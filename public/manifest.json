@@ -1,20 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "manifest-icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "manifest-icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ],
+  "short_name": "plebchan",
+  "name": "plebchan",
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display": "standalone"
 }
