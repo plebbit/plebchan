@@ -37,14 +37,16 @@ export const Page = styled.div`
 export const About = styled.div`
   background: #fff;
   color: #000;
+  margin-bottom: .5em;
+  padding-bottom: .5em;
+  margin: 0;
 `;
 
 export const BoxOuter = styled.div`
   border: 1px solid;
-  margin-bottom: .5em;
-  padding-bottom: .5em;
   margin: 0;
   padding: 0;
+  padding-bottom: .5em;
 `;
 
 export const BoxInner = styled.div`
@@ -58,7 +60,6 @@ export const BoxBar = styled.div`
   position: relative;
   padding-left: .5em;
   line-height: 2em;
-  padding-top: 1ch;
 
   h2 {
     font-size: 131%;
@@ -84,4 +85,39 @@ export const BoxContent = styled.div`
     margin: 0;
     padding: 0;
   }
+`;
+
+export const BoardBoxOuter = styled.div`
+  border: 1px solid;
+  margin: 0;
+  padding: 0;
+  padding-bottom: .5em;
+  background: #fff;
+`;
+
+export const BoardBoxInner = styled.div`
+  margin: 0;
+  padding: 0;
+`;
+
+export const BoardBoxBar = styled.div`
+  background: #fca;
+  color: #800;
+  position: relative;
+  padding-left: .5em;
+  line-height: 2em;
+
+  h2 {
+    font-size: 131%;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+export const BoardBoxContent = styled.div`
+  padding: .5em;
+  padding-top: .25em;
+  padding-bottom: 0;
+  margin: 0;
 `;
