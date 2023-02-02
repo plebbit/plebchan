@@ -1,13 +1,10 @@
 import React from 'react';
+import { Title } from './styled/Board.styled';
 
-class Board extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Board</h1>
-      </div>
-    );
-  }
+const Board = () => {
+  return (
+    <Title>board</Title>
+  )
 }
 
 export default Board;

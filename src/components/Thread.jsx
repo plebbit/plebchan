@@ -1,13 +1,10 @@
 import React from 'react';
+import { Title } from './styled/Board.styled';
 
-class Thread extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Thread</h1>
-      </div>
-    );
-  }
+const Thread = () => {
+  return (
+    <Title>thread</Title>
+  );
 }
 
 export default Thread;

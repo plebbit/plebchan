@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import GlobalStyle from './globalStyles';
 import Home from './components/Home';
 import Board from './components/Board';
 import Thread from './components/Thread';
@@ -17,10 +18,11 @@ function App() {
       <meta name="msapplication-TileColor" content="#fee9cd" />
       <meta name="theme-color" content="#ffffff" />
     </Helmet>
+    <GlobalStyle />
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/board' element={<Board />} />
-     <Route path='/board/:thread' element={<Thread />} />
+      <Route path='/board/:thread' element={<Thread />} />
     </Routes>
   </div>
 )}
