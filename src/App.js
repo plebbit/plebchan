@@ -17,6 +17,7 @@ function App() {
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#fee9cd" />
       <meta name="msapplication-TileColor" content="#fee9cd" />
       <meta name="theme-color" content="#ffffff" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Helmet>
     <GlobalStyle />
     <Routes>
