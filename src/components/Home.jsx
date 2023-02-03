@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Container, Header, Logo, Image, Page, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent } from './styled/Home.styled';
+import {Container, Header, Logo, Image, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent } from './styled/Home.styled';
 
 const Home = () => {
   return (
@@ -12,6 +12,12 @@ const Home = () => {
           </Link>
         </Logo>
       </Header>
+      <Search>
+        <form>
+          <input type="text" placeholder="board.eth" />
+          <input type="submit" value="Search" />
+        </form>
+      </Search>
       <Page>
         <About>
           <AboutTitle>
@@ -19,7 +25,7 @@ const Home = () => {
           </AboutTitle>
           <AboutContent>
             <div id="content">
-              <p>Plebchan is a serverless, adminless, decentralized 4chan alternative that lives on  the <a href="https://plebbit.net">plebbit protocol</a>. Users do not need to register an account before participating in the community; anyone can post comments, share image links and even create a board. Search for any board .eth address, or feel free to click on a popular board below that interests you and jump right in! </p>
+              <p>Plebchan is a serverless, adminless, decentralized 4chan alternative that lives on  the <a href="https://plebbit.net" target="_blank" rel="noreferrer">plebbit protocol</a>. Users do not need to register an account before participating in the community; anyone can post comments, share image links and even create a board. Search for any board address above, or feel free to click on a popular board below that interests you and jump right in! </p>
               <br />
               <p>There are no global rules, each board is completely independent and their owners decide how they should be moderated.</p>
             </div>

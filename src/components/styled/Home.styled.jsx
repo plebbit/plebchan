@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  min-width: 0;
-  width: auto;
-  padding: 10px;
   margin: auto;
   text-align: left;
+  width: 57.69em;
+  min-width: 750px;
+  padding: 0;
+
+  @media (max-device-width: 640px) {
+    min-width: 0;
+    width: auto;
+    padding: 10px;
+  }
 `;
 
 export const Header = styled.div`
@@ -28,6 +34,38 @@ export const Image = styled.img`
   display: block;
   border: none;
   width: 100%;
+`;
+
+export const Search = styled.div`
+  text-align: center;
+  margin-bottom: 20px;
+
+  input[type="text"] {
+    width: 400px;
+    height: 30px;
+    font-size: 18px;
+    padding: 3px 10px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    margin: 0;
+    margin-right: 2px;
+    border: 1px solid #aaa;
+    outline: none;
+    font-family: arial, helvetica, sans-serif;
+  }
+
+  input[type="submit"] {
+    width: 60px;
+    height: 30px;
+    font-size: 14px;
+    padding: 3px;
+    box-sizing: border-box;
+    vertical-align: top;
+    margin-left: 5px;
+  }
+
 `;
 
 export const Page = styled.div`
