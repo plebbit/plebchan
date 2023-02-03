@@ -27,13 +27,13 @@ export const Logo = styled.div`
   overflow: hidden;
   margin: 0 auto;
   width: 300px;
-`;
 
-export const Image = styled.img`
-  margin: auto;
-  display: block;
-  border: none;
-  width: 100%;
+  img {
+    margin: auto;
+    display: block;
+    border: none;
+    width: 100%;
+  }
 `;
 
 export const Search = styled.div`
@@ -60,10 +60,13 @@ export const Search = styled.div`
     width: 60px;
     height: 30px;
     font-size: 14px;
-    padding: 3px;
-    box-sizing: border-box;
-    vertical-align: top;
     margin-left: 5px;
+  }
+  
+  @-moz-document url-prefix() {
+    input[type="submit"] {
+      vertical-align: top;
+    }
   }
 
   @media only screen and (max-width: 480px) {
@@ -75,8 +78,6 @@ export const Search = styled.div`
       font-size: 20px;
       padding: 5px;
       box-sizing: border-box;
-      -webkit-appearance: none;
-      -webkit-border-radius: 0;
       border-radius: 0;
     }
     
@@ -166,7 +167,90 @@ export const BoardsTitle = styled.div`
 `;
 
 export const BoardsContent = styled.div`
+  font-size: 93%;
   padding: .5em;
   padding-top: .25em;
   padding-bottom: 0;
+  line-height: 130%;
+  text-align: center;
+
+  .board {
+    vertical-align: top;
+    display: inline-block;
+    word-wrap: break-word;
+    overflow: hidden;
+    margin-top: 5px;
+    padding: 5px 0 3px;
+    position: relative;
+    width: 175px;
+    max-height: 320px;
+    margin-bottom: 10px;
+  }
+
+  .board-title {
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+    margin-bottom: 5px;
+  }
+
+  img {
+    border: 1px solid #800;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+  }
+
+  .board-text {
+    margin-bottom: 5px;
+    padding: 0 2px;
+    white-space: pre-line;
+  }
+`;
+
+export const Footer = styled.div`
+  font-size: 93%;
+  text-align: center;
+  clear: both;
+  padding-top: .5em;
+  padding-bottom: 20px;
+
+  ul {
+    border-top: 1px solid;
+    display: table;
+    margin: auto;
+    width: 750px;
+    padding: 0;
+  }
+  
+  li {
+    background: #fed;
+    display: block;
+    float: left;
+    border: 1px solid;
+    padding: 2px 1em 2px 1em;
+    border-left: none;
+    margin-top: -1px;
+    list-style: none;
+  }
+  
+  .fill {
+    border-top: 1x solid;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    background: #ffe;
+    width: 10.5%;
+  }
+  
+  .first {
+    border-left: 1px solid;
+  }
+
+  a {
+    color: #800;
+    text-decoration: none;
+  }
 `;

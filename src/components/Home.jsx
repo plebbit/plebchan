@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Container, Header, Logo, Image, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent } from './styled/Home.styled';
+import {Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styled/Home.styled';
 
 const Home = () => {
   return (
@@ -8,7 +8,7 @@ const Home = () => {
       <Header>
         <Logo>
           <Link to="/">
-            <Image alt="plebchan" src="/logo-transparent.png"></Image>
+            <img alt="plebchan" src="/logo-transparent.png" />
           </Link>
         </Logo>
       </Header>
@@ -36,16 +36,110 @@ const Home = () => {
               <h2>Popular boards</h2>
             </BoardsTitle>
             <BoardsContent>
-              <div id="box-content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor nec feugiat nisl pretium. Porta lorem mollis aliquam ut. Risus nec feugiat in fermentum posuere urna. Aliquam purus sit amet luctus venenatis lectus. Adipiscing elit ut aliquam purus sit. Ipsum consequat nisl vel pretium. Semper auctor neque vitae tempus quam pellentesque nec nam aliquam. Neque ornare aenean euismod elementum nisi quis eleifend. Urna nec tincidunt praesent semper feugiat nibh. In fermentum posuere urna nec. Et netus et malesuada fames ac turpis egestas integer. Quam id leo in vitae turpis massa sed elementum tempus. Sed felis eget velit aliquet sagittis. At risus viverra adipiscing at in. Senectus et netus et malesuada fames ac turpis egestas. Consectetur adipiscing elit ut aliquam. At erat pellentesque adipiscing commodo elit at. Dolor sit amet consectetur adipiscing elit. Augue mauris augue neque gravida in.
-                  
-                Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Ut ornare lectus sit amet est. Aliquam id diam maecenas ultricies mi eget mauris pharetra. Quam nulla porttitor massa id neque aliquam vestibulum. Justo eget magna fermentum iaculis eu. Varius morbi enim nunc faucibus. Nisl tincidunt eget nullam non nisi est sit. Mi ipsum faucibus vitae aliquet nec ullamcorper sit. Elementum curabitur vitae nunc sed velit dignissim. Non sodales neque sodales ut etiam sit. Cursus mattis molestie a iaculis at erat pellentesque. Amet consectetur adipiscing elit pellentesque habitant morbi. Id venenatis a condimentum vitae sapien pellentesque habitant. Pellentesque habitant morbi tristique senectus et netus. Id cursus metus aliquam eleifend mi. Quam quisque id diam vel quam elementum pulvinar etiam non. Mauris pharetra et ultrices neque ornare aenean euismod. Vel pharetra vel turpis nunc eget lorem dolor sed viverra. Cras fermentum odio eu feugiat pretium. Risus pretium quam vulputate dignissim suspendisse in est ante in.
-                
-                Nec feugiat in fermentum posuere urna nec tincidunt praesent semper. Dolor morbi non arcu risus quis varius quam quisque. Nunc vel risus commodo viverra maecenas accumsan lacus. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu. In vitae turpis massa sed. Aliquet risus feugiat in ante metus dictum at tempor commodo. Purus sit amet luctus venenatis lectus magna fringilla urna porttitor. Vestibulum sed arcu non odio euismod lacinia at quis risus. Tristique senectus et netus et malesuada fames ac turpis. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Morbi leo urna molestie at. Quam elementum pulvinar etiam non quam. Sed risus ultricies tristique nulla aliquet enim tortor at. Tincidunt ornare massa eget egestas purus viverra. Convallis aenean et tortor at risus viverra. Blandit volutpat maecenas volutpat blandit. Felis eget nunc lobortis mattis. Lorem ipsum dolor sit amet consectetur adipiscing elit duis. Egestas pretium aenean pharetra magna ac placerat.</p>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
+              </div>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
+              </div>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
+              </div>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
+              </div>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
+              </div>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
+              </div>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
+              </div>
+              <div className="board">
+                <div className="board-title">Pleb whales</div>
+                <Link to="/board">
+                  <img alt="board logo" src="/plebchan.png" />
+                </Link>
+                <div className="board-text">
+                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+                </div>
               </div>
             </BoardsContent>
         </Boards>
       </Page>
+      <Footer>
+        <ul>
+          <li className="fill"></li>
+          <li className="first">
+            <a href="https://plebbitdemo.eth.limo" target="_blank" rel="noopener noreferrer">Plebbit</a>
+          </li>
+          <li>
+            <a href="https://gitcoin.co/grants/5515/plebbit-a-serverless-adminless-decentralized-redd" target="_blank" rel="noopener noreferrer">Donate</a>
+          </li>
+          <li>
+            <a href="https://github.com/plebbit/whitepaper/discussions/2" target="_blank" rel="noopener noreferrer">Whitepaper</a>
+          </li>
+          <li>
+            <a href="https://snowtrace.io/token/0x625fc9bb971bb305a2ad63252665dcfe9098bee9" target="_blank" rel="noopener noreferrer">Contract</a>
+          </li>
+          <li>
+            <a href="https://matrix.to/#/#plebbit:plebbitchat.org" target="_blank" rel="noopener noreferrer">Matrix</a>
+          </li>
+          <li>
+            <a href="https://t.me/plebbit" target="_blank" rel="noopener noreferrer">Telegram</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/getplebbit" target="_blank" rel="noopener noreferrer">Twitter</a>
+          </li>
+          <li>
+            <a href="https://discord.gg/E7ejphwzGW" target="_blank" rel="noopener noreferrer">Discord</a>
+          </li>
+        </ul>
+      </Footer>
     </Container>
   )
 };
