@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  min-width: 0;
+  width: auto;
+  padding: 10px;
   margin: auto;
   text-align: left;
-  width: 57.69em;
-  min-width: 750px;
 `;
 
 export const Header = styled.div`
