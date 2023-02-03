@@ -260,6 +260,7 @@ export const Footer = styled.div`
       border-top: none;
       line-height: 2;
       display: block;
+      overflow: hidden;
     }
 
     .fill {
