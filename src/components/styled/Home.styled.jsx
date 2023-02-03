@@ -66,6 +66,30 @@ export const Search = styled.div`
     margin-left: 5px;
   }
 
+  @media only screen and (max-width: 480px) {
+    text-align: center;
+
+    input[type="text"] {
+      width: 80%;
+      height: 35px;
+      font-size: 20px;
+      padding: 5px;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0;
+      border-radius: 0;
+    }
+    
+    input[type="submit"] {
+      height: 35px;
+      font-size: 14px;
+      padding: 5px;
+      box-sizing: border-box;
+      vertical-align: top;
+      width: 60px;
+    }
+  }
+
 `;
 
 export const Page = styled.div`
