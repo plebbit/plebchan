@@ -248,9 +248,39 @@ export const Footer = styled.div`
   .first {
     border-left: 1px solid;
   }
-
+  
   a {
     color: #800;
     text-decoration: none;
+  }
+  
+  @media (max-device-width: 640px) {
+    ul {
+      width: auto;
+      border-top: none;
+      line-height: 2;
+      display: block;
+    }
+
+    .fill {
+      display: none;
+    }
+
+    li {
+      background: inherit;
+      display: inline;
+      float: none;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .first {
+      border-left: none;
+    }
+
+    a {
+      color: blue;
+      text-decoration: underline;
+    }
   }
 `;
