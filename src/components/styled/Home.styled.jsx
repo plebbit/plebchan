@@ -215,7 +215,7 @@ export const Footer = styled.div`
   text-align: center;
   clear: both;
   padding-top: .5em;
-  padding-bottom: 20px;
+  padding-bottom: 5em;
 
   ul {
     border-top: 1px solid;
@@ -255,16 +255,22 @@ export const Footer = styled.div`
   }
   
   @media (max-device-width: 640px) {
+    padding-top: 2em;
+    padding-bottom: 3em;
+
     ul {
       width: auto;
       border-top: none;
       line-height: 2;
-      display: block;
-      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 10px;
     }
 
     .fill {
       display: none;
+      background: inherit;
     }
 
     li {
