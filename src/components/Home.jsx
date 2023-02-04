@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styled/Home.styled';
 
 const Home = () => {
+  const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
+
+  /*const setDefaultSubplebbits = await fetch(
+    'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json',
+    { cache: 'no-cache' }
+  ).then(res => res.json()); */
+
+  useEffect(() => {
+    let didCancel = false;
+    fetch(
+      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
+      { cache: "no-cache" }
+    )
+      .then((res) => res.json())
+      .then(res => {
+        if (!didCancel) {
+          setDefaultSubplebbits(res);
+        }
+      });
+    return () => {
+      didCancel = true;
+    };
+  }, []);
+  
   return (
     <Container>
       <Header>
@@ -36,78 +60,17 @@ const Home = () => {
               <h2>Popular boards</h2>
             </BoardsTitle>
             <BoardsContent>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
+              {defaultSubplebbits.map(subplebbit => (
+                <div className="board">
+                  <div className="board-title">{subplebbit.title}</div>
+                  <Link to="/board">
+                    <img alt="board logo" src="/plebchan.png" />
+                  </Link>
+                  <div className="board-text">
+                    <b>{subplebbit.address}</b>
+                  </div>
                 </div>
-              </div>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
-                </div>
-              </div>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
-                </div>
-              </div>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
-                </div>
-              </div>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
-                </div>
-              </div>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
-                </div>
-              </div>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
-                </div>
-              </div>
-              <div className="board">
-                <div className="board-title">Pleb whales</div>
-                <Link to="/board">
-                  <img alt="board logo" src="/plebchan.png" />
-                </Link>
-                <div className="board-text">
-                  <b>p/plebwhales.eth</b>: For those destined to make it. Minimum 1B PLEB in wallet to post.
-                </div>
-              </div>
+              ))}
             </BoardsContent>
         </Boards>
       </Page>
@@ -121,7 +84,7 @@ const Home = () => {
             <a href="https://gitcoin.co/grants/5515/plebbit-a-serverless-adminless-decentralized-redd" target="_blank" rel="noopener noreferrer">Donate</a>
           </li>
           <li>
-            <a href="https://github.com/plebbit/whitepaper/discussions/2" target="_blank" rel="noopener noreferrer">Whitepaper</a>
+            <a href="https://plebbit.net/whitepaper" target="_blank" rel="noopener noreferrer">Whitepaper</a>
           </li>
           <li>
             <a href="https://snowtrace.io/token/0x625fc9bb971bb305a2ad63252665dcfe9098bee9" target="_blank" rel="noopener noreferrer">Contract</a>
