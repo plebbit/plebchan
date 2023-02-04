@@ -5,11 +5,6 @@ import {Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, 
 const Home = () => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
 
-  /*const setDefaultSubplebbits = await fetch(
-    'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json',
-    { cache: 'no-cache' }
-  ).then(res => res.json()); */
-
   useEffect(() => {
     let didCancel = false;
     fetch(
@@ -39,7 +34,7 @@ const Home = () => {
       <Page>
         <Search>
           <form>
-            <input type="text" placeholder="board.eth" />
+            <input type="text" placeholder='"board.eth" or "Qm..."' />
             <input type="submit" value="Search" />
           </form>
         </Search>

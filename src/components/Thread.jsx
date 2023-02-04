@@ -1,9 +1,8 @@
 import React from 'react';
-import { Title } from './styled/Board.styled';
 
 const Thread = () => {
   return (
-    <Title>thread</Title>
+    <h1>thread</h1>
   );
 }
 
