@@ -61,7 +61,7 @@ const Home = () => {
             </BoardsTitle>
             <BoardsContent>
               {defaultSubplebbits.map(subplebbit => (
-                <div className="board">
+                <div className="board" key={subplebbit.address}>
                   <div className="board-title">{subplebbit.title}</div>
                   <Link to="/board">
                     <img alt="board logo" src="/plebchan.png" />
