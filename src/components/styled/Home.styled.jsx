@@ -88,6 +88,7 @@ export const Search = styled.div`
       box-sizing: border-box;
       vertical-align: top;
       width: 60px;
+      -webkit-appearance: none;
     }
   }
 
