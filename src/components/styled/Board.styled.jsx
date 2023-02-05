@@ -121,3 +121,112 @@ export const TopBar = styled.div`
     color: red;
   }
 `;
+
+export const BoardForm = styled.form`
+  
+  .thread {
+    margin: 0;
+    clear: both;
+  }
+
+  .op-container {
+    display: inline;
+  }
+
+  .op {
+    display: inline;
+  }
+
+  .post {
+    margin: 4px 0;
+    overflow: hidden;
+  }
+
+  .ext-button {
+    float: left;
+    margin-right: 5px;
+    margin-top: -1px;
+    cursor: pointer;
+    margin-bottom: -4px;
+    width: 18px;
+    height: 18px;
+  }
+
+  img {
+    border: none;
+  }
+
+  .post-info {
+    display: block;
+    width: 100%;
+  }
+
+  .name-block {
+    display: inline-block;
+  }
+
+  .name {
+    color: #117743;
+    font-weight: 700;
+  }
+
+  .post-link a {
+    text-decoration: none;
+    color: maroon;
+  }
+
+  .post-link a:hover {
+    color: red;
+  }
+
+  .reply-link a {
+    text-decoration: none;
+    color: #00e;
+  }
+
+  .reply-link a:hover {
+    color: red;
+  }
+
+  .post-menu-button {
+    color: #000080;
+    margin-left: 5px;
+    text-decoration: none;
+    line-height: 1em;
+    display: inline-block;
+    transition: transform 0.1s;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    outline: none;
+    opacity: 0.8;
+  }
+
+  .backlink {
+    font-size: 0.8em !important;
+    display: inline;
+    padding: 0;
+    padding-left: 5px;
+  }
+
+  .quote-link a {
+    color: navy !important;
+    text-decoration: none;
+  }
+
+  .quote-link a:hover {
+    color: red;
+  }
+
+  .backlink span {
+    padding: 0;
+  }
+
+  blockquote {
+    display: block;
+  }
+
+  .quote {
+    color: #789922;
+  }
+`;
