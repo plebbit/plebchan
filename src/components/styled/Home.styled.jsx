@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  height: 100%;
+  color: #800;
+  font: 13px/1.231 arial, helvetica, clean, sans-serif;
+  text-align: center;
   margin: auto;
   text-align: left;
   width: 57.69em;
