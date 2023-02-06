@@ -170,22 +170,17 @@ export const BoardForm = styled.form`
     font-weight: 700;
   }
 
-  .post-link a {
+  .post-number a {
     text-decoration: none;
     color: maroon;
   }
 
-  .post-link a:hover {
+  .post-number a:hover {
     color: red;
   }
 
-  .reply-link a {
-    text-decoration: none;
-    color: #00e;
-  }
-
-  .reply-link a:hover {
-    color: red;
+  .reply-link:not(:hover) {
+    color: #00e !important;
   }
 
   .post-menu-button {
@@ -202,6 +197,10 @@ export const BoardForm = styled.form`
     opacity: 0.8;
   }
 
+  .post-menu-button:hover {
+    color: red;
+  }
+
   .backlink {
     font-size: 0.8em !important;
     display: inline;
@@ -209,12 +208,11 @@ export const BoardForm = styled.form`
     padding-left: 5px;
   }
 
-  .quote-link a {
-    color: navy !important;
-    text-decoration: none;
+  .quote-link {
+    color: navy;
   }
 
-  .quote-link a:hover {
+  .quote-link:hover {
     color: red;
   }
 
@@ -228,5 +226,23 @@ export const BoardForm = styled.form`
 
   .quote {
     color: #789922;
+  }
+
+  .side-arrows {
+    color: #e0bfb7;
+    float: left;
+    margin-right: 2px;
+    margin-top: 0;
+    margin-left: 2px;
+  }
+
+  .post-reply {
+    background-color: #f0e0d6;
+    border: 1px solid #d9bfb7;
+    margin-top: 2px;
+    border-left: none;
+    border-top: none;
+    display: table;
+    padding: 2px;
   }
 `;

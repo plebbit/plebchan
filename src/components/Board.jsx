@@ -88,23 +88,28 @@ const Board = () => {
                 </span>
                 <div id="pi" className="post-info">
                   <input type="checkbox" name="id" value="delete"></input>
+                   
                   <span className="name-block">
                     <span className="name">Tom</span>
+                     
                     <span className="poster-address">
                       (User: plebeius.eth)
                     </span>
                   </span>
+                   
                   <span className="date-time" data-utc="data">2 weeks ago</span>
+                   
                   <span className="post-number">
                     <a href="post-link" title="Link to this post">No.</a>
                     <a href="post-link" title="Reply to this post">00000001</a>
+                       
                     <span>
                       [
                       <a className="reply-link" href="post-link">Reply</a>
                       ]
                     </span>
                   </span>
-                  <a className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
+                  <a className="post-menu-button" href="post-menu" title="Post menu" data-cmd="post-menu">▶</a>
                   <div id="backlink-id" className="backlink">
                       <span>
                         <a className="quote-link" href="post-link">{'>>'}00000002</a>
@@ -123,13 +128,17 @@ const Board = () => {
               <div className="post-reply">
                 <div className="post-info">
                   <input type="checkbox" name="id" value="delete"></input>
+                   
                   <span className="nameblock">
                     <span className="name">Anonymous</span>
+                     
                     <span className="poster-address">
                       (User: Qma319kE7rrHNce8vH9fAjPjihUF4EZCaKSK8dBaFtxsVn)
                     </span>
                   </span>
+                   
                   <span className="date-time" data-utc="data">2 weeks ago</span>
+                   
                   <span className="post-number">
                     <a href="post-link" title="Link to this post">No.</a>
                     <a href="post-link" title="Reply to this post">00000002</a>
