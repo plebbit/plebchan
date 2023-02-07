@@ -17,9 +17,8 @@ const ImageBanner = () => {
 
 const Board = () => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const {feed, hasMore, loadMore} = useFeed(['memes.eth'], 'new');
-
-  console.log({feed});
+  const [selectedTitle, setSelectedTitle] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   useEffect(() => {
     let didCancel = false;
@@ -38,13 +37,24 @@ const Board = () => {
     };
   }, []);
 
+  const handleClick = (title, address) => {
+    setSelectedTitle(title);
+    setSelectedAddress(address);
+  };
+
+  const {feed, hasMore, loadMore} = useFeed([`${selectedAddress}`], 'new');
+
+  console.log(feed);
+
   return (
     <Container>
       <NavBar>
         <>
           {defaultSubplebbits.map(subplebbit => (
-            <span className="boardList" key={subplebbit.address}>[
-              <a href="/board">{subplebbit.title}</a>
+            <span className="boardList" key={subplebbit.address}>
+              [
+              <a href="#" onClick={() => handleClick(subplebbit.title, subplebbit.address)}
+              >{subplebbit.title}</a>
               ]&nbsp;
             </span>
           ))}
@@ -59,8 +69,8 @@ const Board = () => {
             <ImageBanner />
           </div>
             <>
-            <div className="board-title">Crypto</div>
-            <div className="board-address">p/QmPjewdKya8iVkuQiiXQ5qRBsgVUAZg2LQ2m8v3LNJ7Ht8</div>
+            <div className="board-title">{selectedTitle}</div>
+            <div className="board-address">p/{selectedAddress}</div>
             </>
         </>
       </Header>
@@ -91,90 +101,90 @@ const Board = () => {
       </TopBar>
       <BoardForm id="board-form" name="board-form" action="" method="post">
         <div className="board">
-          <div id="t" className="thread">
-            <div id="pc" className="post-container op-container">
-              <div id="p" className="post op">
-                <span id="sa">
-                <img alt="H" className="ext-button thread-hide-button" data-cmd="hide" data-id="1-test" src="./post_expand_minus.png" title="Hide thread" />
-                </span>
-                <div id="pi" className="post-info">
-                   
-                  <span className="name-block">
-                    <span className="name">Tom</span>
-                     
-                    <span className="poster-address">
-                      (User: plebeius.eth)
-                    </span>
+          {feed.map(object => (
+            <>
+            <div id="t" className="thread">
+              <div id="pc" className="post-container op-container">
+                <div id="p" className="post op">
+                  <span id="sa">
+                    <img alt="H" className="ext-button thread-hide-button" data-cmd="hide" data-id="1-test" src="./post_expand_minus.png" title="Hide thread" />
                   </span>
-                   
-                  <span className="date-time" data-utc="data">2 weeks ago</span>
-                   
-                  <span className="post-number">
-                    <a href="post-link" title="Link to this post">No.</a>
-                    <a href="post-link" title="Reply to this post">00000001</a>
-                       
-                    <span>
-                      [
-                      <a className="reply-link" href="post-link">Reply</a>
-                      ]
+                  <div id="pi" className="post-info">
+
+                    <span className="name-block">
+                      <span className="name">Tom</span>
+
+                      <span className="poster-address">
+                        (User: plebeius.eth)
+                      </span>
                     </span>
-                  </span>
-                  <a className="post-menu-button" href="post-menu" title="Post menu" data-cmd="post-menu">▶</a>
-                  <div id="backlink-id" className="backlink">
+
+                    <span className="date-time" data-utc="data">2 weeks ago</span>
+
+                    <span className="post-number">
+                      <a href="post-link" title="Link to this post">No.</a>
+                      <a href="post-link" title="Reply to this post">00000001</a>
+
+                      <span>
+                        [
+                        <a className="reply-link" href="post-link">Reply</a>
+                        ]
+                      </span>
+                    </span>
+                    <a className="post-menu-button" href="post-menu" title="Post menu" data-cmd="post-menu">▶</a>
+                    <div id="backlink-id" className="backlink">
                       <span>
                         <a className="quote-link" href="post-link">{'>>'}00000002</a>
                       </span>
+                    </div>
+                    <blockquote>
+                      <span className="quote">
+                        {'>'}wen mvp
+                      </span>
+                      <br />
+                      two more weeks
+                    </blockquote>
                   </div>
-                  <blockquote>
-                    <span className="quote">
-                      {'>'}wen mvp
+                </div>
+              </div>
+              <div key={`pc-${object.cid}`} className="post-container reply-container">
+                <div key={`sa-${object.cid}`} className="side-arrows">{'>>'}</div>
+                <div key={`pr-${object.cid}`} className="post-reply">
+                  <div key={`pi-${object.cid}`} className="post-info">
+
+                    <span key={`nb-${object.cid}`} className="nameblock">
+                      <span key={`n-${object.cid}`} className="name">{object.author.displayName}</span>
+
+                      <span key={`pa-${object.cid}`} className="poster-address">
+                        (User: {object.author.address})
+                      </span>
+                    </span>
+
+                    <span key={`dt-${object.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+
+                    <span key={`pn-${object.cid}`} className="post-number">
+                      <a key={`pl1-${object.cid}`} href="post-link" title="Link to this post">No.</a>
+                      <a key={`pl2-${object.cid}`} href="post-link" title="Reply to this post">00000002</a>
+                    </span>
+                    <a key={`pmb-${object.cid}`} className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
+                  </div>
+                  <blockquote key={`pm-${object.cid}`} className="post-message">
+                    <span key={`q-${object.cid}`} className="quote">
+                      {'>'}{object.title}
                     </span>
                     <br />
-                    two more weeks
+                    {object.content}
                   </blockquote>
                 </div>
               </div>
             </div>
-            {feed.map(post => (
-              <div id="pc" className="post-container reply-container">
-                <div className="side-arrows">{'>>'}</div>
-                <div className="post-reply">
-                  <div className="post-info">
-                     
-                    <span className="nameblock">
-                      <span className="name">Anonymous</span>
-                       
-                      <span className="poster-address">
-                        (User: {post.author.address})
-                      </span>
-                    </span>
-                     
-                    <span className="date-time" data-utc="data">2 weeks ago</span>
-                     
-                    <span className="post-number">
-                      <a href="post-link" title="Link to this post">No.</a>
-                      <a href="post-link" title="Reply to this post">00000002</a>
-                    </span>
-                    <a className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
-                  </div>
-                  <blockquote className="post-message">
-                    <span className="quote">
-                        {'>'}{post.title}
-                      </span>
-                      <br />
-                      {post.content}
-                  </blockquote>
-                </div>
-              </div>
+            <hr />
+            </>
             ))}
-          </div>
-        </div>
-        <div className="bottom-control">
-          <span></span>
         </div>
       </BoardForm>
     </Container>
-  )
+  );
 }
 
 export default Board;

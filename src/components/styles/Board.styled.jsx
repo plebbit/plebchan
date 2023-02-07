@@ -228,4 +228,10 @@ export const BoardForm = styled.form`
     word-break: break-word;
     max-width: 100%;
   }
+
+  hr {
+    border: none;
+    border-top: 1px solid #d9bfb7;
+    height: 0;
+  }
 `;
