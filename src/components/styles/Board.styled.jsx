@@ -95,30 +95,9 @@ export const TopBar = styled.div`
     height: 0;
   }
 
-  #search-box { 
-    height: 16px;
-    line-height: 16px;
-    margin-top: 0;
-    margin-right: 2px;
-    margin-bottom: 0;
-    margin-left: 2px;
-    padding: 0 2px;
-    width: 120px;
-    -webkit-appearance: none;
-    appearance: none;
-    border: 1px solid #aaa;
-    outline: none;
-    font-family: Arial, Helvetica, sans-serif;
+  .style-changer {
+    margin-left: 5px;
     font-size: 10pt;
-  }
-
-  a {
-    color: #00e;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: red;
   }
 `;
 
@@ -244,5 +223,9 @@ export const BoardForm = styled.form`
     border-top: none;
     display: table;
     padding: 2px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
   }
 `;

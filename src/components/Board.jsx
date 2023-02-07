@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, NavBar, Header, Break, PostForm, TopBar, BoardForm } from './styled/Board.styled';
+import { Container, NavBar, Header, Break, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import { useFeed } from '@plebbit/plebbit-react-hooks';
 
 const ImageBanner = () => {
   const [currentImage, setCurrentImage] = useState(1);
 
   useEffect(() => {
-    setCurrentImage(Math.floor(Math.random() * 5) + 1);
+    setCurrentImage(Math.floor(Math.random() * 12) + 1);
   }, []);
 
   return (
@@ -16,9 +16,10 @@ const ImageBanner = () => {
 };
 
 const Board = () => {
-  // eslint-disable-next-line
-  const { feed, hasMore, loadMore } = useFeed(['news.eth'], 'new');
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
+  const {feed, hasMore, loadMore} = useFeed(['memes.eth'], 'new');
+
+  console.log({feed});
 
   useEffect(() => {
     let didCancel = false;
@@ -57,8 +58,10 @@ const Board = () => {
           <div className="banner">
             <ImageBanner />
           </div>
-          <div className="board-title">Plebs Helping Plebs</div>
-          <div className="board-address">p/plebshelpingplebs.eth</div>
+            <>
+            <div className="board-title">Crypto</div>
+            <div className="board-address">p/QmPjewdKya8iVkuQiiXQ5qRBsgVUAZg2LQ2m8v3LNJ7Ht8</div>
+            </>
         </>
       </Header>
       <Break />
@@ -72,10 +75,18 @@ const Board = () => {
       </PostForm>
       <TopBar>
         <hr />
-        <input id="search-box" type="text" placeholder="Search OPs…" />
-        [
-        <a href="./catalog">Catalog</a>
-        ]
+        <span className="style-changer">
+          Style:
+           
+          <select id="style-selector">
+            <option value="Yotsuba New">Yotsuba</option>
+            <option value="Yotsuba B">Yotsuba B</option>
+            <option value="Futaba New">Futaba New</option>
+            <option value="Burichan">Burichan</option>
+            <option value="Tomorrow">Tomorrow</option>
+            <option value="Photon">Photon</option>
+          </select>
+        </span>
         <hr />
       </TopBar>
       <BoardForm id="board-form" name="board-form" action="" method="post">
@@ -87,7 +98,6 @@ const Board = () => {
                 <img alt="H" className="ext-button thread-hide-button" data-cmd="hide" data-id="1-test" src="./post_expand_minus.png" title="Hide thread" />
                 </span>
                 <div id="pi" className="post-info">
-                  <input type="checkbox" name="id" value="delete"></input>
                    
                   <span className="name-block">
                     <span className="name">Tom</span>
@@ -117,40 +127,50 @@ const Board = () => {
                   </div>
                   <blockquote>
                     <span className="quote">
-                      {'>'}imagine being a pleb
+                      {'>'}wen mvp
                     </span>
+                    <br />
+                    two more weeks
                   </blockquote>
                 </div>
               </div>
             </div>
-            <div id="pc" className="post-container reply-container">
-              <div className="side-arrows">{'>>'}</div>
-              <div className="post-reply">
-                <div className="post-info">
-                  <input type="checkbox" name="id" value="delete"></input>
-                   
-                  <span className="nameblock">
-                    <span className="name">Anonymous</span>
+            {feed.map(post => (
+              <div id="pc" className="post-container reply-container">
+                <div className="side-arrows">{'>>'}</div>
+                <div className="post-reply">
+                  <div className="post-info">
                      
-                    <span className="poster-address">
-                      (User: Qma319kE7rrHNce8vH9fAjPjihUF4EZCaKSK8dBaFtxsVn)
+                    <span className="nameblock">
+                      <span className="name">Anonymous</span>
+                       
+                      <span className="poster-address">
+                        (User: {post.author.address})
+                      </span>
                     </span>
-                  </span>
-                   
-                  <span className="date-time" data-utc="data">2 weeks ago</span>
-                   
-                  <span className="post-number">
-                    <a href="post-link" title="Link to this post">No.</a>
-                    <a href="post-link" title="Reply to this post">00000002</a>
-                  </span>
-                  <a className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
+                     
+                    <span className="date-time" data-utc="data">2 weeks ago</span>
+                     
+                    <span className="post-number">
+                      <a href="post-link" title="Link to this post">No.</a>
+                      <a href="post-link" title="Reply to this post">00000002</a>
+                    </span>
+                    <a className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
+                  </div>
+                  <blockquote className="post-message">
+                    <span className="quote">
+                        {'>'}{post.title}
+                      </span>
+                      <br />
+                      {post.content}
+                  </blockquote>
                 </div>
-                <blockquote className="post-message">
-                  I can imagine being a pleb
-                </blockquote>
               </div>
-            </div>
+            ))}
           </div>
+        </div>
+        <div className="bottom-control">
+          <span></span>
         </div>
       </BoardForm>
     </Container>
