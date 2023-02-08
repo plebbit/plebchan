@@ -2,23 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import { useFeed } from '@plebbit/plebbit-react-hooks';
+import ImageBanner from './ImageBanner';
 
-const ImageBanner = () => {
-  const [currentImage, setCurrentImage] = useState(1);
 
-  useEffect(() => {
-    setCurrentImage(Math.floor(Math.random() * 12) + 1);
-  }, []);
-
-  return (
-    <img id="banner-img" src={`banner-${currentImage}.jpg`} alt="banner" />
-  );
-};
-
-const Board = () => {
+const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedStyle, setSelectedStyle] = useState("Yotsuba");
 
   useEffect(() => {
     let didCancel = false;
@@ -42,13 +33,80 @@ const Board = () => {
     setSelectedAddress(address);
   };
 
+  const handleStyleChange = (event) => {
+    switch (event.target.value) {
+      case "Yotsuba":
+        setBodyStyle({
+          background: "#ffe url(/fade.png) top repeat-x",
+          color: "maroon",
+          fontFamily: "Arial, Helvetica, sans-serif"
+        });
+        setSelectedStyle("Yotsuba");
+        break;
+
+      case "Yotsuba B":
+        setBodyStyle({
+          background: "#eef2ff url(/fade-blue.png) top center repeat-x",
+          color: "#000",
+          fontFamily: "Arial, Helvetica, sans-serif"
+        });
+        setSelectedStyle("Yotsuba B");
+        break;
+
+      case "Futaba":
+        setBodyStyle({
+          background: "#ffe",
+          color: "maroon",
+          fontFamily: "times new roman, serif"
+        });
+        setSelectedStyle("Futaba");
+        break;
+
+      case "Burichan":
+        setBodyStyle({
+          background: "#eef2ff",
+          color: "#000",
+          fontFamily: "times new roman, serif"
+        });
+        setSelectedStyle("Burichan");
+        break;
+        
+      case "Tomorrow":
+        setBodyStyle({
+          background: "#1d1f21 none",
+          color: "#c5c8c6",
+          fontFamily: "Arial, Helvetica, sans-serif"
+        });
+        setSelectedStyle("Tomorrow");
+        break;
+
+      case "Photon":
+        setBodyStyle({
+          background: "#eee none",
+          color: "#333",
+          fontFamily: "Arial, Helvetica, sans-serif"
+        });
+        setSelectedStyle("Photon");
+        break;
+
+      default:
+        setBodyStyle({
+          background: "#ffe url(/fade.png) top repeat-x",
+          color: "maroon",
+          fontFamily: "Arial, Helvetica, sans-serif"
+        });
+        setSelectedStyle("Yotsuba");
+    }
+  }
+
+  // eslint-disable-next-line
   const {feed, hasMore, loadMore} = useFeed([`${selectedAddress}`], 'new');
 
-  console.log(feed);
+  // console.log(feed);
 
   return (
     <Container>
-      <NavBar>
+      <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={subplebbit.address}>
@@ -59,11 +117,12 @@ const Board = () => {
             </span>
           ))}
           <span className="nav">[
-            <Link to="/">Home</Link>]&nbsp;
+            <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+            )}>Home</Link>]&nbsp;
           </span>
         </>
       </NavBar>
-      <Header>
+      <Header selectedStyle={selectedStyle}>
         <>
           <div className="banner">
             <ImageBanner />
@@ -74,8 +133,8 @@ const Board = () => {
             </>
         </>
       </Header>
-      <Break />
-      <PostForm name="post" action="" method="post" enctype="multipart/form-data">
+      <Break selectedStyle={selectedStyle} />
+      <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
         <div id="post-form-link">
           [
             <a href="#">Start a New Thread</a>
@@ -83,15 +142,15 @@ const Board = () => {
         </div>
         <table id="post-form"></table>
       </PostForm>
-      <TopBar>
+      <TopBar selectedStyle={selectedStyle}>
         <hr />
         <span className="style-changer">
           Style:
            
-          <select id="style-selector">
-            <option value="Yotsuba New">Yotsuba</option>
+          <select id="style-selector" onChange={handleStyleChange}>
+            <option value="Yotsuba">Yotsuba</option>
             <option value="Yotsuba B">Yotsuba B</option>
-            <option value="Futaba New">Futaba New</option>
+            <option value="Futaba">Futaba</option>
             <option value="Burichan">Burichan</option>
             <option value="Tomorrow">Tomorrow</option>
             <option value="Photon">Photon</option>
@@ -99,7 +158,7 @@ const Board = () => {
         </span>
         <hr />
       </TopBar>
-      <BoardForm id="board-form" name="board-form" action="" method="post">
+      <BoardForm selectedStyle={selectedStyle} id="board-form" name="board-form" action="" method="post">
         <div className="board">
           {feed.map(object => {
             const thread = object;
@@ -109,9 +168,6 @@ const Board = () => {
             <div key={`t-${thread.cid}`} className="thread">
               <div key={`c-${thread.pc}`} className="post-container op-container">
                 <div key={`po-${thread.cid}`} className="post op">
-                  <span key={`sa-${thread.cid}`}>
-                    <img key={`eb-${thread.cid}`} alt="H" className="ext-button thread-hide-button" data-cmd="hide" data-id="1-test" src="./post_expand_minus.png" title="Hide thread" />
-                  </span>
                   <div key={`pi-${thread.cid}`} className="post-info">
                   &nbsp;
                     <span key={`nb-${thread.cid}`} className="name-block">
@@ -183,7 +239,7 @@ const Board = () => {
               </div>
               ))}
             </div>
-            <hr />
+            <hr key={`hr-${thread.cid}`} />
             </>
             )})}
         </div>

@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import GlobalStyle from './globalStyles';
 import Home from './components/Home';
 import Board from './components/Board';
 import Thread from './components/Thread';
+import { createGlobalStyle } from 'styled-components';
+
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    background: ${props => props.background};
+    color: ${props => props.color};
+    font-family: ${props => props.fontFamily};
+  }
+`;
 
 function App() {
+  const [bodyStyle, setBodyStyle] = useState({
+    background: "#ffe url(/fade.png) top repeat-x",
+    color: "maroon",
+    fontFamily: "Helvetica, Arial, sans-serif"
+  });
+
   return (
   <div>
     <Helmet>
@@ -18,10 +35,14 @@ function App() {
       <meta name="msapplication-TileColor" content="#fee9cd" />
       <meta name="theme-color" content="#ffffff" />
     </Helmet>
-    <GlobalStyle />
+    <GlobalStyle 
+    background={bodyStyle.background} 
+    color={bodyStyle.color} 
+    fontFamily={bodyStyle.fontFamily}
+    />
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/board' element={<Board />} />
+      <Route path='/board' element={<Board setBodyStyle={setBodyStyle} />} />
       <Route path='/board/:thread' element={<Thread />} />
     </Routes>
   </div>
