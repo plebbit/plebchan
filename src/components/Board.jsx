@@ -101,86 +101,91 @@ const Board = () => {
       </TopBar>
       <BoardForm id="board-form" name="board-form" action="" method="post">
         <div className="board">
-          {feed.map(object => (
+          {feed.map(object => {
+            const thread = object;
+            const { replies: { pages: { topAll: { comments } } } } = object;
+            return (
             <>
-            <div id="t" className="thread">
-              <div id="pc" className="post-container op-container">
-                <div id="p" className="post op">
-                  <span id="sa">
-                    <img alt="H" className="ext-button thread-hide-button" data-cmd="hide" data-id="1-test" src="./post_expand_minus.png" title="Hide thread" />
+            <div key={`t-${thread.cid}`} className="thread">
+              <div key={`c-${thread.pc}`} className="post-container op-container">
+                <div key={`po-${thread.cid}`} className="post op">
+                  <span key={`sa-${thread.cid}`}>
+                    <img key={`eb-${thread.cid}`} alt="H" className="ext-button thread-hide-button" data-cmd="hide" data-id="1-test" src="./post_expand_minus.png" title="Hide thread" />
                   </span>
-                  <div id="pi" className="post-info">
-
-                    <span className="name-block">
-                      <span className="name">Tom</span>
-
-                      <span className="poster-address">
-                        (User: plebeius.eth)
+                  <div key={`pi-${thread.cid}`} className="post-info">
+                  &nbsp;
+                    <span key={`nb-${thread.cid}`} className="name-block">
+                      <span key={`n-${thread.cid}`} className="name">{thread.author.displayName}</span>
+                      &nbsp;
+                      <span key={`pa-${thread.cid}`} className="poster-address">
+                        (User: {thread.author.address})
                       </span>
                     </span>
-
-                    <span className="date-time" data-utc="data">2 weeks ago</span>
-
-                    <span className="post-number">
-                      <a href="post-link" title="Link to this post">No.</a>
-                      <a href="post-link" title="Reply to this post">00000001</a>
-
-                      <span>
+                    &nbsp;
+                    <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                    &nbsp;
+                    <span key={`pn-${thread.cid}`} className="post-number">
+                      <a key={`pl1-${thread.cid}`} href="post-link" title="Link to this post">No.</a>
+                      <a key={`pl2-${thread.cid}`} href="post-link" title="Reply to this post">00000001</a>
+                      &nbsp; &nbsp;
+                      <span key={`rl1-${thread.cid}`}>
                         [
-                        <a className="reply-link" href="post-link">Reply</a>
+                        <a key={`rl2-${thread.cid}`} className="reply-link" href="post-link">Reply</a>
                         ]
                       </span>
                     </span>
-                    <a className="post-menu-button" href="post-menu" title="Post menu" data-cmd="post-menu">▶</a>
-                    <div id="backlink-id" className="backlink">
-                      <span>
-                        <a className="quote-link" href="post-link">{'>>'}00000002</a>
+                    <a key={`pmb-${thread.cid}`} className="post-menu-button" href="post-menu" title="Post menu" data-cmd="post-menu">▶</a>
+                    <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
+                      <span key={`ql1-${thread.cid}`}>
+                        <a key={`ql2-${thread.cid}`} className="quote-link" href="post-link">{'>>'}00000002</a>
                       </span>
                     </div>
-                    <blockquote>
-                      <span className="quote">
-                        {'>'}wen mvp
+                    <blockquote key={`t-${thread.cid}`}>
+                      <span key={`q-${thread.cid}`} className="quote">
+                        {'>'}{thread.title}
                       </span>
-                      <br />
-                      two more weeks
+                      <br key={`br-${thread.cid}`} />
+                      {thread.content}
                     </blockquote>
                   </div>
                 </div>
               </div>
-              <div key={`pc-${object.cid}`} className="post-container reply-container">
-                <div key={`sa-${object.cid}`} className="side-arrows">{'>>'}</div>
-                <div key={`pr-${object.cid}`} className="post-reply">
-                  <div key={`pi-${object.cid}`} className="post-info">
-
-                    <span key={`nb-${object.cid}`} className="nameblock">
-                      <span key={`n-${object.cid}`} className="name">{object.author.displayName}</span>
-
-                      <span key={`pa-${object.cid}`} className="poster-address">
-                        (User: {object.author.address})
+              {comments.map(reply => (
+              <div key={`pc-${reply.cid}`} className="post-container reply-container">
+                <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
+                <div key={`pr-${reply.cid}`} className="post-reply">
+                  <div key={`pi-${reply.cid}`} className="post-info">
+                  &nbsp;
+                    <span key={`nb-${reply.cid}`} className="nameblock">
+                      <span key={`n-${reply.cid}`} className="name">{reply.author.displayName}</span>
+                      &nbsp;
+                      <span key={`pa-${reply.cid}`} className="poster-address">
+                        (User: {reply.author.address})
                       </span>
                     </span>
-
-                    <span key={`dt-${object.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-
-                    <span key={`pn-${object.cid}`} className="post-number">
-                      <a key={`pl1-${object.cid}`} href="post-link" title="Link to this post">No.</a>
-                      <a key={`pl2-${object.cid}`} href="post-link" title="Reply to this post">00000002</a>
+                    &nbsp;
+                    <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                    &nbsp;
+                    <span key={`pn-${reply.cid}`} className="post-number">
+                      <a key={`pl1-${reply.cid}`} href="post-link" title="Link to this post">No.</a>
+                      <a key={`pl2-${reply.cid}`} href="post-link" title="Reply to this post">00000002</a>
                     </span>
-                    <a key={`pmb-${object.cid}`} className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
+                    <a key={`pmb-${reply.cid}`} className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
                   </div>
-                  <blockquote key={`pm-${object.cid}`} className="post-message">
-                    <span key={`q-${object.cid}`} className="quote">
-                      {'>'}{object.title}
+                  <blockquote key={`pm-${reply.cid}`} className="post-message">
+                    <span key={`q-${reply.cid}`} className="quote">
+                      {'>'}{reply.title}
                     </span>
                     <br />
-                    {object.content}
+                    {reply.content}
                   </blockquote>
                 </div>
               </div>
+              ))}
             </div>
             <hr />
             </>
-            ))}
+            )})}
         </div>
       </BoardForm>
     </Container>
