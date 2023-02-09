@@ -198,7 +198,7 @@ const Board = ({ setBodyStyle }) => {
                     </div>
                     <blockquote key={`t-${thread.cid}`}>
                       <span key={`q-${thread.cid}`} className="quote">
-                        {'>'}{thread.title}
+                        {thread.title ? `>${thread.title}` : null}
                       </span>
                       <br key={`br-${thread.cid}`} />
                       {thread.content}
@@ -229,10 +229,6 @@ const Board = ({ setBodyStyle }) => {
                     <a key={`pmb-${reply.cid}`} className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
                   </div>
                   <blockquote key={`pm-${reply.cid}`} className="post-message">
-                    <span key={`q-${reply.cid}`} className="quote">
-                      {'>'}{reply.title}
-                    </span>
-                    <br />
                     {reply.content}
                   </blockquote>
                 </div>
