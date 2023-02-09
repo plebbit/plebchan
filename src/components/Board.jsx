@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import { useFeed } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
-
+import { BoardContext } from '../App';
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const [selectedTitle, setSelectedTitle] = useState("");
-  const [selectedAddress, setSelectedAddress] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("Yotsuba");
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
 
   useEffect(() => {
     let didCancel = false;

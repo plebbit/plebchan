@@ -6,6 +6,7 @@ import Board from './components/Board';
 import Thread from './components/Thread';
 import { createGlobalStyle } from 'styled-components';
 
+export const BoardContext = React.createContext();
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,12 +18,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-function App() {
+export default function App() {
   const [bodyStyle, setBodyStyle] = useState({
     background: "#ffe url(/fade.png) top repeat-x",
     color: "maroon",
     fontFamily: "Helvetica, Arial, sans-serif"
   });
+
+  const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedAddress, setSelectedAddress] = useState('');
 
   return (
   <div>
@@ -40,12 +44,12 @@ function App() {
     color={bodyStyle.color} 
     fontFamily={bodyStyle.fontFamily}
     />
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/board' element={<Board setBodyStyle={setBodyStyle} />} />
-      <Route path='/board/:thread' element={<Thread />} />
-    </Routes>
+    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress }}>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/board' element={<Board setBodyStyle={setBodyStyle} />} />
+        <Route path='/board/:thread' element={<Thread />} />
+      </Routes>
+    </BoardContext.Provider>
   </div>
 )}
-
-export default App;

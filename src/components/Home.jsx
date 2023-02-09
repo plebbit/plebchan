@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styles/Home.styled';
+import { BoardContext } from '../App';
 
 const Home = () => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
+
+  const handleClick = (title, address) => {
+    setSelectedTitle(title);
+    setSelectedAddress(address);
+  }
 
   useEffect(() => {
     let didCancel = false;
@@ -58,7 +65,9 @@ const Home = () => {
               {defaultSubplebbits.map(subplebbit => (
                 <div className="board" key={subplebbit.address}>
                   <div className="board-title">{subplebbit.title}</div>
-                  <Link to="/board">
+                  <Link to="/board" onClick={() => {
+                    handleClick(subplebbit.title, subplebbit.address);
+                  }} >
                     <img alt="board logo" src="/plebchan.png" />
                   </Link>
                   <div className="board-text">
