@@ -73,6 +73,18 @@ export const Search = styled.div`
     }
   }
 
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type="submit"] {
+      vertical-align: center;
+    }
+  }
+
+  @media not all and (min-resolution:.001dpcm) {
+    input[type="submit"] {
+      vertical-align: top;
+    }
+  }
+
   @media only screen and (max-width: 480px) {
     text-align: center;
 

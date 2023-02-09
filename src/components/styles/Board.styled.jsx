@@ -378,7 +378,7 @@ export const PostForm = styled.form`
       }
 
       a, a:visited {
-        color: #34345c;
+        color: #00e;
         text-decoration: none;
       }
       a:hover {
@@ -773,7 +773,7 @@ export const BoardForm = styled.form`
       }
 
       .side-arrows {
-        color: #e0bfb7;
+        color: #b7c5d9;
         float: left;
         margin-right: 2px;
         margin-top: 0;
@@ -905,7 +905,6 @@ export const BoardForm = styled.form`
       }
 
       .side-arrows {
-        color: #e0bfb7;
         float: left;
         margin-right: 2px;
         margin-top: 0;
@@ -1143,7 +1142,7 @@ export const BoardForm = styled.form`
       }
 
       .quote-link {
-        color: #34345C;
+        color: #5f89ac;
       }
 
       .quote-link:hover {
