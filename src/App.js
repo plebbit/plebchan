@@ -46,7 +46,7 @@ export default function App() {
     />
     <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress }}>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route exact path='/' element={<Home />} />
         <Route path='/board' element={<Board setBodyStyle={setBodyStyle} />} />
         <Route path='/board/:thread' element={<Thread />} />
       </Routes>

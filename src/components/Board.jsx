@@ -98,10 +98,7 @@ const Board = ({ setBodyStyle }) => {
     }
   }
 
-  // eslint-disable-next-line
-  const {feed, hasMore, loadMore} = useFeed([`${selectedAddress}`], 'new');
-
-  // console.log(feed);
+  const { feed } = useFeed([`${selectedAddress}`], 'new');
 
   return (
     <Container>
@@ -110,7 +107,7 @@ const Board = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={subplebbit.address}>
               [
-              <a href="#" onClick={() => handleClick(subplebbit.title, subplebbit.address)}
+              <a href="javascript:void(0)" onClick={() => handleClick(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</a>
               ]&nbsp;
             </span>
@@ -160,6 +157,7 @@ const Board = ({ setBodyStyle }) => {
       <BoardForm selectedStyle={selectedStyle} id="board-form" name="board-form" action="" method="post">
         <div className="board">
           {feed.map(object => {
+            let counter = 1;
             const thread = object;
             const { replies: { pages: { topAll: { comments } } } } = object;
             return (
@@ -205,7 +203,9 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                 </div>
               </div>
-              {comments.map(reply => (
+              {comments.map(reply => {
+                counter++;
+                return (
               <div key={`pc-${reply.cid}`} className="post-container reply-container">
                 <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
                 <div key={`pr-${reply.cid}`} className="post-reply">
@@ -223,7 +223,7 @@ const Board = ({ setBodyStyle }) => {
                     &nbsp;
                     <span key={`pn-${reply.cid}`} className="post-number">
                       <a key={`pl1-${reply.cid}`} href="javascript:void(0)" title="Link to this post">No.</a>
-                      <a key={`pl2-${reply.cid}`} href="javascript:void(0)" title="Reply to this post">00000002</a>
+                      <a key={`pl2-${reply.cid}`} href="javascript:void(0)" title="Reply to this post">{`0000000${counter}`}</a>
                     </span>
                     <a key={`pmb-${reply.cid}`} className="post-menu-button" href="javascript:void(0)" title="Post menu" data-cmd="post-menu">▶</a>
                   </div>
@@ -232,7 +232,7 @@ const Board = ({ setBodyStyle }) => {
                   </blockquote>
                 </div>
               </div>
-              ))}
+              )})}
             </div>
             <hr key={`hr-${thread.cid}`} />
             </>
