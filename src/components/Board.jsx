@@ -136,7 +136,7 @@ const Board = ({ setBodyStyle }) => {
       <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
         <div id="post-form-link">
           [
-            <a href="#">Start a New Thread</a>
+            <a href="javascript:void(0)">Start a New Thread</a>
           ]
         </div>
         <table id="post-form"></table>
@@ -165,7 +165,7 @@ const Board = ({ setBodyStyle }) => {
             return (
             <>
             <div key={`t-${thread.cid}`} className="thread">
-              <div key={`c-${thread.pc}`} className="post-container op-container">
+              <div key={`c-${thread.cid}`} className="post-container op-container">
                 <div key={`po-${thread.cid}`} className="post op">
                   <div key={`pi-${thread.cid}`} className="post-info">
                   &nbsp;
@@ -180,22 +180,22 @@ const Board = ({ setBodyStyle }) => {
                     <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
                     &nbsp;
                     <span key={`pn-${thread.cid}`} className="post-number">
-                      <a key={`pl1-${thread.cid}`} href="post-link" title="Link to this post">No.</a>
-                      <a key={`pl2-${thread.cid}`} href="post-link" title="Reply to this post">00000001</a>
+                      <a key={`pl1-${thread.cid}`} href="javascript:void(0)" title="Link to this post">No.</a>
+                      <a key={`pl2-${thread.cid}`} href="javascript:void(0)" title="Reply to this post">00000001</a>
                       &nbsp; &nbsp;
                       <span key={`rl1-${thread.cid}`}>
                         [
-                        <a key={`rl2-${thread.cid}`} className="reply-link" href="post-link">Reply</a>
+                        <a key={`rl2-${thread.cid}`} className="reply-link" href="javascript:void(0)">Reply</a>
                         ]
                       </span>
                     </span>
-                    <a key={`pmb-${thread.cid}`} className="post-menu-button" href="post-menu" title="Post menu" data-cmd="post-menu">▶</a>
+                    <a key={`pmb-${thread.cid}`} className="post-menu-button" href="javascript:void(0)" title="Post menu" data-cmd="post-menu">▶</a>
                     <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
                       <span key={`ql1-${thread.cid}`}>
-                        <a key={`ql2-${thread.cid}`} className="quote-link" href="post-link">{'>>'}00000002</a>
+                        <a key={`ql2-${thread.cid}`} className="quote-link" href="javascript:void(0)">{'>>'}00000002</a>
                       </span>
                     </div>
-                    <blockquote key={`t-${thread.cid}`}>
+                    <blockquote key={`bq-${thread.cid}`}>
                       <span key={`q-${thread.cid}`} className="quote">
                         {thread.title ? `>${thread.title}` : null}
                       </span>
@@ -222,10 +222,10 @@ const Board = ({ setBodyStyle }) => {
                     <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
                     &nbsp;
                     <span key={`pn-${reply.cid}`} className="post-number">
-                      <a key={`pl1-${reply.cid}`} href="post-link" title="Link to this post">No.</a>
-                      <a key={`pl2-${reply.cid}`} href="post-link" title="Reply to this post">00000002</a>
+                      <a key={`pl1-${reply.cid}`} href="javascript:void(0)" title="Link to this post">No.</a>
+                      <a key={`pl2-${reply.cid}`} href="javascript:void(0)" title="Reply to this post">00000002</a>
                     </span>
-                    <a key={`pmb-${reply.cid}`} className="post-menu-button" href="#" title="Post menu" data-cmd="post-menu">▶</a>
+                    <a key={`pmb-${reply.cid}`} className="post-menu-button" href="javascript:void(0)" title="Post menu" data-cmd="post-menu">▶</a>
                   </div>
                   <blockquote key={`pm-${reply.cid}`} className="post-message">
                     {reply.content}
