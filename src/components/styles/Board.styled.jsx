@@ -373,7 +373,7 @@ export const PostFormLink = styled.div`
 
 export const PostFormTable = styled.table`
   display: ${props => (props.showPostForm ? 'table' : 'none')};
-  width: 468px;
+  width: 418px;
   border-spacing: 1px;
   margin-left: auto;
   margin-right: auto;
@@ -540,7 +540,7 @@ export const PostFormTable = styled.table`
 
       td {
         padding: 0;
-        font-size: 10pt;
+        font-size: 12pt;
       }
       
       tbody > tr > td > input[type="text"] {
@@ -609,12 +609,11 @@ export const PostFormTable = styled.table`
         color: #000;
         font-weight: 700;
         padding: 0;
-        font-size: 10pt;
+        font-size: 12pt;
       }
 
       td {
         padding: 0;
-        font-size: 10pt;
       }
       
       tbody > tr > td > input[type="text"] {
@@ -962,7 +961,7 @@ export const TopBar = styled.div`
 
         .style-changer {
           margin-left: 5px;
-          font-size: 10pt;
+          font-size: 12pt;
         }`;
 
       case 'Burichan':
@@ -973,7 +972,7 @@ export const TopBar = styled.div`
 
         .style-changer {
           margin-left: 5px;
-          font-size: 10pt;
+          font-size: 12pt;
         }`;
 
       case 'Tomorrow':
@@ -1266,7 +1265,10 @@ export const BoardForm = styled.form`
       }`;
 
       case 'Futaba':
-        return `.thread {
+        return `
+        font-size: 12pt;
+        
+        .thread {
         margin: 0;
         clear: both;
       }
@@ -1398,7 +1400,10 @@ export const BoardForm = styled.form`
       }`;
 
       case 'Burichan':
-        return `.thread {
+        return `
+        font-size: 12pt;
+
+        .thread {
         margin: 0;
         clear: both;
       }
