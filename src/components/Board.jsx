@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, NavBar, Header, Break, PostForm, TopBar, BoardForm } from './styles/Board.styled';
+import { Link, useNavigate } from 'react-router-dom';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import { useFeed } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import { BoardContext } from '../App';
@@ -9,6 +9,11 @@ const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
   const [selectedStyle, setSelectedStyle] = useState("Yotsuba");
   const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
+  const [showPostFormLink, setShowPostFormLink] = useState(true);
+  const [showPostForm, setShowPostForm] = useState(false);
+  const navigate = useNavigate();
+
+  const { feed } = useFeed([`${selectedAddress}`], 'new');
 
   useEffect(() => {
     let didCancel = false;
@@ -30,6 +35,16 @@ const Board = ({ setBodyStyle }) => {
   const handleClick = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
+  };
+
+  const handleClickHelp = () => {
+    alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
+  };
+
+  const handleClickForm = () => {
+    setShowPostFormLink(false);
+    setShowPostForm(true);
+    navigate('/board/post-form');
   };
 
   const handleStyleChange = (event) => {
@@ -98,16 +113,14 @@ const Board = ({ setBodyStyle }) => {
     }
   }
 
-  const { feed } = useFeed([`${selectedAddress}`], 'new');
-
   return (
     <Container>
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
-            <span className="boardList" key={subplebbit.address}>
+            <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <a href="javascript:void(0)" onClick={() => handleClick(subplebbit.title, subplebbit.address)}
+              <a href="javascript:void(0)" key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</a>
               ]&nbsp;
             </span>
@@ -131,12 +144,56 @@ const Board = ({ setBodyStyle }) => {
       </Header>
       <Break selectedStyle={selectedStyle} />
       <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
-        <div id="post-form-link">
+        <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} >
           [
-            <a href="javascript:void(0)">Start a New Thread</a>
+            <a onClick={handleClickForm}>Start a New Thread</a>
           ]
-        </div>
-        <table id="post-form"></table>
+        </PostFormLink>
+        <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
+          <tbody>
+            <tr data-type="Name">
+              <td id="td-name">Name</td>
+              <td>
+                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" />
+              </td>
+            </tr>
+            <tr data-type="Subject">
+              <td>Subject</td>
+              <td>
+                <input name="sub" type="text" tabIndex={3} />
+                <input type="submit" value="Post" tabIndex={6} />
+              </td>
+            </tr>
+            <tr data-type="Comment">
+              <td>Comment</td>
+              <td>
+                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft"></textarea>
+              </td>
+            </tr>
+            <tr id="captchaFormPart">
+              <td>Verification</td>
+              <td colSpan={2}>
+                <div id="t-root">
+                  <input id="t-resp" name="t-response" placeholder="Type the CAPTCHA here" autoComplete='off' type="text" />
+                  <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help" tabIndex={-1}>?</button>
+                  <div id="t-cnt">
+                    <div id="t-bg"></div>
+                    <div id="t-fg"></div>
+                  </div>
+                  <div id="t-msg"></div>
+                  <input name="t-challenge" type="hidden"/>
+                </div>
+              </td>
+            </tr>
+            <tr data-type="File">
+              <td>Embed File</td>
+              <td>
+                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
+              </td>
+            </tr>
+            <tr></tr>
+          </tbody>
+        </PostFormTable>
       </PostForm>
       <TopBar selectedStyle={selectedStyle}>
         <hr />
