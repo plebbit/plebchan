@@ -5,7 +5,7 @@ import { BoardContext } from '../App';
 
 const Home = () => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const {selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress} = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
 
   const handleClick = (title, address) => {
     setSelectedTitle(title);
