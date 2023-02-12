@@ -699,7 +699,9 @@ export const PostFormTable = styled.table`
         margin: 0;
         margin-right: 2px;
         padding: 2px 4px 3px;
-        border: 1px solid #aaa;
+        border: 1px solid #000;
+        background-color: #282a2e;
+        color: #c5c8c6;
         outline: none;
         font-family: arial, helvetica, sans-serif;
         font-size: 10pt;
@@ -710,13 +712,16 @@ export const PostFormTable = styled.table`
         margin-bottom: -3px;
         outline: none;
         border-radius: none;
+        border: 1px solid #000;
+        background-color: #282a2e;
+        color: #c5c8c6;
       }
 
       #t-root {
         position: relative;
         overflow: hidden;
         box-sizing: border-box;
-        background: #eee;
+        background: #2d2d2d;
         border: 1px solid #777;
         margin: 2px 0;
         width: 300px;
@@ -749,6 +754,10 @@ export const PostFormTable = styled.table`
         height: 80px;
         margin-top: 2px;
         position: relative;
+      }
+
+      #post-button, button {
+        filter: brightness(80%);
       }`;
 
       case 'Photon':

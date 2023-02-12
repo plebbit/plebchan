@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Home from './components/Home';
 import Board from './components/Board';
+import Thread from './components/Thread';
 import { createGlobalStyle } from 'styled-components';
 
 export const BoardContext = React.createContext();
@@ -47,7 +48,10 @@ export default function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/board' element={<Board setBodyStyle={setBodyStyle} />}>
-          <Route path='post-form' element={<Board />} />
+          <Route path='post-thread' element={<Board />} />
+        </Route>
+        <Route path='/board/thread' element={<Thread setBodyStyle={setBodyStyle} />}>
+          <Route path='post-reply' element={<Thread />} />
         </Route>
       </Routes>
     </BoardContext.Provider>

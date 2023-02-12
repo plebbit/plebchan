@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
-import { useFeed } from '@plebbit/plebbit-react-hooks';
-import ImageBanner from './ImageBanner';
+import { Container, NavBar, Header, Break, PostForm, TopBar } from './styles/Board.styled';
+import { ReplyFormTable, ReplyFormLink } from './styles/Thread.styled';
 import { BoardContext } from '../App';
+import ImageBanner from './ImageBanner';
 
-const Board = ({ setBodyStyle }) => {
+const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const [selectedStyle, setSelectedStyle] = useState("Yotsuba");
   const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
-  const [showPostFormLink, setShowPostFormLink] = useState(true);
-  const [showPostForm, setShowPostForm] = useState(false);
+  const [selectedStyle, setSelectedStyle] = useState("Yotsuba");
+  const [showReplyFormLink, setShowReplyFormLink] = useState(true);
+  const [showReplyForm, setShowReplyForm] = useState(false);
+
   const navigate = useNavigate();
-
-  const { feed } = useFeed([`${selectedAddress}`], 'new');
-
-  // console.log(feed);
-
+  
   useEffect(() => {
     let didCancel = false;
     fetch(
@@ -46,9 +43,9 @@ const Board = ({ setBodyStyle }) => {
   };
 
   const handleClickForm = () => {
-    setShowPostFormLink(false);
-    setShowPostForm(true);
-    navigate('/board/post-thread');
+    setShowReplyFormLink(false);
+    setShowReplyForm(true);
+    navigate('/board/thread/post-reply');
   };
 
   const handleStyleChange = (event) => {
@@ -148,23 +145,17 @@ const Board = ({ setBodyStyle }) => {
       </Header>
       <Break selectedStyle={selectedStyle} />
       <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
-        <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} >
-          [
-            <a onClick={handleClickForm}>Start a New Thread</a>
-          ]
-        </PostFormLink>
-        <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
+        <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} >
+            [
+              <a onClick={handleClickForm}>Post a Reply</a>
+            ]
+        </ReplyFormLink>
+        <ReplyFormTable id="post-form" showReplyForm={showReplyForm} selectedStyle={selectedStyle} className="post-form">
           <tbody>
-            <tr data-type="Name">
-              <td id="td-name">Name</td>
-              <td>
-                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" />
-              </td>
-            </tr>
             <tr data-type="Subject">
-              <td>Subject</td>
+              <td>Name</td>
               <td>
-                <input name="sub" type="text" tabIndex={3} />
+                <input name="sub" type="text" placeholder='Anonymous' tabIndex={3} />
                 <input id="post-button" type="submit" value="Post" tabIndex={6} />
               </td>
             </tr>
@@ -197,7 +188,7 @@ const Board = ({ setBodyStyle }) => {
             </tr>
             <tr></tr>
           </tbody>
-        </PostFormTable>
+        </ReplyFormTable>
       </PostForm>
       <TopBar selectedStyle={selectedStyle}>
         <hr />
@@ -215,93 +206,8 @@ const Board = ({ setBodyStyle }) => {
         </span>
         <hr />
       </TopBar>
-      <BoardForm selectedStyle={selectedStyle} id="board-form" name="board-form" action="" method="post">
-        <div className="board">
-          {feed.map(object => {
-            let counter = 1;
-            const thread = object;
-            const { replies: { pages: { topAll: { comments } } } } = object;
-            return (
-            <>
-            <div key={`t-${thread.cid}`} className="thread">
-              <div key={`c-${thread.cid}`} className="post-container op-container">
-                <div key={`po-${thread.cid}`} className="post op">
-                  <div key={`pi-${thread.cid}`} className="post-info">
-                  &nbsp;
-                    <span key={`nb-${thread.cid}`} className="name-block">
-                      <span key={`n-${thread.cid}`} className="name">{thread.author.displayName}</span>
-                      &nbsp;
-                      <span key={`pa-${thread.cid}`} className="poster-address">
-                        (User: {thread.author.address})
-                      </span>
-                    </span>
-                    &nbsp;
-                    <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                    &nbsp;
-                    <span key={`pn-${thread.cid}`} className="post-number">
-                      <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                      <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
-                      &nbsp; &nbsp;
-                      <span key={`rl1-${thread.cid}`}>
-                        [
-                        <Link key={`rl2-${thread.cid}`} to="/board/thread" className="reply-link" >Reply</Link>
-                        ]
-                      </span>
-                    </span>
-                    <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                    <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
-                      <span key={`ql1-${thread.cid}`}>
-                        <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
-                      </span>
-                    </div>
-                    <blockquote key={`bq-${thread.cid}`}>
-                      <span key={`q-${thread.cid}`} className="quote">
-                        {thread.title ? `>${thread.title}` : null}
-                      </span>
-                      <br key={`br-${thread.cid}`} />
-                      {thread.content}
-                    </blockquote>
-                  </div>
-                </div>
-              </div>
-              {comments.map(reply => {
-                counter++;
-                return (
-              <div key={`pc-${reply.cid}`} className="post-container reply-container">
-                <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                <div key={`pr-${reply.cid}`} className="post-reply">
-                  <div key={`pi-${reply.cid}`} className="post-info">
-                  &nbsp;
-                    <span key={`nb-${reply.cid}`} className="nameblock">
-                      <span key={`n-${reply.cid}`} className="name">{reply.author.displayName}</span>
-                      &nbsp;
-                      <span key={`pa-${reply.cid}`} className="poster-address">
-                        (User: {reply.author.address})
-                      </span>
-                    </span>
-                    &nbsp;
-                    <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                    &nbsp;
-                    <span key={`pn-${reply.cid}`} className="post-number">
-                      <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                      <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{`0000000${counter}`}</a>
-                    </span>
-                    <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                  </div>
-                  <blockquote key={`pm-${reply.cid}`} className="post-message">
-                    {reply.content}
-                  </blockquote>
-                </div>
-              </div>
-              )})}
-            </div>
-            <hr key={`hr-${thread.cid}`} />
-            </>
-            )})}
-        </div>
-      </BoardForm>
     </Container>
   );
 }
 
-export default Board;
+export default Thread;
