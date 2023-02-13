@@ -7,8 +7,7 @@ import { BoardContext } from '../App';
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const [selectedStyle, setSelectedStyle] = useState("Yotsuba");
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const navigate = useNavigate();
@@ -204,7 +203,7 @@ const Board = ({ setBodyStyle }) => {
         <span className="style-changer">
           Style:
            
-          <select id="style-selector" onChange={handleStyleChange}>
+          <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
             <option value="Yotsuba">Yotsuba</option>
             <option value="Yotsuba B">Yotsuba B</option>
             <option value="Futaba">Futaba</option>

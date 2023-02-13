@@ -27,6 +27,7 @@ export default function App() {
 
   const [selectedTitle, setSelectedTitle] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
+  const [selectedStyle, setSelectedStyle] = useState('Yotsuba');
 
   return (
   <div>
@@ -44,9 +45,9 @@ export default function App() {
     color={bodyStyle.color} 
     fontFamily={bodyStyle.fontFamily}
     />
-    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress }}>
+    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle }}>
       <Routes>
-        <Route exact path='/' element={<Home />} />
+        <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route path='/board' element={<Board setBodyStyle={setBodyStyle} />}>
           <Route path='post-thread' element={<Board />} />
         </Route>

@@ -3,9 +3,18 @@ import { Link } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styles/Home.styled';
 import { BoardContext } from '../App';
 
-const Home = () => {
+const Home = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+
+  useEffect(() => {
+    setBodyStyle({
+      background: "#ffe url(/fade.png) top repeat-x",
+      color: "maroon",
+      fontFamily: "Helvetica, Arial, sans-serif"
+    });
+    setSelectedStyle("Yotsuba");
+  }, [setBodyStyle, setSelectedStyle]);
 
   const handleClick = (title, address) => {
     setSelectedTitle(title);

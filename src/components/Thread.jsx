@@ -7,8 +7,7 @@ import ImageBanner from './ImageBanner';
 
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress } = useContext(BoardContext);
-  const [selectedStyle, setSelectedStyle] = useState("Yotsuba");
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showReplyFormLink, setShowReplyFormLink] = useState(true);
   const [showReplyForm, setShowReplyForm] = useState(false);
 
@@ -195,7 +194,7 @@ const Thread = ({ setBodyStyle }) => {
         <span className="style-changer">
           Style:
            
-          <select id="style-selector" onChange={handleStyleChange}>
+          <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
             <option value="Yotsuba">Yotsuba</option>
             <option value="Yotsuba B">Yotsuba B</option>
             <option value="Futaba">Futaba</option>

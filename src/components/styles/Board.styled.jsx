@@ -414,6 +414,7 @@ export const PostFormTable = styled.table`
         margin-bottom: -3px;
         outline: none;
         border-radius: none;
+        margin-top: 0px;
       }
 
       #t-root {
@@ -423,6 +424,7 @@ export const PostFormTable = styled.table`
         background: #eee;
         border: 1px solid #777;
         margin: 2px 0;
+        margin-bottom: 0px;
         width: 300px;
       }
 
@@ -489,6 +491,7 @@ export const PostFormTable = styled.table`
         margin-bottom: -3px;
         outline: none;
         border-radius: none;
+        margin-top: 0px;
       }
 
       #t-root {
@@ -498,6 +501,7 @@ export const PostFormTable = styled.table`
         background: #eee;
         border: 1px solid #777;
         margin: 2px 0;
+        margin-bottom: 0px;
         width: 300px;
       }
 
@@ -562,6 +566,7 @@ export const PostFormTable = styled.table`
         margin-bottom: -3px;
         outline: none;
         border-radius: none;
+        margin-top: 0px;
       }
 
       #t-root {
@@ -572,6 +577,7 @@ export const PostFormTable = styled.table`
         border: 1px solid #777;
         margin: 2px 0;
         width: 300px;
+        margin-bottom: 0px;
       }
 
       #t-resp {
@@ -635,6 +641,7 @@ export const PostFormTable = styled.table`
         margin-bottom: -3px;
         outline: none;
         border-radius: none;
+        margin-top: 0px;
       }
 
       #t-root {
@@ -645,6 +652,7 @@ export const PostFormTable = styled.table`
         border: 1px solid #777;
         margin: 2px 0;
         width: 300px;
+        margin-bottom: 0px;
       }
 
       #t-resp {
@@ -715,6 +723,7 @@ export const PostFormTable = styled.table`
         border: 1px solid #000;
         background-color: #282a2e;
         color: #c5c8c6;
+        margin-top: 0px;
       }
 
       #t-root {
@@ -725,6 +734,7 @@ export const PostFormTable = styled.table`
         border: 1px solid #777;
         margin: 2px 0;
         width: 300px;
+        margin-bottom: 0px;
       }
 
       #t-resp {
@@ -794,6 +804,7 @@ export const PostFormTable = styled.table`
         margin-bottom: -3px;
         outline: none;
         border-radius: none;
+        margin-top: 0px;
       }
 
       #t-root {
@@ -804,6 +815,7 @@ export const PostFormTable = styled.table`
         border: 1px solid #777;
         margin: 2px 0;
         width: 300px;
+        margin-bottom: 0px;
       }
 
       #t-resp {
@@ -1098,6 +1110,7 @@ export const BoardForm = styled.form`
 
       .quote-link {
         color: navy;
+        text-decoration: underline;
       }
 
       .quote-link:hover {
@@ -1226,6 +1239,7 @@ export const BoardForm = styled.form`
 
       .quote-link {
         color: navy;
+        text-decoration: underline;
       }
 
       .quote-link:hover {
@@ -1362,6 +1376,7 @@ export const BoardForm = styled.form`
 
       .quote-link {
         color: navy;
+        text-decoration: underline;
       }
 
       .quote-link:hover {
@@ -1496,6 +1511,7 @@ export const BoardForm = styled.form`
 
       .quote-link {
         color: navy;
+        text-decoration: underline;
       }
 
       .quote-link:hover {
@@ -1624,6 +1640,7 @@ export const BoardForm = styled.form`
 
       .quote-link {
         color: #5f89ac;
+        text-decoration: underline;
       }
 
       .quote-link:hover {
@@ -1752,6 +1769,7 @@ export const BoardForm = styled.form`
 
       .quote-link {
         color: #34345C;
+        text-decoration: underline;
       }
 
       .quote-link:hover {
