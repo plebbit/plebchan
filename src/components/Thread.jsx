@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, NavBar, Header, Break, PostForm, TopBar } from './styles/Board.styled';
-import { ReplyFormTable, ReplyFormLink } from './styles/Thread.styled';
+import { Container, NavBar, Header, Break, PostForm } from './styles/Board.styled';
+import { ReplyFormTable, ReplyFormLink, TopBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
 import ImageBanner from './ImageBanner';
 
@@ -202,6 +202,11 @@ const Thread = ({ setBodyStyle }) => {
             <option value="Tomorrow">Tomorrow</option>
             <option value="Photon">Photon</option>
           </select>
+        </span>
+        <span className="return-button">
+          [
+          <Link to="/board">Return</Link>
+          ]
         </span>
         <hr />
       </TopBar>

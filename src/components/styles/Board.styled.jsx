@@ -1051,7 +1051,6 @@ export const BoardForm = styled.form`
       }
 
       .post {
-        margin: 4px 0;
         overflow: hidden;
         overflow-wrap: break-word;
         word-wrap: break-word;
@@ -1064,6 +1063,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
+        margin: 2px 0;
         display: block;
         width: 100%;
       }
@@ -1180,7 +1180,6 @@ export const BoardForm = styled.form`
       }
 
       .post {
-        margin: 4px 0;
         overflow: hidden;
         overflow-wrap: break-word;
         word-wrap: break-word;
@@ -1193,6 +1192,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
+        margin: 2px 0;
         display: block;
         width: 100%;
       }
@@ -1312,7 +1312,6 @@ export const BoardForm = styled.form`
       }
 
       .post {
-        margin: 4px 0;
         overflow: hidden;
         overflow-wrap: break-word;
         word-wrap: break-word;
@@ -1325,6 +1324,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
+        margin: 2px 0;
         display: block;
         width: 100%;
       }
@@ -1448,7 +1448,6 @@ export const BoardForm = styled.form`
       }
 
       .post {
-        margin: 4px 0;
         overflow: hidden;
         overflow-wrap: break-word;
         word-wrap: break-word;
@@ -1461,6 +1460,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
+        margin: 2px 0;
         display: block;
         width: 100%;
       }
@@ -1577,7 +1577,6 @@ export const BoardForm = styled.form`
       }
 
       .post {
-        margin: 4px 0;
         overflow: hidden;
         overflow-wrap: break-word;
         word-wrap: break-word;
@@ -1590,6 +1589,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
+        margin: 2px 0;
         display: block;
         width: 100%;
       }
@@ -1710,7 +1710,6 @@ export const BoardForm = styled.form`
       }
 
       .post {
-        margin: 4px 0;
         overflow: hidden;
         overflow-wrap: break-word;
         word-wrap: break-word;
@@ -1723,6 +1722,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
+        margin: 2px 0;
         display: block;
         width: 100%;
       }

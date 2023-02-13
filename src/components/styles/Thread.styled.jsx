@@ -469,3 +469,138 @@ export const ReplyFormTable = styled.table`
     }
   }}
 `;
+
+export const TopBar = styled.div`
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `lear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #d9bfb7;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited {
+            color: #00e !important;
+            text-decoration: none;
+          }
+        }`;
+
+      case 'Yotsuba B':
+        return `clear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #b7c5d9;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited {
+            color: #34345c !important;
+            text-decoration: none;
+          }
+        }`;
+
+      case 'Futaba':
+        return `clear: both;
+        hr {
+          clear: both;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 12pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+          font-size: 12pt;
+
+          a, a:visited {
+            color: #00e !important;
+          }
+        }`;
+
+      case 'Burichan':
+        return `clear: both;
+        hr {
+          clear: both;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 12pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+          font-size: 12pt;
+
+          a, a:visited {
+            color: #00e !important;
+          }
+        }`;
+
+      case 'Tomorrow':
+        return `clear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #282a2e;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited {
+            color: #81a2be !important;
+            text-decoration: none;
+          }
+        }`;
+
+      case 'Photon':
+        return `clear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #ddd;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited {
+            color: #f60 !important;
+            text-decoration: none;
+          }
+        }`;
+      
+    }
+  }}
+`;
