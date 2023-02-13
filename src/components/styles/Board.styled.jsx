@@ -411,7 +411,7 @@ export const PostFormTable = styled.table`
 
       textarea {
         width: 292px;
-        margin-bottom: -3px;
+        margin-bottom: 0;
         outline: none;
         border-radius: none;
         margin-top: 0px;
@@ -423,8 +423,7 @@ export const PostFormTable = styled.table`
         box-sizing: border-box;
         background: #eee;
         border: 1px solid #777;
-        margin: 2px 0;
-        margin-bottom: 0px;
+        margin: 0;
         width: 300px;
       }
 
@@ -435,6 +434,7 @@ export const PostFormTable = styled.table`
         font-size: 11px;
         height: 18px;
         margin: 0px;
+        margin-left: 1px;
         padding: 0px 2px;
         font-family: monospace;
         vertical-align: middle;
@@ -488,7 +488,7 @@ export const PostFormTable = styled.table`
 
       textarea {
         width: 292px;
-        margin-bottom: -3px;
+        margin-bottom: 0;
         outline: none;
         border-radius: none;
         margin-top: 0px;
@@ -500,7 +500,7 @@ export const PostFormTable = styled.table`
         box-sizing: border-box;
         background: #eee;
         border: 1px solid #777;
-        margin: 2px 0;
+        margin: 0;
         margin-bottom: 0px;
         width: 300px;
       }
@@ -512,6 +512,7 @@ export const PostFormTable = styled.table`
         font-size: 11px;
         height: 18px;
         margin: 0px;
+        margin-left: 1px;
         padding: 0px 2px;
         font-family: monospace;
         vertical-align: middle;
@@ -563,7 +564,7 @@ export const PostFormTable = styled.table`
 
       textarea {
         width: 292px;
-        margin-bottom: -3px;
+        margin-bottom: 0;
         outline: none;
         border-radius: none;
         margin-top: 0px;
@@ -575,7 +576,7 @@ export const PostFormTable = styled.table`
         box-sizing: border-box;
         background: #eee;
         border: 1px solid #777;
-        margin: 2px 0;
+        margin: 0;
         width: 300px;
         margin-bottom: 0px;
       }
@@ -587,6 +588,8 @@ export const PostFormTable = styled.table`
         font-size: 11px;
         height: 18px;
         margin: 0px;
+        margin-left: 1px;
+        margin-bottom: 1px;
         padding: 0px 2px;
         font-family: monospace;
         vertical-align: middle;
@@ -638,7 +641,7 @@ export const PostFormTable = styled.table`
 
       textarea {
         width: 292px;
-        margin-bottom: -3px;
+        margin-bottom: 0;
         outline: none;
         border-radius: none;
         margin-top: 0px;
@@ -650,7 +653,7 @@ export const PostFormTable = styled.table`
         box-sizing: border-box;
         background: #eee;
         border: 1px solid #777;
-        margin: 2px 0;
+        margin: 0;
         width: 300px;
         margin-bottom: 0px;
       }
@@ -662,6 +665,8 @@ export const PostFormTable = styled.table`
         font-size: 11px;
         height: 18px;
         margin: 0px;
+        margin-left: 1px;
+        margin-top: 1px;
         padding: 0px 2px;
         font-family: monospace;
         vertical-align: middle;
@@ -717,7 +722,7 @@ export const PostFormTable = styled.table`
 
       textarea {
         width: 292px;
-        margin-bottom: -3px;
+        margin-bottom: 0;
         outline: none;
         border-radius: none;
         border: 1px solid #000;
@@ -732,7 +737,7 @@ export const PostFormTable = styled.table`
         box-sizing: border-box;
         background: #2d2d2d;
         border: 1px solid #777;
-        margin: 2px 0;
+        margin: 0;
         width: 300px;
         margin-bottom: 0px;
       }
@@ -744,6 +749,7 @@ export const PostFormTable = styled.table`
         font-size: 11px;
         height: 18px;
         margin: 0px;
+        margin-left: 1px;
         padding: 0px 2px;
         font-family: monospace;
         vertical-align: middle;
@@ -801,7 +807,7 @@ export const PostFormTable = styled.table`
 
       textarea {
         width: 292px;
-        margin-bottom: -3px;
+        margin-bottom: 0;
         outline: none;
         border-radius: none;
         margin-top: 0px;
@@ -813,7 +819,7 @@ export const PostFormTable = styled.table`
         box-sizing: border-box;
         background: #eee;
         border: 1px solid #777;
-        margin: 2px 0;
+        margin: 0;
         width: 300px;
         margin-bottom: 0px;
       }
@@ -825,6 +831,7 @@ export const PostFormTable = styled.table`
         font-size: 11px;
         height: 18px;
         margin: 0px;
+        margin-left: 1px;
         padding: 0px 2px;
         font-family: monospace;
         vertical-align: middle;
