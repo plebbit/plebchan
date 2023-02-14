@@ -487,7 +487,8 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          margin-left: 10px;
+          float: right;
+          margin-right: 4px;
 
           a, a:visited {
             color: #00e !important;
@@ -509,7 +510,8 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          margin-left: 10px;
+          float: right;
+          margin-right: 4px;
 
           a, a:visited {
             color: #34345c !important;
@@ -529,7 +531,8 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          margin-left: 10px;
+          float: right;
+          margin-right: 4px;
           font-size: 12pt;
 
           a, a:visited {
@@ -549,7 +552,8 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          margin-left: 10px;
+          float: right;
+          margin-right: 4px;
           font-size: 12pt;
 
           a, a:visited {
@@ -571,7 +575,8 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          margin-left: 10px;
+          float: right;
+          margin-right: 4px;
 
           a, a:visited {
             color: #81a2be !important;
@@ -593,7 +598,8 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          margin-left: 10px;
+          float: right;
+          margin-right: 4px;
 
           a, a:visited {
             color: #f60 !important;
