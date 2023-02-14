@@ -494,6 +494,10 @@ export const TopBar = styled.div`
             color: #00e !important;
             text-decoration: none;
           }
+          
+          a:hover {
+            color: red !important;
+          }
         }`;
 
       case 'Yotsuba B':
@@ -517,6 +521,10 @@ export const TopBar = styled.div`
             color: #34345c !important;
             text-decoration: none;
           }
+
+          a:hover {
+            color: red !important;
+          }
         }`;
 
       case 'Futaba':
@@ -538,6 +546,10 @@ export const TopBar = styled.div`
           a, a:visited {
             color: #00e !important;
           }
+
+          a:hover {
+            color: red !important;
+          }
         }`;
 
       case 'Burichan':
@@ -557,7 +569,11 @@ export const TopBar = styled.div`
           font-size: 12pt;
 
           a, a:visited {
-            color: #00e !important;
+            color: #34345c !important;
+          }
+
+          a:hover {
+            color: red !important;
           }
         }`;
 
@@ -582,6 +598,10 @@ export const TopBar = styled.div`
             color: #81a2be !important;
             text-decoration: none;
           }
+
+          a:hover {
+            color: #5f89ab !important;
+          }
         }`;
 
       case 'Photon':
@@ -604,6 +624,10 @@ export const TopBar = styled.div`
           a, a:visited {
             color: #f60 !important;
             text-decoration: none;
+          }
+
+          a:hover {
+            color: #ff3300 !important;
           }
         }`;
       

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
-import { useFeed } from '@plebbit/plebbit-react-hooks';
-import ImageBanner from './ImageBanner';
 import { BoardContext } from '../App';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
+import ImageBanner from './ImageBanner';
+import { useFeed } from '@plebbit/plebbit-react-hooks';
+import InfiniteScroll from 'react-infinite-scroller';
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
@@ -12,7 +13,7 @@ const Board = ({ setBodyStyle }) => {
   const [showPostForm, setShowPostForm] = useState(false);
   const navigate = useNavigate();
 
-  const { feed } = useFeed([`${selectedAddress}`], 'new');
+  const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
 
   // console.log(feed);
 
@@ -129,7 +130,7 @@ const Board = ({ setBodyStyle }) => {
             </span>
           ))}
           <span className="nav">[
-            <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+            <Link id="home-button" to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
             )}>Home</Link>]&nbsp;
           </span>
         </>
@@ -216,7 +217,13 @@ const Board = ({ setBodyStyle }) => {
       </TopBar>
       <BoardForm selectedStyle={selectedStyle} id="board-form" name="board-form" action="" method="post">
         <div className="board">
-          {feed.map(object => {
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={loadMore}
+            hasMore={hasMore}
+            loader={<div>Loading...</div>}
+          >
+            {feed.map(object => {
             let counter = 1;
             const thread = object;
             const { replies: { pages: { topAll: { comments } } } } = object;
@@ -297,6 +304,7 @@ const Board = ({ setBodyStyle }) => {
             <hr key={`hr-${thread.cid}`} />
             </>
             )})}
+          </InfiniteScroll>
         </div>
       </BoardForm>
     </Container>

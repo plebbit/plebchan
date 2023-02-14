@@ -58,22 +58,21 @@ export const NavBar = styled.div`
           return `font-size: 11pt;
           display: block;
           
-          a {
+          a, a:visited {
             font-weight: 400;
             padding: 1px;
+            color: #00e;
+            text-decoration: underline;
           }
 
           a:hover {
             color: red;
           }
 
-          a:visited {
-            color: #00e;
-          }
-
           .nav {
           float: right;
           }
+
           `;
 
         case 'Burichan':
@@ -83,7 +82,8 @@ export const NavBar = styled.div`
           a, a:visited {
             font-weight: 400;
             padding: 1px;
-            color: #34345c
+            color: #34345c;
+            text-decoration: underline;
           }
 
           a:hover {
@@ -899,6 +899,7 @@ export const PostForm = styled.form`
 
       a, a:visited {
         color: #00e;
+        text-decoration: underline;
       }
       a:hover {
         color: red;
@@ -913,6 +914,7 @@ export const PostForm = styled.form`
 
       a, a:visited {
         color: #34345c;
+        text-decoration: underline;
       }
       a:hover {
         color: red;
