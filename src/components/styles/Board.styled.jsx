@@ -1065,7 +1065,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
-        margin: 2px 0;
+        margin: 3px;
         display: block;
         width: 100%;
       }
@@ -1194,7 +1194,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
-        margin: 2px 0;
+        margin: 3px;
         display: block;
         width: 100%;
       }
@@ -1326,7 +1326,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
-        margin: 2px 0;
+        margin: 3px;
         display: block;
         width: 100%;
       }
@@ -1462,7 +1462,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
-        margin: 2px 0;
+        margin: 3px;
         display: block;
         width: 100%;
       }
@@ -1591,7 +1591,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
-        margin: 2px 0;
+        margin: 3px;
         display: block;
         width: 100%;
       }
@@ -1724,7 +1724,7 @@ export const BoardForm = styled.form`
       }
 
       .post-info {
-        margin: 2px 0;
+        margin: 3px;
         display: block;
         width: 100%;
       }

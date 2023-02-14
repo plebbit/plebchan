@@ -4,7 +4,8 @@ import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
 import { useFeed } from '@plebbit/plebbit-react-hooks';
-import InfiniteScroll from 'react-infinite-scroller';
+// import InfiniteScroll from 'react-infinite-scroller';
+
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
@@ -217,12 +218,12 @@ const Board = ({ setBodyStyle }) => {
       </TopBar>
       <BoardForm selectedStyle={selectedStyle} id="board-form" name="board-form" action="" method="post">
         <div className="board">
-          <InfiniteScroll
+          {/* <InfiniteScroll
             pageStart={0}
             loadMore={loadMore}
             hasMore={hasMore}
             loader={<div>Loading...</div>}
-          >
+          > */}
             {feed.map(object => {
             let counter = 1;
             const thread = object;
@@ -304,7 +305,7 @@ const Board = ({ setBodyStyle }) => {
             <hr key={`hr-${thread.cid}`} />
             </>
             )})}
-          </InfiniteScroll>
+          {/* </InfiniteScroll> */}
         </div>
       </BoardForm>
     </Container>
