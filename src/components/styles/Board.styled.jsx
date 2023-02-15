@@ -415,6 +415,8 @@ export const PostFormTable = styled.table`
         outline: none;
         border-radius: none;
         margin-top: 0px;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10pt;
       }
 
       #t-root {
@@ -455,6 +457,11 @@ export const PostFormTable = styled.table`
         height: 80px;
         margin-top: 2px;
         position: relative;
+
+        img {
+          height: 100%;
+          width: 100%
+        }
       }`;
 
       case 'Yotsuba B':
@@ -492,6 +499,8 @@ export const PostFormTable = styled.table`
         outline: none;
         border-radius: none;
         margin-top: 0px;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10pt;
       }
 
       #t-root {
@@ -533,6 +542,11 @@ export const PostFormTable = styled.table`
         height: 80px;
         margin-top: 2px;
         position: relative;
+
+        img {
+          height: 100%;
+          width: 100%
+        }
       }`;
 
       case 'Futaba':
@@ -568,6 +582,8 @@ export const PostFormTable = styled.table`
         outline: none;
         border-radius: none;
         margin-top: 0px;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10pt;
       }
 
       #t-root {
@@ -610,6 +626,11 @@ export const PostFormTable = styled.table`
         height: 80px;
         margin-top: 2px;
         position: relative;
+
+        img {
+          height: 100%;
+          width: 100%
+        }
       }`;
 
       case 'Burichan':
@@ -645,6 +666,8 @@ export const PostFormTable = styled.table`
         outline: none;
         border-radius: none;
         margin-top: 0px;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10pt;
       }
 
       #t-root {
@@ -687,6 +710,11 @@ export const PostFormTable = styled.table`
         height: 80px;
         margin-top: 2px;
         position: relative;
+
+        img {
+          height: 100%;
+          width: 100%
+        }
       }`;
 
       case 'Tomorrow':
@@ -729,6 +757,8 @@ export const PostFormTable = styled.table`
         background-color: #282a2e;
         color: #c5c8c6;
         margin-top: 0px;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10pt;
       }
 
       #t-root {
@@ -770,6 +800,11 @@ export const PostFormTable = styled.table`
         height: 80px;
         margin-top: 2px;
         position: relative;
+
+        img {
+          height: 100%;
+          width: 100%
+        }
       }
 
       #post-button, button {
@@ -811,6 +846,8 @@ export const PostFormTable = styled.table`
         outline: none;
         border-radius: none;
         margin-top: 0px;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10pt;
       }
 
       #t-root {
@@ -852,12 +889,17 @@ export const PostFormTable = styled.table`
         height: 80px;
         margin-top: 2px;
         position: relative;
+
+        img {
+          height: 100%;
+          width: 100%
+        }
       }`;
     }
   }}
 `;
 
-export const PostForm = styled.form`
+export const PostForm = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
@@ -1035,7 +1077,7 @@ export const TopBar = styled.div`
   }}
 `;
 
-export const BoardForm = styled.form`
+export const BoardForm = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':

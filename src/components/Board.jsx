@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
-import { useFeed } from '@plebbit/plebbit-react-hooks';
+import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 // import InfiniteScroll from 'react-infinite-scroller';
 
 
@@ -12,11 +12,77 @@ const Board = ({ setBodyStyle }) => {
   const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
+  const [name, setName] = useState('');
+  const [subject, setSubject] = useState('');
+  const [comment, setComment] = useState('');
   const navigate = useNavigate();
 
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
+  const { publishComment } = useAccountsActions();
 
-  // console.log(feed);
+  const onChallengeVerification = (challengeVerification) => {
+    if (challengeVerification.challengeSuccess === true) {
+      console.log('challenge success', {publishedCid: challengeVerification.publication.cid})
+    }
+    else if (challengeVerification.challengeSuccess === false) {
+      console.error('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      alert("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+    }
+  }
+
+  const onChallenge = async (challenges, comment) => {
+    let challengeAnswers = [];
+    try {
+      challengeAnswers = await getChallengeAnswersFromUser(challenges)
+    }
+    catch (error) {
+      console.log(error);
+    }
+    if (challengeAnswers) {
+      await comment.publishChallengeAnswers(challengeAnswers)
+    }
+  }
+  
+  const onError = (error) => console.error(error)
+
+  const getChallengeAnswersFromUser = async (challenges) => {
+    return new Promise((resolve, reject) => {
+      const imageString = challenges?.challenges[0].challenge;
+      const imageSource = `data:image/png;base64,${imageString}`;
+      const challengeImg = new Image();
+      challengeImg.src = imageSource;
+  
+      challengeImg.onload = () => {
+        const inputEl = document.getElementById('t-resp');
+        const cntEl = document.getElementById('t-cnt');
+        cntEl.appendChild(challengeImg);
+        inputEl.focus();
+  
+        const handleKeyDown = (event) => {
+          if (event.key === 'Enter') {
+            const challengeResponse = inputEl.value;
+            inputEl.value = '';
+  
+            if (cntEl.contains(challengeImg)) {
+              cntEl.removeChild(challengeImg);
+            }
+  
+            document.removeEventListener('keydown', handleKeyDown);
+  
+            resolve(challengeResponse);
+          }
+        };
+  
+        document.addEventListener('keydown', handleKeyDown);
+      };
+  
+      challengeImg.onerror = () => {
+        reject(new Error('Could not load challenge image'));
+      };
+    });
+  };
+  
+  
 
   useEffect(() => {
     let didCancel = false;
@@ -50,6 +116,26 @@ const Board = ({ setBodyStyle }) => {
     setShowPostFormLink(false);
     setShowPostForm(true);
     navigate('/board/post-thread');
+  };
+  
+  const handlePublishComment = async () => {
+    // Event.preventDefault();
+    try {
+      const pendingComment = await publishComment({
+        content: comment,
+        title: subject,
+        subplebbitAddress: selectedAddress,
+        onChallengeVerification,
+        onChallenge,
+        onError,
+      });
+      console.log(`Comment pending with index: ${pendingComment.index}`);
+      setName('');
+      setSubject('');
+      setComment('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleStyleChange = (event) => {
@@ -148,7 +234,7 @@ const Board = ({ setBodyStyle }) => {
         </>
       </Header>
       <Break selectedStyle={selectedStyle} />
-      <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
+      <PostForm selectedStyle={selectedStyle}>
         <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} >
           [
             <a onClick={handleClickForm}>Start a New Thread</a>
@@ -159,34 +245,30 @@ const Board = ({ setBodyStyle }) => {
             <tr data-type="Name">
               <td id="td-name">Name</td>
               <td>
-                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" />
+                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" value={name} onChange={(event) => setName(event.target.value)} />
               </td>
             </tr>
             <tr data-type="Subject">
               <td>Subject</td>
               <td>
-                <input name="sub" type="text" tabIndex={3} />
-                <input id="post-button" type="submit" value="Post" tabIndex={6} />
+                <input name="sub" type="text" tabIndex={3} value={subject} onChange={(event) => setSubject(event.target.value)} />
+                <input id="post-button" type="submit" value="Post" tabIndex={6} onClick={handlePublishComment} />
               </td>
             </tr>
             <tr data-type="Comment">
               <td>Comment</td>
               <td>
-                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft"></textarea>
+                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
               </td>
             </tr>
             <tr id="captchaFormPart">
               <td>Verification</td>
               <td colSpan={2}>
                 <div id="t-root">
-                  <input id="t-resp" name="t-response" placeholder="Type the CAPTCHA here" autoComplete='off' type="text" />
+                  <input id="t-resp" name="t-response" placeholder="Type the CAPTCHA here and hit return" autoComplete='off' type="text" />
                   <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help" tabIndex={-1}>?</button>
                   <div id="t-cnt">
-                    <div id="t-bg"></div>
-                    <div id="t-fg"></div>
                   </div>
-                  <div id="t-msg"></div>
-                  <input name="t-challenge" type="hidden"/>
                 </div>
               </td>
             </tr>
@@ -216,7 +298,7 @@ const Board = ({ setBodyStyle }) => {
         </span>
         <hr />
       </TopBar>
-      <BoardForm selectedStyle={selectedStyle} id="board-form" name="board-form" action="" method="post">
+      <BoardForm selectedStyle={selectedStyle}>
         <div className="board">
           {/* <InfiniteScroll
             pageStart={0}
