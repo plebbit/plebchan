@@ -4,7 +4,7 @@ import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
-// import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller';
 
 
 const Board = ({ setBodyStyle }) => {
@@ -18,6 +18,13 @@ const Board = ({ setBodyStyle }) => {
   const navigate = useNavigate();
 
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
+
+  const tryLoadMore = async () => {
+    try {loadMore()} 
+    catch (e)
+    {await new Promise(resolve => setTimeout(resolve, 1000))}
+  }
+
   const { publishComment } = useAccountsActions();
 
   const onChallengeVerification = (challengeVerification) => {
@@ -81,8 +88,6 @@ const Board = ({ setBodyStyle }) => {
       };
     });
   };
-  
-  
 
   useEffect(() => {
     let didCancel = false;
@@ -300,12 +305,12 @@ const Board = ({ setBodyStyle }) => {
       </TopBar>
       <BoardForm selectedStyle={selectedStyle}>
         <div className="board">
-          {/* <InfiniteScroll
+          <InfiniteScroll
             pageStart={0}
-            loadMore={loadMore}
+            loadMore={tryLoadMore}
             hasMore={hasMore}
             loader={<div>Loading...</div>}
-          > */}
+          >
             {feed.map(object => {
             let counter = 1;
             const thread = object;
@@ -387,7 +392,7 @@ const Board = ({ setBodyStyle }) => {
             <hr key={`hr-${thread.cid}`} />
             </>
             )})}
-          {/* </InfiniteScroll> */}
+          </InfiniteScroll>
         </div>
       </BoardForm>
     </Container>
