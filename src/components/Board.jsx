@@ -142,7 +142,7 @@ const Board = ({ setBodyStyle }) => {
     switch (event.target.value) {
       case "Yotsuba":
         setBodyStyle({
-          background: "#ffe url(/fade.png) top repeat-x",
+          background: "#ffe url(/assets/fade.png) top repeat-x",
           color: "maroon",
           fontFamily: "Arial, Helvetica, sans-serif"
         });
@@ -151,7 +151,7 @@ const Board = ({ setBodyStyle }) => {
 
       case "Yotsuba B":
         setBodyStyle({
-          background: "#eef2ff url(/fade-blue.png) top center repeat-x",
+          background: "#eef2ff url(/assets/fade-blue.png) top center repeat-x",
           color: "#000",
           fontFamily: "Arial, Helvetica, sans-serif"
         });
@@ -196,7 +196,7 @@ const Board = ({ setBodyStyle }) => {
 
       default:
         setBodyStyle({
-          background: "#ffe url(/fade.png) top repeat-x",
+          background: "#ffe url(/assets/fade.png) top repeat-x",
           color: "maroon",
           fontFamily: "Arial, Helvetica, sans-serif"
         });

@@ -9,7 +9,7 @@ const Home = ({ setBodyStyle }) => {
 
   useEffect(() => {
     setBodyStyle({
-      background: "#ffe url(/fade.png) top repeat-x",
+      background: "#ffe url(/assets/fade.png) top repeat-x",
       color: "maroon",
       fontFamily: "Helvetica, Arial, sans-serif"
     });
@@ -43,7 +43,7 @@ const Home = ({ setBodyStyle }) => {
       <Header>
         <Logo>
           <Link to="/">
-            <img alt="plebchan" src="/logo-transparent.png" />
+            <img alt="plebchan" src="/assets/logo/logo-transparent.png" />
           </Link>
         </Logo>
       </Header>
@@ -77,7 +77,7 @@ const Home = ({ setBodyStyle }) => {
                   <Link to="/board" onClick={() => {
                     handleClick(subplebbit.title, subplebbit.address);
                   }} >
-                    <img alt="board logo" src="/plebchan.png" />
+                    <img alt="board logo" src="/assets/plebchan.png" />
                   </Link>
                   <div className="board-text">
                     <b>{subplebbit.address}</b>

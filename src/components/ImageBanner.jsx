@@ -8,7 +8,7 @@ const ImageBanner = () => {
   }, []);
 
   return (
-    <img id="banner-img" src={`banner-${currentImage}.jpg`} alt="banner" />
+    <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg`} alt="banner" />
   );
 };
 
