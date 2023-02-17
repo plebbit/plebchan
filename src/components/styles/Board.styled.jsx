@@ -1176,7 +1176,13 @@ export const BoardForm = styled.div`
         display: block;
       }
 
-      .quote {
+      .title {
+        color: #cc1105;
+        font-weight: 700;
+      }
+
+      blockquote > p:first-of-type::before {
+        content: '>';
         color: #789922;
       }
 
@@ -1305,7 +1311,13 @@ export const BoardForm = styled.div`
         display: block;
       }
 
-      .quote {
+      .title {
+        color: #0f0c5d;
+        font-weight: 700;
+      }
+
+      blockquote > p:first-of-type::before {
+        content: '>';
         color: #789922;
       }
 
@@ -1442,7 +1454,13 @@ export const BoardForm = styled.div`
         display: block;
       }
 
-      .quote {
+      .title {
+        color: #cc1105;
+        font-weight: 700;
+      }
+
+      blockquote > p:first-of-type::before {
+        content: '>';
         color: #789922;
       }
 
@@ -1577,7 +1595,13 @@ export const BoardForm = styled.div`
         display: block;
       }
 
-      .quote {
+      .title {
+        color: #0f0c5d;
+        font-weight: 700;
+      }
+
+      blockquote > p:first-of-type::before {
+        content: '>';
         color: #789922;
       }
 
@@ -1706,8 +1730,14 @@ export const BoardForm = styled.div`
         display: block;
       }
 
-      .quote {
-        color: #b5bd68;
+      .title {
+        color: #b294bb;
+        font-weight: 700;
+      }
+
+      blockquote > p:first-of-type::before {
+        content: '>';
+        color: #789922;
       }
 
       .side-arrows {
@@ -1835,7 +1865,13 @@ export const BoardForm = styled.div`
         display: block;
       }
 
-      .quote {
+      .title {
+        color: #111;
+        font-weight: 700;
+      }
+
+      blockquote > p:first-of-type::before {
+        content: '>';
         color: #789922;
       }
 

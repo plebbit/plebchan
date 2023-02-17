@@ -19,6 +19,8 @@ const Board = ({ setBodyStyle }) => {
 
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
 
+  console.log(feed);
+
   const tryLoadMore = async () => {
     try {loadMore()} 
     catch (e)
@@ -323,7 +325,7 @@ const Board = ({ setBodyStyle }) => {
                   <div key={`pi-${thread.cid}`} className="post-info">
                   &nbsp;
                     <span key={`nb-${thread.cid}`} className="name-block">
-                      <span key={`n-${thread.cid}`} className="name">{thread.author.displayName}</span>
+                      <span key={`n-${thread.cid}`} className="name">{thread.author.displayName || "Anonymous"}</span>
                       &nbsp;
                       <span key={`pa-${thread.cid}`} className="poster-address">
                         (User: {thread.author.address})
@@ -349,11 +351,16 @@ const Board = ({ setBodyStyle }) => {
                       </span>
                     </div>
                     <blockquote key={`bq-${thread.cid}`}>
-                      <span key={`q-${thread.cid}`} className="quote">
-                        {thread.title ? `>${thread.title}` : null}
+                      <span key={`q-${thread.cid}`} className="title">
+                        {thread.title ? `${thread.title}` : null}
                       </span>
-                      <br key={`br-${thread.cid}`} />
-                      {thread.content}
+                      <br key={`br1-${thread.cid}`} />
+                      {thread.content ? (
+                        <>
+                          <br key={`br2-${thread.cid}`} />
+                          {thread.content}
+                        </>
+                      ) : null}
                     </blockquote>
                   </div>
                 </div>
@@ -367,7 +374,7 @@ const Board = ({ setBodyStyle }) => {
                   <div key={`pi-${reply.cid}`} className="post-info">
                   &nbsp;
                     <span key={`nb-${reply.cid}`} className="nameblock">
-                      <span key={`n-${reply.cid}`} className="name">{reply.author.displayName}</span>
+                      <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
                       &nbsp;
                       <span key={`pa-${reply.cid}`} className="poster-address">
                         (User: {reply.author.address})
