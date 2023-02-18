@@ -211,6 +211,20 @@ const Board = ({ setBodyStyle }) => {
     }
   }
 
+  function renderComments(comments) {
+    return comments.map(comment => {
+      const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
+  
+      if (replyCount > 0 && nestedComments.length > 0) {
+        const renderedNestedComments = renderComments(nestedComments, comment.cid);
+        return [comment, ...renderedNestedComments];
+      }
+  
+      return [comment];
+    }).flat();
+  }
+  
+
   return (
     <Container>
       <NavBar selectedStyle={selectedStyle}>
@@ -317,6 +331,7 @@ const Board = ({ setBodyStyle }) => {
             let counter = 1;
             const thread = object;
             const { replies: { pages: { topAll: { comments } } } } = object;
+            const renderedComments = renderComments(comments, thread.cid);
             return (
             <>
             <div key={`t-${thread.cid}`} className="thread">
@@ -365,8 +380,9 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                 </div>
               </div>
-              {comments.map(reply => {
+              {renderedComments.map(reply => {
                 counter++;
+                const counterString = counter.toString().padStart(8, '0');
                 return (
               <div key={`pc-${reply.cid}`} className="post-container reply-container">
                 <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
@@ -385,11 +401,14 @@ const Board = ({ setBodyStyle }) => {
                     &nbsp;
                     <span key={`pn-${reply.cid}`} className="post-number">
                       <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                      <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{`0000000${counter}`}</a>
+                      <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
                     </span>
                     <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                   </div>
                   <blockquote key={`pm-${reply.cid}`} className="post-message">
+                    <a class="quotelink" href={handleVoidClick}>
+                      {`>>${counterString}`}{counterString !== '' && <br />}
+                    </a>
                     {reply.content}
                   </blockquote>
                 </div>

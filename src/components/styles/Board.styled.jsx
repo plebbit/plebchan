@@ -1174,6 +1174,7 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
+        line-height: 1.3em;
       }
 
       .title {
@@ -1184,6 +1185,16 @@ export const BoardForm = styled.div`
       blockquote > p:first-of-type::before {
         content: '>';
         color: #789922;
+      }
+
+      .quotelink {
+        color: navy;
+        text-decoration: underline;
+        font-family: arial;
+      }
+
+      .quotelink:hover {
+        color: red;
       }
 
       .side-arrows {
@@ -1309,6 +1320,7 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
+        line-height: 1.3em;
       }
 
       .title {
@@ -1319,6 +1331,12 @@ export const BoardForm = styled.div`
       blockquote > p:first-of-type::before {
         content: '>';
         color: #789922;
+      }
+      
+      .quotelink {
+        color: #d00;
+        text-decoration: underline;
+        font-family: arial;
       }
 
       .side-arrows {
@@ -1452,6 +1470,7 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
+        line-height: 1.3em;
       }
 
       .title {
@@ -1462,6 +1481,15 @@ export const BoardForm = styled.div`
       blockquote > p:first-of-type::before {
         content: '>';
         color: #789922;
+      }
+
+      .quotelink {
+        color: navy;
+        text-decoration: underline;
+      }
+
+      .quotelink:hover {
+        color: red;
       }
 
       .side-arrows {
@@ -1579,12 +1607,8 @@ export const BoardForm = styled.div`
       }
 
       .quote-link {
-        color: navy;
+        color: #d00;
         text-decoration: underline;
-      }
-
-      .quote-link:hover {
-        color: red;
       }
 
       .backlink span {
@@ -1593,16 +1617,22 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
+        line-height: 1.3em;
       }
 
       .title {
-        color: #0f0c5d;
+        color: #cc1105;
         font-weight: 700;
       }
 
       blockquote > p:first-of-type::before {
         content: '>';
         color: #789922;
+      }
+
+      .quotelink {
+        color: #d00;
+        text-decoration: underline;
       }
 
       .side-arrows {
@@ -1719,7 +1749,7 @@ export const BoardForm = styled.div`
       }
 
       .quote-link:hover {
-        color: red;
+        color: #81a2be;
       }
 
       .backlink span {
@@ -1728,6 +1758,7 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
+        line-height: 1.3em;
       }
 
       .title {
@@ -1738,6 +1769,16 @@ export const BoardForm = styled.div`
       blockquote > p:first-of-type::before {
         content: '>';
         color: #789922;
+      }
+
+      .quotelink {
+        color: #5f89ac;
+        text-decoration: underline;
+        font-family: arial;
+      }
+
+      .quotelink:hover {
+        color: #81a2be;
       }
 
       .side-arrows {
@@ -1849,7 +1890,7 @@ export const BoardForm = styled.div`
       }
 
       .quote-link {
-        color: #34345C;
+        color: #f60;
         text-decoration: underline;
       }
 
@@ -1863,6 +1904,7 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
+        line-height: 1.3em;
       }
 
       .title {
@@ -1873,6 +1915,16 @@ export const BoardForm = styled.div`
       blockquote > p:first-of-type::before {
         content: '>';
         color: #789922;
+      }
+
+      .quotelink {
+        color: #f60;
+        text-decoration: underline;
+        font-family: arial;
+      }
+
+      .quotelink:hover {
+        color: red;
       }
 
       .side-arrows {
