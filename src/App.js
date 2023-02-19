@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Home from './components/Home';
 import Board from './components/Board';
 import Thread from './components/Thread';
+import Catalog from './components/Catalog';
 import { createGlobalStyle } from 'styled-components';
 
 export const BoardContext = React.createContext();
@@ -52,6 +53,9 @@ export default function App() {
         </Route>
         <Route path='/board/thread' element={<Thread setBodyStyle={setBodyStyle} />}>
           <Route path='post-reply' element={<Thread />} />
+        </Route>
+        <Route path='/board/catalog' element={<Catalog setBodyStyle={setBodyStyle} /> }>
+          <Route path='post-thread' element={<Catalog />} />
         </Route>
       </Routes>
     </BoardContext.Provider>

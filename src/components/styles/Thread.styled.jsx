@@ -471,6 +471,9 @@ export const ReplyFormTable = styled.table`
 `;
 
 export const TopBar = styled.div`
+  .return-button {
+    padding-top: 3px;
+  }
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
@@ -541,6 +544,7 @@ export const TopBar = styled.div`
         .return-button {
           float: right;
           margin-right: 4px;
+          padding-top: 2px;
           font-size: 12pt;
 
           a, a:visited {
@@ -566,6 +570,7 @@ export const TopBar = styled.div`
         .return-button {
           float: right;
           margin-right: 4px;
+          padding-top: 2px;
           font-size: 12pt;
 
           a, a:visited {

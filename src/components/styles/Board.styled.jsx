@@ -1009,7 +1009,17 @@ export const TopBar = styled.div`
 
         .style-changer {
           margin-left: 5px;
+          margin-right: 10px;
           font-size: 10pt;
+        }
+        
+        a {
+          color: #00e;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: red;
         }`;
 
       case 'Yotsuba B':
@@ -1022,29 +1032,63 @@ export const TopBar = styled.div`
 
         .style-changer {
           margin-left: 5px;
+          margin-right: 10px;
           font-size: 10pt;
+        }
+        
+        a {
+          color: #34345c;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: red;
         }`;
 
       case 'Futaba':
         return `clear: both;
+        font-size: 12pt;
+        
         hr {
           clear: both;
         }
 
         .style-changer {
           margin-left: 5px;
+          margin-right: 10px;
           font-size: 12pt;
+        }
+        
+        a {
+          color: #00e;
+          text-decoration: underline;
+        }
+        
+        a:hover {
+          color: red;
         }`;
 
       case 'Burichan':
         return `clear: both;
+        font-size: 12pt;
+
         hr {
           clear: both;
         }
 
         .style-changer {
           margin-left: 5px;
+          margin-right: 10px;
           font-size: 12pt;
+        }
+        
+        a {
+          color: #34345c;
+          text-decoration: underline;
+        }
+        
+        a:hover {
+          color: red;
         }`;
 
       case 'Tomorrow':
@@ -1057,7 +1101,17 @@ export const TopBar = styled.div`
 
         .style-changer {
           margin-left: 5px;
+          margin-right: 10px;
           font-size: 10pt;
+        }
+        
+        a {
+          color: #81a2be;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: #5f89ab;
         }`;
 
       case 'Photon':
@@ -1070,7 +1124,17 @@ export const TopBar = styled.div`
 
         .style-changer {
           margin-left: 5px;
+          margin-right: 10px;
           font-size: 10pt;
+        }
+        
+        a {
+          color: #f60;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: red;
         }`;
       
     }

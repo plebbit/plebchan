@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
+import { TopBar } from './styles/Thread.styled';
+import { Threads } from './styles/Catalog.styled';
 import { BoardContext } from '../App';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
-import ImageBanner from './ImageBanner';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import ImageBanner from './ImageBanner';
 import InfiniteScroll from 'react-infinite-scroller';
 
-
-const Board = ({ setBodyStyle }) => {
+const Catalog = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
   const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
@@ -18,8 +19,6 @@ const Board = ({ setBodyStyle }) => {
   const navigate = useNavigate();
 
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
-
-  // console.log(feed);
 
   const tryLoadMore = async () => {
     try {loadMore()} 
@@ -122,9 +121,9 @@ const Board = ({ setBodyStyle }) => {
   const handleClickForm = () => {
     setShowPostFormLink(false);
     setShowPostForm(true);
-    navigate('/board/post-thread');
+    navigate('/board/catalog/post-thread');
   };
-  
+
   const handlePublishComment = async () => {
     // Event.preventDefault();
     try {
@@ -144,6 +143,7 @@ const Board = ({ setBodyStyle }) => {
       console.error(error);
     }
   };
+
 
   const handleStyleChange = (event) => {
     switch (event.target.value) {
@@ -210,20 +210,6 @@ const Board = ({ setBodyStyle }) => {
         setSelectedStyle("Yotsuba");
     }
   }
-
-  function renderComments(comments) {
-    return comments.map(comment => {
-      const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
-  
-      if (replyCount > 0 && nestedComments.length > 0) {
-        const renderedNestedComments = renderComments(nestedComments);
-        return [comment, ...renderedNestedComments];
-      }
-  
-      return [comment];
-    }).flat();
-  }
-  
 
   return (
     <Container>
@@ -317,115 +303,43 @@ const Board = ({ setBodyStyle }) => {
             <option value="Photon">Photon</option>
           </select>
         </span>
-        [
-        <Link to="/board/catalog">Catalog</Link>
-        ]
+        <span className="return-button">
+          [
+          <Link to="/board">Return</Link>
+          ]
+        </span>
         <hr />
       </TopBar>
-      <BoardForm selectedStyle={selectedStyle}>
-        <div className="board">
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={tryLoadMore}
-            hasMore={hasMore}
-            loader={<div>Loading...</div>}
-          >
-            {feed.map(object => {
-            let counter = 1;
-            const thread = object;
-            const { replies: { pages: { topAll: { comments } } } } = object;
-            const renderedComments = renderComments(comments);
+      <Threads selectedStyle={selectedStyle}>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={tryLoadMore}
+          hasMore={hasMore}
+          loader={<div>Loading...</div>}
+        >
+          {feed.map(thread => {
             return (
-            <>
-            <div key={`t-${thread.cid}`} className="thread">
-              <div key={`c-${thread.cid}`} className="post-container op-container">
-                <div key={`po-${thread.cid}`} className="post op">
-                  <div key={`pi-${thread.cid}`} className="post-info">
-                  &nbsp;
-                    <span key={`nb-${thread.cid}`} className="name-block">
-                      <span key={`n-${thread.cid}`} className="name">{thread.author.displayName || "Anonymous"}</span>
-                      &nbsp;
-                      <span key={`pa-${thread.cid}`} className="poster-address">
-                        (User: {thread.author.address})
-                      </span>
-                    </span>
-                    &nbsp;
-                    <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                    &nbsp;
-                    <span key={`pn-${thread.cid}`} className="post-number">
-                      <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                      <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
-                      &nbsp; &nbsp;
-                      <span key={`rl1-${thread.cid}`}>
-                        [
-                        <Link key={`rl2-${thread.cid}`} to="/board/thread" className="reply-link" >Reply</Link>
-                        ]
-                      </span>
-                    </span>
-                    <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                    <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
-                      <span key={`ql1-${thread.cid}`}>
-                        <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
-                      </span>
-                    </div>
-                    <blockquote key={`bq-${thread.cid}`}>
-                      <span key={`q-${thread.cid}`} className="title">
-                        {thread.title ? `${thread.title}` : null}
-                      </span>
-                      <br key={`br1-${thread.cid}`} />
-                      {thread.content ? (
-                        <>
-                          <br key={`br2-${thread.cid}`} />
-                          {thread.content}
-                        </>
-                      ) : null}
-                    </blockquote>
-                  </div>
+              <div key={`${thread.cid}`} className="thread">
+                <a key={`a-${thread.cid}`} href={handleVoidClick}>
+                  <img key={`img-${thread.cid}`} alt="" src="/assets/plebchan-psycho.png" />
+                </a>
+                <div key={`ti-${thread.cid}`} className="thread-icons" >
+                  <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>
+                </div>
+                <div key={`meta-${thread.cid}`} className="meta" title="(R)eplies / (I)mage Replies" >
+                  R:
+                  <b key={`b-${thread.cid}`}>{thread.replyCount}</b>
+                </div>
+                <div key={`t-${thread.cid}`} className="teaser">
+                  <b>{thread.title ? `${thread.title}` : null}</b>
+                  {thread.content ? `${thread.content}` : null}
                 </div>
               </div>
-              {renderedComments.map(reply => {
-                counter++;
-                const counterString = counter.toString().padStart(8, '0');
-                return (
-              <div key={`pc-${reply.cid}`} className="post-container reply-container">
-                <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                <div key={`pr-${reply.cid}`} className="post-reply">
-                  <div key={`pi-${reply.cid}`} className="post-info">
-                  &nbsp;
-                    <span key={`nb-${reply.cid}`} className="nameblock">
-                      <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
-                      &nbsp;
-                      <span key={`pa-${reply.cid}`} className="poster-address">
-                        (User: {reply.author.address})
-                      </span>
-                    </span>
-                    &nbsp;
-                    <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                    &nbsp;
-                    <span key={`pn-${reply.cid}`} className="post-number">
-                      <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                      <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
-                    </span>
-                    <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                  </div>
-                  <blockquote key={`pm-${reply.cid}`} className="post-message">
-                    <a className="quotelink" href={handleVoidClick}>
-                      {`>>${counterString}`}{<br />}
-                    </a>
-                    {reply.content}
-                  </blockquote>
-                </div>
-              </div>
-              )})}
-            </div>
-            <hr key={`hr-${thread.cid}`} />
-            </>
             )})}
-          </InfiniteScroll>
-        </div>
-      </BoardForm>
+        </InfiniteScroll>
+      </Threads>
     </Container>
   );
 }
 
-export default Board;
+export default Catalog;
