@@ -121,7 +121,7 @@ const Catalog = ({ setBodyStyle }) => {
   const handleClickForm = () => {
     setShowPostFormLink(false);
     setShowPostForm(true);
-    navigate('/board/catalog/post-thread');
+    navigate(`/${selectedAddress}/catalog/post`);
   };
 
   const handlePublishComment = async () => {
@@ -218,8 +218,8 @@ const Catalog = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <a href={handleVoidClick} key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
-              >{subplebbit.title}</a>
+              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
+              >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
           ))}
@@ -305,7 +305,7 @@ const Catalog = ({ setBodyStyle }) => {
         </span>
         <span className="return-button">
           [
-          <Link to="/board">Return</Link>
+          <Link to={`/${selectedAddress}`}>Return</Link>
           ]
         </span>
         <hr />

@@ -44,7 +44,7 @@ const Thread = ({ setBodyStyle }) => {
   const handleClickForm = () => {
     setShowReplyFormLink(false);
     setShowReplyForm(true);
-    navigate('/board/thread/post-reply');
+    navigate(`/${selectedAddress}/thread/post`);
   };
 
   const handleStyleChange = (event) => {
@@ -120,8 +120,8 @@ const Thread = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <a href={handleVoidClick} key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
-              >{subplebbit.title}</a>
+              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
+              >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
           ))}
@@ -205,7 +205,7 @@ const Thread = ({ setBodyStyle }) => {
         </span>
         <span className="return-button">
           [
-          <Link to="/board">Return</Link>
+          <Link to={`/${selectedAddress}`}>Return</Link>
           ]
         </span>
         <hr />

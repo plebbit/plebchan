@@ -122,7 +122,7 @@ const Board = ({ setBodyStyle }) => {
   const handleClickForm = () => {
     setShowPostFormLink(false);
     setShowPostForm(true);
-    navigate('/board/post-thread');
+    navigate(`/${selectedAddress}/post`);
   };
   
   const handlePublishComment = async () => {
@@ -232,8 +232,8 @@ const Board = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <a href={handleVoidClick} key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
-              >{subplebbit.title}</a>
+              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
+              >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
           ))}
@@ -318,7 +318,7 @@ const Board = ({ setBodyStyle }) => {
           </select>
         </span>
         [
-        <Link to="/board/catalog">Catalog</Link>
+        <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
         ]
         <hr />
       </TopBar>
@@ -358,7 +358,7 @@ const Board = ({ setBodyStyle }) => {
                       &nbsp; &nbsp;
                       <span key={`rl1-${thread.cid}`}>
                         [
-                        <Link key={`rl2-${thread.cid}`} to="/board/thread" className="reply-link" >Reply</Link>
+                        <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread`} className="reply-link" >Reply</Link>
                         ]
                       </span>
                     </span>
