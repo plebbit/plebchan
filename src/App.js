@@ -28,6 +28,7 @@ export default function App() {
 
   const [selectedTitle, setSelectedTitle] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
+  const [selectedThread, setSelectedThread] = useState('');
   const [selectedStyle, setSelectedStyle] = useState('Yotsuba');
 
   return (
@@ -45,13 +46,13 @@ export default function App() {
     color={bodyStyle.color} 
     fontFamily={bodyStyle.fontFamily}
     />
-    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle }}>
+    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle }}>
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route path={`/${selectedAddress}`} element={<Board setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Board />} />
         </Route>
-        <Route path={`/${selectedAddress}/thread`} element={<Thread setBodyStyle={setBodyStyle} />}>
+        <Route path={`/${selectedAddress}/thread/${selectedThread}`} element={<Thread setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Thread />} />
         </Route>
         <Route path={`/${selectedAddress}/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>

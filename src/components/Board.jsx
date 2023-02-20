@@ -9,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
@@ -124,6 +124,10 @@ const Board = ({ setBodyStyle }) => {
     setShowPostForm(true);
     navigate(`/${selectedAddress}/post`);
   };
+
+  const handleClickThread = (thread) => {
+    setSelectedThread(thread);
+  }
   
   const handlePublishComment = async () => {
     // Event.preventDefault();
@@ -330,10 +334,9 @@ const Board = ({ setBodyStyle }) => {
             hasMore={hasMore}
             loader={<div>Loading...</div>}
           >
-            {feed.map(object => {
+            {feed.map(thread => {
             let counter = 1;
-            const thread = object;
-            const { replies: { pages: { topAll: { comments } } } } = object;
+            const { replies: { pages: { topAll: { comments } } } } = thread;
             const renderedComments = renderComments(comments);
             return (
             <>
@@ -358,7 +361,7 @@ const Board = ({ setBodyStyle }) => {
                       &nbsp; &nbsp;
                       <span key={`rl1-${thread.cid}`}>
                         [
-                        <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread`} className="reply-link" >Reply</Link>
+                        <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
                         ]
                       </span>
                     </span>

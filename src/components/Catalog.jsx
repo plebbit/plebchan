@@ -10,7 +10,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 const Catalog = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
@@ -123,6 +123,10 @@ const Catalog = ({ setBodyStyle }) => {
     setShowPostForm(true);
     navigate(`/${selectedAddress}/catalog/post`);
   };
+
+  const handleClickThread = (thread) => {
+    setSelectedThread(thread);
+  }
 
   const handlePublishComment = async () => {
     // Event.preventDefault();
@@ -320,9 +324,9 @@ const Catalog = ({ setBodyStyle }) => {
           {feed.map(thread => {
             return (
               <div key={`${thread.cid}`} className="thread">
-                <a key={`a-${thread.cid}`} href={handleVoidClick}>
+                <Link key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
                   <img key={`img-${thread.cid}`} alt="" src="/assets/plebchan-psycho.png" />
-                </a>
+                </Link>
                 <div key={`ti-${thread.cid}`} className="thread-icons" >
                   <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>
                 </div>
@@ -332,7 +336,7 @@ const Catalog = ({ setBodyStyle }) => {
                 </div>
                 <div key={`t-${thread.cid}`} className="teaser">
                   <b>{thread.title ? `${thread.title}` : null}</b>
-                  {thread.content ? `${thread.content}` : null}
+                  {thread.content ? `: ${thread.content}` : null}
                 </div>
               </div>
             )})}

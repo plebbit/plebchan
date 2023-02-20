@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, NavBar, Header, Break, PostForm } from './styles/Board.styled';
+import { Container, NavBar, Header, Break, PostForm, BoardForm } from './styles/Board.styled';
 import { ReplyFormTable, ReplyFormLink, TopBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
+import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showReplyFormLink, setShowReplyFormLink] = useState(true);
   const [showReplyForm, setShowReplyForm] = useState(false);
-
   const navigate = useNavigate();
+
+  const comment = useComment(`${selectedThread}`);
   
   useEffect(() => {
     let didCancel = false;
@@ -44,7 +46,7 @@ const Thread = ({ setBodyStyle }) => {
   const handleClickForm = () => {
     setShowReplyFormLink(false);
     setShowReplyForm(true);
-    navigate(`/${selectedAddress}/thread/post`);
+    navigate(`/${selectedAddress}/thread/${selectedThread}/post`);
   };
 
   const handleStyleChange = (event) => {
@@ -111,6 +113,19 @@ const Thread = ({ setBodyStyle }) => {
         });
         setSelectedStyle("Yotsuba");
     }
+  }
+
+  function renderComments(comments) {
+    return comments.map(comment => {
+      const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
+  
+      if (replyCount > 0 && nestedComments.length > 0) {
+        const renderedNestedComments = renderComments(nestedComments);
+        return [comment, ...renderedNestedComments];
+      }
+  
+      return [comment];
+    }).flat();
   }
 
   return (
@@ -210,6 +225,110 @@ const Thread = ({ setBodyStyle }) => {
         </span>
         <hr />
       </TopBar>
+      <BoardForm selectedStyle={selectedStyle}>
+        {comment ? (
+          <>
+            <div className="thread">
+              <div className="post-container op-container">
+                <div className="post op">
+                  <div className="post-info">
+                  &nbsp;
+                    <span className="name-block">
+                      <span className="name">{comment.author.displayName || "Anonymous"}</span>
+                      &nbsp;
+                      <span className="poster-address">
+                        (User: {comment.author.address})
+                      </span>
+                    </span>
+                    &nbsp;
+                    <span className="date-time" data-utc="data">2 weeks ago</span>
+                    &nbsp;
+                    <span className="post-number">
+                      <a href={handleVoidClick} title="Link to this post">No.</a>
+                      <a href={handleVoidClick} title="Reply to this post">00000001</a>
+                    </span>
+                    <a key={`pmb-${comment.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                    <div id="backlink-id" className="backlink">
+                      <span>
+                        <a className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
+                      </span>
+                    </div>
+                    <blockquote>
+                      {comment.title ? 
+                      <>
+                      <span key={`q-${comment.cid}`} className="title">{comment.title}</span>
+                      <br />
+                      <br />
+                      </>
+                      : null}
+                      {comment.content ? (
+                        <>
+                          {comment.content}
+                        </>
+                      ) : null}
+                    </blockquote>
+                  </div>
+                </div>
+              </div>
+              {comment.replyCount > 0 ? (
+                <div>there are {comment.replyCount} replies</div>
+              ) : (
+                <div>No replies yet</div>
+              )}
+              {/* {comment ? (
+                comment.map(thread => {
+                  let counter = 1;
+                  const { replies: { pages: { topAll: { comments } } } } = thread;
+                  const renderedComments = renderComments(comments);
+                  return (
+                    <>
+                    {renderedComments.map(reply => {
+                      counter++;
+                      const counterString = counter.toString().padStart(8, '0');
+                      return (
+                        <div key={`pc-${reply.cid}`} className="post-container reply-container">
+                          <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
+                          <div key={`pr-${reply.cid}`} className="post-reply">
+                            <div key={`pi-${reply.cid}`} className="post-info">
+                            &nbsp;
+                              <span key={`nb-${reply.cid}`} className="nameblock">
+                                <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
+                                &nbsp;
+                                <span key={`pa-${reply.cid}`} className="poster-address">
+                                  (User: {reply.author.address})
+                                </span>
+                              </span>
+                              &nbsp;
+                              <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                              &nbsp;
+                              <span key={`pn-${reply.cid}`} className="post-number">
+                                <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                                <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                              </span>
+                              <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                            </div>
+                            <blockquote key={`pm-${reply.cid}`} className="post-message">
+                              <a className="quotelink" href={handleVoidClick}>
+                                {`>>${counterString}`}{<br />}
+                              </a>
+                              {reply.content}
+                            </blockquote>
+                          </div>
+                        </div>
+                      )
+                    })}
+                    </>
+                  )
+                })
+              ) : (
+                <div>Loading...</div>
+              )} */}
+            </div>
+          </>
+         ) : (
+          <div>Loading...</div>
+        )}
+      </BoardForm>
     </Container>
   );
 }
