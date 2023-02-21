@@ -482,6 +482,10 @@ export const TopBar = styled.div`
     margin-top: 4px;
   }
 
+  .catalog-button {
+    margin-left: 3px !important;
+  }
+
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
@@ -554,6 +558,7 @@ export const TopBar = styled.div`
 
           a, a:visited {
             color: #00e !important;
+            text-decoration: underline;
           }
 
           a:hover {
@@ -584,6 +589,7 @@ export const TopBar = styled.div`
 
           a, a:visited {
             color: #34345c !important;
+            text-decoration: underline;
           }
 
           a:hover {

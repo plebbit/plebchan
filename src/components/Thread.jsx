@@ -119,18 +119,24 @@ const Thread = ({ setBodyStyle }) => {
     window.scrollTo(0, 0);
   }
 
+  const handleClickBottom = () => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
   function renderComments(comments) {
-    return comments.map(comment => {
-      const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
-  
-      if (replyCount > 0 && nestedComments.length > 0) {
+    const commentKeys = Object.keys(comments);
+    const renderedComments = commentKeys.map(key => {
+      const comment = comments[key];
+      const { replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
+      if (comment.replyCount > 0 && nestedComments) {
         const renderedNestedComments = renderComments(nestedComments);
         return [comment, ...renderedNestedComments];
       }
-  
       return [comment];
     }).flat();
+    return renderedComments;
   }
+  
 
   return (
     <Container>
@@ -227,6 +233,16 @@ const Thread = ({ setBodyStyle }) => {
           <Link to={`/${selectedAddress}`}>Return</Link>
           ]
         </span>
+        <span className="return-button catalog-button">
+          [
+          <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+          ]
+        </span>
+        <span className="return-button catalog-button">
+          [
+          <a href={handleVoidClick} onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Bottom</a>
+          ]
+        </span>
         {comment ? (
           comment.replyCount > 0 ? (
             <span className="reply-stat">{comment.replyCount} replies</span>
@@ -282,85 +298,75 @@ const Thread = ({ setBodyStyle }) => {
                   </div>
                 </div>
               </div>
-                  <BottomBar selectedStyle={selectedStyle}>
-                    <hr />
-                    <span className="bottom-bar-return">
-                      [
-                      <Link to={`/${selectedAddress}`}>Return</Link>
-                      ]
-                    </span>
-                    <span className="bottom-bar-catalog">
-                      [
-                      <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
-                      ]
-                    </span>
-                    <span className="bottom-bar-top">
-                      [
-                      <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'}>Top</a>
-                      ]
-                    </span>
-                    <span className="quickreply-button">
-                    [
-                    <a href={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
-                    ]
-                    </span>
-                    {comment.replyCount > 0 ? (
-                      <span className="reply-stat">{comment.replyCount} replies</span>
-                    ) : (
-                      <span className="reply-stat">No replies yet</span>
-                    )}
-                    <hr />
-                  </BottomBar>
-                <>
-                </>
-              {/* {comment ? (
-                comment.map(thread => {
+              {comment.replyCount > 0 && 
+              Object.keys(comment.replies.pages.topAll.comments).map(() => {
+                const renderedComments = renderComments(comment.replies.pages.topAll.comments);
+                return renderedComments.map(reply => {
                   let counter = 1;
-                  const { replies: { pages: { topAll: { comments } } } } = thread;
-                  const renderedComments = renderComments(comments);
+                  counter++;
+                  const counterString = counter.toString().padStart(8, '0');
                   return (
-                    <>
-                    {renderedComments.map(reply => {
-                      counter++;
-                      const counterString = counter.toString().padStart(8, '0');
-                      return (
-                        <div key={`pc-${reply.cid}`} className="post-container reply-container">
-                          <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                          <div key={`pr-${reply.cid}`} className="post-reply">
-                            <div key={`pi-${reply.cid}`} className="post-info">
+                    <div key={`pc-${reply.cid}`} className="post-container reply-container">
+                      <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
+                      <div key={`pr-${reply.cid}`} className="post-reply">
+                        <div key={`pi-${reply.cid}`} className="post-info">
+                        &nbsp;
+                          <span key={`nb-${reply.cid}`} className="nameblock">
+                            <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
                             &nbsp;
-                              <span key={`nb-${reply.cid}`} className="nameblock">
-                                <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
-                                &nbsp;
-                                <span key={`pa-${reply.cid}`} className="poster-address">
-                                  (User: {reply.author.address})
-                                </span>
-                              </span>
-                              &nbsp;
-                              <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                              &nbsp;
-                              <span key={`pn-${reply.cid}`} className="post-number">
-                                <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                                <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
-                              </span>
-                              <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                            </div>
-                            <blockquote key={`pm-${reply.cid}`} className="post-message">
-                              <a className="quotelink" href={handleVoidClick}>
-                                {`>>${counterString}`}{<br />}
-                              </a>
-                              {reply.content}
-                            </blockquote>
-                          </div>
+                            <span key={`pa-${reply.cid}`} className="poster-address">
+                              (User: {reply.author.address})
+                            </span>
+                          </span>
+                          &nbsp;
+                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                          &nbsp;
+                          <span key={`pn-${reply.cid}`} className="post-number">
+                            <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                            <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                          </span>
+                          <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                         </div>
-                      )
-                    })}
-                    </>
+                        <blockquote key={`pm-${reply.cid}`} className="post-message">
+                          <a className="quotelink" href={handleVoidClick}>
+                            {`>>${counterString}`}{<br />}
+                          </a>
+                          {reply.content}
+                        </blockquote>
+                      </div>
+                    </div>
                   )
                 })
-              ) : (
-                <div>Loading...</div>
-              )} */}
+              })}
+              <BottomBar selectedStyle={selectedStyle}>
+                <hr />
+                <span className="bottom-bar-return">
+                  [
+                  <Link to={`/${selectedAddress}`}>Return</Link>
+                  ]
+                </span>
+                <span className="bottom-bar-catalog">
+                  [
+                  <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+                  ]
+                </span>
+                <span className="bottom-bar-top">
+                  [
+                  <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                  ]
+                </span>
+                <span className="quickreply-button">
+                [
+                <a href={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                ]
+                </span>
+                {comment.replyCount > 0 ? (
+                  <span className="reply-stat">{comment.replyCount} replies</span>
+                ) : (
+                  <span className="reply-stat">No replies yet</span>
+                )}
+                <hr />
+              </BottomBar>
             </div>
           </>
          ) : (
