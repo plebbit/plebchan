@@ -472,12 +472,20 @@ export const ReplyFormTable = styled.table`
 
 export const TopBar = styled.div`
   .return-button {
-    padding-top: 3px;
+    margin-top: 3px;
   }
+
+  .reply-stat { 
+    position: relative;
+    float: right;
+    margin-right: 5px;
+    margin-top: 4px;
+  }
+
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `lear: both;
+        return `clear: both;
         hr {
           border: none;
           border-top: 1px solid #d9bfb7;
@@ -490,8 +498,7 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          float: right;
-          margin-right: 4px;
+          margin-left: 10px;
 
           a, a:visited {
             color: #00e !important;
@@ -517,8 +524,7 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          float: right;
-          margin-right: 4px;
+          margin-left: 10px;
 
           a, a:visited {
             color: #34345c !important;
@@ -542,8 +548,7 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          float: right;
-          margin-right: 4px;
+          margin-left: 10px;
           padding-top: 2px;
           font-size: 12pt;
 
@@ -554,6 +559,11 @@ export const TopBar = styled.div`
           a:hover {
             color: red !important;
           }
+        }
+        
+        .reply-stat {
+          font-size: 12pt;
+          bottom: 2px;
         }`;
 
       case 'Burichan':
@@ -568,8 +578,7 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          float: right;
-          margin-right: 4px;
+          margin-left: 10px;
           padding-top: 2px;
           font-size: 12pt;
 
@@ -580,6 +589,11 @@ export const TopBar = styled.div`
           a:hover {
             color: red !important;
           }
+        }
+        
+        .reply-stat {
+          font-size: 12pt;
+          bottom: 2px;
         }`;
 
       case 'Tomorrow':
@@ -596,8 +610,7 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          float: right;
-          margin-right: 4px;
+          margin-left: 10px;
 
           a, a:visited {
             color: #81a2be !important;
@@ -623,8 +636,7 @@ export const TopBar = styled.div`
         }
         
         .return-button {
-          float: right;
-          margin-right: 4px;
+          margin-left: 10px;
 
           a, a:visited {
             color: #f60 !important;
@@ -634,6 +646,170 @@ export const TopBar = styled.div`
           a:hover {
             color: #ff3300 !important;
           }
+        }`;
+      
+    }
+  }}
+`;
+
+export const BottomBar = styled.div`
+  .reply-stat { 
+    position: relative;
+    float: right;
+    margin-right: 5px;
+    transform: translateY(-50%);
+  }
+
+  .quickreply-button {
+    text-align: center;
+    width: 200px;
+    position: absolute;
+    margin-left: 50%;
+    left: -100px;
+    transform: translateY(-50%);
+  }
+
+  .bottom-bar-return {
+    position: absolute;
+    transform: translateY(-50%);
+  }
+
+  .bottom-bar-catalog {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 56px;
+  }
+
+  .bottom-bar-top {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 113px;
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
+        a, a:visited {
+          color: #00e !important;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
+        }`;
+
+      case 'Yotsuba B':
+        return `
+        a, a:visited {
+          color: #34345c !important;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
+        }`;
+
+      case 'Futaba':
+        return `
+        a, a:visited {
+          color: #00e !important;
+          text-decoration: underline;
+        }
+        
+        a:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          margin-top: 5px;
+          margin-bottom: 15px;
+        }
+        
+        .bottom-bar-catalog {
+          left: 62px;
+        }
+
+        .bottom-bar-top {
+          left: 125px;
+        }`;
+
+      case 'Burichan':
+        return `
+        a, a:visited {
+          color: #34345c !important;
+          text-decoration: underline;
+        }
+        
+        a:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          margin-top: 5px;
+          margin-bottom: 15px;
+        }
+
+        .bottom-bar-catalog {
+          left: 62px;
+        }
+
+        .bottom-bar-top {
+          left: 125px;
+        }`;
+
+      case 'Tomorrow':
+        return `
+        a, a:visited {
+          color: #81a2be !important;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: #5f89ab !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
+        }`;
+
+      case 'Photon':
+        return `
+        a, a:visited {
+          color: #f60 !important;
+          text-decoration: none;
+        }
+        
+        a:hover {
+          color: #ff3300 !important;
+        }
+        
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
         }`;
       
     }

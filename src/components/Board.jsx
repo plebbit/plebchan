@@ -262,7 +262,7 @@ const Board = ({ setBodyStyle }) => {
       <PostForm selectedStyle={selectedStyle}>
         <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} >
           [
-            <a onClick={handleClickForm}>Start a New Thread</a>
+            <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
           ]
         </PostFormLink>
         <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">

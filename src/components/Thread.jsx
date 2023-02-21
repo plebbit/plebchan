@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from './styles/Board.styled';
-import { ReplyFormTable, ReplyFormLink, TopBar } from './styles/Thread.styled';
+import { ReplyFormTable, ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
 import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
@@ -115,6 +115,10 @@ const Thread = ({ setBodyStyle }) => {
     }
   }
 
+  const handleClickTop = () => {
+    window.scrollTo(0, 0);
+  }
+
   function renderComments(comments) {
     return comments.map(comment => {
       const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
@@ -161,7 +165,7 @@ const Thread = ({ setBodyStyle }) => {
       <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
         <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} >
             [
-              <a onClick={handleClickForm}>Post a Reply</a>
+              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
             ]
         </ReplyFormLink>
         <ReplyFormTable id="post-form" showReplyForm={showReplyForm} selectedStyle={selectedStyle} className="post-form">
@@ -223,6 +227,14 @@ const Thread = ({ setBodyStyle }) => {
           <Link to={`/${selectedAddress}`}>Return</Link>
           ]
         </span>
+        {comment ? (
+          comment.replyCount > 0 ? (
+            <span className="reply-stat">{comment.replyCount} replies</span>
+          ) : (
+            <span className="reply-stat">No replies yet</span>
+        )) : (
+          null
+        )}
         <hr />
       </TopBar>
       <BoardForm selectedStyle={selectedStyle}>
@@ -270,11 +282,37 @@ const Thread = ({ setBodyStyle }) => {
                   </div>
                 </div>
               </div>
-              {comment.replyCount > 0 ? (
-                <div>there are {comment.replyCount} replies</div>
-              ) : (
-                <div>No replies yet</div>
-              )}
+                  <BottomBar selectedStyle={selectedStyle}>
+                    <hr />
+                    <span className="bottom-bar-return">
+                      [
+                      <Link to={`/${selectedAddress}`}>Return</Link>
+                      ]
+                    </span>
+                    <span className="bottom-bar-catalog">
+                      [
+                      <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+                      ]
+                    </span>
+                    <span className="bottom-bar-top">
+                      [
+                      <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'}>Top</a>
+                      ]
+                    </span>
+                    <span className="quickreply-button">
+                    [
+                    <a href={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                    ]
+                    </span>
+                    {comment.replyCount > 0 ? (
+                      <span className="reply-stat">{comment.replyCount} replies</span>
+                    ) : (
+                      <span className="reply-stat">No replies yet</span>
+                    )}
+                    <hr />
+                  </BottomBar>
+                <>
+                </>
               {/* {comment ? (
                 comment.map(thread => {
                   let counter = 1;

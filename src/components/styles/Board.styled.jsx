@@ -989,7 +989,7 @@ export const PostForm = styled.div`
         text-decoration: none;
       }
       a:hover {
-        color: red;
+        color: #ff3300;
       }`;
       
     }
@@ -1134,7 +1134,7 @@ export const TopBar = styled.div`
         }
         
         a:hover {
-          color: red;
+          color: #ff3300;
         }`;
       
     }
@@ -1579,9 +1579,7 @@ export const BoardForm = styled.div`
       }
 
       hr {
-        border: none;
-        border-top: 1px solid #d9bfb7;
-        height: 0;
+        clear: both;
       }`;
 
       case 'Burichan':
@@ -1921,7 +1919,7 @@ export const BoardForm = styled.div`
       }
 
       .post-number a:hover {
-        color: red;
+        color: #ff3300;
       }
 
       .reply-link:not(:hover) {
@@ -1943,7 +1941,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: red;
+        color: #ff3300;
       }
 
       .backlink {
@@ -1959,7 +1957,7 @@ export const BoardForm = styled.div`
       }
 
       .quote-link:hover {
-        color: red;
+        color: #ff3300;
       }
 
       .backlink span {
@@ -1988,7 +1986,7 @@ export const BoardForm = styled.div`
       }
 
       .quotelink:hover {
-        color: red;
+        color: #ff3300;
       }
 
       .side-arrows {
