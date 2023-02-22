@@ -240,7 +240,7 @@ const Thread = ({ setBodyStyle }) => {
         </span>
         <span className="return-button catalog-button">
           [
-          <a href={handleVoidClick} onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Bottom</a>
+          <a href={handleVoidClick} onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickBottom}>Bottom</a>
           ]
         </span>
         {comment ? (
@@ -262,38 +262,29 @@ const Thread = ({ setBodyStyle }) => {
                   <div className="post-info">
                   &nbsp;
                     <span className="name-block">
+                      <span key={`q-${comment.cid}`} className="title">{comment.title}</span>
+                      &nbsp;
                       <span className="name">{comment.author.displayName || "Anonymous"}</span>
                       &nbsp;
                       <span className="poster-address">
                         (User: {comment.author.address})
                       </span>
-                    </span>
-                    &nbsp;
-                    <span className="date-time" data-utc="data">2 weeks ago</span>
-                    &nbsp;
-                    <span className="post-number">
-                      <a href={handleVoidClick} title="Link to this post">No.</a>
-                      <a href={handleVoidClick} title="Reply to this post">00000001</a>
-                    </span>
-                    <a key={`pmb-${comment.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                    <div id="backlink-id" className="backlink">
-                      <span>
-                        <a className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
+                      &nbsp;
+                      <span className="date-time" data-utc="data">2 weeks ago</span>
+                      &nbsp;
+                      <span className="post-number">
+                        <a href={handleVoidClick} title="Link to this post">No.</a>
+                        <a href={handleVoidClick} title="Reply to this post">00000001</a>
                       </span>
-                    </div>
+                      <a key={`pmb-${comment.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                      <div id="backlink-id" className="backlink">
+                        <span>
+                          <a className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
+                        </span>
+                      </div>
+                    </span>
                     <blockquote>
-                      {comment.title ? 
-                      <>
-                      <span key={`q-${comment.cid}`} className="title">{comment.title}</span>
-                      <br />
-                      <br />
-                      </>
-                      : null}
-                      {comment.content ? (
-                        <>
-                          {comment.content}
-                        </>
-                      ) : null}
+                      {comment.content}
                     </blockquote>
                   </div>
                 </div>
