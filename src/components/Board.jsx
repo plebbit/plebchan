@@ -400,7 +400,6 @@ const Board = ({ setBodyStyle }) => {
                 <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
                 <div key={`pr-${reply.cid}`} className="post-reply">
                   <div key={`pi-${reply.cid}`} className="post-info">
-                  &nbsp;
                     <span key={`nb-${reply.cid}`} className="nameblock">
                       <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
                       &nbsp;
