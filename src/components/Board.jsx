@@ -324,7 +324,6 @@ const Board = ({ setBodyStyle }) => {
         [
         <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
         ]
-        <hr />
       </TopBar>
       <BoardForm selectedStyle={selectedStyle}>
         <div className="board">
@@ -343,42 +342,49 @@ const Board = ({ setBodyStyle }) => {
             <div key={`t-${thread.cid}`} className="thread">
               <div key={`c-${thread.cid}`} className="post-container op-container">
                 <div key={`po-${thread.cid}`} className="post op">
+                  <hr key={`hr-${thread.cid}`} />
                   <div key={`pi-${thread.cid}`} className="post-info">
-                  &nbsp;
+                    <div key={`f-${thread.cid}`} className="file">
+                      <div key={`ft-${thread.cid}`} className="file-text">
+                        File:&nbsp;
+                        <a key={`fa-${thread.cid}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
+                      </div>
+                      <a key={`fta-${thread.cid}`} href={handleVoidClick} target="_blank" class="file-thumb">
+                        <img key={`fti-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
+                      </a>
+                    </div>
                     <span key={`nb-${thread.cid}`} className="name-block">
+                      <span key={`q-${thread.cid}`} className="title">
+                        {thread.title ? `${thread.title}` : null}&nbsp;
+                      </span>
                       <span key={`n-${thread.cid}`} className="name">{thread.author.displayName || "Anonymous"}</span>
                       &nbsp;
                       <span key={`pa-${thread.cid}`} className="poster-address">
                         (User: {thread.author.address})
                       </span>
-                    </span>
-                    &nbsp;
-                    <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                    &nbsp;
-                    <span key={`pn-${thread.cid}`} className="post-number">
-                      <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                      <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
-                      &nbsp; &nbsp;
-                      <span key={`rl1-${thread.cid}`}>
-                        [
-                        <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
-                        ]
+                      &nbsp;
+                      <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                      &nbsp;
+                      <span key={`pn-${thread.cid}`} className="post-number">
+                        <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                        <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
+                        &nbsp;
+                        <span key={`rl1-${thread.cid}`}>
+                          [
+                          <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
+                          ]
+                        </span>
                       </span>
+                      <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                      <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
+                        <span key={`ql1-${thread.cid}`}>
+                          <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
+                        </span>
+                      </div>
                     </span>
-                    <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                    <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
-                      <span key={`ql1-${thread.cid}`}>
-                        <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
-                      </span>
-                    </div>
                     <blockquote key={`bq-${thread.cid}`}>
-                      <span key={`q-${thread.cid}`} className="title">
-                        {thread.title ? `${thread.title}` : null}
-                      </span>
-                      <br key={`br1-${thread.cid}`} />
                       {thread.content ? (
                         <>
-                          <br key={`br2-${thread.cid}`} />
                           {thread.content}
                         </>
                       ) : null}
@@ -421,7 +427,6 @@ const Board = ({ setBodyStyle }) => {
               </div>
               )})}
             </div>
-            <hr key={`hr-${thread.cid}`} />
             </>
             )})}
           </InfiniteScroll>

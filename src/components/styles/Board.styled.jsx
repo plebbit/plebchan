@@ -46,7 +46,7 @@ export const NavBar = styled.div`
         }
 
         a:hover {
-          color: red;
+          color: #d00;
         }
 
         .nav {
@@ -929,7 +929,7 @@ export const PostForm = styled.div`
         text-decoration: none;
       }
       a:hover {
-        color: red;
+        color: #d00;
       }`;
 
       case 'Futaba':
@@ -1042,7 +1042,7 @@ export const TopBar = styled.div`
         }
         
         a:hover {
-          color: red;
+          color: #d00;
         }`;
 
       case 'Futaba':
@@ -1142,6 +1142,50 @@ export const TopBar = styled.div`
 `;
 
 export const BoardForm = styled.div`
+  .file {
+    display: block;
+  }
+
+  .file-text {
+    max-width: 600px;
+    white-space: nowrap;
+  }
+
+  .fileText a {
+    text-decoration: underline;
+  }
+
+  .file-thumb {
+    float: left;
+    margin: 3px 20px 5px 20px;
+  }
+
+  .file-thumb img {
+    border: none;
+    float: left;
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  @media (min-width: 600px) {
+    .post-info {
+      margin: 3px;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .name-block {
+      display: block;
+    }
+
+    .post-info {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
@@ -1170,14 +1214,13 @@ export const BoardForm = styled.div`
         border: none;
       }
 
-      .post-info {
-        margin: 3px;
-        display: block;
-        width: 100%;
+      .file a {
+        text-decoration: underline;
+        color: #00e;
       }
 
-      .name-block {
-        display: inline-block;
+      .file a:hover {
+        color: red;
       }
 
       .name {
@@ -1316,14 +1359,13 @@ export const BoardForm = styled.div`
         border: none;
       }
 
-      .post-info {
-        margin: 3px;
-        display: block;
-        width: 100%;
+      .file a {
+        text-decoration: underline;
+        color: #34345c;
       }
 
-      .name-block {
-        display: inline-block;
+      .file a:hover {
+        color: #d00;
       }
 
       .name {
@@ -1337,7 +1379,7 @@ export const BoardForm = styled.div`
       }
 
       .post-number a:hover {
-        color: red;
+        color: #d00;
       }
 
       .reply-link:not(:hover) {
@@ -1359,7 +1401,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: red;
+        color: #d00;
       }
 
       .backlink {
@@ -1370,12 +1412,8 @@ export const BoardForm = styled.div`
       }
 
       .quote-link {
-        color: #34345C;
+        color: #d00;
         text-decoration: underline;
-      }
-
-      .quote-link:hover {
-        color: red;
       }
 
       .backlink span {
@@ -1436,7 +1474,7 @@ export const BoardForm = styled.div`
         return `
         font-size: 12pt;
         
-        .thread {
+      .thread {
         margin: 0;
         clear: both;
       }
@@ -1461,15 +1499,14 @@ export const BoardForm = styled.div`
         border: none;
       }
 
-      .post-info {
-        margin: 3px;
-        display: block;
-        width: 100%;
+      .file a {
+        color: #00e;
+        text-decoration: underline;
       }
 
-      .name-block {
-        display: inline-block;
-      }
+      .file a:hover {
+        color: red;
+       } 
 
       .name {
         color: #117743;
@@ -1586,9 +1623,9 @@ export const BoardForm = styled.div`
         return `
         font-size: 12pt;
 
-        .thread {
-        margin: 0;
-        clear: both;
+      .thread {
+      margin: 0;
+      clear: both;
       }
 
       .op-container {
@@ -1611,15 +1648,14 @@ export const BoardForm = styled.div`
         border: none;
       }
 
-      .post-info {
-        margin: 3px;
-        display: block;
-        width: 100%;
+      .file a {
+        color: #34345c;
+        text-decoration: underline;
       }
 
-      .name-block {
-        display: inline-block;
-      }
+      .file a:hover {
+        color: red;
+      } 
 
       .name {
         color: #117743;
@@ -1752,15 +1788,14 @@ export const BoardForm = styled.div`
         border: none;
       }
 
-      .post-info {
-        margin: 3px;
-        display: block;
-        width: 100%;
+      .file a {
+        color: #81a2be;
+        text-decoration: underline;
       }
 
-      .name-block {
-        display: inline-block;
-      }
+      .file a:hover {
+        color: #5f89ab;
+      } 
 
       .name {
         color: #c5c8c6;
@@ -1902,14 +1937,13 @@ export const BoardForm = styled.div`
         border: none;
       }
 
-      .post-info {
-        margin: 3px;
-        display: block;
-        width: 100%;
+      .file a {
+        text-decoration: underline;
+        color: #f60;
       }
 
-      .name-block {
-        display: inline-block;
+      .file a:hover {
+        color: #ff3300;
       }
 
       .name {

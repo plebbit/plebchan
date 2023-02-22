@@ -260,7 +260,15 @@ const Thread = ({ setBodyStyle }) => {
               <div className="post-container op-container">
                 <div className="post op">
                   <div className="post-info">
-                  &nbsp;
+                    <div key={`f-${comment.cid}`} className="file">
+                        <div key={`ft-${comment.cid}`} className="file-text">
+                          File:&nbsp;
+                          <a key={`fa-${comment.cid}`} href={`${comment.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
+                        </div>
+                        <a key={`fta-${comment.cid}`} href={handleVoidClick} target="_blank" class="file-thumb">
+                          <img key={`fti-${comment.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
+                        </a>
+                      </div>
                     <span className="name-block">
                       <span key={`q-${comment.cid}`} className="title">{comment.title}</span>
                       &nbsp;
