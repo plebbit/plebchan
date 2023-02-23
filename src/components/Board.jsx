@@ -241,10 +241,33 @@ const Board = ({ setBodyStyle }) => {
               ]&nbsp;
             </span>
           ))}
-          <span className="nav">[
-            <Link id="home-button" to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
-            )}>Home</Link>]&nbsp;
+          <span className="nav">
+            [
+            <a href={handleVoidClick}>Settings</a>
+            ]
+            [
+            <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+            )}>Home</Link>
+            ]
           </span>
+          <div id="board-nav-mobile">
+            <div className="board-select">
+              <strong>Board</strong>
+              &nbsp;
+              <select id="board-select-mobile">
+                {defaultSubplebbits.map(subplebbit => (
+                  <option key={`option-${subplebbit.address}`} value={subplebbit.address} onClick={() => handleClick(subplebbit.title, subplebbit.address)}>{subplebbit.title}</option>))}
+              </select>
+            </div>
+            <div className="page-jump">
+              <a href={handleVoidClick}>Settings</a>
+              &nbsp;
+              <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+                )}>Home</Link>
+            </div>
+          </div>
+          <div id="separator-mobile">&nbsp;</div>
+          <div id="separator-mobile">&nbsp;</div>
         </>
       </NavBar>
       <Header selectedStyle={selectedStyle}>
@@ -349,7 +372,7 @@ const Board = ({ setBodyStyle }) => {
                         File:&nbsp;
                         <a key={`fa-${thread.cid}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
                       </div>
-                      <a key={`fta-${thread.cid}`} href={handleVoidClick} target="_blank" class="file-thumb">
+                      <a key={`fta-${thread.cid}`} href={handleVoidClick} target="_blank" className="file-thumb">
                         <img key={`fti-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
                       </a>
                     </div>

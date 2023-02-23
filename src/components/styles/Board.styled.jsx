@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const slideIn = keyframes`
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -25px;
+  }
+`;
 
 export const Container = styled.div`
   font-size: 10pt;
@@ -10,135 +19,215 @@ export const Container = styled.div`
 `;
 
 export const NavBar = styled.div`
+  @media (min-width: 480px) {
+    .board-select, .page-jump {
+      display: none;
+    }
+
+    .nav {
+      float: right;
+    }
+
+    #separator-mobile {
+      display: none;
+    }
+
+    #board-nav-mobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .boardList, .nav {
+      display: none;
+    }
+
+    #board-nav-mobile {
+      padding: 2px 4px;
+      background-color: #d6daf0;
+      overflow: hidden;
+      border-bottom: 2px solid #b7c5d9;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      font-size: x-small;
+      left: 0;
+      right: 0;
+      z-index: 9001;
+      /* animation: ${slideIn} 0.2s ease-in-out; */
+      display: block !important;
+      clear: left !important;
+    }
+
+    .board-select {
+      float: left;
+    }
+
+    strong {
+      padding-right: 5px;
+    }
+
+    #board-select-mobile {
+      font-size: x-small;
+    }
+
+    .page-jump {
+      float: right;
+      padding-right: 5px;
+      padding-top: 2.5px;
+      font-size: 7.5pt;
+    }
+
+    .page-jump a {
+      text-decoration: none;
+      padding-right: 5px;
+    }
+
+  }
+
   ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `font-size: 9pt;
-        color: #b86;
+  switch (selectedStyle) {
+    case 'Yotsuba':
+      return `font-size: 9pt;
+      color: #b86;
+      display: block;
+      margin-top: 5px;
+      
+      a {
+        font-weight: 400;
+        padding: 1px;
+        text-decoration: none;
+        color: maroon;
+      }
+
+      a:hover {
+        color: red;
+      }
+      
+      #board-nav-mobile {
+        background-color: #f0e0d6;
+        border-bottom: 2px solid #d9c5b7;
+      }
+
+      strong {
+        color: maroon;
+      }
+
+      .page-jump a {
+        color: navy;
+      }`;
+
+    case 'Yotsuba B':
+      return `font-size: 9pt;
+      color: #89a;
+      display: block;
+      
+      a {
+        font-weight: 400;
+        padding: 1px;
+        text-decoration: none;
+        color: #34345c;
+      }
+
+      a:hover {
+        color: #d00;
+      }
+      
+      strong {
+        color: #000;
+      }`;
+
+      case 'Futaba':
+        return `font-size: 11pt;
         display: block;
-        margin-top: 5px;
         
-        a {
+        a, a:visited {
           font-weight: 400;
           padding: 1px;
-          text-decoration: none;
-          color: maroon;
+          color: #00e;
+          text-decoration: underline;
         }
 
         a:hover {
           color: red;
         }
+      
+        #board-nav-mobile {
+          background-color: #f0e0d6;
+          border-bottom: 2px solid #d9c5b7;
+          font: 10px arial, helvetica, sans-serif;
+          font-style: normal;
+        }
 
-        .nav {
-          float: right;
+        strong {
+          color: maroon;
         }`;
 
-      case 'Yotsuba B':
-        return `font-size: 9pt;
-        color: #89a;
+      case 'Burichan':
+        return `font-size: 11pt;
         display: block;
         
-        a {
+        a, a:visited {
           font-weight: 400;
           padding: 1px;
-          text-decoration: none;
           color: #34345c;
+          text-decoration: underline;
         }
 
         a:hover {
           color: #d00;
         }
+      
+        #board-nav-mobile {
+          background-color: #d6daf0;
+          border-bottom: 2px solid #b7c5d9;
+          font: 10px arial, helvetica, sans-serif;
+          font-style: normal;
+        }`;
 
-        .nav {
-          float: right;
+      case 'Tomorrow':
+        return `font-size: 9pt;
+        color: #c5c8c6;
+        display: block;
+        
+        a, a:visited {
+          font-weight: 400;
+          padding: 1px;
+          text-decoration: none;
+          color: #81a2be;
         }
-        `;
 
-        case 'Futaba':
-          return `font-size: 11pt;
-          display: block;
-          
-          a, a:visited {
-            font-weight: 400;
-            padding: 1px;
-            color: #00e;
-            text-decoration: underline;
-          }
+        a:hover {
+          color: #5f89ab;
+        }
 
-          a:hover {
-            color: red;
-          }
+        #board-nav-mobile {
+          background-color: #1d1f21;
+          border-bottom: 2px solid #282a2e;
+        }`;
 
-          .nav {
-          float: right;
-          }
+      case 'Photon':
+        return `font-size: 9pt;
+        color: #333;
+        display: block;
+        
+        a, a:visited {
+          font-weight: 400;
+          padding: 1px;
+          text-decoration: none;
+          color: #f60;
+        }
 
-          `;
+        a:hover {
+          color: #ff3300;
+        }
 
-        case 'Burichan':
-          return `font-size: 11pt;
-          display: block;
-          
-          a, a:visited {
-            font-weight: 400;
-            padding: 1px;
-            color: #34345c;
-            text-decoration: underline;
-          }
-
-          a:hover {
-            color: red;
-          }
-
-          .nav {
-          float: right;
-          }
-          `;
-
-        case 'Tomorrow':
-          return `font-size: 9pt;
-          color: #c5c8c6;
-          display: block;
-          
-          a, a:visited {
-            font-weight: 400;
-            padding: 1px;
-            text-decoration: none;
-            color: #81a2be;
-          }
-
-          a:hover {
-            color: #5f89ab;
-          }
-
-          .nav {
-           float: right;
-          }
-          `;
-
-        case 'Photon':
-          return `font-size: 9pt;
-          color: #333;
-          display: block;
-          
-          a, a:visited {
-            font-weight: 400;
-            padding: 1px;
-            text-decoration: none;
-            color: #f60;
-          }
-
-          a:hover {
-            color: #ff3300;
-          }
-
-          .nav {
-           float: right;
-          }
-          `;
-    }
-  }}
-`;
+        #board-nav-mobile {
+          background-color: #ddd;
+          border-bottom: 2px solid #ccc;
+        }`;
+  }
+  }}`;
 
 export const Header = styled.div`
   ${({ selectedStyle }) => {
@@ -1163,8 +1252,8 @@ export const BoardForm = styled.div`
   .file-thumb img {
     border: none;
     float: left;
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 250px;
+    max-height: 250px;
   }
 
   @media (min-width: 600px) {
@@ -1183,6 +1272,7 @@ export const BoardForm = styled.div`
     .post-info {
       display: flex;
       flex-wrap: wrap;
+      margin: 4px;
     }
   }
 
