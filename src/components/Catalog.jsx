@@ -17,6 +17,8 @@ const Catalog = ({ setBodyStyle }) => {
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
   const navigate = useNavigate();
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
 
@@ -106,6 +108,19 @@ const Catalog = ({ setBodyStyle }) => {
       didCancel = true;
     };
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos, visible]);
 
   const handleVoidClick = () => {}
 
@@ -236,7 +251,7 @@ const Catalog = ({ setBodyStyle }) => {
             )}>Home</Link>
             ]
           </span>
-          <div id="board-nav-mobile">
+          <div id="board-nav-mobile" style={{ top: visible ? 0 : '-23px' }}>
             <div className="board-select">
               <strong>Board</strong>
               &nbsp;

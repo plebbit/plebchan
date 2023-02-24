@@ -17,12 +17,12 @@ export const ReplyFormLink = styled.div`
     }
 
     #post-form-link-mobile {
-        margin: 11px 0;
-        font-size: 13px;
-        text-align: center;
-        font-weight: 700;
-        display: block !important;
-        padding-top: 10px;
+      margin: 11px 0;
+      font-size: 13px;
+      text-align: center;
+      font-weight: 700;
+      display: block !important;
+      padding-top: 10px;
     }
 
     #return-button-mobile, #catalog-button-mobile, #bottom-button-mobile, #bottom-bar-top {
@@ -37,6 +37,10 @@ export const ReplyFormLink = styled.div`
 
     #btns-container {
       text-align: center;
+    }
+
+    .bottom-bar-top {
+
     }
   }
 

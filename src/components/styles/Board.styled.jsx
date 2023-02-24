@@ -47,6 +47,7 @@ export const NavBar = styled.div`
       z-index: 9001;
       display: block !important;
       clear: left !important;
+      transition: top 0.3s ease-in-out;
     }
 
     .board-select {
