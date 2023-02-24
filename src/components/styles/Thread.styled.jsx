@@ -1,7 +1,171 @@
 import styled from 'styled-components';
 
 export const ReplyFormLink = styled.div`
-  display: ${props => (props.showReplyFormLink ? 'block' : 'none')};
+  @media (min-width: 480px) {
+    display: ${props => (props.showReplyFormLink ? 'block' : 'none')};
+
+    #post-form-link-mobile, #return-button-mobile, #catalog-button-mobile, #bottom-button-mobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    display: ${props => (props.showReplyFormLink ? 'block' : 'none')};
+
+    #post-form-link-desktop {
+      display: none;
+    }
+
+    #post-form-link-mobile {
+        margin: 11px 0;
+        font-size: 13px;
+        text-align: center;
+        font-weight: 700;
+        display: block !important;
+        padding-top: 10px;
+    }
+
+    #return-button-mobile, #catalog-button-mobile, #bottom-button-mobile, #bottom-bar-top {
+      font-size: 10pt;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    .post-button-mobile {
+      padding-bottom: 10px;
+    }
+
+    #btns-container {
+      text-align: center;
+    }
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Yotsuba B':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c !important;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #34345c !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Futaba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Burichan':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Tomorrow':
+        return `.btn-wrap {
+          background-color: #1b1c1e;
+          background-image: url(/assets/buttonfade-dark.png);
+          border: 1px solid #282a2e;
+          color: #707070;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: #707070 !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Photon':
+        return `.btn-wrap {
+          background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+          border: 1px solid #ccc;
+          color: #333;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #333 !important;
+          white-space: nowrap;
+        }`;
+      }
+    }}
 `;
 
 export const ReplyFormTable = styled.table`
@@ -471,15 +635,45 @@ export const ReplyFormTable = styled.table`
 `;
 
 export const TopBar = styled.div`
+  @media (min-width: 480px) {
+    #return-button-mobile {
+      display: none;
+    }
+
+    .reply-stat {
+      margin-top: 5px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    line-height: 30px;
+    
+    #return-button-desktop, #catalog-button-desktop, #bottom-button-desktop {
+      display: none;
+    }
+
+    #return-button-mobile {
+      position: absolute;
+      left: 50%;
+      display: inline-block;
+      transform: translateX(-50%);
+      font-size: 10pt;
+    }
+
+    hr {
+      margin-left: calc((100% - 100vw) / 2);
+      margin-right: calc((100% - 100vw) / 2);
+    }
+  }
+
   .return-button {
-    margin-top: 3px;
+    display: inline-block;
   }
 
   .reply-stat { 
     position: relative;
     float: right;
     margin-right: 5px;
-    margin-top: 4px;
   }
 
   .catalog-button {
@@ -656,6 +850,134 @@ export const TopBar = styled.div`
       
     }
   }}
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Yotsuba B':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c !important;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #34345c !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Futaba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Burichan':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Tomorrow':
+        return `.btn-wrap {
+          background-color: #1b1c1e;
+          background-image: url(/assets/buttonfade-dark.png);
+          border: 1px solid #282a2e;
+          color: #707070;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: #707070 !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Photon':
+        return `.btn-wrap {
+          background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+          border: 1px solid #ccc;
+          color: #333;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #333 !important;
+          white-space: nowrap;
+        }`;
+      
+      }
+    }}
 `;
 
 export const BottomBar = styled.div`

@@ -130,7 +130,6 @@ const Board = ({ setBodyStyle }) => {
   }
   
   const handlePublishComment = async () => {
-    // Event.preventDefault();
     try {
       const pendingComment = await publishComment({
         content: comment,
@@ -283,10 +282,17 @@ const Board = ({ setBodyStyle }) => {
       </Header>
       <Break selectedStyle={selectedStyle} />
       <PostForm selectedStyle={selectedStyle}>
-        <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} >
-          [
-            <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
-          ]
+      <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
+        <div id="post-form-link-desktop">
+            [
+              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+            ]
+          </div>
+          <div id="post-form-link-mobile">
+            <span className="btn-wrap">
+              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+            </span>
+          </div>
         </PostFormLink>
         <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
           <tbody>
@@ -344,9 +350,16 @@ const Board = ({ setBodyStyle }) => {
             <option value="Photon">Photon</option>
           </select>
         </span>
-        [
-        <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
-        ]
+        <div id="catalog-button-desktop">
+          [
+          <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+          ]
+        </div>
+        <div id="catalog-button-mobile">
+          <span className="btn-wrap">
+            <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+          </span>
+        </div>
       </TopBar>
       <BoardForm selectedStyle={selectedStyle}>
         <div className="board">

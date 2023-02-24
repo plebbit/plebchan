@@ -269,10 +269,17 @@ const Catalog = ({ setBodyStyle }) => {
       </Header>
       <Break selectedStyle={selectedStyle} />
       <PostForm selectedStyle={selectedStyle}>
-        <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} >
-          [
-            <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
-          ]
+        <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
+          <div id="post-form-link-desktop">
+            [
+              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+            ]
+          </div>
+          <div id="post-form-link-mobile">
+            <span className="btn-wrap">
+              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+            </span>
+          </div>
         </PostFormLink>
         <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
           <tbody>
@@ -330,11 +337,16 @@ const Catalog = ({ setBodyStyle }) => {
             <option value="Photon">Photon</option>
           </select>
         </span>
-        <span className="return-button">
+        <div className="return-button" id="return-button-desktop">
           [
           <Link to={`/${selectedAddress}`}>Return</Link>
           ]
-        </span>
+        </div>
+        <div id="return-button-mobile">
+          <span className="btn-wrap-catalog btn-wrap">
+            <Link to={`/${selectedAddress}`}>Return</Link>
+          </span>
+        </div>
         <hr />
       </TopBar>
       <Threads selectedStyle={selectedStyle}>

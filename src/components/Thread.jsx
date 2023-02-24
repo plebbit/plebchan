@@ -192,10 +192,32 @@ const Thread = ({ setBodyStyle }) => {
       </Header>
       <Break selectedStyle={selectedStyle} />
       <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
-        <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} >
+        <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} selectedStyle={selectedStyle} >
+          <div id="return-button-mobile">
+            <span className="btn-wrap">
+              <Link to={`/${selectedAddress}`}>Return</Link>
+            </span>
+          </div>
+          <div id="catalog-button-mobile">
+            <span className="btn-wrap">
+              <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+            </span>
+          </div>
+          <div id="bottom-button-mobile">
+            <span className="btn-wrap">
+              <a onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'}>Bottom</a>
+            </span>
+          </div>
+          <div id="post-form-link-desktop">
             [
               <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
             ]
+          </div>
+          <div id="post-form-link-mobile">
+            <span className="btn-wrap">
+              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+            </span>
+          </div>
         </ReplyFormLink>
         <ReplyFormTable id="post-form" showReplyForm={showReplyForm} selectedStyle={selectedStyle} className="post-form">
           <tbody>
@@ -251,17 +273,17 @@ const Thread = ({ setBodyStyle }) => {
             <option value="Photon">Photon</option>
           </select>
         </span>
-        <span className="return-button">
+        <span className="return-button" id="return-button-desktop">
           [
           <Link to={`/${selectedAddress}`}>Return</Link>
           ]
         </span>
-        <span className="return-button catalog-button">
+        <span className="return-button catalog-button" id="catalog-button-desktop">
           [
           <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
           ]
         </span>
-        <span className="return-button catalog-button">
+        <span className="return-button catalog-button" id="bottom-button-desktop">
           [
           <a href={handleVoidClick} onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickBottom}>Bottom</a>
           ]
@@ -361,34 +383,86 @@ const Thread = ({ setBodyStyle }) => {
                 })
               })}
               <BottomBar selectedStyle={selectedStyle}>
-                <hr />
-                <span className="bottom-bar-return">
+                <div id="bottombar-desktop">
+                  <hr />
+                  <span className="bottom-bar-return">
+                    [
+                    <Link to={`/${selectedAddress}`}>Return</Link>
+                    ]
+                  </span>
+                  <span className="bottom-bar-catalog">
+                    [
+                    <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+                    ]
+                  </span>
+                  <span className="bottom-bar-top">
+                    [
+                    <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                    ]
+                  </span>
+                  <span className="quickreply-button">
                   [
-                  <Link to={`/${selectedAddress}`}>Return</Link>
+                  <a href={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
                   ]
-                </span>
-                <span className="bottom-bar-catalog">
-                  [
-                  <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
-                  ]
-                </span>
-                <span className="bottom-bar-top">
-                  [
-                  <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
-                  ]
-                </span>
-                <span className="quickreply-button">
-                [
-                <a href={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
-                ]
-                </span>
-                {comment.replyCount > 0 ? (
-                  <span className="reply-stat">{comment.replyCount} replies</span>
-                ) : (
-                  <span className="reply-stat">No replies yet</span>
-                )}
-                <hr />
+                  </span>
+                  {comment.replyCount > 0 ? (
+                    <span className="reply-stat">{comment.replyCount} replies</span>
+                  ) : (
+                    <span className="reply-stat">No replies yet</span>
+                  )}
+                  <hr />
+                </div>
               </BottomBar>
+              <div id="bottombar-mobile">
+                <TopBar selectedStyle={selectedStyle}>
+                  <hr />
+                  <span className="style-changer">
+                    Style:
+                     
+                    <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
+                      <option value="Yotsuba">Yotsuba</option>
+                      <option value="Yotsuba B">Yotsuba B</option>
+                      <option value="Futaba">Futaba</option>
+                      <option value="Burichan">Burichan</option>
+                      <option value="Tomorrow">Tomorrow</option>
+                      <option value="Photon">Photon</option>
+                    </select>
+                  </span>
+                  {comment ? (
+                    comment.replyCount > 0 ? (
+                      <span className="reply-stat">{comment.replyCount} replies</span>
+                    ) : (
+                      <span className="reply-stat">No replies yet</span>
+                  )) : (
+                    null
+                  )}
+                  <hr />
+                </TopBar>
+                <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} selectedStyle={selectedStyle} >
+                  <div id="post-form-link-mobile" className="post-button-mobile">
+                    <span className="btn-wrap">
+                      <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                    </span>
+                  </div>
+                  <div id="btns-container">
+                    <div id="return-button-mobile">
+                      <span className="btn-wrap">
+                        <Link to={`/${selectedAddress}`}>Return</Link>
+                      </span>
+                    </div>
+                    <div id="catalog-button-mobile">
+                      <span className="btn-wrap">
+                        <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+                      </span>
+                    </div>
+                    <span className="bottom-bar-top">
+                      <span className="btn-wrap">
+                        <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                      </span>
+                    </span>
+                  </div>
+                </ReplyFormLink>
+              </div>
             </div>
           </>
          ) : (

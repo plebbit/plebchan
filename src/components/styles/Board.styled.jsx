@@ -1,14 +1,5 @@
 import styled, { keyframes } from 'styled-components';
 
-const slideIn = keyframes`
-  0% {
-    top: 0;
-  }
-  100% {
-    top: -25px;
-  }
-`;
-
 export const Container = styled.div`
   font-size: 10pt;
   margin-left: 0;
@@ -54,7 +45,6 @@ export const NavBar = styled.div`
       left: 0;
       right: 0;
       z-index: 9001;
-      /* animation: ${slideIn} 0.2s ease-in-out; */
       display: block !important;
       clear: left !important;
     }
@@ -90,8 +80,6 @@ export const NavBar = styled.div`
     case 'Yotsuba':
       return `font-size: 9pt;
       color: #b86;
-      display: block;
-      margin-top: 5px;
       
       a {
         font-weight: 400;
@@ -120,7 +108,6 @@ export const NavBar = styled.div`
     case 'Yotsuba B':
       return `font-size: 9pt;
       color: #89a;
-      display: block;
       
       a {
         font-weight: 400;
@@ -139,7 +126,6 @@ export const NavBar = styled.div`
 
       case 'Futaba':
         return `font-size: 11pt;
-        display: block;
         
         a, a:visited {
           font-weight: 400;
@@ -165,7 +151,6 @@ export const NavBar = styled.div`
 
       case 'Burichan':
         return `font-size: 11pt;
-        display: block;
         
         a, a:visited {
           font-weight: 400;
@@ -188,7 +173,6 @@ export const NavBar = styled.div`
       case 'Tomorrow':
         return `font-size: 9pt;
         color: #c5c8c6;
-        display: block;
         
         a, a:visited {
           font-weight: 400;
@@ -209,7 +193,6 @@ export const NavBar = styled.div`
       case 'Photon':
         return `font-size: 9pt;
         color: #333;
-        display: block;
         
         a, a:visited {
           font-weight: 400;
@@ -316,12 +299,12 @@ export const Header = styled.div`
           font-size: 24pt;
           font-weight: 700;
           margin-top: 0;
+          color: #af0a0f;
         }
 
         .board-address {
-          font-size: 9pt;
           margin-top: 5px;
-          font-size: 9pt;
+          font-size: 11pt;
         }`;
 
       case 'Burichan':
@@ -348,9 +331,8 @@ export const Header = styled.div`
         }
 
         .board-address {
-          font-size: 9pt;
           margin-top: 5px;
-          font-size: 9pt;
+          font-size: 11pt;
         }`;
 
       case 'Tomorrow':
@@ -457,7 +439,158 @@ export const Break = styled.hr`
 `;
 
 export const PostFormLink = styled.div`
-  display: ${props => (props.showPostFormLink ? 'block' : 'none')};
+  @media (min-width: 480px) {
+    display: ${props => (props.showPostFormLink ? 'block' : 'none')};
+
+    #post-form-link-mobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    display: ${props => (props.showPostFormLink ? 'block' : 'none')};
+    line-height: 30px;
+
+    #post-form-link-desktop {
+      display: none;
+    }
+
+    #post-form-link-mobile {
+        margin: 11px 0;
+        font-size: 10pt;
+        text-align: center;
+        font-weight: 700;
+        display: block !important;
+    }
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Yotsuba B':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c !important;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #34345c !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Futaba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Burichan':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Tomorrow':
+        return `.btn-wrap {
+          background-color: #1b1c1e;
+          background-image: url(/assets/buttonfade-dark.png);
+          border: 1px solid #282a2e;
+          color: #707070;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: #707070 !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Photon':
+        return `.btn-wrap {
+          background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+          border: 1px solid #ccc;
+          color: #333;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #333 !important;
+          white-space: nowrap;
+        }`;
+      
+      }
+    }}
 `;
 
 export const PostFormTable = styled.table`
@@ -1089,7 +1222,7 @@ export const TopBar = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `lear: both;
+        return `clear: both;
         hr {
           border: none;
           border-top: 1px solid #d9bfb7;
@@ -1228,6 +1361,164 @@ export const TopBar = styled.div`
       
     }
   }}
+
+  @media (min-width: 480px) {
+    #catalog-button-mobile {
+      display: none;
+    }
+
+    #catalog-button-desktop {
+      display: inline-block;
+    }
+  }
+
+  @media (max-width: 480px) {
+    line-height: 30px;
+
+    hr {
+      margin-left: calc((100% - 100vw) / 2);
+      margin-right: calc((100% - 100vw) / 2);
+    }
+
+    #catalog-button-desktop {
+      display: none;
+    }
+
+    #catalog-button-mobile {
+      position: absolute;
+      left: 50%;
+      display: inline-block;
+      transform: translateX(-50%);
+      font-size: 10pt;
+    }
+  }
+
+${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Yotsuba B':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c !important;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #34345c !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Futaba':
+        return `.btn-wrap {
+          background-color: #f0e0d6;
+          background-image: url(/assets/buttonfade.png);
+          border: 1px solid #c0a69d;
+          color: #800;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Burichan':
+        return `.btn-wrap {
+          background-color: #d6daf0;
+          background-image: url(/assets/buttonfade-blue.png);
+          border: 1px solid #b7c5d9;
+          color: #34345c;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        .btn-wrap a {
+          text-decoration: none !important;
+          border: none;
+          color: inherit !important;
+          white-space: nowrap;
+        }
+      }`;
+
+      case 'Tomorrow':
+        return `.btn-wrap {
+          background-color: #1b1c1e;
+          background-image: url(/assets/buttonfade-dark.png);
+          border: 1px solid #282a2e;
+          color: #707070;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #707070 !important;
+          white-space: nowrap;
+        }`;
+
+      case 'Photon':
+        return `.btn-wrap {
+          background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+          border: 1px solid #ccc;
+          color: #333;
+          border-radius: 3px 3px 3px 3px;
+          font-weight: 700;
+          padding: 6px 10px 5px;
+          background-repeat: repeat-x;
+          cursor: pointer;
+        }
+
+        .btn-wrap a {
+          text-decoration: none;
+          border: none;
+          color: #333 !important;
+          white-space: nowrap;
+        }`;
+      }
+    }}
 `;
 
 export const BoardForm = styled.div`
@@ -1256,15 +1547,24 @@ export const BoardForm = styled.div`
     max-height: 250px;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 480px) {
     .post-info {
       margin: 3px;
       display: block;
       width: 100%;
     }
+
+    #bottombar-mobile {
+      display: none;
+    }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 480px) {
+    hr {
+      margin-left: calc((100% - 100vw) / 2);
+      margin-right: calc((100% - 100vw) / 2);
+    }
+    
     .name-block {
       display: block;
     }
@@ -1273,6 +1573,10 @@ export const BoardForm = styled.div`
       display: flex;
       flex-wrap: wrap;
       margin: 4px;
+    }
+
+    #bottombar-desktop {
+      display: none;
     }
   }
 
