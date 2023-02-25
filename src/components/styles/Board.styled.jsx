@@ -189,6 +189,12 @@ export const NavBar = styled.div`
         #board-nav-mobile {
           background-color: #1d1f21;
           border-bottom: 2px solid #282a2e;
+        }
+        
+        #board-select-mobile {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          border: 1px solid #373b41;
         }`;
 
       case 'Photon':
@@ -1498,6 +1504,12 @@ ${({ selectedStyle }) => {
           border: none;
           color: #707070 !important;
           white-space: nowrap;
+        }
+        
+        #style-selector {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          border: 1px solid #373b41;
         }`;
 
       case 'Photon':

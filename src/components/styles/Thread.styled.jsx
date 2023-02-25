@@ -37,10 +37,7 @@ export const ReplyFormLink = styled.div`
 
     #btns-container {
       text-align: center;
-    }
-
-    .bottom-bar-top {
-
+      margin-bottom: 50px;
     }
   }
 
@@ -811,6 +808,12 @@ export const TopBar = styled.div`
         .style-changer {
           margin-left: 5px;
           font-size: 10pt;
+        }
+
+        #style-selector {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          border: 1px solid #373b41;
         }
         
         .return-button {
