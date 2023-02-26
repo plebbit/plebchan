@@ -10,7 +10,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 const Catalog = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');

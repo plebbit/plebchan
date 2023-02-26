@@ -9,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
@@ -390,50 +390,127 @@ const Board = ({ setBodyStyle }) => {
             const renderedComments = renderComments(comments);
             return (
             <>
-            <div key={`t-${thread.cid}`} className="thread">
-              <div key={`c-${thread.cid}`} className="post-container op-container">
-                <div key={`po-${thread.cid}`} className="post op">
-                  <hr key={`hr-${thread.cid}`} />
-                  <div key={`pi-${thread.cid}`} className="post-info">
-                    <div key={`f-${thread.cid}`} className="file">
-                      <div key={`ft-${thread.cid}`} className="file-text">
-                        File:&nbsp;
-                        <a key={`fa-${thread.cid}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
+              <div key={`t-${thread.cid}`} className="thread">
+                <div key={`c-${thread.cid}`} className="post-container op-container">
+                  <div key={`po-${thread.cid}`} className="post op">
+                    <hr key={`hr-${thread.cid}`} />
+                    <div key={`pi-${thread.cid}`} className="post-info">
+                      <div key={`f-${thread.cid}`} className="file">
+                        <div key={`ft-${thread.cid}`} className="file-text">
+                          File:&nbsp;
+                          <a key={`fa-${thread.cid}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
+                        </div>
+                        <a key={`fta-${thread.cid}`} href={handleVoidClick} target="_blank" className="file-thumb">
+                          <img key={`fti-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
+                        </a>
                       </div>
-                      <a key={`fta-${thread.cid}`} href={handleVoidClick} target="_blank" className="file-thumb">
-                        <img key={`fti-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
+                      <span key={`nb-${thread.cid}`} className="name-block">
+                        <span key={`q-${thread.cid}`} className="title">
+                          {thread.title ? `${thread.title}` : null}&nbsp;
+                        </span>
+                        <span key={`n-${thread.cid}`} className="name">{thread.author.displayName || "Anonymous"}</span>
+                        &nbsp;
+                        <span key={`pa-${thread.cid}`} className="poster-address">
+                          (User: {thread.author.address})
+                        </span>
+                        &nbsp;
+                        <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                        &nbsp;
+                        <span key={`pn-${thread.cid}`} className="post-number">
+                          <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                          <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
+                          &nbsp;
+                          <span key={`rl1-${thread.cid}`}>
+                            [
+                            <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
+                            ]
+                          </span>
+                        </span>
+                        <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                        <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
+                          <span key={`ql1-${thread.cid}`}>
+                            <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
+                          </span>
+                        </div>
+                      </span>
+                      <blockquote key={`bq-${thread.cid}`}>
+                        {thread.content ? (
+                          <>
+                            {thread.content}
+                          </>
+                        ) : null}
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+                {renderedComments.map(reply => {
+                  counter++;
+                  const counterString = counter.toString().padStart(8, '0');
+                  return (
+                <div key={`pc-${reply.cid}`} className="post-container reply-container">
+                  <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
+                  <div key={`pr-${reply.cid}`} className="post-reply">
+                    <div key={`pi-${reply.cid}`} className="post-info">
+                      <span key={`nb-${reply.cid}`} className="nameblock">
+                        <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
+                        &nbsp;
+                        <span key={`pa-${reply.cid}`} className="poster-address">
+                          (User: {reply.author.address})
+                        </span>
+                      </span>
+                      &nbsp;
+                      <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                      &nbsp;
+                      <span key={`pn-${reply.cid}`} className="post-number">
+                        <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                        <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                      </span>
+                      <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                    </div>
+                    <blockquote key={`pm-${reply.cid}`} className="post-message">
+                      <a className="quotelink" href={handleVoidClick}>
+                        {`>>${counterString}`}{<br />}
+                      </a>
+                      {reply.content}
+                    </blockquote>
+                  </div>
+                </div>
+                )})}
+              </div>
+              <div key={`mob-t-${thread.cid}`} className="thread-mobile">
+                <hr key={`mob-hr-${thread.cid}`} />
+                <div key={`mob-c-${thread.cid}`} className="post-container op-container">
+                  <div key={`mob-po-${thread.cid}`} className="post op">
+                    <div key={`mob-pi-${thread.cid}`} className="post-info-mobile">
+                      <a key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
+                      <span className="name-block-mobile">
+                        <span key={`mob-n-${thread.cid}`} className="name-mobile">{thread.author.displayName || "Anonymous"}</span>
+                        &nbsp;
+                        <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile">
+                          (User:&nbsp;
+                          <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">{thread.author.address}</span>
+                          )
+                        </span>
+                        <br key={`mob-br1-${thread.cid}`} />
+                        <span key={`mob-s-${thread.cid}`} className="subject-mobile">
+                          {/* {thread.title ? `${thread.title}` : null} */}
+                          This is a test title because titles are (…)
+                        </span>
+                      </span>
+                      <span key={`mob-dt-${thread.cid}`} className="date-time-mobile">
+                        2 weeks ago
+                        &nbsp;
+                        <a key={`mob-no-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                        <a key={`mob-no2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
+                      </span>
+                    </div>
+                    <div key={`mob-f-${thread.cid}`} className="file-mobile">
+                      <a key={`mob-ft${thread.cid}`} className="file-thumb-mobile" href={handleVoidClick} target="_blank">
+                        <img key={`mob-img-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="" />
+                        <div key={`mob-fi-${thread.cid}`} className="file-info-mobile">58 KB JPG</div>
                       </a>
                     </div>
-                    <span key={`nb-${thread.cid}`} className="name-block">
-                      <span key={`q-${thread.cid}`} className="title">
-                        {thread.title ? `${thread.title}` : null}&nbsp;
-                      </span>
-                      <span key={`n-${thread.cid}`} className="name">{thread.author.displayName || "Anonymous"}</span>
-                      &nbsp;
-                      <span key={`pa-${thread.cid}`} className="poster-address">
-                        (User: {thread.author.address})
-                      </span>
-                      &nbsp;
-                      <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                      &nbsp;
-                      <span key={`pn-${thread.cid}`} className="post-number">
-                        <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                        <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
-                        &nbsp;
-                        <span key={`rl1-${thread.cid}`}>
-                          [
-                          <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
-                          ]
-                        </span>
-                      </span>
-                      <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                      <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
-                        <span key={`ql1-${thread.cid}`}>
-                          <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
-                        </span>
-                      </div>
-                    </span>
-                    <blockquote key={`bq-${thread.cid}`}>
+                    <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
                       {thread.content ? (
                         <>
                           {thread.content}
@@ -441,42 +518,45 @@ const Board = ({ setBodyStyle }) => {
                       ) : null}
                     </blockquote>
                   </div>
-                </div>
-              </div>
-              {renderedComments.map(reply => {
-                counter++;
-                const counterString = counter.toString().padStart(8, '0');
-                return (
-              <div key={`pc-${reply.cid}`} className="post-container reply-container">
-                <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                <div key={`pr-${reply.cid}`} className="post-reply">
-                  <div key={`pi-${reply.cid}`} className="post-info">
-                    <span key={`nb-${reply.cid}`} className="nameblock">
-                      <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
-                      &nbsp;
-                      <span key={`pa-${reply.cid}`} className="poster-address">
-                        (User: {reply.author.address})
-                      </span>
-                    </span>
-                    &nbsp;
-                    <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
-                    &nbsp;
-                    <span key={`pn-${reply.cid}`} className="post-number">
-                      <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                      <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
-                    </span>
-                    <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                  <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
+                    <span key={`mob-info-${thread.cid}`} className="info-mobile">{thread.replyCount} Replies / ? Images</span>
+                    <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
                   </div>
-                  <blockquote key={`pm-${reply.cid}`} className="post-message">
-                    <a className="quotelink" href={handleVoidClick}>
-                      {`>>${counterString}`}{<br />}
-                    </a>
-                    {reply.content}
-                  </blockquote>
                 </div>
+                {renderedComments.map(reply => {
+                  counter++;
+                  const counterString = counter.toString().padStart(8, '0');
+                  return (
+                  <div key={`mob-rc-${reply.cid}`} className="post-container reply-container">
+                    <div key={`mob-pr-${reply.cid}`} className="post-reply">
+                      <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
+                        <a className="post-menu-button-mobile" title="Post menu">...</a>
+                        <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
+                          <span key={`mob-n-${reply.cid}`} className="name-mobile">{reply.author.displayName || "Anonymous"}</span>
+                          &nbsp;
+                          <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
+                            (User:&nbsp;
+                            <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
+                            )
+                          </span>
+                          <br key={`mob-br-${reply.cid}`} />
+                        </span>
+                        <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
+                          2 weeks ago&nbsp;
+                          <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                          <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                        </span>
+                      </div>
+                      <blockquote className="post-message-mobile">
+                        <a className="quotelink-mobile" href={handleVoidClick}>
+                          {`>>${counterString}`}{<br />}
+                        </a>
+                        {reply.content}
+                      </blockquote>
+                    </div>
+                  </div>
+                )})}
               </div>
-              )})}
-            </div>
             </>
             )})}
           </InfiniteScroll>
