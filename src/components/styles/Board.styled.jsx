@@ -1574,6 +1574,640 @@ export const BoardForm = styled.div`
     #bottombar-desktop {
       display: none;
     }
+
+    ${({ selectedStyle }) => {
+      switch (selectedStyle) {
+        case 'Yotsuba':
+          return `
+            .op-container {
+              background-color: #f5e9e1;
+              border: 1px solid #d9bfb7 !important;
+
+              .post-info-mobile {
+                border-bottom: 1px solid #d9bfb7;
+                background-color: #ead6ca;
+              }
+    
+              .post-menu-button-mobile {
+                color: #00e;
+              }
+    
+              .name-mobile {
+                color: #117743;
+                font-weight: 700;
+              }
+    
+              .subject-mobile {
+                color: #cc1105;
+                font-weight: 700;
+              }
+    
+              .date-time-mobile {
+                color: maroon;
+              }
+    
+              .file-thumb-mobile {
+                color: #00e !important;
+              }
+    
+              .file-info-mobile {
+                color: #707070;
+                font-size: 9pt !important;
+              }
+    
+              blockquote {
+                font-size: 11pt;
+              }
+    
+              .post-link-mobile {
+                background-color: #ead6ca;
+                border-top: 1px solid #d9bfb7;
+              }
+    
+              .info-mobile {
+                color: #800;
+              }
+    
+              .button-mobile {
+                color: #800;
+                font-weight: 700;
+                background-color: #f0e0d6;
+                border: 1px solid #c0a69d;
+                background-image: url(/assets/buttonfade.png);
+                background-repeat: repeat-x;
+                text-decoration: none;
+              }
+            }
+
+            .reply-container {
+              background-color: #f0e0d6;
+
+              .post-reply {
+                background-color: #f0e0d6;
+                border: 1px solid #d9bfb7;
+              }
+
+              .post-info-mobile {
+                border-bottom: 1px solid #d9bfb7;
+                background-color: #ead6ca;
+
+                .post-menu-button-mobile {
+                  color: #00e;
+                }
+
+                .name-mobile {
+                  color: #117743;
+                  font-weight: 700;
+                }
+
+                .date-time-mobile {
+                  color: maroon;
+
+                  a {
+                    color: maroon;
+                  }
+                }
+              }
+
+              blockquote {
+                font-size: 11pt;
+
+                .quotelink-mobile {
+                  color: navy !important;
+                  text-decoration: underline;
+                }
+
+                .quotelink-mobile:hover {
+                  color: red !important;
+                }
+              }
+            }
+          }`;
+
+        case 'Yotsuba B':
+          return `
+            .op-container {
+              background-color: #d6daf0;
+              border: 1px solid #b7c5d9 !important;
+
+              .post-info-mobile {
+                border-bottom: 1px solid #b7c5d9;
+                background-color: #c9cde8;
+              }
+    
+              .post-menu-button-mobile {
+                color: #34345c;
+              }
+    
+              .name-mobile {
+                color: #117743;
+                font-weight: 700;
+              }
+    
+              .subject-mobile {
+                color: #0f0c5d;
+                font-weight: 700;
+              }
+    
+              .date-time-mobile {
+                color: #000;
+              }
+    
+              .file-thumb-mobile {
+                color: #81a2be !important;
+              }
+    
+              .file-info-mobile {
+                color: #707070;
+                font-size: 9pt !important;
+              }
+    
+              blockquote {
+                font-size: 11pt;
+              }
+    
+              .post-link-mobile {
+                background-color: #c9cde8;
+                border-top: 1px solid #b7c5d9;
+              }
+    
+              .info-mobile {
+                color: #34345c;
+              }
+    
+              .button-mobile {
+                color: #34345c;
+                font-weight: 700;
+                background-color: #d6daf0;
+                border: 1px solid #b7c5d9;
+                background-image: url(/assets/buttonfade-blue.png);
+                background-repeat: repeat-x;
+                text-decoration: none;
+              }
+            }
+
+            .reply-container {
+              background-color: #d6daf0;
+
+              .post-reply {
+                background-color: #d6daf0;
+                border: 1px solid #b7c5d9;
+              }
+
+              .post-info-mobile {
+                border-bottom: 1px solid #b7c5d9;
+                background-color: #c9cde8;
+
+                .post-menu-button-mobile {
+                  color: #34345c;
+                }
+
+                .name-mobile {
+                  color: #117743;
+                  font-weight: 700;
+                }
+
+                .date-time-mobile {
+                  color: #000;
+
+                  a {
+                    color: #000;
+                  }
+                }
+              }
+
+              blockquote {
+                font-size: 11pt;
+              }
+            }
+          }`;
+
+        case 'Futaba':
+          return `
+            .op-container {
+              background-color: #f5e9e1;
+              border: 1px solid #d9bfb7 !important;
+
+              .post-info-mobile {
+                border-bottom: 1px solid #d9bfb7;
+                background-color: #ead6ca;
+              }
+    
+              .post-menu-button-mobile {
+                color: #00e;
+              }
+    
+              .name-mobile {
+                color: #117743;
+                font-weight: 700;
+              }
+    
+              .subject-mobile {
+                color: #cc1105;
+                font-weight: 700;
+              }
+    
+              .date-time-mobile {
+                color: maroon;
+              }
+    
+              .file-thumb-mobile {
+                color: #00e !important;
+              }
+    
+              .file-info-mobile {
+                color: #707070;
+                font-size: 9pt !important;
+              }
+    
+              blockquote {
+                font-size: 12pt;
+              }
+    
+              .post-link-mobile {
+                background-color: #ead6ca;
+                border-top: 1px solid #d9bfb7;
+              }
+    
+              .info-mobile {
+                color: #800;
+              }
+    
+              .button-mobile {
+                color: #800;
+                font-weight: 700;
+                background-color: #f0e0d6;
+                border: 1px solid #c0a69d;
+                background-image: url(/assets/buttonfade.png);
+                background-repeat: repeat-x;
+                text-decoration: none;
+              }
+            }
+
+            .reply-container {
+              background-color: #f0e0d6;
+
+              .post-reply {
+                background-color: #f0e0d6;
+                border: 1px solid #d9bfb7;
+              }
+
+              .post-info-mobile {
+                border-bottom: 1px solid #d9bfb7;
+                background-color: #ead6ca;
+
+                .post-menu-button-mobile {
+                  color: #00e;
+                }
+
+                .name-mobile {
+                  color: #117743;
+                  font-weight: 700;
+                }
+
+                .date-time-mobile {
+                  color: maroon;
+
+                  a {
+                    color: maroon;
+                  }
+                }
+              }
+
+              blockquote {
+                font-size: 12pt;
+
+                .quotelink-mobile {
+                  color: navy !important;
+                  text-decoration: underline;
+                }
+
+                .quotelink-mobile:hover {
+                  color: red !important;
+                }
+              }
+            }
+          }`;
+
+        case 'Burichan':
+          return `
+            .op-container {
+              background-color: #d6daf0;
+              border: 1px solid #b7c5d9 !important;
+
+              .post-info-mobile {
+                border-bottom: 1px solid #b7c5d9;
+                background-color: #c9cde8;
+              }
+    
+              .post-menu-button-mobile {
+                color: #34345c;
+              }
+    
+              .name-mobile {
+                color: #117743;
+                font-weight: 700;
+              }
+    
+              .subject-mobile {
+                color: #0f0c5d;
+                font-weight: 700;
+              }
+    
+              .date-time-mobile {
+                color: #000;
+              }
+    
+              .file-thumb-mobile {
+                color: #81a2be !important;
+              }
+    
+              .file-info-mobile {
+                color: #707070;
+                font-size: 9pt !important;
+              }
+    
+              blockquote {
+                font-size: 12pt;
+              }
+    
+              .post-link-mobile {
+                background-color: #c9cde8;
+                border-top: 1px solid #b7c5d9;
+              }
+    
+              .info-mobile {
+                color: #34345c;
+              }
+    
+              .button-mobile {
+                color: #34345c;
+                font-weight: 700;
+                background-color: #d6daf0;
+                border: 1px solid #b7c5d9;
+                background-image: url(/assets/buttonfade-blue.png);
+                background-repeat: repeat-x;
+                text-decoration: none;
+              }
+            }
+
+            .reply-container {
+              background-color: #d6daf0;
+
+              .post-reply {
+                background-color: #d6daf0;
+                border: 1px solid #b7c5d9;
+              }
+
+              .post-info-mobile {
+                border-bottom: 1px solid #b7c5d9;
+                background-color: #c9cde8;
+
+                .post-menu-button-mobile {
+                  color: #34345c;
+                }
+
+                .name-mobile {
+                  color: #117743;
+                  font-weight: 700;
+                }
+
+                .date-time-mobile {
+                  color: #000;
+
+                  a {
+                    color: #000;
+                  }
+                }
+              }
+
+              blockquote {
+                font-size: 12pt;
+              }
+            }
+          }`;
+
+        case 'Tomorrow':
+          return `
+            .op-container {
+              background-color: #282A2E;
+              border: 1px solid #2D2F33 !important;
+
+              .post-info-mobile {
+                border-bottom: 1px solid #2D2F33;
+                background-color: #212326;
+              }
+    
+              .post-menu-button-mobile {
+                color: #81A2BE;
+              }
+    
+              .name-mobile {
+                color: #117743;
+                font-weight: 700;
+              }
+
+              .poster-address-mobile {
+                color: #707070;
+              }
+    
+              .subject-mobile {
+                color: #B294BB;
+                font-weight: 700;
+              }
+    
+              .date-time-mobile {
+                color: #707070;
+              }
+    
+              .file-thumb-mobile {
+                color: #81A2BE !important;
+              }
+    
+              .file-info-mobile {
+                color: #707070;
+                font-size: 9pt !important;
+              }
+    
+              blockquote {
+                color: #C5C8C6;
+                font-size: 11pt;
+              }
+    
+              .post-link-mobile {
+                background-color: #212326;
+                border-top: 1px solid #2D2F33;
+              }
+    
+              .info-mobile {
+                color: #707070;
+              }
+    
+              .button-mobile {
+                color: #707070;
+                font-weight: 700;
+                background-color: rgb(27,28,30);
+                border: 1px solid #282A2E;
+                background-image: url(/assets/buttonfade-dark.png);
+                background-repeat: repeat-x;
+                text-decoration: none;
+              }
+            }
+
+            .reply-container {
+              background-color: #f0e0d6;
+              color: #C5C8C6;
+
+              .post-reply {
+                background-color: #282A2E;
+                border: 1px solid #2D2F33;
+              }
+
+              .post-info-mobile {
+                border-bottom: 1px solid #2D2F33;
+                background-color: #212326;
+
+                .post-menu-button-mobile {
+                  color: #81A2BE;
+                }
+
+                .name-mobile {
+                  color: #117743;
+                  font-weight: 700;
+                }
+
+                .date-time-mobile {
+                  color: #707070;
+
+                  a {
+                    color: #707070;
+                  }
+                }
+              }
+
+              blockquote {
+                font-size: 11pt;
+              }
+
+              .quotelink-mobile {
+                color: #81A2BE;
+              }
+
+              .quotelink-mobile:hover {
+                color: #5F89AC;
+              }
+            }
+          }`;
+
+        case 'Photon':
+          return `
+            .op-container {
+              background-color: #eee;
+              border: 1px solid #ccc !important;
+
+              .post-info-mobile {
+                border-bottom: 1px solid #ccc;
+                background-color: #ddd;
+              }
+    
+              .post-menu-button-mobile {
+                color: #f60;
+              }
+    
+              .name-mobile {
+                color: #004a99;
+                font-weight: 700;
+              }
+    
+              .subject-mobile {
+                color: #111;
+                font-weight: 700;
+              }
+    
+              .date-time-mobile {
+                color: #333;
+              }
+    
+              .file-thumb-mobile {
+                color: #f60 !important;
+              }
+    
+              .file-info-mobile {
+                color: #707070;
+                font-size: 9pt !important;
+              }
+    
+              blockquote {
+                font-size: 11pt;
+              }
+    
+              .post-link-mobile {
+                background-color: #ddd;
+                border-top: 1px solid #ccc;
+              }
+    
+              .info-mobile {
+                color: #333;
+              }
+    
+              .button-mobile {
+                background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+                border: 1px solid #ccc;
+                color: #333;
+                border-radius: 3px 3px 3px 3px;
+                font-weight: 700;
+                padding: 6px 10px 5px;
+                background-repeat: repeat-x;
+                cursor: pointer;
+              }
+            }
+
+            .reply-container {
+              background-color: #eee;
+
+              .post-reply {
+                background-color: #eee;
+                border: 1px solid #ccc;
+              }
+
+              .post-info-mobile {
+                border-bottom: 1px solid #ccc;
+                background-color: #ddd;
+
+                .post-menu-button-mobile {
+                  color: #f60;
+                }
+
+                .name-mobile {
+                  color: #004a99;
+                  font-weight: 700;
+                }
+
+                .date-time-mobile {
+                  color: #333;
+
+                  a {
+                    color: #333;
+                  }
+                }
+              }
+
+              blockquote {
+                font-size: 11pt;
+              }
+
+              .quotelink-mobile {
+                color: #f60;
+              }
+
+              .quotelink-mobile:hover {
+                color: #ff3300;
+              }
+            }
+          }`;
+        
+      }
+    }}
   }
 
   .file {
@@ -2643,640 +3277,6 @@ export const BoardForm = styled.div`
         border-top: 1px solid #ddd;
         height: 0;
       }`;
-      
-    }
-  }}
-
-${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `
-          .op-container {
-            background-color: #f5e9e1;
-            border: 1px solid #d9bfb7 !important;
-
-            .post-info-mobile {
-              border-bottom: 1px solid #d9bfb7;
-              background-color: #ead6ca;
-            }
-  
-            .post-menu-button-mobile {
-              color: #00e;
-            }
-  
-            .name-mobile {
-              color: #117743;
-              font-weight: 700;
-            }
-  
-            .subject-mobile {
-              color: #cc1105;
-              font-weight: 700;
-            }
-  
-            .date-time-mobile {
-              color: maroon;
-            }
-  
-            .file-thumb-mobile {
-              color: #00e !important;
-            }
-  
-            .file-info-mobile {
-              color: #707070;
-              font-size: 9pt !important;
-            }
-  
-            blockquote {
-              font-size: 11pt;
-            }
-  
-            .post-link-mobile {
-              background-color: #ead6ca;
-              border-top: 1px solid #d9bfb7;
-            }
-  
-            .info-mobile {
-              color: #800;
-            }
-  
-            .button-mobile {
-              color: #800;
-              font-weight: 700;
-              background-color: #f0e0d6;
-              border: 1px solid #c0a69d;
-              background-image: url(/assets/buttonfade.png);
-              background-repeat: repeat-x;
-              text-decoration: none;
-            }
-          }
-
-          .reply-container {
-            background-color: #f0e0d6;
-
-            .post-reply {
-              background-color: #f0e0d6;
-              border: 1px solid #d9bfb7;
-            }
-
-            .post-info-mobile {
-              border-bottom: 1px solid #d9bfb7;
-              background-color: #ead6ca;
-
-              .post-menu-button-mobile {
-                color: #00e;
-              }
-
-              .name-mobile {
-                color: #117743;
-                font-weight: 700;
-              }
-
-              .date-time-mobile {
-                color: maroon;
-
-                a {
-                  color: maroon;
-                }
-              }
-            }
-
-            blockquote {
-              font-size: 11pt;
-
-              .quotelink-mobile {
-                color: navy !important;
-                text-decoration: underline;
-              }
-
-              .quotelink-mobile:hover {
-                color: red !important;
-              }
-            }
-          }
-        }`;
-
-      case 'Yotsuba B':
-        return `
-          .op-container {
-            background-color: #d6daf0;
-            border: 1px solid #b7c5d9 !important;
-
-            .post-info-mobile {
-              border-bottom: 1px solid #b7c5d9;
-              background-color: #c9cde8;
-            }
-  
-            .post-menu-button-mobile {
-              color: #34345c;
-            }
-  
-            .name-mobile {
-              color: #117743;
-              font-weight: 700;
-            }
-  
-            .subject-mobile {
-              color: #0f0c5d;
-              font-weight: 700;
-            }
-  
-            .date-time-mobile {
-              color: #000;
-            }
-  
-            .file-thumb-mobile {
-              color: #81a2be !important;
-            }
-  
-            .file-info-mobile {
-              color: #707070;
-              font-size: 9pt !important;
-            }
-  
-            blockquote {
-              font-size: 11pt;
-            }
-  
-            .post-link-mobile {
-              background-color: #c9cde8;
-              border-top: 1px solid #b7c5d9;
-            }
-  
-            .info-mobile {
-              color: #34345c;
-            }
-  
-            .button-mobile {
-              color: #34345c;
-              font-weight: 700;
-              background-color: #d6daf0;
-              border: 1px solid #b7c5d9;
-              background-image: url(/assets/buttonfade-blue.png);
-              background-repeat: repeat-x;
-              text-decoration: none;
-            }
-          }
-
-          .reply-container {
-            background-color: #d6daf0;
-
-            .post-reply {
-              background-color: #d6daf0;
-              border: 1px solid #b7c5d9;
-            }
-
-            .post-info-mobile {
-              border-bottom: 1px solid #b7c5d9;
-              background-color: #c9cde8;
-
-              .post-menu-button-mobile {
-                color: #34345c;
-              }
-
-              .name-mobile {
-                color: #117743;
-                font-weight: 700;
-              }
-
-              .date-time-mobile {
-                color: #000;
-
-                a {
-                  color: #000;
-                }
-              }
-            }
-
-            blockquote {
-              font-size: 11pt;
-            }
-          }
-        }`;
-
-      case 'Futaba':
-        return `
-          .op-container {
-            background-color: #f5e9e1;
-            border: 1px solid #d9bfb7 !important;
-
-            .post-info-mobile {
-              border-bottom: 1px solid #d9bfb7;
-              background-color: #ead6ca;
-            }
-  
-            .post-menu-button-mobile {
-              color: #00e;
-            }
-  
-            .name-mobile {
-              color: #117743;
-              font-weight: 700;
-            }
-  
-            .subject-mobile {
-              color: #cc1105;
-              font-weight: 700;
-            }
-  
-            .date-time-mobile {
-              color: maroon;
-            }
-  
-            .file-thumb-mobile {
-              color: #00e !important;
-            }
-  
-            .file-info-mobile {
-              color: #707070;
-              font-size: 9pt !important;
-            }
-  
-            blockquote {
-              font-size: 12pt;
-            }
-  
-            .post-link-mobile {
-              background-color: #ead6ca;
-              border-top: 1px solid #d9bfb7;
-            }
-  
-            .info-mobile {
-              color: #800;
-            }
-  
-            .button-mobile {
-              color: #800;
-              font-weight: 700;
-              background-color: #f0e0d6;
-              border: 1px solid #c0a69d;
-              background-image: url(/assets/buttonfade.png);
-              background-repeat: repeat-x;
-              text-decoration: none;
-            }
-          }
-
-          .reply-container {
-            background-color: #f0e0d6;
-
-            .post-reply {
-              background-color: #f0e0d6;
-              border: 1px solid #d9bfb7;
-            }
-
-            .post-info-mobile {
-              border-bottom: 1px solid #d9bfb7;
-              background-color: #ead6ca;
-
-              .post-menu-button-mobile {
-                color: #00e;
-              }
-
-              .name-mobile {
-                color: #117743;
-                font-weight: 700;
-              }
-
-              .date-time-mobile {
-                color: maroon;
-
-                a {
-                  color: maroon;
-                }
-              }
-            }
-
-            blockquote {
-              font-size: 12pt;
-
-              .quotelink-mobile {
-                color: navy !important;
-                text-decoration: underline;
-              }
-
-              .quotelink-mobile:hover {
-                color: red !important;
-              }
-            }
-          }
-        }`;
-
-      case 'Burichan':
-        return `
-          .op-container {
-            background-color: #d6daf0;
-            border: 1px solid #b7c5d9 !important;
-
-            .post-info-mobile {
-              border-bottom: 1px solid #b7c5d9;
-              background-color: #c9cde8;
-            }
-  
-            .post-menu-button-mobile {
-              color: #34345c;
-            }
-  
-            .name-mobile {
-              color: #117743;
-              font-weight: 700;
-            }
-  
-            .subject-mobile {
-              color: #0f0c5d;
-              font-weight: 700;
-            }
-  
-            .date-time-mobile {
-              color: #000;
-            }
-  
-            .file-thumb-mobile {
-              color: #81a2be !important;
-            }
-  
-            .file-info-mobile {
-              color: #707070;
-              font-size: 9pt !important;
-            }
-  
-            blockquote {
-              font-size: 12pt;
-            }
-  
-            .post-link-mobile {
-              background-color: #c9cde8;
-              border-top: 1px solid #b7c5d9;
-            }
-  
-            .info-mobile {
-              color: #34345c;
-            }
-  
-            .button-mobile {
-              color: #34345c;
-              font-weight: 700;
-              background-color: #d6daf0;
-              border: 1px solid #b7c5d9;
-              background-image: url(/assets/buttonfade-blue.png);
-              background-repeat: repeat-x;
-              text-decoration: none;
-            }
-          }
-
-          .reply-container {
-            background-color: #d6daf0;
-
-            .post-reply {
-              background-color: #d6daf0;
-              border: 1px solid #b7c5d9;
-            }
-
-            .post-info-mobile {
-              border-bottom: 1px solid #b7c5d9;
-              background-color: #c9cde8;
-
-              .post-menu-button-mobile {
-                color: #34345c;
-              }
-
-              .name-mobile {
-                color: #117743;
-                font-weight: 700;
-              }
-
-              .date-time-mobile {
-                color: #000;
-
-                a {
-                  color: #000;
-                }
-              }
-            }
-
-            blockquote {
-              font-size: 12pt;
-            }
-          }
-        }`;
-
-      case 'Tomorrow':
-        return `
-          .op-container {
-            background-color: #282A2E;
-            border: 1px solid #2D2F33 !important;
-
-            .post-info-mobile {
-              border-bottom: 1px solid #2D2F33;
-              background-color: #212326;
-            }
-  
-            .post-menu-button-mobile {
-              color: #81A2BE;
-            }
-  
-            .name-mobile {
-              color: #117743;
-              font-weight: 700;
-            }
-
-            .poster-address-mobile {
-              color: #707070;
-            }
-  
-            .subject-mobile {
-              color: #B294BB;
-              font-weight: 700;
-            }
-  
-            .date-time-mobile {
-              color: #707070;
-            }
-  
-            .file-thumb-mobile {
-              color: #81A2BE !important;
-            }
-  
-            .file-info-mobile {
-              color: #707070;
-              font-size: 9pt !important;
-            }
-  
-            blockquote {
-              color: #C5C8C6;
-              font-size: 11pt;
-            }
-  
-            .post-link-mobile {
-              background-color: #212326;
-              border-top: 1px solid #2D2F33;
-            }
-  
-            .info-mobile {
-              color: #707070;
-            }
-  
-            .button-mobile {
-              color: #707070;
-              font-weight: 700;
-              background-color: rgb(27,28,30);
-              border: 1px solid #282A2E;
-              background-image: url(/assets/buttonfade-dark.png);
-              background-repeat: repeat-x;
-              text-decoration: none;
-            }
-          }
-
-          .reply-container {
-            background-color: #f0e0d6;
-            color: #C5C8C6;
-
-            .post-reply {
-              background-color: #282A2E;
-              border: 1px solid #2D2F33;
-            }
-
-            .post-info-mobile {
-              border-bottom: 1px solid #2D2F33;
-              background-color: #212326;
-
-              .post-menu-button-mobile {
-                color: #81A2BE;
-              }
-
-              .name-mobile {
-                color: #117743;
-                font-weight: 700;
-              }
-
-              .date-time-mobile {
-                color: #707070;
-
-                a {
-                  color: #707070;
-                }
-              }
-            }
-
-            blockquote {
-              font-size: 11pt;
-            }
-
-            .quotelink-mobile {
-              color: #81A2BE;
-            }
-
-            .quotelink-mobile:hover {
-              color: #5F89AC;
-            }
-          }
-        }`;
-
-      case 'Photon':
-        return `
-          .op-container {
-            background-color: #eee;
-            border: 1px solid #ccc !important;
-
-            .post-info-mobile {
-              border-bottom: 1px solid #ccc;
-              background-color: #ddd;
-            }
-  
-            .post-menu-button-mobile {
-              color: #f60;
-            }
-  
-            .name-mobile {
-              color: #004a99;
-              font-weight: 700;
-            }
-  
-            .subject-mobile {
-              color: #111;
-              font-weight: 700;
-            }
-  
-            .date-time-mobile {
-              color: #333;
-            }
-  
-            .file-thumb-mobile {
-              color: #f60 !important;
-            }
-  
-            .file-info-mobile {
-              color: #707070;
-              font-size: 9pt !important;
-            }
-  
-            blockquote {
-              font-size: 11pt;
-            }
-  
-            .post-link-mobile {
-              background-color: #ddd;
-              border-top: 1px solid #ccc;
-            }
-  
-            .info-mobile {
-              color: #333;
-            }
-  
-            .button-mobile {
-              background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
-              border: 1px solid #ccc;
-              color: #333;
-              border-radius: 3px 3px 3px 3px;
-              font-weight: 700;
-              padding: 6px 10px 5px;
-              background-repeat: repeat-x;
-              cursor: pointer;
-            }
-          }
-
-          .reply-container {
-            background-color: #eee;
-
-            .post-reply {
-              background-color: #eee;
-              border: 1px solid #ccc;
-            }
-
-            .post-info-mobile {
-              border-bottom: 1px solid #ccc;
-              background-color: #ddd;
-
-              .post-menu-button-mobile {
-                color: #f60;
-              }
-
-              .name-mobile {
-                color: #004a99;
-                font-weight: 700;
-              }
-
-              .date-time-mobile {
-                color: #333;
-
-                a {
-                  color: #333;
-                }
-              }
-            }
-
-            blockquote {
-              font-size: 11pt;
-            }
-
-            .quotelink-mobile {
-              color: #f60;
-            }
-
-            .quotelink-mobile:hover {
-              color: #ff3300;
-            }
-          }
-        }`;
       
     }
   }}

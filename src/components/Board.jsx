@@ -547,8 +547,8 @@ const Board = ({ setBodyStyle }) => {
                           <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
                         </span>
                       </div>
-                      <blockquote className="post-message-mobile">
-                        <a className="quotelink-mobile" href={handleVoidClick}>
+                      <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
+                        <a key={`mob-ql-${reply.cid}`} className="quotelink-mobile" href={handleVoidClick}>
                           {`>>${counterString}`}{<br />}
                         </a>
                         {reply.content}
