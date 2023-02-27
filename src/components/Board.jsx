@@ -130,6 +130,14 @@ const Board = ({ setBodyStyle }) => {
     setSelectedAddress(address);
   };
 
+  const handleSelectChange = (event) => {
+    const selected = event.target.value;
+    const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
+    setSelectedTitle(selectedTitle);
+    setSelectedAddress(selected);
+    navigate(`/${selected}`);
+  }
+
   const handleClickHelp = () => {
     alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
   };
@@ -268,13 +276,10 @@ const Board = ({ setBodyStyle }) => {
             <div className="board-select">
               <strong>Board</strong>
               &nbsp;
-              <select id="board-select-mobile" value={selectedAddress}>
+              <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                 {defaultSubplebbits.map(subplebbit => (
-                    <option key={`option-${subplebbit.address}`} 
-                    value={subplebbit.address}
-                    onClick={() => {handleClickTitle(subplebbit.title, subplebbit.address); navigate(`/${subplebbit.address}`)}}
-                    onTouchStart={() => {handleClickTitle(subplebbit.title, subplebbit.address); navigate(`/${subplebbit.address}`)}}
-                      >{subplebbit.title}</option>
+                    <option key={`option-${subplebbit.address}`} value={subplebbit.address}
+                    >{subplebbit.title}</option>
                   ))}
               </select>
             </div>
