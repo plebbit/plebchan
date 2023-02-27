@@ -4,7 +4,7 @@ const ImageBanner = () => {
   const [currentImage, setCurrentImage] = useState(1);
 
   useEffect(() => {
-    setCurrentImage(Math.floor(Math.random() * 12) + 1);
+    setCurrentImage(Math.floor(Math.random() * 13) + 1);
   }, []);
 
   return (

@@ -260,6 +260,7 @@ const Catalog = ({ setBodyStyle }) => {
                     <option key={`option-${subplebbit.address}`} 
                     value={subplebbit.address}
                     onClick={() => {handleClickTitle(subplebbit.title, subplebbit.address); navigate(`/${subplebbit.address}`)}}
+                    onTouchStart={() => {handleClickTitle(subplebbit.title, subplebbit.address); navigate(`/${subplebbit.address}`)}}
                       >{subplebbit.title}</option>
                   ))}
               </select>
