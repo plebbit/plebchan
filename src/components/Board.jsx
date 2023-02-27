@@ -125,7 +125,7 @@ const Board = ({ setBodyStyle }) => {
 
   const handleVoidClick = () => {}
 
-  const handleClick = (title, address) => {
+  const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
   };
@@ -250,7 +250,7 @@ const Board = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClick(subplebbit.title, subplebbit.address)}
+              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
@@ -268,9 +268,13 @@ const Board = ({ setBodyStyle }) => {
             <div className="board-select">
               <strong>Board</strong>
               &nbsp;
-              <select id="board-select-mobile">
+              <select id="board-select-mobile" value={selectedAddress}>
                 {defaultSubplebbits.map(subplebbit => (
-                  <option key={`option-${subplebbit.address}`} value={subplebbit.address} onClick={() => handleClick(subplebbit.title, subplebbit.address)}>{subplebbit.title}</option>))}
+                    <option key={`option-${subplebbit.address}`} 
+                    value={subplebbit.address}
+                    onClick={() => {handleClickTitle(subplebbit.title, subplebbit.address); navigate(`/${subplebbit.address}`)}}
+                      >{subplebbit.title}</option>
+                  ))}
               </select>
             </div>
             <div className="page-jump">
