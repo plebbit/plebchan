@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from './styles/Board.styled';
 import { ReplyFormTable, ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
-import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import { useComment } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showReplyFormLink, setShowReplyFormLink] = useState(true);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const navigate = useNavigate();
@@ -317,7 +317,7 @@ const Thread = ({ setBodyStyle }) => {
         {comment ? (
           <>
             <div className="thread">
-              <div className="post-container op-container">
+              <div className="op-container">
                 <div className="post op">
                   <div className="post-info">
                     <div key={`f-${comment.cid}`} className="file">
@@ -365,7 +365,7 @@ const Thread = ({ setBodyStyle }) => {
                   counter++;
                   const counterString = counter.toString().padStart(8, '0');
                   return (
-                    <div key={`pc-${reply.cid}`} className="post-container reply-container">
+                    <div key={`pc-${reply.cid}`} className="reply-container">
                       <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
                       <div key={`pr-${reply.cid}`} className="post-reply">
                         <div key={`pi-${reply.cid}`} className="post-info">
@@ -397,7 +397,90 @@ const Thread = ({ setBodyStyle }) => {
                   )
                 })
               })}
-              <BottomBar selectedStyle={selectedStyle}>
+            </div>
+            <div className="thread-mobile">
+              <hr />
+              <div className="op-container">
+                  <div key={`mob-po-${comment.cid}`} className="post op">
+                    <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
+                      <a key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
+                      <span className="name-block-mobile">
+                        <span key={`mob-n-${comment.cid}`} className="name-mobile">LongName (...)</span>
+                        &nbsp;
+                        <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile">
+                          (User:&nbsp;
+                          <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
+                          )
+                        </span>
+                        <br key={`mob-br1-${comment.cid}`} />
+                        <span key={`mob-s-${comment.cid}`} className="subject-mobile">
+                          {/* {thread.title ? `${thread.title}` : null} */}
+                          Sometimes titles can be very lon (…)
+                        </span>
+                      </span>
+                      <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
+                        2 weeks ago
+                        &nbsp;
+                        <a key={`mob-no-${comment.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                        <a key={`mob-no2-${comment.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
+                      </span>
+                    </div>
+                    <div key={`mob-f-${comment.cid}`} className="file-mobile">
+                      <a key={`mob-ft${comment.cid}`} className="file-thumb-mobile" href={handleVoidClick} target="_blank">
+                        <img key={`mob-img-${comment.cid}`} src="/assets/plebchan-psycho.png" alt="" />
+                        <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">58 KB JPG</div>
+                      </a>
+                    </div>
+                    <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
+                      {comment.content ? (
+                        <>
+                          {comment.content}
+                        </>
+                      ) : null}
+                    </blockquote>
+                  </div>
+                </div>
+                {comment.replyCount > 0 && 
+                Object.keys(comment.replies.pages.topAll.comments).map(() => {
+                  const renderedComments = renderComments(comment.replies.pages.topAll.comments);
+                  return renderedComments.map(reply => {
+                    let counter = 1;
+                    counter++;
+                    const counterString = counter.toString().padStart(8, '0');
+                    return (
+                  <div key={`mob-rc-${reply.cid}`} className="reply-container">
+                    <div key={`mob-pr-${reply.cid}`} className="post-reply">
+                      <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
+                        <a className="post-menu-button-mobile" title="Post menu">...</a>
+                        <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
+                          <span key={`mob-n-${reply.cid}`} className="name-mobile">{reply.author.displayName || "Anonymous"}</span>
+                          &nbsp;
+                          <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
+                            (User:&nbsp;
+                            <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
+                            )
+                          </span>
+                          <br key={`mob-br-${reply.cid}`} />
+                        </span>
+                        <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
+                          2 weeks ago&nbsp;
+                          <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
+                          <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                        </span>
+                      </div>
+                      <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
+                        <a key={`mob-ql-${reply.cid}`} className="quotelink-mobile" href={handleVoidClick}>
+                          {`>>${counterString}`}{<br />}
+                        </a>
+                        {reply.content}
+                      </blockquote>
+                    </div>
+                  </div>
+                  )
+                })
+              })}
+            </div>
+            <BottomBar selectedStyle={selectedStyle}>
                 <div id="bottombar-desktop">
                   <hr />
                   <span className="bottom-bar-return">
@@ -428,56 +511,55 @@ const Thread = ({ setBodyStyle }) => {
                   <hr />
                 </div>
               </BottomBar>
-              <div id="bottombar-mobile">
-                <TopBar selectedStyle={selectedStyle}>
-                  <hr />
-                  <span className="style-changer">
-                    Style:
-                     
-                    <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
-                      <option value="Yotsuba">Yotsuba</option>
-                      <option value="Yotsuba B">Yotsuba B</option>
-                      <option value="Futaba">Futaba</option>
-                      <option value="Burichan">Burichan</option>
-                      <option value="Tomorrow">Tomorrow</option>
-                      <option value="Photon">Photon</option>
-                    </select>
+            <div id="bottombar-mobile">
+              <TopBar selectedStyle={selectedStyle}>
+                <hr />
+                <span className="style-changer">
+                  Style:
+                   
+                  <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
+                    <option value="Yotsuba">Yotsuba</option>
+                    <option value="Yotsuba B">Yotsuba B</option>
+                    <option value="Futaba">Futaba</option>
+                    <option value="Burichan">Burichan</option>
+                    <option value="Tomorrow">Tomorrow</option>
+                    <option value="Photon">Photon</option>
+                  </select>
+                </span>
+                {comment ? (
+                  comment.replyCount > 0 ? (
+                    <span className="reply-stat">{comment.replyCount} replies</span>
+                  ) : (
+                    <span className="reply-stat">No replies yet</span>
+                )) : (
+                  null
+                )}
+                <hr />
+              </TopBar>
+              <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} selectedStyle={selectedStyle} >
+                <div id="post-form-link-mobile" className="post-button-mobile">
+                  <span className="btn-wrap">
+                    <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
                   </span>
-                  {comment ? (
-                    comment.replyCount > 0 ? (
-                      <span className="reply-stat">{comment.replyCount} replies</span>
-                    ) : (
-                      <span className="reply-stat">No replies yet</span>
-                  )) : (
-                    null
-                  )}
-                  <hr />
-                </TopBar>
-                <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} selectedStyle={selectedStyle} >
-                  <div id="post-form-link-mobile" className="post-button-mobile">
+                </div>
+                <div id="btns-container">
+                  <div id="return-button-mobile">
                     <span className="btn-wrap">
-                      <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                      <Link to={`/${selectedAddress}`}>Return</Link>
                     </span>
                   </div>
-                  <div id="btns-container">
-                    <div id="return-button-mobile">
-                      <span className="btn-wrap">
-                        <Link to={`/${selectedAddress}`}>Return</Link>
-                      </span>
-                    </div>
-                    <div id="catalog-button-mobile">
-                      <span className="btn-wrap">
-                        <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
-                      </span>
-                    </div>
-                    <span className="bottom-bar-top">
-                      <span className="btn-wrap">
-                        <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
-                      </span>
+                  <div id="catalog-button-mobile">
+                    <span className="btn-wrap">
+                      <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
                     </span>
                   </div>
-                </ReplyFormLink>
-              </div>
+                  <span className="bottom-bar-top">
+                    <span className="btn-wrap">
+                      <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                    </span>
+                  </span>
+                </div>
+              </ReplyFormLink>
             </div>
           </>
          ) : (

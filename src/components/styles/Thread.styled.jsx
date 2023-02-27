@@ -662,8 +662,7 @@ export const TopBar = styled.div`
     }
 
     hr {
-      margin-left: calc((100% - 100vw) / 2);
-      margin-right: calc((100% - 100vw) / 2);
+      display: none;
     }
   }
 

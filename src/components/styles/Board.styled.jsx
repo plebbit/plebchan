@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   font-size: 10pt;
@@ -1680,6 +1680,11 @@ export const BoardForm = styled.div`
                 .quotelink-mobile:hover {
                   color: red !important;
                 }
+
+                p:first-of-type::before {
+                  content: '>';
+                  color: #789922;
+                }
               }
             }
           }`;
@@ -1778,6 +1783,17 @@ export const BoardForm = styled.div`
 
               blockquote {
                 font-size: 11pt;
+
+                .quotelink-mobile {
+                  color: #d00;
+                  text-decoration: underline;
+                  font-family: arial;
+                }
+
+                p:first-of-type::before {
+                  content: '>';
+                  color: #789922;
+                }
               }
             }
           }`;
@@ -1885,6 +1901,11 @@ export const BoardForm = styled.div`
                 .quotelink-mobile:hover {
                   color: red !important;
                 }
+
+                p:first-of-type::before {
+                  content: '>';
+                  color: #789922;
+                }
               }
             }
           }`;
@@ -1983,6 +2004,16 @@ export const BoardForm = styled.div`
 
               blockquote {
                 font-size: 12pt;
+
+                .quotelink-mobile {
+                  color: #d00;
+                  text-decoration: underline;
+                }
+
+                p:first-of-type::before {
+                  content: '>';
+                  color: #789922;
+                }
               }
             }
           }`;
@@ -2091,10 +2122,16 @@ export const BoardForm = styled.div`
 
               .quotelink-mobile {
                 color: #81A2BE;
+                text-decoration: underline;
               }
 
               .quotelink-mobile:hover {
                 color: #5F89AC;
+              }
+
+              p:first-of-type::before {
+                content: '>';
+                color: #b5bd68;
               }
             }
           }`;
@@ -2198,10 +2235,16 @@ export const BoardForm = styled.div`
 
               .quotelink-mobile {
                 color: #f60;
+                text-decoration: underline;
               }
 
               .quotelink-mobile:hover {
                 color: #ff3300;
+              }
+
+              p:first-of-type::before {
+                content: '>';
+                color: #789922;
               }
             }
           }`;
@@ -3091,7 +3134,7 @@ export const BoardForm = styled.div`
 
       blockquote > p:first-of-type::before {
         content: '>';
-        color: #789922;
+        color: #b5bd68;
       }
 
       .quotelink {

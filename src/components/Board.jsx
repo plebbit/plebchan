@@ -391,7 +391,7 @@ const Board = ({ setBodyStyle }) => {
             return (
             <>
               <div key={`t-${thread.cid}`} className="thread">
-                <div key={`c-${thread.cid}`} className="post-container op-container">
+                <div key={`c-${thread.cid}`} className="op-container">
                   <div key={`po-${thread.cid}`} className="post op">
                     <hr key={`hr-${thread.cid}`} />
                     <div key={`pi-${thread.cid}`} className="post-info">
@@ -447,7 +447,7 @@ const Board = ({ setBodyStyle }) => {
                   counter++;
                   const counterString = counter.toString().padStart(8, '0');
                   return (
-                <div key={`pc-${reply.cid}`} className="post-container reply-container">
+                <div key={`pc-${reply.cid}`} className="reply-container">
                   <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
                   <div key={`pr-${reply.cid}`} className="post-reply">
                     <div key={`pi-${reply.cid}`} className="post-info">
@@ -479,22 +479,22 @@ const Board = ({ setBodyStyle }) => {
               </div>
               <div key={`mob-t-${thread.cid}`} className="thread-mobile">
                 <hr key={`mob-hr-${thread.cid}`} />
-                <div key={`mob-c-${thread.cid}`} className="post-container op-container">
+                <div key={`mob-c-${thread.cid}`} className="op-container">
                   <div key={`mob-po-${thread.cid}`} className="post op">
                     <div key={`mob-pi-${thread.cid}`} className="post-info-mobile">
                       <a key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
                       <span className="name-block-mobile">
-                        <span key={`mob-n-${thread.cid}`} className="name-mobile">{thread.author.displayName || "Anonymous"}</span>
+                        <span key={`mob-n-${thread.cid}`} className="name-mobile">LongName (...)</span>
                         &nbsp;
                         <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile">
                           (User:&nbsp;
-                          <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">{thread.author.address}</span>
+                          <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
                           )
                         </span>
                         <br key={`mob-br1-${thread.cid}`} />
                         <span key={`mob-s-${thread.cid}`} className="subject-mobile">
                           {/* {thread.title ? `${thread.title}` : null} */}
-                          This is a test title because titles are (…)
+                          Sometimes titles can be very lon (…)
                         </span>
                       </span>
                       <span key={`mob-dt-${thread.cid}`} className="date-time-mobile">
@@ -527,12 +527,12 @@ const Board = ({ setBodyStyle }) => {
                   counter++;
                   const counterString = counter.toString().padStart(8, '0');
                   return (
-                  <div key={`mob-rc-${reply.cid}`} className="post-container reply-container">
+                  <div key={`mob-rc-${reply.cid}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <a className="post-menu-button-mobile" title="Post menu">...</a>
                         <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
-                          <span key={`mob-n-${reply.cid}`} className="name-mobile">{reply.author.displayName || "Anonymous"}</span>
+                          <span key={`mob-n-${reply.cid}`} className="name-mobile">LongName (...)</span>
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
                             (User:&nbsp;
