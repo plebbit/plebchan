@@ -1541,7 +1541,7 @@ export const BoardForm = styled.div`
     }
 
     .post-info {
-      margin: 3px;
+      margin: 5px;
       display: block;
       width: 100%;
     }
@@ -1580,6 +1580,7 @@ export const BoardForm = styled.div`
       max-width: 80%;
       font-size: 11px;
       padding: 3px;
+      opacity: 100%;
     }
 
     ${({ selectedStyle }) => {
@@ -1682,6 +1683,7 @@ export const BoardForm = styled.div`
                 .quotelink-mobile {
                   color: navy !important;
                   text-decoration: underline;
+                  font-family: arial;
                 }
 
                 .quotelink-mobile:hover {
