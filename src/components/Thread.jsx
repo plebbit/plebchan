@@ -5,6 +5,7 @@ import { ReplyFormTable, ReplyFormLink, TopBar, BottomBar } from './styles/Threa
 import { BoardContext } from '../App';
 import { useComment } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
+import { Tooltip } from 'react-tooltip';
 
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
@@ -417,18 +418,54 @@ const Thread = ({ setBodyStyle }) => {
                     <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
                       <a key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
                       <span className="name-block-mobile">
-                        <span key={`mob-n-${comment.cid}`} className="name-mobile">LongName (...)</span>
+                        {comment.author.displayName
+                        ? comment.author.displayName.length > 15
+                        ? <>
+                            <Tooltip key={`mob-tt-nm-${comment.cid}`} id="tt-name-mobile" className="tooltip" />
+                            <span key={`mob-n-${comment.cid}`} className="name-mobile"
+                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-content={comment.author.displayName}
+                            data-tooltip-place="top">
+                              {comment.author.displayName.slice(0, 15) + " (...)"}
+                            </span>
+                          </> 
+                          : <span key={`mob-n-${comment.cid}`} className="name-mobile">
+                            {comment.author.displayName}</span>
+                        : <span key={`mob-n-${comment.cid}`} className="name-mobile">
+                          Anonymous</span>}
                         &nbsp;
                         <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile">
                           (User:&nbsp;
-                          <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
-                          )
+                          {comment.author.address.length > 15 ?
+                          <>
+                            <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
+                            <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile"
+                            data-tooltip-id="tt-address-mobile"
+                            data-tooltip-content={comment.author.address}
+                            data-tooltip-place="top">
+                              {comment.author.address.slice(0, 15) + "..."}
+                            </span>
+                          </>
+                          : <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile">
+                            {comment.author.address}
+                          </span>}
+                          )&nbsp;
                         </span>
                         <br key={`mob-br1-${comment.cid}`} />
-                        <span key={`mob-s-${comment.cid}`} className="subject-mobile">
-                          {/* {thread.title ? `${thread.title}` : null} */}
-                          Sometimes titles can be very lon (…)
-                        </span>
+                        {comment.title ? (
+                            comment.title.length > 30 ?
+                            <>
+                              <Tooltip key={`mob-tt-tm-${comment.cid}`} id="tt-title-mobile" className="tooltip" />
+                              <span key={`mob-t-${comment.cid}`} className="subject-mobile"
+                              data-tooltip-id="tt-title-mobile"
+                              data-tooltip-content={comment.title}
+                              data-tooltip-place="top">
+                                {comment.title.slice(0, 30) + " (...)"}
+                              </span>
+                            </>
+                            : <span key={`mob-t-${comment.cid}`} className="subject-mobile">
+                              {comment.title}
+                            </span>) : null}
                       </span>
                       <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
                         2 weeks ago
@@ -465,11 +502,37 @@ const Thread = ({ setBodyStyle }) => {
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <a className="post-menu-button-mobile" title="Post menu">...</a>
                         <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
-                          <span key={`mob-n-${reply.cid}`} className="name-mobile">{reply.author.displayName || "Anonymous"}</span>
+                          {reply.author.displayName
+                          ? reply.author.displayName.length > 12
+                          ? <>
+                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name-mobile" className="tooltip" />
+                              <span key={`mob-n-${reply.cid}`} className="name-mobile"
+                              data-tooltip-id="tt-name-mobile"
+                              data-tooltip-content={reply.author.displayName}
+                              data-tooltip-place="top">
+                                {reply.author.displayName.slice(0, 12) + " (...)"}
+                              </span>
+                            </>
+                            : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                              {reply.author.displayName}</span>
+                          : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                            Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
                             (User:&nbsp;
-                            <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
+                            {reply.author.address.length > 12 ?
+                            <>
+                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
+                              <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
+                              data-tooltip-id="tt-address-mobile"
+                              data-tooltip-content={reply.author.address}
+                              data-tooltip-place="top">
+                                {reply.author.address.slice(0, 12) + "..."}
+                              </span>
+                            </>
+                            : <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
+                              {reply.author.address}
+                            </span>}
                             )
                           </span>
                           <br key={`mob-br-${reply.cid}`} />

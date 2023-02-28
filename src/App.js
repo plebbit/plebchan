@@ -6,6 +6,7 @@ import Board from './components/Board';
 import Thread from './components/Thread';
 import Catalog from './components/Catalog';
 import { createGlobalStyle } from 'styled-components';
+import 'react-tooltip/dist/react-tooltip.css';
 
 export const BoardContext = React.createContext();
 

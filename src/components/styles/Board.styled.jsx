@@ -1575,6 +1575,13 @@ export const BoardForm = styled.div`
       display: none;
     }
 
+    .tooltip {
+      border-radius: 0;
+      max-width: 80%;
+      font-size: 11px;
+      padding: 3px;
+    }
+
     ${({ selectedStyle }) => {
       switch (selectedStyle) {
         case 'Yotsuba':

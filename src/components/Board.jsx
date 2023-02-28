@@ -5,6 +5,7 @@ import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm
 import ImageBanner from './ImageBanner';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
+import { Tooltip } from 'react-tooltip';
 
 
 const Board = ({ setBodyStyle }) => {
@@ -493,19 +494,56 @@ const Board = ({ setBodyStyle }) => {
                   <div key={`mob-po-${thread.cid}`} className="post op">
                     <div key={`mob-pi-${thread.cid}`} className="post-info-mobile">
                       <a key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
-                      <span className="name-block-mobile">
-                        <span key={`mob-n-${thread.cid}`} className="name-mobile">LongName (...)</span>
+                      <span key={`mob-nbm-${thread.cid}`} className="name-block-mobile">
+                        {thread.author.displayName
+                        ? thread.author.displayName.length > 15
+                        ? <>
+                            <Tooltip key={`mob-tt-nm-${thread.cid}`} id="tt-name-mobile" className="tooltip" />
+                            <span key={`mob-n-${thread.cid}`} className="name-mobile"
+                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-content={thread.author.displayName}
+                            data-tooltip-place="top">
+                              {thread.author.displayName.slice(0, 15) + " (...)"}
+                            </span>
+                          </> 
+                          : <span key={`mob-n-${thread.cid}`} className="name-mobile">
+                            {thread.author.displayName}</span>
+                        : <span key={`mob-n-${thread.cid}`} className="name-mobile">
+                          Anonymous</span>}
                         &nbsp;
                         <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile">
                           (User:&nbsp;
-                          <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
-                          )
+                          {thread.author.address.length > 15 ?
+                          <>
+                            <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
+                            <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile"
+                            data-tooltip-id="tt-address-mobile"
+                            data-tooltip-content={thread.author.address}
+                            data-tooltip-place="top">
+                              {thread.author.address.slice(0, 15) + "..."}
+                            </span>
+                          </>
+                          : <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile">
+                            {thread.author.address}
+                          </span>}
+                          )&nbsp;
                         </span>
                         <br key={`mob-br1-${thread.cid}`} />
-                        <span key={`mob-s-${thread.cid}`} className="subject-mobile">
-                          {/* {thread.title ? `${thread.title}` : null} */}
-                          Sometimes titles can be very lon (…)
-                        </span>
+                        {thread.title ? (
+                          thread.title.length > 30 ?
+                          <>
+                            <Tooltip key={`mob-tt-tm-${thread.cid}`} id="tt-title-mobile" className="tooltip" />
+                            <span key={`mob-t-${thread.cid}`} className="subject-mobile"
+                            data-tooltip-id="tt-title-mobile"
+                            data-tooltip-content={thread.title}
+                            data-tooltip-place="top">
+                              {thread.title.slice(0, 30) + " (...)"}
+                            </span>
+                          </>
+                        : <span key={`mob-t-${thread.cid}`} className="subject-mobile">
+                          {thread.title}
+                          </span>) 
+                        : null}
                       </span>
                       <span key={`mob-dt-${thread.cid}`} className="date-time-mobile">
                         2 weeks ago
@@ -542,11 +580,37 @@ const Board = ({ setBodyStyle }) => {
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <a className="post-menu-button-mobile" title="Post menu">...</a>
                         <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
-                          <span key={`mob-n-${reply.cid}`} className="name-mobile">LongName (...)</span>
+                          {reply.author.displayName
+                          ? reply.author.displayName.length > 12
+                          ? <>
+                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name-mobile" className="tooltip" />
+                              <span key={`mob-n-${reply.cid}`} className="name-mobile"
+                              data-tooltip-id="tt-name-mobile"
+                              data-tooltip-content={reply.author.displayName}
+                              data-tooltip-place="top">
+                                {reply.author.displayName.slice(0, 12) + " (...)"}
+                              </span>
+                            </>
+                            : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                              {reply.author.displayName}</span>
+                          : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                            Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
                             (User:&nbsp;
-                            <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile" title="Highlight posts by this address">CCxfJWFT...</span>
+                            {reply.author.address.length > 12 ?
+                            <>
+                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
+                              <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
+                              data-tooltip-id="tt-address-mobile"
+                              data-tooltip-content={reply.author.address}
+                              data-tooltip-place="top">
+                                {reply.author.address.slice(0, 12) + "..."}
+                              </span>
+                            </>
+                            : <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
+                              {reply.author.address}
+                            </span>}
                             )
                           </span>
                           <br key={`mob-br-${reply.cid}`} />
