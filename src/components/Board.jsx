@@ -19,16 +19,38 @@ const Board = ({ setBodyStyle }) => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(5);
+  const [loadedFeed, setLoadedFeed] = useState([]);
+
+
+  const handleScroll = (event) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
+    if (scrollTop + clientHeight >= scrollHeight) {
+      // const prevScrollPosition = event.currentTarget.scrollTop;
+      setEndIndex(endIndex + 5);
+      // // Scroll up the page by 10 pixels after new content is loaded
+      // event.currentTarget.scrollTo(0, prevScrollPosition - 10);
+    }
+  };
+
 
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
+  const renderedFeed = loadedFeed.slice(startIndex, endIndex);
 
-  // console.log(feed);
+  // console.log(renderedFeed);
 
   const tryLoadMore = async () => {
-    try {loadMore()} 
-    catch (e)
-    {await new Promise(resolve => setTimeout(resolve, 1000))}
-  }
+    try {
+      await loadMore();
+      const newFeed = [...loadedFeed, ...feed];
+      setLoadedFeed(newFeed);
+      setStartIndex(endIndex);
+      setEndIndex(endIndex + 5);
+    } catch (e) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  };
 
   const { publishComment } = useAccountsActions();
 
@@ -250,7 +272,6 @@ const Board = ({ setBodyStyle }) => {
       return [comment];
     }).flat();
   }
-  
 
   return (
     <Container>
@@ -388,14 +409,14 @@ const Board = ({ setBodyStyle }) => {
         </div>
       </TopBar>
       <BoardForm selectedStyle={selectedStyle}>
-        <div className="board">
+        <div onScroll={handleScroll} className="board">
           <InfiniteScroll
             pageStart={0}
             loadMore={tryLoadMore}
             hasMore={hasMore}
             loader={<div>Loading...</div>}
           >
-            {feed.map(thread => {
+            {renderedFeed.map(thread => {
             let counter = 1;
             const { replies: { pages: { topAll: { comments } } } } = thread;
             const renderedComments = renderComments(comments);
