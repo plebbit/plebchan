@@ -486,7 +486,8 @@ const Board = ({ setBodyStyle }) => {
                         <>
                           <blockquote key={`bq-${thread.cid}`}>
                             {thread.content.slice(0, 2000)}
-                            <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) Thread content too long.&nbsp;
+                            <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
+                            <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) Thread too long.&nbsp;
                               <Link key={`ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
@@ -646,13 +647,22 @@ const Board = ({ setBodyStyle }) => {
                         <div key={`mob-fi-${thread.cid}`} className="file-info-mobile">58 KB JPG</div>
                       </a>
                     </div>
-                    <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
-                      {thread.content ? (
+                    {thread.content ? (
+                        thread.content.length > 1500 ?
                         <>
-                          {thread.content}
+                          <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
+                            {thread.content.slice(0, 1500)}
+                            <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
+                            <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
+                             Thread too long.&nbsp;
+                              <Link key={`mob-ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              &nbsp;to view. </span>
+                          </blockquote>
                         </>
-                      ) : null}
-                    </blockquote>
+                      : <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
+                          {thread.content}
+                        </blockquote>)
+                      : null}
                   </div>
                   <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
                     <span key={`mob-info-${thread.cid}`} className="info-mobile">{thread.replyCount} Replies / ? Images</span>
@@ -686,20 +696,20 @@ const Board = ({ setBodyStyle }) => {
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
                             (User:&nbsp;
-                            {reply.author.address.length > 12 ?
+                            {reply.author.address.length > 10 ?
                             <>
                               <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
                               <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
                               data-tooltip-id="tt-address-mobile"
                               data-tooltip-content={reply.author.address}
                               data-tooltip-place="top">
-                                {reply.author.address.slice(0, 12) + "..."}
+                                {reply.author.address.slice(0, 10) + "..."}
                               </span>
                             </>
                             : <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
                               {reply.author.address}
                             </span>}
-                            )
+                            )&nbsp;
                           </span>
                           <br key={`mob-br-${reply.cid}`} />
                         </span>
@@ -709,12 +719,28 @@ const Board = ({ setBodyStyle }) => {
                           <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
                         </span>
                       </div>
-                      <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
-                        <a key={`mob-ql-${reply.cid}`} className="quotelink-mobile" href={handleVoidClick}>
-                          {`>>${counterString}`}{<br />}
-                        </a>
-                        {reply.content}
-                      </blockquote>
+                      {reply.content ? (
+                        reply.content.length > 1000 ?
+                        <>
+                          <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
+                            <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                              {`>>${counterString}`}{<br />}
+                            </a>
+                            {reply.content.slice(0, 1000)}
+                            <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
+                            <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
+                            Comment too long.&nbsp;
+                              <Link key={`mob-ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                            &nbsp;to view. </span>
+                          </blockquote>
+                        </>
+                      : <blockquote key={`mob-pm-${thread.cid}`} className="post-message">
+                          <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                            {`>>${counterString}`}{<br />}
+                          </a>
+                          {reply.content}
+                        </blockquote>)
+                      : null}
                     </div>
                   </div>
                 )})}

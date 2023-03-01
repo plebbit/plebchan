@@ -343,12 +343,54 @@ const Thread = ({ setBodyStyle }) => {
                         </a>
                       </div>
                     <span className="name-block">
-                      <span key={`q-${comment.cid}`} className="title">{comment.title}</span>
+                        {comment.title ? (
+                          comment.title.length > 75 ?
+                          <>
+                            <Tooltip key={`mob-tt-tm-${comment.cid}`} id="tt-title-mobile" className="tooltip" />
+                            <span key={`q-${comment.cid}`} className="title"
+                            data-tooltip-id="tt-title-mobile"
+                            data-tooltip-content={comment.title}
+                            data-tooltip-place="top">
+                              {comment.title.slice(0, 75) + " (...)"}
+                            </span>
+                          </>
+                        : <span key={`q-${comment.cid}`} className="title">
+                          {comment.title}
+                          </span>) 
+                        : null}
                       &nbsp;
-                      <span className="name">{comment.author.displayName || "Anonymous"}</span>
+                      {comment.author.displayName
+                        ? comment.author.displayName.length > 20
+                        ? <>
+                            <Tooltip key={`mob-tt-nm-${comment.cid}`} id="tt-name-mobile" className="tooltip" />
+                            <span key={`n-${comment.cid}`} className="name"
+                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-content={comment.author.displayName}
+                            data-tooltip-place="top">
+                              {comment.author.displayName.slice(0, 20) + " (...)"}
+                            </span>
+                          </> 
+                          : <span key={`n-${comment.cid}`} className="name">
+                            {comment.author.displayName}</span>
+                        : <span key={`n-${comment.cid}`} className="name">
+                          Anonymous</span>}
+                        &nbsp;
                       &nbsp;
                       <span className="poster-address">
-                        (User: {comment.author.address})
+                        (User:&nbsp;
+                          {comment.author.address.length > 20 ?
+                        <>
+                          <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
+                          <span key={`pa-${comment.cid}`} className="poster-address"
+                          data-tooltip-id="tt-address-mobile"
+                          data-tooltip-content={comment.author.address}
+                          data-tooltip-place="top">
+                            {comment.author.address.slice(0, 20) + "..."}
+                          </span>
+                        </>
+                        : <span key={`pa-${comment.cid}`} className="poster-address">
+                          {comment.author.address}
+                        </span>})
                       </span>
                       &nbsp;
                       <span className="date-time" data-utc="data">2 weeks ago</span>
@@ -384,10 +426,37 @@ const Thread = ({ setBodyStyle }) => {
                         <div key={`pi-${reply.cid}`} className="post-info">
                         &nbsp;
                           <span key={`nb-${reply.cid}`} className="nameblock">
-                            <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
+                          {reply.author.displayName
+                          ? reply.author.displayName.length > 20
+                          ? <>
+                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name" className="tooltip" />
+                              <span key={`mob-n-${reply.cid}`} className="name"
+                              data-tooltip-id="tt-name"
+                              data-tooltip-content={reply.author.displayName}
+                              data-tooltip-place="top">
+                                {reply.author.displayName.slice(0, 20) + " (...)"}
+                              </span>
+                            </>
+                            : <span key={`mob-n-${reply.cid}`} className="name">
+                              {reply.author.displayName}</span>
+                          : <span key={`mob-n-${reply.cid}`} className="name">
+                            Anonymous</span>}
                             &nbsp;
                             <span key={`pa-${reply.cid}`} className="poster-address">
-                              (User: {reply.author.address})
+                              (User:&nbsp;
+                              {reply.author.address.length > 20 ?
+                              <>
+                                <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
+                                <span key={`mob-ha-${reply.cid}`}
+                                data-tooltip-id="tt-address"
+                                data-tooltip-content={reply.author.address}
+                                data-tooltip-place="top">
+                                  {reply.author.address.slice(0, 20) + "..."}
+                                </span>
+                              </>
+                              : <span key={`mob-ha-${reply.cid}`}>
+                                {reply.author.address}
+                              </span>})
                             </span>
                           </span>
                           &nbsp;
