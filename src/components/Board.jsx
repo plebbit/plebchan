@@ -416,14 +416,51 @@ const Board = ({ setBodyStyle }) => {
                         </a>
                       </div>
                       <span key={`nb-${thread.cid}`} className="name-block">
-                        <span key={`q-${thread.cid}`} className="title">
-                          {thread.title ? `${thread.title}` : null}&nbsp;
-                        </span>
-                        <span key={`n-${thread.cid}`} className="name">{thread.author.displayName || "Anonymous"}</span>
+                        {thread.title ? (
+                          thread.title.length > 75 ?
+                          <>
+                            <Tooltip key={`mob-tt-tm-${thread.cid}`} id="tt-title-mobile" className="tooltip" />
+                            <span key={`q-${thread.cid}`} className="title"
+                            data-tooltip-id="tt-title-mobile"
+                            data-tooltip-content={thread.title}
+                            data-tooltip-place="top">
+                              {thread.title.slice(0, 75) + " (...)"}
+                            </span>
+                          </>
+                        : <span key={`q-${thread.cid}`} className="title">
+                          {thread.title}
+                          </span>) 
+                        : null}&nbsp;
+                        {thread.author.displayName
+                        ? thread.author.displayName.length > 20
+                        ? <>
+                            <Tooltip key={`mob-tt-nm-${thread.cid}`} id="tt-name-mobile" className="tooltip" />
+                            <span key={`n-${thread.cid}`} className="name"
+                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-content={thread.author.displayName}
+                            data-tooltip-place="top">
+                              {thread.author.displayName.slice(0, 20) + " (...)"}
+                            </span>
+                          </> 
+                          : <span key={`n-${thread.cid}`} className="name">
+                            {thread.author.displayName}</span>
+                        : <span key={`n-${thread.cid}`} className="name">
+                          Anonymous</span>}
                         &nbsp;
-                        <span key={`pa-${thread.cid}`} className="poster-address">
-                          (User: {thread.author.address})
-                        </span>
+                        (User:&nbsp;
+                        {thread.author.address.length > 15 ?
+                        <>
+                          <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
+                          <span key={`pa-${thread.cid}`} className="poster-address"
+                          data-tooltip-id="tt-address-mobile"
+                          data-tooltip-content={thread.author.address}
+                          data-tooltip-place="top">
+                            {thread.author.address.slice(0, 15) + "..."}
+                          </span>
+                        </>
+                        : <span key={`pa-${thread.cid}`} className="poster-address">
+                          {thread.author.address}
+                        </span>})
                         &nbsp;
                         <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
                         &nbsp;
@@ -444,13 +481,20 @@ const Board = ({ setBodyStyle }) => {
                           </span>
                         </div>
                       </span>
-                      <blockquote key={`bq-${thread.cid}`}>
-                        {thread.content ? (
-                          <>
-                            {thread.content}
-                          </>
-                        ) : null}
-                      </blockquote>
+                      {thread.content ? (
+                        thread.content.length > 2000 ?
+                        <>
+                          <blockquote key={`bq-${thread.cid}`}>
+                            {thread.content.slice(0, 2000)}
+                            <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) Thread content too long.&nbsp;
+                              <Link key={`ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              &nbsp;to view. </span>
+                          </blockquote>
+                        </>
+                      : <blockquote key={`bq-${thread.cid}`}>
+                          {thread.content}
+                        </blockquote>)
+                      : null}
                     </div>
                   </div>
                 </div>
@@ -463,10 +507,38 @@ const Board = ({ setBodyStyle }) => {
                   <div key={`pr-${reply.cid}`} className="post-reply">
                     <div key={`pi-${reply.cid}`} className="post-info">
                       <span key={`nb-${reply.cid}`} className="nameblock">
-                        <span key={`n-${reply.cid}`} className="name">{reply.author.displayName || "Anonymous"}</span>
+                        {reply.author.displayName
+                          ? reply.author.displayName.length > 12
+                          ? <>
+                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name" className="tooltip" />
+                              <span key={`mob-n-${reply.cid}`} className="name"
+                              data-tooltip-id="tt-name"
+                              data-tooltip-content={reply.author.displayName}
+                              data-tooltip-place="top">
+                                {reply.author.displayName.slice(0, 12) + " (...)"}
+                              </span>
+                            </>
+                            : <span key={`mob-n-${reply.cid}`} className="name">
+                              {reply.author.displayName}</span>
+                          : <span key={`mob-n-${reply.cid}`} className="name">
+                            Anonymous</span>}
                         &nbsp;
                         <span key={`pa-${reply.cid}`} className="poster-address">
-                          (User: {reply.author.address})
+                          (User:&nbsp;
+                            {reply.author.address.length > 12 ?
+                            <>
+                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
+                              <span key={`mob-ha-${reply.cid}`}
+                              data-tooltip-id="tt-address"
+                              data-tooltip-content={reply.author.address}
+                              data-tooltip-place="top">
+                                {reply.author.address.slice(0, 12) + "..."}
+                              </span>
+                            </>
+                            : <span key={`mob-ha-${reply.cid}`}>
+                              {reply.author.address}
+                            </span>}
+                          )
                         </span>
                       </span>
                       &nbsp;
@@ -478,12 +550,28 @@ const Board = ({ setBodyStyle }) => {
                       </span>
                       <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                     </div>
-                    <blockquote key={`pm-${reply.cid}`} className="post-message">
-                      <a className="quotelink" href={handleVoidClick}>
-                        {`>>${counterString}`}{<br />}
-                      </a>
-                      {reply.content}
-                    </blockquote>
+                    {reply.content ? (
+                        reply.content.length > 1000 ?
+                        <>
+                          <blockquote key={`pm-${reply.cid}`} className="post-message">
+                            <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                              {`>>${counterString}`}{<br />}
+                            </a>
+                            {reply.content.slice(0, 1000)}
+                            <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
+                            <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
+                            Comment too long.&nbsp;
+                              <Link key={`ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                            &nbsp;to view. </span>
+                          </blockquote>
+                        </>
+                      : <blockquote key={`pm-${thread.cid}`} className="post-message">
+                          <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                            {`>>${counterString}`}{<br />}
+                          </a>
+                          {reply.content}
+                        </blockquote>)
+                      : null}
                   </div>
                 </div>
                 )})}

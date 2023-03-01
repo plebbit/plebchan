@@ -1575,14 +1575,6 @@ export const BoardForm = styled.div`
       display: none;
     }
 
-    .tooltip {
-      border-radius: 0;
-      max-width: 80%;
-      font-size: 11px;
-      padding: 3px;
-      opacity: 100%;
-    }
-
     ${({ selectedStyle }) => {
       switch (selectedStyle) {
         case 'Yotsuba':
@@ -2515,6 +2507,19 @@ export const BoardForm = styled.div`
         color: #00e !important;
       }
 
+      .ttl {
+        color: #707070;
+      }
+
+      .ttl-link {
+        text-decoration: none;
+        color: #00e;
+      }
+
+      .ttl-link:hover {
+        color: red;
+      }
+
       .post-menu-button {
         color: #000080;
         margin-left: 5px;
@@ -2658,6 +2663,19 @@ export const BoardForm = styled.div`
 
       .reply-link:not(:hover) {
         color: #34345c !important;
+      }
+
+      .ttl {
+        color: #707070;
+      }
+
+      .ttl-link {
+        text-decoration: none;
+        color: #34345c;
+      }
+
+      .ttl-link:hover {
+        color: #d00;
       }
 
       .post-menu-button {
@@ -2804,6 +2822,13 @@ export const BoardForm = styled.div`
         color: #00e !important;
       }
 
+      .ttl-link {
+        color: #00e;
+      }
+
+      .ttl-link:hover {
+        color: red;
+      }
 
       .post-menu-button {
         color: #00e;
@@ -2953,6 +2978,18 @@ export const BoardForm = styled.div`
         color: #000 !important;
       }
 
+      .ttl {
+        color: #707070;
+      }
+
+      .ttl-link {
+        color: #34345c;
+      }
+
+      .ttl-link:hover {
+        color: #d00;
+      }
+
       .post-menu-button {
         color: #34345c;
         margin-left: 5px;
@@ -3087,6 +3124,19 @@ export const BoardForm = styled.div`
 
       .reply-link:not(:hover) {
         color: #81a2be;
+      }
+
+      .ttl {
+        color: #707070;
+      }
+
+      .ttl-link {
+        text-decoration: none;
+        color: #81a2be;
+      }
+
+      .ttl-link:hover {
+        color: #5f89ab;
       }
 
       .reply-link:hover {
@@ -3236,6 +3286,19 @@ export const BoardForm = styled.div`
 
       .reply-link:not(:hover) {
         color: #f60 !important;
+      }
+
+      .ttl {
+        color: #707070;
+      }
+
+      .ttl-link {
+        text-decoration: none;
+        color: #f60;
+      }
+
+      .ttl-link:hover {
+        color: #ff3300;
       }
 
       .post-menu-button {

@@ -18,6 +18,14 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.color};
     font-family: ${props => props.fontFamily};
   }
+  
+  .tooltip {
+    border-radius: 0;
+    max-width: 40%;
+    font-size: 11px;
+    padding: 3px;
+    opacity: 100%;
+  }
 `;
 
 export default function App() {
