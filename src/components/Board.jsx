@@ -16,43 +16,40 @@ const Board = ({ setBodyStyle }) => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
+  const { publishComment } = useAccountsActions();
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(5);
+  const [endIndex, setEndIndex] = useState(2);
   const [loadedFeed, setLoadedFeed] = useState([]);
+  const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
+  const [selectedFeed, setSelectedFeed] = useState(feed);
+  const renderedFeed = selectedFeed.slice(startIndex, endIndex);
 
 
   const handleScroll = (event) => {
     const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
     if (scrollTop + clientHeight >= scrollHeight) {
-      // const prevScrollPosition = event.currentTarget.scrollTop;
       setEndIndex(endIndex + 5);
-      // // Scroll up the page by 10 pixels after new content is loaded
-      // event.currentTarget.scrollTo(0, prevScrollPosition - 10);
     }
   };
 
-
-  const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
-  const renderedFeed = loadedFeed.slice(startIndex, endIndex);
-
-  // console.log(renderedFeed);
+  useEffect(() => {
+    setSelectedFeed(feed);
+  }, [feed]);
 
   const tryLoadMore = async () => {
     try {
-      await loadMore();
+      loadMore();
       const newFeed = [...loadedFeed, ...feed];
       setLoadedFeed(newFeed);
       setStartIndex(endIndex);
-      setEndIndex(endIndex + 5);
+      setEndIndex(endIndex + 2);
     } catch (e) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   };
-
-  const { publishComment } = useAccountsActions();
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
@@ -151,6 +148,7 @@ const Board = ({ setBodyStyle }) => {
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
+    setSelectedFeed(feed.filter(feed => feed.title === title));
   };
 
   const handleSelectChange = (event) => {
@@ -507,8 +505,9 @@ const Board = ({ setBodyStyle }) => {
                         <>
                           <blockquote key={`bq-${thread.cid}`}>
                             {thread.content.slice(0, 2000)}
+                            <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) 
                             <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
-                            <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) Thread too long.&nbsp;
+                            Post too long.&nbsp;
                               <Link key={`ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
@@ -675,7 +674,7 @@ const Board = ({ setBodyStyle }) => {
                             {thread.content.slice(0, 1500)}
                             <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
-                             Thread too long.&nbsp;
+                             Post too long.&nbsp;
                               <Link key={`mob-ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
