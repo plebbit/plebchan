@@ -7,6 +7,7 @@ import { useComment } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import { Tooltip } from 'react-tooltip';
 
+
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
   const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
@@ -15,7 +16,10 @@ const Thread = ({ setBodyStyle }) => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const comment = useComment(`${selectedThread}`);
   const { subplebbitAddress, threadCid } = useParams();
+
+
 
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -25,8 +29,8 @@ const Thread = ({ setBodyStyle }) => {
       setSelectedTitle(selectedSubplebbit.title);
     }
   }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
-  const comment = useComment(`${selectedThread}`);
   
+
   useEffect(() => {
     let didCancel = false;
     fetch(
@@ -44,6 +48,7 @@ const Thread = ({ setBodyStyle }) => {
     };
   }, []);
 
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -57,12 +62,16 @@ const Thread = ({ setBodyStyle }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, visible]);
 
+
+
   const handleVoidClick = () => {}
+
 
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
   };
+
 
   const handleSelectChange = (event) => {
     const selected = event.target.value;
@@ -72,15 +81,28 @@ const Thread = ({ setBodyStyle }) => {
     navigate(`/${selected}`);
   }
 
+
   const handleClickHelp = () => {
     alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
   };
 
+
   const handleClickForm = () => {
     setShowReplyFormLink(false);
     setShowReplyForm(true);
-    navigate(`/p/${selectedAddress}/thread/${selectedThread}/post`);
+    navigate(`/${selectedAddress}/thread/${selectedThread}/post`);
   };
+
+
+  const handleClickTop = () => {
+    window.scrollTo(0, 0);
+  }
+
+
+  const handleClickBottom = () => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
 
   const handleStyleChange = (event) => {
     switch (event.target.value) {
@@ -148,13 +170,7 @@ const Thread = ({ setBodyStyle }) => {
     }
   }
 
-  const handleClickTop = () => {
-    window.scrollTo(0, 0);
-  }
 
-  const handleClickBottom = () => {
-    window.scrollTo(0, document.body.scrollHeight);
-  }
 
   function renderComments(comments) {
     const commentKeys = Object.keys(comments);
@@ -170,6 +186,7 @@ const Thread = ({ setBodyStyle }) => {
     return renderedComments;
   }
   
+
 
   return (
     <Container>
@@ -232,12 +249,12 @@ const Thread = ({ setBodyStyle }) => {
         <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} selectedStyle={selectedStyle} >
           <div id="return-button-mobile">
             <span className="btn-wrap">
-              <Link to={`/p/${selectedAddress}`}>Return</Link>
+              <Link to={`/${selectedAddress}`}>Return</Link>
             </span>
           </div>
           <div id="catalog-button-mobile">
             <span className="btn-wrap">
-              <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+              <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
             </span>
           </div>
           <div id="bottom-button-mobile">
@@ -312,12 +329,12 @@ const Thread = ({ setBodyStyle }) => {
         </span>
         <span className="return-button" id="return-button-desktop">
           [
-          <Link to={`/p/${selectedAddress}`}>Return</Link>
+          <Link to={`/${selectedAddress}`}>Return</Link>
           ]
         </span>
         <span className="return-button catalog-button" id="catalog-button-desktop">
           [
-          <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+          <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
           ]
         </span>
         <span className="return-button catalog-button" id="bottom-button-desktop">
@@ -638,12 +655,12 @@ const Thread = ({ setBodyStyle }) => {
                   <hr />
                   <span className="bottom-bar-return">
                     [
-                    <Link to={`/p/${selectedAddress}`}>Return</Link>
+                    <Link to={`/${selectedAddress}`}>Return</Link>
                     ]
                   </span>
                   <span className="bottom-bar-catalog">
                     [
-                    <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+                    <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
                     ]
                   </span>
                   <span className="bottom-bar-top">
@@ -698,12 +715,12 @@ const Thread = ({ setBodyStyle }) => {
                 <div id="btns-container">
                   <div id="return-button-mobile">
                     <span className="btn-wrap">
-                      <Link to={`/p/${selectedAddress}`}>Return</Link>
+                      <Link to={`/${selectedAddress}`}>Return</Link>
                     </span>
                   </div>
                   <div id="catalog-button-mobile">
                     <span className="btn-wrap">
-                      <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+                      <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
                     </span>
                   </div>
                   <span className="bottom-bar-top">

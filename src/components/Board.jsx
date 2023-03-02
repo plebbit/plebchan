@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
-import { useFeed, useAccountsActions, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 
@@ -27,9 +27,8 @@ const Board = ({ setBodyStyle }) => {
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const renderedFeed = selectedFeed.slice(startIndex, endIndex);
   const { subplebbitAddress } = useParams();
-  const subplebbit = useSubplebbit(subplebbitAddress);
 
-  // console.log(subplebbit);
+
 
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -43,6 +42,7 @@ const Board = ({ setBodyStyle }) => {
   useEffect(() => {
     setSelectedFeed(feed);
   }, [feed]);
+
 
   useEffect(() => {
     let didCancel = false;
@@ -61,6 +61,7 @@ const Board = ({ setBodyStyle }) => {
     };
   }, []);
 
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -75,6 +76,7 @@ const Board = ({ setBodyStyle }) => {
   }, [prevScrollPos, visible]);
 
 
+
   const tryLoadMore = async () => {
     try {
       loadMore();
@@ -87,6 +89,7 @@ const Board = ({ setBodyStyle }) => {
     }
   };
 
+
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       console.log('challenge success', {publishedCid: challengeVerification.publication.cid})
@@ -96,6 +99,7 @@ const Board = ({ setBodyStyle }) => {
       alert("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   }
+
 
   const onChallenge = async (challenges, comment) => {
     let challengeAnswers = [];
@@ -110,7 +114,9 @@ const Board = ({ setBodyStyle }) => {
     }
   }
   
+
   const onError = (error) => console.error(error)
+
 
   const getChallengeAnswersFromUser = async (challenges) => {
     return new Promise((resolve, reject) => {
@@ -150,6 +156,7 @@ const Board = ({ setBodyStyle }) => {
   };
 
 
+
   const handleScroll = (event) => {
     const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
     if (scrollTop + clientHeight >= scrollHeight) {
@@ -157,7 +164,9 @@ const Board = ({ setBodyStyle }) => {
     }
   };
   
+
   const handleVoidClick = () => {}
+
 
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
@@ -165,28 +174,33 @@ const Board = ({ setBodyStyle }) => {
     setSelectedFeed(feed.filter(feed => feed.title === title));
   };
 
+
   const handleClickHelp = () => {
     alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
   };
 
+
   const handleClickForm = () => {
     setShowPostFormLink(false);
     setShowPostForm(true);
-    navigate(`/p/${selectedAddress}/post`);
+    navigate(`/${selectedAddress}/post`);
   };
+
 
   const handleClickThread = (thread) => {
     setSelectedThread(thread);
   }
+
 
   const handleSelectChange = (event) => {
     const selected = event.target.value;
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
-    navigate(`/p/${selected}`);
+    navigate(`/${selected}`);
   }
   
+
   const handlePublishComment = async () => {
     try {
       const pendingComment = await publishComment({
@@ -205,6 +219,7 @@ const Board = ({ setBodyStyle }) => {
       console.error(error);
     }
   };
+
 
   const handleStyleChange = (event) => {
     switch (event.target.value) {
@@ -273,6 +288,7 @@ const Board = ({ setBodyStyle }) => {
   }
 
 
+
   function renderComments(comments) {
     return comments.map(comment => {
       const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
@@ -286,6 +302,8 @@ const Board = ({ setBodyStyle }) => {
     }).flat();
   }
 
+
+
   return (
     <Container>
       <NavBar selectedStyle={selectedStyle}>
@@ -293,7 +311,7 @@ const Board = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
@@ -412,12 +430,12 @@ const Board = ({ setBodyStyle }) => {
         </span>
         <div id="catalog-button-desktop">
           [
-          <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+          <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
           ]
         </div>
         <div id="catalog-button-mobile">
           <span className="btn-wrap">
-            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+            <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
           </span>
         </div>
       </TopBar>
@@ -504,7 +522,7 @@ const Board = ({ setBodyStyle }) => {
                           &nbsp;
                           <span key={`rl1-${thread.cid}`}>
                             [
-                            <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
+                            <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
                             ]
                           </span>
                         </span>
@@ -523,7 +541,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) 
                             <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
                             Post too long.&nbsp;
-                              <Link key={`ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
                         </>
@@ -597,7 +615,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
                             <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
                             Comment too long.&nbsp;
-                              <Link key={`ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
                         </>
@@ -690,7 +708,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
                              Post too long.&nbsp;
-                              <Link key={`mob-ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`mob-ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
                         </>
@@ -701,7 +719,7 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                   <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
                     <span key={`mob-info-${thread.cid}`} className="info-mobile">{thread.replyCount} Replies / ? Images</span>
-                    <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
+                    <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
                   </div>
                 </div>
                 {renderedComments.map(reply => {
@@ -765,7 +783,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                             Comment too long.&nbsp;
-                              <Link key={`mob-ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`mob-ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
                         </>

@@ -58,13 +58,13 @@ export default function App() {
     <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle }}>
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
-        <Route path={`/p/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
+        <Route path={`/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Board />} />
         </Route>
-        <Route path={`/p/:subplebbitAddress/thread/:threadCid`} element={<Thread setBodyStyle={setBodyStyle} />}>
+        <Route path={`/:subplebbitAddress/thread/:threadCid`} element={<Thread setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Thread />} />
         </Route>
-        <Route path={`/p/:subplebbitAddress/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>
+        <Route path={`/:subplebbitAddress/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>
           <Route path='post' element={<Catalog />} />
         </Route>
       </Routes>
