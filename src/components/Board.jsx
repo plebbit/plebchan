@@ -28,16 +28,40 @@ const Board = ({ setBodyStyle }) => {
   const renderedFeed = selectedFeed.slice(startIndex, endIndex);
 
 
-  const handleScroll = (event) => {
-    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
-    if (scrollTop + clientHeight >= scrollHeight) {
-      setEndIndex(endIndex + 5);
-    }
-  };
-
   useEffect(() => {
     setSelectedFeed(feed);
   }, [feed]);
+
+  useEffect(() => {
+    let didCancel = false;
+    fetch(
+      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
+      { cache: "no-cache" }
+    )
+      .then((res) => res.json())
+      .then(res => {
+        if (!didCancel) {
+          setDefaultSubplebbits(res);
+        }
+      });
+    return () => {
+      didCancel = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos, visible]);
+
 
   const tryLoadMore = async () => {
     try {
@@ -113,36 +137,14 @@ const Board = ({ setBodyStyle }) => {
     });
   };
 
-  useEffect(() => {
-    let didCancel = false;
-    fetch(
-      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
-      { cache: "no-cache" }
-    )
-      .then((res) => res.json())
-      .then(res => {
-        if (!didCancel) {
-          setDefaultSubplebbits(res);
-        }
-      });
-    return () => {
-      didCancel = true;
-    };
-  }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-      setPrevScrollPos(currentScrollPos);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollPos, visible]);
-
+  const handleScroll = (event) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
+    if (scrollTop + clientHeight >= scrollHeight) {
+      setEndIndex(endIndex + 5);
+    }
+  };
+  
   const handleVoidClick = () => {}
 
   const handleClickTitle = (title, address) => {
@@ -151,14 +153,6 @@ const Board = ({ setBodyStyle }) => {
     setSelectedFeed(feed.filter(feed => feed.title === title));
   };
 
-  const handleSelectChange = (event) => {
-    const selected = event.target.value;
-    const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
-    setSelectedTitle(selectedTitle);
-    setSelectedAddress(selected);
-    navigate(`/${selected}`);
-  }
-
   const handleClickHelp = () => {
     alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
   };
@@ -166,11 +160,19 @@ const Board = ({ setBodyStyle }) => {
   const handleClickForm = () => {
     setShowPostFormLink(false);
     setShowPostForm(true);
-    navigate(`/${selectedAddress}/post`);
+    navigate(`/p/${selectedAddress}/post`);
   };
 
   const handleClickThread = (thread) => {
     setSelectedThread(thread);
+  }
+
+  const handleSelectChange = (event) => {
+    const selected = event.target.value;
+    const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
+    setSelectedTitle(selectedTitle);
+    setSelectedAddress(selected);
+    navigate(`/p/${selected}`);
   }
   
   const handlePublishComment = async () => {
@@ -258,6 +260,7 @@ const Board = ({ setBodyStyle }) => {
     }
   }
 
+
   function renderComments(comments) {
     return comments.map(comment => {
       const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
@@ -278,7 +281,7 @@ const Board = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
@@ -397,12 +400,12 @@ const Board = ({ setBodyStyle }) => {
         </span>
         <div id="catalog-button-desktop">
           [
-          <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+          <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
           ]
         </div>
         <div id="catalog-button-mobile">
           <span className="btn-wrap">
-            <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
           </span>
         </div>
       </TopBar>
@@ -489,7 +492,7 @@ const Board = ({ setBodyStyle }) => {
                           &nbsp;
                           <span key={`rl1-${thread.cid}`}>
                             [
-                            <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
+                            <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
                             ]
                           </span>
                         </span>
@@ -508,7 +511,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) 
                             <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
                             Post too long.&nbsp;
-                              <Link key={`ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
                         </>
@@ -582,7 +585,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
                             <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
                             Comment too long.&nbsp;
-                              <Link key={`ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
                         </>
@@ -675,7 +678,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
                              Post too long.&nbsp;
-                              <Link key={`mob-ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`mob-ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
                         </>
@@ -686,7 +689,7 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                   <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
                     <span key={`mob-info-${thread.cid}`} className="info-mobile">{thread.replyCount} Replies / ? Images</span>
-                    <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
+                    <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
                   </div>
                 </div>
                 {renderedComments.map(reply => {
@@ -750,7 +753,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                             Comment too long.&nbsp;
-                              <Link key={`mob-ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`mob-ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
                         </>

@@ -74,7 +74,7 @@ const Home = ({ setBodyStyle }) => {
               {defaultSubplebbits.map(subplebbit => (
                 <div className="board" key={subplebbit.address}>
                   <div className="board-title">{subplebbit.title}</div>
-                  <Link to={`/${subplebbit.address}`} onClick={() => {
+                  <Link to={`/p/${subplebbit.address}`} onClick={() => {
                     handleClick(subplebbit.title, subplebbit.address);
                   }} >
                     <img alt="board logo" src="/assets/plebchan.png" />

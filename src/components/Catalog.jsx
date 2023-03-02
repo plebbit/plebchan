@@ -144,7 +144,7 @@ const Catalog = ({ setBodyStyle }) => {
   const handleClickForm = () => {
     setShowPostFormLink(false);
     setShowPostForm(true);
-    navigate(`/${selectedAddress}/catalog/post`);
+    navigate(`/p/${selectedAddress}/catalog/post`);
   };
 
   const handleClickThread = (thread) => {
@@ -245,7 +245,7 @@ const Catalog = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
@@ -364,12 +364,12 @@ const Catalog = ({ setBodyStyle }) => {
         </span>
         <div className="return-button" id="return-button-desktop">
           [
-          <Link to={`/${selectedAddress}`}>Return</Link>
+          <Link to={`/p/${selectedAddress}`}>Return</Link>
           ]
         </div>
         <div id="return-button-mobile">
           <span className="btn-wrap-catalog btn-wrap">
-            <Link to={`/${selectedAddress}`}>Return</Link>
+            <Link to={`/p/${selectedAddress}`}>Return</Link>
           </span>
         </div>
         <hr />
@@ -384,7 +384,7 @@ const Catalog = ({ setBodyStyle }) => {
           {feed.map(thread => {
             return (
               <div key={`${thread.cid}`} className="thread">
-                <Link key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
+                <Link key={`a-${thread.cid}`} to={`/p/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
                   <img key={`img-${thread.cid}`} alt="" src="/assets/plebchan-psycho.png" />
                 </Link>
                 <div key={`ti-${thread.cid}`} className="thread-icons" >

@@ -58,13 +58,13 @@ export default function App() {
     <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle }}>
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
-        <Route path={`/${selectedAddress}`} element={<Board setBodyStyle={setBodyStyle} />}>
+        <Route path={`/p/${selectedAddress}`} element={<Board setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Board />} />
         </Route>
-        <Route path={`/${selectedAddress}/thread/${selectedThread}`} element={<Thread setBodyStyle={setBodyStyle} />}>
+        <Route path={`/p/${selectedAddress}/thread/${selectedThread}`} element={<Thread setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Thread />} />
         </Route>
-        <Route path={`/${selectedAddress}/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>
+        <Route path={`/p/${selectedAddress}/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>
           <Route path='post' element={<Catalog />} />
         </Route>
       </Routes>
