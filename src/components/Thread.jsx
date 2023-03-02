@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from './styles/Board.styled';
 import { ReplyFormTable, ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
@@ -9,13 +9,22 @@ import { Tooltip } from 'react-tooltip';
 
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
   const [showReplyFormLink, setShowReplyFormLink] = useState(true);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const { subplebbitAddress, threadCid } = useParams();
 
+  useEffect(() => {
+    setSelectedAddress(subplebbitAddress);
+    setSelectedThread(threadCid);
+    const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (selectedSubplebbit) {
+      setSelectedTitle(selectedSubplebbit.title);
+    }
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
   const comment = useComment(`${selectedThread}`);
   
   useEffect(() => {

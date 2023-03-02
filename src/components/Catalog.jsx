@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { TopBar } from './styles/Thread.styled';
 import { Threads } from './styles/Catalog.styled';
@@ -7,6 +7,7 @@ import { BoardContext } from '../App';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import InfiniteScroll from 'react-infinite-scroller';
+
 
 const Catalog = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
@@ -19,8 +20,53 @@ const Catalog = ({ setBodyStyle }) => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-
+  const { publishComment } = useAccountsActions();
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
+  const { subplebbitAddress } = useParams();
+
+
+
+  useEffect(() => {
+    setSelectedAddress(subplebbitAddress);
+    const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (selectedSubplebbit) {
+      setSelectedTitle(selectedSubplebbit.title);
+    }
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
+
+
+  useEffect(() => {
+    let didCancel = false;
+    fetch(
+      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
+      { cache: "no-cache" }
+    )
+      .then((res) => res.json())
+      .then(res => {
+        if (!didCancel) {
+          setDefaultSubplebbits(res);
+        }
+      });
+    return () => {
+      didCancel = true;
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos, visible]);
+
+
 
   const tryLoadMore = async () => {
     try {loadMore()} 
@@ -28,7 +74,6 @@ const Catalog = ({ setBodyStyle }) => {
     {await new Promise(resolve => setTimeout(resolve, 1000))}
   }
 
-  const { publishComment } = useAccountsActions();
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
@@ -39,6 +84,7 @@ const Catalog = ({ setBodyStyle }) => {
       alert("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   }
+
 
   const onChallenge = async (challenges, comment) => {
     let challengeAnswers = [];
@@ -53,7 +99,9 @@ const Catalog = ({ setBodyStyle }) => {
     }
   }
   
+
   const onError = (error) => console.error(error)
+
 
   const getChallengeAnswersFromUser = async (challenges) => {
     return new Promise((resolve, reject) => {
@@ -92,42 +140,16 @@ const Catalog = ({ setBodyStyle }) => {
     });
   };
 
-  useEffect(() => {
-    let didCancel = false;
-    fetch(
-      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
-      { cache: "no-cache" }
-    )
-      .then((res) => res.json())
-      .then(res => {
-        if (!didCancel) {
-          setDefaultSubplebbits(res);
-        }
-      });
-    return () => {
-      didCancel = true;
-    };
-  }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-      setPrevScrollPos(currentScrollPos);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollPos, visible]);
 
   const handleVoidClick = () => {}
+
 
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
   };
+
 
   const handleSelectChange = (event) => {
     const selected = event.target.value;
@@ -137,9 +159,11 @@ const Catalog = ({ setBodyStyle }) => {
     navigate(`/${selected}`);
   }
 
+
   const handleClickHelp = () => {
     alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
   };
+
 
   const handleClickForm = () => {
     setShowPostFormLink(false);
@@ -147,9 +171,11 @@ const Catalog = ({ setBodyStyle }) => {
     navigate(`/p/${selectedAddress}/catalog/post`);
   };
 
+
   const handleClickThread = (thread) => {
     setSelectedThread(thread);
   }
+
 
   const handlePublishComment = async () => {
     // Event.preventDefault();
@@ -237,6 +263,8 @@ const Catalog = ({ setBodyStyle }) => {
         setSelectedStyle("Yotsuba");
     }
   }
+
+
 
   return (
     <Container>

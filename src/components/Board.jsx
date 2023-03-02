@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
-import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import { useFeed, useAccountsActions, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 
@@ -26,7 +26,19 @@ const Board = ({ setBodyStyle }) => {
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const renderedFeed = selectedFeed.slice(startIndex, endIndex);
+  const { subplebbitAddress } = useParams();
+  const subplebbit = useSubplebbit(subplebbitAddress);
 
+  // console.log(subplebbit);
+
+  useEffect(() => {
+    setSelectedAddress(subplebbitAddress);
+    const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (selectedSubplebbit) {
+      setSelectedTitle(selectedSubplebbit.title);
+    }
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
+  
 
   useEffect(() => {
     setSelectedFeed(feed);
