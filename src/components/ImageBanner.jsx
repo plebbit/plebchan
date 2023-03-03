@@ -10,7 +10,7 @@ const ImageBanner = () => {
   }, [location.key]);
 
   return (
-    <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg`} alt="banner" />
+    <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg?${Date.now()}`} alt="banner" />
   );
 };
 
