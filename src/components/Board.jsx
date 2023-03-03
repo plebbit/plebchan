@@ -20,16 +20,14 @@ const Board = ({ setBodyStyle }) => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(2);
-  const [loadedFeed, setLoadedFeed] = useState([]);
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
   const [selectedFeed, setSelectedFeed] = useState(feed);
-  const renderedFeed = selectedFeed.slice(startIndex, endIndex);
+  const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();
 
 
-
+  // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
@@ -38,12 +36,12 @@ const Board = ({ setBodyStyle }) => {
     }
   }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
   
-
+  // sets useFeed to address from URL
   useEffect(() => {
     setSelectedFeed(feed);
   }, [feed]);
 
-
+  // fetches default subplebbits from JSON
   useEffect(() => {
     let didCancel = false;
     fetch(
@@ -61,7 +59,7 @@ const Board = ({ setBodyStyle }) => {
     };
   }, []);
 
-
+  // mobile navbar scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -75,19 +73,23 @@ const Board = ({ setBodyStyle }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, visible]);
 
+  // reset endIndex whenever selectedAddress changes
+  useEffect(() => {
+    setEndIndex(2);
+  }, [selectedAddress]);
+
 
 
   const tryLoadMore = async () => {
     try {
       loadMore();
-      const newFeed = [...loadedFeed, ...feed];
-      setLoadedFeed(newFeed);
-      setStartIndex(endIndex);
+      const newFeed = [...selectedFeed, ...feed];
+      setSelectedFeed(newFeed);
       setEndIndex(endIndex + 2);
     } catch (e) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
-  };
+  };  
 
 
   const onChallengeVerification = (challengeVerification) => {
@@ -165,14 +167,23 @@ const Board = ({ setBodyStyle }) => {
   };
   
 
-  const handleVoidClick = () => {}
+  const handleVoidClick = () => {};
 
-
+  // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
     setSelectedFeed(feed.filter(feed => feed.title === title));
   };
+
+  // mobile navbar board select functionality
+  const handleSelectChange = (event) => {
+    const selected = event.target.value;
+    const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
+    setSelectedTitle(selectedTitle);
+    setSelectedAddress(selected);
+    navigate(`/${selected}`);
+  }
 
 
   const handleClickHelp = () => {
@@ -189,15 +200,6 @@ const Board = ({ setBodyStyle }) => {
 
   const handleClickThread = (thread) => {
     setSelectedThread(thread);
-  }
-
-
-  const handleSelectChange = (event) => {
-    const selected = event.target.value;
-    const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
-    setSelectedTitle(selectedTitle);
-    setSelectedAddress(selected);
-    navigate(`/${selected}`);
   }
   
 
