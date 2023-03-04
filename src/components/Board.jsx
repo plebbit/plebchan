@@ -765,7 +765,7 @@ const Board = ({ setBodyStyle }) => {
                           <br key={`mob-br-${reply.cid}`} />
                         </span>
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
-                          2 weeks ago&nbsp;
+                          {moment(reply.timestamp * 1000).fromNow()}&nbsp;
                           <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
                           <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                         </span>
