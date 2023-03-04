@@ -3,14 +3,27 @@ import { useLocation } from 'react-router-dom';
 
 const ImageBanner = () => {
   const [currentImage, setCurrentImage] = useState(1);
+  const [isLoaded, setIsLoaded] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
+    setIsLoaded(false);
     setCurrentImage(Math.floor(Math.random() * 13) + 1);
   }, [location.key]);
 
+  useEffect(() => {
+    setIsLoaded(false);
+    const img = new Image();
+    img.src = `/assets/banners/banner-${currentImage}.jpg?${Date.now()}`;
+    img.onload = () => {
+      setIsLoaded(true);
+    };
+  }, [currentImage]);
+
   return (
-    <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg?${Date.now()}`} alt="banner" />
+    <>
+      {isLoaded && <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg?${Date.now()}`} alt="banner" />}
+    </>
   );
 };
 

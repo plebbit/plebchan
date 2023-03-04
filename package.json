@@ -17,6 +17,7 @@
     "eslint": "^8.34.0",
     "eslint-config-react-app": "^7.0.1",
     "ext-name": "^5.0.0",
+    "moment": "^2.29.4",
     "postcss": "^8.4.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

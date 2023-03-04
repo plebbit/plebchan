@@ -6,6 +6,7 @@ import { BoardContext } from '../App';
 import { useComment } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import { Tooltip } from 'react-tooltip';
+import moment from 'moment';
 
 
 const Thread = ({ setBodyStyle }) => {
@@ -419,16 +420,16 @@ const Thread = ({ setBodyStyle }) => {
                         </span>})
                       </span>
                       &nbsp;
-                      <span className="date-time" data-utc="data">2 weeks ago</span>
+                      <span className="date-time" data-utc="data">{moment(comment.timestamp * 1000).fromNow()}</span>
                       &nbsp;
                       <span className="post-number">
-                        <a href={handleVoidClick} title="Link to this post">No.</a>
-                        <a href={handleVoidClick} title="Reply to this post">00000001</a>
+                        <a href={handleVoidClick} title="Link to this post">c/</a>
+                        <a href={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</a>
                       </span>
                       <a key={`pmb-${comment.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                       <div id="backlink-id" className="backlink">
                         <span>
-                          <a className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
+                          <a className="quote-link" href={handleVoidClick}>{'>>'}{comment.cid.slice(0, 8)}</a>
                         </span>
                       </div>
                     </span>
@@ -442,9 +443,6 @@ const Thread = ({ setBodyStyle }) => {
               Object.keys(comment.replies.pages.topAll.comments).map(() => {
                 const renderedComments = renderComments(comment.replies.pages.topAll.comments);
                 return renderedComments.map(reply => {
-                  let counter = 1;
-                  counter++;
-                  const counterString = counter.toString().padStart(8, '0');
                   return (
                     <div key={`pc-${reply.cid}`} className="reply-container">
                       <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
@@ -486,17 +484,17 @@ const Thread = ({ setBodyStyle }) => {
                             </span>
                           </span>
                           &nbsp;
-                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{moment(reply.timestamp * 1000).fromNow()}</span>
                           &nbsp;
                           <span key={`pn-${reply.cid}`} className="post-number">
-                            <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                            <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                            <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
+                            <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                           </span>
                           <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                         </div>
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
                           <a className="quotelink" href={handleVoidClick}>
-                            {`>>${counterString}`}{<br />}
+                            {`>>${reply.cid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
                         </blockquote>
@@ -563,10 +561,10 @@ const Thread = ({ setBodyStyle }) => {
                             </span>) : null}
                       </span>
                       <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
-                        2 weeks ago
+                        {moment(comment.timestamp * 1000).fromNow()}
                         &nbsp;
-                        <a key={`mob-no-${comment.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                        <a key={`mob-no2-${comment.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
+                        <a key={`mob-no-${comment.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
+                        <a key={`mob-no2-${comment.cid}`} href={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</a>
                       </span>
                     </div>
                     <div key={`mob-f-${comment.cid}`} className="file-mobile">
@@ -588,9 +586,6 @@ const Thread = ({ setBodyStyle }) => {
                 Object.keys(comment.replies.pages.topAll.comments).map(() => {
                   const renderedComments = renderComments(comment.replies.pages.topAll.comments);
                   return renderedComments.map(reply => {
-                    let counter = 1;
-                    counter++;
-                    const counterString = counter.toString().padStart(8, '0');
                     return (
                   <div key={`mob-rc-${reply.cid}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
@@ -633,14 +628,14 @@ const Thread = ({ setBodyStyle }) => {
                           <br key={`mob-br-${reply.cid}`} />
                         </span>
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
-                          2 weeks ago&nbsp;
-                          <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                          <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                          {moment(reply.timestamp * 1000).fromNow()}&nbsp;
+                          <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
+                          <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
                         <a key={`mob-ql-${reply.cid}`} className="quotelink-mobile" href={handleVoidClick}>
-                          {`>>${counterString}`}{<br />}
+                          {`>>${reply.cid.slice(0, 8)}`}{<br />}
                         </a>
                         {reply.content}
                       </blockquote>

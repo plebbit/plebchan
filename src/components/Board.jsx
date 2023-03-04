@@ -6,6 +6,7 @@ import ImageBanner from './ImageBanner';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
+import moment from 'moment';
 
 
 const Board = ({ setBodyStyle }) => {
@@ -450,7 +451,6 @@ const Board = ({ setBodyStyle }) => {
             loader={<div>Loading...</div>}
           >
             {renderedFeed.map(thread => {
-            let counter = 1;
             const { replies: { pages: { topAll: { comments } } } } = thread;
             const renderedComments = renderComments(comments);
             return (
@@ -516,11 +516,11 @@ const Board = ({ setBodyStyle }) => {
                           {thread.author.address}
                         </span>})
                         &nbsp;
-                        <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                        <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">{moment(thread.timestamp * 1000).fromNow()}</span>
                         &nbsp;
                         <span key={`pn-${thread.cid}`} className="post-number">
-                          <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                          <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
+                          <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
+                          <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
                           &nbsp;
                           <span key={`rl1-${thread.cid}`}>
                             [
@@ -531,7 +531,7 @@ const Board = ({ setBodyStyle }) => {
                         <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                         <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
                           <span key={`ql1-${thread.cid}`}>
-                            <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}00000002</a>
+                            <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}{thread.cid.slice(0, 8)}</a>
                           </span>
                         </div>
                       </span>
@@ -555,8 +555,6 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                 </div>
                 {renderedComments.map(reply => {
-                  counter++;
-                  const counterString = counter.toString().padStart(8, '0');
                   return (
                 <div key={`pc-${reply.cid}`} className="reply-container">
                   <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
@@ -598,11 +596,11 @@ const Board = ({ setBodyStyle }) => {
                         </span>
                       </span>
                       &nbsp;
-                      <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">2 weeks ago</span>
+                      <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{moment(reply.timestamp * 1000).fromNow()}</span>
                       &nbsp;
                       <span key={`pn-${reply.cid}`} className="post-number">
-                        <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                        <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                        <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
+                        <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                       </span>
                       <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                     </div>
@@ -611,7 +609,7 @@ const Board = ({ setBodyStyle }) => {
                         <>
                           <blockquote key={`pm-${reply.cid}`} className="post-message">
                             <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                              {`>>${counterString}`}{<br />}
+                              {`>>${reply.cid.slice(0, 8)}`}{<br />}
                             </a>
                             {reply.content.slice(0, 1000)}
                             <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
@@ -623,7 +621,7 @@ const Board = ({ setBodyStyle }) => {
                         </>
                       : <blockquote key={`pm-${thread.cid}`} className="post-message">
                           <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                            {`>>${counterString}`}{<br />}
+                            {`>>${reply.cid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
                         </blockquote>)
@@ -690,10 +688,10 @@ const Board = ({ setBodyStyle }) => {
                         : null}
                       </span>
                       <span key={`mob-dt-${thread.cid}`} className="date-time-mobile">
-                        2 weeks ago
+                        {moment(thread.timestamp * 1000).fromNow()}
                         &nbsp;
-                        <a key={`mob-no-${thread.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                        <a key={`mob-no2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">00000001</a>
+                        <a key={`mob-no-${thread.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
+                        <a key={`mob-no2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
                       </span>
                     </div>
                     <div key={`mob-f-${thread.cid}`} className="file-mobile">
@@ -725,8 +723,6 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                 </div>
                 {renderedComments.map(reply => {
-                  counter++;
-                  const counterString = counter.toString().padStart(8, '0');
                   return (
                   <div key={`mob-rc-${reply.cid}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
@@ -770,8 +766,8 @@ const Board = ({ setBodyStyle }) => {
                         </span>
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
                           2 weeks ago&nbsp;
-                          <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">No.</a>
-                          <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{counterString}</a>
+                          <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
+                          <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                         </span>
                       </div>
                       {reply.content ? (
@@ -779,7 +775,7 @@ const Board = ({ setBodyStyle }) => {
                         <>
                           <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
                             <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                              {`>>${counterString}`}{<br />}
+                              {`>>${reply.cid.slice(0, 8)}`}{<br />}
                             </a>
                             {reply.content.slice(0, 1000)}
                             <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
@@ -789,9 +785,9 @@ const Board = ({ setBodyStyle }) => {
                             &nbsp;to view. </span>
                           </blockquote>
                         </>
-                      : <blockquote key={`mob-pm-${thread.cid}`} className="post-message">
+                      : <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
                           <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                            {`>>${counterString}`}{<br />}
+                            {`>>${reply.cid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
                         </blockquote>)
