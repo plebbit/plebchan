@@ -7,6 +7,7 @@ import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 import getDate from '../utils/getDate';
+import renderComments from '../utils/renderComments';
 
 
 const Board = ({ setBodyStyle }) => {
@@ -292,21 +293,6 @@ const Board = ({ setBodyStyle }) => {
 
 
 
-  function renderComments(comments) {
-    return comments.map(comment => {
-      const { replyCount, replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
-  
-      if (replyCount > 0 && nestedComments.length > 0) {
-        const renderedNestedComments = renderComments(nestedComments);
-        return [comment, ...renderedNestedComments];
-      }
-  
-      return [comment];
-    }).flat();
-  }
-
-
-
   return (
     <Container>
       <NavBar selectedStyle={selectedStyle}>
@@ -452,7 +438,7 @@ const Board = ({ setBodyStyle }) => {
           >
             {renderedFeed.map(thread => {
             const { replies: { pages: { topAll: { comments } } } } = thread;
-            const renderedComments = renderComments(comments);
+            const { renderedComments, omittedCount } = renderComments(comments);
             return (
             <>
               <div key={`t-${thread.cid}`} className="thread">
