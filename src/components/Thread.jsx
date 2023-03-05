@@ -6,7 +6,7 @@ import { BoardContext } from '../App';
 import { useComment } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import { Tooltip } from 'react-tooltip';
-import moment from 'moment';
+import getDate from '../utils/getDate';
 
 
 const Thread = ({ setBodyStyle }) => {
@@ -404,7 +404,7 @@ const Thread = ({ setBodyStyle }) => {
                         &nbsp;
                       &nbsp;
                       <span className="poster-address">
-                        (User:&nbsp;
+                        (u/
                           {comment.author.address.length > 20 ?
                         <>
                           <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
@@ -420,7 +420,7 @@ const Thread = ({ setBodyStyle }) => {
                         </span>})
                       </span>
                       &nbsp;
-                      <span className="date-time" data-utc="data">{moment(comment.timestamp * 1000).fromNow()}</span>
+                      <span className="date-time" data-utc="data">{getDate(comment.timestamp)}</span>
                       &nbsp;
                       <span className="post-number">
                         <a href={handleVoidClick} title="Link to this post">c/</a>
@@ -467,7 +467,7 @@ const Thread = ({ setBodyStyle }) => {
                             Anonymous</span>}
                             &nbsp;
                             <span key={`pa-${reply.cid}`} className="poster-address">
-                              (User:&nbsp;
+                              (u/
                               {reply.author.address.length > 20 ?
                               <>
                                 <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
@@ -484,7 +484,7 @@ const Thread = ({ setBodyStyle }) => {
                             </span>
                           </span>
                           &nbsp;
-                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{moment(reply.timestamp * 1000).fromNow()}</span>
+                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                           &nbsp;
                           <span key={`pn-${reply.cid}`} className="post-number">
                             <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
@@ -528,7 +528,7 @@ const Thread = ({ setBodyStyle }) => {
                           Anonymous</span>}
                         &nbsp;
                         <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile">
-                          (User:&nbsp;
+                          (u/
                           {comment.author.address.length > 15 ?
                           <>
                             <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
@@ -561,7 +561,7 @@ const Thread = ({ setBodyStyle }) => {
                             </span>) : null}
                       </span>
                       <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
-                        {moment(comment.timestamp * 1000).fromNow()}
+                        {getDate(comment.timestamp)}
                         &nbsp;
                         <a key={`mob-no-${comment.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
                         <a key={`mob-no2-${comment.cid}`} href={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</a>
@@ -609,7 +609,7 @@ const Thread = ({ setBodyStyle }) => {
                             Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
-                            (User:&nbsp;
+                            (u/
                             {reply.author.address.length > 12 ?
                             <>
                               <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
@@ -628,7 +628,7 @@ const Thread = ({ setBodyStyle }) => {
                           <br key={`mob-br-${reply.cid}`} />
                         </span>
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
-                          {moment(reply.timestamp * 1000).fromNow()}&nbsp;
+                          {getDate(reply.timestamp)}&nbsp;
                           <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
                           <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                         </span>

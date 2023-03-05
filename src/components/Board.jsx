@@ -6,7 +6,7 @@ import ImageBanner from './ImageBanner';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
-import moment from 'moment';
+import getDate from '../utils/getDate';
 
 
 const Board = ({ setBodyStyle }) => {
@@ -501,7 +501,7 @@ const Board = ({ setBodyStyle }) => {
                         : <span key={`n-${thread.cid}`} className="name">
                           Anonymous</span>}
                         &nbsp;
-                        (User:&nbsp;
+                        (u/
                         {thread.author.address.length > 15 ?
                         <>
                           <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
@@ -516,7 +516,7 @@ const Board = ({ setBodyStyle }) => {
                           {thread.author.address}
                         </span>})
                         &nbsp;
-                        <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">{moment(thread.timestamp * 1000).fromNow()}</span>
+                        <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
                         &nbsp;
                         <span key={`pn-${thread.cid}`} className="post-number">
                           <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
@@ -578,7 +578,7 @@ const Board = ({ setBodyStyle }) => {
                             Anonymous</span>}
                         &nbsp;
                         <span key={`pa-${reply.cid}`} className="poster-address">
-                          (User:&nbsp;
+                          (u/
                             {reply.author.address.length > 12 ?
                             <>
                               <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
@@ -596,7 +596,7 @@ const Board = ({ setBodyStyle }) => {
                         </span>
                       </span>
                       &nbsp;
-                      <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{moment(reply.timestamp * 1000).fromNow()}</span>
+                      <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                       &nbsp;
                       <span key={`pn-${reply.cid}`} className="post-number">
                         <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
@@ -654,7 +654,7 @@ const Board = ({ setBodyStyle }) => {
                           Anonymous</span>}
                         &nbsp;
                         <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile">
-                          (User:&nbsp;
+                          (u/
                           {thread.author.address.length > 15 ?
                           <>
                             <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
@@ -688,7 +688,7 @@ const Board = ({ setBodyStyle }) => {
                         : null}
                       </span>
                       <span key={`mob-dt-${thread.cid}`} className="date-time-mobile">
-                        {moment(thread.timestamp * 1000).fromNow()}
+                        {getDate(thread.timestamp)}
                         &nbsp;
                         <a key={`mob-no-${thread.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
                         <a key={`mob-no2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
@@ -746,7 +746,7 @@ const Board = ({ setBodyStyle }) => {
                             Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
-                            (User:&nbsp;
+                            (u/
                             {reply.author.address.length > 10 ?
                             <>
                               <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
@@ -765,7 +765,7 @@ const Board = ({ setBodyStyle }) => {
                           <br key={`mob-br-${reply.cid}`} />
                         </span>
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
-                          {moment(reply.timestamp * 1000).fromNow()}&nbsp;
+                        {getDate(reply.timestamp)}&nbsp;
                           <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
                           <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                         </span>
