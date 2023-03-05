@@ -540,6 +540,16 @@ const Board = ({ setBodyStyle }) => {
                     </div>
                   </div>
                 </div>
+                <span class="summary">
+                  {omittedCount > 0 ? (
+                  <span key={`oc-${thread.cid}`} className="ttl">
+                    <span key={`oc1-${thread.cid}`}>
+                      {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
+                      <Link key={`oc2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">here</Link>
+                      &nbsp;to view.
+                    </span>
+                  </span>) : null}
+                </span>
                 {renderedComments.map(reply => {
                   return (
                 <div key={`pc-${reply.cid}`} className="reply-container">

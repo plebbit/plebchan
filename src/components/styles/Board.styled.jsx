@@ -1549,6 +1549,10 @@ export const BoardForm = styled.div`
     #bottombar-mobile {
       display: none;
     }
+
+    .summary {
+      margin-top: 10px;
+    }
   }
 
   @media (max-width: 480px) {
