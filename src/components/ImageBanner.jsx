@@ -14,7 +14,7 @@ const ImageBanner = () => {
   useEffect(() => {
     setIsLoaded(false);
     const img = new Image();
-    img.src = `/assets/banners/banner-${currentImage}.jpg?${Date.now()}`;
+    img.src = `/assets/banners/banner-${currentImage}.jpg`;
     img.onload = () => {
       setIsLoaded(true);
     };
@@ -22,7 +22,7 @@ const ImageBanner = () => {
 
   return (
     <>
-      {isLoaded && <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg?${Date.now()}`} alt="banner" />}
+      {isLoaded && <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg`} alt="banner" />}
     </>
   );
 };

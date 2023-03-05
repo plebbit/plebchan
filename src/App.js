@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Home from './components/Home';
@@ -7,6 +7,7 @@ import Thread from './components/Thread';
 import Catalog from './components/Catalog';
 import { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
+import preloadImages from './utils/preloadImages';
 
 export const BoardContext = React.createContext();
 
@@ -39,6 +40,14 @@ export default function App() {
   const [selectedAddress, setSelectedAddress] = useState('');
   const [selectedThread, setSelectedThread] = useState('');
   const [selectedStyle, setSelectedStyle] = useState('Yotsuba');
+
+
+  const imageUrls = Array.from({ length: 14 }, (_, index) => `/assets/banners/banner-${index + 1}.jpg`);
+
+  useEffect(() => {
+    preloadImages([...imageUrls]);
+  }, []);
+
 
   return (
   <div>
