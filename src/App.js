@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Board from './components/Board';
 import Thread from './components/Thread';
 import Catalog from './components/Catalog';
+import NotFound from './components/NotFound';
 import { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
 import preloadImages from './utils/preloadImages';
@@ -76,6 +77,7 @@ export default function App() {
         <Route path={`/:subplebbitAddress/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>
           <Route path='post' element={<Catalog />} />
         </Route>
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BoardContext.Provider>
   </div>

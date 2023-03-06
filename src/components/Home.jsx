@@ -5,7 +5,7 @@ import { BoardContext } from '../App';
 
 const Home = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { setSelectedTitle, setSelectedAddress, setSelectedStyle } = useContext(BoardContext);
 
   useEffect(() => {
     setBodyStyle({
