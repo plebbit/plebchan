@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
@@ -20,6 +20,7 @@ const Board = ({ setBodyStyle }) => {
   const [comment, setComment] = useState('');
   const { publishComment } = useAccountsActions();
   const navigate = useNavigate();
+  const location = useLocation();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [endIndex, setEndIndex] = useState(2);
@@ -79,6 +80,18 @@ const Board = ({ setBodyStyle }) => {
   useEffect(() => {
     setEndIndex(2);
   }, [selectedAddress]);
+
+  // post route handling
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.endsWith('/post')) {
+      setShowPostFormLink(false);
+      setShowPostForm(true);
+    } else {
+      setShowPostFormLink(true);
+      setShowPostForm(false);
+    }
+  }, [location.pathname]);
 
 
 
@@ -540,7 +553,7 @@ const Board = ({ setBodyStyle }) => {
                     </div>
                   </div>
                 </div>
-                <span class="summary">
+                <span className="summary">
                   {omittedCount > 0 ? (
                   <span key={`oc-${thread.cid}`} className="ttl">
                     <span key={`oc1-${thread.cid}`}>

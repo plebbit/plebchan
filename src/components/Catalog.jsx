@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { TopBar } from './styles/Thread.styled';
 import { Threads } from './styles/Catalog.styled';
@@ -18,6 +18,7 @@ const Catalog = ({ setBodyStyle }) => {
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const { publishComment } = useAccountsActions();
@@ -65,6 +66,18 @@ const Catalog = ({ setBodyStyle }) => {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, visible]);
+
+  // post route handling
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.endsWith('/post')) {
+      setShowPostFormLink(false);
+      setShowPostForm(true);
+    } else {
+      setShowPostFormLink(true);
+      setShowPostForm(false);
+    }
+  }, [location.pathname]);
 
 
 

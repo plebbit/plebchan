@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from './styles/Board.styled';
 import { ReplyFormTable, ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
@@ -12,9 +12,10 @@ import getDate from '../utils/getDate';
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
   const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
-  const [showReplyFormLink, setShowReplyFormLink] = useState(true);
-  const [showReplyForm, setShowReplyForm] = useState(false);
+  const [showPostFormLink, setShowPostFormLink] = useState(true);
+  const [showPostForm, setShowPostForm] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const comment = useComment(`${selectedThread}`);
@@ -62,6 +63,18 @@ const Thread = ({ setBodyStyle }) => {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, visible]);
+  
+  // post route handling
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.endsWith('/post')) {
+      setShowPostFormLink(false);
+      setShowPostForm(true);
+    } else {
+      setShowPostFormLink(true);
+      setShowPostForm(false);
+    }
+  }, [location.pathname]);
 
 
 
@@ -89,8 +102,8 @@ const Thread = ({ setBodyStyle }) => {
 
 
   const handleClickForm = () => {
-    setShowReplyFormLink(false);
-    setShowReplyForm(true);
+    setShowPostFormLink(false);
+    setShowPostForm(true);
     navigate(`/${selectedAddress}/thread/${selectedThread}/post`);
   };
 
@@ -249,7 +262,7 @@ const Thread = ({ setBodyStyle }) => {
       </Header>
       <Break selectedStyle={selectedStyle} />
       <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
-        <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} selectedStyle={selectedStyle} >
+        <ReplyFormLink id="post-form-link" showReplyFormLink={showPostFormLink} selectedStyle={selectedStyle} >
           <div id="return-button-mobile">
             <span className="btn-wrap">
               <Link to={`/${selectedAddress}`}>Return</Link>
@@ -276,7 +289,7 @@ const Thread = ({ setBodyStyle }) => {
             </span>
           </div>
         </ReplyFormLink>
-        <ReplyFormTable id="post-form" showReplyForm={showReplyForm} selectedStyle={selectedStyle} className="post-form">
+        <ReplyFormTable id="post-form" showReplyForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
           <tbody>
             <tr data-type="Subject">
               <td>Name</td>
@@ -703,7 +716,7 @@ const Thread = ({ setBodyStyle }) => {
                 )}
                 <hr />
               </TopBar>
-              <ReplyFormLink id="post-form-link" showReplyFormLink={showReplyFormLink} selectedStyle={selectedStyle} >
+              <ReplyFormLink id="post-form-link" selectedStyle={selectedStyle} >
                 <div id="post-form-link-mobile" className="post-button-mobile">
                   <span className="btn-wrap">
                     <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
