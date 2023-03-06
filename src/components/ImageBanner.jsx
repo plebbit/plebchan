@@ -7,14 +7,19 @@ const ImageBanner = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const countImages = async () => {
+      const images = await importAll(require.context('../../public/assets/banners', false, /\.(png|jpe?g|svg)$/));
+      setCurrentImage(Math.floor(Math.random() * images.length) + 1);
+    };
+
     setIsLoaded(false);
-    setCurrentImage(Math.floor(Math.random() * 13) + 1);
+    countImages();
   }, [location.key]);
 
   useEffect(() => {
     setIsLoaded(false);
     const img = new Image();
-    img.src = `/assets/banners/banner-${currentImage}.jpg`;
+    img.src = `${process.env.PUBLIC_URL}/assets/banners/banner-${currentImage}.jpg`;
     img.onload = () => {
       setIsLoaded(true);
     };
@@ -22,9 +27,14 @@ const ImageBanner = () => {
 
   return (
     <>
-      {isLoaded && <img id="banner-img" src={`/assets/banners/banner-${currentImage}.jpg`} alt="banner" />}
+      {isLoaded && <img id="banner-img" src={`${process.env.PUBLIC_URL}/assets/banners/banner-${currentImage}.jpg`} alt="banner" />}
     </>
   );
 };
+
+// Helper function to import all images from a directory
+function importAll(r) {
+  return r.keys().map(r);
+}
 
 export default ImageBanner;
