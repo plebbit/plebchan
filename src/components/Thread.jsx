@@ -184,10 +184,12 @@ const Thread = ({ setBodyStyle }) => {
       }
       return [comment];
     }).flat();
-    return renderedComments;
+  
+    const sortedComments = renderedComments.sort((a, b) => a.timestamp - b.timestamp);
+    return sortedComments;
   }
   
-
+  
 
   return (
     <Container>

@@ -22,6 +22,7 @@ function renderComments(comments) {
   };
 
   const renderedComments = comments.flatMap(renderComment);
+  renderedComments.sort((a, b) => a.timestamp - b.timestamp);
 
   return { renderedComments, omittedCount };
 }
