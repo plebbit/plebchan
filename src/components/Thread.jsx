@@ -444,7 +444,7 @@ const Thread = ({ setBodyStyle }) => {
                       <a key={`pmb-${comment.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                       <div id="backlink-id" className="backlink">
                         <span>
-                          <a className="quote-link" href={handleVoidClick}>{'>>'}{comment.cid.slice(0, 8)}</a>
+                          <a className="quote-link" href={handleVoidClick}>c/{comment.cid.slice(0, 8)}</a>
                         </span>
                       </div>
                     </span>
@@ -509,7 +509,7 @@ const Thread = ({ setBodyStyle }) => {
                         </div>
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
                           <a className="quotelink" href={handleVoidClick}>
-                            {`>>${reply.cid.slice(0, 8)}`}{<br />}
+                            {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
                         </blockquote>
@@ -650,7 +650,7 @@ const Thread = ({ setBodyStyle }) => {
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
                         <a key={`mob-ql-${reply.cid}`} className="quotelink-mobile" href={handleVoidClick}>
-                          {`>>${reply.cid.slice(0, 8)}`}{<br />}
+                          {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                         </a>
                         {reply.content}
                       </blockquote>

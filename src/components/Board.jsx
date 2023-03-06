@@ -530,7 +530,7 @@ const Board = ({ setBodyStyle }) => {
                         <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                         <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
                           <span key={`ql1-${thread.cid}`}>
-                            <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'>>'}{thread.cid.slice(0, 8)}</a>
+                            <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'c/'}{thread.cid.slice(0, 8)}</a>
                           </span>
                         </div>
                       </span>
@@ -618,7 +618,7 @@ const Board = ({ setBodyStyle }) => {
                         <>
                           <blockquote key={`pm-${reply.cid}`} className="post-message">
                             <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                              {`>>${reply.cid.slice(0, 8)}`}{<br />}
+                              {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                             </a>
                             {reply.content.slice(0, 1000)}
                             <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
@@ -630,7 +630,7 @@ const Board = ({ setBodyStyle }) => {
                         </>
                       : <blockquote key={`pm-${thread.cid}`} className="post-message">
                           <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                            {`>>${reply.cid.slice(0, 8)}`}{<br />}
+                            {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
                         </blockquote>)
@@ -784,7 +784,7 @@ const Board = ({ setBodyStyle }) => {
                         <>
                           <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
                             <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                              {`>>${reply.cid.slice(0, 8)}`}{<br />}
+                              {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                             </a>
                             {reply.content.slice(0, 1000)}
                             <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
@@ -796,7 +796,7 @@ const Board = ({ setBodyStyle }) => {
                         </>
                       : <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
                           <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
-                            {`>>${reply.cid.slice(0, 8)}`}{<br />}
+                            {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
                         </blockquote>)
