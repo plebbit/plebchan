@@ -1608,6 +1608,11 @@ export const BoardForm = styled.div`
     
               .date-time-mobile {
                 color: maroon;
+
+                a {
+                  text-decoration: none;
+                  color: maroon;
+                }
               }
     
               .file-thumb-mobile {
@@ -1721,6 +1726,11 @@ export const BoardForm = styled.div`
     
               .date-time-mobile {
                 color: #000;
+
+                a {
+                  text-decoration: none;
+                  color: #000;
+                }
               }
     
               .file-thumb-mobile {
@@ -1830,6 +1840,11 @@ export const BoardForm = styled.div`
     
               .date-time-mobile {
                 color: maroon;
+
+                a {
+                  text-decoration: none;
+                  color: maroon;
+                }
               }
     
               .file-thumb-mobile {
@@ -1942,6 +1957,11 @@ export const BoardForm = styled.div`
     
               .date-time-mobile {
                 color: #000;
+
+                a {
+                  text-decoration: none;
+                  color: #000;
+                }
               }
     
               .file-thumb-mobile {
@@ -2054,6 +2074,11 @@ export const BoardForm = styled.div`
     
               .date-time-mobile {
                 color: #707070;
+
+                a {
+                  text-decoration: none;
+                  color: #707070;
+                }
               }
     
               .file-thumb-mobile {
@@ -2168,6 +2193,11 @@ export const BoardForm = styled.div`
     
               .date-time-mobile {
                 color: #333;
+
+                a {
+                  text-decoration: none;
+                  color: #333;
+                }
               }
     
               .file-thumb-mobile {
