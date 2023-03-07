@@ -220,7 +220,7 @@ const Thread = ({ setBodyStyle }) => {
           ))}
           <span className="nav">
             [
-            <a href={handleVoidClick}>Settings</a>
+            <Link to="" onClick={handleVoidClick}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -239,7 +239,7 @@ const Thread = ({ setBodyStyle }) => {
               </select>
             </div>
             <div className="page-jump">
-              <a href={handleVoidClick}>Settings</a>
+              <Link to="" onClick={handleVoidClick}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>
@@ -355,7 +355,7 @@ const Thread = ({ setBodyStyle }) => {
         </span>
         <span className="return-button catalog-button" id="bottom-button-desktop">
           [
-          <a href={handleVoidClick} onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickBottom}>Bottom</a>
+          <a onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickBottom}>Bottom</a>
           ]
         </span>
         {comment ? (
@@ -380,9 +380,9 @@ const Thread = ({ setBodyStyle }) => {
                           File:&nbsp;
                           <a key={`fa-${Math.random()}`} href={`${comment.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
                         </div>
-                        <a key={`fta-${Math.random()}`} href={handleVoidClick} target="_blank" className="file-thumb">
+                        <Link to="" key={`fta-${Math.random()}`} onClick={handleVoidClick} target="_blank" className="file-thumb">
                           <img key={`fti-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
-                        </a>
+                        </Link>
                       </div>
                     <span className="name-block">
                         {comment.title ? (
@@ -438,13 +438,13 @@ const Thread = ({ setBodyStyle }) => {
                       <span className="date-time" data-utc="data">{getDate(comment.timestamp)}</span>
                       &nbsp;
                       <span className="post-number">
-                        <a href={handleVoidClick} title="Link to this post">c/</a>
-                        <a href={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</a>
+                        <Link to="" onClick={handleVoidClick} title="Link to this post">c/</Link>
+                        <Link to="" onClick={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</Link>
                       </span>
-                      <a key={`pmb-${Math.random()}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                      <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                       <div id="backlink-id" className="backlink">
                         <span>
-                          <a className="quote-link" href={handleVoidClick}>c/{comment.cid.slice(0, 8)}</a>
+                          <Link to="" className="quote-link" onClick={handleVoidClick}>c/{comment.cid.slice(0, 8)}</Link>
                         </span>
                       </div>
                     </span>
@@ -502,15 +502,15 @@ const Thread = ({ setBodyStyle }) => {
                           <span key={`dt-${Math.random()}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                           &nbsp;
                           <span key={`pn-${Math.random()}`} className="post-number">
-                            <a key={`pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
-                            <a key={`pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
+                            <Link to="" key={`pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                            <Link to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                           </span>
-                          <a key={`pmb-${Math.random()}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                          <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                         </div>
                         <blockquote key={`pm-${Math.random()}`} className="post-message">
-                          <a className="quotelink" href={handleVoidClick}>
+                          <Link to="" className="quotelink" onClick={handleVoidClick}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                          </a>
+                          </Link>
                           {reply.content}
                         </blockquote>
                       </div>
@@ -524,7 +524,7 @@ const Thread = ({ setBodyStyle }) => {
               <div className="op-container">
                   <div key={`mob-po-${Math.random()}`} className="post op">
                     <div key={`mob-pi-${Math.random()}`} className="post-info-mobile">
-                      <a key={`mob-pb-${Math.random()}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
+                      <Link to="" key={`mob-pb-${Math.random()}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</Link>
                       <span className="name-block-mobile">
                         {comment.author.displayName
                         ? comment.author.displayName.length > 15
@@ -578,15 +578,15 @@ const Thread = ({ setBodyStyle }) => {
                       <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                         {getDate(comment.timestamp)}
                         &nbsp;
-                        <a key={`mob-no-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
-                        <a key={`mob-no2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</a>
+                        <Link to="" key={`mob-no-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                        <Link to="" key={`mob-no2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</Link>
                       </span>
                     </div>
                     <div key={`mob-f-${Math.random()}`} className="file-mobile">
-                      <a key={`mob-ft${Math.random()}`} className="file-thumb-mobile" href={handleVoidClick} target="_blank">
+                      <Link to="" key={`mob-ft${Math.random()}`} className="file-thumb-mobile" onClick={handleVoidClick} target="_blank">
                         <img key={`mob-img-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="" />
                         <div key={`mob-fi-${Math.random()}`} className="file-info-mobile">58 KB JPG</div>
-                      </a>
+                      </Link>
                     </div>
                     <blockquote key={`mob-bq-${Math.random()}`} className="post-message-mobile">
                       {comment.content ? (
@@ -644,14 +644,14 @@ const Thread = ({ setBodyStyle }) => {
                         </span>
                         <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                           {getDate(reply.timestamp)}&nbsp;
-                          <a key={`mob-pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
-                          <a key={`mob-pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
+                          <Link to="" key={`mob-pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                          <Link to="" key={`mob-pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${Math.random()}`} className="post-message-mobile">
-                        <a key={`mob-ql-${Math.random()}`} className="quotelink-mobile" href={handleVoidClick}>
+                        <Link to="" key={`mob-ql-${Math.random()}`} className="quotelink-mobile" onClick={handleVoidClick}>
                           {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                        </a>
+                        </Link>
                         {reply.content}
                       </blockquote>
                     </div>
@@ -675,12 +675,12 @@ const Thread = ({ setBodyStyle }) => {
                   </span>
                   <span className="bottom-bar-top">
                     [
-                    <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                    <a onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
                     ]
                   </span>
                   <span className="quickreply-button">
                   [
-                  <a href={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                  <Link to="" onClick={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
                   ]
                   </span>
                   {comment.replyCount > 0 ? (
@@ -735,7 +735,7 @@ const Thread = ({ setBodyStyle }) => {
                   </div>
                   <span className="bottom-bar-top">
                     <span className="btn-wrap">
-                      <a href={handleVoidClick} onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                      <a onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
                     </span>
                   </span>
                 </div>

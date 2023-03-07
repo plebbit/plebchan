@@ -293,7 +293,7 @@ const Catalog = ({ setBodyStyle }) => {
           ))}
           <span className="nav">
             [
-            <a href={handleVoidClick}>Settings</a>
+            <Link to="" onClick={handleVoidClick}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -312,7 +312,7 @@ const Catalog = ({ setBodyStyle }) => {
               </select>
             </div>
             <div className="page-jump">
-              <a href={handleVoidClick}>Settings</a>
+              <Link to="" onClick={handleVoidClick}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>

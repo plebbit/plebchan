@@ -320,7 +320,7 @@ const Board = ({ setBodyStyle }) => {
           ))}
           <span className="nav">
             [
-            <a href={handleVoidClick}>Settings</a>
+            <Link to="" onClick={handleVoidClick}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -339,7 +339,7 @@ const Board = ({ setBodyStyle }) => {
               </select>
             </div>
             <div className="page-jump">
-              <a href={handleVoidClick}>Settings</a>
+              <Link to="" onClick={handleVoidClick}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>
@@ -464,9 +464,9 @@ const Board = ({ setBodyStyle }) => {
                           File:&nbsp;
                           <a key={`fa-${Math.random()}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
                         </div>
-                        <a key={`fta-${Math.random()}`} href={handleVoidClick} target="_blank" className="file-thumb">
+                        <Link to="" key={`fta-${Math.random()}`} onClick={handleVoidClick} target="_blank" className="file-thumb">
                           <img key={`fti-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
-                        </a>
+                        </Link>
                       </div>
                       <span key={`nb-${Math.random()}`} className="name-block">
                         {thread.title ? (
@@ -518,8 +518,8 @@ const Board = ({ setBodyStyle }) => {
                         <span key={`dt-${Math.random()}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
                         &nbsp;
                         <span key={`pn-${Math.random()}`} className="post-number">
-                          <a key={`pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
-                          <a key={`pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
+                          <Link to="" key={`pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                          <Link to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
                           &nbsp;
                           <span key={`rl1-${Math.random()}`}>
                             [
@@ -527,10 +527,10 @@ const Board = ({ setBodyStyle }) => {
                             ]
                           </span>
                         </span>
-                        <a key={`pmb-${Math.random()}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                        <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                         <div key={`bi-${Math.random()}`} id="backlink-id" className="backlink">
                           <span key={`ql1-${Math.random()}`}>
-                            <a key={`ql2-${Math.random()}`} className="quote-link" href={handleVoidClick}>{'c/'}{thread.cid.slice(0, 8)}</a>
+                            <Link to="" key={`ql2-${Math.random()}`} className="quote-link" onClick={handleVoidClick}>{'c/'}{thread.cid.slice(0, 8)}</Link>
                           </span>
                         </div>
                       </span>
@@ -608,18 +608,18 @@ const Board = ({ setBodyStyle }) => {
                       <span key={`dt-${Math.random()}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                       &nbsp;
                       <span key={`pn-${Math.random()}`} className="post-number">
-                        <a key={`pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
-                        <a key={`pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
+                        <Link to="" key={`pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                        <Link to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                       </span>
-                      <a key={`pmb-${Math.random()}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                      <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                     </div>
                     {reply.content ? (
                         reply.content.length > 1000 ?
                         <Fragment key={`fragment8-${Math.random()}`}>
                           <blockquote key={`pm-${Math.random()}`} className="post-message">
-                            <a key={`r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
+                            <Link to="" key={`r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
                               {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                            </a>
+                            </Link>
                             {reply.content.slice(0, 1000)}
                             <span key={`ttl-s-${Math.random()}`} className="ttl"> (...)
                             <br key={`ttl-s-br1-${Math.random()}`} /><br key={`ttl-s-br2${Math.random()}`} />
@@ -629,9 +629,9 @@ const Board = ({ setBodyStyle }) => {
                           </blockquote>
                         </Fragment>
                       : <blockquote key={`pm-${Math.random()}`} className="post-message">
-                          <a key={`r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
+                          <Link to="" key={`r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                          </a>
+                          </Link>
                           {reply.content}
                         </blockquote>)
                       : null}
@@ -644,7 +644,7 @@ const Board = ({ setBodyStyle }) => {
                 <div key={`mob-c-${Math.random()}`} className="op-container">
                   <div key={`mob-po-${Math.random()}`} className="post op">
                     <div key={`mob-pi-${Math.random()}`} className="post-info-mobile">
-                      <a key={`mob-pb-${Math.random()}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
+                      <Link to="" key={`mob-pb-${Math.random()}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</Link>
                       <span key={`mob-nbm-${Math.random()}`} className="name-block-mobile">
                         {thread.author.displayName
                         ? thread.author.displayName.length > 15
@@ -699,15 +699,15 @@ const Board = ({ setBodyStyle }) => {
                       <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                         {getDate(thread.timestamp)}
                         &nbsp;
-                        <a key={`mob-no-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
-                        <a key={`mob-no2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
+                        <Link to="" key={`mob-no-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                        <Link to="" key={`mob-no2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
                       </span>
                     </div>
                     <div key={`mob-f-${Math.random()}`} className="file-mobile">
-                      <a key={`mob-ft${Math.random()}`} className="file-thumb-mobile" href={handleVoidClick} target="_blank">
+                      <Link to="" key={`mob-ft${Math.random()}`} className="file-thumb-mobile" onClick={handleVoidClick} target="_blank">
                         <img key={`mob-img-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="" />
                         <div key={`mob-fi-${Math.random()}`} className="file-info-mobile">58 KB JPG</div>
-                      </a>
+                      </Link>
                     </div>
                     {thread.content ? (
                         thread.content.length > 1500 ?
@@ -775,17 +775,17 @@ const Board = ({ setBodyStyle }) => {
                         </span>
                         <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                         {getDate(reply.timestamp)}&nbsp;
-                          <a key={`mob-pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
-                          <a key={`mob-pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
+                          <Link to="" key={`mob-pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                          <Link to="" key={`mob-pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                         </span>
                       </div>
                       {reply.content ? (
                         reply.content.length > 1000 ?
                         <Fragment key={`fragment15-${Math.random()}`}>
                           <blockquote key={`mob-pm-${Math.random()}`} className="post-message">
-                            <a key={`mob-r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
+                            <Link to="" key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
                               {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                            </a>
+                            </Link>
                             {reply.content.slice(0, 1000)}
                             <span key={`mob-ttl-s-${Math.random()}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${Math.random()}`} /><br key={`mob-ttl-s-br2${Math.random()}`} />
@@ -795,9 +795,9 @@ const Board = ({ setBodyStyle }) => {
                           </blockquote>
                         </Fragment>
                       : <blockquote key={`mob-pm-${Math.random()}`} className="post-message">
-                          <a key={`mob-r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
+                          <Link to="" key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                          </a>
+                          </Link>
                           {reply.content}
                         </blockquote>)
                       : null}
