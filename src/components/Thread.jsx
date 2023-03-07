@@ -443,9 +443,17 @@ const Thread = ({ setBodyStyle }) => {
                       </span>
                       <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                       <div id="backlink-id" className="backlink">
-                        <span>
-                          <Link to="" className="quote-link" onClick={handleVoidClick}>c/{comment.cid.slice(0, 8)}</Link>
-                        </span>
+                        {comment.replies?.pages.topAll.comments
+                          .sort((a, b) => a.timestamp - b.timestamp)
+                          .map((reply) => (
+                            <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
+                            <Link key={`ql-${Math.random()}`}
+                             to="" className="quote-link" onClick={handleVoidClick}>
+                              c/{reply.cid.slice(0, 8)}</Link>
+                              &nbsp;
+                            </div>
+                          ))
+                        }
                       </div>
                     </span>
                     <blockquote>

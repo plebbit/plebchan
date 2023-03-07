@@ -529,9 +529,20 @@ const Board = ({ setBodyStyle }) => {
                         </span>
                         <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                         <div key={`bi-${Math.random()}`} id="backlink-id" className="backlink">
-                          <span key={`ql1-${Math.random()}`}>
-                            <Link to="" key={`ql2-${Math.random()}`} className="quote-link" onClick={handleVoidClick}>{'c/'}{thread.cid.slice(0, 8)}</Link>
-                          </span>
+                          {thread.replies?.pages.topAll.comments
+                            .sort((a, b) => a.timestamp - b.timestamp)
+                            .map((reply) => (
+                              <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
+                              <Link key={`ql-${Math.random()}`}
+                              to="" className="quote-link" onClick={handleVoidClick}>
+                                c/{reply.cid.slice(0, 8)}</Link>
+                                &nbsp;
+                              </div>
+                            ))
+                          }
+                          {/* <span key={`ql1-${Math.random()}`}>
+                            <Link to="" key={`ql2-${Math.random()}`} className="quote-link" onClick={handleVoidClick}>c/{thread.cid.slice(0, 8)}</Link>
+                          </span> */}
                         </div>
                       </span>
                       {thread.content ? (
