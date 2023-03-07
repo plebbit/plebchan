@@ -284,9 +284,9 @@ const Catalog = ({ setBodyStyle }) => {
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
-            <span className="boardList" key={`span-${subplebbit.address}`}>
+            <span className="boardList" key={`span-${Math.random()}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              <Link to={`/${subplebbit.address}`} key={`a-${Math.random()}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
@@ -306,7 +306,7 @@ const Catalog = ({ setBodyStyle }) => {
               &nbsp;
               <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                 {defaultSubplebbits.map(subplebbit => (
-                    <option key={`option-${subplebbit.address}`} value={subplebbit.address}
+                    <option key={`option-${Math.random()}`} value={subplebbit.address}
                     >{subplebbit.title}</option>
                   ))}
               </select>
@@ -420,23 +420,23 @@ const Catalog = ({ setBodyStyle }) => {
           pageStart={0}
           loadMore={tryLoadMore}
           hasMore={hasMore}
-          loader={<div>Loading...</div>}
+          loader={<div key={`loader-${Math.random()}`}>Loading...</div>}
         >
           {feed.map(thread => {
             return (
-              <div key={`${thread.cid}`} className="thread">
-                <Link key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
-                  <img key={`img-${thread.cid}`} alt="" src="/assets/plebchan-psycho.png" />
+              <div key={`thread-${Math.random()}`} className="thread">
+                <Link key={`a-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
+                  <img key={`img-${Math.random()}`} alt="" src="/assets/plebchan-psycho.png" />
                 </Link>
-                <div key={`ti-${thread.cid}`} className="thread-icons" >
-                  <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>
+                <div key={`ti-${Math.random()}`} className="thread-icons" >
+                  <span key={`si-${Math.random()}`} className="thread-icon sticky-icon" title="Sticky"></span>
                 </div>
-                <div key={`meta-${thread.cid}`} className="meta" title="(R)eplies / (I)mage Replies" >
+                <div key={`meta-${Math.random()}`} className="meta" title="(R)eplies / (I)mage Replies" >
                   R:
-                  <b key={`b-${thread.cid}`}>{thread.replyCount}</b>
+                  <b key={`b-${Math.random()}`}>{thread.replyCount}</b>
                 </div>
-                <div key={`t-${thread.cid}`} className="teaser">
-                  <b>{thread.title ? `${thread.title}` : null}</b>
+                <div key={`t-${Math.random()}`} className="teaser">
+                  <b key={`b2-${Math.random()}`}>{thread.title ? `${thread.title}` : null}</b>
                   {thread.content ? `: ${thread.content}` : null}
                 </div>
               </div>

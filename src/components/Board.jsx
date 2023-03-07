@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
@@ -447,189 +447,189 @@ const Board = ({ setBodyStyle }) => {
             pageStart={0}
             loadMore={tryLoadMore}
             hasMore={hasMore}
-            loader={<div>Loading...</div>}
+            loader={<div key={`loader-${Math.random()}`}>Loading...</div>}
           >
             {renderedFeed.map(thread => {
             const { replies: { pages: { topAll: { comments } } } } = thread;
             const { renderedComments, omittedCount } = renderComments(comments);
             return (
-            <>
-              <div key={`t-${thread.cid}`} className="thread">
-                <div key={`c-${thread.cid}`} className="op-container">
-                  <div key={`po-${thread.cid}`} className="post op">
-                    <hr key={`hr-${thread.cid}`} />
-                    <div key={`pi-${thread.cid}`} className="post-info">
-                      <div key={`f-${thread.cid}`} className="file">
-                        <div key={`ft-${thread.cid}`} className="file-text">
+            <Fragment key={`fragment1-${Math.random()}`}>
+              <div key={`t-${Math.random()}`} className="thread">
+                <div key={`c-${Math.random()}`} className="op-container">
+                  <div key={`po-${Math.random()}`} className="post op">
+                    <hr key={`hr-${Math.random()}`} />
+                    <div key={`pi-${Math.random()}`} className="post-info">
+                      <div key={`f-${Math.random()}`} className="file">
+                        <div key={`ft-${Math.random()}`} className="file-text">
                           File:&nbsp;
-                          <a key={`fa-${thread.cid}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
+                          <a key={`fa-${Math.random()}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
                         </div>
-                        <a key={`fta-${thread.cid}`} href={handleVoidClick} target="_blank" className="file-thumb">
-                          <img key={`fti-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
+                        <a key={`fta-${Math.random()}`} href={handleVoidClick} target="_blank" className="file-thumb">
+                          <img key={`fti-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
                         </a>
                       </div>
-                      <span key={`nb-${thread.cid}`} className="name-block">
+                      <span key={`nb-${Math.random()}`} className="name-block">
                         {thread.title ? (
                           thread.title.length > 75 ?
-                          <>
-                            <Tooltip key={`mob-tt-tm-${thread.cid}`} id="tt-title-mobile" className="tooltip" />
-                            <span key={`q-${thread.cid}`} className="title"
+                          <Fragment key={`fragment2-${Math.random()}`}>
+                            <Tooltip key={`mob-tt-tm-${Math.random()}`} id="tt-title-mobile" className="tooltip" />
+                            <span key={`q-${Math.random()}`} className="title"
                             data-tooltip-id="tt-title-mobile"
                             data-tooltip-content={thread.title}
                             data-tooltip-place="top">
                               {thread.title.slice(0, 75) + " (...)"}
                             </span>
-                          </>
-                        : <span key={`q-${thread.cid}`} className="title">
+                          </Fragment>
+                        : <span key={`q-${Math.random()}`} className="title">
                           {thread.title}
                           </span>) 
                         : null}&nbsp;
                         {thread.author.displayName
                         ? thread.author.displayName.length > 20
-                        ? <>
-                            <Tooltip key={`mob-tt-nm-${thread.cid}`} id="tt-name-mobile" className="tooltip" />
-                            <span key={`n-${thread.cid}`} className="name"
+                        ? <Fragment key={`fragment3-${Math.random()}`}>
+                            <Tooltip key={`mob-tt-nm-${Math.random()}`} id="tt-name-mobile" className="tooltip" />
+                            <span key={`n-${Math.random()}`} className="name"
                             data-tooltip-id="tt-name-mobile"
                             data-tooltip-content={thread.author.displayName}
                             data-tooltip-place="top">
                               {thread.author.displayName.slice(0, 20) + " (...)"}
                             </span>
-                          </> 
-                          : <span key={`n-${thread.cid}`} className="name">
+                          </Fragment> 
+                          : <span key={`n-${Math.random()}`} className="name">
                             {thread.author.displayName}</span>
-                        : <span key={`n-${thread.cid}`} className="name">
+                        : <span key={`n-${Math.random()}`} className="name">
                           Anonymous</span>}
                         &nbsp;
                         (u/
                         {thread.author.address.length > 15 ?
-                        <>
-                          <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
-                          <span key={`pa-${thread.cid}`} className="poster-address"
+                        <Fragment key={`fragment4-${Math.random()}`}>
+                          <Tooltip key={`mob-tt-am-${Math.random()}`} id="tt-address-mobile" className="tooltip" />
+                          <span key={`pa-${Math.random()}`} className="poster-address"
                           data-tooltip-id="tt-address-mobile"
                           data-tooltip-content={thread.author.address}
                           data-tooltip-place="top">
                             {thread.author.address.slice(0, 15) + "..."}
                           </span>
-                        </>
-                        : <span key={`pa-${thread.cid}`} className="poster-address">
+                        </Fragment>
+                        : <span key={`pa-${Math.random()}`} className="poster-address">
                           {thread.author.address}
                         </span>})
                         &nbsp;
-                        <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
+                        <span key={`dt-${Math.random()}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
                         &nbsp;
-                        <span key={`pn-${thread.cid}`} className="post-number">
-                          <a key={`pl1-${thread.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
-                          <a key={`pl2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
+                        <span key={`pn-${Math.random()}`} className="post-number">
+                          <a key={`pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
+                          <a key={`pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
                           &nbsp;
-                          <span key={`rl1-${thread.cid}`}>
+                          <span key={`rl1-${Math.random()}`}>
                             [
-                            <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
+                            <Link key={`rl2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
                             ]
                           </span>
                         </span>
-                        <a key={`pmb-${thread.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
-                        <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
-                          <span key={`ql1-${thread.cid}`}>
-                            <a key={`ql2-${thread.cid}`} className="quote-link" href={handleVoidClick}>{'c/'}{thread.cid.slice(0, 8)}</a>
+                        <a key={`pmb-${Math.random()}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                        <div key={`bi-${Math.random()}`} id="backlink-id" className="backlink">
+                          <span key={`ql1-${Math.random()}`}>
+                            <a key={`ql2-${Math.random()}`} className="quote-link" href={handleVoidClick}>{'c/'}{thread.cid.slice(0, 8)}</a>
                           </span>
                         </div>
                       </span>
                       {thread.content ? (
                         thread.content.length > 2000 ?
-                        <>
-                          <blockquote key={`bq-${thread.cid}`}>
+                        <Fragment key={`fragment5-${Math.random()}`}>
+                          <blockquote key={`bq-${Math.random()}`}>
                             {thread.content.slice(0, 2000)}
-                            <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) 
-                            <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
+                            <span key={`ttl-s-${Math.random()}`} className="ttl"> (...) 
+                            <br key={`ttl-s-br1-${Math.random()}`} /><br key={`ttl-s-br2${Math.random()}`} />
                             Post too long.&nbsp;
-                              <Link key={`ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
-                        </>
-                      : <blockquote key={`bq-${thread.cid}`}>
+                        </Fragment>
+                      : <blockquote key={`bq-${Math.random()}`}>
                           {thread.content}
                         </blockquote>)
                       : null}
                     </div>
                   </div>
                 </div>
-                <span className="summary">
+                <span key={`summary-${Math.random()}`} className="summary">
                   {omittedCount > 0 ? (
-                  <span key={`oc-${thread.cid}`} className="ttl">
-                    <span key={`oc1-${thread.cid}`}>
+                  <span key={`oc-${Math.random()}`} className="ttl">
+                    <span key={`oc1-${Math.random()}`}>
                       {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
-                      <Link key={`oc2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">here</Link>
+                      <Link key={`oc2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">here</Link>
                       &nbsp;to view.
                     </span>
                   </span>) : null}
                 </span>
                 {renderedComments.map(reply => {
                   return (
-                <div key={`pc-${reply.cid}`} className="reply-container">
-                  <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                  <div key={`pr-${reply.cid}`} className="post-reply">
-                    <div key={`pi-${reply.cid}`} className="post-info">
-                      <span key={`nb-${reply.cid}`} className="nameblock">
+                <div key={`pc-${Math.random()}`} className="reply-container">
+                  <div key={`sa-${Math.random()}`} className="side-arrows">{'>>'}</div>
+                  <div key={`pr-${Math.random()}`} className="post-reply">
+                    <div key={`pi-${Math.random()}`} className="post-info">
+                      <span key={`nb-${Math.random()}`} className="nameblock">
                         {reply.author.displayName
                           ? reply.author.displayName.length > 12
-                          ? <>
-                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name" className="tooltip" />
-                              <span key={`mob-n-${reply.cid}`} className="name"
+                          ? <Fragment key={`fragment6-${Math.random()}`}>
+                              <Tooltip key={`mob-tt-nm-${Math.random()}`} id="tt-name" className="tooltip" />
+                              <span key={`mob-n-${Math.random()}`} className="name"
                               data-tooltip-id="tt-name"
                               data-tooltip-content={reply.author.displayName}
                               data-tooltip-place="top">
                                 {reply.author.displayName.slice(0, 12) + " (...)"}
                               </span>
-                            </>
-                            : <span key={`mob-n-${reply.cid}`} className="name">
+                            </Fragment>
+                            : <span key={`mob-n-${Math.random()}`} className="name">
                               {reply.author.displayName}</span>
-                          : <span key={`mob-n-${reply.cid}`} className="name">
+                          : <span key={`mob-n-${Math.random()}`} className="name">
                             Anonymous</span>}
                         &nbsp;
-                        <span key={`pa-${reply.cid}`} className="poster-address">
+                        <span key={`pa-${Math.random()}`} className="poster-address">
                           (u/
                             {reply.author.address.length > 12 ?
-                            <>
-                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
-                              <span key={`mob-ha-${reply.cid}`}
+                            <Fragment key={`fragment7-${Math.random()}`}>
+                              <Tooltip key={`mob-tt-am-${Math.random()}`} id="tt-address" className="tooltip" />
+                              <span key={`mob-ha-${Math.random()}`}
                               data-tooltip-id="tt-address"
                               data-tooltip-content={reply.author.address}
                               data-tooltip-place="top">
                                 {reply.author.address.slice(0, 12) + "..."}
                               </span>
-                            </>
-                            : <span key={`mob-ha-${reply.cid}`}>
+                            </Fragment>
+                            : <span key={`mob-ha-${Math.random()}`}>
                               {reply.author.address}
                             </span>}
                           )
                         </span>
                       </span>
                       &nbsp;
-                      <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
+                      <span key={`dt-${Math.random()}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                       &nbsp;
-                      <span key={`pn-${reply.cid}`} className="post-number">
-                        <a key={`pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
-                        <a key={`pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
+                      <span key={`pn-${Math.random()}`} className="post-number">
+                        <a key={`pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
+                        <a key={`pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                       </span>
-                      <a key={`pmb-${reply.cid}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
+                      <a key={`pmb-${Math.random()}`} className="post-menu-button" href={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</a>
                     </div>
                     {reply.content ? (
                         reply.content.length > 1000 ?
-                        <>
-                          <blockquote key={`pm-${reply.cid}`} className="post-message">
-                            <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                        <Fragment key={`fragment8-${Math.random()}`}>
+                          <blockquote key={`pm-${Math.random()}`} className="post-message">
+                            <a key={`r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
                               {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                             </a>
                             {reply.content.slice(0, 1000)}
-                            <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
-                            <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
+                            <span key={`ttl-s-${Math.random()}`} className="ttl"> (...)
+                            <br key={`ttl-s-br1-${Math.random()}`} /><br key={`ttl-s-br2${Math.random()}`} />
                             Comment too long.&nbsp;
-                              <Link key={`ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
-                        </>
-                      : <blockquote key={`pm-${thread.cid}`} className="post-message">
-                          <a key={`r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                        </Fragment>
+                      : <blockquote key={`pm-${Math.random()}`} className="post-message">
+                          <a key={`r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
@@ -639,163 +639,163 @@ const Board = ({ setBodyStyle }) => {
                 </div>
                 )})}
               </div>
-              <div key={`mob-t-${thread.cid}`} className="thread-mobile">
-                <hr key={`mob-hr-${thread.cid}`} />
-                <div key={`mob-c-${thread.cid}`} className="op-container">
-                  <div key={`mob-po-${thread.cid}`} className="post op">
-                    <div key={`mob-pi-${thread.cid}`} className="post-info-mobile">
-                      <a key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
-                      <span key={`mob-nbm-${thread.cid}`} className="name-block-mobile">
+              <div key={`mob-t-${Math.random()}`} className="thread-mobile">
+                <hr key={`mob-hr-${Math.random()}`} />
+                <div key={`mob-c-${Math.random()}`} className="op-container">
+                  <div key={`mob-po-${Math.random()}`} className="post op">
+                    <div key={`mob-pi-${Math.random()}`} className="post-info-mobile">
+                      <a key={`mob-pb-${Math.random()}`} className="post-menu-button-mobile" href={handleVoidClick}>...</a>
+                      <span key={`mob-nbm-${Math.random()}`} className="name-block-mobile">
                         {thread.author.displayName
                         ? thread.author.displayName.length > 15
-                        ? <>
-                            <Tooltip key={`mob-tt-nm-${thread.cid}`} id="tt-name-mobile" className="tooltip" />
-                            <span key={`mob-n-${thread.cid}`} className="name-mobile"
+                        ? <Fragment key={`fragment9-${Math.random()}`}>
+                            <Tooltip key={`mob-tt-nm-${Math.random()}`} id="tt-name-mobile" className="tooltip" />
+                            <span key={`mob-n-${Math.random()}`} className="name-mobile"
                             data-tooltip-id="tt-name-mobile"
                             data-tooltip-content={thread.author.displayName}
                             data-tooltip-place="top">
                               {thread.author.displayName.slice(0, 15) + " (...)"}
                             </span>
-                          </> 
-                          : <span key={`mob-n-${thread.cid}`} className="name-mobile">
+                          </Fragment> 
+                          : <span key={`mob-n-${Math.random()}`} className="name-mobile">
                             {thread.author.displayName}</span>
-                        : <span key={`mob-n-${thread.cid}`} className="name-mobile">
+                        : <span key={`mob-n-${Math.random()}`} className="name-mobile">
                           Anonymous</span>}
                         &nbsp;
-                        <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile">
+                        <span key={`mob-pa-${Math.random()}`} className="poster-address-mobile">
                           (u/
                           {thread.author.address.length > 15 ?
-                          <>
-                            <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
-                            <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile"
+                          <Fragment key={`fragment10-${Math.random()}`}>
+                            <Tooltip key={`mob-tt-am-${Math.random()}`} id="tt-address-mobile" className="tooltip" />
+                            <span key={`mob-ha-${Math.random()}`} className="highlight-address-mobile"
                             data-tooltip-id="tt-address-mobile"
                             data-tooltip-content={thread.author.address}
                             data-tooltip-place="top">
                               {thread.author.address.slice(0, 15) + "..."}
                             </span>
-                          </>
-                          : <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile">
+                          </Fragment>
+                          : <span key={`mob-ha-${Math.random()}`} className="highlight-address-mobile">
                             {thread.author.address}
                           </span>}
                           )&nbsp;
                         </span>
-                        <br key={`mob-br1-${thread.cid}`} />
+                        <br key={`mob-br1-${Math.random()}`} />
                         {thread.title ? (
                           thread.title.length > 30 ?
-                          <>
-                            <Tooltip key={`mob-tt-tm-${thread.cid}`} id="tt-title-mobile" className="tooltip" />
-                            <span key={`mob-t-${thread.cid}`} className="subject-mobile"
+                          <Fragment key={`fragment11-${Math.random()}`}>
+                            <Tooltip key={`mob-tt-tm-${Math.random()}`} id="tt-title-mobile" className="tooltip" />
+                            <span key={`mob-t-${Math.random()}`} className="subject-mobile"
                             data-tooltip-id="tt-title-mobile"
                             data-tooltip-content={thread.title}
                             data-tooltip-place="top">
                               {thread.title.slice(0, 30) + " (...)"}
                             </span>
-                          </>
-                        : <span key={`mob-t-${thread.cid}`} className="subject-mobile">
+                          </Fragment>
+                        : <span key={`mob-t-${Math.random()}`} className="subject-mobile">
                           {thread.title}
                           </span>) 
                         : null}
                       </span>
-                      <span key={`mob-dt-${thread.cid}`} className="date-time-mobile">
+                      <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                         {getDate(thread.timestamp)}
                         &nbsp;
-                        <a key={`mob-no-${thread.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
-                        <a key={`mob-no2-${thread.cid}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
+                        <a key={`mob-no-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
+                        <a key={`mob-no2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</a>
                       </span>
                     </div>
-                    <div key={`mob-f-${thread.cid}`} className="file-mobile">
-                      <a key={`mob-ft${thread.cid}`} className="file-thumb-mobile" href={handleVoidClick} target="_blank">
-                        <img key={`mob-img-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="" />
-                        <div key={`mob-fi-${thread.cid}`} className="file-info-mobile">58 KB JPG</div>
+                    <div key={`mob-f-${Math.random()}`} className="file-mobile">
+                      <a key={`mob-ft${Math.random()}`} className="file-thumb-mobile" href={handleVoidClick} target="_blank">
+                        <img key={`mob-img-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="" />
+                        <div key={`mob-fi-${Math.random()}`} className="file-info-mobile">58 KB JPG</div>
                       </a>
                     </div>
                     {thread.content ? (
                         thread.content.length > 1500 ?
-                        <>
-                          <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
+                        <Fragment key={`fragment12-${Math.random()}`}>
+                          <blockquote key={`mob-bq-${Math.random()}`} className="post-message-mobile">
                             {thread.content.slice(0, 1500)}
-                            <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
-                            <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
+                            <span key={`mob-ttl-s-${Math.random()}`} className="ttl"> (...)
+                            <br key={`mob-ttl-s-br1-${Math.random()}`} /><br key={`mob-ttl-s-br2${Math.random()}`} />
                              Post too long.&nbsp;
-                              <Link key={`mob-ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`mob-ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
-                        </>
-                      : <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
+                        </Fragment>
+                      : <blockquote key={`mob-bq-${Math.random()}`} className="post-message-mobile">
                           {thread.content}
                         </blockquote>)
                       : null}
                   </div>
-                  <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
-                    <span key={`mob-info-${thread.cid}`} className="info-mobile">{thread.replyCount} Replies / ? Images</span>
-                    <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
+                  <div key={`mob-pl-${Math.random()}`} className="post-link-mobile">
+                    <span key={`mob-info-${Math.random()}`} className="info-mobile">{thread.replyCount} Replies / ? Images</span>
+                    <Link key={`rl2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
                   </div>
                 </div>
                 {renderedComments.map(reply => {
                   return (
-                  <div key={`mob-rc-${reply.cid}`} className="reply-container">
-                    <div key={`mob-pr-${reply.cid}`} className="post-reply">
-                      <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
-                        <a className="post-menu-button-mobile" title="Post menu">...</a>
-                        <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
+                  <div key={`mob-rc-${Math.random()}`} className="reply-container">
+                    <div key={`mob-pr-${Math.random()}`} className="post-reply">
+                      <div key={`mob-pi-${Math.random()}`} className="post-info-mobile">
+                        <a key={`pmbm-${Math.random()}`} className="post-menu-button-mobile" title="Post menu">...</a>
+                        <span key={`mob-nb-${Math.random()}`} className="name-block-mobile">
                           {reply.author.displayName
                           ? reply.author.displayName.length > 12
-                          ? <>
-                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name-mobile" className="tooltip" />
-                              <span key={`mob-n-${reply.cid}`} className="name-mobile"
+                          ? <Fragment key={`fragment13-${Math.random()}`}>
+                              <Tooltip key={`mob-tt-nm-${Math.random()}`} id="tt-name-mobile" className="tooltip" />
+                              <span key={`mob-n-${Math.random()}`} className="name-mobile"
                               data-tooltip-id="tt-name-mobile"
                               data-tooltip-content={reply.author.displayName}
                               data-tooltip-place="top">
                                 {reply.author.displayName.slice(0, 12) + " (...)"}
                               </span>
-                            </>
-                            : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                            </Fragment>
+                            : <span key={`mob-n-${Math.random()}`} className="name-mobile">
                               {reply.author.displayName}</span>
-                          : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                          : <span key={`mob-n-${Math.random()}`} className="name-mobile">
                             Anonymous</span>}
                           &nbsp;
-                          <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
+                          <span key={`mob-pa-${Math.random()}`} className="poster-address-mobile">
                             (u/
                             {reply.author.address.length > 10 ?
-                            <>
-                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
-                              <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
+                            <Fragment key={`fragment14-${Math.random()}`}>
+                              <Tooltip key={`mob-tt-am-${Math.random()}`} id="tt-address-mobile" className="tooltip" />
+                              <span key={`mob-ha-${Math.random()}`} className="highlight-address-mobile"
                               data-tooltip-id="tt-address-mobile"
                               data-tooltip-content={reply.author.address}
                               data-tooltip-place="top">
                                 {reply.author.address.slice(0, 10) + "..."}
                               </span>
-                            </>
-                            : <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
+                            </Fragment>
+                            : <span key={`mob-ha-${Math.random()}`} className="highlight-address-mobile">
                               {reply.author.address}
                             </span>}
                             )&nbsp;
                           </span>
-                          <br key={`mob-br-${reply.cid}`} />
+                          <br key={`mob-br-${Math.random()}`} />
                         </span>
-                        <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
+                        <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                         {getDate(reply.timestamp)}&nbsp;
-                          <a key={`mob-pl1-${reply.cid}`} href={handleVoidClick} title="Link to this post">c/</a>
-                          <a key={`mob-pl2-${reply.cid}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
+                          <a key={`mob-pl1-${Math.random()}`} href={handleVoidClick} title="Link to this post">c/</a>
+                          <a key={`mob-pl2-${Math.random()}`} href={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</a>
                         </span>
                       </div>
                       {reply.content ? (
                         reply.content.length > 1000 ?
-                        <>
-                          <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                            <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                        <Fragment key={`fragment15-${Math.random()}`}>
+                          <blockquote key={`mob-pm-${Math.random()}`} className="post-message">
+                            <a key={`mob-r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
                               {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                             </a>
                             {reply.content.slice(0, 1000)}
-                            <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
-                            <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
+                            <span key={`mob-ttl-s-${Math.random()}`} className="ttl"> (...)
+                            <br key={`mob-ttl-s-br1-${Math.random()}`} /><br key={`mob-ttl-s-br2${Math.random()}`} />
                             Comment too long.&nbsp;
-                              <Link key={`mob-ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link key={`mob-ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
-                        </>
-                      : <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                          <a key={`mob-r-pm-${reply.cid}`} className="quotelink" href={handleVoidClick}>
+                        </Fragment>
+                      : <blockquote key={`mob-pm-${Math.random()}`} className="post-message">
+                          <a key={`mob-r-pm-${Math.random()}`} className="quotelink" href={handleVoidClick}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </a>
                           {reply.content}
@@ -805,7 +805,7 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                 )})}
               </div>
-            </>
+            </Fragment>
             )})}
           </InfiniteScroll>
         </div>
