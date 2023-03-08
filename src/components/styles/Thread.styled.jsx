@@ -64,7 +64,7 @@ export const ReplyFormLink = styled.div`
         }
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `.btn-wrap {
           background-color: #d6daf0;
           background-image: url(/assets/buttonfade-blue.png);
@@ -253,7 +253,7 @@ export const ReplyFormTable = styled.table`
         position: relative;
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `tbody > tr > td:first-child {
         background-color: #98e;
         color: #000;
@@ -708,7 +708,7 @@ export const TopBar = styled.div`
           }
         }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `clear: both;
         hr {
           border: none;
@@ -880,7 +880,7 @@ export const TopBar = styled.div`
         }
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `.btn-wrap {
           background-color: #d6daf0;
           background-image: url(/assets/buttonfade-blue.png);
@@ -1040,7 +1040,7 @@ export const BottomBar = styled.div`
           padding-top: 5px;
         }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `
         a, a:visited {
           color: #34345c !important;

@@ -106,7 +106,7 @@ export const NavBar = styled.div`
         color: navy;
       }`;
 
-    case 'Yotsuba B':
+    case 'Yotsuba-B':
       return `font-size: 9pt;
       color: #89a;
       
@@ -254,7 +254,7 @@ export const Header = styled.div`
           font-size: 9pt;
         }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `text-align: center;
         clear: both;
 
@@ -419,7 +419,7 @@ export const Break = styled.hr`
         border-top: 1px solid #d9bfb7;
         height: 0;`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `width: 90%;
         border: none;
         border-top: 1px solid #b7c5d9;
@@ -495,7 +495,7 @@ export const PostFormLink = styled.div`
         }
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `.btn-wrap {
           background-color: #d6daf0;
           background-image: url(/assets/buttonfade-blue.png);
@@ -694,7 +694,7 @@ export const PostFormTable = styled.table`
         }
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `tbody > tr > td:first-child {
         background-color: #98e;
         color: #000;
@@ -1147,7 +1147,7 @@ export const PostForm = styled.div`
         color: red;
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `#post-form-link {
         font-size: 22px;
         font-weight: 700;
@@ -1252,7 +1252,7 @@ export const TopBar = styled.div`
           color: red;
         }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `clear: both;
         hr {
           border: none;
@@ -1423,7 +1423,7 @@ ${({ selectedStyle }) => {
         }
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `.btn-wrap {
           background-color: #d6daf0;
           background-image: url(/assets/buttonfade-blue.png);
@@ -1699,7 +1699,7 @@ export const BoardForm = styled.div`
             }
           }`;
 
-        case 'Yotsuba B':
+        case 'Yotsuba-B':
           return `
             .op-container {
               background-color: #d6daf0;
@@ -2646,7 +2646,7 @@ export const BoardForm = styled.div`
         height: 0;
       }`;
 
-      case 'Yotsuba B':
+      case 'Yotsuba-B':
         return `.thread {
         margin: 0;
         clear: both;

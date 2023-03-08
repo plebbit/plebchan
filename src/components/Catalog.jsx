@@ -225,14 +225,14 @@ const Catalog = ({ setBodyStyle }) => {
         setCookie("selectedStyle", "Yotsuba", { path: "/" });
         break;
 
-      case "Yotsuba B":
+      case "Yotsuba-B":
         setBodyStyle({
           background: "#eef2ff url(/assets/fade-blue.png) top center repeat-x",
           color: "#000",
           fontFamily: "Arial, Helvetica, sans-serif"
         });
-        setSelectedStyle("Yotsuba B");
-        setCookie("selectedStyle", "Yotsuba B", { path: "/", sameSite: 'none', secure: true });
+        setSelectedStyle("Yotsuba-B");
+        setCookie("selectedStyle", "Yotsuba-B", { path: "/", sameSite: 'none', secure: true });
         break;
 
       case "Futaba":
@@ -289,15 +289,15 @@ const Catalog = ({ setBodyStyle }) => {
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    if (parts.length === 2) return parts.pop().split(";").shift();
   }
-
+  
   useEffect(() => {
     const style = getCookie("selectedStyle");
     if (style) {
-      handleStyleChange({target: {value: style}});
+      handleStyleChange({ target: { value: style } });
     }
-  }, [selectedStyle])
+  }, []);
 
 
 
@@ -418,7 +418,7 @@ const Catalog = ({ setBodyStyle }) => {
            
           <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
             <option value="Yotsuba">Yotsuba</option>
-            <option value="Yotsuba B">Yotsuba B</option>
+            <option value="Yotsuba-B">Yotsuba B</option>
             <option value="Futaba">Futaba</option>
             <option value="Burichan">Burichan</option>
             <option value="Tomorrow">Tomorrow</option>

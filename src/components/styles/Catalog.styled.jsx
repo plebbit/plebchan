@@ -57,27 +57,4 @@ export const Threads = styled.div`
     display: block;
     padding: 0 15px;
   }
-
-  ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return ``;
-
-      case 'Yotsuba B':
-        return ``;
-
-      case 'Futaba':
-        return `font-size: 12pt;`;
-
-      case 'Burichan':
-        return `font-size: 12pt;`;
-
-      case 'Tomorrow':
-        return ``;
-
-      case 'Photon':
-        return ``;
-      
-    }
-  }}
 `;
