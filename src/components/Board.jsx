@@ -237,6 +237,17 @@ const Board = ({ setBodyStyle }) => {
     }
   };
 
+  // scroll to post when quote is clicked
+  function handleQuoteClick(reply, event) {
+    event.preventDefault();
+    const cid = reply.cid.slice(0, 8);
+    const targetElement = [...document.querySelectorAll('.post-reply')]
+      .find(el => el.innerHTML.includes(cid));
+    if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "instant" });
+    }
+  }
+
 
   const handleStyleChange = (event) => {
     switch (event.target.value) {
@@ -534,15 +545,13 @@ const Board = ({ setBodyStyle }) => {
                             .map((reply) => (
                               <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
                               <Link key={`ql-${Math.random()}`}
-                              to="" className="quote-link" onClick={handleVoidClick}>
+                              to={handleVoidClick} className="quote-link" 
+                              onClick={(event) => handleQuoteClick(reply, event)}>
                                 c/{reply.cid.slice(0, 8)}</Link>
                                 &nbsp;
                               </div>
                             ))
                           }
-                          {/* <span key={`ql1-${Math.random()}`}>
-                            <Link to="" key={`ql2-${Math.random()}`} className="quote-link" onClick={handleVoidClick}>c/{thread.cid.slice(0, 8)}</Link>
-                          </span> */}
                         </div>
                       </span>
                       {thread.content ? (
@@ -623,6 +632,20 @@ const Board = ({ setBodyStyle }) => {
                         <Link to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                       </span>
                       <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                      <div id="backlink-id" className="backlink">
+                        {reply.replies?.pages.topAll.comments
+                          .sort((a, b) => a.timestamp - b.timestamp)
+                          .map((reply) => (
+                            <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
+                            <Link to={handleVoidClick} key={`ql-${Math.random()}`}
+                              className="quote-link" 
+                              onClick={(event) => handleQuoteClick(reply, event)}>
+                              c/{reply.cid.slice(0, 8)}</Link>
+                              &nbsp;
+                            </div>
+                          ))
+                        }
+                      </div>
                     </div>
                     {reply.content ? (
                         reply.content.length > 1000 ?
@@ -640,7 +663,7 @@ const Board = ({ setBodyStyle }) => {
                           </blockquote>
                         </Fragment>
                       : <blockquote key={`pm-${Math.random()}`} className="post-message">
-                          <Link to="" key={`r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
+                          <Link to={handleVoidClick} key={`r-pm-${Math.random()}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </Link>
                           {reply.content}
@@ -806,7 +829,7 @@ const Board = ({ setBodyStyle }) => {
                           </blockquote>
                         </Fragment>
                       : <blockquote key={`mob-pm-${Math.random()}`} className="post-message">
-                          <Link to="" key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
+                          <Link to={handleVoidClick} key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </Link>
                           {reply.content}

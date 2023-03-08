@@ -7,6 +7,7 @@ import { useComment } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import { Tooltip } from 'react-tooltip';
 import getDate from '../utils/getDate';
+import renderThreadComments from '../utils/renderThreadComments';
 
 
 const Thread = ({ setBodyStyle }) => {
@@ -22,7 +23,7 @@ const Thread = ({ setBodyStyle }) => {
   const { subplebbitAddress, threadCid } = useParams();
 
 
-
+  // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
     setSelectedThread(threadCid);
@@ -32,7 +33,7 @@ const Thread = ({ setBodyStyle }) => {
     }
   }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
   
-
+  // fetches default subplebbits from JSON
   useEffect(() => {
     let didCancel = false;
     fetch(
@@ -50,7 +51,7 @@ const Thread = ({ setBodyStyle }) => {
     };
   }, []);
 
-
+  // mobile navbar scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -80,13 +81,13 @@ const Thread = ({ setBodyStyle }) => {
 
   const handleVoidClick = () => {}
 
-
+  // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
   };
 
-
+  // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
@@ -115,6 +116,17 @@ const Thread = ({ setBodyStyle }) => {
 
   const handleClickBottom = () => {
     window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  // scroll to post when quote is clicked
+  function handleQuoteClick(reply, event) {
+    event.preventDefault();
+    const cid = reply.cid.slice(0, 8);
+    const targetElement = [...document.querySelectorAll('.post-reply')]
+      .find(el => el.innerHTML.includes(cid));
+    if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "instant" });
+    }
   }
 
 
@@ -182,24 +194,6 @@ const Thread = ({ setBodyStyle }) => {
         });
         setSelectedStyle("Yotsuba");
     }
-  }
-
-
-
-  function renderComments(comments) {
-    const commentKeys = Object.keys(comments);
-    const renderedComments = commentKeys.map(key => {
-      const comment = comments[key];
-      const { replies: { pages: { topAll: { comments: nestedComments } } } } = comment;
-      if (comment.replyCount > 0 && nestedComments) {
-        const renderedNestedComments = renderComments(nestedComments);
-        return [comment, ...renderedNestedComments];
-      }
-      return [comment];
-    }).flat();
-  
-    const sortedComments = renderedComments.sort((a, b) => a.timestamp - b.timestamp);
-    return sortedComments;
   }
   
   
@@ -447,8 +441,9 @@ const Thread = ({ setBodyStyle }) => {
                           .sort((a, b) => a.timestamp - b.timestamp)
                           .map((reply) => (
                             <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
-                            <Link key={`ql-${Math.random()}`}
-                             to="" className="quote-link" onClick={handleVoidClick}>
+                            <Link to={handleVoidClick} key={`ql-${Math.random()}`}
+                              className="quote-link" 
+                              onClick={(event) => handleQuoteClick(reply, event)}>
                               c/{reply.cid.slice(0, 8)}</Link>
                               &nbsp;
                             </div>
@@ -464,12 +459,12 @@ const Thread = ({ setBodyStyle }) => {
               </div>
               {comment.replyCount > 0 && 
               Object.keys(comment.replies.pages.topAll.comments).map(() => {
-                const renderedComments = renderComments(comment.replies.pages.topAll.comments);
+                const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
                 return renderedComments.map(reply => {
                   return (
                     <div key={`pc-${Math.random()}`} className="reply-container">
                       <div key={`sa-${Math.random()}`} className="side-arrows">{'>>'}</div>
-                      <div key={`pr-${Math.random()}`} className="post-reply">
+                      <div key={`pr-${Math.random()}`} className="post-reply" id="post-reply">
                         <div key={`pi-${Math.random()}`} className="post-info">
                         &nbsp;
                           <span key={`nb-${Math.random()}`} className="nameblock">
@@ -514,9 +509,24 @@ const Thread = ({ setBodyStyle }) => {
                             <Link to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                           </span>
                           <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                          <div id="backlink-id" className="backlink">
+                            {reply.replies?.pages.topAll.comments
+                              .sort((a, b) => a.timestamp - b.timestamp)
+                              .map((reply) => (
+                                <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
+                                <Link to={handleVoidClick} key={`ql-${Math.random()}`}
+                                  className="quote-link" 
+                                  onClick={(event) => handleQuoteClick(reply, event)}>
+                                  c/{reply.cid.slice(0, 8)}</Link>
+                                  &nbsp;
+                                </div>
+                              ))
+                            }
+                          </div>
                         </div>
                         <blockquote key={`pm-${Math.random()}`} className="post-message">
-                          <Link to="" className="quotelink" onClick={handleVoidClick}>
+                          <Link to={handleVoidClick} className="quote-link"
+                            onClick={(event) => handleQuoteClick(reply, event)}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </Link>
                           {reply.content}
@@ -607,7 +617,7 @@ const Thread = ({ setBodyStyle }) => {
                 </div>
                 {comment.replyCount > 0 && 
                 Object.keys(comment.replies.pages.topAll.comments).map(() => {
-                  const renderedComments = renderComments(comment.replies.pages.topAll.comments);
+                  const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
                   return renderedComments.map(reply => {
                     return (
                   <div key={`mob-rc-${Math.random()}`} className="reply-container">
@@ -657,7 +667,8 @@ const Thread = ({ setBodyStyle }) => {
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${Math.random()}`} className="post-message-mobile">
-                        <Link to="" key={`mob-ql-${Math.random()}`} className="quotelink-mobile" onClick={handleVoidClick}>
+                        <Link to={handleVoidClick} key={`mob-ql-${Math.random()}`} className="quotelink-mobile" 
+                        onClick={(event) => handleQuoteClick(reply, event)}>
                           {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                         </Link>
                         {reply.content}
