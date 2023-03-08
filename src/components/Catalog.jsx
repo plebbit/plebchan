@@ -81,6 +81,40 @@ const Catalog = ({ setBodyStyle }) => {
     }
   }, [location.pathname]);
 
+  // automatic dark mode without interefering with user's selected style
+  useEffect(() => {
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const isDarkMode = darkModeMediaQuery.matches;
+  
+    if (isDarkMode) {
+      setSelectedStyle('Tomorrow');
+      setBodyStyle({
+        background: '#1d1f21 none',
+        color: '#c5c8c6',
+        fontFamily: 'Arial, Helvetica, sans-serif'
+      });
+      setCookie('selectedStyle', 'Tomorrow', { path: '/', sameSite: 'none', secure: true });
+    }
+  
+    const darkModeListener = (e) => {
+      if (e.matches) {
+        setSelectedStyle('Tomorrow');
+        setBodyStyle({
+          background: '#1d1f21 none',
+          color: '#c5c8c6',
+          fontFamily: 'Arial, Helvetica, sans-serif'
+        });
+        setCookie('selectedStyle', 'Tomorrow', { path: '/', sameSite: 'none', secure: true });
+      }
+    };
+  
+    darkModeMediaQuery.addEventListener('change', darkModeListener);
+  
+    return () => {
+      darkModeMediaQuery.removeEventListener('change', darkModeListener);
+    };
+  }, []);
+
 
 
   const tryLoadMore = async () => {
