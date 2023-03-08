@@ -9,6 +9,7 @@ import NotFound from './components/NotFound';
 import { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
 import preloadImages from './utils/preloadImages';
+import { useCookies } from 'react-cookie';
 
 export const BoardContext = React.createContext();
 
@@ -40,7 +41,9 @@ export default function App() {
   const [selectedTitle, setSelectedTitle] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
   const [selectedThread, setSelectedThread] = useState('');
-  const [selectedStyle, setSelectedStyle] = useState('Yotsuba');
+  const [cookies, setCookie] = useCookies(['selectedStyle']);
+  const [selectedStyle, setSelectedStyle] = useState(cookies.selectedStyle || 'Yotsuba');
+
 
 
   const imageUrls = Array.from({ length: 14 }, (_, index) => `/assets/banners/banner-${index + 1}.jpg`);

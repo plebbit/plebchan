@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Header, Logo, Page, Boards, BoardsTitle } from './styles/Home.styled';
 
 
-const NotFound = ({ setBodyStyle }) => {
+const NotFound = () => {
 
   return (
     <Container>

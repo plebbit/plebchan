@@ -7,6 +7,7 @@ import { BoardContext } from '../App';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import InfiniteScroll from 'react-infinite-scroller';
+import { useCookies } from 'react-cookie';
 
 
 const Catalog = ({ setBodyStyle }) => {
@@ -24,6 +25,7 @@ const Catalog = ({ setBodyStyle }) => {
   const { publishComment } = useAccountsActions();
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
   const { subplebbitAddress } = useParams();
+  const [cookies, setCookie] = useCookies(['selectedStyle']);
 
 
 
@@ -220,6 +222,7 @@ const Catalog = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Yotsuba");
+        setCookie("selectedStyle", "Yotsuba", { path: "/" });
         break;
 
       case "Yotsuba B":
@@ -229,6 +232,7 @@ const Catalog = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Yotsuba B");
+        setCookie("selectedStyle", "Yotsuba B", { path: "/", sameSite: 'none', secure: true });
         break;
 
       case "Futaba":
@@ -238,6 +242,7 @@ const Catalog = ({ setBodyStyle }) => {
           fontFamily: "times new roman, serif"
         });
         setSelectedStyle("Futaba");
+        setCookie("selectedStyle", "Futaba", { path: "/", sameSite: 'none', secure: true });
         break;
 
       case "Burichan":
@@ -247,6 +252,7 @@ const Catalog = ({ setBodyStyle }) => {
           fontFamily: "times new roman, serif"
         });
         setSelectedStyle("Burichan");
+        setCookie("selectedStyle", "Burichan", { path: "/", sameSite: 'none', secure: true });
         break;
         
       case "Tomorrow":
@@ -256,6 +262,7 @@ const Catalog = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Tomorrow");
+        setCookie("selectedStyle", "Tomorrow", { path: "/", sameSite: 'none', secure: true });
         break;
 
       case "Photon":
@@ -265,6 +272,7 @@ const Catalog = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Photon");
+        setCookie("selectedStyle", "Photon", { path: "/", sameSite: 'none', secure: true });
         break;
 
       default:
@@ -274,8 +282,22 @@ const Catalog = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Yotsuba");
+        setCookie("selectedStyle", "Yotsuba", { path: "/", sameSite: 'none', secure: true });
     }
   }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  useEffect(() => {
+    const style = getCookie("selectedStyle");
+    if (style) {
+      handleStyleChange({target: {value: style}});
+    }
+  }, [selectedStyle])
 
 
 

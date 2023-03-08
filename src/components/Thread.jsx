@@ -8,6 +8,7 @@ import ImageBanner from './ImageBanner';
 import { Tooltip } from 'react-tooltip';
 import getDate from '../utils/getDate';
 import renderThreadComments from '../utils/renderThreadComments';
+import { useCookies } from 'react-cookie';
 
 
 const Thread = ({ setBodyStyle }) => {
@@ -21,6 +22,7 @@ const Thread = ({ setBodyStyle }) => {
   const [visible, setVisible] = useState(true);
   const comment = useComment(`${selectedThread}`);
   const { subplebbitAddress, threadCid } = useParams();
+  const [cookies, setCookie] = useCookies(['selectedStyle']);
 
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
@@ -139,6 +141,7 @@ const Thread = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Yotsuba");
+        setCookie("selectedStyle", "Yotsuba", { path: "/" });
         break;
 
       case "Yotsuba B":
@@ -148,6 +151,7 @@ const Thread = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Yotsuba B");
+        setCookie("selectedStyle", "Yotsuba B", { path: "/", sameSite: 'none', secure: true });
         break;
 
       case "Futaba":
@@ -157,6 +161,7 @@ const Thread = ({ setBodyStyle }) => {
           fontFamily: "times new roman, serif"
         });
         setSelectedStyle("Futaba");
+        setCookie("selectedStyle", "Futaba", { path: "/", sameSite: 'none', secure: true });
         break;
 
       case "Burichan":
@@ -166,6 +171,7 @@ const Thread = ({ setBodyStyle }) => {
           fontFamily: "times new roman, serif"
         });
         setSelectedStyle("Burichan");
+        setCookie("selectedStyle", "Burichan", { path: "/", sameSite: 'none', secure: true });
         break;
         
       case "Tomorrow":
@@ -175,6 +181,7 @@ const Thread = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Tomorrow");
+        setCookie("selectedStyle", "Tomorrow", { path: "/", sameSite: 'none', secure: true });
         break;
 
       case "Photon":
@@ -184,6 +191,7 @@ const Thread = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Photon");
+        setCookie("selectedStyle", "Photon", { path: "/", sameSite: 'none', secure: true });
         break;
 
       default:
@@ -193,8 +201,22 @@ const Thread = ({ setBodyStyle }) => {
           fontFamily: "Arial, Helvetica, sans-serif"
         });
         setSelectedStyle("Yotsuba");
+        setCookie("selectedStyle", "Yotsuba", { path: "/", sameSite: 'none', secure: true });
     }
   }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  useEffect(() => {
+    const style = getCookie("selectedStyle");
+    if (style) {
+      handleStyleChange({target: {value: style}});
+    }
+  }, [selectedStyle])
   
   
 
