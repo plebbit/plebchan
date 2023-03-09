@@ -13,7 +13,7 @@ import { useCookies } from 'react-cookie';
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle, setIsCaptchaOpen } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
@@ -238,7 +238,7 @@ const Board = ({ setBodyStyle }) => {
 
 
   const handleClickHelp = () => {
-    alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
+    alert("- The media will appear in the post after sharing its link. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.");
   };
 
 
@@ -461,23 +461,14 @@ const Board = ({ setBodyStyle }) => {
                 <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
               </td>
             </tr>
-            <tr id="captchaFormPart">
-              <td>Verification</td>
-              <td colSpan={2}>
-                <div id="t-root">
-                  <input id="t-resp" name="t-response" placeholder="Type the CAPTCHA here and hit return" autoComplete='off' type="text" />
-                  <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help" tabIndex={-1}>?</button>
-                  <div id="t-cnt">
-                  </div>
-                </div>
-              </td>
-            </tr>
             <tr data-type="File">
               <td>Embed File</td>
               <td>
                 <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
+                <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
               </td>
             </tr>
+            <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
             <tr></tr>
           </tbody>
         </PostFormTable>

@@ -673,16 +673,6 @@ export const PostFormTable = styled.table`
         -webkit-appearance: none;
       }
 
-      #t-help {
-        font-size: 11px;
-        padding: 0;
-        width: 20px;
-        box-sizing: border-box;
-        margin: 0px 0px 0px 6px;
-        vertical-align: middle;
-        height: 18px;
-      }
-
       #t-cnt {
         height: 80px;
         margin-top: 2px;

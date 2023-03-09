@@ -6,6 +6,7 @@ import Board from './components/Board';
 import Thread from './components/Thread';
 import Catalog from './components/Catalog';
 import NotFound from './components/NotFound';
+import CaptchaModal from './components/CaptchaModal';
 import { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
 import preloadImages from './utils/preloadImages';
@@ -43,6 +44,7 @@ export default function App() {
   const [selectedThread, setSelectedThread] = useState('');
   const [cookies, setCookie] = useCookies(['selectedStyle']);
   const [selectedStyle, setSelectedStyle] = useState(cookies.selectedStyle || 'Yotsuba');
+  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
 
 
 
@@ -52,6 +54,9 @@ export default function App() {
     preloadImages([...imageUrls]);
   }, []);
 
+  const handleCaptchaClose = () => {
+    setIsCaptchaOpen(false);
+  };
 
   return (
   <div>
@@ -68,7 +73,7 @@ export default function App() {
     color={bodyStyle.color} 
     fontFamily={bodyStyle.fontFamily}
     />
-    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle }}>
+    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, isCaptchaOpen, setIsCaptchaOpen }}>
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route path={`/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
@@ -83,5 +88,6 @@ export default function App() {
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BoardContext.Provider>
+    <CaptchaModal isOpen={isCaptchaOpen} closeModal={handleCaptchaClose} />
   </div>
 )}
