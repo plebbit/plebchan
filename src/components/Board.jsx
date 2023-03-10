@@ -280,8 +280,16 @@ const Board = ({ setBodyStyle }) => {
     const targetElement = [...document.querySelectorAll('.post-reply')]
       .find(el => el.innerHTML.includes(cid));
     if (targetElement) {
+      const rect = targetElement.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > window.innerHeight) {
         targetElement.scrollIntoView({ behavior: "instant" });
+      }
     }
+  }
+
+  function handleTouch(event) {
+    event.preventDefault();
+    event.target.click();
   }
 
 
@@ -379,17 +387,17 @@ const Board = ({ setBodyStyle }) => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              <Link style={{ touchAction: 'manipulation' }} to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
           ))}
           <span className="nav">
             [
-            <Link to="" onClick={handleVoidClick}>Settings</Link>
+            <Link style={{ touchAction: 'manipulation' }} to="" onClick={handleVoidClick}>Settings</Link>
             ]
             [
-            <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+            <Link style={{ touchAction: 'manipulation' }} to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
             )}>Home</Link>
             ]
           </span>
@@ -405,9 +413,9 @@ const Board = ({ setBodyStyle }) => {
               </select>
             </div>
             <div className="page-jump">
-              <Link to="" onClick={handleVoidClick}>Settings</Link>
+              <Link style={{ touchAction: 'manipulation' }} to="" onClick={handleVoidClick}>Settings</Link>
               &nbsp;
-              <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+              <Link style={{ touchAction: 'manipulation' }} to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>
             </div>
           </div>
@@ -468,8 +476,11 @@ const Board = ({ setBodyStyle }) => {
                 <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
               </td>
             </tr>
-            <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
-            <tr></tr>
+            <tr>
+              <td>
+              <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
+              </td>
+            </tr>
           </tbody>
         </PostFormTable>
       </PostForm>
@@ -489,12 +500,12 @@ const Board = ({ setBodyStyle }) => {
         </span>
         <div id="catalog-button-desktop">
           [
-          <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+          <Link style={{ touchAction: 'manipulation' }} to={`/${selectedAddress}/catalog`}>Catalog</Link>
           ]
         </div>
         <div id="catalog-button-mobile">
           <span className="btn-wrap">
-            <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+            <Link style={{ touchAction: 'manipulation' }} to={`/${selectedAddress}/catalog`}>Catalog</Link>
           </span>
         </div>
       </TopBar>
@@ -521,7 +532,7 @@ const Board = ({ setBodyStyle }) => {
                           File:&nbsp;
                           <a key={`fa-${Math.random()}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
                         </div>
-                        <Link to="" key={`fta-${Math.random()}`} onClick={handleVoidClick} target="_blank" className="file-thumb">
+                        <Link style={{ touchAction: 'manipulation' }} to="" key={`fta-${Math.random()}`} onClick={handleVoidClick} target="_blank" className="file-thumb">
                           <img key={`fti-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
                         </Link>
                       </div>
@@ -575,22 +586,22 @@ const Board = ({ setBodyStyle }) => {
                         <span key={`dt-${Math.random()}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
                         &nbsp;
                         <span key={`pn-${Math.random()}`} className="post-number">
-                          <Link to="" key={`pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                          <Link to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
+                          <Link style={{ touchAction: 'manipulation' }} to="" key={`pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                          <Link style={{ touchAction: 'manipulation' }} to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
                           &nbsp;
                           <span key={`rl1-${Math.random()}`}>
                             [
-                            <Link key={`rl2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
+                            <Link style={{ touchAction: 'manipulation' }} key={`rl2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
                             ]
                           </span>
                         </span>
-                        <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                        <Link style={{ touchAction: 'manipulation' }} to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                         <div key={`bi-${Math.random()}`} id="backlink-id" className="backlink">
                           {thread.replies?.pages.topAll.comments
                             .sort((a, b) => a.timestamp - b.timestamp)
                             .map((reply) => (
                               <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
-                              <Link key={`ql-${Math.random()}`}
+                              <Link style={{ touchAction: 'manipulation' }} key={`ql-${Math.random()}`}
                               to={handleVoidClick} className="quote-link" 
                               onClick={(event) => handleQuoteClick(reply, event)}>
                                 c/{reply.cid.slice(0, 8)}</Link>
@@ -608,7 +619,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`ttl-s-${Math.random()}`} className="ttl"> (...) 
                             <br key={`ttl-s-br1-${Math.random()}`} /><br key={`ttl-s-br2${Math.random()}`} />
                             Post too long.&nbsp;
-                              <Link key={`ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link style={{ touchAction: 'manipulation' }} key={`ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
                         </Fragment>
@@ -624,7 +635,7 @@ const Board = ({ setBodyStyle }) => {
                   <span key={`oc-${Math.random()}`} className="ttl">
                     <span key={`oc1-${Math.random()}`}>
                       {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
-                      <Link key={`oc2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">here</Link>
+                      <Link style={{ touchAction: 'manipulation' }} key={`oc2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">here</Link>
                       &nbsp;to view.
                     </span>
                   </span>) : null}
@@ -674,16 +685,16 @@ const Board = ({ setBodyStyle }) => {
                       <span key={`dt-${Math.random()}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                       &nbsp;
                       <span key={`pn-${Math.random()}`} className="post-number">
-                        <Link to="" key={`pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <Link to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
+                        <Link style={{ touchAction: 'manipulation' }} to="" key={`pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                        <Link style={{ touchAction: 'manipulation' }} to="" key={`pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                       </span>
-                      <Link to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                      <Link style={{ touchAction: 'manipulation' }} to="" key={`pmb-${Math.random()}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
                       <div id="backlink-id" className="backlink">
                         {reply.replies?.pages.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
                           .map((reply) => (
                             <div key={`div-${Math.random()}`} style={{display: 'inline-block'}}>
-                            <Link to={handleVoidClick} key={`ql-${Math.random()}`}
+                            <Link style={{ touchAction: 'manipulation' }} to={handleVoidClick} key={`ql-${Math.random()}`}
                               className="quote-link" 
                               onClick={(event) => handleQuoteClick(reply, event)}>
                               c/{reply.cid.slice(0, 8)}</Link>
@@ -697,19 +708,19 @@ const Board = ({ setBodyStyle }) => {
                         reply.content.length > 1000 ?
                         <Fragment key={`fragment8-${Math.random()}`}>
                           <blockquote key={`pm-${Math.random()}`} className="post-message">
-                            <Link to="" key={`r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
+                            <Link style={{ touchAction: 'manipulation' }} to="" key={`r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
                               {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                             </Link>
                             {reply.content.slice(0, 1000)}
                             <span key={`ttl-s-${Math.random()}`} className="ttl"> (...)
                             <br key={`ttl-s-br1-${Math.random()}`} /><br key={`ttl-s-br2${Math.random()}`} />
                             Comment too long.&nbsp;
-                              <Link key={`ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link style={{ touchAction: 'manipulation' }} key={`ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
                         </Fragment>
                       : <blockquote key={`pm-${Math.random()}`} className="post-message">
-                          <Link to={handleVoidClick} key={`r-pm-${Math.random()}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
+                          <Link style={{ touchAction: 'manipulation' }} to={handleVoidClick} key={`r-pm-${Math.random()}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </Link>
                           {reply.content}
@@ -724,7 +735,7 @@ const Board = ({ setBodyStyle }) => {
                 <div key={`mob-c-${Math.random()}`} className="op-container">
                   <div key={`mob-po-${Math.random()}`} className="post op">
                     <div key={`mob-pi-${Math.random()}`} className="post-info-mobile">
-                      <Link to="" key={`mob-pb-${Math.random()}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</Link>
+                      <Link style={{ touchAction: 'manipulation' }} to="" key={`mob-pb-${Math.random()}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</Link>
                       <span key={`mob-nbm-${Math.random()}`} className="name-block-mobile">
                         {thread.author.displayName
                         ? thread.author.displayName.length > 15
@@ -779,12 +790,12 @@ const Board = ({ setBodyStyle }) => {
                       <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                         {getDate(thread.timestamp)}
                         &nbsp;
-                        <Link to="" key={`mob-no-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <Link to="" key={`mob-no2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
+                        <Link style={{ touchAction: 'manipulation' }} to="" key={`mob-no-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                        <Link style={{ touchAction: 'manipulation' }} to="" key={`mob-no2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
                       </span>
                     </div>
                     <div key={`mob-f-${Math.random()}`} className="file-mobile">
-                      <Link to="" key={`mob-ft${Math.random()}`} className="file-thumb-mobile" onClick={handleVoidClick} target="_blank">
+                      <Link style={{ touchAction: 'manipulation' }} to="" key={`mob-ft${Math.random()}`} className="file-thumb-mobile" onClick={handleVoidClick} target="_blank">
                         <img key={`mob-img-${Math.random()}`} src="/assets/plebchan-psycho.png" alt="" />
                         <div key={`mob-fi-${Math.random()}`} className="file-info-mobile">58 KB JPG</div>
                       </Link>
@@ -797,7 +808,7 @@ const Board = ({ setBodyStyle }) => {
                             <span key={`mob-ttl-s-${Math.random()}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${Math.random()}`} /><br key={`mob-ttl-s-br2${Math.random()}`} />
                              Post too long.&nbsp;
-                              <Link key={`mob-ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link style={{ touchAction: 'manipulation' }} key={`mob-ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                           </blockquote>
                         </Fragment>
@@ -808,7 +819,7 @@ const Board = ({ setBodyStyle }) => {
                   </div>
                   <div key={`mob-pl-${Math.random()}`} className="post-link-mobile">
                     <span key={`mob-info-${Math.random()}`} className="info-mobile">{thread.replyCount} Replies / ? Images</span>
-                    <Link key={`rl2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
+                    <Link style={{ touchAction: 'manipulation' }} key={`rl2-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
                   </div>
                 </div>
                 {renderedComments.map(reply => {
@@ -855,27 +866,27 @@ const Board = ({ setBodyStyle }) => {
                         </span>
                         <span key={`mob-dt-${Math.random()}`} className="date-time-mobile">
                         {getDate(reply.timestamp)}&nbsp;
-                          <Link to="" key={`mob-pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                          <Link to="" key={`mob-pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
+                          <Link style={{ touchAction: 'manipulation' }} to="" key={`mob-pl1-${Math.random()}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                          <Link style={{ touchAction: 'manipulation' }} to="" key={`mob-pl2-${Math.random()}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
                         </span>
                       </div>
                       {reply.content ? (
                         reply.content.length > 1000 ?
                         <Fragment key={`fragment15-${Math.random()}`}>
                           <blockquote key={`mob-pm-${Math.random()}`} className="post-message">
-                            <Link to="" key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
+                            <Link style={{ touchAction: 'manipulation' }} to="" key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={handleVoidClick}>
                               {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                             </Link>
                             {reply.content.slice(0, 1000)}
                             <span key={`mob-ttl-s-${Math.random()}`} className="ttl"> (...)
                             <br key={`mob-ttl-s-br1-${Math.random()}`} /><br key={`mob-ttl-s-br2${Math.random()}`} />
                             Comment too long.&nbsp;
-                              <Link key={`mob-ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                              <Link style={{ touchAction: 'manipulation' }} key={`mob-ttl-l-${Math.random()}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
                             &nbsp;to view. </span>
                           </blockquote>
                         </Fragment>
                       : <blockquote key={`mob-pm-${Math.random()}`} className="post-message">
-                          <Link to={handleVoidClick} key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
+                          <Link style={{ touchAction: 'manipulation' }} to={handleVoidClick} key={`mob-r-pm-${Math.random()}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </Link>
                           {reply.content}
