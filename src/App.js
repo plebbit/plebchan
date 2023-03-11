@@ -10,7 +10,6 @@ import CaptchaModal from './components/CaptchaModal';
 import { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
 import preloadImages from './utils/preloadImages';
-import { useCookies } from 'react-cookie';
 
 export const BoardContext = React.createContext();
 
@@ -33,19 +32,16 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function App() {
-  const [bodyStyle, setBodyStyle] = useState({
+  const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedAddress, setSelectedAddress] = useState('');
+  const [selectedThread, setSelectedThread] = useState('');
+  const [selectedStyle, setSelectedStyle] = useState(localStorage.getItem('selectedStyle') || 'Yotsuba');
+  const [bodyStyle, setBodyStyle] = useState(JSON.parse(localStorage.getItem('bodyStyle')) || {
     background: "#ffe url(/assets/fade.png) top repeat-x",
     color: "maroon",
     fontFamily: "Helvetica, Arial, sans-serif"
   });
-
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [selectedAddress, setSelectedAddress] = useState('');
-  const [selectedThread, setSelectedThread] = useState('');
-  const [cookies, setCookie] = useCookies(['selectedStyle']);
-  const [selectedStyle, setSelectedStyle] = useState(cookies.selectedStyle || 'Yotsuba');
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
-
 
 
   const imageUrls = Array.from({ length: 14 }, (_, index) => `/assets/banners/banner-${index + 1}.jpg`);
@@ -54,9 +50,12 @@ export default function App() {
     preloadImages([...imageUrls]);
   }, []);
 
+
   const handleCaptchaClose = () => {
     setIsCaptchaOpen(false);
   };
+
+
 
   return (
   <div>
