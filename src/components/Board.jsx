@@ -468,8 +468,11 @@ const Board = ({ setBodyStyle }) => {
                 <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
               </td>
             </tr>
-            <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
-            <tr></tr>
+            <tr>
+              <td>
+                <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
+              </td>
+            </tr>
           </tbody>
         </PostFormTable>
       </PostForm>
