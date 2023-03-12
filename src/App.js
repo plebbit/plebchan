@@ -6,7 +6,6 @@ import Board from './components/Board';
 import Thread from './components/Thread';
 import Catalog from './components/Catalog';
 import NotFound from './components/NotFound';
-import CaptchaModal from './components/CaptchaModal';
 import { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
 import preloadImages from './utils/preloadImages';
@@ -41,20 +40,13 @@ export default function App() {
     color: "maroon",
     fontFamily: "Helvetica, Arial, sans-serif"
   });
-  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
-
+  const [captchaResponse, setCaptchaResponse] = useState('');
 
   const imageUrls = Array.from({ length: 14 }, (_, index) => `/assets/banners/banner-${index + 1}.jpg`);
 
   useEffect(() => {
     preloadImages([...imageUrls]);
   }, []);
-
-
-  const handleCaptchaClose = () => {
-    setIsCaptchaOpen(false);
-  };
-
 
 
   return (
@@ -72,7 +64,7 @@ export default function App() {
     color={bodyStyle.color} 
     fontFamily={bodyStyle.fontFamily}
     />
-    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, isCaptchaOpen, setIsCaptchaOpen }}>
+    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, captchaResponse, setCaptchaResponse }}>
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route path={`/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
@@ -87,6 +79,5 @@ export default function App() {
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BoardContext.Provider>
-    <CaptchaModal isOpen={isCaptchaOpen} closeModal={handleCaptchaClose} />
   </div>
 )}

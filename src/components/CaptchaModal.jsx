@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import { BoardContext } from '../App';
 
 const StyledModal = styled(Modal)`
   @media (min-width: 480px) {
     .modal-content {
       width: 450px;
-      height: 350px;
+      height: 300px;
     }
   }
 
@@ -52,19 +53,13 @@ const StyledModal = styled(Modal)`
   }
 
   input {
-    margin-top: 20px;
+    margin-top: 30px;
     width: 70%;
     padding: 2px;
     border: 1px solid #ccc;
     font-family: monospace;
     border: 1px solid #777;
     outline: none;
-  }
-
-  button.submit {
-    margin-top: 20px;
-    padding: 3px 15px;
-    border-radius: 3px;
   }
 `;
 
@@ -74,10 +69,16 @@ const customOverlayStyles = {
   }
 };
 
-const CaptchaModal = ({ isOpen, closeModal }) => {
+const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
+  const { captchaResponse, setCaptchaResponse } = useContext(BoardContext);
+
   const handleCloseModal = () => {
     closeModal();
   };
+
+  const handleChallengeResponse = (event) => {
+    setCaptchaResponse(event.target.value);
+  };  
 
   return (
     <StyledModal
@@ -90,10 +91,13 @@ const CaptchaModal = ({ isOpen, closeModal }) => {
       <div className="modal-content">
         <button className='x' onClick={handleCloseModal}>X</button>
         <div className="challenge">Verification</div>
-        <img src="/assets/banners/banner-1.jpg" alt="captcha" />
-        <input type="text" autoComplete='off'
-        placeholder="TYPE THE CAPTCHA HERE" />
-        <button className="submit">Submit</button>
+        <img src={captchaImage} alt="captcha" />
+        <input 
+        type="text" 
+        autoComplete='off'
+        placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
+        value={captchaResponse} 
+        onChange={handleChallengeResponse} />
       </div>
     </StyledModal>
   );

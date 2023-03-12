@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { BoardContext } from '../App';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
+import CaptchaModal from './CaptchaModal';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
@@ -12,13 +13,15 @@ import renderComments from '../utils/renderComments';
 
 const Board = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle, setIsCaptchaOpen } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle, captchaResponse, setCaptchaResponse } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
   const { publishComment } = useAccountsActions();
+  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -28,7 +31,6 @@ const Board = ({ setBodyStyle }) => {
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();
-  // const [cookies, setCookie] = useCookies(['selectedStyle']);
 
 
   // temporary title from JSON, gets subplebbitAddress from URL
@@ -178,26 +180,19 @@ const Board = ({ setBodyStyle }) => {
       challengeImg.src = imageSource;
   
       challengeImg.onload = () => {
-        const inputEl = document.getElementById('t-resp');
-        const cntEl = document.getElementById('t-cnt');
-        cntEl.appendChild(challengeImg);
-        inputEl.focus();
+        setIsCaptchaOpen(true);
+        setCaptchaImage(imageSource);
   
         const handleKeyDown = (event) => {
           if (event.key === 'Enter') {
-            const challengeResponse = inputEl.value;
-            inputEl.value = '';
-  
-            if (cntEl.contains(challengeImg)) {
-              cntEl.removeChild(challengeImg);
-            }
-  
+            setCaptchaImage('');
+            resolve(captchaResponse);
+            setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
-  
-            resolve(challengeResponse);
           }
         };
-  
+
+        setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
       };
   
@@ -250,7 +245,7 @@ const Board = ({ setBodyStyle }) => {
 
   const handleClickThread = (thread) => {
     setSelectedThread(thread);
-  }
+  };
   
 
   const handlePublishComment = async () => {
@@ -282,6 +277,10 @@ const Board = ({ setBodyStyle }) => {
         targetElement.scrollIntoView({ behavior: "instant" });
     }
   }
+
+  const handleCaptchaClose = () => {
+    setIsCaptchaOpen(false);
+  };
 
 
   const handleStyleChange = (event) => {
@@ -375,6 +374,10 @@ const Board = ({ setBodyStyle }) => {
 
   return (
     <Container>
+      <CaptchaModal 
+      isOpen={isCaptchaOpen} 
+      closeModal={handleCaptchaClose} 
+      captchaImage={captchaImage} />
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
@@ -467,11 +470,6 @@ const Board = ({ setBodyStyle }) => {
               <td>
                 <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
                 <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
               </td>
             </tr>
           </tbody>

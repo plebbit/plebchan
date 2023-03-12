@@ -5,6 +5,7 @@ import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
 import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
+import CaptchaModal from './CaptchaModal';
 import { Tooltip } from 'react-tooltip';
 import getDate from '../utils/getDate';
 import renderThreadComments from '../utils/renderThreadComments';
@@ -12,13 +13,15 @@ import renderThreadComments from '../utils/renderThreadComments';
 
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, setIsCaptchaOpen } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, captchaResponse, setCaptchaResponse } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [commentContent, setCommentContent] = useState('');
   const { publishComment } = useAccountsActions();
+  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -153,26 +156,19 @@ const Thread = ({ setBodyStyle }) => {
       challengeImg.src = imageSource;
   
       challengeImg.onload = () => {
-        const inputEl = document.getElementById('t-resp');
-        const cntEl = document.getElementById('t-cnt');
-        cntEl.appendChild(challengeImg);
-        inputEl.focus();
+        setIsCaptchaOpen(true);
+        setCaptchaImage(imageSource);
   
         const handleKeyDown = (event) => {
           if (event.key === 'Enter') {
-            const challengeResponse = inputEl.value;
-            inputEl.value = '';
-  
-            if (cntEl.contains(challengeImg)) {
-              cntEl.removeChild(challengeImg);
-            }
-  
+            setCaptchaImage('');
+            resolve(captchaResponse);
+            setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
-  
-            resolve(challengeResponse);
           }
         };
-  
+
+        setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
       };
   
@@ -253,6 +249,10 @@ const Thread = ({ setBodyStyle }) => {
         targetElement.scrollIntoView({ behavior: "instant" });
     }
   }
+
+  const handleCaptchaClose = () => {
+    setIsCaptchaOpen(false);
+  };
 
 
   const handleStyleChange = (event) => {
@@ -346,6 +346,10 @@ const Thread = ({ setBodyStyle }) => {
 
   return (
     <Container>
+      <CaptchaModal 
+      isOpen={isCaptchaOpen} 
+      closeModal={handleCaptchaClose} 
+      captchaImage={captchaImage} />
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
@@ -455,11 +459,6 @@ const Thread = ({ setBodyStyle }) => {
               <td>
                 <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
                 <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
               </td>
             </tr>
           </tbody>
