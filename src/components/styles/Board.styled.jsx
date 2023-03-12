@@ -608,6 +608,10 @@ export const PostFormTable = styled.table`
   margin-left: auto;
   margin-right: auto;
 
+  @media (max-width: 480px) {
+    margin-bottom: 20px;
+  }
+
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
