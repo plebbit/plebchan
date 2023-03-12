@@ -1117,6 +1117,11 @@ export const PostFormTable = styled.table`
       }`;
     }
   }}
+
+  #t-help {
+    margin: 0;
+    margin-top: -5px
+  }
 `;
 
 export const PostForm = styled.div`

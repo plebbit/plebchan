@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import { Container, NavBar, Header, Break, PostForm, BoardForm } from './styles/Board.styled';
-import { ReplyFormTable, ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
+import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
+import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { BoardContext } from '../App';
-import { useComment } from '@plebbit/plebbit-react-hooks';
+import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import { Tooltip } from 'react-tooltip';
 import getDate from '../utils/getDate';
@@ -12,9 +12,13 @@ import renderThreadComments from '../utils/renderThreadComments';
 
 const Thread = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle } = useContext(BoardContext);
+  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, setIsCaptchaOpen } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
+  const [name, setName] = useState('');
+  const [subject, setSubject] = useState('');
+  const [commentContent, setCommentContent] = useState('');
+  const { publishComment } = useAccountsActions();
   const navigate = useNavigate();
   const location = useLocation();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -113,6 +117,73 @@ const Thread = ({ setBodyStyle }) => {
 
 
 
+  const onChallengeVerification = (challengeVerification) => {
+    if (challengeVerification.challengeSuccess === true) {
+      console.log('challenge success', {publishedCid: challengeVerification.publication.cid})
+    }
+    else if (challengeVerification.challengeSuccess === false) {
+      console.error('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      alert("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+    }
+  }
+
+
+  const onChallenge = async (challenges, comment) => {
+    let challengeAnswers = [];
+    try {
+      challengeAnswers = await getChallengeAnswersFromUser(challenges)
+    }
+    catch (error) {
+      console.log(error);
+    }
+    if (challengeAnswers) {
+      await comment.publishChallengeAnswers(challengeAnswers)
+    }
+  }
+  
+
+  const onError = (error) => console.error(error)
+
+
+  const getChallengeAnswersFromUser = async (challenges) => {
+    return new Promise((resolve, reject) => {
+      const imageString = challenges?.challenges[0].challenge;
+      const imageSource = `data:image/png;base64,${imageString}`;
+      const challengeImg = new Image();
+      challengeImg.src = imageSource;
+  
+      challengeImg.onload = () => {
+        const inputEl = document.getElementById('t-resp');
+        const cntEl = document.getElementById('t-cnt');
+        cntEl.appendChild(challengeImg);
+        inputEl.focus();
+  
+        const handleKeyDown = (event) => {
+          if (event.key === 'Enter') {
+            const challengeResponse = inputEl.value;
+            inputEl.value = '';
+  
+            if (cntEl.contains(challengeImg)) {
+              cntEl.removeChild(challengeImg);
+            }
+  
+            document.removeEventListener('keydown', handleKeyDown);
+  
+            resolve(challengeResponse);
+          }
+        };
+  
+        document.addEventListener('keydown', handleKeyDown);
+      };
+  
+      challengeImg.onerror = () => {
+        reject(new Error('Could not load challenge image'));
+      };
+    });
+  };
+
+
+
   const handleVoidClick = () => {}
 
   // desktop navbar board select functionality
@@ -132,7 +203,7 @@ const Thread = ({ setBodyStyle }) => {
 
 
   const handleClickHelp = () => {
-    alert("- The CAPTCHA loads after you click \"Post\" \n- The CAPTCHA is case-sensitive. \n- Make sure to not block any cookies set by plebchan.");
+    alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.");
   };
 
 
@@ -151,6 +222,26 @@ const Thread = ({ setBodyStyle }) => {
   const handleClickBottom = () => {
     window.scrollTo(0, document.body.scrollHeight);
   }
+
+
+  const handlePublishComment = async () => {
+    try {
+      const pendingComment = await publishComment({
+        content: commentContent,
+        title: subject,
+        subplebbitAddress: selectedAddress,
+        onChallengeVerification,
+        onChallenge,
+        onError,
+      });
+      console.log(`Comment pending with index: ${pendingComment.index}`);
+      setName('');
+      setSubject('');
+      setCommentContent('');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // scroll to post when quote is clicked
   function handleQuoteClick(reply, event) {
@@ -338,45 +429,41 @@ const Thread = ({ setBodyStyle }) => {
             </span>
           </div>
         </ReplyFormLink>
-        <ReplyFormTable id="post-form" showReplyForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
+        <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
           <tbody>
-            <tr data-type="Subject">
-              <td>Name</td>
+            <tr data-type="Name">
+              <td id="td-name">Name</td>
               <td>
-                <input name="sub" type="text" placeholder='Anonymous' tabIndex={3} />
-                <input id="post-button" type="submit" value="Post" tabIndex={6} />
+                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" value={name} onChange={(event) => setName(event.target.value)} />
+              </td>
+            </tr>
+            <tr data-type="Subject">
+              <td>Subject</td>
+              <td>
+                <input name="sub" type="text" tabIndex={3} value={subject} onChange={(event) => setSubject(event.target.value)} />
+                <input id="post-button" type="submit" value="Post" tabIndex={6} onClick={handlePublishComment} />
               </td>
             </tr>
             <tr data-type="Comment">
               <td>Comment</td>
               <td>
-                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft"></textarea>
-              </td>
-            </tr>
-            <tr id="captchaFormPart">
-              <td>Verification</td>
-              <td colSpan={2}>
-                <div id="t-root">
-                  <input id="t-resp" name="t-response" placeholder="Type the CAPTCHA here" autoComplete='off' type="text" />
-                  <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help" tabIndex={-1}>?</button>
-                  <div id="t-cnt">
-                    <div id="t-bg"></div>
-                    <div id="t-fg"></div>
-                  </div>
-                  <div id="t-msg"></div>
-                  <input name="t-challenge" type="hidden"/>
-                </div>
+                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" value={commentContent} onChange={(event) => setCommentContent(event.target.value)}></textarea>
               </td>
             </tr>
             <tr data-type="File">
               <td>Embed File</td>
               <td>
                 <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
+                <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
               </td>
             </tr>
-            <tr></tr>
+            <tr>
+              <td>
+                <button onClick={() => setIsCaptchaOpen(true)}>Show Captcha</button>
+              </td>
+            </tr>
           </tbody>
-        </ReplyFormTable>
+        </PostFormTable>
       </PostForm>
       <TopBar selectedStyle={selectedStyle}>
         <hr />

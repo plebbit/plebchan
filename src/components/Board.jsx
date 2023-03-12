@@ -237,7 +237,7 @@ const Board = ({ setBodyStyle }) => {
 
 
   const handleClickHelp = () => {
-    alert("- The media will appear in the post after sharing its link. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.");
+    alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.");
   };
 
 
