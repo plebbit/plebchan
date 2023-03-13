@@ -7,6 +7,7 @@ import CaptchaModal from './CaptchaModal';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
+import onError from '../utils/onError';
 import getDate from '../utils/getDate';
 import renderComments from '../utils/renderComments';
 
@@ -181,9 +182,6 @@ const Board = ({ setBodyStyle }) => {
   }
   
 
-  const onError = (error) => console.error(error)
-
-
   const getChallengeAnswersFromUser = async (challenges) => {
     return new Promise((resolve, reject) => {
       const imageString = challenges?.challenges[0].challenge;
@@ -268,14 +266,14 @@ const Board = ({ setBodyStyle }) => {
         subplebbitAddress: selectedAddress,
         onChallengeVerification,
         onChallenge,
-        onError,
+        onError: onError,
       });
       console.log(`Comment pending with index: ${pendingComment.index}`);
       setName('');
       setSubject('');
       setComment('');
     } catch (error) {
-      console.error(error);
+      onError(error);
     }
   };
 

@@ -7,6 +7,7 @@ import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
 import { Tooltip } from 'react-tooltip';
+import onError from '../utils/onError';
 import getDate from '../utils/getDate';
 import renderThreadComments from '../utils/renderThreadComments';
 
@@ -156,9 +157,6 @@ const Thread = ({ setBodyStyle }) => {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
   }
-  
-
-  const onError = (error) => console.error(error)
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -241,14 +239,14 @@ const Thread = ({ setBodyStyle }) => {
         subplebbitAddress: selectedAddress,
         onChallengeVerification,
         onChallenge,
-        onError,
+        onError: onError,
       });
       console.log(`Comment pending with index: ${pendingComment.index}`);
       setName('');
       setSubject('');
       setCommentContent('');
     } catch (error) {
-      console.error(error);
+      onError(error);
     }
   };
 

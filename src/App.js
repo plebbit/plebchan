@@ -7,9 +7,11 @@ import Board from './components/Board';
 import Thread from './components/Thread';
 import Catalog from './components/Catalog';
 import NotFound from './components/NotFound';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
+import 'react-toastify/dist/ReactToastify.css';
 import preloadImages from './utils/preloadImages';
+import { ToastContainer } from 'react-toastify';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -27,6 +29,13 @@ const GlobalStyle = createGlobalStyle`
     font-size: 11px;
     padding: 3px;
     opacity: 100%;
+  }
+`;
+
+const StyledContainer = styled(ToastContainer)`
+  .Toastify__toast {
+    border-radius: 0px;
+    font-size: 11pt;
   }
 `;
 
@@ -69,5 +78,6 @@ export default function App() {
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <StyledContainer />
   </div>
 )}

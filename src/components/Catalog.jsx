@@ -7,6 +7,7 @@ import { Threads } from './styles/Catalog.styled';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
+import onError from '../utils/onError';
 import InfiniteScroll from 'react-infinite-scroller';
 
 
@@ -241,14 +242,14 @@ const Catalog = ({ setBodyStyle }) => {
         subplebbitAddress: selectedAddress,
         onChallengeVerification,
         onChallenge,
-        onError,
+        onError: onError,
       });
       console.log(`Comment pending with index: ${pendingComment.index}`);
       setName('');
       setSubject('');
       setComment('');
     } catch (error) {
-      console.error(error);
+      onError(error);
     }
   };
 
