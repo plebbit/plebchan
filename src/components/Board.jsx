@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import { BoardContext } from '../App';
+import useBoardStore from '../useBoardStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
@@ -12,8 +12,20 @@ import renderComments from '../utils/renderComments';
 
 
 const Board = ({ setBodyStyle }) => {
+  
+  const {
+    selectedTitle,
+    setSelectedTitle,
+    selectedAddress,
+    setSelectedAddress,
+    setSelectedThread,
+    selectedStyle,
+    setSelectedStyle,
+    captchaResponse,
+    setCaptchaResponse
+  } = useBoardStore(state => state);
+
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle, captchaResponse, setCaptchaResponse } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
@@ -30,7 +42,7 @@ const Board = ({ setBodyStyle }) => {
   const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const renderedFeed = selectedFeed.slice(0, endIndex);
-  const { subplebbitAddress } = useParams();
+  const { subplebbitAddress } = useParams();  
 
 
   // temporary title from JSON, gets subplebbitAddress from URL

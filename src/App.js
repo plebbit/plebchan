@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import useBoardStore from './useBoardStore';
 import Home from './components/Home';
 import Board from './components/Board';
 import Thread from './components/Thread';
@@ -10,7 +11,6 @@ import { createGlobalStyle } from 'styled-components';
 import 'react-tooltip/dist/react-tooltip.css';
 import preloadImages from './utils/preloadImages';
 
-export const BoardContext = React.createContext();
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -30,18 +30,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default function App() {
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [selectedAddress, setSelectedAddress] = useState('');
-  const [selectedThread, setSelectedThread] = useState('');
-  const [selectedStyle, setSelectedStyle] = useState(localStorage.getItem('selectedStyle') || 'Yotsuba');
-  const [bodyStyle, setBodyStyle] = useState(JSON.parse(localStorage.getItem('bodyStyle')) || {
-    background: "#ffe url(/assets/fade.png) top repeat-x",
-    color: "maroon",
-    fontFamily: "Helvetica, Arial, sans-serif"
-  });
-  const [captchaResponse, setCaptchaResponse] = useState('');
 
+export default function App() {
+  const { bodyStyle, setBodyStyle } = useBoardStore(state => state);
+  
   const imageUrls = Array.from({ length: 14 }, (_, index) => `/assets/banners/banner-${index + 1}.jpg`);
 
   useEffect(() => {
@@ -64,7 +56,6 @@ export default function App() {
     color={bodyStyle.color} 
     fontFamily={bodyStyle.fontFamily}
     />
-    <BoardContext.Provider value={{ selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, captchaResponse, setCaptchaResponse }}>
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route path={`/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
@@ -78,6 +69,5 @@ export default function App() {
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
-    </BoardContext.Provider>
   </div>
 )}

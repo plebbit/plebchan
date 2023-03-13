@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import useBoardStore from '../useBoardStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
-import { BoardContext } from '../App';
 import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
@@ -12,8 +12,21 @@ import renderThreadComments from '../utils/renderThreadComments';
 
 
 const Thread = ({ setBodyStyle }) => {
+
+  const {
+    selectedTitle,
+    setSelectedTitle,
+    selectedAddress,
+    setSelectedAddress,
+    selectedThread,
+    setSelectedThread,
+    selectedStyle,
+    setSelectedStyle,
+    captchaResponse,
+    setCaptchaResponse
+  } = useBoardStore(state => state);
+  
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, selectedThread, setSelectedThread, selectedStyle, setSelectedStyle, captchaResponse, setCaptchaResponse } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');

@@ -28,7 +28,8 @@
     "react-scripts": "5.0.1",
     "react-tooltip": "^5.8.3",
     "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "zustand": "^4.3.6"
   },
   "scripts": {
     "start": "craco start",

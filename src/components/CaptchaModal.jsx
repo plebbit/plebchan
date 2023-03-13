@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
+import useBoardStore from '../useBoardStore';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { BoardContext } from '../App';
 
 const StyledModal = styled(Modal)`
   @media (min-width: 480px) {
@@ -70,7 +70,7 @@ const customOverlayStyles = {
 };
 
 const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
-  const { captchaResponse, setCaptchaResponse } = useContext(BoardContext);
+  const { captchaResponse, setCaptchaResponse } = useBoardStore(state => state);
 
   const handleCloseModal = () => {
     closeModal();
@@ -97,7 +97,8 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
         autoComplete='off'
         placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
         value={captchaResponse} 
-        onChange={handleChallengeResponse} />
+        onChange={handleChallengeResponse}
+        autoFocus />
       </div>
     </StyledModal>
   );

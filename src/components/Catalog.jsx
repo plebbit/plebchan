@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import useBoardStore from '../useBoardStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { TopBar } from './styles/Thread.styled';
 import { Threads } from './styles/Catalog.styled';
-import { BoardContext } from '../App';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
@@ -11,8 +11,20 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 
 const Catalog = ({ setBodyStyle }) => {
+
+  const {
+    selectedTitle,
+    setSelectedTitle,
+    selectedAddress,
+    setSelectedAddress,
+    setSelectedThread,
+    selectedStyle,
+    setSelectedStyle,
+    captchaResponse,
+    setCaptchaResponse
+  } = useBoardStore(state => state);
+
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { selectedTitle, setSelectedTitle, selectedAddress, setSelectedAddress, setSelectedThread, selectedStyle, setSelectedStyle, captchaResponse, setCaptchaResponse } = useContext(BoardContext);
   const [showPostFormLink, setShowPostFormLink] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
   const [name, setName] = useState('');
