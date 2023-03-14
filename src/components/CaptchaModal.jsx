@@ -4,20 +4,10 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 
 const StyledModal = styled(Modal)`
-  @media (min-width: 480px) {
-    .modal-content {
-      width: 450px;
-      height: 300px;
-    }
-  }
 
-  @media (max-width: 480px) {
-    .modal-content {
-      width: 90%;
-      height: 40%;
-    }
-  }
   .modal-content {
+    width: 400px;
+    height: 300px;
     display: flex;
     align-self: center;
     flex-direction: column;
@@ -40,21 +30,21 @@ const StyledModal = styled(Modal)`
   }
 
   img {
-    width: 80%;
+    width: 300px;
     height: 100px;
     object-fit: contain;
   }
 
   .challenge {
     font-size: 12pt;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     font-weight: 700;
     color: #fff;
   }
 
   input {
     margin-top: 30px;
-    width: 70%;
+    width: 300px;
     padding: 2px;
     border: 1px solid #ccc;
     font-family: monospace;
