@@ -161,9 +161,6 @@ const Catalog = ({ setBodyStyle }) => {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
   }
-  
-
-  const onError = (error) => console.error(error)
 
 
   const getChallengeAnswersFromUser = async (challenges) => {

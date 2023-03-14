@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 const onError = (error) => {
   return toast.error(error.toString(), {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: false,
     hideProgressBar: false,
     closeOnClick: false,
