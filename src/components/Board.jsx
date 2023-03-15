@@ -10,6 +10,7 @@ import { Tooltip } from 'react-tooltip';
 import onError from '../utils/onError';
 import getDate from '../utils/getDate';
 import renderComments from '../utils/renderComments';
+import SettingsModal from './SettingsModal';
 
 
 const Board = ({ setBodyStyle }) => {
@@ -34,6 +35,7 @@ const Board = ({ setBodyStyle }) => {
   const [comment, setComment] = useState('');
   const { publishComment } = useAccountsActions();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -97,9 +99,10 @@ const Board = ({ setBodyStyle }) => {
     setEndIndex(2);
   }, [selectedAddress]);
 
-  // post route handling
+  // nested routes handling
   useEffect(() => {
     const path = location.pathname;
+
     if (path.endsWith('/post')) {
       setShowPostFormLink(false);
       setShowPostForm(true);
@@ -107,6 +110,13 @@ const Board = ({ setBodyStyle }) => {
       setShowPostFormLink(true);
       setShowPostForm(false);
     }
+
+    if (path.endsWith('/settings')) {
+      setIsSettingsOpen(true);
+    } else {
+      setIsSettingsOpen(false);
+    }
+    
   }, [location.pathname]);
 
   // automatic dark mode without interefering with user's selected style
@@ -292,6 +302,14 @@ const Board = ({ setBodyStyle }) => {
     setIsCaptchaOpen(false);
   };
 
+  const handleSettingsClose = () => {
+    setIsSettingsOpen(false);
+  }
+
+  const handleSettingsOpen = () => {
+    setIsSettingsOpen(true);
+  }
+
 
   const handleStyleChange = (event) => {
     switch (event.target.value) {
@@ -385,9 +403,14 @@ const Board = ({ setBodyStyle }) => {
   return (
     <Container>
       <CaptchaModal 
+      selectedStyle={selectedStyle}
       isOpen={isCaptchaOpen} 
       closeModal={handleCaptchaClose} 
       captchaImage={captchaImage} />
+      <SettingsModal
+      selectedStyle={selectedStyle}
+      isOpen={isSettingsOpen}
+      closeModal={handleSettingsClose} />
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
@@ -400,7 +423,7 @@ const Board = ({ setBodyStyle }) => {
           ))}
           <span className="nav">
             [
-            <Link to="" onClick={handleVoidClick}>Settings</Link>
+            <Link to={`/${selectedAddress}/settings`} onClick={handleSettingsOpen}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -419,7 +442,7 @@ const Board = ({ setBodyStyle }) => {
               </select>
             </div>
             <div className="page-jump">
-              <Link to="" onClick={handleVoidClick}>Settings</Link>
+              <Link to={`/${selectedAddress}/settings`} onClick={handleSettingsOpen}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>

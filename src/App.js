@@ -71,12 +71,15 @@ export default function App() {
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route path={`/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Board />} />
+          <Route path='settings' element={<Board />} />
         </Route>
         <Route path={`/:subplebbitAddress/thread/:threadCid`} element={<Thread setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Thread />} />
+          <Route path='settings' element={<Thread />} />
         </Route>
         <Route path={`/:subplebbitAddress/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>
           <Route path='post' element={<Catalog />} />
+          <Route path='settings' element={<Catalog />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>

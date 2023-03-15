@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 
 const StyledModal = styled(Modal)`
-
   .modal-content {
     width: 400px;
     height: 300px;
@@ -51,6 +50,29 @@ const StyledModal = styled(Modal)`
     border: 1px solid #777;
     outline: none;
   }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return ``;
+
+      case 'Yotsuba B':
+        return ``;
+
+      case 'Futaba':
+        return ``;
+
+      case 'Burichan':
+        return ``;
+
+      case 'Tomorrow':
+        return ``;
+
+      case 'Photon':
+        return ``;
+      
+    }
+  }}
 `;
 
 const customOverlayStyles = {
