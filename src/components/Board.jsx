@@ -8,6 +8,7 @@ import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 import onError from '../utils/onError';
+import onSuccess from '../utils/onSuccess';
 import getDate from '../utils/getDate';
 import renderComments from '../utils/renderComments';
 import SettingsModal from './SettingsModal';
@@ -169,11 +170,11 @@ const Board = ({ setBodyStyle }) => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      console.log('challenge success', {publishedCid: challengeVerification.publication.cid})
+      onSuccess('challenge success', {publishedCid: challengeVerification.publication.cid})
     }
     else if (challengeVerification.challengeSuccess === false) {
-      console.error('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-      alert("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+      onError('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      onError("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   }
 
@@ -184,7 +185,7 @@ const Board = ({ setBodyStyle }) => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      console.log(error);
+      onError(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -217,7 +218,7 @@ const Board = ({ setBodyStyle }) => {
       };
   
       challengeImg.onerror = () => {
-        reject(new Error('Could not load challenge image'));
+        reject(onError('Could not load challenge image'));
       };
     });
   };
