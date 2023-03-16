@@ -472,12 +472,6 @@ const Thread = ({ setBodyStyle }) => {
               <td id="td-name">Name</td>
               <td>
                 <input name="name" type="text" tabIndex={1} placeholder="Anonymous" value={name} onChange={(event) => setName(event.target.value)} />
-              </td>
-            </tr>
-            <tr data-type="Subject">
-              <td>Subject</td>
-              <td>
-                <input name="sub" type="text" tabIndex={3} value={subject} onChange={(event) => setSubject(event.target.value)} />
                 <input id="post-button" type="submit" value="Post" tabIndex={6} onClick={handlePublishComment} />
               </td>
             </tr>

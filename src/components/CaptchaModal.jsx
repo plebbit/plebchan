@@ -2,87 +2,253 @@ import React from 'react';
 import useBoardStore from '../useBoardStore';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import Draggable from 'react-draggable';
+
 
 const StyledModal = styled(Modal)`
+  .hide-modal-overlay {
+    display: none;
+  }
+
   .modal-content {
-    width: 400px;
-    height: 300px;
-    display: flex;
-    align-self: center;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.75);
-    padding: 0;
-    z-index: 9999;
-    border: 1px solid #aaa;
+    display: block;
+    padding: 2px;
+    font-size: 10pt;
+    border-left: none;
+    border-top: none;
   }
 
-  button.x {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  .modal-header {
+    font-size: 10pt;
+    text-align: center;
+    margin-bottom: 1px;
+    padding: 0;
+    height: 18px;
+    line-height: 18px;
+    cursor: move;
+    font-weight: 700;
+  }
+
+  .icon {
+    all: unset;
+    float: right;
+    cursor: pointer;
+    margin-bottom: -4px;
+    width: 18px;
+    height: 18px;
+    border: none;
+  }
+
+  #name {
+    border: 1px solid #aaa;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    outline: medium none;
+    width: 298px;
+    padding: 2px;
+  }
+
+  textarea {
+    min-width: 296px;
+    float: left;
+    font-size: 10pt;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #captcha-container {
+    position: relative;
+    clear: both;
+    width: 302px;
+    overflow: hidden;
+    margin-bottom: 3px;
+  }
+
+  #response {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 11px;
+    height: 18px;
+    margin: 0px;
+    padding: 0px 2px;
+    font-family: monospace;
+    vertical-align: middle;
   }
 
   img {
-    width: 300px;
-    height: 100px;
-    object-fit: contain;
+    height: 100%;
+    width: 100%;
+    margin-top: 2px;
+    position: relative;
+    display: block;
   }
 
-  .challenge {
-    font-size: 12pt;
-    margin-bottom: 40px;
-    font-weight: 700;
-    color: #fff;
-  }
-
-  input {
-    margin-top: 30px;
-    width: 300px;
-    padding: 2px;
-    border: 1px solid #ccc;
-    font-family: monospace;
-    border: 1px solid #777;
-    outline: none;
+  #next {
+    float: right;
+    margin: 0;
+    width: 75px;
   }
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return ``;
+        return `
+        .modal-content {
+          background-color: #f0e0d6;
+          border: 1px solid #d9bfb7;
+        }
 
-      case 'Yotsuba B':
-        return ``;
+        .modal-header {
+          background-color: #ea8;
+          color: #800;
+          border: 1px solid #800;
+        }
+
+        .icon {
+          background-image: url(/assets/buttons/cross_red.png);
+        }
+
+        span {
+          color: maroon;
+        }`;
+
+      case 'Yotsuba-B':
+        return `
+        .modal-content {
+          background-color: #d6daf0;
+          border: 1px solid #b7c5d9;
+        }
+
+        .modal-header {
+          background-color: #98e;
+          color: #000;
+          border: 1px solid #000;
+        }
+
+        .icon {
+          background-image: url(/assets/buttons/cross_blue.png);
+        }
+
+        span {
+          color: #000;
+        }`;
 
       case 'Futaba':
-        return ``;
+        return `
+        .modal-content {
+          background-color: #f0e0d6;
+          border: 1px solid #d9bfb7;
+        }
+
+        .modal-header {
+          background-color: #ea8;
+          color: #800;
+          border: 1px solid #800;
+        }
+
+        .icon {
+          background-image: url(/assets/buttons/cross_red.png);
+        }
+
+        span {
+          color: maroon;
+        }`;
 
       case 'Burichan':
-        return ``;
+        return `
+        .modal-content {
+          background-color: #d6daf0;
+          border: 1px solid #b7c5d9;
+        }
+
+        .modal-header {
+          background-color: #98e;
+          color: #000;
+          border: 1px solid #000;
+        }
+
+        .icon {
+          background-image: url(/assets/buttons/cross_blue.png);
+        }
+
+        span {
+          color: #000;
+        }`;
 
       case 'Tomorrow':
-        return ``;
+        return `
+        .modal-content {
+          background-color: #282a2e;
+          border: 1px solid #111;
+        }
+
+        .modal-header {
+          background-color: #282a2e;
+          color: #c5c8c6;
+        }
+
+        .icon {
+          background-image: url(/assets/buttons/cross_dark.png);
+        }
+
+        #name {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          border: 1px solid #515151;
+          width: 296px;
+        }
+
+        textarea {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          border: 1px solid #515151;
+        }
+
+        #response {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          outline: none;
+          border: 1px solid #515151;
+        }
+
+        span {
+          color: #c5c8c6;
+        }
+        
+        #next {
+          filter: brightness(80%);
+        }`;
 
       case 'Photon':
-        return ``;
-      
+        return `
+        .modal-content {
+          background-color: #ddd;
+          border: 1px solid #ccc;
+        }
+
+        .modal-header {
+          background-color: #ddd;
+          color: #333;
+        }
+
+        .icon {
+          background-image: url(/assets/buttons/cross_photon.png);
+        }
+
+        span {
+          color: #333;
+        }`; 
     }
   }}
 `;
 
-const customOverlayStyles = {
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.4)'
-  }
-};
 
 const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
   const { captchaResponse, setCaptchaResponse } = useBoardStore(state => state);
+  const selectedStyle = useBoardStore(state => state.selectedStyle);
 
   const handleCloseModal = () => {
     closeModal();
@@ -94,24 +260,44 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
 
   return (
     <StyledModal
-      isOpen={isOpen}
-      onRequestClose={closeModal}
-      shouldCloseOnOverlayClick={false}
-      contentLabel="Captcha Modal"
-      style={customOverlayStyles}
-    >
-      <div className="modal-content">
-        <button className='x' onClick={handleCloseModal}>X</button>
-        <div className="challenge">Verification</div>
-        <img src={captchaImage} alt="captcha" />
-        <input 
-        type="text" 
-        autoComplete='off'
-        placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
-        value={captchaResponse} 
-        onChange={handleChallengeResponse}
-        autoFocus />
-      </div>
+    isOpen={isOpen}
+    onRequestClose={closeModal}
+    contentLabel="Captcha Modal"
+    shouldCloseOnEsc={false}
+    shouldCloseOnOverlayClick={false}
+    selectedStyle={selectedStyle}
+    overlayClassName="hide-modal-overlay">
+      <Draggable handle=".modal-header">
+        <div className="modal-content">
+          <div className="modal-header">
+            Challenges for
+            <button className="icon" onClick={handleCloseModal} title="close" />
+          </div>
+          <div id="form">
+            <div>
+              <input id="name" type="text" placeholder="Name" disabled></input>
+            </div>
+            <div>
+              <textarea rows="4" placeholder="Comment" wrap="soft" disabled></textarea>
+            </div>
+            <div id="captcha-container">
+              <input 
+              id="response"
+              type="text" 
+              autoComplete='off'
+              placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
+              value={captchaResponse} 
+              onChange={handleChallengeResponse}
+              autoFocus />
+              <img src={captchaImage} alt="captcha" />
+            </div>
+            <div>
+              <span>Challenge 1 of 3</span>
+              <button id="next">Next</button>
+            </div>
+          </div>
+        </div>
+      </Draggable>
     </StyledModal>
   );
 };
