@@ -557,7 +557,7 @@ const Board = ({ setBodyStyle }) => {
                           File:&nbsp;
                           <a key={`fa-${thread.cid}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
                         </div>
-                        <Link to="" key={`fta-${thread.cid}`} onClick={handleVoidClick} target="_blank" className="file-thumb">
+                        <Link to="" key={`fta-${thread.cid}`} onClick={handleVoidClick} className="file-thumb">
                           <img key={`fti-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
                         </Link>
                       </div>
@@ -614,13 +614,13 @@ const Board = ({ setBodyStyle }) => {
                           <Link to="" key={`pl1-${thread.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
                           <Link to="" key={`pl2-${thread.cid}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
                           &nbsp;
-                          <span key={`rl1-${thread.cid}`}>
+                          <span key={`rl1-${thread.cid}`}>&nbsp;
                             [
                             <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="reply-link" >Reply</Link>
                             ]
                           </span>
-                        </span>
-                        <Link to="" key={`pmb-${thread.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                        </span>&nbsp;
+                        <button key={`pmb-${thread.cid}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                         <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
                           {thread.replies?.pages.topAll.comments
                             .sort((a, b) => a.timestamp - b.timestamp)
@@ -712,8 +712,8 @@ const Board = ({ setBodyStyle }) => {
                       <span key={`pn-${reply.cid}`} className="post-number">
                         <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
                         <Link to="" key={`pl2-${reply.cid}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
-                      </span>
-                      <Link to="" key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                      </span>&nbsp;
+                      <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                       <div id="backlink-id" className="backlink">
                         {reply.replies?.pages.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
@@ -760,7 +760,7 @@ const Board = ({ setBodyStyle }) => {
                 <div key={`mob-c-${thread.cid}`} className="op-container">
                   <div key={`mob-po-${thread.cid}`} className="post op">
                     <div key={`mob-pi-${thread.cid}`} className="post-info-mobile">
-                      <Link to="" key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</Link>
+                      <button key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" onClick={handleVoidClick} style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                       <span key={`mob-nbm-${thread.cid}`} className="name-block-mobile">
                         {thread.author.displayName
                         ? thread.author.displayName.length > 15
@@ -852,7 +852,7 @@ const Board = ({ setBodyStyle }) => {
                   <div key={`mob-rc-${reply.cid}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
-                        <a key={`pmbm-${reply.cid}`} className="post-menu-button-mobile" title="Post menu">...</a>
+                        <button key={`pmbm-${reply.cid}`} className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                         <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
                           {reply.author.displayName
                           ? reply.author.displayName.length > 12

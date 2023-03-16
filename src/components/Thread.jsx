@@ -527,7 +527,7 @@ const Thread = ({ setBodyStyle }) => {
                           File:&nbsp;
                           <a key={`fa-${comment.cid}`} href={`${comment.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
                         </div>
-                        <Link to="" key={`fta-${comment.cid}`} onClick={handleVoidClick} target="_blank" className="file-thumb">
+                        <Link to="" key={`fta-${comment.cid}`} onClick={handleVoidClick} className="file-thumb">
                           <img key={`fti-${comment.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
                         </Link>
                       </div>
@@ -587,8 +587,8 @@ const Thread = ({ setBodyStyle }) => {
                       <span className="post-number">
                         <Link to="" onClick={handleVoidClick} title="Link to this post">c/</Link>
                         <Link to="" onClick={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</Link>
-                      </span>
-                      <Link to="" key={`pmb-${comment.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                      </span>&nbsp;&nbsp;
+                      <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                       <div id="backlink-id" className="backlink">
                         {comment.replies?.pages.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
@@ -660,8 +660,8 @@ const Thread = ({ setBodyStyle }) => {
                           <span key={`pn-${reply.cid}`} className="post-number">
                             <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
                             <Link to="" key={`pl2-${reply.cid}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
-                          </span>
-                          <Link to="" key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" data-cmd="post-menu">▶</Link>
+                          </span>&nbsp;
+                          <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                           <div id="backlink-id" className="backlink">
                             {reply.replies?.pages.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
@@ -695,7 +695,7 @@ const Thread = ({ setBodyStyle }) => {
               <div className="op-container">
                   <div key={`mob-po-${comment.cid}`} className="post op">
                     <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
-                      <Link to="" key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</Link>
+                      <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</button>
                       <span className="name-block-mobile">
                         {comment.author.displayName
                         ? comment.author.displayName.length > 15
@@ -754,7 +754,7 @@ const Thread = ({ setBodyStyle }) => {
                       </span>
                     </div>
                     <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                      <Link to="" key={`mob-ft${comment.cid}`} className="file-thumb-mobile" onClick={handleVoidClick} target="_blank">
+                      <Link to="" key={`mob-ft${comment.cid}`} className="file-thumb-mobile" onClick={handleVoidClick}>
                         <img key={`mob-img-${comment.cid}`} src="/assets/plebchan-psycho.png" alt="" />
                         <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">58 KB JPG</div>
                       </Link>
@@ -776,7 +776,7 @@ const Thread = ({ setBodyStyle }) => {
                   <div key={`mob-rc-${reply.cid}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
-                        <a className="post-menu-button-mobile" title="Post menu">...</a>
+                        <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                         <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
                           {reply.author.displayName
                           ? reply.author.displayName.length > 12

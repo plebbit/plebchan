@@ -1592,7 +1592,7 @@ export const BoardForm = styled.div`
               }
     
               .post-menu-button-mobile {
-                color: #00e;
+                color: #00e !important;
               }
     
               .name-mobile {
@@ -1660,7 +1660,7 @@ export const BoardForm = styled.div`
                 background-color: #ead6ca;
 
                 .post-menu-button-mobile {
-                  color: #00e;
+                  color: #00e !important;
                 }
 
                 .name-mobile {
@@ -1710,7 +1710,7 @@ export const BoardForm = styled.div`
               }
     
               .post-menu-button-mobile {
-                color: #34345c;
+                color: #34345c !important;
               }
     
               .name-mobile {
@@ -1778,7 +1778,7 @@ export const BoardForm = styled.div`
                 background-color: #c9cde8;
 
                 .post-menu-button-mobile {
-                  color: #34345c;
+                  color: #34345c !important;
                 }
 
                 .name-mobile {
@@ -1824,7 +1824,7 @@ export const BoardForm = styled.div`
               }
     
               .post-menu-button-mobile {
-                color: #00e;
+                color: #00e !important;
               }
     
               .name-mobile {
@@ -1892,7 +1892,7 @@ export const BoardForm = styled.div`
                 background-color: #ead6ca;
 
                 .post-menu-button-mobile {
-                  color: #00e;
+                  color: #00e !important;
                 }
 
                 .name-mobile {
@@ -1941,7 +1941,7 @@ export const BoardForm = styled.div`
               }
     
               .post-menu-button-mobile {
-                color: #34345c;
+                color: #34345c !important;
               }
     
               .name-mobile {
@@ -2009,7 +2009,7 @@ export const BoardForm = styled.div`
                 background-color: #c9cde8;
 
                 .post-menu-button-mobile {
-                  color: #34345c;
+                  color: #34345c !important;
                 }
 
                 .name-mobile {
@@ -2054,7 +2054,7 @@ export const BoardForm = styled.div`
               }
     
               .post-menu-button-mobile {
-                color: #81A2BE;
+                color: #81A2BE !important;
               }
     
               .name-mobile {
@@ -2128,7 +2128,7 @@ export const BoardForm = styled.div`
                 background-color: #212326;
 
                 .post-menu-button-mobile {
-                  color: #81A2BE;
+                  color: #81A2BE !important;
                 }
 
                 .name-mobile {
@@ -2177,7 +2177,7 @@ export const BoardForm = styled.div`
               }
     
               .post-menu-button-mobile {
-                color: #f60;
+                color: #f60 !important;
               }
     
               .name-mobile {
@@ -2246,7 +2246,7 @@ export const BoardForm = styled.div`
                 background-color: #ddd;
 
                 .post-menu-button-mobile {
-                  color: #f60;
+                  color: #f60 !important;
                 }
 
                 .name-mobile {
@@ -2343,18 +2343,17 @@ export const BoardForm = styled.div`
       }
   
       .post-menu-button-mobile {
-        text-decoration: none;
-        line-height: 1em;
-        width: 1em;
-        text-align: center;
-        outline: none;
-        transform: rotate(90deg);
+        line-height: 1em !important;
+        width: 1em !important;
+        text-align: center !important;
+        outline: none !important;
+        transform: rotate(90deg) !important;
         margin: 4px -5px 0 4px !important;
-        float: left;
-        font-weight: 700;
+        float: left !important;
+        font-weight: 700 !important;
         opacity: 1 !important;
         height: .5em !important;
-        font-size: 16px;
+        font-size: 16px !important;
       }
   
       .name-block-mobile {
@@ -2448,18 +2447,17 @@ export const BoardForm = styled.div`
         clear: left !important;
 
         .post-menu-button-mobile {
-          text-decoration: none;
-          line-height: 1em;
-          width: 1em;
-          text-align: center;
-          outline: none;
-          transform: rotate(90deg);
+          line-height: 1em !important;
+          width: 1em !important;
+          text-align: center !important;
+          outline: none !important;
+          transform: rotate(90deg)!important;
           margin: 4px -5px 0 4px !important;
-          float: left;
-          font-weight: 700;
+          float: left !important;
+          font-weight: 700 !important;
           opacity: 1 !important;
           height: .5em !important;
-          font-size: 16px;
+          font-size: 16px !important;
         }
 
         .name-block-mobile {
@@ -2554,7 +2552,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button {
-        color: #000080;
+        color: #000080 !important;
         margin-left: 5px;
         text-decoration: none;
         line-height: 1em;
@@ -2568,7 +2566,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: red;
+        color: red !important;
       }
 
       .backlink {
@@ -2712,7 +2710,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button {
-        color: #34345c;
+        color: #34345c !important;
         margin-left: 5px;
         text-decoration: none;
         line-height: 1em;
@@ -2726,7 +2724,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: #d00;
+        color: #d00 !important;
       }
 
       .backlink {
@@ -2864,7 +2862,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button {
-        color: #00e;
+        color: #00e !important;
         margin-left: 5px;
         text-decoration: none;
         line-height: 1em;
@@ -2878,7 +2876,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: red;
+        color: red !important;
       }
 
       .backlink {
@@ -3024,7 +3022,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button {
-        color: #34345c;
+        color: #34345c !important;
         margin-left: 5px;
         text-decoration: none;
         line-height: 1em;
@@ -3038,7 +3036,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: red;
+        color: red !important;
       }
 
       .backlink {
@@ -3177,7 +3175,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button {
-        color: #81a2be;
+        color: #81a2be !important;
         margin-left: 5px;
         text-decoration: none;
         line-height: 1em;
@@ -3191,7 +3189,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: #5f89ab;
+        color: #5f89ab !important;
       }
 
       .backlink {
@@ -3335,7 +3333,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button {
-        color: #f60;
+        color: #f60 !important;
         margin-left: 5px;
         text-decoration: none;
         line-height: 1em;
@@ -3349,7 +3347,7 @@ export const BoardForm = styled.div`
       }
 
       .post-menu-button:hover {
-        color: #ff3300;
+        color: #ff3300 !important;
       }
 
       .backlink {
