@@ -7,6 +7,7 @@ import { Threads } from './styles/Catalog.styled';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
+import SettingsModal from './SettingsModal';
 import onError from '../utils/onError';
 import onSuccess from '../utils/onSuccess';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -34,6 +35,7 @@ const Catalog = ({ setBodyStyle }) => {
   const [comment, setComment] = useState('');
   const { publishComment } = useAccountsActions();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,7 +86,7 @@ const Catalog = ({ setBodyStyle }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, visible]);
 
-  // post route handling
+  // nested routes handling
   useEffect(() => {
     const path = location.pathname;
     if (path.endsWith('/post')) {
@@ -94,6 +96,13 @@ const Catalog = ({ setBodyStyle }) => {
       setShowPostFormLink(true);
       setShowPostForm(false);
     }
+
+    if (path.endsWith('/settings')) {
+      setIsSettingsOpen(true);
+    } else {
+      setIsSettingsOpen(false);
+    }
+    
   }, [location.pathname]);
 
   // automatic dark mode without interefering with user's selected style
@@ -255,6 +264,14 @@ const Catalog = ({ setBodyStyle }) => {
     setIsCaptchaOpen(false);
   };
 
+  const handleSettingsClose = () => {
+    setIsSettingsOpen(false);
+  }
+
+  const handleSettingsOpen = () => {
+    setIsSettingsOpen(true);
+  }
+
 
   const handleStyleChange = (event) => {
     switch (event.target.value) {
@@ -351,6 +368,10 @@ const Catalog = ({ setBodyStyle }) => {
       isOpen={isCaptchaOpen} 
       closeModal={handleCaptchaClose} 
       captchaImage={captchaImage} />
+      <SettingsModal
+      selectedStyle={selectedStyle}
+      isOpen={isSettingsOpen}
+      closeModal={handleSettingsClose} />
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
@@ -363,7 +384,7 @@ const Catalog = ({ setBodyStyle }) => {
           ))}
           <span className="nav">
             [
-            <Link to="" onClick={handleVoidClick}>Settings</Link>
+            <Link to={`/${selectedAddress}/catalog/settings`} onClick={handleSettingsOpen}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -382,7 +403,7 @@ const Catalog = ({ setBodyStyle }) => {
               </select>
             </div>
             <div className="page-jump">
-              <Link to="" onClick={handleVoidClick}>Settings</Link>
+              <Link to={`/${selectedAddress}/catalog/settings`} onClick={handleSettingsOpen}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>

@@ -4,6 +4,7 @@ import useBoardStore from '../useBoardStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
+import SettingsModal from './SettingsModal';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
@@ -11,7 +12,6 @@ import onError from '../utils/onError';
 import onSuccess from '../utils/onSuccess';
 import getDate from '../utils/getDate';
 import renderComments from '../utils/renderComments';
-import SettingsModal from './SettingsModal';
 
 
 const Board = ({ setBodyStyle }) => {
