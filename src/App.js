@@ -15,6 +15,10 @@ import { ToastContainer } from 'react-toastify';
 
 
 const GlobalStyle = createGlobalStyle`
+  *:focus {
+    outline: none;
+  }
+  
   body {
     margin: 0;
     padding: 0;

@@ -5,24 +5,6 @@ import styled from "styled-components";
 import useBoardStore from "../useBoardStore";
 
 const StyledModal = styled(Modal)`
-  .modal-content {
-    width: 400px;
-    height: 800px;
-    display: flex;
-    align-self: center;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.85);
-    padding: 0;
-    z-index: 9999;
-    border: 1px solid #aaa;
-  }
-
   .panel {
     top: 60px;
     width: 330px;
@@ -64,7 +46,8 @@ const StyledModal = styled(Modal)`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `.panel {
+        return `
+        .panel {
           background-color: #f0e0d6;
         }
 
@@ -77,7 +60,8 @@ const StyledModal = styled(Modal)`
         }`;
 
       case 'Yotsuba-B':
-        return `.panel {
+        return `
+        .panel {
           background-color: #d6daf0;
         }
         
@@ -90,7 +74,8 @@ const StyledModal = styled(Modal)`
         }`;
 
       case 'Futaba':
-        return `.panel {
+        return `
+        .panel {
           background-color: #f0e0d6;
         }
 
@@ -103,7 +88,8 @@ const StyledModal = styled(Modal)`
         }`;
 
       case 'Burichan':
-        return `.panel {
+        return `
+        .panel {
           background-color: #d6daf0;
         }
         
@@ -116,7 +102,8 @@ const StyledModal = styled(Modal)`
         }`;
 
       case 'Tomorrow':
-        return `.panel {
+        return `
+        .panel {
           background-color: #282a2e;
         }
         
@@ -129,7 +116,8 @@ const StyledModal = styled(Modal)`
         }`;
 
       case 'Photon':
-        return `.panel {
+        return `
+        .panel {
           background-color: #ddd;
         }
         
