@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect }  from 'react';
+import useBoardStore from '../useBoardStore';
 import { Link } from "react-router-dom";
 import { Container, Header, Logo, Page, Boards, BoardsTitle } from './styles/Home.styled';
 
 
-const NotFound = () => {
+const NotFound = ({ setBodyStyle }) => {
+
+  const { setSelectedStyle } = useBoardStore(state => state);
+
+  useEffect(() => {
+    setBodyStyle({
+      background: "#ffe url(/assets/fade.png) top repeat-x",
+      color: "maroon",
+      fontFamily: "Helvetica, Arial, sans-serif"
+    });
+    setSelectedStyle("Yotsuba");
+  }, [setBodyStyle, setSelectedStyle]);
 
   return (
     <Container>

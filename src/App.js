@@ -86,7 +86,7 @@ export default function App() {
           <Route path='post' element={<Catalog />} />
           <Route path='settings' element={<Catalog />} />
         </Route>
-        <Route path='*' element={<NotFound />} />
+        <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>
       <StyledContainer />
   </div>

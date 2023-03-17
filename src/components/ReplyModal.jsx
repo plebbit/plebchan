@@ -49,6 +49,7 @@ const StyledModal = styled(Modal)`
     outline: medium none;
     width: 298px;
     padding: 2px;
+    margin-bottom: 1px;
   }
 
   textarea {
@@ -56,6 +57,7 @@ const StyledModal = styled(Modal)`
     float: left;
     font-size: 10pt;
     font-family: Arial, Helvetica, sans-serif;
+    margin-top: 0.5px;
   }
 
   #captcha-container {
@@ -269,14 +271,16 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           </div>
           <div id="form">
             <div>
-              <input id="name" type="text" placeholder="Name" disabled></input>
+              <input id="name" type="text" placeholder="Name"></input>
             </div>
             <div>
-              <textarea rows="4" placeholder="Comment" wrap="soft" disabled></textarea>
+              <input id="name" type="text" placeholder="Embed link"></input>
             </div>
             <div>
-              <span>Challenge 1 of 3</span>
-              <button id="next">Next</button>
+              <textarea rows="4" placeholder="Comment" wrap="soft"></textarea>
+            </div>
+            <div>
+              <button id="next">Post</button>
             </div>
           </div>
         </div>
