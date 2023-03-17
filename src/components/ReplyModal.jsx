@@ -245,23 +245,18 @@ const StyledModal = styled(Modal)`
 `;
 
 
-const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
-  const { captchaResponse, setCaptchaResponse } = useBoardStore(state => state);
+const ReplyModal = ({ isOpen, closeModal }) => {
   const selectedStyle = useBoardStore(state => state.selectedStyle);
 
   const handleCloseModal = () => {
     closeModal();
   };
 
-  const handleChallengeResponse = (event) => {
-    setCaptchaResponse(event.target.value);
-  };  
-
   return (
     <StyledModal
     isOpen={isOpen}
     onRequestClose={closeModal}
-    contentLabel="Captcha Modal"
+    contentLabel="Reply Modal"
     shouldCloseOnEsc={false}
     shouldCloseOnOverlayClick={false}
     selectedStyle={selectedStyle}
@@ -269,7 +264,7 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
       <Draggable handle=".modal-header">
         <div className="modal-content">
           <div className="modal-header">
-            Challenges for
+            Reply to Thread
             <button className="icon" onClick={handleCloseModal} title="close" />
           </div>
           <div id="form">
@@ -278,17 +273,6 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
             </div>
             <div>
               <textarea rows="4" placeholder="Comment" wrap="soft" disabled></textarea>
-            </div>
-            <div id="captcha-container">
-              <input 
-              id="response"
-              type="text" 
-              autoComplete='off'
-              placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
-              value={captchaResponse} 
-              onChange={handleChallengeResponse}
-              autoFocus />
-              <img src={captchaImage} alt="captcha" />
             </div>
             <div>
               <span>Challenge 1 of 3</span>
@@ -303,4 +287,4 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
 
 Modal.setAppElement('#root');
 
-export default CaptchaModal;
+export default ReplyModal;

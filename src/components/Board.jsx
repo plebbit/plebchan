@@ -4,6 +4,7 @@ import useBoardStore from '../useBoardStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import ImageBanner from './ImageBanner';
 import CaptchaModal from './CaptchaModal';
+import ReplyModal from './ReplyModal';
 import SettingsModal from './SettingsModal';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -36,6 +37,7 @@ const Board = ({ setBodyStyle }) => {
   const [comment, setComment] = useState('');
   const { publishComment } = useAccountsActions();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
@@ -303,6 +305,14 @@ const Board = ({ setBodyStyle }) => {
     setIsCaptchaOpen(false);
   };
 
+  const handleReplyClose = () => {
+    setIsReplyOpen(false);
+  };
+  
+  const handleReplyOpen = () => {
+    setIsReplyOpen(true);
+  };
+
   const handleSettingsClose = () => {
     setIsSettingsOpen(false);
   }
@@ -408,6 +418,10 @@ const Board = ({ setBodyStyle }) => {
       isOpen={isCaptchaOpen} 
       closeModal={handleCaptchaClose} 
       captchaImage={captchaImage} />
+      <ReplyModal 
+      selectedStyle={selectedStyle}
+      isOpen={isReplyOpen}
+      closeModal={handleReplyClose} />
       <SettingsModal
       selectedStyle={selectedStyle}
       isOpen={isSettingsOpen}
@@ -612,7 +626,7 @@ const Board = ({ setBodyStyle }) => {
                         &nbsp;
                         <span key={`pn-${thread.cid}`} className="post-number">
                           <Link to="" key={`pl1-${thread.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                          <Link to="" key={`pl2-${thread.cid}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
+                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${thread.cid}`} onClick={handleReplyOpen} title="Reply to this post">{thread.cid.slice(0, 8)}</button>
                           &nbsp;
                           <span key={`rl1-${thread.cid}`}>&nbsp;
                             [
@@ -711,7 +725,7 @@ const Board = ({ setBodyStyle }) => {
                       &nbsp;
                       <span key={`pn-${reply.cid}`} className="post-number">
                         <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <Link to="" key={`pl2-${reply.cid}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
                       </span>&nbsp;
                       <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                       <div id="backlink-id" className="backlink">
@@ -816,7 +830,7 @@ const Board = ({ setBodyStyle }) => {
                         {getDate(thread.timestamp)}
                         &nbsp;
                         <Link to="" key={`mob-no-${thread.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <Link to="" key={`mob-no2-${thread.cid}`} onClick={handleVoidClick} title="Reply to this post">{thread.cid.slice(0, 8)}</Link>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no2-${thread.cid}`} onClick={handleReplyOpen} title="Reply to this post">{thread.cid.slice(0, 8)}</button>
                       </span>
                     </div>
                     <div key={`mob-f-${thread.cid}`} className="file-mobile">
@@ -892,7 +906,7 @@ const Board = ({ setBodyStyle }) => {
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
                         {getDate(reply.timestamp)}&nbsp;
                           <Link to="" key={`mob-pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                          <Link to="" key={`mob-pl2-${reply.cid}`} onClick={handleVoidClick} title="Reply to this post">{reply.cid.slice(0, 8)}</Link>
+                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
                         </span>
                       </div>
                       {reply.content ? (

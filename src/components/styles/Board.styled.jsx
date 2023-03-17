@@ -2534,6 +2534,10 @@ export const BoardForm = styled.div`
         color: red;
       }
 
+      #reply-button:hover {
+        color: red !important;
+      }
+
       .reply-link:not(:hover) {
         color: #00e !important;
       }
@@ -2692,6 +2696,10 @@ export const BoardForm = styled.div`
         color: #d00;
       }
 
+      #reply-button:hover {
+        color: #d00 !important;
+      }
+
       .reply-link:not(:hover) {
         color: #34345c !important;
       }
@@ -2843,6 +2851,10 @@ export const BoardForm = styled.div`
 
       .post-number a:hover {
         color: red;
+      }
+
+      #reply-button:hover {
+        color: red !important;
       }
       
       .reply-link {
@@ -3001,6 +3013,10 @@ export const BoardForm = styled.div`
         color: red;
       }
 
+      #reply-button:hover {
+        color: red !important;
+      }
+
       .reply-link {
         text-decoration: underline !important;
        }
@@ -3151,6 +3167,10 @@ export const BoardForm = styled.div`
 
       .post-number a:hover {
         color: #5f89ab;
+      }
+
+      #reply-button:hover {
+        color: #5f89ab !important;
       }
 
       .reply-link:not(:hover) {
@@ -3313,6 +3333,10 @@ export const BoardForm = styled.div`
 
       .post-number a:hover {
         color: #ff3300;
+      }
+
+      #reply-button:hover {
+        color: #ff3300 !important;
       }
 
       .reply-link:not(:hover) {
