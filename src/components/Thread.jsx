@@ -534,12 +534,22 @@ const Thread = ({ setBodyStyle }) => {
           <a onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickBottom}>Bottom</a>
           ]
         </span>
+        {/* "loading" indicator while replycount loads */}
         {comment ? (
-          comment.replyCount > 0 ? (
-            <span className="reply-stat">{comment.replyCount} replies</span>
+          comment.replyCount !== undefined ? (
+            comment.replyCount > 0 ? (
+              comment.replyCount === 1 ? (
+                <span className="reply-stat">{comment.replyCount} reply</span>
+              ) : (
+                <span className="reply-stat">{comment.replyCount} replies</span>
+              )
+            ) : (
+              <span className="reply-stat">No replies yet</span>
+            )
           ) : (
-            <span className="reply-stat">No replies yet</span>
-        )) : (
+            <span className="reply-stat">Loading...</span>
+          )
+        ) : (
           null
         )}
         <hr />
