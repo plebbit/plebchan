@@ -1,18 +1,18 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import useBoardStore from '../useBoardStore';
+import useBoardStore from '../../useBoardStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
-import ImageBanner from './ImageBanner';
-import CaptchaModal from './CaptchaModal';
-import ReplyModal from './ReplyModal';
-import SettingsModal from './SettingsModal';
+import ImageBanner from '../ImageBanner';
+import CaptchaModal from '../CaptchaModal';
+import ReplyModal from '../ReplyModal';
+import SettingsModal from '../SettingsModal';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
-import onError from '../utils/onError';
-import onSuccess from '../utils/onSuccess';
-import getDate from '../utils/getDate';
-import renderComments from '../utils/renderComments';
+import onError from '../../utils/onError';
+import onSuccess from '../../utils/onSuccess';
+import getDate from '../../utils/getDate';
+import renderComments from '../../utils/renderComments';
 
 
 const Board = ({ setBodyStyle }) => {

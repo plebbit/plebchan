@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useBoardStore from '../useBoardStore';
+import useBoardStore from '../../useBoardStore';
 import { Link } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styles/Home.styled';
 

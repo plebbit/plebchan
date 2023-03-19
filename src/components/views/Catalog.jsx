@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import useBoardStore from '../useBoardStore';
+import useBoardStore from '../../useBoardStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { TopBar } from './styles/Thread.styled';
 import { Threads } from './styles/Catalog.styled';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
-import ImageBanner from './ImageBanner';
-import CaptchaModal from './CaptchaModal';
-import SettingsModal from './SettingsModal';
-import onError from '../utils/onError';
-import onSuccess from '../utils/onSuccess';
+import ImageBanner from '../ImageBanner';
+import CaptchaModal from '../CaptchaModal';
+import SettingsModal from '../SettingsModal';
+import onError from '../../utils/onError';
+import onSuccess from '../../utils/onSuccess';
 import InfiniteScroll from 'react-infinite-scroller';
 
 

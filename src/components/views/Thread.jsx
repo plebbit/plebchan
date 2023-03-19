@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import useBoardStore from '../useBoardStore';
+import useBoardStore from '../../useBoardStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
-import ImageBanner from './ImageBanner';
-import CaptchaModal from './CaptchaModal';
-import ReplyModal from './ReplyModal';
-import SettingsModal from './SettingsModal';
+import ImageBanner from '../ImageBanner';
+import CaptchaModal from '../CaptchaModal';
+import ReplyModal from '../ReplyModal';
+import SettingsModal from '../SettingsModal';
 import { Tooltip } from 'react-tooltip';
-import onError from '../utils/onError';
-import onSuccess from '../utils/onSuccess';
-import getDate from '../utils/getDate';
-import renderThreadComments from '../utils/renderThreadComments';
+import onError from '../../utils/onError';
+import onSuccess from '../../utils/onSuccess';
+import getDate from '../../utils/getDate';
+import renderThreadComments from '../../utils/renderThreadComments';
 
 
 const Thread = ({ setBodyStyle }) => {
