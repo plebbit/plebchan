@@ -4,8 +4,9 @@ import useBoardStore from '../../useBoardStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
-import ImageBanner from '../ImageBanner';
 import CaptchaModal from '../CaptchaModal';
+import ImageBanner from '../ImageBanner';
+import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import { Tooltip } from 'react-tooltip';
@@ -648,6 +649,7 @@ const Thread = ({ setBodyStyle }) => {
                   </div>
                 </div>
               </div>
+              {comment.replyCount ?? <PostLoader />}
               {comment.replyCount > 0 && 
               Object.keys(comment.replies.pages.topAll.comments).map(() => {
                 const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
@@ -806,6 +808,7 @@ const Thread = ({ setBodyStyle }) => {
                     </blockquote>
                   </div>
                 </div>
+                {comment.replyCount ?? <PostLoader />}
                 {comment.replyCount > 0 && 
                 Object.keys(comment.replies.pages.topAll.comments).map(() => {
                   const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
@@ -962,7 +965,7 @@ const Thread = ({ setBodyStyle }) => {
             </div>
           </>
          ) : (
-          <div>Loading...</div>
+          <PostLoader />
         )}
       </BoardForm>
     </Container>

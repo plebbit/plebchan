@@ -2,8 +2,9 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import useBoardStore from '../../useBoardStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
-import ImageBanner from '../ImageBanner';
 import CaptchaModal from '../CaptchaModal';
+import ImageBanner from '../ImageBanner';
+import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
@@ -554,7 +555,7 @@ const Board = ({ setBodyStyle }) => {
             pageStart={0}
             loadMore={tryLoadMore}
             hasMore={hasMore}
-            loader={<div key="loader">Loading...</div>}
+            loader={<PostLoader key="loader" />}
           >
             {renderedFeed.map(thread => {
             const { replies: { pages: { topAll: { comments } } } } = thread;

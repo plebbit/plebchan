@@ -7,6 +7,7 @@ import { Threads } from './styles/Catalog.styled';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from '../ImageBanner';
 import CaptchaModal from '../CaptchaModal';
+import CatalogLoader from '../CatalogLoader';
 import SettingsModal from '../SettingsModal';
 import onError from '../../utils/onError';
 import onSuccess from '../../utils/onSuccess';
@@ -203,9 +204,6 @@ const Catalog = ({ setBodyStyle }) => {
     });
   };
 
-
-
-  const handleVoidClick = () => {}
 
 
   const handleClickTitle = (title, address) => {
@@ -500,7 +498,7 @@ const Catalog = ({ setBodyStyle }) => {
           pageStart={0}
           loadMore={tryLoadMore}
           hasMore={hasMore}
-          loader={<div key={`loader-${feed.length}`}>Loading...</div>}
+          loader={<CatalogLoader key="loader" />}
         >
           {feed.map(thread => {
             return (
