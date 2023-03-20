@@ -480,7 +480,7 @@ const Thread = () => {
                   </div>
                 </div>
               </div>
-              {comment.replyCount ?? <PostLoader />}
+              {comment.replyCount === undefined ? <PostLoader /> : null}
               {comment.replyCount > 0 && 
               Object.keys(comment.replies.pages.topAll.comments).map(() => {
                 const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
@@ -639,7 +639,7 @@ const Thread = () => {
                     </blockquote>
                   </div>
                 </div>
-                {comment.replyCount ?? <PostLoader />}
+                {comment.replyCount === undefined ? <PostLoader /> : null}
                 {comment.replyCount > 0 && 
                 Object.keys(comment.replies.pages.topAll.comments).map(() => {
                   const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
