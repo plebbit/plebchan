@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import useBoardStore from './useBoardStore';
+import useAppStore from './useAppStore';
 import Home from './components/views/Home';
 import Board from './components/views/Board';
 import Thread from './components/views/Thread';
@@ -48,14 +48,96 @@ const StyledContainer = styled(ToastContainer)`
 
 
 export default function App() {
-  const { bodyStyle, setBodyStyle } = useBoardStore(state => state);
+  const { 
+    bodyStyle, setBodyStyle,
+    setDefaultSubplebbits,
+    setIsSettingsOpen,
+    setSelectedStyle,
+    setShowPostForm,
+    setShowPostFormLink,
+  } = useAppStore(state => state);
+
+  const location = useLocation();
   
+
+  // preload images
   const imageUrls = Array.from({ length: 14 }, (_, index) => `/assets/banners/banner-${index + 1}.jpg`);
 
   useEffect(() => {
     preloadImages([...imageUrls]);
   }, []);
 
+
+  // automatic dark mode without interefering with user's selected style
+  useEffect(() => {
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const isDarkMode = darkModeMediaQuery.matches;
+  
+    if (isDarkMode) {
+      setSelectedStyle('Tomorrow');
+      setBodyStyle({
+        background: '#1d1f21 none',
+        color: '#c5c8c6',
+        fontFamily: 'Arial, Helvetica, sans-serif'
+      });
+      localStorage.setItem('selectedStyle', 'Tomorrow');
+    }
+  
+    const darkModeListener = (e) => {
+      if (e.matches) {
+        setSelectedStyle('Tomorrow');
+        setBodyStyle({
+          background: '#1d1f21 none',
+          color: '#c5c8c6',
+          fontFamily: 'Arial, Helvetica, sans-serif'
+        });
+        localStorage.setItem('selectedStyle', 'Tomorrow');
+      }
+    };
+  
+    darkModeMediaQuery.addEventListener('change', darkModeListener);
+  
+    return () => {
+      darkModeMediaQuery.removeEventListener('change', darkModeListener);
+    };
+  }, []);
+
+  // fetch default subplebbits
+  useEffect(() => {
+    let didCancel = false;
+    fetch(
+      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
+      { cache: "no-cache" }
+    )
+      .then((res) => res.json())
+      .then(res => {
+        if (!didCancel) {
+          setDefaultSubplebbits(res);
+        }
+      });
+    return () => {
+      didCancel = true;
+    };
+  }, []);
+
+  // handle nested routes
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.endsWith('/post')) {
+      setShowPostFormLink(false);
+      setShowPostForm(true);
+    } else {
+      setShowPostFormLink(true);
+      setShowPostForm(false);
+    }
+
+    if (path.endsWith('/settings')) {
+      setIsSettingsOpen(true);
+    } else {
+      setIsSettingsOpen(false);
+    }
+    
+  }, [location.pathname]);
 
   return (
   <div>

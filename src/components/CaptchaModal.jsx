@@ -1,5 +1,5 @@
 import React from 'react';
-import useBoardStore from '../useBoardStore';
+import useAppStore from '../useAppStore';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
@@ -246,8 +246,8 @@ const StyledModal = styled(Modal)`
 
 
 const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
-  const { captchaResponse, setCaptchaResponse } = useBoardStore(state => state);
-  const selectedStyle = useBoardStore(state => state.selectedStyle);
+  const { captchaResponse, setCaptchaResponse } = useAppStore(state => state);
+  const selectedStyle = useAppStore(state => state.selectedStyle);
 
   const handleCloseModal = () => {
     closeModal();

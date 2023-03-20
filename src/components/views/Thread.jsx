@@ -1,53 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import useBoardStore from '../../useBoardStore';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import { Tooltip } from 'react-tooltip';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
-import { Tooltip } from 'react-tooltip';
+import handleStyleChange from '../../utils/handleStyleChange';
 import onError from '../../utils/onError';
 import onSuccess from '../../utils/onSuccess';
 import getDate from '../../utils/getDate';
 import renderThreadComments from '../../utils/renderThreadComments';
+import useClickForm from '../../hooks/useClickForm';
 
 
-const Thread = ({ setBodyStyle }) => {
-
+const Thread = () => {
   const {
-    selectedTitle,
-    setSelectedTitle,
-    selectedAddress,
-    setSelectedAddress,
-    selectedThread,
-    setSelectedThread,
+    captchaResponse, setCaptchaResponse,
+    defaultSubplebbits,
+    isSettingsOpen, setIsSettingsOpen,
+    selectedAddress, setSelectedAddress,
     selectedStyle,
-    setSelectedStyle,
-    captchaResponse,
-    setCaptchaResponse
-  } = useBoardStore(state => state);
+    selectedThread, setSelectedThread,
+    selectedTitle, setSelectedTitle,
+    showPostForm,
+    showPostFormLink
+  } = useAppStore(state => state);
   
-  const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const [showPostFormLink, setShowPostFormLink] = useState(true);
-  const [showPostForm, setShowPostForm] = useState(false);
+
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [commentContent, setCommentContent] = useState('');
   const { publishComment } = useAccountsActions();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const comment = useComment(`${selectedThread}`);
   const { subplebbitAddress, threadCid } = useParams();
+  const handleClickForm = useClickForm();
 
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
@@ -59,24 +56,6 @@ const Thread = ({ setBodyStyle }) => {
       setSelectedTitle(selectedSubplebbit.title);
     }
   }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
-  
-  // fetches default subplebbits from JSON
-  useEffect(() => {
-    let didCancel = false;
-    fetch(
-      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
-      { cache: "no-cache" }
-    )
-      .then((res) => res.json())
-      .then(res => {
-        if (!didCancel) {
-          setDefaultSubplebbits(res);
-        }
-      });
-    return () => {
-      didCancel = true;
-    };
-  }, []);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -91,62 +70,9 @@ const Thread = ({ setBodyStyle }) => {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, visible]);
-  
-  // nested routes handling
-  useEffect(() => {
-    const path = location.pathname;
-    if (path.endsWith('/post')) {
-      setShowPostFormLink(false);
-      setShowPostForm(true);
-    } else {
-      setShowPostFormLink(true);
-      setShowPostForm(false);
-    }
-
-    if (path.endsWith('/settings')) {
-      setIsSettingsOpen(true);
-    } else {
-      setIsSettingsOpen(false);
-    }
-    
-  }, [location.pathname]);
-
-  // automatic dark mode without interefering with user's selected style
-  useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const isDarkMode = darkModeMediaQuery.matches;
-  
-    if (isDarkMode) {
-      setSelectedStyle('Tomorrow');
-      setBodyStyle({
-        background: '#1d1f21 none',
-        color: '#c5c8c6',
-        fontFamily: 'Arial, Helvetica, sans-serif'
-      });
-      localStorage.setItem('selectedStyle', 'Tomorrow');
-    }
-  
-    const darkModeListener = (e) => {
-      if (e.matches) {
-        setSelectedStyle('Tomorrow');
-        setBodyStyle({
-          background: '#1d1f21 none',
-          color: '#c5c8c6',
-          fontFamily: 'Arial, Helvetica, sans-serif'
-        });
-        localStorage.setItem('selectedStyle', 'Tomorrow');
-      }
-    };
-  
-    darkModeMediaQuery.addEventListener('change', darkModeListener);
-  
-    return () => {
-      darkModeMediaQuery.removeEventListener('change', darkModeListener);
-    };
-  }, []);
 
 
-
+  
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       onSuccess('challenge success', {publishedCid: challengeVerification.publication.cid})
@@ -227,13 +153,6 @@ const Thread = ({ setBodyStyle }) => {
   };
 
 
-  const handleClickForm = () => {
-    setShowPostFormLink(false);
-    setShowPostForm(true);
-    navigate(`/${selectedAddress}/thread/${selectedThread}/post`);
-  };
-
-
   const handleClickTop = () => {
     window.scrollTo(0, 0);
   }
@@ -293,94 +212,6 @@ const Thread = ({ setBodyStyle }) => {
   const handleSettingsOpen = () => {
     setIsSettingsOpen(true);
   }
-
-
-  const handleStyleChange = (event) => {
-    switch (event.target.value) {
-      case "Yotsuba":
-        const yotsubaBodyStyle = {
-          background: "#ffe url(/assets/fade.png) top repeat-x",
-          color: "maroon",
-          fontFamily: "Arial, Helvetica, sans-serif"
-        };
-        setBodyStyle(yotsubaBodyStyle);
-        setSelectedStyle("Yotsuba");
-        localStorage.setItem("selectedStyle", "Yotsuba");
-        localStorage.setItem("bodyStyle", JSON.stringify(yotsubaBodyStyle));
-        break;
-  
-      case "Yotsuba-B":
-        const yotsubaBBodyStyle = {
-          background: "#eef2ff url(/assets/fade-blue.png) top center repeat-x",
-          color: "#000",
-          fontFamily: "Arial, Helvetica, sans-serif"
-        };
-        setBodyStyle(yotsubaBBodyStyle);
-        setSelectedStyle("Yotsuba-B");
-        localStorage.setItem("selectedStyle", "Yotsuba-B");
-        localStorage.setItem("bodyStyle", JSON.stringify(yotsubaBBodyStyle));
-        break;
-  
-      case "Futaba":
-        const futabaBodyStyle = {
-          background: "#ffe",
-          color: "maroon",
-          fontFamily: "times new roman, serif"
-        };
-        setBodyStyle(futabaBodyStyle);
-        setSelectedStyle("Futaba");
-        localStorage.setItem("selectedStyle", "Futaba");
-        localStorage.setItem("bodyStyle", JSON.stringify(futabaBodyStyle));
-        break;
-  
-      case "Burichan":
-        const burichanBodyStyle = {
-          background: "#eef2ff",
-          color: "#000",
-          fontFamily: "times new roman, serif"
-        };
-        setBodyStyle(burichanBodyStyle);
-        setSelectedStyle("Burichan");
-        localStorage.setItem("selectedStyle", "Burichan");
-        localStorage.setItem("bodyStyle", JSON.stringify(burichanBodyStyle));
-        break;
-  
-      case "Tomorrow":
-        const tomorrowBodyStyle = {
-          background: "#1d1f21 none",
-          color: "#c5c8c6",
-          fontFamily: "Arial, Helvetica, sans-serif"
-        };
-        setBodyStyle(tomorrowBodyStyle);
-        setSelectedStyle("Tomorrow");
-        localStorage.setItem("selectedStyle", "Tomorrow");
-        localStorage.setItem("bodyStyle", JSON.stringify(tomorrowBodyStyle));
-        break;
-  
-      case "Photon":
-        const photonBodyStyle = {
-          background: "#eee none",
-          color: "#333",
-          fontFamily: "Arial, Helvetica, sans-serif"
-        };
-        setBodyStyle(photonBodyStyle);
-        setSelectedStyle("Photon");
-        localStorage.setItem("selectedStyle", "Photon");
-        localStorage.setItem("bodyStyle", JSON.stringify(photonBodyStyle));
-        break;
-  
-      default:
-        const defaultBodyStyle = {
-          background: "#ffe url(/assets/fade.png) top repeat-x",
-          color: "maroon",
-          fontFamily: "Arial, Helvetica, sans-serif"
-        };
-        setBodyStyle(defaultBodyStyle);
-        setSelectedStyle("Yotsuba");
-        localStorage.setItem("selectedStyle", "Yotsuba");
-        localStorage.setItem("bodyStyle", JSON.stringify(defaultBodyStyle));
-    }
-  }  
   
   
 

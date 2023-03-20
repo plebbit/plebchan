@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import useBoardStore from '../../useBoardStore';
+import useAppStore from '../../useAppStore';
 import { Link } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styles/Home.styled';
 
 
 const Home = ({ setBodyStyle }) => {
   const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { setSelectedTitle, setSelectedAddress, setSelectedStyle } = useBoardStore(state => state);
+  const { setSelectedTitle, setSelectedAddress, setSelectedStyle } = useAppStore(state => state);
 
   useEffect(() => {
     setBodyStyle({

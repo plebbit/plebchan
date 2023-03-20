@@ -1,9 +1,9 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
-import useBoardStore from '../useBoardStore';
+import useAppStore from '../useAppStore';
 
 const SinglePostLoader = () => {
-  const selectedStyle = useBoardStore((state) => state.selectedStyle);
+  const selectedStyle = useAppStore((state) => state.selectedStyle);
   const backgroundColor = selectedStyle === 'Tomorrow' ? '#333' : '#f3f3f3';
   const foregroundColor = selectedStyle === 'Tomorrow' ? '#555' : '#ecebeb';
 
