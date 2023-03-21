@@ -58,6 +58,7 @@ export default function App() {
   } = useAppStore(state => state);
 
   const location = useLocation();
+  const isHomeRoute = location.pathname === "/";
   
 
   // preload images
@@ -70,10 +71,13 @@ export default function App() {
 
   // automatic dark mode without interefering with user's selected style
   useEffect(() => {
+
+    if (isHomeRoute) return;
+  
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const isDarkMode = darkModeMediaQuery.matches;
   
-    if (isDarkMode) {
+    if (isDarkMode && !isHomeRoute) {
       setSelectedStyle('Tomorrow');
       setBodyStyle({
         background: '#1d1f21 none',
@@ -84,7 +88,7 @@ export default function App() {
     }
   
     const darkModeListener = (e) => {
-      if (e.matches) {
+      if (e.matches && !isHomeRoute) {
         setSelectedStyle('Tomorrow');
         setBodyStyle({
           background: '#1d1f21 none',
@@ -100,8 +104,8 @@ export default function App() {
     return () => {
       darkModeMediaQuery.removeEventListener('change', darkModeListener);
     };
-  }, []);
-
+  }, [isHomeRoute]);
+  
   // fetch default subplebbits
   useEffect(() => {
     let didCancel = false;

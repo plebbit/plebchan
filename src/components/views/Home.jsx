@@ -1,13 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useAppStore from '../../useAppStore';
 import { Link } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styles/Home.styled';
 
 
-const Home = ({ setBodyStyle }) => {
-  const [defaultSubplebbits, setDefaultSubplebbits] = useState([]);
-  const { setSelectedTitle, setSelectedAddress, setSelectedStyle } = useAppStore(state => state);
+const Home = () => {
+  const { 
+    setBodyStyle,
+    defaultSubplebbits,
+    setSelectedAddress, 
+    setSelectedStyle,
+    setSelectedTitle
+  } = useAppStore(state => state);
 
+
+  const handleClick = (title, address) => {
+    setSelectedTitle(title);
+    setSelectedAddress(address);
+  }
+
+  // prevent dark mode
   useEffect(() => {
     setBodyStyle({
       background: "#ffe url(/assets/fade.png) top repeat-x",
@@ -17,28 +29,7 @@ const Home = ({ setBodyStyle }) => {
     setSelectedStyle("Yotsuba");
   }, [setBodyStyle, setSelectedStyle]);
 
-  const handleClick = (title, address) => {
-    setSelectedTitle(title);
-    setSelectedAddress(address);
-  }
 
-  useEffect(() => {
-    let didCancel = false;
-    fetch(
-      "https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json",
-      { cache: "no-cache" }
-    )
-      .then((res) => res.json())
-      .then(res => {
-        if (!didCancel) {
-          setDefaultSubplebbits(res);
-        }
-      });
-    return () => {
-      didCancel = true;
-    };
-  }, []);
-  
   return (
     <Container>
       <Header>
