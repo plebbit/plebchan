@@ -4,7 +4,7 @@ import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { TopBar } from './styles/Thread.styled';
 import { Threads } from './styles/Catalog.styled';
-import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import ImageBanner from '../ImageBanner';
 import CaptchaModal from '../CaptchaModal';
 import CatalogLoader from '../CatalogLoader';
@@ -32,13 +32,13 @@ const Catalog = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
-  const { publishComment } = usePublishComment();
+  const { publishComment } = useAccountsActions();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`thisIsATest`], sortType: 'new'});
+  const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
   const { subplebbitAddress } = useParams();
   const handleClickForm = useClickForm();
 

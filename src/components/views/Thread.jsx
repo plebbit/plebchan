@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
-import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import { Tooltip } from 'react-tooltip';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
@@ -35,20 +35,16 @@ const Thread = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [commentContent, setCommentContent] = useState('');
-  const { publishComment } = usePublishComment();
+  const { publishComment } = useAccountsActions();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const comment = useComment({selectedThread});
+  const comment = useComment(selectedThread);
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
-
-  useEffect(() => {
-    console.log(comment);
-  }, [comment]);
 
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL

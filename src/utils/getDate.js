@@ -1,6 +1,6 @@
 const getDate = (commentTimestamp) => {
   const locale = Intl.DateTimeFormat().resolvedOptions().locale;
-  const string = /*new Intl.DateTimeFormat(locale, {
+  const string = new Intl.DateTimeFormat(locale, {
     hour12: false,
     year: '2-digit',
     month: '2-digit',
@@ -9,7 +9,7 @@ const getDate = (commentTimestamp) => {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit'
-  }).format(new Date(commentTimestamp * 1000))*/ "";
+  }).format(new Date(commentTimestamp * 1000));
   if (locale.startsWith('ar')) {
     return string
   }

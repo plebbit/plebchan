@@ -2417,6 +2417,40 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#bea28433713a50fca9a4d2a44f75fc6cda69c0bf":
+  version "0.0.3"
+  resolved "https://github.com/plebbit/plebbit-js.git#bea28433713a50fca9a4d2a44f75fc6cda69c0bf"
+  dependencies:
+    "@keyv/sqlite" "3.6.2"
+    "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
+    "@types/node-fetch" "2.6.2"
+    "@types/proper-lockfile" "4.1.2"
+    "@types/uuid" "8.3.4"
+    assert "2.0.0"
+    async-wait-until "2.0.12"
+    buffer "6.0.3"
+    captcha-canvas "3.2.1"
+    err-code "3.0.1"
+    ethers "5.7.2"
+    file-type "16.5.4"
+    form-data "4.0.0"
+    ipfs-http-client "56.0.3"
+    ipfs-only-hash "4.0.0"
+    is-ipfs "6.0.2"
+    jose "4.11.0"
+    js-sha256 "0.9.0"
+    keyv "4.5.2"
+    knex "2.3.0"
+    libp2p-crypto "0.21.2"
+    lodash-es "4.17.21"
+    peer-id "0.16.0"
+    proper-lockfile "github:Rinse12/node-proper-lockfile"
+    safe-stable-stringify "2.4.1"
+    skia-canvas "1.0.0"
+    sqlite3 "5.1.2"
+    tinycache "1.1.2"
+    uuid "9.0.0"
+
 "@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#f1279f55558db3cdf0459be786217b9bfe845194":
   version "0.0.3"
   resolved "https://github.com/plebbit/plebbit-js.git#f1279f55558db3cdf0459be786217b9bfe845194"
@@ -2465,9 +2499,9 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#1ee06ac4dae8f2fc330205031d86fc959d431fe0":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks#1ee06ac4dae8f2fc330205031d86fc959d431fe0"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#1ee06ac4dae8f2fc330205031d86fc959d431fe0"
   dependencies:
     "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#f1279f55558db3cdf0459be786217b9bfe845194"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
@@ -2480,19 +2514,16 @@
     uuid "8.3.2"
     zustand "4.0.0"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#1ee06ac4dae8f2fc330205031d86fc959d431fe0":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#b4428eb09249497c8b9584e9b56941876de76ab7":
   version "0.0.1"
-  uid "1ee06ac4dae8f2fc330205031d86fc959d431fe0"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#1ee06ac4dae8f2fc330205031d86fc959d431fe0"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#b4428eb09249497c8b9584e9b56941876de76ab7"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#f1279f55558db3cdf0459be786217b9bfe845194"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#bea28433713a50fca9a4d2a44f75fc6cda69c0bf"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
+    "@types/uuid" "8.3.4"
     assert "2.0.0"
     ethers "5.6.9"
     localforage "1.10.0"
-    lodash.isequal "4.5.0"
-    memoizee "0.4.15"
-    quick-lru "5.1.1"
     uuid "8.3.2"
     zustand "4.0.0"
 
@@ -9953,6 +9984,14 @@ prop-types@^15.5.8, prop-types@^15.7.2, prop-types@^15.8.1:
     loose-envify "^1.4.0"
     object-assign "^4.1.1"
     react-is "^16.13.1"
+
+"proper-lockfile@github:Rinse12/node-proper-lockfile":
+  version "4.1.2"
+  resolved "https://codeload.github.com/Rinse12/node-proper-lockfile/tar.gz/072ee9e37d52858cf8410ce55c281599cef1fb92"
+  dependencies:
+    graceful-fs "^4.2.4"
+    retry "^0.12.0"
+    signal-exit "^3.0.2"
 
 "proper-lockfile@github:plebbit/node-proper-lockfile":
   version "4.1.2"

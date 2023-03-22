@@ -7,7 +7,7 @@ import ImageBanner from '../ImageBanner';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
-import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 import handleStyleChange from '../../utils/handleStyleChange';
@@ -34,7 +34,7 @@ const Board = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
-  const { publishComment } = usePublishComment();
+  const { publishComment } = useAccountsActions();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
@@ -42,7 +42,7 @@ const Board = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [endIndex, setEndIndex] = useState(2);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: ['test2'], sortType: 'new'});
+  const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();  
