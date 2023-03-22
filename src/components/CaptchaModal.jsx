@@ -257,6 +257,8 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
     setCaptchaResponse(event.target.value);
   };  
 
+  const nodeRef = React.useRef(null);
+
   return (
     <StyledModal
     isOpen={isOpen}
@@ -266,8 +268,8 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
     shouldCloseOnOverlayClick={false}
     selectedStyle={selectedStyle}
     overlayClassName="hide-modal-overlay">
-      <Draggable handle=".modal-header">
-        <div className="modal-content">
+      <Draggable handle=".modal-header" nodeRef={nodeRef}>
+        <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
             Challenges for
             <button className="icon" onClick={handleCloseModal} title="close" />
