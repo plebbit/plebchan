@@ -373,6 +373,9 @@ const Board = () => {
           <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
           ]
         </div>
+        <div id="stats" style={{float: "right", marginTop: "5px"}}>
+          {feed.length > 0 ? (null) : (<span>Fetching IPFS...</span>)}
+        </div>
         <div id="catalog-button-mobile">
           <span className="btn-wrap">
             <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>

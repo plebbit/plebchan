@@ -378,10 +378,10 @@ const Thread = () => {
               <span className="reply-stat">No replies yet</span>
             )
           ) : (
-            <span className="reply-stat">Loading...</span>
+            <span className="reply-stat">Fetching IPFS...</span>
           )
         ) : (
-          null
+          <span className="reply-stat">Fetching IPFS...</span>
         )}
         <hr />
       </TopBar>

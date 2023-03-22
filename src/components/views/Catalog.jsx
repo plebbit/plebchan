@@ -321,6 +321,9 @@ const Catalog = () => {
             <Link to={`/${selectedAddress}`}>Return</Link>
           </span>
         </div>
+        <div id="stats" style={{float: "right", marginTop: "5px"}}>
+          {feed.length > 0 ? (null) : (<span>Fetching IPFS...</span>)}
+        </div>
         <hr />
       </TopBar>
       <Threads selectedStyle={selectedStyle}>

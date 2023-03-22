@@ -1399,7 +1399,7 @@ export const TopBar = styled.div`
     }
   }
 
-${({ selectedStyle }) => {
+  ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
         return `.btn-wrap {
