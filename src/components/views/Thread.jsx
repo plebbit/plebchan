@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
-import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { Tooltip } from 'react-tooltip';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
@@ -35,16 +35,20 @@ const Thread = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [commentContent, setCommentContent] = useState('');
-  const { publishComment } = useAccountsActions();
+  const { publishComment } = usePublishComment();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const comment = useComment(`${selectedThread}`);
+  const comment = useComment({selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
+
+  useEffect(() => {
+    console.log(comment);
+  }, [comment]);
 
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
@@ -418,37 +422,37 @@ const Thread = () => {
                           </span>) 
                         : null}
                       &nbsp;
-                      {comment.author.displayName
-                        ? comment.author.displayName.length > 20
+                      {comment.author?.displayName
+                        ? comment.author?.displayName.length > 20
                         ? <>
                             <Tooltip key={`mob-tt-nm-${comment.cid}`} id="tt-name-mobile" className="tooltip" />
                             <span key={`n-${comment.cid}`} className="name"
                             data-tooltip-id="tt-name-mobile"
-                            data-tooltip-content={comment.author.displayName}
+                            data-tooltip-content={comment.author?.displayName}
                             data-tooltip-place="top">
-                              {comment.author.displayName.slice(0, 20) + " (...)"}
+                              {comment.author?.displayName.slice(0, 20) + " (...)"}
                             </span>
                           </> 
                           : <span key={`n-${comment.cid}`} className="name">
-                            {comment.author.displayName}</span>
+                            {comment.author?.displayName}</span>
                         : <span key={`n-${comment.cid}`} className="name">
                           Anonymous</span>}
                         &nbsp;
                       &nbsp;
                       <span className="poster-address">
                         (u/
-                          {comment.author.address.length > 20 ?
+                          {comment.author?.address.length > 20 ?
                         <>
                           <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
                           <span key={`pa-${comment.cid}`} className="poster-address"
                           data-tooltip-id="tt-address-mobile"
-                          data-tooltip-content={comment.author.address}
+                          data-tooltip-content={comment.author?.address}
                           data-tooltip-place="top">
-                            {comment.author.address.slice(0, 20) + "..."}
+                            {comment.author?.address.slice(0, 20) + "..."}
                           </span>
                         </>
                         : <span key={`pa-${comment.cid}`} className="poster-address">
-                          {comment.author.address}
+                          {comment.author?.address}
                         </span>})
                       </span>
                       &nbsp;
@@ -456,7 +460,7 @@ const Thread = () => {
                       &nbsp;
                       <span className="post-number">
                         <Link to="" onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={handleReplyOpen} title="Reply to this post">{comment.cid.slice(0, 8)}</button>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={handleReplyOpen} title="Reply to this post">{comment.cid?.slice(0, 8)}</button>
                       </span>&nbsp;&nbsp;
                       <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                       <div id="backlink-id" className="backlink">
@@ -568,36 +572,36 @@ const Thread = () => {
                     <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
                       <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</button>
                       <span className="name-block-mobile">
-                        {comment.author.displayName
-                        ? comment.author.displayName.length > 15
+                        {comment.author?.displayName
+                        ? comment.author?.displayName.length > 15
                         ? <>
                             <Tooltip key={`mob-tt-nm-${comment.cid}`} id="tt-name-mobile" className="tooltip" />
                             <span key={`mob-n-${comment.cid}`} className="name-mobile"
                             data-tooltip-id="tt-name-mobile"
-                            data-tooltip-content={comment.author.displayName}
+                            data-tooltip-content={comment.author?.displayName}
                             data-tooltip-place="top">
-                              {comment.author.displayName.slice(0, 15) + " (...)"}
+                              {comment.author?.displayName.slice(0, 15) + " (...)"}
                             </span>
                           </> 
                           : <span key={`mob-n-${comment.cid}`} className="name-mobile">
-                            {comment.author.displayName}</span>
+                            {comment.author?.displayName}</span>
                         : <span key={`mob-n-${comment.cid}`} className="name-mobile">
                           Anonymous</span>}
                         &nbsp;
                         <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile">
                           (u/
-                          {comment.author.address.length > 15 ?
+                          {comment.author?.address.length > 15 ?
                           <>
                             <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
                             <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile"
                             data-tooltip-id="tt-address-mobile"
-                            data-tooltip-content={comment.author.address}
+                            data-tooltip-content={comment.author?.address}
                             data-tooltip-place="top">
-                              {comment.author.address.slice(0, 15) + "..."}
+                              {comment.author?.address.slice(0, 15) + "..."}
                             </span>
                           </>
                           : <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile">
-                            {comment.author.address}
+                            {comment.author?.address}
                           </span>}
                           )&nbsp;
                         </span>
@@ -621,7 +625,7 @@ const Thread = () => {
                         {getDate(comment.timestamp)}
                         &nbsp;
                         <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={handleReplyOpen} title="Link to this post">c/</button>
-                        <Link to="" key={`mob-no2-${comment.cid}`} onClick={handleVoidClick} title="Reply to this post">{comment.cid.slice(0, 8)}</Link>
+                        <Link to="" key={`mob-no2-${comment.cid}`} onClick={handleVoidClick} title="Reply to this post">{comment.cid?.slice(0, 8)}</Link>
                       </span>
                     </div>
                     <div key={`mob-f-${comment.cid}`} className="file-mobile">

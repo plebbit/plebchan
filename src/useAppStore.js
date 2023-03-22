@@ -23,7 +23,6 @@ const useAppStore = create((set) => ({
   selectedAddress: '',
   setSelectedAddress: (address) => set({ selectedAddress: address }),
   
-  
   selectedStyle: localStorage.getItem('selectedStyle') || 'Yotsuba',
   setSelectedStyle: (style) => {
     localStorage.setItem('selectedStyle', style);
