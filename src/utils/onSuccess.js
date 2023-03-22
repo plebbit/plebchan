@@ -6,7 +6,7 @@ const onSuccess = (success) => {
     autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: false,
-    pauseOnHover: true,
+    pauseOnHover: false,
     draggable: false,
     progress: undefined,
     theme: "dark",
