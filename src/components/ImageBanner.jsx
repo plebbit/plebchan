@@ -32,8 +32,7 @@ const ImageBanner = () => {
   );
 };
 
-// Helper function to import all images from a directory
-function importAll(r) {
+export function importAll(r) {
   return r.keys().map(r);
 }
 

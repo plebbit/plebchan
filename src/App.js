@@ -12,6 +12,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import 'react-toastify/dist/ReactToastify.css';
 import preloadImages from './utils/preloadImages';
 import { ToastContainer } from 'react-toastify';
+import { importAll } from './components/ImageBanner';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -60,18 +61,20 @@ export default function App() {
   const location = useLocation();
   const isHomeRoute = location.pathname === "/";
   
-
-  // preload images
-  const imageUrls = Array.from({ length: 14 }, (_, index) => `/assets/banners/banner-${index + 1}.jpg`);
-
+  // preload banners
   useEffect(() => {
-    preloadImages([...imageUrls]);
+    const loadImages = async () => {
+      const images = await importAll(require.context('../public/assets/banners', false, /\.(png|jpe?g|svg)$/));
+      const imageUrls = images.map((image) => image.default);
+      preloadImages(imageUrls);
+    };
+
+    loadImages();
   }, []);
 
 
   // automatic dark mode without interefering with user's selected style
   useEffect(() => {
-
     if (isHomeRoute) return;
   
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
