@@ -254,6 +254,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     closeModal();
   };
 
+  const nodeRef = React.useRef(null);
+
   return (
     <StyledModal
     isOpen={isOpen}
@@ -263,8 +265,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     shouldCloseOnOverlayClick={false}
     selectedStyle={selectedStyle}
     overlayClassName="hide-modal-overlay">
-      <Draggable handle=".modal-header">
-        <div className="modal-content">
+      <Draggable handle=".modal-header" nodeRef={nodeRef}>
+        <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
             Reply to Thread
             <button className="icon" onClick={handleCloseModal} title="close" />
