@@ -10,10 +10,11 @@ import SettingsModal from '../SettingsModal';
 import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
+import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
+import getDate from '../../utils/getDate';
 import handleStyleChange from '../../utils/handleStyleChange';
 import onError from '../../utils/onError';
 import onSuccess from '../../utils/onSuccess';
-import getDate from '../../utils/getDate';
 import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
 
@@ -47,6 +48,7 @@ const Board = () => {
   const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();  
   const handleClickForm = useClickForm();
+
 
 
   // temporary title from JSON, gets subplebbitAddress from URL
@@ -393,6 +395,8 @@ const Board = () => {
             {renderedFeed.map(thread => {
             const { replies: { pages: { topAll: { comments } } } } = thread;
             const { renderedComments, omittedCount } = renderComments(comments);
+            const commentMediaInfo = getCommentMediaInfo(thread);
+            const fallbackImgUrl = "/assets/filedeleted-res.gif";
             return (
             <Fragment key={`fragment1-${thread.cid}`}>
               <div key={`t-${thread.cid}`} className="thread">
@@ -400,15 +404,38 @@ const Board = () => {
                   <div key={`po-${thread.cid}`} className="post op">
                     <hr key={`hr-${thread.cid}`} />
                     <div key={`pi-${thread.cid}`} className="post-info">
-                      <div key={`f-${thread.cid}`} className="file">
+                    {commentMediaInfo?.url ? (
+                      <div key={`f-${thread.cid}`} className="file" style={{marginBottom: "5px"}}>
                         <div key={`ft-${thread.cid}`} className="file-text">
-                          File:&nbsp;
-                          <a key={`fa-${thread.cid}`} href={`${thread.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
+                          Link:&nbsp;
+                          <a key={`fa-${thread.cid}`} href={commentMediaInfo.url} target="_blank">{
+                          commentMediaInfo?.url.length > 30 ?
+                          commentMediaInfo?.url.slice(0, 30) + "(...)" :
+                          commentMediaInfo?.url
+                          }</a>&nbsp;({commentMediaInfo?.type})
                         </div>
-                        <Link to="" key={`fta-${thread.cid}`} onClick={handleVoidClick} className="file-thumb">
-                          <img key={`fti-${thread.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
-                        </Link>
+                        {commentMediaInfo?.type === "webpage" ? (
+                          <span key={`fta-${thread.cid}`} className="file-thumb">
+                            <img key={`fti-${thread.cid}`} src={thread.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
+                        {commentMediaInfo?.type === "image" ? (
+                          <span key={`fta-${thread.cid}`} className="file-thumb">
+                            <img key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
+                        {commentMediaInfo?.type === "video" ? (
+                          <span key={`fta-${thread.cid}`} className="file-thumb">
+                            <video key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
+                        {commentMediaInfo?.type === "audio" ? (
+                          <span key={`fta-${thread.cid}`} className="file-thumb">
+                            <audio key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
                       </div>
+                    ) : null}
                       <span key={`nb-${thread.cid}`} className="name-block">
                         {thread.title ? (
                           thread.title.length > 75 ?
