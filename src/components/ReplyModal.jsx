@@ -276,7 +276,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
               <input id="name" type="text" placeholder="Name"></input>
             </div>
             <div>
-              <input id="name" type="text" placeholder="Embed link"></input>
+              <input id="name" type="text" placeholder="Embed link" disabled></input>
             </div>
             <div>
               <textarea rows="4" placeholder="Comment" wrap="soft"></textarea>
