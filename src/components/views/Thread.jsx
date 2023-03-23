@@ -651,12 +651,37 @@ const Thread = () => {
                         <Link to="" key={`mob-no2-${comment.cid}`} onClick={handleVoidClick} title="Reply to this post">{comment.cid?.slice(0, 8)}</Link>
                       </span>
                     </div>
-                    <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                      <Link to="" key={`mob-ft${comment.cid}`} className="file-thumb-mobile" onClick={handleVoidClick}>
-                        <img key={`mob-img-${comment.cid}`} src="/assets/plebchan-psycho.png" alt="" />
-                        <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">58 KB JPG</div>
-                      </Link>
-                    </div>
+                    {commentMediaInfo?.url ? (
+                      commentMediaInfo.type === "webpage" ? (
+                        <div key={`mob-f-${comment.cid}`} className="file-mobile">
+                          <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                            <img key={`mob-img-${comment.cid}`} src={comment.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                            <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
+                          </span>
+                        </div>
+                      ) : commentMediaInfo.type === "image" ? (
+                        <div key={`mob-f-${comment.cid}`} className="file-mobile">
+                          <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                            <img key={`mob-img-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
+                          </span>
+                        </div>
+                      ) : commentMediaInfo.type === "video" ? (
+                        <div key={`mob-f-${comment.cid}`} className="file-mobile">
+                          <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                            <video key={`mob-img-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
+                          </span>
+                        </div>
+                      ) : commentMediaInfo.type === "audio" ? (
+                        <div key={`mob-f-${comment.cid}`} className="file-mobile">
+                          <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                            <audio key={`mob-img-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
+                          </span>
+                        </div>
+                      ) : null
+                    ) : null}
                     <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                       {comment.content ? (
                         <>
