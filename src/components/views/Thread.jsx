@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
+import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
-import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
-import { Tooltip } from 'react-tooltip';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
+import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
+import getDate from '../../utils/getDate';
 import handleStyleChange from '../../utils/handleStyleChange';
 import onError from '../../utils/onError';
 import onSuccess from '../../utils/onSuccess';
-import getDate from '../../utils/getDate';
 import renderThreadComments from '../../utils/renderThreadComments';
 import useClickForm from '../../hooks/useClickForm';
 
@@ -45,6 +46,9 @@ const Thread = () => {
   const comment = useComment(selectedThread);
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
+
+  const commentMediaInfo = getCommentMediaInfo(comment);
+  const fallbackImgUrl = "/assets/filedeleted-res.gif";
 
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
@@ -392,15 +396,38 @@ const Thread = () => {
               <div className="op-container">
                 <div className="post op">
                   <div className="post-info">
-                    <div key={`f-${comment.cid}`} className="file">
+                  {commentMediaInfo?.url ? (
+                      <div key={`f-${comment.cid}`} className="file" style={{marginBottom: "5px"}}>
                         <div key={`ft-${comment.cid}`} className="file-text">
-                          File:&nbsp;
-                          <a key={`fa-${comment.cid}`} href={`${comment.link}`} target="_blank">filename.something</a>&nbsp;(metadata)
+                          Link:&nbsp;
+                          <a key={`fa-${comment.cid}`} href={commentMediaInfo.url} target="_blank">{
+                          commentMediaInfo?.url.length > 30 ?
+                          commentMediaInfo?.url.slice(0, 30) + "(...)" :
+                          commentMediaInfo?.url
+                          }</a>&nbsp;({commentMediaInfo?.type})
                         </div>
-                        <Link to="" key={`fta-${comment.cid}`} onClick={handleVoidClick} className="file-thumb">
-                          <img key={`fti-${comment.cid}`} src="/assets/plebchan-psycho.png" alt="filename.something" />
-                        </Link>
+                        {commentMediaInfo?.type === "webpage" ? (
+                          <span key={`fta-${comment.cid}`} className="file-thumb">
+                            <img key={`fti-${comment.cid}`} src={comment.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
+                        {commentMediaInfo?.type === "image" ? (
+                          <span key={`fta-${comment.cid}`} className="file-thumb">
+                            <img key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
+                        {commentMediaInfo?.type === "video" ? (
+                          <span key={`fta-${comment.cid}`} className="file-thumb">
+                            <video key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
+                        {commentMediaInfo?.type === "audio" ? (
+                          <span key={`fta-${comment.cid}`} className="file-thumb">
+                            <audio key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                          </span>
+                        ) : null}
                       </div>
+                    ) : null}
                     <span className="name-block">
                         {comment.title ? (
                           comment.title.length > 75 ?

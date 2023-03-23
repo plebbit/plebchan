@@ -1,5 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroller';
+import { Tooltip } from 'react-tooltip';
+import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import CaptchaModal from '../CaptchaModal';
@@ -7,9 +10,6 @@ import ImageBanner from '../ImageBanner';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
-import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
-import InfiniteScroll from 'react-infinite-scroller';
-import { Tooltip } from 'react-tooltip';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleStyleChange from '../../utils/handleStyleChange';
@@ -48,7 +48,6 @@ const Board = () => {
   const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();  
   const handleClickForm = useClickForm();
-
 
 
   // temporary title from JSON, gets subplebbitAddress from URL

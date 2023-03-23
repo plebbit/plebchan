@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroller';
+import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
-import { TopBar } from './styles/Thread.styled';
 import { Threads } from './styles/Catalog.styled';
-import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
-import ImageBanner from '../ImageBanner';
+import { TopBar } from './styles/Thread.styled';
 import CaptchaModal from '../CaptchaModal';
 import CatalogLoader from '../CatalogLoader';
+import ImageBanner from '../ImageBanner';
 import SettingsModal from '../SettingsModal';
+import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import onError from '../../utils/onError';
 import onSuccess from '../../utils/onSuccess';
-import InfiniteScroll from 'react-infinite-scroller';
 import useClickForm from '../../hooks/useClickForm';
 
 
@@ -334,14 +335,31 @@ const Catalog = () => {
           loader={<CatalogLoader key="loader" />}
         >
           {feed.map(thread => {
+            const commentMediaInfo = getCommentMediaInfo(thread);
+            const fallbackImgUrl = "/assets/plebchan-thumbdown.png";
             return (
               <div key={`thread-${thread.cid}`} className="thread">
                 <Link key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
-                  <img key={`img-${thread.cid}`} alt="" src="/assets/plebchan-psycho.png" />
+                  {commentMediaInfo?.url ? (
+                    <Fragment key="f-catalog">
+                      {commentMediaInfo?.type === "webpage" ? (
+                        <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                        onError={(e) => {
+                          e.target.src = fallbackImgUrl
+                          e.target.onerror = null;}}  />
+                      ) : null}
+                      {commentMediaInfo?.type === "image" ? (
+                        <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                        onError={(e) => {
+                          e.target.src = fallbackImgUrl
+                          e.target.onerror = null;}}  />
+                      ) : null}
+                    </Fragment>
+                  ) : (<img key={`img-${thread.cid}`} alt="thread" src={fallbackImgUrl} />)}
                 </Link>
-                <div key={`ti-${thread.cid}`} className="thread-icons" >
+                {/* <div key={`ti-${thread.cid}`} className="thread-icons" >
                   <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>
-                </div>
+                </div> */}
                 <div key={`meta-${thread.cid}`} className="meta" title="(R)eplies / (I)mage Replies" >
                   R:
                   <b key={`b-${thread.cid}`}>{thread.replyCount}</b>
