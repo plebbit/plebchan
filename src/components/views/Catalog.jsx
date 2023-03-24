@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
-import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import VideoThumbnail from 'react-video-thumbnail';
+import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { Threads } from './styles/Catalog.styled';
@@ -33,13 +34,13 @@ const Catalog = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
-  const { publishComment } = useAccountsActions();
+  const { publishComment } = usePublishComment();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const { subplebbitAddress } = useParams();
   const handleClickForm = useClickForm();
 
@@ -336,7 +337,7 @@ const Catalog = () => {
         >
           {feed.map(thread => {
             const commentMediaInfo = getCommentMediaInfo(thread);
-            const fallbackImgUrl = "/assets/plebchan-thumbdown.png";
+            const fallbackImgUrl = "/assets/filedeleted-res.gif";
             return (
               <div key={`thread-${thread.cid}`} className="thread">
                 <Link key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
@@ -354,8 +355,25 @@ const Catalog = () => {
                           e.target.src = fallbackImgUrl
                           e.target.onerror = null;}}  />
                       ) : null}
+                      {commentMediaInfo?.type === "video" ? (
+                        <VideoThumbnail
+                          videoUrl={commentMediaInfo.url}
+                          thumbnailHandler={(thumbnail) => {
+                            const img = document.querySelector(`img[key="img-${thread.cid}"]`);
+                            if (img) {
+                              img.src = thumbnail;
+                            }
+                          }}
+                        />
+                      ) : null}
+                      {commentMediaInfo?.type === "audio" ? (
+                        <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                        onError={(e) => {
+                          e.target.src = fallbackImgUrl
+                          e.target.onerror = null;}}  />
+                      ) : null}
                     </Fragment>
-                  ) : (<img key={`img-${thread.cid}`} alt="thread" src={fallbackImgUrl} />)}
+                  ) : null}
                 </Link>
                 {/* <div key={`ti-${thread.cid}`} className="thread-icons" >
                   <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>

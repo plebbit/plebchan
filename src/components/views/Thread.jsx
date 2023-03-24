@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useComment, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
@@ -36,14 +36,14 @@ const Thread = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [commentContent, setCommentContent] = useState('');
-  const { publishComment } = useAccountsActions();
+  const { publishComment } = usePublishComment();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const comment = useComment(selectedThread);
+  const comment = useComment({ selectedThread });
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
 
@@ -479,7 +479,7 @@ const Thread = () => {
                         </span>})
                       </span>
                       &nbsp;
-                      <span className="date-time" data-utc="data">{getDate(comment.timestamp)}</span>
+                      <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                       &nbsp;
                       <span className="post-number">
                         <Link to="" onClick={handleVoidClick} title="Link to this post">c/</Link>
@@ -553,7 +553,7 @@ const Thread = () => {
                             </span>
                           </span>
                           &nbsp;
-                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
+                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
                           &nbsp;
                           <span key={`pn-${reply.cid}`} className="post-number">
                             <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
@@ -645,7 +645,7 @@ const Thread = () => {
                             </span>) : null}
                       </span>
                       <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
-                        {getDate(comment.timestamp)}
+                        {getDate(comment?.timestamp)}
                         &nbsp;
                         <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={handleReplyOpen} title="Link to this post">c/</button>
                         <Link to="" key={`mob-no2-${comment.cid}`} onClick={handleVoidClick} title="Reply to this post">{comment.cid?.slice(0, 8)}</Link>
@@ -738,7 +738,7 @@ const Thread = () => {
                           <br key={`mob-br-${reply.cid}`} />
                         </span>
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
-                          {getDate(reply.timestamp)}&nbsp;
+                          {getDate(reply?.timestamp)}&nbsp;
                           <Link to="" key={`mob-pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
                           <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
                         </span>

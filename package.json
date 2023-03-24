@@ -7,7 +7,7 @@
     "@babel/plugin-syntax-flow": "^7.18.6",
     "@babel/plugin-transform-react-jsx": "^7.21.0",
     "@plebbit/plebbit-logger": "https://github.com/plebbit/plebbit-logger.git",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#b4428eb09249497c8b9584e9b56941876de76ab7",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#e3ad7681a7a2e594ed8f78ef1e5ccf39834f4f88",
     "@testing-library/dom": "^9.0.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^14.0.0",
@@ -30,6 +30,7 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
     "react-tooltip": "^5.10.0",
+    "react-video-thumbnail": "^0.1.3",
     "styled-components": "^5.3.9",
     "web-vitals": "^3.3.0",
     "zustand": "^4.3.6"

@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
-import { useFeed, useAccountsActions } from '@plebbit/plebbit-react-hooks';
+import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import CaptchaModal from '../CaptchaModal';
@@ -17,6 +17,7 @@ import onError from '../../utils/onError';
 import onSuccess from '../../utils/onSuccess';
 import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
+import VideoThumbnail from 'react-video-thumbnail';
 
 
 const Board = () => {
@@ -35,7 +36,7 @@ const Board = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
-  const { publishComment } = useAccountsActions();
+  const { publishComment } = usePublishComment();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
@@ -43,8 +44,8 @@ const Board = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [endIndex, setEndIndex] = useState(2);
-  const { feed, hasMore, loadMore } = useFeed([`${selectedAddress}`], 'new');
-  const [selectedFeed, setSelectedFeed] = useState(feed);
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
+  const [selectedFeed, setSelectedFeed] = useState(feed.slice(0, endIndex));
   const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();  
   const handleClickForm = useClickForm();
@@ -83,8 +84,7 @@ const Board = () => {
     setEndIndex(2);
   }, [selectedAddress]);
 
-
-
+  
   const tryLoadMore = async () => {
     try {
       loadMore();
@@ -425,12 +425,20 @@ const Board = () => {
                         ) : null}
                         {commentMediaInfo?.type === "video" ? (
                           <span key={`fta-${thread.cid}`} className="file-thumb">
-                            <video key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <VideoThumbnail
+                              videoUrl={commentMediaInfo.url}
+                              thumbnailHandler={(thumbnail) => {
+                                const img = document.querySelector(`img[key="img-${thread.cid}"]`);
+                                if (img) {
+                                  img.src = thumbnail;
+                                }
+                              }}
+                            />
                           </span>
                         ) : null}
                         {commentMediaInfo?.type === "audio" ? (
                           <span key={`fta-${thread.cid}`} className="file-thumb">
-                            <audio key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            {/* <audio key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} /> */}
                           </span>
                         ) : null}
                       </div>
@@ -711,14 +719,23 @@ const Board = () => {
                       ) : commentMediaInfo.type === "video" ? (
                         <div key={`mob-f-${thread.cid}`} className="file-mobile">
                           <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                            <video key={`mob-img-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <VideoThumbnail
+                              videoUrl={commentMediaInfo.url}
+                              thumbnailHandler={(thumbnail) => {
+                                const img = document.querySelector(`img[key="img-${thread.cid}"]`);
+                                if (img) {
+                                  img.src = thumbnail;
+                                }
+                              }}
+                            />
+                            {/* <video key={`mob-img-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} /> */}
                             <div key={`mob-fi-${thread.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
                           </span>
                         </div>
                       ) : commentMediaInfo.type === "audio" ? (
                         <div key={`mob-f-${thread.cid}`} className="file-mobile">
                           <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                            <audio key={`mob-img-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            {/* <audio key={`mob-img-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} /> */}
                             <div key={`mob-fi-${thread.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
                           </span>
                         </div>

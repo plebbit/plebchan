@@ -1,4 +1,7 @@
 const getDate = (commentTimestamp) => {
+  if (commentTimestamp === undefined || isNaN(commentTimestamp)) {
+    return "";
+  }
   const locale = Intl.DateTimeFormat().resolvedOptions().locale;
   const string = new Intl.DateTimeFormat(locale, {
     hour12: false,

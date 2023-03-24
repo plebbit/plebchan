@@ -24,8 +24,6 @@ export const Threads = styled.div`
     display: inline;
     margin: auto;
     box-shadow: 0 0 5px rgba(0, 0, 0, .25);
-    min-height: 50px;
-    min-width: 50px;
     border: 0;
   }
 
