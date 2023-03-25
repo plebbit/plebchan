@@ -44,10 +44,8 @@ const Board = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [endIndex, setEndIndex] = useState(5);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed);
-  const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();  
   const handleClickForm = useClickForm();
 
@@ -80,17 +78,11 @@ const Board = () => {
   }, [prevScrollPos, visible]);
   
 
-  // reset endIndex whenever selectedAddress changes
-  useEffect(() => {
-    setEndIndex(5);
-  }, [selectedAddress]);
 
 
   const tryLoadMore = async () => {
     try {
       await loadMore();
-      setSelectedFeed([...selectedFeed, ...feed]);
-      setEndIndex(endIndex + 2);
     } catch (e) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
@@ -153,14 +145,6 @@ const Board = () => {
     });
   };
 
-
-
-  const handleScroll = (event) => {
-    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
-    if (scrollTop + clientHeight >= scrollHeight) {
-      setEndIndex(endIndex + 5);
-    }
-  };
   
 
   const handleVoidClick = () => {};
@@ -384,15 +368,16 @@ const Board = () => {
           </span>
         </div>
       </TopBar>
+      <Tooltip id="tooltip" className="tooltip" />
       <BoardForm selectedStyle={selectedStyle}>
-        <div onScroll={handleScroll} className="board">
+        <div className="board">
           <InfiniteScroll
             pageStart={0}
             loadMore={tryLoadMore}
             hasMore={hasMore}
             loader={<PostLoader key="loader" />}
           >
-            {renderedFeed.map(thread => {
+            {feed.map(thread => {
             const { replies: { pages: { topAll: { comments } } } } = thread;
             const { renderedComments, omittedCount } = renderComments(comments);
             const commentMediaInfo = getCommentMediaInfo(thread);
@@ -448,9 +433,8 @@ const Board = () => {
                         {thread.title ? (
                           thread.title.length > 75 ?
                           <Fragment key={`fragment2-${thread.cid}`}>
-                            <Tooltip key={`mob-tt-tm-${thread.cid}`} id="tt-title-mobile" className="tooltip" />
                             <span key={`q-${thread.cid}`} className="title"
-                            data-tooltip-id="tt-title-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={thread.title}
                             data-tooltip-place="top">
                               {thread.title.slice(0, 75) + " (...)"}
@@ -463,9 +447,8 @@ const Board = () => {
                         {thread.author.displayName
                         ? thread.author.displayName.length > 20
                         ? <Fragment key={`fragment3-${thread.cid}`}>
-                            <Tooltip key={`mob-tt-nm-${thread.cid}`} id="tt-name-mobile" className="tooltip" />
                             <span key={`n-${thread.cid}`} className="name"
-                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={thread.author.displayName}
                             data-tooltip-place="top">
                               {thread.author.displayName.slice(0, 20) + " (...)"}
@@ -479,9 +462,8 @@ const Board = () => {
                         (u/
                         {thread.author.address.length > 15 ?
                         <Fragment key={`fragment4-${thread.cid}`}>
-                          <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
                           <span key={`pa-${thread.cid}`} className="poster-address"
-                          data-tooltip-id="tt-address-mobile"
+                          data-tooltip-id="tooltip"
                           data-tooltip-content={thread.author.address}
                           data-tooltip-place="top">
                             {thread.author.address.slice(0, 15) + "..."}
@@ -558,9 +540,8 @@ const Board = () => {
                             {reply.author.displayName
                               ? reply.author.displayName.length > 12
                               ? <Fragment key={`fragment6-${reply.cid}`}>
-                                  <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name" className="tooltip" />
                                   <span key={`mob-n-${reply.cid}`} className="name"
-                                  data-tooltip-id="tt-name"
+                                  data-tooltip-id="tooltip"
                                   data-tooltip-content={reply.author.displayName}
                                   data-tooltip-place="top">
                                     {reply.author.displayName.slice(0, 12) + " (...)"}
@@ -575,9 +556,8 @@ const Board = () => {
                               (u/
                                 {reply.author.address.length > 12 ?
                                 <Fragment key={`fragment7-${reply.cid}`}>
-                                  <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
                                   <span key={`mob-ha-${reply.cid}`}
-                                  data-tooltip-id="tt-address"
+                                  data-tooltip-id="tooltip"
                                   data-tooltip-content={reply.author.address}
                                   data-tooltip-place="top">
                                     {reply.author.address.slice(0, 12) + "..."}
@@ -649,9 +629,8 @@ const Board = () => {
                         {thread.author.displayName
                         ? thread.author.displayName.length > 15
                         ? <Fragment key={`fragment9-${thread.cid}`}>
-                            <Tooltip key={`mob-tt-nm-${thread.cid}`} id="tt-name-mobile" className="tooltip" />
                             <span key={`mob-n-${thread.cid}`} className="name-mobile"
-                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={thread.author.displayName}
                             data-tooltip-place="top">
                               {thread.author.displayName.slice(0, 15) + " (...)"}
@@ -666,9 +645,8 @@ const Board = () => {
                           (u/
                           {thread.author.address.length > 15 ?
                           <Fragment key={`fragment10-${thread.cid}`}>
-                            <Tooltip key={`mob-tt-am-${thread.cid}`} id="tt-address-mobile" className="tooltip" />
                             <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile"
-                            data-tooltip-id="tt-address-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={thread.author.address}
                             data-tooltip-place="top">
                               {thread.author.address.slice(0, 15) + "..."}
@@ -683,9 +661,8 @@ const Board = () => {
                         {thread.title ? (
                           thread.title.length > 30 ?
                           <Fragment key={`fragment11-${thread.cid}`}>
-                            <Tooltip key={`mob-tt-tm-${thread.cid}`} id="tt-title-mobile" className="tooltip" />
                             <span key={`mob-t-${thread.cid}`} className="subject-mobile"
-                            data-tooltip-id="tt-title-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={thread.title}
                             data-tooltip-place="top">
                               {thread.title.slice(0, 30) + " (...)"}
@@ -774,9 +751,8 @@ const Board = () => {
                           {reply.author.displayName
                           ? reply.author.displayName.length > 12
                           ? <Fragment key={`fragment13-${reply.cid}`}>
-                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name-mobile" className="tooltip" />
                               <span key={`mob-n-${reply.cid}`} className="name-mobile"
-                              data-tooltip-id="tt-name-mobile"
+                              data-tooltip-id="tooltip"
                               data-tooltip-content={reply.author.displayName}
                               data-tooltip-place="top">
                                 {reply.author.displayName.slice(0, 12) + " (...)"}
@@ -791,9 +767,8 @@ const Board = () => {
                             (u/
                             {reply.author.address.length > 10 ?
                             <Fragment key={`fragment14-${reply.cid}`}>
-                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
                               <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
-                              data-tooltip-id="tt-address-mobile"
+                              data-tooltip-id="tooltip"
                               data-tooltip-content={reply.author.address}
                               data-tooltip-place="top">
                                 {reply.author.address.slice(0, 10) + "..."}

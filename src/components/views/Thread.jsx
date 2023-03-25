@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense} from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
@@ -393,6 +393,7 @@ const Thread = () => {
         )}
         <hr />
       </TopBar>
+      <Tooltip id="tooltip" className="tooltip" />
       <BoardForm selectedStyle={selectedStyle}>
         {comment !== undefined ? (
           <>
@@ -436,9 +437,8 @@ const Thread = () => {
                         {comment.title ? (
                           comment.title.length > 75 ?
                           <>
-                            <Tooltip key={`mob-tt-tm-${comment.cid}`} id="tt-title-mobile" className="tooltip" />
                             <span key={`q-${comment.cid}`} className="title"
-                            data-tooltip-id="tt-title-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={comment.title}
                             data-tooltip-place="top">
                               {comment.title.slice(0, 75) + " (...)"}
@@ -452,9 +452,8 @@ const Thread = () => {
                       {comment.author?.displayName
                         ? comment.author?.displayName.length > 20
                         ? <>
-                            <Tooltip key={`mob-tt-nm-${comment.cid}`} id="tt-name-mobile" className="tooltip" />
                             <span key={`n-${comment.cid}`} className="name"
-                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={comment.author?.displayName}
                             data-tooltip-place="top">
                               {comment.author?.displayName.slice(0, 20) + " (...)"}
@@ -470,9 +469,8 @@ const Thread = () => {
                         (u/
                           {comment.author?.address.length > 20 ?
                         <>
-                          <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
                           <span key={`pa-${comment.cid}`} className="poster-address"
-                          data-tooltip-id="tt-address-mobile"
+                          data-tooltip-id="tooltip"
                           data-tooltip-content={comment.author?.address}
                           data-tooltip-place="top">
                             {comment.author?.address.slice(0, 20) + "..."}
@@ -517,7 +515,7 @@ const Thread = () => {
                 const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
                 return renderedComments.map(reply => {
                   return (
-                    <div key={`pc-${reply.cid}`} className="reply-container">
+                    <div key={`pc-${reply.cid}-${Math.random()}`} className="reply-container">
                       <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
                       <div key={`pr-${reply.cid}`} className="post-reply" id="post-reply">
                         <div key={`pi-${reply.cid}`} className="post-info">
@@ -526,9 +524,8 @@ const Thread = () => {
                           {reply.author.displayName
                           ? reply.author.displayName.length > 20
                           ? <>
-                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name" className="tooltip" />
                               <span key={`mob-n-${reply.cid}`} className="name"
-                              data-tooltip-id="tt-name"
+                              data-tooltip-id="tooltip"
                               data-tooltip-content={reply.author.displayName}
                               data-tooltip-place="top">
                                 {reply.author.displayName.slice(0, 20) + " (...)"}
@@ -543,9 +540,8 @@ const Thread = () => {
                               (u/
                               {reply.author.address.length > 20 ?
                               <>
-                                <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
                                 <span key={`mob-ha-${reply.cid}`}
-                                data-tooltip-id="tt-address"
+                                data-tooltip-id="tooltip"
                                 data-tooltip-content={reply.author.address}
                                 data-tooltip-place="top">
                                   {reply.author.address.slice(0, 20) + "..."}
@@ -592,9 +588,9 @@ const Thread = () => {
                 })
               })}
             </div>
-            <div className="thread-mobile">
+            <div className="thread-mobile" key="thread-mobile">
               <hr />
-              <div className="op-container">
+              <div className="op-container" key="op-container">
                   <div key={`mob-po-${comment.cid}`} className="post op">
                     <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
                       <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</button>
@@ -602,9 +598,8 @@ const Thread = () => {
                         {comment.author?.displayName
                         ? comment.author?.displayName.length > 15
                         ? <>
-                            <Tooltip key={`mob-tt-nm-${comment.cid}`} id="tt-name-mobile" className="tooltip" />
                             <span key={`mob-n-${comment.cid}`} className="name-mobile"
-                            data-tooltip-id="tt-name-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={comment.author?.displayName}
                             data-tooltip-place="top">
                               {comment.author?.displayName.slice(0, 15) + " (...)"}
@@ -619,9 +614,8 @@ const Thread = () => {
                           (u/
                           {comment.author?.address.length > 15 ?
                           <>
-                            <Tooltip key={`mob-tt-am-${comment.cid}`} id="tt-address-mobile" className="tooltip" />
                             <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile"
-                            data-tooltip-id="tt-address-mobile"
+                            data-tooltip-id="tooltip"
                             data-tooltip-content={comment.author?.address}
                             data-tooltip-place="top">
                               {comment.author?.address.slice(0, 15) + "..."}
@@ -636,9 +630,8 @@ const Thread = () => {
                         {comment.title ? (
                             comment.title.length > 30 ?
                             <>
-                              <Tooltip key={`mob-tt-tm-${comment.cid}`} id="tt-title-mobile" className="tooltip" />
                               <span key={`mob-t-${comment.cid}`} className="subject-mobile"
-                              data-tooltip-id="tt-title-mobile"
+                              data-tooltip-id="tooltip"
                               data-tooltip-content={comment.title}
                               data-tooltip-place="top">
                                 {comment.title.slice(0, 30) + " (...)"}
@@ -701,7 +694,7 @@ const Thread = () => {
                   const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
                   return renderedComments.map(reply => {
                     return (
-                  <div key={`mob-rc-${reply.cid}`} className="reply-container">
+                  <div key={`mob-rc-${reply.cid}-${Math.random()}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
@@ -709,9 +702,8 @@ const Thread = () => {
                           {reply.author.displayName
                           ? reply.author.displayName.length > 12
                           ? <>
-                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name-mobile" className="tooltip" />
                               <span key={`mob-n-${reply.cid}`} className="name-mobile"
-                              data-tooltip-id="tt-name-mobile"
+                              data-tooltip-id="tooltip"
                               data-tooltip-content={reply.author.displayName}
                               data-tooltip-place="top">
                                 {reply.author.displayName.slice(0, 12) + " (...)"}
@@ -726,9 +718,8 @@ const Thread = () => {
                             (u/
                             {reply.author.address.length > 12 ?
                             <>
-                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address-mobile" className="tooltip" />
                               <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
-                              data-tooltip-id="tt-address-mobile"
+                              data-tooltip-id="tooltip"
                               data-tooltip-content={reply.author.address}
                               data-tooltip-place="top">
                                 {reply.author.address.slice(0, 12) + "..."}
@@ -851,7 +842,7 @@ const Thread = () => {
               </ReplyFormLink>
             </div>
           </>
-         ) : (
+        ) : (
           <PostLoader />
         )}
       </BoardForm>
