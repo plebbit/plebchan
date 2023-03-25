@@ -1,8 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
-import VideoThumbnail from 'react-video-thumbnail';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import VideoThumbnail from 'react-video-thumbnail';
+import { debounce } from 'lodash';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { Threads } from './styles/Catalog.styled';
@@ -55,17 +56,17 @@ const Catalog = () => {
   }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
 
 
+  // mobile navbar scroll effect
   useEffect(() => {
-    const handleScroll = () => {
+    const debouncedHandleScroll = debounce(() => {
       const currentScrollPos = window.pageYOffset;
-
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    }, 50);
+  
+    window.addEventListener('scroll', debouncedHandleScroll);
+  
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [prevScrollPos, visible]);
 
 

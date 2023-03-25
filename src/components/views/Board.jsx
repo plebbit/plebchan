@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import VideoThumbnail from 'react-video-thumbnail';
+import { debounce } from 'lodash';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import CaptchaModal from '../CaptchaModal';
@@ -17,7 +19,6 @@ import onError from '../../utils/onError';
 import onSuccess from '../../utils/onSuccess';
 import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
-import VideoThumbnail from 'react-video-thumbnail';
 
 
 const Board = () => {
@@ -43,9 +44,9 @@ const Board = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [endIndex, setEndIndex] = useState(2);
+  const [endIndex, setEndIndex] = useState(5);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
-  const [selectedFeed, setSelectedFeed] = useState(feed.slice(0, endIndex));
+  const [selectedFeed, setSelectedFeed] = useState(feed);
   const renderedFeed = selectedFeed.slice(0, endIndex);
   const { subplebbitAddress } = useParams();  
   const handleClickForm = useClickForm();
@@ -67,34 +68,34 @@ const Board = () => {
 
   // mobile navbar scroll effect
   useEffect(() => {
-    const handleScroll = () => {
+    const debouncedHandleScroll = debounce(() => {
       const currentScrollPos = window.pageYOffset;
-
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    }, 50);
+  
+    window.addEventListener('scroll', debouncedHandleScroll);
+  
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [prevScrollPos, visible]);
+  
 
   // reset endIndex whenever selectedAddress changes
   useEffect(() => {
-    setEndIndex(2);
+    setEndIndex(5);
   }, [selectedAddress]);
 
-  
+
   const tryLoadMore = async () => {
     try {
-      loadMore();
-      const newFeed = [...selectedFeed, ...feed];
-      setSelectedFeed(newFeed);
+      await loadMore();
+      setSelectedFeed([...selectedFeed, ...feed]);
       setEndIndex(endIndex + 2);
     } catch (e) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
-  };  
+  };
+  
 
 
   const onChallengeVerification = (challengeVerification) => {
@@ -425,7 +426,7 @@ const Board = () => {
                         ) : null}
                         {commentMediaInfo?.type === "video" ? (
                           <span key={`fta-${thread.cid}`} className="file-thumb">
-                            <VideoThumbnail
+                            {/* <VideoThumbnail
                               videoUrl={commentMediaInfo.url}
                               thumbnailHandler={(thumbnail) => {
                                 const img = document.querySelector(`img[key="img-${thread.cid}"]`);
@@ -433,7 +434,7 @@ const Board = () => {
                                   img.src = thumbnail;
                                 }
                               }}
-                            />
+                            /> */}
                           </span>
                         ) : null}
                         {commentMediaInfo?.type === "audio" ? (
@@ -549,93 +550,94 @@ const Board = () => {
                 </span>
                 {renderedComments.map(reply => {
                   return (
-                <div key={`pc-${reply.cid}`} className="reply-container">
-                  <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                  <div key={`pr-${reply.cid}`} className="post-reply">
-                    <div key={`pi-${reply.cid}`} className="post-info">
-                      <span key={`nb-${reply.cid}`} className="nameblock">
-                        {reply.author.displayName
-                          ? reply.author.displayName.length > 12
-                          ? <Fragment key={`fragment6-${reply.cid}`}>
-                              <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name" className="tooltip" />
-                              <span key={`mob-n-${reply.cid}`} className="name"
-                              data-tooltip-id="tt-name"
-                              data-tooltip-content={reply.author.displayName}
-                              data-tooltip-place="top">
-                                {reply.author.displayName.slice(0, 12) + " (...)"}
-                              </span>
+                    <div key={`rc-${reply.cid}-${Math.random()}`} className="reply-container">
+                      <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
+                      <div key={`pr-${reply.cid}`} className="post-reply">
+                        <div key={`pi-${reply.cid}`} className="post-info">
+                          <span key={`nb-${reply.cid}`} className="nameblock">
+                            {reply.author.displayName
+                              ? reply.author.displayName.length > 12
+                              ? <Fragment key={`fragment6-${reply.cid}`}>
+                                  <Tooltip key={`mob-tt-nm-${reply.cid}`} id="tt-name" className="tooltip" />
+                                  <span key={`mob-n-${reply.cid}`} className="name"
+                                  data-tooltip-id="tt-name"
+                                  data-tooltip-content={reply.author.displayName}
+                                  data-tooltip-place="top">
+                                    {reply.author.displayName.slice(0, 12) + " (...)"}
+                                  </span>
+                                </Fragment>
+                                : <span key={`mob-n-${reply.cid}`} className="name">
+                                  {reply.author.displayName}</span>
+                              : <span key={`mob-n-${reply.cid}`} className="name">
+                                Anonymous</span>}
+                            &nbsp;
+                            <span key={`pa-${reply.cid}`} className="poster-address">
+                              (u/
+                                {reply.author.address.length > 12 ?
+                                <Fragment key={`fragment7-${reply.cid}`}>
+                                  <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
+                                  <span key={`mob-ha-${reply.cid}`}
+                                  data-tooltip-id="tt-address"
+                                  data-tooltip-content={reply.author.address}
+                                  data-tooltip-place="top">
+                                    {reply.author.address.slice(0, 12) + "..."}
+                                  </span>
+                                </Fragment>
+                                : <span key={`mob-ha-${reply.cid}`}>
+                                  {reply.author.address}
+                                </span>}
+                              )
+                            </span>
+                          </span>
+                          &nbsp;
+                          <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
+                          &nbsp;
+                          <span key={`pn-${reply.cid}`} className="post-number">
+                            <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
+                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
+                          </span>&nbsp;
+                          <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
+                          <div id="backlink-id" className="backlink">
+                            {reply.replies?.pages.topAll.comments
+                              .sort((a, b) => a.timestamp - b.timestamp)
+                              .map((reply) => (
+                                <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
+                                <Link to={handleVoidClick} key={`ql-${reply.cid}`}
+                                  className="quote-link" 
+                                  onClick={(event) => handleQuoteClick(reply, event)}>
+                                  c/{reply.cid.slice(0, 8)}</Link>
+                                  &nbsp;
+                                </div>
+                              ))
+                            }
+                          </div>
+                        </div>
+                        {reply.content ? (
+                            reply.content.length > 1000 ?
+                            <Fragment key={`fragment8-${reply.cid}`}>
+                              <blockquote key={`pm-${reply.cid}`} className="post-message">
+                                <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={handleVoidClick}>
+                                  {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
+                                </Link>
+                                {reply.content.slice(0, 1000)}
+                                <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
+                                <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
+                                Comment too long.&nbsp;
+                                  <Link key={`ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
+                                &nbsp;to view. </span>
+                              </blockquote>
                             </Fragment>
-                            : <span key={`mob-n-${reply.cid}`} className="name">
-                              {reply.author.displayName}</span>
-                          : <span key={`mob-n-${reply.cid}`} className="name">
-                            Anonymous</span>}
-                        &nbsp;
-                        <span key={`pa-${reply.cid}`} className="poster-address">
-                          (u/
-                            {reply.author.address.length > 12 ?
-                            <Fragment key={`fragment7-${reply.cid}`}>
-                              <Tooltip key={`mob-tt-am-${reply.cid}`} id="tt-address" className="tooltip" />
-                              <span key={`mob-ha-${reply.cid}`}
-                              data-tooltip-id="tt-address"
-                              data-tooltip-content={reply.author.address}
-                              data-tooltip-place="top">
-                                {reply.author.address.slice(0, 12) + "..."}
-                              </span>
-                            </Fragment>
-                            : <span key={`mob-ha-${reply.cid}`}>
-                              {reply.author.address}
-                            </span>}
-                          )
-                        </span>
-                      </span>
-                      &nbsp;
-                      <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
-                      &nbsp;
-                      <span key={`pn-${reply.cid}`} className="post-number">
-                        <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
-                      </span>&nbsp;
-                      <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
-                      <div id="backlink-id" className="backlink">
-                        {reply.replies?.pages.topAll.comments
-                          .sort((a, b) => a.timestamp - b.timestamp)
-                          .map((reply) => (
-                            <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
-                            <Link to={handleVoidClick} key={`ql-${reply.cid}`}
-                              className="quote-link" 
-                              onClick={(event) => handleQuoteClick(reply, event)}>
-                              c/{reply.cid.slice(0, 8)}</Link>
-                              &nbsp;
-                            </div>
-                          ))
-                        }
+                          : <blockquote key={`pm-${reply.cid}`} className="post-message">
+                              <Link to={handleVoidClick} key={`r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
+                                {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
+                              </Link>
+                              {reply.content}
+                            </blockquote>)
+                          : null}
                       </div>
                     </div>
-                    {reply.content ? (
-                        reply.content.length > 1000 ?
-                        <Fragment key={`fragment8-${reply.cid}`}>
-                          <blockquote key={`pm-${reply.cid}`} className="post-message">
-                            <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={handleVoidClick}>
-                              {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                            </Link>
-                            {reply.content.slice(0, 1000)}
-                            <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
-                            <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
-                            Comment too long.&nbsp;
-                              <Link key={`ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="ttl-link">Click here</Link>
-                            &nbsp;to view. </span>
-                          </blockquote>
-                        </Fragment>
-                      : <blockquote key={`pm-${reply.cid}`} className="post-message">
-                          <Link to={handleVoidClick} key={`r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
-                            {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                          </Link>
-                          {reply.content}
-                        </blockquote>)
-                      : null}
-                  </div>
-                </div>
-                )})}
+                    )
+                })}
               </div>
               <div key={`mob-t-${thread.cid}`} className="thread-mobile">
                 <hr key={`mob-hr-${thread.cid}`} />
@@ -719,7 +721,7 @@ const Board = () => {
                       ) : commentMediaInfo.type === "video" ? (
                         <div key={`mob-f-${thread.cid}`} className="file-mobile">
                           <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                            <VideoThumbnail
+                            {/* <VideoThumbnail
                               videoUrl={commentMediaInfo.url}
                               thumbnailHandler={(thumbnail) => {
                                 const img = document.querySelector(`img[key="img-${thread.cid}"]`);
@@ -727,8 +729,7 @@ const Board = () => {
                                   img.src = thumbnail;
                                 }
                               }}
-                            />
-                            {/* <video key={`mob-img-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} /> */}
+                            /> */}
                             <div key={`mob-fi-${thread.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
                           </span>
                         </div>
@@ -765,7 +766,7 @@ const Board = () => {
                 </div>
                 {renderedComments.map(reply => {
                   return (
-                  <div key={`mob-rc-${reply.cid}`} className="reply-container">
+                  <div key={`mob-rc1-${Math.random()}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <button key={`pmbm-${reply.cid}`} className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>

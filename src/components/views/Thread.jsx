@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { debounce } from 'lodash';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
@@ -43,7 +44,7 @@ const Thread = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const comment = useComment({ selectedThread });
+  const comment = useComment({selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
 
@@ -63,16 +64,15 @@ const Thread = () => {
 
   // mobile navbar scroll effect
   useEffect(() => {
-    const handleScroll = () => {
+    const debouncedHandleScroll = debounce(() => {
       const currentScrollPos = window.pageYOffset;
-
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    }, 50);
+  
+    window.addEventListener('scroll', debouncedHandleScroll);
+  
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [prevScrollPos, visible]);
 
 
