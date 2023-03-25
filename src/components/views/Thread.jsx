@@ -44,12 +44,16 @@ const Thread = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const comment = useComment({selectedThread});
+  const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
+
+  // useEffect(() => {
+  //   console.log(comment);
+  // }, [comment]);
 
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
@@ -390,7 +394,7 @@ const Thread = () => {
         <hr />
       </TopBar>
       <BoardForm selectedStyle={selectedStyle}>
-        {comment ? (
+        {comment !== undefined ? (
           <>
             <div className="thread">
               <div className="op-container">

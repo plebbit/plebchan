@@ -45,9 +45,7 @@ const Catalog = () => {
   const { subplebbitAddress } = useParams();
   const handleClickForm = useClickForm();
 
-  useEffect(() => {
-    console.log(feed);
-  }, [feed]);
+
 
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
