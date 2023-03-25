@@ -45,7 +45,9 @@ const Catalog = () => {
   const { subplebbitAddress } = useParams();
   const handleClickForm = useClickForm();
 
-
+  useEffect(() => {
+    console.log(feed);
+  }, [feed]);
 
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -330,66 +332,69 @@ const Catalog = () => {
         <hr />
       </TopBar>
       <Threads selectedStyle={selectedStyle}>
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={tryLoadMore}
-          hasMore={hasMore}
-          loader={<CatalogLoader key="loader" />}
-        >
-          {feed.map(thread => {
-            const commentMediaInfo = getCommentMediaInfo(thread);
-            const fallbackImgUrl = "/assets/filedeleted-res.gif";
-            return (
-              <div key={`thread-${thread.cid}`} className="thread">
-                <Link key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
-                  {commentMediaInfo?.url ? (
-                    <Fragment key="f-catalog">
-                      {commentMediaInfo?.type === "webpage" ? (
-                        <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
-                        onError={(e) => {
-                          e.target.src = fallbackImgUrl
-                          e.target.onerror = null;}}  />
-                      ) : null}
-                      {commentMediaInfo?.type === "image" ? (
-                        <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
-                        onError={(e) => {
-                          e.target.src = fallbackImgUrl
-                          e.target.onerror = null;}}  />
-                      ) : null}
-                      {commentMediaInfo?.type === "video" ? (
-                        <VideoThumbnail
-                          videoUrl={commentMediaInfo.url}
-                          thumbnailHandler={(thumbnail) => {
-                            const img = document.querySelector(`img[key="img-${thread.cid}"]`);
-                            if (img) {
-                              img.src = thumbnail;
-                            }
-                          }}
-                        />
-                      ) : null}
-                      {commentMediaInfo?.type === "audio" ? (
-                        <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
-                        onError={(e) => {
-                          e.target.src = fallbackImgUrl
-                          e.target.onerror = null;}}  />
-                      ) : null}
-                    </Fragment>
-                  ) : null}
-                </Link>
-                {/* <div key={`ti-${thread.cid}`} className="thread-icons" >
-                  <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>
-                </div> */}
-                <div key={`meta-${thread.cid}`} className="meta" title="(R)eplies / (I)mage Replies" >
-                  R:
-                  <b key={`b-${thread.cid}`}>{thread.replyCount}</b>
+        {feed.length < 1 ? (
+          <CatalogLoader />
+        ) : (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={tryLoadMore}
+            hasMore={hasMore}
+          >
+            {feed.map(thread => {
+              const commentMediaInfo = getCommentMediaInfo(thread);
+              const fallbackImgUrl = "/assets/filedeleted-res.gif";
+              return (
+                <div key={`thread-${thread.cid}`} className="thread">
+                  <Link key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
+                    {commentMediaInfo?.url ? (
+                      <Fragment key="f-catalog">
+                        {commentMediaInfo?.type === "webpage" ? (
+                          <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                          onError={(e) => {
+                            e.target.src = fallbackImgUrl
+                            e.target.onerror = null;}}  />
+                        ) : null}
+                        {commentMediaInfo?.type === "image" ? (
+                          <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                          onError={(e) => {
+                            e.target.src = fallbackImgUrl
+                            e.target.onerror = null;}}  />
+                        ) : null}
+                        {commentMediaInfo?.type === "video" ? (
+                          <VideoThumbnail
+                            videoUrl={commentMediaInfo.url}
+                            thumbnailHandler={(thumbnail) => {
+                              const img = document.querySelector(`img[key="img-${thread.cid}"]`);
+                              if (img) {
+                                img.src = thumbnail;
+                              }
+                            }}
+                          />
+                        ) : null}
+                        {commentMediaInfo?.type === "audio" ? (
+                          <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                          onError={(e) => {
+                            e.target.src = fallbackImgUrl
+                            e.target.onerror = null;}}  />
+                        ) : null}
+                      </Fragment>
+                    ) : null}
+                  </Link>
+                  {/* <div key={`ti-${thread.cid}`} className="thread-icons" >
+                    <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>
+                  </div> */}
+                  <div key={`meta-${thread.cid}`} className="meta" title="(R)eplies / (I)mage Replies" >
+                    R:
+                    <b key={`b-${thread.cid}`}>{thread.replyCount}</b>
+                  </div>
+                  <div key={`t-${thread.cid}`} className="teaser">
+                    <b key={`b2-${thread.cid}`}>{thread.title ? `${thread.title}` : null}</b>
+                    {thread.content ? `: ${thread.content}` : null}
+                  </div>
                 </div>
-                <div key={`t-${thread.cid}`} className="teaser">
-                  <b key={`b2-${thread.cid}`}>{thread.title ? `${thread.title}` : null}</b>
-                  {thread.content ? `: ${thread.content}` : null}
-                </div>
-              </div>
-            )})}
-        </InfiniteScroll>
+              )})}
+          </InfiniteScroll>
+        )}
       </Threads>
     </Container>
   );
