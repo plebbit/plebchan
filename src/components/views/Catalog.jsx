@@ -370,10 +370,7 @@ const Catalog = () => {
                           />
                         ) : null}
                         {commentMediaInfo?.type === "audio" ? (
-                          <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
-                          onError={(e) => {
-                            e.target.src = fallbackImgUrl
-                            e.target.onerror = null;}}  />
+                          <audio controls key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
                         ) : null}
                       </Fragment>
                     ) : null}

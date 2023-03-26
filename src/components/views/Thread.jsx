@@ -423,7 +423,7 @@ const Thread = () => {
                         ) : null}
                         {commentMediaInfo?.type === "video" ? (
                           <span key={`fta-${comment.cid}`} className="file-thumb">
-                            <video key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <video controls key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
                           </span>
                         ) : null}
                         {commentMediaInfo?.type === "audio" ? (
@@ -666,7 +666,7 @@ const Thread = () => {
                       ) : commentMediaInfo.type === "video" ? (
                         <div key={`mob-f-${comment.cid}`} className="file-mobile">
                           <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                            <video key={`mob-img-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <video controls key={`mob-img-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
                             <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
                           </span>
                         </div>

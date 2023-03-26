@@ -2306,9 +2306,13 @@ export const BoardForm = styled.div`
   
     .file-thumb img {
       border: none;
-      float: left;
       max-width: 250px;
       max-height: 250px;
+    }
+
+    .file-thumb video {
+      max-width: 400px;
+      max-height: 400px;
     }
   }
 
@@ -2388,6 +2392,11 @@ export const BoardForm = styled.div`
           text-decoration: none;
           display: block !important;
           clear: left !important;
+        }
+
+        video {
+          max-width: 100%;
+          max-height: 250px;
         }
       }
   

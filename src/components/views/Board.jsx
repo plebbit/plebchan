@@ -413,20 +413,12 @@ const Board = () => {
                           ) : null}
                           {commentMediaInfo?.type === "video" ? (
                             <span key={`fta-${thread.cid}`} className="file-thumb">
-                              <VideoThumbnail
-                                videoUrl={commentMediaInfo.url}
-                                thumbnailHandler={(thumbnail) => {
-                                  const img = document.querySelector(`img[key="img-${thread.cid}"]`);
-                                  if (img) {
-                                    img.src = thumbnail;
-                                  }
-                                }}
-                              />
+                              <video controls width="" key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
                             </span>
                           ) : null}
                           {commentMediaInfo?.type === "audio" ? (
                             <span key={`fta-${thread.cid}`} className="file-thumb">
-                              <audio key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                              <audio controls key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
                             </span>
                           ) : null}
                         </div>
@@ -700,15 +692,7 @@ const Board = () => {
                         ) : commentMediaInfo.type === "video" ? (
                           <div key={`mob-f-${thread.cid}`} className="file-mobile">
                             <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                              <VideoThumbnail
-                                videoUrl={commentMediaInfo.url}
-                                thumbnailHandler={(thumbnail) => {
-                                  const img = document.querySelector(`img[key="img-${thread.cid}"]`);
-                                  if (img) {
-                                    img.src = thumbnail;
-                                  }
-                                }}
-                              />
+                              <video controls width="" key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
                               <div key={`mob-fi-${thread.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
                             </span>
                           </div>
