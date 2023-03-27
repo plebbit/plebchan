@@ -338,11 +338,11 @@ const Catalog = () => {
             loadMore={tryLoadMore}
             hasMore={hasMore}
           >
-            {feed.map(thread => {
+            {feed.map((thread, index) => {
               const commentMediaInfo = getCommentMediaInfo(thread);
               const fallbackImgUrl = "/assets/filedeleted-res.gif";
               return (
-                <Link style={{all: "unset", cursor: "pointer"}} key={`a-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
+                <Link style={{all: "unset", cursor: "pointer"}} key={`${index}-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
                   <div key={`thread-${thread.cid}`} className="thread">
                       {commentMediaInfo?.url ? (
                         <Fragment key="f-catalog">

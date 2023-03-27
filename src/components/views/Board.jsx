@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
-import VideoThumbnail from 'react-video-thumbnail';
 import { debounce } from 'lodash';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
@@ -379,13 +378,13 @@ const Board = () => {
               loadMore={tryLoadMore}
               hasMore={hasMore}
             >
-              {feed.map(thread => {
+              {feed.map((thread, index) => {
               const { replies: { pages: { topAll: { comments } } } } = thread;
               const { renderedComments, omittedCount } = renderComments(comments);
               const commentMediaInfo = getCommentMediaInfo(thread);
               const fallbackImgUrl = "/assets/filedeleted-res.gif";
               return (
-              <Fragment key={`fragment1-${thread.cid}`}>
+              <Fragment key={`${index}-${thread.cid}`}>
                 <div key={`t-${thread.cid}`} className="thread">
                   <div key={`c-${thread.cid}`} className="op-container">
                     <div key={`po-${thread.cid}`} className="post op">
@@ -483,8 +482,8 @@ const Board = () => {
                           <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
                             {thread.replies?.pages.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
-                              .map((reply) => (
-                                <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
+                              .map((reply, index) => (
+                                <div key={`${index}-${reply.cid}`} style={{display: 'inline-block'}}>
                                 <Link key={`ql-${reply.cid}`}
                                 to={handleVoidClick} className="quote-link" 
                                 onClick={(event) => handleQuoteClick(reply, event)}>
@@ -524,9 +523,9 @@ const Board = () => {
                       </span>
                     </span>) : null}
                   </span>
-                  {renderedComments.map(reply => {
+                  {renderedComments.map((reply, index) => {
                     return (
-                      <div key={`rc-${reply.cid}-${Math.random()}`} className="reply-container">
+                      <div key={`${index}-${reply.cid}`} className="reply-container">
                         <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
                         <div key={`pr-${reply.cid}`} className="post-reply">
                           <div key={`pi-${reply.cid}`} className="post-info">
@@ -727,9 +726,9 @@ const Board = () => {
                       <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)} className="button-mobile" >View Thread</Link>
                     </div>
                   </div>
-                  {renderedComments.map(reply => {
+                  {renderedComments.map((reply, index) => {
                     return (
-                    <div key={`mob-rc1-${Math.random()}`} className="reply-container">
+                    <div key={`${index}-${reply.cid}`} className="reply-container">
                       <div key={`mob-pr-${reply.cid}`} className="post-reply">
                         <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                           <button key={`pmbm-${reply.cid}`} className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>

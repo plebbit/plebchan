@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
@@ -491,8 +491,8 @@ const Thread = () => {
                       <div id="backlink-id" className="backlink">
                         {comment.replies?.pages.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
-                          .map((reply) => (
-                            <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
+                          .map((reply, index) => (
+                            <div key={`${index}-${reply.cid}`} style={{display: 'inline-block'}}>
                             <Link to={handleVoidClick} key={`ql-${reply.cid}`}
                               className="quote-link" 
                               onClick={(event) => handleQuoteClick(reply, event)}>
@@ -563,8 +563,8 @@ const Thread = () => {
                           <div id="backlink-id" className="backlink">
                             {reply.replies?.pages.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
-                              .map((reply) => (
-                                <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
+                              .map((reply, index) => (
+                                <div key={`${index}-${reply.cid}`} style={{display: 'inline-block'}}>
                                 <Link to={handleVoidClick} key={`ql-${reply.cid}`}
                                   className="quote-link" 
                                   onClick={(event) => handleQuoteClick(reply, event)}>
