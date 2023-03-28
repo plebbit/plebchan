@@ -18,9 +18,12 @@ export const Threads = styled.div`
     position: relative;
   }
 
-  img {
+  video, audio, img {
     max-width: 150px;
     max-height: 150px;
+  }
+
+  img {
     display: inline;
     margin: auto;
     box-shadow: 0 0 5px rgba(0, 0, 0, .25);

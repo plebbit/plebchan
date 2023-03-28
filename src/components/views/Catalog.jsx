@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
-import VideoThumbnail from 'react-video-thumbnail';
 import { debounce } from 'lodash';
 import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
@@ -347,30 +346,33 @@ const Catalog = () => {
                       {commentMediaInfo?.url ? (
                         <Fragment key="f-catalog">
                           {commentMediaInfo?.type === "webpage" ? (
-                            <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                            <img key={`img-${thread.cid}`} alt="thread" 
+                            src={commentMediaInfo.url} 
                             onError={(e) => {
                               e.target.src = fallbackImgUrl
                               e.target.onerror = null;}}  />
                           ) : null}
                           {commentMediaInfo?.type === "image" ? (
-                            <img key={`img-${thread.cid}`} alt="thread" src={commentMediaInfo.url} 
+                            <img key={`img-${thread.cid}`} alt="thread" 
+                            src={commentMediaInfo.url} 
                             onError={(e) => {
                               e.target.src = fallbackImgUrl
                               e.target.onerror = null;}}  />
                           ) : null}
                           {commentMediaInfo?.type === "video" ? (
-                            <VideoThumbnail
-                              videoUrl={commentMediaInfo.url}
-                              thumbnailHandler={(thumbnail) => {
-                                const img = document.querySelector(`img[key="img-${thread.cid}"]`);
-                                if (img) {
-                                  img.src = thumbnail;
-                                }
-                              }}
-                            />
+                            <video key={`fti-${thread.cid}`} 
+                            src={commentMediaInfo.url} 
+                            alt={commentMediaInfo.type} 
+                            style={{ pointerEvents: "none" }}
+                            onError={(e) => e.target.src = fallbackImgUrl} /> 
                           ) : null}
                           {commentMediaInfo?.type === "audio" ? (
-                            <audio controls key={`fti-${thread.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                            <audio controls 
+                            key={`fti-${thread.cid}`} 
+                            src={commentMediaInfo.url} 
+                            alt={commentMediaInfo.type} 
+                            style={{ pointerEvents: "none" }}
+                            onError={(e) => e.target.src = fallbackImgUrl} />
                           ) : null}
                         </Fragment>
                       ) : null}

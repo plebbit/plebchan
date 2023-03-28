@@ -2304,15 +2304,10 @@ export const BoardForm = styled.div`
       margin: 3px 20px 5px 20px;
     }
   
-    .file-thumb img {
+    .file-thumb img, video, audio {
       border: none;
       max-width: 250px;
       max-height: 250px;
-    }
-
-    .file-thumb video {
-      max-width: 400px;
-      max-height: 400px;
     }
   }
 
