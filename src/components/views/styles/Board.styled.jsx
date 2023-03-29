@@ -340,7 +340,7 @@ export const Header = styled.div`
 
         .board-address {
           margin-top: 5px;
-          font-size: 11pt;
+          font-size: 10pt;
         }`;
 
       case 'Tomorrow':
@@ -1585,6 +1585,7 @@ export const BoardForm = styled.div`
             .op-container {
               background-color: #f5e9e1;
               border: 1px solid #d9bfb7 !important;
+            }
 
               .post-info-mobile {
                 border-bottom: 1px solid #d9bfb7;
@@ -1645,7 +1646,6 @@ export const BoardForm = styled.div`
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
-            }
 
             .reply-container {
               background-color: #f0e0d6;
@@ -1702,6 +1702,7 @@ export const BoardForm = styled.div`
             .op-container {
               background-color: #d6daf0;
               border: 1px solid #b7c5d9 !important;
+            }
 
               .post-info-mobile {
                 border-bottom: 1px solid #b7c5d9;
@@ -1762,7 +1763,6 @@ export const BoardForm = styled.div`
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
-            }
 
             .reply-container {
               background-color: #d6daf0;
@@ -1815,6 +1815,7 @@ export const BoardForm = styled.div`
             .op-container {
               background-color: #f5e9e1;
               border: 1px solid #d9bfb7 !important;
+            }
 
               .post-info-mobile {
                 border-bottom: 1px solid #d9bfb7;
@@ -1875,7 +1876,6 @@ export const BoardForm = styled.div`
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
-            }
 
             .reply-container {
               background-color: #f0e0d6;
@@ -1931,6 +1931,7 @@ export const BoardForm = styled.div`
             .op-container {
               background-color: #d6daf0;
               border: 1px solid #b7c5d9 !important;
+            }
 
               .post-info-mobile {
                 border-bottom: 1px solid #b7c5d9;
@@ -1991,7 +1992,6 @@ export const BoardForm = styled.div`
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
-            }
 
             .reply-container {
               background-color: #d6daf0;
@@ -2043,6 +2043,7 @@ export const BoardForm = styled.div`
             .op-container {
               background-color: #282A2E;
               border: 1px solid #2D2F33 !important;
+            }
 
               .post-info-mobile {
                 border-bottom: 1px solid #2D2F33;
@@ -2108,7 +2109,6 @@ export const BoardForm = styled.div`
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
-            }
 
             .reply-container {
               background-color: #f0e0d6;
@@ -2165,67 +2165,67 @@ export const BoardForm = styled.div`
             .op-container {
               background-color: #eee;
               border: 1px solid #ccc !important;
+            }
 
-              .post-info-mobile {
-                border-bottom: 1px solid #ccc;
-                background-color: #ddd;
-              }
-    
-              .post-menu-button-mobile {
-                color: #f60 !important;
-              }
-    
-              .name-mobile {
-                color: #004a99;
-                font-weight: 700;
-              }
-    
-              .subject-mobile {
-                color: #111;
-                font-weight: 700;
-              }
-    
-              .date-time-mobile {
-                color: #333;
+            .post-info-mobile {
+              border-bottom: 1px solid #ccc;
+              background-color: #ddd;
+            }
+  
+            .post-menu-button-mobile {
+              color: #f60 !important;
+            }
+  
+            .name-mobile {
+              color: #004a99;
+              font-weight: 700;
+            }
+  
+            .subject-mobile {
+              color: #111;
+              font-weight: 700;
+            }
+  
+            .date-time-mobile {
+              color: #333;
 
-                a {
-                  text-decoration: none;
-                  color: #333;
-                }
-              }
-    
-              .file-thumb-mobile {
-                color: #f60 !important;
-              }
-    
-              .file-info-mobile {
-                color: #707070;
-                font-size: 9pt !important;
-              }
-    
-              blockquote {
-                font-size: 11pt;
-              }
-    
-              .post-link-mobile {
-                background-color: #ddd;
-                border-top: 1px solid #ccc;
-              }
-    
-              .info-mobile {
+              a {
+                text-decoration: none;
                 color: #333;
               }
-    
-              .button-mobile {
-                background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
-                border: 1px solid #ccc;
-                color: #333;
-                border-radius: 3px 3px 3px 3px;
-                font-weight: 700;
-                padding: 6px 10px 5px;
-                background-repeat: repeat-x;
-                cursor: pointer;
-              }
+            }
+  
+            .file-thumb-mobile {
+              color: #f60 !important;
+            }
+  
+            .file-info-mobile {
+              color: #707070;
+              font-size: 9pt !important;
+            }
+  
+            blockquote {
+              font-size: 11pt;
+            }
+  
+            .post-link-mobile {
+              background-color: #ddd;
+              border-top: 1px solid #ccc;
+            }
+  
+            .info-mobile {
+              color: #333;
+            }
+  
+            .button-mobile {
+              background: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+              border: 1px solid #ccc;
+              color: #333;
+              border-radius: 3px 3px 3px 3px;
+              font-weight: 700;
+              padding: 6px 10px 5px;
+              background-repeat: repeat-x;
+              cursor: pointer;
             }
 
             .reply-container {
