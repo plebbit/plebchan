@@ -2404,10 +2404,10 @@ export const BoardForm = styled.div`
           clear: left !important;
         }
 
-        video {
-          max-width: 100%;
-          max-height: 250px;
-        }
+      }
+
+      video {
+        width: 100px;
       }
   
       img {
@@ -2456,6 +2456,39 @@ export const BoardForm = styled.div`
         padding: 0 !important;
         display: table;
         overflow: hidden;
+      }
+
+      .file-mobile {
+        display: block;
+  
+        .file-thumb-mobile {
+          margin-left: 10px !important;
+          margin-right: 10px !important;
+          text-decoration: none;
+          float: left;
+          margin-bottom: 5px;
+          margin-top: 15px;
+        }
+  
+        .file-info-mobile {
+          padding-top: 5px;
+          text-align: center;
+          text-decoration: none;
+          display: block !important;
+          clear: left !important;
+        }
+      }
+
+      video {
+        max-width: 100px;
+      }
+  
+      img {
+        border: none;
+        float: left;
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: scale-down;
       }
 
       .post-info-mobile {
