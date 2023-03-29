@@ -8,6 +8,7 @@ import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } 
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
+import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
@@ -503,8 +504,8 @@ const Thread = () => {
                         }
                       </div>
                     </span>
-                    <blockquote>
-                      {comment.content}
+                    <blockquote key={`blockquote-${comment.cid}`}>
+                      <Post content={comment.content} key={`post-${comment.cid}`} />
                     </blockquote>
                   </div>
                 </div>
@@ -580,7 +581,7 @@ const Thread = () => {
                             onClick={(event) => handleQuoteClick(reply, event)}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </Link>
-                          {reply.content}
+                          <Post content={reply.content} key={`post-${reply.cid}`} />
                         </blockquote>
                       </div>
                     </div>
@@ -682,7 +683,7 @@ const Thread = () => {
                     <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                       {comment.content ? (
                         <>
-                          {comment.content}
+                          <Post content={comment.content} key={`post-mobile-${comment.cid}`} /> 
                         </>
                       ) : null}
                     </blockquote>
@@ -743,7 +744,7 @@ const Thread = () => {
                         onClick={(event) => handleQuoteClick(reply, event)}>
                           {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                         </Link>
-                        {reply.content}
+                        <Post content={reply.content} key={`post-mobile-${reply.cid}`} />
                       </blockquote>
                     </div>
                   </div>

@@ -10,6 +10,7 @@ import { TopBar } from './styles/Thread.styled';
 import CaptchaModal from '../CaptchaModal';
 import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
+import Post from '../Post';
 import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
@@ -385,7 +386,8 @@ const Catalog = () => {
                     </div>
                     <div key={`t-${thread.cid}`} className="teaser">
                         <b key={`b2-${thread.cid}`}>{thread.title ? `${thread.title}` : null}</b>
-                      {thread.content ? `: ${thread.content}` : null}
+                        {thread.content && `: `}
+                        {thread.content && <Post content={thread.content} key="post"/>}
                     </div>
                   </div>
                 </Link>

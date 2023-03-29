@@ -1691,7 +1691,6 @@ export const BoardForm = styled.div`
                 }
 
                 p:first-of-type::before {
-                  content: '>';
                   color: #789922;
                 }
               }
@@ -1805,7 +1804,6 @@ export const BoardForm = styled.div`
                 }
 
                 p:first-of-type::before {
-                  content: '>';
                   color: #789922;
                 }
               }
@@ -1922,7 +1920,6 @@ export const BoardForm = styled.div`
                 }
 
                 p:first-of-type::before {
-                  content: '>';
                   color: #789922;
                 }
               }
@@ -2035,7 +2032,6 @@ export const BoardForm = styled.div`
                 }
 
                 p:first-of-type::before {
-                  content: '>';
                   color: #789922;
                 }
               }
@@ -2159,7 +2155,6 @@ export const BoardForm = styled.div`
               }
 
               p:first-of-type::before {
-                content: '>';
                 color: #b5bd68;
               }
             }
@@ -2277,7 +2272,6 @@ export const BoardForm = styled.div`
               }
 
               p:first-of-type::before {
-                content: '>';
                 color: #789922;
               }
             }
@@ -2607,8 +2601,7 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      blockquote > p:first-of-type::before {
-        content: '>';
+      .greentext {
         color: #789922;
       }
 
@@ -2765,8 +2758,7 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      blockquote > p:first-of-type::before {
-        content: '>';
+      .greentext {
         color: #789922;
       }
       
@@ -2925,8 +2917,7 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      blockquote > p:first-of-type::before {
-        content: '>';
+      .greentext {
         color: #789922;
       }
 
@@ -3089,8 +3080,7 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      blockquote > p:first-of-type::before {
-        content: '>';
+      .greentext {
         color: #789922;
       }
 
@@ -3246,8 +3236,7 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      blockquote > p:first-of-type::before {
-        content: '>';
+      .greentext {
         color: #b5bd68;
       }
 
@@ -3408,8 +3397,8 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      blockquote > p:first-of-type::before {
-        content: '>';
+      .greentext {
+        
         color: #789922;
       }
 

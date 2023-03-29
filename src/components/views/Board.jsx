@@ -8,6 +8,7 @@ import useAppStore from '../../useAppStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
+import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
@@ -378,7 +379,7 @@ const Board = () => {
               loadMore={tryLoadMore}
               hasMore={hasMore}
             >
-              {feed.map((thread) => {
+              {selectedFeed.map((thread) => {
               const { replies: { pages: { topAll: { comments } } } } = thread;
               const { renderedComments, omittedCount } = renderComments(comments);
               const commentMediaInfo = getCommentMediaInfo(thread);
@@ -495,10 +496,10 @@ const Board = () => {
                           </div>
                         </span>
                         {thread.content ? (
-                          thread.content.length > 2000 ?
+                          thread.content.length > 1000 ?
                           <Fragment key={`fragment5-${thread.cid}`}>
                             <blockquote key={`bq-${thread.cid}`}>
-                              {thread.content.slice(0, 2000)}
+                            <Post content={thread.content.slice(0, 1000)} key={`post-${thread.cid}`} />
                               <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) 
                               <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
@@ -507,7 +508,7 @@ const Board = () => {
                             </blockquote>
                           </Fragment>
                         : <blockquote key={`bq-${thread.cid}`}>
-                            {thread.content}
+                            <Post content={thread.content} key={`post-${thread.cid}`} />
                           </blockquote>)
                         : null}
                       </div>
@@ -586,13 +587,13 @@ const Board = () => {
                             </div>
                           </div>
                           {reply.content ? (
-                              reply.content.length > 1000 ?
+                              reply.content.length > 500 ?
                               <Fragment key={`fragment8-${reply.cid}`}>
                                 <blockquote key={`pm-${reply.cid}`} className="post-message">
                                   <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={handleVoidClick}>
                                     {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                                   </Link>
-                                  {reply.content.slice(0, 1000)}
+                                  <Post content={reply.content.slice(0, 500)} key={`post-${reply.cid}`} />
                                   <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
                                   <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
                                   Comment too long.&nbsp;
@@ -604,7 +605,7 @@ const Board = () => {
                                 <Link to={handleVoidClick} key={`r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
                                   {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                                 </Link>
-                                {reply.content}
+                                <Post content={reply.content} key={`post-${reply.cid}`} />
                               </blockquote>)
                             : null}
                         </div>
@@ -705,10 +706,10 @@ const Board = () => {
                         ) : null
                       ) : null}
                       {thread.content ? (
-                          thread.content.length > 1500 ?
+                          thread.content.length > 500 ?
                           <Fragment key={`fragment12-${thread.cid}`}>
                             <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
-                              {thread.content.slice(0, 1500)}
+                              <Post content={thread.content.slice(0, 500)} key={`post-mobile-${thread.cid}`} />
                               <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
@@ -717,7 +718,7 @@ const Board = () => {
                             </blockquote>
                           </Fragment>
                         : <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
-                            {thread.content}
+                            <Post content={thread.content} key={`post-mobile-${thread.cid}`} />
                           </blockquote>)
                         : null}
                     </div>
@@ -773,13 +774,13 @@ const Board = () => {
                           </span>
                         </div>
                         {reply.content ? (
-                          reply.content.length > 1000 ?
+                          reply.content.length > 500 ?
                           <Fragment key={`fragment15-${reply.cid}`}>
                             <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
                               <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={handleVoidClick}>
                                 {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                               </Link>
-                              {reply.content.slice(0, 1000)}
+                              <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} />
                               <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                               Comment too long.&nbsp;
@@ -791,7 +792,7 @@ const Board = () => {
                             <Link to={handleVoidClick} key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
                               {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                             </Link>
-                            {reply.content}
+                            <Post content={reply.content} key={`post-mobile-${reply.cid}`} />
                           </blockquote>)
                         : null}
                       </div>
