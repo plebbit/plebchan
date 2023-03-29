@@ -49,9 +49,9 @@ const Board = () => {
   const { subplebbitAddress } = useParams();  
   const handleClickForm = useClickForm();
 
-  useEffect(() => {
-    console.log(selectedFeed);
-  }, [selectedFeed]);
+  // useEffect(() => {
+  //   console.log(selectedFeed);
+  // }, [selectedFeed]);
 
 
   // temporary title from JSON, gets subplebbitAddress from URL
@@ -520,6 +520,8 @@ const Board = () => {
                     </span>) : null}
                   </span>
                   {renderedComments.map((reply) => {
+                    const replyMediaInfo = getCommentMediaInfo(reply);
+                    const fallbackImgUrl = "/assets/filedeleted-res.gif";
                     return (
                       <div key={`rc-${reply.cid}`} className="reply-container">
                         <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
@@ -572,6 +574,51 @@ const Board = () => {
                               }
                             </div>
                           </div>
+                          {replyMediaInfo?.url ? (
+                            <div key={`f-${reply.cid}`} className="file" 
+                            style={{marginBottom: "5px"}}>
+                              <div key={`ft-${reply.cid}`} className="reply-file-text">
+                                Link:&nbsp;
+                                <a key={`fa-${reply.cid}`} href={replyMediaInfo.url} target="_blank">{
+                                replyMediaInfo?.url.length > 30 ?
+                                replyMediaInfo?.url.slice(0, 30) + "(...)" :
+                                replyMediaInfo?.url
+                                }</a>&nbsp;({replyMediaInfo?.type})
+                              </div>
+                              {replyMediaInfo?.type === "webpage" ? (
+                                <span key={`fta-${reply.cid}`} className="file-thumb-reply">
+                                  <img key={`fti-${reply.cid}`}
+                                  src={reply.thumbnailUrl} 
+                                  alt="thumbnail" 
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                </span>
+                              ) : null}
+                              {replyMediaInfo?.type === "image" ? (
+                                <span key={`fta-${reply.cid}`} className="file-thumb-reply">
+                                  <img key={`fti-${reply.cid}`}
+                                  src={replyMediaInfo.url} 
+                                  alt={replyMediaInfo.type} 
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                </span>
+                              ) : null}
+                              {replyMediaInfo?.type === "video" ? (
+                                <span key={`fta-${reply.cid}`} className="file-thumb-reply">
+                                  <video controls
+                                  key={`fti-${reply.cid}`} 
+                                  src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                </span>
+                              ) : null}
+                              {replyMediaInfo?.type === "audio" ? (
+                                <span key={`fta-${reply.cid}`} className="file-thumb-reply">
+                                  <audio controls 
+                                  key={`fti-${reply.cid}`}
+                                  src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                </span>
+                              ) : null}
+                            </div>
+                          ) : null}
                           {reply.content ? (
                               reply.content.length > 500 ?
                               <Fragment key={`fragment8-${reply.cid}`}>

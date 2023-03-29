@@ -1540,7 +1540,7 @@ export const BoardForm = styled.div`
     }
 
     .post-info {
-      margin: 5px;
+      margin: 3px 3px 0 5px;
       display: block;
       width: 100%;
     }
@@ -2297,12 +2297,33 @@ export const BoardForm = styled.div`
       float: left;
       margin: 3px 20px 5px 20px;
     }
-  
-    .file-thumb img, video, audio {
+
+    .reply-file-text {
+      max-width: 600px;
+      white-space: nowrap;
+      margin-left: 5px;
+    }
+
+    .file-thumb-reply {
+      float: left;
+      margin: 3px 20px 5px 20px;
+    }
+    
+    .file-thumb img,
+    .file-thumb video,
+    .file-thumb audio {
       border: none;
       max-width: 250px;
       max-height: 250px;
     }
+
+    .file-thumb-reply img,
+    .file-thumb-reply video,
+    .file-thumb-reply audio {
+      max-width: 125px;
+      max-height: 125px;
+    }
+
   }
 
   .thread-mobile {
