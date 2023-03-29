@@ -36,6 +36,7 @@ const Post = ({ content }) => {
         video: () => null,
         source: () => null,
         gif: () => null,
+        a: () => null
       }}
     />
   );

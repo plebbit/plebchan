@@ -49,6 +49,10 @@ const Board = () => {
   const { subplebbitAddress } = useParams();  
   const handleClickForm = useClickForm();
 
+  useEffect(() => {
+    console.log(selectedFeed);
+  }, [selectedFeed]);
+
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
@@ -454,18 +458,9 @@ const Board = () => {
                             Anonymous</span>}
                           &nbsp;
                           (u/
-                          {thread.author.address.length > 15 ?
-                          <Fragment key={`fragment4-${thread.cid}`}>
-                            <span key={`pa-${thread.cid}`} className="poster-address"
-                            data-tooltip-id="tooltip"
-                            data-tooltip-content={thread.author.address}
-                            data-tooltip-place="top">
-                              {thread.author.address.slice(0, 15) + "..."}
-                            </span>
-                          </Fragment>
-                          : <span key={`pa-${thread.cid}`} className="poster-address">
-                            {thread.author.address}
-                          </span>})
+                          <span key={`pa-${thread.cid}`} className="poster-address">
+                            {thread.author.shortAddress}
+                          </span>)
                           &nbsp;
                           <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
                           &nbsp;
@@ -548,18 +543,9 @@ const Board = () => {
                               &nbsp;
                               <span key={`pa-${reply.cid}`} className="poster-address">
                                 (u/
-                                  {reply.author.address.length > 12 ?
-                                  <Fragment key={`fragment7-${reply.cid}`}>
-                                    <span key={`mob-ha-${reply.cid}`}
-                                    data-tooltip-id="tooltip"
-                                    data-tooltip-content={reply.author.address}
-                                    data-tooltip-place="top">
-                                      {reply.author.address.slice(0, 12) + "..."}
-                                    </span>
-                                  </Fragment>
-                                  : <span key={`mob-ha-${reply.cid}`}>
-                                    {reply.author.address}
-                                  </span>}
+                                  <span key={`mob-ha-${reply.cid}`}>
+                                    {reply.author.shortAddress}
+                                  </span>
                                 )
                               </span>
                             </span>
@@ -637,18 +623,9 @@ const Board = () => {
                           &nbsp;
                           <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile">
                             (u/
-                            {thread.author.address.length > 15 ?
-                            <Fragment key={`fragment10-${thread.cid}`}>
-                              <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile"
-                              data-tooltip-id="tooltip"
-                              data-tooltip-content={thread.author.address}
-                              data-tooltip-place="top">
-                                {thread.author.address.slice(0, 15) + "..."}
-                              </span>
-                            </Fragment>
-                            : <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile">
-                              {thread.author.address}
-                            </span>}
+                            <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile">
+                              {thread.author.shortAddress}
+                            </span>
                             )&nbsp;
                           </span>
                           <br key={`mob-br1-${thread.cid}`} />
@@ -751,18 +728,9 @@ const Board = () => {
                             &nbsp;
                             <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
                               (u/
-                              {reply.author.address.length > 10 ?
-                              <Fragment key={`fragment14-${reply.cid}`}>
-                                <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={reply.author.address}
-                                data-tooltip-place="top">
-                                  {reply.author.address.slice(0, 10) + "..."}
-                                </span>
-                              </Fragment>
-                              : <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
-                                {reply.author.address}
-                              </span>}
+                              <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
+                                {reply.author.shortAddress}
+                              </span>
                               )&nbsp;
                             </span>
                             <br key={`mob-br-${reply.cid}`} />

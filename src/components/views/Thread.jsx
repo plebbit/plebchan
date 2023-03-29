@@ -468,18 +468,9 @@ const Thread = () => {
                       &nbsp;
                       <span className="poster-address">
                         (u/
-                          {comment.author?.address.length > 20 ?
-                        <>
-                          <span key={`pa-${comment.cid}`} className="poster-address"
-                          data-tooltip-id="tooltip"
-                          data-tooltip-content={comment.author?.address}
-                          data-tooltip-place="top">
-                            {comment.author?.address.slice(0, 20) + "..."}
-                          </span>
-                        </>
-                        : <span key={`pa-${comment.cid}`} className="poster-address">
-                          {comment.author?.address}
-                        </span>})
+                          <span key={`pa-${comment.cid}`} className="poster-address">
+                          {comment.author?.shortAddress}
+                        </span>)
                       </span>
                       &nbsp;
                       <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
@@ -539,18 +530,9 @@ const Thread = () => {
                             &nbsp;
                             <span key={`pa-${reply.cid}`} className="poster-address">
                               (u/
-                              {reply.author.address.length > 20 ?
-                              <>
-                                <span key={`mob-ha-${reply.cid}`}
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={reply.author.address}
-                                data-tooltip-place="top">
-                                  {reply.author.address.slice(0, 20) + "..."}
-                                </span>
-                              </>
-                              : <span key={`mob-ha-${reply.cid}`}>
-                                {reply.author.address}
-                              </span>})
+                              <span key={`mob-ha-${reply.cid}`}>
+                                {reply.author.shortAddress}
+                              </span>)
                             </span>
                           </span>
                           &nbsp;
@@ -613,18 +595,9 @@ const Thread = () => {
                         &nbsp;
                         <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile">
                           (u/
-                          {comment.author?.address.length > 15 ?
-                          <>
-                            <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile"
-                            data-tooltip-id="tooltip"
-                            data-tooltip-content={comment.author?.address}
-                            data-tooltip-place="top">
-                              {comment.author?.address.slice(0, 15) + "..."}
-                            </span>
-                          </>
-                          : <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile">
-                            {comment.author?.address}
-                          </span>}
+                          <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile">
+                            {comment.author?.shortAddress}
+                          </span>
                           )&nbsp;
                         </span>
                         <br key={`mob-br1-${comment.cid}`} />
@@ -717,18 +690,9 @@ const Thread = () => {
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
                             (u/
-                            {reply.author.address.length > 12 ?
-                            <>
-                              <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile"
-                              data-tooltip-id="tooltip"
-                              data-tooltip-content={reply.author.address}
-                              data-tooltip-place="top">
-                                {reply.author.address.slice(0, 12) + "..."}
-                              </span>
-                            </>
-                            : <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
-                              {reply.author.address}
-                            </span>}
+                            <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
+                              {reply.author.shortAddress}
+                            </span>
                             )
                           </span>
                           <br key={`mob-br-${reply.cid}`} />
