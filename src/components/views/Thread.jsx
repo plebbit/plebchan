@@ -194,7 +194,7 @@ const Thread = () => {
   // scroll to post when quote is clicked
   function handleQuoteClick(reply, event) {
     event.preventDefault();
-    const cid = reply.cid.slice(0, 8);
+    const cid = reply.shortCid;
     const targetElement = [...document.querySelectorAll('.post-reply')]
       .find(el => el.innerHTML.includes(cid));
     if (targetElement) {
@@ -477,7 +477,7 @@ const Thread = () => {
                       &nbsp;
                       <span className="post-number">
                         <Link to="" onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={handleReplyOpen} title="Reply to this post">{comment.cid?.slice(0, 8)}</button>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={handleReplyOpen} title="Reply to this post">{comment.shortCid}</button>
                       </span>&nbsp;&nbsp;
                       <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                       <div id="backlink-id" className="backlink">
@@ -488,7 +488,7 @@ const Thread = () => {
                             <Link to={handleVoidClick} key={`ql-${reply.cid}`}
                               className="quote-link" 
                               onClick={(event) => handleQuoteClick(reply, event)}>
-                              c/{reply.cid.slice(0, 8)}</Link>
+                              c/{reply.shortCid}</Link>
                               &nbsp;
                             </div>
                           ))
@@ -542,7 +542,7 @@ const Thread = () => {
                           &nbsp;
                           <span key={`pn-${reply.cid}`} className="post-number">
                             <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
+                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.shortCid}</button>
                           </span>&nbsp;
                           <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                           <div id="backlink-id" className="backlink">
@@ -553,7 +553,7 @@ const Thread = () => {
                                 <Link to={handleVoidClick} key={`ql-${reply.cid}`}
                                   className="quote-link" 
                                   onClick={(event) => handleQuoteClick(reply, event)}>
-                                  c/{reply.cid.slice(0, 8)}</Link>
+                                  c/{reply.shortCid}</Link>
                                   &nbsp;
                                 </div>
                               ))
@@ -747,7 +747,7 @@ const Thread = () => {
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
                           {getDate(reply?.timestamp)}&nbsp;
                           <Link to="" key={`mob-pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
+                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.shortCid}</button>
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">

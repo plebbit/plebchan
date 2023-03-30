@@ -202,7 +202,7 @@ const Board = () => {
   // scroll to post when quote is clicked
   function handleQuoteClick(reply, event) {
     event.preventDefault();
-    const cid = reply.cid.slice(0, 8);
+    const cid = reply.shortCid;
     const targetElement = [...document.querySelectorAll('.post-reply')]
       .find(el => el.innerHTML.includes(cid));
     if (targetElement) {
@@ -467,7 +467,7 @@ const Board = () => {
                           &nbsp;
                           <span key={`pn-${thread.cid}`} className="post-number">
                             <Link to="" key={`pl1-${thread.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${thread.cid}`} onClick={handleReplyOpen} title="Reply to this post">{thread.cid.slice(0, 8)}</button>
+                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${thread.cid}`} onClick={handleReplyOpen} title="Reply to this post">{thread.shortCid}</button>
                             &nbsp;
                             <span key={`rl1-${thread.cid}`}>&nbsp;
                               [
@@ -484,7 +484,7 @@ const Board = () => {
                                 <Link key={`ql-${reply.cid}`}
                                 to={handleVoidClick} className="quote-link" 
                                 onClick={(event) => handleQuoteClick(reply, event)}>
-                                  c/{reply.cid.slice(0, 8)}</Link>
+                                  c/{reply.shortCid}</Link>
                                   &nbsp;
                                 </div>
                               ))
@@ -557,7 +557,7 @@ const Board = () => {
                             &nbsp;
                             <span key={`pn-${reply.cid}`} className="post-number">
                               <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
+                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.shortCid}</button>
                             </span>&nbsp;
                             <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                             <div id="backlink-id" className="backlink">
@@ -568,7 +568,7 @@ const Board = () => {
                                   <Link to={handleVoidClick} key={`ql-${reply.cid}`}
                                     className="quote-link" 
                                     onClick={(event) => handleQuoteClick(reply, event)}>
-                                    c/{reply.cid.slice(0, 8)}</Link>
+                                    c/{reply.shortCid}</Link>
                                     &nbsp;
                                   </div>
                                 ))
@@ -697,7 +697,7 @@ const Board = () => {
                           {getDate(thread.timestamp)}
                           &nbsp;
                           <Link to="" key={`mob-no-${thread.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no2-${thread.cid}`} onClick={handleReplyOpen} title="Reply to this post">{thread.cid.slice(0, 8)}</button>
+                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no2-${thread.cid}`} onClick={handleReplyOpen} title="Reply to this post">{thread.shortCid}</button>
                         </span>
                       </div>
                       {thread.link ? (
@@ -791,7 +791,7 @@ const Board = () => {
                           <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
                           {getDate(reply.timestamp)}&nbsp;
                             <Link to="" key={`mob-pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.cid.slice(0, 8)}</button>
+                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.shortCid}</button>
                           </span>
                         </div>
                         {reply.link ? (
