@@ -2794,8 +2794,12 @@ export const BoardForm = styled.div`
       }
 
       .quote-link {
-        color: #d00;
+        color: #34345C;
         text-decoration: underline;
+      }
+
+      .quote-link:hover {
+        color: red;
       }
 
       .backlink span {
