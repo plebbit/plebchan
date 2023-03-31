@@ -42,7 +42,7 @@ const Home = () => {
       <Page>
         <Search>
           <form>
-            <input type="text" placeholder='"board.eth" or "Qm..."' />
+            <input type="text" placeholder='"board.eth" or "12D3KooW..."' disabled />
             <input type="submit" value="Search" disabled />
           </form>
         </Search>
