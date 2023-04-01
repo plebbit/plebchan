@@ -46,7 +46,6 @@ const Catalog = () => {
   const handleClickForm = useClickForm();
 
 
-
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
@@ -54,7 +53,6 @@ const Catalog = () => {
       setSelectedTitle(selectedSubplebbit.title);
     }
   }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
-
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -70,12 +68,11 @@ const Catalog = () => {
   }, [prevScrollPos, visible]);
 
 
-
   const tryLoadMore = async () => {
     try {loadMore()} 
     catch (e)
     {await new Promise(resolve => setTimeout(resolve, 1000))}
-  }
+  };
 
 
   const onChallengeVerification = (challengeVerification) => {
@@ -86,7 +83,7 @@ const Catalog = () => {
       onError('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       onError("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
-  }
+  };
 
 
   const onChallenge = async (challenges, comment) => {
@@ -100,7 +97,7 @@ const Catalog = () => {
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
-  }
+  };
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -134,29 +131,13 @@ const Catalog = () => {
   };
 
 
-
-  const handleClickTitle = (title, address) => {
-    setSelectedTitle(title);
-    setSelectedAddress(address);
-  };
-
-
   const handleSelectChange = (event) => {
     const selected = event.target.value;
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
     navigate(`/${selected}`);
-  }
-
-
-  const handleClickHelp = () => {
-    alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.");
   };
-
-  const handleClickThread = (thread) => {
-    setSelectedThread(thread);
-  }
 
 
   const handlePublishComment = async () => {
@@ -179,43 +160,34 @@ const Catalog = () => {
     }
   };
 
-  const handleCaptchaClose = () => {
-    setIsCaptchaOpen(false);
-  };
-
-  const handleSettingsClose = () => {
-    setIsSettingsOpen(false);
-  }
-
-  const handleSettingsOpen = () => {
-    setIsSettingsOpen(true);
-  }
-
-
 
   return (
     <Container>
       <CaptchaModal 
       isOpen={isCaptchaOpen} 
-      closeModal={handleCaptchaClose} 
+      closeModal={() => setIsCaptchaOpen(false)} 
       captchaImage={captchaImage} />
       <SettingsModal
       selectedStyle={selectedStyle}
       isOpen={isSettingsOpen}
-      closeModal={handleSettingsClose} />
+      closeModal={() => setIsSettingsOpen(false)} />
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} 
+              onClick={() => {
+              setSelectedTitle(subplebbit.title);
+              setSelectedAddress(subplebbit.address);
+              }}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
           ))}
           <span className="nav">
             [
-            <Link to={`/${selectedAddress}/catalog/settings`} onClick={handleSettingsOpen}>Settings</Link>
+            <Link to={`/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -234,7 +206,7 @@ const Catalog = () => {
               </select>
             </div>
             <div className="page-jump">
-              <Link to={`/${selectedAddress}/catalog/settings`} onClick={handleSettingsOpen}>Settings</Link>
+              <Link to={`/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>
@@ -294,7 +266,9 @@ const Catalog = () => {
               <td>Embed File</td>
               <td>
                 <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
-                <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
+                <button id="t-help" type="button" onClick={
+                  () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
+                } data-tip="Help">?</button>
               </td>
             </tr>
           </tbody>
@@ -342,7 +316,7 @@ const Catalog = () => {
               const commentMediaInfo = getCommentMediaInfo(thread);
               const fallbackImgUrl = "/assets/filedeleted-res.gif";
               return (
-                <Link style={{all: "unset", cursor: "pointer"}} key={`link-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => handleClickThread(thread.cid)}>
+                <Link style={{all: "unset", cursor: "pointer"}} key={`link-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)}>
                   <div key={`thread-${thread.cid}`} className="thread">
                       {commentMediaInfo?.url ? (
                         <Fragment key="f-catalog">

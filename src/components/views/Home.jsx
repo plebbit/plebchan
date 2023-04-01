@@ -13,12 +13,6 @@ const Home = () => {
     setSelectedTitle
   } = useAppStore(state => state);
 
-
-  const handleClick = (title, address) => {
-    setSelectedTitle(title);
-    setSelectedAddress(address);
-  }
-
   // prevent dark mode
   useEffect(() => {
     setBodyStyle({
@@ -67,7 +61,8 @@ const Home = () => {
                 <div className="board" key={subplebbit.address}>
                   <div className="board-title">{subplebbit.title}</div>
                   <Link to={`/${subplebbit.address}`} onClick={() => {
-                    handleClick(subplebbit.title, subplebbit.address);
+                    setSelectedTitle(subplebbit.title);
+                    setSelectedAddress(subplebbit.address);
                   }} >
                     <img alt="board logo" src="/assets/plebchan.png" />
                   </Link>

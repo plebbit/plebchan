@@ -52,10 +52,10 @@ const Thread = () => {
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
 
+
   // useEffect(() => {
   //   console.log(comment);
   // }, [comment]);
-
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
@@ -80,7 +80,6 @@ const Thread = () => {
     return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [prevScrollPos, visible]);
 
-
   
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
@@ -90,7 +89,7 @@ const Thread = () => {
       onError('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       onError("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
-  }
+  };
 
 
   const onChallenge = async (challenges, comment) => {
@@ -104,7 +103,7 @@ const Thread = () => {
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
-  }
+  };
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -137,16 +136,6 @@ const Thread = () => {
     });
   };
 
-
-
-  const handleVoidClick = () => {}
-
-  // desktop navbar board select functionality
-  const handleClickTitle = (title, address) => {
-    setSelectedTitle(title);
-    setSelectedAddress(address);
-  };
-
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
@@ -154,22 +143,7 @@ const Thread = () => {
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
     navigate(`/${selected}`);
-  }
-
-
-  const handleClickHelp = () => {
-    alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.");
   };
-
-
-  const handleClickTop = () => {
-    window.scrollTo(0, 0);
-  }
-
-
-  const handleClickBottom = () => {
-    window.scrollTo(0, document.body.scrollHeight);
-  }
 
 
   const handlePublishComment = async () => {
@@ -200,44 +174,23 @@ const Thread = () => {
     if (targetElement) {
         targetElement.scrollIntoView({ behavior: "instant" });
     }
-  }
-
-  const handleCaptchaClose = () => {
-    setIsCaptchaOpen(false);
   };
 
-  const handleReplyClose = () => {
-    setIsReplyOpen(false);
-  };
-  
-  const handleReplyOpen = () => {
-    setIsReplyOpen(true);
-  };
-
-  const handleSettingsClose = () => {
-    setIsSettingsOpen(false);
-  }
-
-  const handleSettingsOpen = () => {
-    setIsSettingsOpen(true);
-  }
-  
-  
 
   return (
     <Container>
       <CaptchaModal 
       isOpen={isCaptchaOpen} 
-      closeModal={handleCaptchaClose} 
+      closeModal={() => setIsCaptchaOpen(false)} 
       captchaImage={captchaImage} />
       <ReplyModal 
       selectedStyle={selectedStyle}
       isOpen={isReplyOpen}
-      closeModal={handleReplyClose} />
+      closeModal={() => setIsReplyOpen(false)} />
       <SettingsModal
       selectedStyle={selectedStyle}
       isOpen={isSettingsOpen}
-      closeModal={handleSettingsClose} />
+      closeModal={() => setIsSettingsOpen(false)} />
       <NavBar selectedStyle={selectedStyle}>
         <>
           {defaultSubplebbits.map(subplebbit => (
@@ -245,14 +198,17 @@ const Thread = () => {
               [
               <Link key={`a-${subplebbit.address}`} 
               to={`/${subplebbit.address}`} 
-              onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              onClick={() => {
+                setSelectedTitle(subplebbit.title);
+                setSelectedAddress(subplebbit.address);
+              }}
               >{subplebbit.title}</Link>
               ]&nbsp;
             </span>
           ))}
           <span className="nav">
             [
-            <Link to={`/${selectedAddress}/thread/${selectedThread}/settings`} onClick={handleSettingsOpen}>Settings</Link>
+            <Link to={`/${selectedAddress}/thread/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -271,7 +227,7 @@ const Thread = () => {
               </select>
             </div>
             <div className="page-jump">
-              <Link to={`/${selectedAddress}/thread/${selectedThread}/settings`} onClick={handleSettingsOpen}>Settings</Link>
+              <Link to={`/${selectedAddress}/thread/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>
@@ -307,7 +263,7 @@ const Thread = () => {
           </div>
           <div id="bottom-button-mobile">
             <span className="btn-wrap">
-              <a onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'}>Bottom</a>
+              <a onClick={() => window.scrollTo(0, document.body.scrollHeight)} onMouseOver={(event) => event.target.style.cursor='pointer'}>Bottom</a>
             </span>
           </div>
           <div id="post-form-link-desktop">
@@ -340,7 +296,10 @@ const Thread = () => {
               <td>Embed File</td>
               <td>
                 <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
-                <button id="t-help" type="button" onClick={handleClickHelp} data-tip="Help">?</button>
+                <button id="t-help" type="button" onClick={
+                  () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")}
+                  data-tip="Help"
+                >?</button>
               </td>
             </tr>
           </tbody>
@@ -372,7 +331,9 @@ const Thread = () => {
         </span>
         <span className="return-button catalog-button" id="bottom-button-desktop">
           [
-          <a onClick={handleClickBottom} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickBottom}>Bottom</a>
+          <a onClick={() =>  window.scrollTo(0, document.body.scrollHeight)} 
+          onMouseOver={(event) => event.target.style.cursor='pointer'} 
+          onTouchStart={() =>  window.scrollTo(0, document.body.scrollHeight)}>Bottom</a>
           ]
         </span>
         {comment ? (
@@ -476,16 +437,16 @@ const Thread = () => {
                       <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                       &nbsp;
                       <span className="post-number">
-                        <Link to="" onClick={handleVoidClick} title="Link to this post">c/</Link>
-                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={handleReplyOpen} title="Reply to this post">{comment.shortCid}</button>
+                        <Link to="" onClick={() => {}} title="Link to this post">c/</Link>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => setIsReplyOpen(true)} title="Reply to this post">{comment.shortCid}</button>
                       </span>&nbsp;&nbsp;
-                      <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
+                      <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                       <div id="backlink-id" className="backlink">
                         {comment.replies?.pages.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
                           .map((reply) => (
                             <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
-                            <Link to={handleVoidClick} key={`ql-${reply.cid}`}
+                            <Link to={() => {}} key={`ql-${reply.cid}`}
                               className="quote-link" 
                               onClick={(event) => handleQuoteClick(reply, event)}>
                               c/{reply.shortCid}</Link>
@@ -541,16 +502,16 @@ const Thread = () => {
                           <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
                           &nbsp;
                           <span key={`pn-${reply.cid}`} className="post-number">
-                            <Link to="" key={`pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.shortCid}</button>
+                            <Link to="" key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={() => setIsReplyOpen(true)} title="Reply to this post">{reply.shortCid}</button>
                           </span>&nbsp;
-                          <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={handleVoidClick} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
+                          <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                           <div id="backlink-id" className="backlink">
                             {reply.replies?.pages.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
                               .map((reply) => (
                                 <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
-                                <Link to={handleVoidClick} key={`ql-${reply.cid}`}
+                                <Link to={() => {}} key={`ql-${reply.cid}`}
                                   className="quote-link" 
                                   onClick={(event) => handleQuoteClick(reply, event)}>
                                   c/{reply.shortCid}</Link>
@@ -606,7 +567,7 @@ const Thread = () => {
                             </div>
                           ) : null}
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
-                          <Link to={handleVoidClick} className="quote-link"
+                          <Link to={() => {}} className="quote-link"
                             onClick={(event) => handleQuoteClick(reply, event)}>
                             {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                           </Link>
@@ -623,7 +584,7 @@ const Thread = () => {
               <div className="op-container" key="op-container">
                   <div key={`mob-po-${comment.cid}`} className="post op">
                     <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
-                      <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" onClick={handleVoidClick}>...</button>
+                      <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" onClick={() => {}}>...</button>
                       <span className="name-block-mobile">
                         {comment.author?.displayName
                         ? comment.author?.displayName.length > 15
@@ -665,8 +626,8 @@ const Thread = () => {
                       <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
                         {getDate(comment?.timestamp)}
                         &nbsp;
-                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={handleReplyOpen} title="Link to this post">c/</button>
-                        <Link to="" key={`mob-no2-${comment.cid}`} onClick={handleVoidClick} title="Reply to this post">{comment.cid?.slice(0, 8)}</Link>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={() => setIsReplyOpen(true)} title="Link to this post">c/</button>
+                        <Link to="" key={`mob-no2-${comment.cid}`} onClick={() => {}} title="Reply to this post">{comment.cid?.slice(0, 8)}</Link>
                       </span>
                     </div>
                     {commentMediaInfo?.url ? (
@@ -746,12 +707,12 @@ const Thread = () => {
                         </span>
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
                           {getDate(reply?.timestamp)}&nbsp;
-                          <Link to="" key={`mob-pl1-${reply.cid}`} onClick={handleVoidClick} title="Link to this post">c/</Link>
-                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={handleReplyOpen} title="Reply to this post">{reply.shortCid}</button>
+                          <Link to="" key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={() => setIsReplyOpen(true)} title="Reply to this post">{reply.shortCid}</button>
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
-                        <Link to={handleVoidClick} key={`mob-ql-${reply.cid}`} className="quotelink-mobile" 
+                        <Link to={() => {}} key={`mob-ql-${reply.cid}`} className="quotelink-mobile" 
                         onClick={(event) => handleQuoteClick(reply, event)}>
                           {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
                         </Link>
@@ -778,12 +739,14 @@ const Thread = () => {
                   </span>
                   <span className="bottom-bar-top">
                     [
-                    <a onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                    <a onClick={() => window.scrollTo(0, 0)} 
+                    onMouseOver={(event) => event.target.style.cursor='pointer'} 
+                    onTouchStart={() => window.scrollTo(0, 0)}>Top</a>
                     ]
                   </span>
                   <span className="quickreply-button">
                   [
-                  <Link to="" onClick={handleVoidClick} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
+                  <Link to="" onClick={() => {}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
                   ]
                   </span>
                   {comment.replyCount > 0 ? (
@@ -847,7 +810,9 @@ const Thread = () => {
                   </div>
                   <span className="bottom-bar-top">
                     <span className="btn-wrap">
-                      <a onClick={handleClickTop} onMouseOver={(event) => event.target.style.cursor='pointer'} onTouchStart={handleClickTop}>Top</a>
+                      <a onClick={() => window.scrollTo(0, 0)} 
+                      onMouseOver={(event) => event.target.style.cursor='pointer'} 
+                      onTouchStart={() => window.scrollTo(0, 0)}>Top</a>
                     </span>
                   </span>
                 </div>
