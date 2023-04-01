@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useAppStore from '../../useAppStore';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styles/Home.styled';
 
 
@@ -12,6 +12,9 @@ const Home = () => {
     setSelectedStyle,
     setSelectedTitle
   } = useAppStore(state => state);
+
+  const inputRef = useRef(null);
+  const navigate = useNavigate();
 
   // prevent dark mode
   useEffect(() => {
@@ -35,10 +38,26 @@ const Home = () => {
       </Header>
       <Page>
         <Search>
-          <form>
-            <input type="text" placeholder='"board.eth" or "12D3KooW..."' disabled />
-            <input type="submit" value="Search" disabled />
-          </form>
+          <input type="text" placeholder='"board.eth" or "12D3KooW..."' ref={inputRef} onKeyDown={
+            (event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                const address = inputRef.current.value;
+                if (address) {
+                  setSelectedAddress(address);
+                  navigate(`/${address}`)
+                }
+              }
+          }} />
+          <input type="submit" value="Search" onClick={
+            () => {
+              const address = inputRef.current.value;
+              if (address) {
+                setSelectedAddress(address);
+                navigate(`/${address}`)
+              }
+            }
+          } />
         </Search>
         <About>
           <AboutTitle>
