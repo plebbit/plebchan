@@ -59,7 +59,9 @@ const Home = () => {
             <BoardsContent>
               {defaultSubplebbits.map(subplebbit => (
                 <div className="board" key={subplebbit.address}>
-                  <div className="board-title">{subplebbit.title}</div>
+                  <div className="board-title">
+                    {subplebbit.title ? subplebbit.title : <span style={{userSelect: "none"}}>&nbsp;</span>}
+                  </div>
                   <Link to={`/${subplebbit.address}`} onClick={() => {
                     setSelectedTitle(subplebbit.title);
                     setSelectedAddress(subplebbit.address);

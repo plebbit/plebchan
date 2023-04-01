@@ -216,7 +216,7 @@ const Board = () => {
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
               <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
-              >{subplebbit.title}</Link>
+              >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
               ]&nbsp;
             </span>
           ))}
@@ -236,7 +236,7 @@ const Board = () => {
               <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                 {defaultSubplebbits.map(subplebbit => (
                     <option key={`option-${subplebbit.address}`} value={subplebbit.address}
-                    >{subplebbit.title}</option>
+                    >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
                   ))}
               </select>
             </div>
