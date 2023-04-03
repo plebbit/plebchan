@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import useAppStore from '../useAppStore';
 import Modal from 'react-modal';
 import styled from 'styled-components';
@@ -246,18 +246,21 @@ const StyledModal = styled(Modal)`
 
 
 const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
-  const { captchaResponse, setCaptchaResponse } = useAppStore(state => state);
+  const { setCaptchaResponse } = useAppStore(state => state);
   const selectedStyle = useAppStore(state => state.selectedStyle);
 
-  const handleCloseModal = () => {
-    closeModal();
+  const responseRef = useRef();
+  const nodeRef = useRef(null);
+
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      setCaptchaResponse(responseRef.current.value);
+      closeModal();
+    }
   };
 
-  const handleChallengeResponse = (event) => {
-    setCaptchaResponse(event.target.value);
-  };  
-
-  const nodeRef = React.useRef(null);
 
   return (
     <StyledModal
@@ -272,7 +275,7 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
             Challenges for
-            <button className="icon" onClick={handleCloseModal} title="close" />
+            <button className="icon" onClick={() => closeModal()} title="close" />
           </div>
           <div id="form">
             <div>
@@ -287,8 +290,8 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
               type="text" 
               autoComplete='off'
               placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
-              value={captchaResponse} 
-              onChange={handleChallengeResponse}
+              ref={responseRef}
+              onKeyDown={handleKeyDown}
               autoFocus />
               <img src={captchaImage} alt="captcha" />
             </div>

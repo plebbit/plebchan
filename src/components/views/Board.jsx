@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
@@ -34,10 +34,11 @@ const Board = () => {
     showPostFormLink
   } = useAppStore(state => state);
 
-  const [name, setName] = useState('');
-  const [subject, setSubject] = useState('');
-  const [comment, setComment] = useState('');
-  const { publishComment } = usePublishComment();
+  const nameRef = useRef();
+  const subjectRef = useRef();
+  const commentRef = useRef();
+  const linkRef = useRef();
+
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
@@ -46,12 +47,11 @@ const Board = () => {
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed);
-  const { subplebbitAddress } = useParams();  
-  const handleClickForm = useClickForm();
+  const { subplebbitAddress } = useParams();
 
 
   // useEffect(() => {
-  //   console.log(selectedFeed);
+  //   console.log(selectedFeed[3]);
   // }, [selectedFeed]);
 
   // temporary title from JSON, gets subplebbitAddress from URL
@@ -89,7 +89,7 @@ const Board = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   };
-  
+
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
@@ -103,6 +103,7 @@ const Board = () => {
 
 
   const onChallenge = async (challenges, comment) => {
+    console.log("onChallenge:", challenges, comment)
     let challengeAnswers = [];
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
@@ -114,8 +115,31 @@ const Board = () => {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
   }
-  
 
+
+  const publishCommentOptions = {
+    displayName: nameRef.current ? nameRef.current.value : undefined,
+    title: subjectRef.current ? subjectRef.current.value : undefined,
+    content: commentRef.current ? commentRef.current.value : undefined,
+    link: linkRef.current ? linkRef.current.value : undefined,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError
+  };
+
+
+  const resetFields = () => {
+    nameRef.current.value = '';
+    subjectRef.current.value = '';
+    commentRef.current.value = '';
+    linkRef.current.value = '';
+  };
+
+
+  const { publishComment } = usePublishComment(publishCommentOptions);
+  
+  
   const getChallengeAnswersFromUser = async (challenges) => {
     return new Promise((resolve, reject) => {
       const imageString = challenges?.challenges[0].challenge;
@@ -133,6 +157,7 @@ const Board = () => {
             resolve(captchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
+            event.preventDefault();
           }
         };
 
@@ -162,26 +187,6 @@ const Board = () => {
     navigate(`/${selected}`);
   };
 
-
-  const handlePublishComment = async () => {
-    try {
-      const pendingComment = await publishComment({
-        content: comment,
-        title: subject,
-        subplebbitAddress: selectedAddress,
-        onChallengeVerification,
-        onChallenge,
-        onError: onError,
-      });
-      console.log(`Comment pending with index: ${pendingComment.index}`);
-      setName('');
-      setSubject('');
-      setComment('');
-    } catch (error) {
-      onError(error);
-    }
-  };
-
   // scroll to post when quote is clicked
   function handleQuoteClick(reply, event) {
     event.preventDefault();
@@ -192,7 +197,6 @@ const Board = () => {
         targetElement.scrollIntoView({ behavior: "instant" });
     }
   };
-
 
 
   return (
@@ -267,12 +271,12 @@ const Board = () => {
       <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
         <div id="post-form-link-desktop">
             [
-              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+              <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
             ]
           </div>
           <div id="post-form-link-mobile">
             <span className="btn-wrap">
-              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+              <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
             </span>
           </div>
         </PostFormLink>
@@ -281,26 +285,27 @@ const Board = () => {
             <tr data-type="Name">
               <td id="td-name">Name</td>
               <td>
-                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" />
+                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
               </td>
             </tr>
             <tr data-type="Subject">
               <td>Subject</td>
               <td>
-                <input name="sub" type="text" tabIndex={3} />
-                <input id="post-button" type="submit" value="Post" tabIndex={6} onClick={handlePublishComment} />
+                <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
+                <input id="post-button" type="submit" value="Post" tabIndex={6} 
+                onClick={async () => {await publishComment(); resetFields();}} />
               </td>
             </tr>
             <tr data-type="Comment">
               <td>Comment</td>
               <td>
-                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" />
+                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
               </td>
             </tr>
             <tr data-type="File">
               <td>Embed File</td>
               <td>
-                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
+                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
                 <button id="t-help" type="button" onClick={
                   () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
                 } data-tip="Help">?</button>

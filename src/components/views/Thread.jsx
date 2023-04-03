@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
@@ -33,12 +33,12 @@ const Thread = () => {
     showPostForm,
     showPostFormLink
   } = useAppStore(state => state);
-  
 
-  const [name, setName] = useState('');
-  const [subject, setSubject] = useState('');
+  const nameRef = useRef();
+  const commentRef = useRef();
+  const linkRef = useRef();
+
   const [commentContent, setCommentContent] = useState('');
-  const { publishComment } = usePublishComment();
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
@@ -93,6 +93,7 @@ const Thread = () => {
 
 
   const onChallenge = async (challenges, comment) => {
+    // console.log("onChallenge:", challenges, comment);
     let challengeAnswers = [];
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
@@ -104,6 +105,28 @@ const Thread = () => {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
   };
+
+
+  const publishCommentOptions = {
+    displayName: nameRef.current ? nameRef.current.value : undefined,
+    content: commentRef.current ? commentRef.current.value : undefined,
+    link: linkRef.current ? linkRef.current.value : undefined,
+    parentCid: selectedThread,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError
+  };
+
+
+  const resetFields = () => {
+    nameRef.current.value = '';
+    commentRef.current.value = '';
+    linkRef.current.value = '';
+  };
+
+
+  const { publishComment } = usePublishComment(publishCommentOptions);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -123,6 +146,7 @@ const Thread = () => {
             resolve(captchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
+            event.preventDefault();
           }
         };
 
@@ -145,25 +169,6 @@ const Thread = () => {
     navigate(`/${selected}`);
   };
 
-
-  const handlePublishComment = async () => {
-    try {
-      const pendingComment = await publishComment({
-        content: commentContent,
-        title: subject,
-        subplebbitAddress: selectedAddress,
-        onChallengeVerification,
-        onChallenge,
-        onError: onError,
-      });
-      console.log(`Comment pending with index: ${pendingComment.index}`);
-      setName('');
-      setSubject('');
-      setCommentContent('');
-    } catch (error) {
-      onError(error);
-    }
-  };
 
   // scroll to post when quote is clicked
   function handleQuoteClick(reply, event) {
@@ -282,20 +287,21 @@ const Thread = () => {
             <tr data-type="Name">
               <td id="td-name">Name</td>
               <td>
-                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" value={name} onChange={(event) => setName(event.target.value)} />
-                <input id="post-button" type="submit" value="Post" tabIndex={6} onClick={handlePublishComment} />
+                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
+                <input id="post-button" type="submit" value="Post" tabIndex={6} 
+                onClick={async () => {await publishComment(); resetFields();}} />
               </td>
             </tr>
             <tr data-type="Comment">
               <td>Comment</td>
               <td>
-                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" value={commentContent} onChange={(event) => setCommentContent(event.target.value)}></textarea>
+                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
               </td>
             </tr>
             <tr data-type="File">
               <td>Embed File</td>
               <td>
-                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
+                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
                 <button id="t-help" type="button" onClick={
                   () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")}
                   data-tip="Help"

@@ -2417,9 +2417,9 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#7e6f4d7d90f628e474e02c51a89e2723fb71a73d":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#d5f312ef577dc4a845e15d1f87c4273cb2195c08":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#7e6f4d7d90f628e474e02c51a89e2723fb71a73d"
+  resolved "https://github.com/plebbit/plebbit-js.git#d5f312ef577dc4a845e15d1f87c4273cb2195c08"
   dependencies:
     "@keyv/sqlite" "3.6.2"
     "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
@@ -2434,6 +2434,7 @@
     ethers "5.7.2"
     file-type "16.5.4"
     form-data "4.0.0"
+    hpagent "1.2.0"
     ipfs-http-client "56.0.3"
     ipfs-only-hash "4.0.0"
     is-ipfs "6.0.2"
@@ -2442,8 +2443,9 @@
     keyv "4.5.2"
     knex "2.3.0"
     libp2p-crypto "0.21.2"
+    limiter "2.1.0"
     lodash-es "4.17.21"
-    open-graph-scraper "^5.2.2"
+    open-graph-scraper "5.2.3"
     peer-id "0.16.0"
     proper-lockfile "github:plebbit/node-proper-lockfile"
     retry "0.13.1"
@@ -2452,12 +2454,12 @@
     sqlite3 "5.1.2"
     tiny-typed-emitter "2.1.0"
     tinycache "1.1.2"
-    tunnel "0.0.6"
+    ts-custom-error "3.3.1"
     uuid "9.0.0"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#d5f312ef577dc4a845e15d1f87c4273cb2195c08":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#ef0f3c6dd5e72c58dab1dffc486addf2819bd638":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#d5f312ef577dc4a845e15d1f87c4273cb2195c08"
+  resolved "https://github.com/plebbit/plebbit-js.git#ef0f3c6dd5e72c58dab1dffc486addf2819bd638"
   dependencies:
     "@keyv/sqlite" "3.6.2"
     "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
@@ -2523,11 +2525,11 @@
     uuid "8.3.2"
     zustand "4.0.0"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#b42bcb6a4f74ab23bbb8dfa49e43e9cccef3ece6":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#6de131a2e9f23578efd9faf4670d2cc43ce6d5ba":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#b42bcb6a4f74ab23bbb8dfa49e43e9cccef3ece6"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#6de131a2e9f23578efd9faf4670d2cc43ce6d5ba"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#7e6f4d7d90f628e474e02c51a89e2723fb71a73d"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#ef0f3c6dd5e72c58dab1dffc486addf2819bd638"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
@@ -9630,7 +9632,7 @@ onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-open-graph-scraper@5.2.3, open-graph-scraper@^5.2.2:
+open-graph-scraper@5.2.3:
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/open-graph-scraper/-/open-graph-scraper-5.2.3.tgz#8a84b4f48d42e18d9ec44453377499acf57cfe66"
   integrity sha512-OFKyI3Zv60onbwjUtwTdLwMB9P1O0+U2JV0HD4hHdwyKGwDhyM09udZVU5vEwe/PxI4MyPuVaxcdy1okc4SgWw==
@@ -12337,11 +12339,6 @@ tsutils@^3.21.0:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
-
-tunnel@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
-  integrity sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

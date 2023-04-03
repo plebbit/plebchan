@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
@@ -32,10 +32,11 @@ const Catalog = () => {
     showPostFormLink
   } = useAppStore(state => state);
 
-  const [name, setName] = useState('');
-  const [subject, setSubject] = useState('');
-  const [comment, setComment] = useState('');
-  const { publishComment } = usePublishComment();
+  const nameRef = useRef();
+  const subjectRef = useRef();
+  const commentRef = useRef();
+  const linkRef = useRef();
+
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
@@ -43,9 +44,8 @@ const Catalog = () => {
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const { subplebbitAddress } = useParams();
-  const handleClickForm = useClickForm();
 
-
+  // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
@@ -87,6 +87,7 @@ const Catalog = () => {
 
 
   const onChallenge = async (challenges, comment) => {
+    // console.log("onChallenge:", challenges, comment);
     let challengeAnswers = [];
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
@@ -98,6 +99,29 @@ const Catalog = () => {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
   };
+
+
+  const publishCommentOptions = {
+    displayName: nameRef.current ? nameRef.current.value : undefined,
+    title: subjectRef.current ? subjectRef.current.value : undefined,
+    content: commentRef.current ? commentRef.current.value : undefined,
+    link: linkRef.current ? linkRef.current.value : undefined,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError
+  };
+
+
+  const resetFields = () => {
+    nameRef.current.value = '';
+    subjectRef.current.value = '';
+    commentRef.current.value = '';
+    linkRef.current.value = '';
+  };
+
+
+  const { publishComment } = usePublishComment(publishCommentOptions);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -117,6 +141,7 @@ const Catalog = () => {
             resolve(captchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
+            event.preventDefault();
           }
         };
 
@@ -130,34 +155,13 @@ const Catalog = () => {
     });
   };
 
-
+  // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
     navigate(`/${selected}`);
-  };
-
-
-  const handlePublishComment = async () => {
-    // Event.preventDefault();
-    try {
-      const pendingComment = await publishComment({
-        content: comment,
-        title: subject,
-        subplebbitAddress: selectedAddress,
-        onChallengeVerification,
-        onChallenge,
-        onError: onError,
-      });
-      console.log(`Comment pending with index: ${pendingComment.index}`);
-      setName('');
-      setSubject('');
-      setComment('');
-    } catch (error) {
-      onError(error);
-    }
   };
 
 
@@ -232,46 +236,47 @@ const Catalog = () => {
         <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
           <div id="post-form-link-desktop">
             [
-              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+              <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
             ]
           </div>
           <div id="post-form-link-mobile">
             <span className="btn-wrap">
-              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+              <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
             </span>
           </div>
         </PostFormLink>
         <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
         <tbody>
-            <tr data-type="Name">
-              <td id="td-name">Name</td>
-              <td>
-                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" value={name} onChange={(event) => setName(event.target.value)} />
-              </td>
-            </tr>
-            <tr data-type="Subject">
-              <td>Subject</td>
-              <td>
-                <input name="sub" type="text" tabIndex={3} value={subject} onChange={(event) => setSubject(event.target.value)} />
-                <input id="post-button" type="submit" value="Post" tabIndex={6} onClick={handlePublishComment} />
-              </td>
-            </tr>
-            <tr data-type="Comment">
-              <td>Comment</td>
-              <td>
-                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
-              </td>
-            </tr>
-            <tr data-type="File">
-              <td>Embed File</td>
-              <td>
-                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" />
-                <button id="t-help" type="button" onClick={
-                  () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
-                } data-tip="Help">?</button>
-              </td>
-            </tr>
-          </tbody>
+          <tr data-type="Name">
+            <td id="td-name">Name</td>
+            <td>
+              <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
+            </td>
+          </tr>
+          <tr data-type="Subject">
+            <td>Subject</td>
+            <td>
+              <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
+              <input id="post-button" type="submit" value="Post" tabIndex={6} 
+              onClick={async () => {await publishComment(); resetFields();}} />
+            </td>
+          </tr>
+          <tr data-type="Comment">
+            <td>Comment</td>
+            <td>
+              <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
+            </td>
+          </tr>
+          <tr data-type="File">
+            <td>Embed File</td>
+            <td>
+              <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
+              <button id="t-help" type="button" onClick={
+                () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
+              } data-tip="Help">?</button>
+            </td>
+          </tr>
+        </tbody>
         </PostFormTable>
       </PostForm>
       <TopBar selectedStyle={selectedStyle}>
