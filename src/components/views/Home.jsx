@@ -99,7 +99,7 @@ const Home = () => {
         <ul>
           <li className="fill"></li>
           <li className="first">
-            <a href="https://plebbitdemo.eth.limo" target="_blank" rel="noopener noreferrer">Plebbit</a>
+            <a href="https://plebbitapp.eth.limo/#/" target="_blank" rel="noopener noreferrer">Plebbit</a>
           </li>
           <li>
             <a href="https://gitcoin.co/grants/5515/plebbit-a-serverless-adminless-decentralized-redd" target="_blank" rel="noopener noreferrer">Donate</a>
@@ -108,7 +108,7 @@ const Home = () => {
             <a href="https://plebbit.com/whitepaper" target="_blank" rel="noopener noreferrer">Whitepaper</a>
           </li>
           <li>
-            <a href="https://snowtrace.io/token/0x625fc9bb971bb305a2ad63252665dcfe9098bee9" target="_blank" rel="noopener noreferrer">Contract</a>
+            <a href="https://snowtrace.io/token/0x625fc9bb971bb305a2ad63252665dcfe9098bee9" target="_blank" rel="noopener noreferrer">Token</a>
           </li>
           <li>
             <a href="https://matrix.to/#/#plebbit:plebbitchat.org" target="_blank" rel="noopener noreferrer">Matrix</a>
