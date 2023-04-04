@@ -14,9 +14,9 @@ import Post from '../Post';
 import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
-import onError from '../../utils/onError';
-import onSuccess from '../../utils/onSuccess';
 import useClickForm from '../../hooks/useClickForm';
+import useError from '../../hooks/useError';
+import useSuccess from '../../hooks/useSuccess';
 
 
 const Catalog = () => {
@@ -44,6 +44,11 @@ const Catalog = () => {
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const { subplebbitAddress } = useParams();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
@@ -77,11 +82,11 @@ const Catalog = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      onSuccess('challenge success', {publishedCid: challengeVerification.publication.cid})
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid})
     }
     else if (challengeVerification.challengeSuccess === false) {
-      onError('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-      onError("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+      setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
 
@@ -93,7 +98,7 @@ const Catalog = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      onError(error);
+      setErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -109,7 +114,6 @@ const Catalog = () => {
     subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
-    onError
   };
 
 
@@ -150,7 +154,7 @@ const Catalog = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(onError('Could not load challenge image'));
+        reject(setErrorMessage('Could not load challenge image'));
       };
     });
   };

@@ -15,10 +15,10 @@ import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleStyleChange from '../../utils/handleStyleChange';
-import onError from '../../utils/onError';
-import onSuccess from '../../utils/onSuccess';
 import renderThreadComments from '../../utils/renderThreadComments';
 import useClickForm from '../../hooks/useClickForm';
+import useError from '../../hooks/useError';
+import useSuccess from '../../hooks/useSuccess';
 
 
 const Thread = () => {
@@ -38,7 +38,6 @@ const Thread = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const [commentContent, setCommentContent] = useState('');
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
@@ -51,6 +50,11 @@ const Thread = () => {
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
 
 
   // useEffect(() => {
@@ -83,11 +87,11 @@ const Thread = () => {
   
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      onSuccess('challenge success', {publishedCid: challengeVerification.publication.cid})
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid})
     }
     else if (challengeVerification.challengeSuccess === false) {
-      onError('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-      onError("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+      setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
 
@@ -99,7 +103,7 @@ const Thread = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      onError(error);
+      setErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -115,7 +119,6 @@ const Thread = () => {
     subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
-    onError
   };
 
 
@@ -155,7 +158,7 @@ const Thread = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(onError('Could not load challenge image'));
+        reject(setErrorMessage('Could not load challenge image'));
       };
     });
   };

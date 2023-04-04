@@ -15,10 +15,10 @@ import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleStyleChange from '../../utils/handleStyleChange';
-import onError from '../../utils/onError';
-import onSuccess from '../../utils/onSuccess';
 import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
+import useError from '../../hooks/useError';
+import useSuccess from '../../hooks/useSuccess';
 
 
 const Board = () => {
@@ -48,6 +48,11 @@ const Board = () => {
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const { subplebbitAddress } = useParams();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
 
 
   // useEffect(() => {
@@ -93,11 +98,13 @@ const Board = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      onSuccess('challenge success', {publishedCid: challengeVerification.publication.cid})
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid});
+      setSelectedThread(challengeVerification.publication.cid);
+      navigate(`/${selectedAddress}/thread/${challengeVerification.publication.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
-      onError('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-      onError("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+      setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   }
 
@@ -109,7 +116,7 @@ const Board = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      onError(error);
+      setErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -125,7 +132,9 @@ const Board = () => {
     subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
-    onError
+    onError: (error) => {
+      setErrorMessage(error);
+    }
   };
 
 
@@ -166,7 +175,7 @@ const Board = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(onError('Could not load challenge image'));
+        reject(setErrorMessage('Could not load challenge image'));
       };
     });
   };
