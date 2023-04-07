@@ -24,8 +24,10 @@ import useSuccess from '../../hooks/useSuccess';
 const Board = () => {
   const {
     captchaResponse, setCaptchaResponse,
+    setChallengesArray,
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
+    setPendingComment,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     setSelectedThread,
@@ -41,7 +43,6 @@ const Board = () => {
 
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
-  const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -54,10 +55,6 @@ const Board = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
-
-  // useEffect(() => {
-  //   console.log(selectedFeed[3]);
-  // }, [selectedFeed]);
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
@@ -110,7 +107,8 @@ const Board = () => {
 
 
   const onChallenge = async (challenges, comment) => {
-    console.log("onChallenge:", challenges, comment)
+    
+    setPendingComment(comment);
     let challengeAnswers = [];
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
@@ -150,6 +148,8 @@ const Board = () => {
   
   
   const getChallengeAnswersFromUser = async (challenges) => {
+    setChallengesArray(challenges);
+    
     return new Promise((resolve, reject) => {
       const imageString = challenges?.challenges[0].challenge;
       const imageSource = `data:image/png;base64,${imageString}`;
@@ -158,11 +158,9 @@ const Board = () => {
   
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
-        setCaptchaImage(imageSource);
   
         const handleKeyDown = (event) => {
           if (event.key === 'Enter') {
-            setCaptchaImage('');
             resolve(captchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
@@ -175,7 +173,7 @@ const Board = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenge image'));
+        reject(setErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -213,8 +211,7 @@ const Board = () => {
       <CaptchaModal 
       selectedStyle={selectedStyle}
       isOpen={isCaptchaOpen} 
-      closeModal={() => setIsCaptchaOpen(false)} 
-      captchaImage={captchaImage} />
+      closeModal={() => setIsCaptchaOpen(false)} />
       <ReplyModal 
       selectedStyle={selectedStyle}
       isOpen={isReplyOpen}

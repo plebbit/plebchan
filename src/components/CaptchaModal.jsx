@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import useAppStore from '../useAppStore';
 import Modal from 'react-modal';
 import styled from 'styled-components';
@@ -42,7 +42,7 @@ const StyledModal = styled(Modal)`
     border: none;
   }
 
-  #name {
+  #field {
     border: 1px solid #aaa;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
@@ -85,10 +85,10 @@ const StyledModal = styled(Modal)`
     display: block;
   }
 
-  #next {
+  #nav {
     float: right;
     margin: 0;
-    width: 75px;
+    width: 40px;
   }
 
   ${({ selectedStyle }) => {
@@ -193,7 +193,7 @@ const StyledModal = styled(Modal)`
           background-image: url(/assets/buttons/cross_dark.png);
         }
 
-        #name {
+        #field {
           background-color: #282a2e;
           color: #c5c8c6;
           border: 1px solid #515151;
@@ -245,13 +245,35 @@ const StyledModal = styled(Modal)`
 `;
 
 
-const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
-  const { setCaptchaResponse } = useAppStore(state => state);
-  const selectedStyle = useAppStore(state => state.selectedStyle);
+const CaptchaModal = ({ isOpen, closeModal }) => {
+  const { 
+    challengesArray,
+    pendingComment,
+    selectedStyle,
+    setCaptchaResponse,
+   } = useAppStore(state => state);
 
+  const [imageSources, setImageSources] = useState([]);
+  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
+  const [totalChallenges, setTotalChallenges] = useState(0);
   const responseRef = useRef();
   const nodeRef = useRef(null);
 
+  useEffect(() => {
+    if (challengesArray) {
+      const challenges = challengesArray.challenges;
+      const decryptedChallenges = [];
+
+      for (let i = 0; i < challenges.length; i++) {
+        const imageString = challenges[i].challenge;
+        const imageSource = `data:image/png;base64,${imageString}`;
+        decryptedChallenges.push(imageSource);
+      }
+
+      setImageSources(decryptedChallenges);
+      setTotalChallenges(decryptedChallenges.length);
+    }
+  }, [challengesArray]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -260,7 +282,6 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
       closeModal();
     }
   };
-
 
   return (
     <StyledModal
@@ -274,16 +295,37 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
       <Draggable handle=".modal-header" nodeRef={nodeRef}>
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
-            Challenges for
+            {pendingComment.parentCid ? 
+            ("Challenges for Reply c/" + pendingComment.cid) : 
+            "Challenges for New Thread"}
             <button className="icon" onClick={() => closeModal()} title="close" />
           </div>
           <div id="form">
-            <div>
-              <input id="name" type="text" placeholder="Name" disabled></input>
-            </div>
-            <div>
-              <textarea rows="4" placeholder="Comment" wrap="soft" disabled></textarea>
-            </div>
+            {pendingComment.displayName ? (
+              <div>
+                <input id="field" type="text" placeholder={pendingComment.displayName} disabled />
+              </div>
+            ) : null}
+            {pendingComment.title ? (
+              <div>
+                <input id="field" type="text" placeholder={pendingComment.title} disabled />
+              </div>
+            ) : null}
+            {pendingComment.content ? (
+              <div>
+                <textarea
+                  rows="4"
+                  placeholder={pendingComment.content || "Comment"}
+                  wrap="soft"
+                  disabled
+                />
+              </div>
+            ) : null}
+            {pendingComment.link ? (
+              <div>
+                <input id="field" type="text" placeholder={pendingComment.link} disabled />
+              </div>
+            ) : null}
             <div id="captcha-container">
               <input 
               id="response"
@@ -293,11 +335,19 @@ const CaptchaModal = ({ isOpen, closeModal, captchaImage }) => {
               ref={responseRef}
               onKeyDown={handleKeyDown}
               autoFocus />
-              <img src={captchaImage} alt="captcha" />
+              <img src={imageSources[currentChallengeIndex]} alt="captcha" />
             </div>
             <div>
-              <span>Challenge 1 of 3</span>
-              <button id="next">Next</button>
+              <span style={{lineHeight: '1.7'}}>
+                Challenge {currentChallengeIndex + 1} of {totalChallenges}
+              </span>
+              <button id="nav" onClick={() => {
+                setCurrentChallengeIndex((currentChallengeIndex + 1) % totalChallenges)
+              }
+              }>&gt;</button>
+              <button id="nav" onClick={()=> {
+                setCurrentChallengeIndex((currentChallengeIndex - 1 + totalChallenges) % totalChallenges)
+              }}>&lt;</button>
             </div>
           </div>
         </div>

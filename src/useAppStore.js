@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 
 const useAppStore = create((set) => ({
-  captchaResponse: '',
-  setCaptchaResponse: (response) => set({ captchaResponse: response }),
-
   bodyStyle: JSON.parse(localStorage.getItem('bodyStyle')) || {
     background: '#ffe url(/assets/fade.png) top repeat-x',
     color: 'maroon',
@@ -14,11 +11,23 @@ const useAppStore = create((set) => ({
     set(() => ({ bodyStyle }));
   },
 
+  captchaResponse: '',
+  setCaptchaResponse: (response) => set({ captchaResponse: response }),
+
+  challengesArray: [],
+  setChallengesArray: (challengesArray) => set({ challengesArray }),
+
   defaultSubplebbits: [],
   setDefaultSubplebbits: (subplebbits) => set({ defaultSubplebbits: subplebbits }),
 
   isSettingsOpen: false,
   setIsSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),
+
+  pendingComment: '',
+  setPendingComment: (comment) => set({ pendingComment: comment }),
+
+  publishedComment: '',
+  setPublishedComment: (comment) => set({ publishedComment: comment }),
   
   selectedAddress: '',
   setSelectedAddress: (address) => set({ selectedAddress: address }),
