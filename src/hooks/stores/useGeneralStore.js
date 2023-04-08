@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const useAppStore = create((set) => ({
+const useGeneralStore = create((set) => ({
   bodyStyle: JSON.parse(localStorage.getItem('bodyStyle')) || {
     background: '#ffe url(/assets/fade.png) top repeat-x',
     color: 'maroon',
@@ -52,4 +52,4 @@ const useAppStore = create((set) => ({
 
 }));
 
-export default useAppStore;
+export default useGeneralStore;

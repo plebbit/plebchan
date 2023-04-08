@@ -1,12 +1,12 @@
 import React, { useEffect }  from 'react';
-import useAppStore from '../../useAppStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link } from "react-router-dom";
 import { Container, Header, Logo, Page, Boards, BoardsTitle } from './styles/Home.styled';
 
 
 const NotFound = ({ setBodyStyle }) => {
 
-  const { setSelectedStyle } = useAppStore(state => state);
+  const { setSelectedStyle } = useGeneralStore(state => state);
 
   useEffect(() => {
     setBodyStyle({

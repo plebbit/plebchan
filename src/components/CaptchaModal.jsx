@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import useAppStore from '../useAppStore';
+import useGeneralStore from '../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
@@ -251,7 +251,7 @@ const CaptchaModal = ({ isOpen, closeModal }) => {
     pendingComment,
     selectedStyle,
     setCaptchaResponse,
-   } = useAppStore(state => state);
+   } = useGeneralStore(state => state);
 
   const [imageSources, setImageSources] = useState([]);
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);

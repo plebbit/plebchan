@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
-import useAppStore from "../useAppStore";
+import useGeneralStore from "../hooks/stores/useGeneralStore";
 
 const StyledModal = styled(Modal)`
   .panel {
@@ -140,7 +140,7 @@ const customOverlayStyles = {
 };
 
 const SettingsModal = ({ isOpen, closeModal }) => {
-  const selectedStyle = useAppStore(state => state.selectedStyle);
+  const selectedStyle = useGeneralStore(state => state.selectedStyle);
   const navigate = useNavigate();
   const location = useLocation();
 

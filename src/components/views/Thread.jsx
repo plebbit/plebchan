@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
-import useAppStore from '../../useAppStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from './styles/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from './styles/Thread.styled';
 import CaptchaModal from '../CaptchaModal';
@@ -32,7 +32,7 @@ const Thread = () => {
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink
-  } = useAppStore(state => state);
+  } = useGeneralStore(state => state);
 
   const nameRef = useRef();
   const commentRef = useRef();

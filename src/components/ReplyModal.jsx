@@ -1,5 +1,5 @@
 import React from 'react';
-import useAppStore from '../useAppStore';
+import useGeneralStore from '../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
@@ -248,7 +248,7 @@ const StyledModal = styled(Modal)`
 
 
 const ReplyModal = ({ isOpen, closeModal }) => {
-  const selectedStyle = useAppStore(state => state.selectedStyle);
+  const selectedStyle = useGeneralStore(state => state.selectedStyle);
 
   const handleCloseModal = () => {
     closeModal();

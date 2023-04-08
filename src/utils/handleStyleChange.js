@@ -1,9 +1,9 @@
-import useAppStore from "../useAppStore";
+import useGeneralStore from "../hooks/stores/useGeneralStore";
 
 const handleStyleChange = (event) => {
   const { 
     setBodyStyle, setSelectedStyle
-   } = useAppStore.getState();
+   } = useGeneralStore.getState();
 
   switch (event.target.value) {
     case "Yotsuba":

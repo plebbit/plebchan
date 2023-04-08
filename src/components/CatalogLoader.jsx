@@ -1,10 +1,10 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
-import useAppStore from '../useAppStore';
+import useGeneralStore from '../hooks/stores/useGeneralStore';
 
 
 const SingleRectLoader = () => {
-  const selectedStyle = useAppStore((state) => state.selectedStyle);
+  const selectedStyle = useGeneralStore((state) => state.selectedStyle);
   const backgroundColor = selectedStyle === 'Tomorrow' ? '#333' : '#f3f3f3';
   const foregroundColor = selectedStyle === 'Tomorrow' ? '#555' : '#ecebeb';
   

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import useAppStore from './useAppStore';
+import useGeneralStore from './hooks/stores/useGeneralStore';
 import Home from './components/views/Home';
 import Board from './components/views/Board';
 import Thread from './components/views/Thread';
@@ -56,7 +56,7 @@ export default function App() {
     setSelectedStyle,
     setShowPostForm,
     setShowPostFormLink,
-  } = useAppStore(state => state);
+  } = useGeneralStore(state => state);
 
   const location = useLocation();
   const isHomeRoute = location.pathname === "/";

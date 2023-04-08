@@ -1,10 +1,10 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import useAppStore from "../useAppStore";
+import useGeneralStore from "./stores/useGeneralStore";
 
 const useClickForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setShowPostForm, setShowPostFormLink } = useAppStore.getState();
+  const { setShowPostForm, setShowPostFormLink } = useGeneralStore.getState();
 
   const handleClickForm = () => {
     setShowPostForm(true);

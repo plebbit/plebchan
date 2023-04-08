@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import useAppStore from '../../useAppStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from './styles/Home.styled';
 
@@ -11,7 +11,7 @@ const Home = () => {
     setSelectedAddress, 
     setSelectedStyle,
     setSelectedTitle
-  } = useAppStore(state => state);
+  } = useGeneralStore(state => state);
 
   const inputRef = useRef(null);
   const navigate = useNavigate();

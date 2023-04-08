@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { Tooltip } from 'react-tooltip';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
-import useAppStore from '../../useAppStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
@@ -34,7 +34,7 @@ const Board = () => {
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink
-  } = useAppStore(state => state);
+  } = useGeneralStore(state => state);
 
   const nameRef = useRef();
   const subjectRef = useRef();

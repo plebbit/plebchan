@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
-import useAppStore from '../../useAppStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from './styles/Board.styled';
 import { Threads } from './styles/Catalog.styled';
 import { TopBar } from './styles/Thread.styled';
@@ -30,7 +30,7 @@ const Catalog = () => {
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink
-  } = useAppStore(state => state);
+  } = useGeneralStore(state => state);
 
   const nameRef = useRef();
   const subjectRef = useRef();
