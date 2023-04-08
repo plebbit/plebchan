@@ -264,7 +264,7 @@ const CaptchaModal = ({ isOpen, closeModal }) => {
       const challenges = challengesArray.challenges;
       const decryptedChallenges = [];
 
-      for (let i = 0; i < challenges.length; i++) {
+      for (let i = 0; i < challenges?.length; i++) {
         const imageString = challenges[i].challenge;
         const imageSource = `data:image/png;base64,${imageString}`;
         decryptedChallenges.push(imageSource);
