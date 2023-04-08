@@ -16,13 +16,13 @@ const useClickForm = () => {
     if (location.pathname === "/") {
       navigate("/post");
     } else if (location.pathname.endsWith("/catalog")) {
-      navigate(`/${subplebbitAddress}/catalog/post`);
+      navigate(`/p/${subplebbitAddress}/catalog/post`);
     } else if (location.pathname.endsWith("/thread")) {
-      navigate(`/${subplebbitAddress}/thread/post`);
+      navigate(`/p/${subplebbitAddress}/c/post`);
     } else if (threadCid) {
-      navigate(`/${subplebbitAddress}/thread/${threadCid}/post`);
+      navigate(`/p/${subplebbitAddress}/c/${threadCid}/post`);
     } else {
-      navigate(`/${subplebbitAddress}/post`);
+      navigate(`/p/${subplebbitAddress}/post`);
     }
   };
 

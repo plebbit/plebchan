@@ -165,7 +165,7 @@ const Catalog = () => {
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
-    navigate(`/${selected}`);
+    navigate(`/p/${selected}`);
   };
 
 
@@ -184,7 +184,7 @@ const Catalog = () => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} 
+              <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} 
               onClick={() => {
               setSelectedTitle(subplebbit.title);
               setSelectedAddress(subplebbit.address);
@@ -195,7 +195,7 @@ const Catalog = () => {
           ))}
           <span className="nav">
             [
-            <Link to={`/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+            <Link to={`/p/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -214,7 +214,7 @@ const Catalog = () => {
               </select>
             </div>
             <div className="page-jump">
-              <Link to={`/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>
@@ -299,12 +299,12 @@ const Catalog = () => {
         </span>
         <div className="return-button" id="return-button-desktop">
           [
-          <Link to={`/${selectedAddress}`}>Return</Link>
+          <Link to={`/p/${selectedAddress}`}>Return</Link>
           ]
         </div>
         <div id="return-button-mobile">
           <span className="btn-wrap-catalog btn-wrap">
-            <Link to={`/${selectedAddress}`}>Return</Link>
+            <Link to={`/p/${selectedAddress}`}>Return</Link>
           </span>
         </div>
         <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -325,7 +325,7 @@ const Catalog = () => {
               const commentMediaInfo = getCommentMediaInfo(thread);
               const fallbackImgUrl = "/assets/filedeleted-res.gif";
               return (
-                <Link style={{all: "unset", cursor: "pointer"}} key={`link-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)}>
+                <Link style={{all: "unset", cursor: "pointer"}} key={`link-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)}>
                   <div key={`thread-${thread.cid}`} className="thread">
                       {commentMediaInfo?.url ? (
                         <Fragment key="f-catalog">

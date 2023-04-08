@@ -45,7 +45,7 @@ const Home = () => {
                 const address = inputRef.current.value;
                 if (address) {
                   setSelectedAddress(address);
-                  navigate(`/${address}`)
+                  navigate(`/p/${address}`)
                 }
               }
           }} />
@@ -54,7 +54,7 @@ const Home = () => {
               const address = inputRef.current.value;
               if (address) {
                 setSelectedAddress(address);
-                navigate(`/${address}`)
+                navigate(`/p/${address}`)
               }
             }
           } />
@@ -81,7 +81,7 @@ const Home = () => {
                   <div className="board-title">
                     {subplebbit.title ? subplebbit.title : <span style={{userSelect: "none"}}>&nbsp;</span>}
                   </div>
-                  <Link to={`/${subplebbit.address}`} onClick={() => {
+                  <Link to={`/p/${subplebbit.address}`} onClick={() => {
                     setSelectedTitle(subplebbit.title);
                     setSelectedAddress(subplebbit.address);
                   }} >

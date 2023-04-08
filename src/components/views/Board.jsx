@@ -97,7 +97,7 @@ const Board = () => {
     if (challengeVerification.challengeSuccess === true) {
       setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid});
       setSelectedThread(challengeVerification.publication.cid);
-      navigate(`/${selectedAddress}/thread/${challengeVerification.publication.cid}`);
+      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -191,7 +191,7 @@ const Board = () => {
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
-    navigate(`/${selected}`);
+    navigate(`/p/${selected}`);
   };
 
   // scroll to post when quote is clicked
@@ -225,14 +225,14 @@ const Board = () => {
           {defaultSubplebbits.map(subplebbit => (
             <span className="boardList" key={`span-${subplebbit.address}`}>
               [
-              <Link to={`/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+              <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
               >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
               ]&nbsp;
             </span>
           ))}
           <span className="nav">
             [
-            <Link to={`/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+            <Link to={`/p/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
             ]
             [
             <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -251,7 +251,7 @@ const Board = () => {
               </select>
             </div>
             <div className="page-jump">
-              <Link to={`/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               &nbsp;
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                 )}>Home</Link>
@@ -336,7 +336,7 @@ const Board = () => {
         </span>
         <div id="catalog-button-desktop">
           [
-          <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+          <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
           ]
         </div>
         <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -344,7 +344,7 @@ const Board = () => {
         </div>
         <div id="catalog-button-mobile">
           <span className="btn-wrap">
-            <Link to={`/${selectedAddress}/catalog`}>Catalog</Link>
+            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
           </span>
         </div>
       </TopBar>
@@ -447,7 +447,7 @@ const Board = () => {
                             &nbsp;
                             <span key={`rl1-${thread.cid}`}>&nbsp;
                               [
-                              <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>
+                              <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>
                               ]
                             </span>
                           </span>&nbsp;
@@ -475,7 +475,7 @@ const Board = () => {
                               <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) 
                               <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
-                                <Link key={`ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                <Link key={`ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                             </blockquote>
                           </Fragment>
@@ -491,7 +491,7 @@ const Board = () => {
                     <span key={`oc-${thread.cid}`} className="ttl">
                       <span key={`oc1-${thread.cid}`}>
                         {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
-                        <Link key={`oc2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
+                        <Link key={`oc2-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
                         &nbsp;to view.
                       </span>
                     </span>) : null}
@@ -608,7 +608,7 @@ const Board = () => {
                                   <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
                                   <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
                                   Comment too long.&nbsp;
-                                    <Link key={`ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                    <Link key={`ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. </span>
                                 </blockquote>
                               </Fragment>
@@ -718,7 +718,7 @@ const Board = () => {
                               <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
-                                <Link key={`mob-ttl-l-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                <Link key={`mob-ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                             </blockquote>
                           </Fragment>
@@ -729,7 +729,7 @@ const Board = () => {
                     </div>
                     <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
                       <span key={`mob-info-${thread.cid}`} className="info-mobile">{thread.replyCount} Replies</span>
-                      <Link key={`rl2-${thread.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
+                      <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
                     </div>
                   </div>
                   {renderedComments.map((reply) => {
@@ -814,7 +814,7 @@ const Board = () => {
                               <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                               Comment too long.&nbsp;
-                                <Link key={`mob-ttl-l-${reply.cid}`} to={`/${selectedAddress}/thread/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                <Link key={`mob-ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                               &nbsp;to view. </span>
                             </blockquote>
                           </Fragment>
