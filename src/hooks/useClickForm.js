@@ -9,20 +9,18 @@ const useClickForm = () => {
   const handleClickForm = () => {
     setShowPostForm(true);
     setShowPostFormLink(false);
+    const pathComponents = location.pathname.split("/");
+    const subplebbitAddress = pathComponents[2];
+    const threadCid = pathComponents[4];
 
-    const subplebbitAddress = location.pathname.split("/")[1];
-    const threadCid = location.pathname.split("/")[3];
-
-    if (location.pathname === "/") {
-      navigate("/post");
-    } else if (location.pathname.endsWith("/catalog")) {
-      navigate(`/p/${subplebbitAddress}/catalog/post`);
-    } else if (location.pathname.endsWith("/thread")) {
-      navigate(`/p/${subplebbitAddress}/c/post`);
-    } else if (threadCid) {
-      navigate(`/p/${subplebbitAddress}/c/${threadCid}/post`);
-    } else {
-      navigate(`/p/${subplebbitAddress}/post`);
+    if (pathComponents[1] === "p") {
+      if (pathComponents[3] === "c") {
+        navigate(`/p/${subplebbitAddress}/c/${threadCid}/post`);
+      } else if (pathComponents[3] === "catalog") {
+        navigate(`/p/${subplebbitAddress}/catalog/post`);
+      } else {
+        navigate(`/p/${subplebbitAddress}/post`);
+      }
     }
   };
 
