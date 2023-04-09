@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import styled, { createGlobalStyle } from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import 'react-tooltip/dist/react-tooltip.css';
+import 'react-toastify/dist/ReactToastify.css';
 import useGeneralStore from './hooks/stores/useGeneralStore';
 import Home from './components/views/Home';
 import Board from './components/views/Board';
 import Thread from './components/views/Thread';
 import Catalog from './components/views/Catalog';
 import NotFound from './components/views/NotFound';
-import styled, { createGlobalStyle } from 'styled-components';
-import 'react-tooltip/dist/react-tooltip.css';
-import 'react-toastify/dist/ReactToastify.css';
-import preloadImages from './utils/preloadImages';
-import { ToastContainer } from 'react-toastify';
+import CaptchaModal from './components/CaptchaModal';
 import { importAll } from './components/ImageBanner';
+import preloadImages from './utils/preloadImages';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -52,8 +53,9 @@ export default function App() {
   const { 
     bodyStyle, setBodyStyle,
     setDefaultSubplebbits,
+    isCaptchaOpen, setIsCaptchaOpen,
     setIsSettingsOpen,
-    setSelectedStyle,
+    selectedStyle, setSelectedStyle,
     setShowPostForm,
     setShowPostFormLink,
   } = useGeneralStore(state => state);
@@ -157,9 +159,9 @@ export default function App() {
       <meta name="theme-color" content="#ffffff" />
     </Helmet>
     <GlobalStyle 
-    background={bodyStyle.background} 
-    color={bodyStyle.color} 
-    fontFamily={bodyStyle.fontFamily}
+      background={bodyStyle.background} 
+      color={bodyStyle.color} 
+      fontFamily={bodyStyle.fontFamily}
     />
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
@@ -178,5 +180,10 @@ export default function App() {
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>
       <StyledContainer />
+      <CaptchaModal 
+        selectedStyle={selectedStyle}
+        isOpen={isCaptchaOpen} 
+        closeModal={() => setIsCaptchaOpen(false)} 
+      />
   </div>
 )}

@@ -5,12 +5,13 @@ import Modal from 'react-modal';
 import Draggable from 'react-draggable';
 
 
-const CaptchaModal = ({ isOpen, closeModal }) => {
+const CaptchaModal = () => {
   const { 
     challengesArray,
     pendingComment,
     selectedStyle,
     setCaptchaResponse,
+    isCaptchaOpen, setIsCaptchaOpen
    } = useGeneralStore(state => state);
 
   const [imageSources, setImageSources] = useState([]);
@@ -39,14 +40,14 @@ const CaptchaModal = ({ isOpen, closeModal }) => {
     if (event.key === "Enter") {
       event.preventDefault();
       setCaptchaResponse(responseRef.current.value);
-      closeModal();
+      setIsCaptchaOpen(false);
     }
   };
 
   return (
     <StyledModal
-    isOpen={isOpen}
-    onRequestClose={closeModal}
+    isOpen={isCaptchaOpen}
+    onRequestClose={() => setIsCaptchaOpen(false)}
     contentLabel="Captcha Modal"
     shouldCloseOnEsc={false}
     shouldCloseOnOverlayClick={false}
@@ -58,7 +59,7 @@ const CaptchaModal = ({ isOpen, closeModal }) => {
             {pendingComment.parentCid ? 
             ("Challenges for Reply c/" + pendingComment.cid) : 
             "Challenges for New Thread"}
-            <button className="icon" onClick={() => closeModal()} title="close" />
+            <button className="icon" onClick={() => setIsCaptchaOpen(false)} title="close" />
           </div>
           <div id="form">
             {pendingComment.displayName ? (

@@ -7,7 +7,6 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from '../styled/Board.styled';
 import { Threads } from '../styled/Catalog.styled';
 import { TopBar } from '../styled/Thread.styled';
-import CaptchaModal from '../CaptchaModal';
 import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
@@ -23,13 +22,14 @@ const Catalog = () => {
   const {
     captchaResponse, setCaptchaResponse,
     defaultSubplebbits,
+    setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     setSelectedThread,
     selectedTitle, setSelectedTitle,
     showPostForm,
-    showPostFormLink
+    showPostFormLink,
   } = useGeneralStore(state => state);
 
   const nameRef = useRef();
@@ -37,7 +37,6 @@ const Catalog = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -92,8 +91,8 @@ const Catalog = () => {
 
 
   const onChallenge = async (challenges, comment) => {
-    // console.log("onChallenge:", challenges, comment);
     let challengeAnswers = [];
+
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
@@ -171,10 +170,6 @@ const Catalog = () => {
 
   return (
     <Container>
-      <CaptchaModal 
-      isOpen={isCaptchaOpen} 
-      closeModal={() => setIsCaptchaOpen(false)} 
-      captchaImage={captchaImage} />
       <SettingsModal
       selectedStyle={selectedStyle}
       isOpen={isSettingsOpen}

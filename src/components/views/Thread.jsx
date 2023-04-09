@@ -6,7 +6,6 @@ import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from '../styled/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from '../styled/Thread.styled';
-import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
@@ -25,20 +24,20 @@ const Thread = () => {
   const {
     captchaResponse, setCaptchaResponse,
     defaultSubplebbits,
+    setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     selectedThread, setSelectedThread,
     selectedTitle, setSelectedTitle,
     showPostForm,
-    showPostFormLink
+    showPostFormLink,
   } = useGeneralStore(state => state);
 
   const nameRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
@@ -56,10 +55,6 @@ const Thread = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
-
-  // useEffect(() => {
-  //   console.log(comment);
-  // }, [comment]);
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
@@ -97,8 +92,8 @@ const Thread = () => {
 
 
   const onChallenge = async (challenges, comment) => {
-    // console.log("onChallenge:", challenges, comment);
     let challengeAnswers = [];
+
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
@@ -187,10 +182,6 @@ const Thread = () => {
 
   return (
     <Container>
-      <CaptchaModal 
-      isOpen={isCaptchaOpen} 
-      closeModal={() => setIsCaptchaOpen(false)} 
-      captchaImage={captchaImage} />
       <ReplyModal 
       selectedStyle={selectedStyle}
       isOpen={isReplyOpen}

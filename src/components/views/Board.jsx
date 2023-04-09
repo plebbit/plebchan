@@ -6,7 +6,6 @@ import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from '../styled/Board.styled';
-import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
@@ -26,6 +25,7 @@ const Board = () => {
     captchaResponse, setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
+    setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
     selectedAddress, setSelectedAddress,
@@ -33,7 +33,7 @@ const Board = () => {
     setSelectedThread,
     selectedTitle, setSelectedTitle,
     showPostForm,
-    showPostFormLink
+    showPostFormLink,
   } = useGeneralStore(state => state);
 
   const nameRef = useRef();
@@ -41,7 +41,6 @@ const Board = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -107,9 +106,9 @@ const Board = () => {
 
 
   const onChallenge = async (challenges, comment) => {
-    
     setPendingComment(comment);
     let challengeAnswers = [];
+    
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
@@ -208,10 +207,6 @@ const Board = () => {
 
   return (
     <Container>
-      <CaptchaModal 
-      selectedStyle={selectedStyle}
-      isOpen={isCaptchaOpen} 
-      closeModal={() => setIsCaptchaOpen(false)} />
       <ReplyModal 
       selectedStyle={selectedStyle}
       isOpen={isReplyOpen}
