@@ -5,7 +5,7 @@ import { Tooltip } from 'react-tooltip';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from './styles/Board.styled';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from '../styled/Board.styled';
 import CaptchaModal from '../CaptchaModal';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';

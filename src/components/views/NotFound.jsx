@@ -1,7 +1,7 @@
 import React, { useEffect }  from 'react';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link } from "react-router-dom";
-import { Container, Header, Logo, Page, Boards, BoardsTitle } from './styles/Home.styled';
+import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/Home.styled';
 
 
 const NotFound = ({ setBodyStyle }) => {
