@@ -11,6 +11,7 @@ import Board from './components/views/Board';
 import Thread from './components/views/Thread';
 import Catalog from './components/views/Catalog';
 import NotFound from './components/views/NotFound';
+import Pending from './components/views/Pending';
 import CaptchaModal from './components/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
@@ -177,6 +178,7 @@ export default function App() {
           <Route path='post' element={<Catalog />} />
           <Route path='settings' element={<Catalog />} />
         </Route>
+        <Route path={`/p/:subplebbitAddress/c/pending`} element={<Pending setBodyStyle={setBodyStyle} /> } />
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>
       <StyledContainer />

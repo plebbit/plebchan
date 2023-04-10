@@ -5,7 +5,6 @@ import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/Ho
 
 
 const NotFound = ({ setBodyStyle }) => {
-
   const { setSelectedStyle } = useGeneralStore(state => state);
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const NotFound = ({ setBodyStyle }) => {
           <BoardsTitle>
             <h2 style={{textAlign: 'center'}}>404 Not Found</h2>
           </BoardsTitle>
-          <img src="/assets/plebchan-husbando.jpg" style={{
+          <img src="/assets/plebchan-husbando.jpg" alt="plebchan" style={{
             display: "block",
             margin: "auto",
             padding: "15px", 

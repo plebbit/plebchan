@@ -108,6 +108,7 @@ const Board = () => {
   const onChallenge = async (challenges, comment) => {
     setPendingComment(comment);
     let challengeAnswers = [];
+    navigate(`/p/${selectedAddress}/c/pending`)
     
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
