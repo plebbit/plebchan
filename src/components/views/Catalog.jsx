@@ -20,9 +20,11 @@ import useSuccess from '../../hooks/useSuccess';
 const Catalog = () => {
   const {
     captchaResponse, setCaptchaResponse,
+    setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
+    setPendingComment,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     setSelectedThread,
@@ -36,7 +38,6 @@ const Catalog = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const [setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -47,6 +48,7 @@ const Catalog = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
+
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
@@ -80,18 +82,22 @@ const Catalog = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid})
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid});
+      setSelectedThread(challengeVerification.publication.cid);
+      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
-  };
+  }
 
 
   const onChallenge = async (challenges, comment) => {
+    setPendingComment(comment);
     let challengeAnswers = [];
-
+    navigate(`/p/${selectedAddress}/c/pending`)
+    
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
@@ -101,7 +107,7 @@ const Catalog = () => {
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
-  };
+  }
 
 
   const publishCommentOptions = {
@@ -112,6 +118,9 @@ const Catalog = () => {
     subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    }
   };
 
 
@@ -127,6 +136,8 @@ const Catalog = () => {
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
+    setChallengesArray(challenges);
+    
     return new Promise((resolve, reject) => {
       const imageString = challenges?.challenges[0].challenge;
       const imageSource = `data:image/png;base64,${imageString}`;
@@ -135,11 +146,9 @@ const Catalog = () => {
   
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
-        setCaptchaImage(imageSource);
   
         const handleKeyDown = (event) => {
           if (event.key === 'Enter') {
-            setCaptchaImage('');
             resolve(captchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
@@ -152,7 +161,7 @@ const Catalog = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenge image'));
+        reject(setErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -244,37 +253,37 @@ const Catalog = () => {
           </div>
         </PostFormLink>
         <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
-        <tbody>
-          <tr data-type="Name">
-            <td id="td-name">Name</td>
-            <td>
-              <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
-            </td>
-          </tr>
-          <tr data-type="Subject">
-            <td>Subject</td>
-            <td>
-              <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
-              <input id="post-button" type="submit" value="Post" tabIndex={6} 
-              onClick={async () => {await publishComment(); resetFields();}} />
-            </td>
-          </tr>
-          <tr data-type="Comment">
-            <td>Comment</td>
-            <td>
-              <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
-            </td>
-          </tr>
-          <tr data-type="File">
-            <td>Embed File</td>
-            <td>
-              <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
-              <button id="t-help" type="button" onClick={
-                () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
-              } data-tip="Help">?</button>
-            </td>
-          </tr>
-        </tbody>
+          <tbody>
+            <tr data-type="Name">
+              <td id="td-name">Name</td>
+              <td>
+                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
+              </td>
+            </tr>
+            <tr data-type="Subject">
+              <td>Subject</td>
+              <td>
+                <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
+                <input id="post-button" type="submit" value="Post" tabIndex={6} 
+                onClick={async () => {await publishComment(); resetFields();}} />
+              </td>
+            </tr>
+            <tr data-type="Comment">
+              <td>Comment</td>
+              <td>
+                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
+              </td>
+            </tr>
+            <tr data-type="File">
+              <td>Embed File</td>
+              <td>
+                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
+                <button id="t-help" type="button" onClick={
+                  () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
+                } data-tip="Help">?</button>
+              </td>
+            </tr>
+          </tbody>
         </PostFormTable>
       </PostForm>
       <TopBar selectedStyle={selectedStyle}>

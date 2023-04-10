@@ -23,9 +23,11 @@ import useSuccess from '../../hooks/useSuccess';
 const Thread = () => {
   const {
     captchaResponse, setCaptchaResponse,
+    setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
+    setPendingComment,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     selectedThread, setSelectedThread,
@@ -39,7 +41,6 @@ const Thread = () => {
   const linkRef = useRef();
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
-  const [captchaImage, setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -82,18 +83,22 @@ const Thread = () => {
   
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid})
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid});
+      setSelectedThread(challengeVerification.publication.cid);
+      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
-  };
+  }
 
 
   const onChallenge = async (challenges, comment) => {
+    setPendingComment(comment);
     let challengeAnswers = [];
-
+    navigate(`/p/${selectedAddress}/c/pending`)
+    
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
@@ -103,17 +108,19 @@ const Thread = () => {
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
-  };
+  }
 
 
   const publishCommentOptions = {
     displayName: nameRef.current ? nameRef.current.value : undefined,
     content: commentRef.current ? commentRef.current.value : undefined,
     link: linkRef.current ? linkRef.current.value : undefined,
-    parentCid: selectedThread,
     subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    }
   };
 
 
@@ -128,6 +135,8 @@ const Thread = () => {
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
+    setChallengesArray(challenges);
+    
     return new Promise((resolve, reject) => {
       const imageString = challenges?.challenges[0].challenge;
       const imageSource = `data:image/png;base64,${imageString}`;
@@ -136,11 +145,9 @@ const Thread = () => {
   
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
-        setCaptchaImage(imageSource);
   
         const handleKeyDown = (event) => {
           if (event.key === 'Enter') {
-            setCaptchaImage('');
             resolve(captchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
@@ -153,7 +160,7 @@ const Thread = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenge image'));
+        reject(setErrorMessage('Could not load challenges'));
       };
     });
   };
