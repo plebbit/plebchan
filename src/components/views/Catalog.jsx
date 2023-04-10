@@ -9,7 +9,6 @@ import { Threads } from '../styled/Catalog.styled';
 import { TopBar } from '../styled/Thread.styled';
 import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
-import Post from '../Post';
 import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
@@ -37,7 +36,7 @@ const Catalog = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const [captchaImage, setCaptchaImage] = useState('');
+  const [setCaptchaImage] = useState('');
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -364,8 +363,7 @@ const Catalog = () => {
                     </div>
                     <div key={`t-${thread.cid}`} className="teaser">
                         <b key={`b2-${thread.cid}`}>{thread.title ? `${thread.title}` : null}</b>
-                        {thread.content && `: `}
-                        {thread.content && <Post content={thread.content} key="post"/>}
+                        {thread.content ? `: ${thread.content}` : null}
                     </div>
                   </div>
                 </Link>
