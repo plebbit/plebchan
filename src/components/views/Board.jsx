@@ -41,6 +41,8 @@ const Board = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
+  const onChallengeVerificationRef = useRef();
+
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -92,18 +94,17 @@ const Board = () => {
   };
 
 
-  const onChallengeVerificationRef = useRef();
-
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid});
-      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication.cid}`);
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
+      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
+
 
   onChallengeVerificationRef.current = onChallengeVerification;
 
@@ -142,6 +143,7 @@ const Board = () => {
     },
   });
 
+  
   useEffect(() => {
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,

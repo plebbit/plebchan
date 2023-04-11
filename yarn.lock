@@ -2417,9 +2417,9 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#d5f312ef577dc4a845e15d1f87c4273cb2195c08":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#c90a5a2920f763a32bedc0584606b358d83600e5":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#d5f312ef577dc4a845e15d1f87c4273cb2195c08"
+  resolved "https://github.com/plebbit/plebbit-js.git#c90a5a2920f763a32bedc0584606b358d83600e5"
   dependencies:
     "@keyv/sqlite" "3.6.2"
     "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
@@ -2444,8 +2444,10 @@
     knex "2.3.0"
     libp2p-crypto "0.21.2"
     limiter "2.1.0"
+    localforage "1.10.0"
     lodash-es "4.17.21"
     open-graph-scraper "5.2.3"
+    p-limit "3.1.0"
     peer-id "0.16.0"
     proper-lockfile "github:plebbit/node-proper-lockfile"
     retry "0.13.1"
@@ -2510,11 +2512,11 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#47c89c104bf3f16f790282fbdf26f672c395df52":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#33fca8ef1cfc78e5c16d7fcbe7effbeebeb082c8":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#47c89c104bf3f16f790282fbdf26f672c395df52"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#33fca8ef1cfc78e5c16d7fcbe7effbeebeb082c8"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#d5f312ef577dc4a845e15d1f87c4273cb2195c08"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#c90a5a2920f763a32bedc0584606b358d83600e5"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
@@ -9694,19 +9696,19 @@ p-fifo@^1.0.0:
     fast-fifo "^1.0.0"
     p-defer "^3.0.0"
 
+p-limit@3.1.0, p-limit@^3.0.2:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
+  integrity sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==
+  dependencies:
+    yocto-queue "^0.1.0"
+
 p-limit@^2.0.0, p-limit@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.3.0.tgz#3dd33c647a214fdfffd835933eb086da0dc21db1"
   integrity sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==
   dependencies:
     p-try "^2.0.0"
-
-p-limit@^3.0.2:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
-  integrity sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==
-  dependencies:
-    yocto-queue "^0.1.0"
 
 p-locate@^3.0.0:
   version "3.0.0"

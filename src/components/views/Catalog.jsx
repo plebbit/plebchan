@@ -38,6 +38,8 @@ const Catalog = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
+  const onChallengeVerificationRef = useRef();
+
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -82,15 +84,17 @@ const Catalog = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid});
-      setSelectedThread(challengeVerification.publication.cid);
-      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication.cid}`);
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
+      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
-  }
+  };
+
+  
+  onChallengeVerificationRef.current = onChallengeVerification;
 
 
   const onChallenge = async (challenges, comment) => {
@@ -110,20 +114,6 @@ const Catalog = () => {
   }
 
 
-  const publishCommentOptions = {
-    displayName: nameRef.current ? nameRef.current.value : undefined,
-    title: subjectRef.current ? subjectRef.current.value : undefined,
-    content: commentRef.current ? commentRef.current.value : undefined,
-    link: linkRef.current ? linkRef.current.value : undefined,
-    subplebbitAddress: selectedAddress,
-    onChallenge,
-    onChallengeVerification,
-    onError: (error) => {
-      setErrorMessage(error);
-    }
-  };
-
-
   const resetFields = () => {
     nameRef.current.value = '';
     subjectRef.current.value = '';
@@ -131,10 +121,51 @@ const Catalog = () => {
     linkRef.current.value = '';
   };
 
+  
+  const [publishCommentOptions, setPublishCommentOptions] = useState({
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification: onChallengeVerificationRef.current,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+
+  useEffect(() => {
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      subplebbitAddress: selectedAddress,
+      onChallengeVerification: onChallengeVerificationRef.current,
+    }));
+  }, [selectedAddress]);
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      displayName: nameRef.current.value || undefined,
+      title: subjectRef.current.value || undefined,
+      content: commentRef.current.value || undefined,
+      link: linkRef.current.value || undefined,
+    }));
+  };
+  
+  
+  useEffect(() => {
+    if (publishCommentOptions.content) {
+      (async () => {
+        await publishComment();
+        resetFields();
+      })();
+    }
+  }, [publishCommentOptions]);
+
 
   const { publishComment } = usePublishComment(publishCommentOptions);
-
-
+  
+  
   const getChallengeAnswersFromUser = async (challenges) => {
     setChallengesArray(challenges);
     
@@ -265,7 +296,7 @@ const Catalog = () => {
               <td>
                 <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
                 <input id="post-button" type="submit" value="Post" tabIndex={6} 
-                onClick={async () => {await publishComment(); resetFields();}} />
+                onClick={handleSubmit} />
               </td>
             </tr>
             <tr data-type="Comment">
