@@ -92,17 +92,20 @@ const Board = () => {
   };
 
 
+  const onChallengeVerificationRef = useRef();
+
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication.cid});
-      setSelectedThread(challengeVerification.publication.cid);
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
-  }
+  };
+
+  onChallengeVerificationRef.current = onChallengeVerification;
 
 
   const onChallenge = async (challenges, comment) => {
@@ -133,11 +136,19 @@ const Board = () => {
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: selectedAddress,
     onChallenge,
-    onChallengeVerification,
+    onChallengeVerification: onChallengeVerificationRef.current,
     onError: (error) => {
       setErrorMessage(error);
     },
   });
+
+  useEffect(() => {
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      subplebbitAddress: selectedAddress,
+      onChallengeVerification: onChallengeVerificationRef.current,
+    }));
+  }, [selectedAddress]);
 
 
   const handleSubmit = async (event) => {
