@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledModal } from './styled/CaptchaModal.styled';
+import { StyledModal } from './styled/ReplyModal.styled';
 import useGeneralStore from '../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
