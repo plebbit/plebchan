@@ -227,18 +227,18 @@ const Pending = () => {
                           </span>) 
                         : null}
                       &nbsp;
-                      {comment.author?.displayName
-                        ? comment.author?.displayName.length > 20
+                      {comment.displayName
+                        ? comment.displayName.length > 20
                         ? <>
                             <span key={`n-${"pending"}`} className="name"
                             data-tooltip-id="tooltip"
-                            data-tooltip-content={comment.author?.displayName}
+                            data-tooltip-content={comment.displayName}
                             data-tooltip-place="top">
-                              {comment.author?.displayName.slice(0, 20) + " (...)"}
+                              {comment.displayName.slice(0, 20) + " (...)"}
                             </span>
                           </> 
                           : <span key={`n-${"pending"}`} className="name">
-                            {comment.author?.displayName}</span>
+                            {comment.displayName}</span>
                         : <span key={`n-${"pending"}`} className="name">
                           Anonymous</span>}
                         &nbsp;
@@ -246,7 +246,7 @@ const Pending = () => {
                       <span className="poster-address">
                         (u/
                           <span key={`pa-${"pending"}`} className="poster-address">
-                          {comment.author?.shortAddress}
+                          {comment.author?.address}
                         </span>)
                       </span>
                       &nbsp;
@@ -273,25 +273,25 @@ const Pending = () => {
                     <div key={`mob-pi-${"pending"}`} className="post-info-mobile">
                       <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${"pending"}`} className="post-menu-button-mobile" onClick={() => {}}>...</button>
                       <span className="name-block-mobile">
-                        {comment.author?.displayName
-                        ? comment.author?.displayName.length > 15
+                        {comment.displayName
+                        ? comment.displayName.length > 15
                         ? <>
                             <span key={`mob-n-${"pending"}`} className="name-mobile"
                             data-tooltip-id="tooltip"
-                            data-tooltip-content={comment.author?.displayName}
+                            data-tooltip-content={comment.displayName}
                             data-tooltip-place="top">
-                              {comment.author?.displayName.slice(0, 15) + " (...)"}
+                              {comment.displayName.slice(0, 15) + " (...)"}
                             </span>
                           </> 
                           : <span key={`mob-n-${"pending"}`} className="name-mobile">
-                            {comment.author?.displayName}</span>
+                            {comment.displayName}</span>
                         : <span key={`mob-n-${"pending"}`} className="name-mobile">
                           Anonymous</span>}
                         &nbsp;
                         <span key={`mob-pa-${"pending"}`} className="poster-address-mobile">
                           (u/
                           <span key={`mob-ha-${"pending"}`} className="highlight-address-mobile">
-                            {comment.author?.shortAddress}
+                            {comment.author?.address}
                           </span>
                           )&nbsp;
                         </span>
