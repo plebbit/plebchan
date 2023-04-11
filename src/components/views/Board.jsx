@@ -122,26 +122,45 @@ const Board = () => {
   }
 
 
-  const publishCommentOptions = {
-    displayName: nameRef.current ? nameRef.current.value : undefined,
-    title: subjectRef.current ? subjectRef.current.value : undefined,
-    content: commentRef.current ? commentRef.current.value : undefined,
-    link: linkRef.current ? linkRef.current.value : undefined,
-    subplebbitAddress: selectedAddress,
-    onChallenge,
-    onChallengeVerification,
-    onError: (error) => {
-      setErrorMessage(error);
-    }
-  };
-
-
   const resetFields = () => {
     nameRef.current.value = '';
     subjectRef.current.value = '';
     commentRef.current.value = '';
     linkRef.current.value = '';
   };
+
+  
+  const [publishCommentOptions, setPublishCommentOptions] = useState({
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      displayName: nameRef.current.value || undefined,
+      title: subjectRef.current.value || undefined,
+      content: commentRef.current.value || undefined,
+      link: linkRef.current.value || undefined,
+    }));
+  };
+  
+  
+  useEffect(() => {
+    if (publishCommentOptions.content) {
+      (async () => {
+        await publishComment();
+        resetFields();
+      })();
+    }
+  }, [publishCommentOptions]);
 
 
   const { publishComment } = usePublishComment(publishCommentOptions);
@@ -295,7 +314,7 @@ const Board = () => {
               <td>
                 <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
                 <input id="post-button" type="submit" value="Post" tabIndex={6} 
-                onClick={async () => {await publishComment(); resetFields();}} />
+                onClick={handleSubmit} />
               </td>
             </tr>
             <tr data-type="Comment">
