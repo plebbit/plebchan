@@ -85,7 +85,7 @@ const Thread = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
-      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
+      navigate(`/p/${selectedAddress}/c/${selectedThread}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -95,6 +95,7 @@ const Thread = () => {
 
 
   const onChallenge = async (challenges, comment) => {
+    console.log(comment);
     setPendingComment(comment);
     let challengeAnswers = [];
     
@@ -158,6 +159,7 @@ const Thread = () => {
       displayName: nameRef.current.value || undefined,
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
+      parentCid: selectedThread,
     }));
   };
   
