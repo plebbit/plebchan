@@ -29,7 +29,8 @@ const Board = () => {
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
     selectedAddress, setSelectedAddress,
-    setSelectedReply,
+    setSelectedParentCid,
+    setSelectedShortCid,
     selectedStyle,
     setSelectedThread,
     selectedTitle, setSelectedTitle,
@@ -479,7 +480,7 @@ const Board = () => {
                             <Link to="" key={`pl1-${thread.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                             <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${thread.cid}`} 
                             onClick={() => {
-                              setIsReplyOpen(true); setSelectedReply(thread.shortCid);
+                              setIsReplyOpen(true); setSelectedShortCid(thread.shortCid); setSelectedParentCid(thread.cid);
                               }} title="Reply to this post">{thread.shortCid}</button>
                             &nbsp;
                             <span key={`rl1-${thread.cid}`}>&nbsp;
@@ -572,7 +573,7 @@ const Board = () => {
                               <Link to="" key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                               <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} 
                               onClick={() => {
-                                setIsReplyOpen(true); setSelectedReply(reply.shortCid);
+                                setIsReplyOpen(true); setSelectedShortCid(reply.shortCid); setSelectedParentCid(reply.cid);
                               }} title="Reply to this post">{reply.shortCid}</button>
                             </span>&nbsp;
                             <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
@@ -714,7 +715,7 @@ const Board = () => {
                           &nbsp;
                           <Link to="" key={`mob-no-${thread.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                           <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no2-${thread.cid}`} onClick={() => {
-                             setIsReplyOpen(true); setSelectedReply(thread.shortCid); 
+                             setIsReplyOpen(true); setSelectedShortCid(thread.shortCid); setSelectedParentCid(thread.cid);
                              }} title="Reply to this post">{thread.shortCid}</button>
                         </span>
                       </div>
@@ -810,7 +811,7 @@ const Board = () => {
                           {getDate(reply.timestamp)}&nbsp;
                             <Link to="" key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                             <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={() => {
-                              setIsReplyOpen(true); setSelectedReply(reply.shortCid);
+                              setIsReplyOpen(true); setSelectedShortCid(reply.shortCid); setSelectedParentCid(reply.cid)
                             }} title="Reply to this post">{reply.shortCid}</button>
                           </span>
                         </div>

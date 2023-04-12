@@ -34,9 +34,12 @@ const useGeneralStore = create((set) => ({
   
   selectedAddress: '',
   setSelectedAddress: (address) => set({ selectedAddress: address }),
-  
-  selectedReply: '',
-  setSelectedReply: (reply) => set({ selectedReply: reply }),
+
+  selectedParentCid: '',
+  setSelectedParentCid: (parentCid) => set({ selectedParentCid: parentCid }),
+
+  selectedShortCid: '',
+  setSelectedShortCid: (shortCid) => set({ selectedShortCid: shortCid }),
   
   selectedStyle: localStorage.getItem('selectedStyle') || 'Yotsuba',
   setSelectedStyle: (style) => {

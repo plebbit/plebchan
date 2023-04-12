@@ -16,7 +16,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     setIsCaptchaOpen,
     setPendingComment,
     selectedAddress,
-    selectedReply,
+    selectedParentCid,
+    selectedShortCid,
     selectedStyle,
     selectedThread,
   } = useGeneralStore(state => state);
@@ -113,7 +114,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       displayName: nameRef.current.value || undefined,
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
-      parentCid: selectedReply,
+      parentCid: selectedParentCid,
     }));
   };
   
@@ -172,7 +173,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       <Draggable handle=".modal-header" nodeRef={nodeRef}>
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
-            Reply to c/{selectedReply}
+            Reply to c/{selectedShortCid}
             <button className="icon" onClick={() => closeModal()} title="close" />
           </div>
           <div id="form">

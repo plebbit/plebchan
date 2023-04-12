@@ -29,6 +29,8 @@ const Thread = () => {
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
     selectedAddress, setSelectedAddress,
+    setSelectedParentCid,
+    setSelectedShortCid,
     selectedStyle,
     selectedThread, setSelectedThread,
     selectedTitle, setSelectedTitle,
@@ -483,7 +485,9 @@ const Thread = () => {
                       &nbsp;
                       <span className="post-number">
                         <Link to="" onClick={() => {}} title="Link to this post">c/</Link>
-                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => setIsReplyOpen(true)} title="Reply to this post">{comment.shortCid}</button>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => {
+                          setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
+                          }} title="Reply to this post">{comment.shortCid}</button>
                       </span>&nbsp;&nbsp;
                       <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                       <div id="backlink-id" className="backlink">
@@ -548,7 +552,9 @@ const Thread = () => {
                           &nbsp;
                           <span key={`pn-${reply.cid}`} className="post-number">
                             <Link to="" key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
-                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={() => setIsReplyOpen(true)} title="Reply to this post">{reply.shortCid}</button>
+                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={() => { 
+                              setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
+                              }} title="Reply to this post">{reply.shortCid}</button>
                           </span>&nbsp;
                           <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                           <div id="backlink-id" className="backlink">
@@ -671,8 +677,10 @@ const Thread = () => {
                       <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
                         {getDate(comment?.timestamp)}
                         &nbsp;
-                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={() => setIsReplyOpen(true)} title="Link to this post">c/</button>
-                        <Link to="" key={`mob-no2-${comment.cid}`} onClick={() => {}} title="Reply to this post">{comment.cid?.slice(0, 8)}</Link>
+                        <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={() => {
+                          setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
+                          }} title="Link to this post">c/</button>
+                        <Link to="" key={`mob-no2-${comment.cid}`} onClick={() => {}} title="Reply to this post">{comment.shortCid}</Link>
                       </span>
                     </div>
                     {commentMediaInfo?.url ? (
@@ -753,7 +761,9 @@ const Thread = () => {
                         <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
                           {getDate(reply?.timestamp)}&nbsp;
                           <Link to="" key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
-                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={() => setIsReplyOpen(true)} title="Reply to this post">{reply.shortCid}</button>
+                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={() => {
+                            setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
+                            }} title="Reply to this post">{reply.shortCid}</button>
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
