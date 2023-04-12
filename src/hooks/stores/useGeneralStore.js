@@ -35,6 +35,9 @@ const useGeneralStore = create((set) => ({
   selectedAddress: '',
   setSelectedAddress: (address) => set({ selectedAddress: address }),
   
+  selectedReply: '',
+  setSelectedReply: (reply) => set({ selectedReply: reply }),
+  
   selectedStyle: localStorage.getItem('selectedStyle') || 'Yotsuba',
   setSelectedStyle: (style) => {
     localStorage.setItem('selectedStyle', style);

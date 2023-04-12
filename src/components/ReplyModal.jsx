@@ -1,18 +1,164 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from './styled/ReplyModal.styled';
 import useGeneralStore from '../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
+import useError from '../hooks/useError';
+import useSuccess from '../hooks/useSuccess';
 
 
 const ReplyModal = ({ isOpen, closeModal }) => {
-  const selectedStyle = useGeneralStore(state => state.selectedStyle);
+  const {
+    captchaResponse, setCaptchaResponse,
+    setChallengesArray,
+    setIsCaptchaOpen,
+    setPendingComment,
+    selectedAddress,
+    selectedReply,
+    selectedStyle,
+    selectedThread,
+  } = useGeneralStore(state => state);
 
-  const handleCloseModal = () => {
-    closeModal();
+  const navigate = useNavigate();
+
+  const nodeRef = useRef(null);
+
+  const nameRef = useRef();
+  const commentRef = useRef();
+  const linkRef = useRef();
+
+  const onChallengeVerificationRef = useRef();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
+
+
+  const onChallengeVerification = (challengeVerification) => {
+    if (challengeVerification.challengeSuccess === true) {
+      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
+      navigate(`/p/${selectedAddress}/c/${selectedThread}`);
+    }
+    else if (challengeVerification.challengeSuccess === false) {
+      setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+    }
   };
 
-  const nodeRef = React.useRef(null);
+
+  const onChallenge = async (challenges, comment) => {
+    setPendingComment(comment);
+    let challengeAnswers = [];
+    
+    try {
+      challengeAnswers = await getChallengeAnswersFromUser(challenges)
+    }
+    catch (error) {
+      setErrorMessage(error);
+    }
+    if (challengeAnswers) {
+      await comment.publishChallengeAnswers(challengeAnswers)
+    }
+  };
+
+  
+  const [publishCommentOptions, setPublishCommentOptions] = useState({
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification: onChallengeVerificationRef.current,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+
+
+  const { publishComment, index } = usePublishComment(publishCommentOptions);
+
+
+  useEffect(() => {
+    if (index !== undefined) {
+      navigate(`/profile/c/${index}`);
+      setSuccessMessage('Comment pending with index ' + index + '.');
+    }
+  }, [index]);
+  
+
+  onChallengeVerificationRef.current = onChallengeVerification;
+
+  
+  const resetFields = () => {
+    nameRef.current.value = '';
+    commentRef.current.value = '';
+    linkRef.current.value = '';
+  };
+
+
+  useEffect(() => {
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      subplebbitAddress: selectedAddress,
+      onChallengeVerification: onChallengeVerificationRef.current,
+    }));
+  }, [selectedAddress]);
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      displayName: nameRef.current.value || undefined,
+      content: commentRef.current.value || undefined,
+      link: linkRef.current.value || undefined,
+      parentCid: selectedReply,
+    }));
+  };
+  
+  
+  useEffect(() => {
+    if (publishCommentOptions.content) {
+      (async () => {
+        await publishComment();
+        resetFields();
+      })();
+    }
+  }, [publishCommentOptions]);
+
+
+  const getChallengeAnswersFromUser = async (challenges) => {
+    setChallengesArray(challenges);
+    
+    return new Promise((resolve, reject) => {
+      const imageString = challenges?.challenges[0].challenge;
+      const imageSource = `data:image/png;base64,${imageString}`;
+      const challengeImg = new Image();
+      challengeImg.src = imageSource;
+  
+      challengeImg.onload = () => {
+        setIsCaptchaOpen(true);
+  
+        const handleKeyDown = (event) => {
+          if (event.key === 'Enter') {
+            resolve(captchaResponse);
+            setIsCaptchaOpen(false);
+            document.removeEventListener('keydown', handleKeyDown);
+            event.preventDefault();
+          }
+        };
+
+        setCaptchaResponse('');
+        document.addEventListener('keydown', handleKeyDown);
+      };
+  
+      challengeImg.onerror = () => {
+        reject(setErrorMessage('Could not load challenges'));
+      };
+    });
+  };
+
 
   return (
     <StyledModal
@@ -26,21 +172,21 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       <Draggable handle=".modal-header" nodeRef={nodeRef}>
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
-            Reply to Thread
-            <button className="icon" onClick={handleCloseModal} title="close" />
+            Reply to c/{selectedReply}
+            <button className="icon" onClick={() => closeModal()} title="close" />
           </div>
           <div id="form">
             <div>
-              <input id="name" type="text" placeholder="Name"></input>
+              <input id="name" type="text" placeholder="Name" ref={nameRef} />
             </div>
             <div>
-              <input id="name" type="text" placeholder="Embed link" disabled></input>
+              <input id="name" type="text" placeholder="Embed link" ref={linkRef} />
             </div>
             <div>
-              <textarea rows="4" placeholder="Comment" wrap="soft"></textarea>
+              <textarea rows="4" placeholder="Comment" wrap="soft" ref={commentRef} />
             </div>
             <div>
-              <button id="next">Post</button>
+              <button id="next" onClick={handleSubmit}>Post</button>
             </div>
           </div>
         </div>

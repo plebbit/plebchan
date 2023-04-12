@@ -95,7 +95,6 @@ const Thread = () => {
 
 
   const onChallenge = async (challenges, comment) => {
-    console.log(comment);
     setPendingComment(comment);
     let challengeAnswers = [];
     
