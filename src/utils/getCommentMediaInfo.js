@@ -11,7 +11,15 @@ const getCommentMediaInfo = (comment) => {
     };
   }
   if (comment?.link) {
-    const mime = extName(new URL(comment?.link).pathname.replace('/', ''))[0]?.mime
+    try {
+      new URL(comment.link);
+    } catch (error) {
+      console.error("Invalid URL:", comment.link);
+      return;
+    }
+
+    const mime = extName(new URL(comment?.link).pathname.replace('/', ''))[0]?.mime;
+
     if (mime?.startsWith('image')) {
       return {
         url: comment.link,
