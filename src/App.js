@@ -178,7 +178,7 @@ export default function App() {
           <Route path='post' element={<Catalog />} />
           <Route path='settings' element={<Catalog />} />
         </Route>
-        <Route path={`/p/:subplebbitAddress/c/pending`} element={<Pending setBodyStyle={setBodyStyle} /> } />
+        <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} /> } />
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>
       <StyledContainer />

@@ -37,7 +37,6 @@ const Pending = () => {
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
 
-
   const [selectedAddress, setSelectedAddress] = useState(comment.subplebbitAddress);
   const [selectedTitle, setSelectedTitle] = useState(null);
 
@@ -119,8 +118,8 @@ const Pending = () => {
             <ImageBanner />
           </div>
             <>
-            <div className="board-title">{selectedTitle}</div>
-            <div className="board-address">p/{selectedAddress}</div>
+            <div className="board-title">{selectedTitle ?? null}</div>
+            <div className="board-address">{selectedAddress ? ("p/" + selectedAddress) : null}</div>
             </>
         </>
       </Header>

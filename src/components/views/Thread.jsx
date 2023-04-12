@@ -58,7 +58,6 @@ const Thread = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
-
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -95,13 +94,9 @@ const Thread = () => {
   };
 
 
-  onChallengeVerificationRef.current = onChallengeVerification;
-
-
   const onChallenge = async (challenges, comment) => {
     setPendingComment(comment);
     let challengeAnswers = [];
-    navigate(`/p/${selectedAddress}/c/pending`)
     
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
@@ -112,13 +107,6 @@ const Thread = () => {
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
-  }
-
-
-  const resetFields = () => {
-    nameRef.current.value = '';
-    commentRef.current.value = '';
-    linkRef.current.value = '';
   };
 
   
@@ -130,6 +118,27 @@ const Thread = () => {
       setErrorMessage(error);
     },
   });
+
+
+  const { publishComment, index } = usePublishComment(publishCommentOptions);
+
+
+  useEffect(() => {
+    if (index !== undefined) {
+      navigate(`/profile/c/${index}`);
+      setSuccessMessage('Comment pending with index ' + index + '.');
+    }
+  }, [index]);
+  
+
+  onChallengeVerificationRef.current = onChallengeVerification;
+
+  
+  const resetFields = () => {
+    nameRef.current.value = '';
+    commentRef.current.value = '';
+    linkRef.current.value = '';
+  };
 
 
   useEffect(() => {
@@ -161,9 +170,6 @@ const Thread = () => {
       })();
     }
   }, [publishCommentOptions]);
-
-
-  const { publishComment } = usePublishComment(publishCommentOptions);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -205,7 +211,6 @@ const Thread = () => {
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
-
 
   // scroll to post when quote is clicked
   function handleQuoteClick(reply, event) {

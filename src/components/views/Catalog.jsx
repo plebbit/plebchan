@@ -51,7 +51,6 @@ const Catalog = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
-
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -84,23 +83,19 @@ const Catalog = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
+      setSuccessMessage('Challenge success.', {publishedCid: challengeVerification.publication?.cid});
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setErrorMessage('Challenge failed.', {reason: challengeVerification.reason, errors: challengeVerification.errors});
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
-
-  
-  onChallengeVerificationRef.current = onChallengeVerification;
 
 
   const onChallenge = async (challenges, comment) => {
     setPendingComment(comment);
     let challengeAnswers = [];
-    navigate(`/p/${selectedAddress}/c/pending`)
     
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
@@ -111,14 +106,6 @@ const Catalog = () => {
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
-  }
-
-
-  const resetFields = () => {
-    nameRef.current.value = '';
-    subjectRef.current.value = '';
-    commentRef.current.value = '';
-    linkRef.current.value = '';
   };
 
   
@@ -130,6 +117,28 @@ const Catalog = () => {
       setErrorMessage(error);
     },
   });
+
+
+  const { publishComment, index } = usePublishComment(publishCommentOptions);
+
+  useEffect(() => {
+    if (index !== undefined) {
+      navigate(`/profile/c/${index}`);
+      setSuccessMessage('Comment pending with index ' + index + '.');
+    }
+  }, [index]);
+  
+
+  onChallengeVerificationRef.current = onChallengeVerification;
+
+
+  const resetFields = () => {
+    nameRef.current.value = '';
+    subjectRef.current.value = '';
+    commentRef.current.value = '';
+    linkRef.current.value = '';
+  };
+
 
   useEffect(() => {
     setPublishCommentOptions((prevPublishCommentOptions) => ({
@@ -161,9 +170,6 @@ const Catalog = () => {
       })();
     }
   }, [publishCommentOptions]);
-
-
-  const { publishComment } = usePublishComment(publishCommentOptions);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {
