@@ -10,6 +10,7 @@ import PostLoader from '../PostLoader';
 import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
+import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
 import useSuccess from '../../hooks/useSuccess';
@@ -259,7 +260,7 @@ const Pending = () => {
                       <button key={`pmb-${"pending"}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                     </span>
                     <blockquote key={`blockquote-${"pending"}`}>
-                      <Post content={comment.content} key={`post-${"pending"}`} />
+                      <Post content={comment.content} comment={comment} handleQuoteClick={handleQuoteClick} key={`post-${"pending"}`} />
                     </blockquote>
                   </div>
                 </div>
@@ -351,7 +352,7 @@ const Pending = () => {
                     <blockquote key={`mob-bq-${"pending"}`} className="post-message-mobile">
                       {comment.content ? (
                         <>
-                          <Post content={comment.content} key={`post-mobile-${"pending"}`} /> 
+                          <Post content={comment.content} handleQuoteClick={handleQuoteClick} comment={comment} key={`post-mobile-${"pending"}`} /> 
                         </>
                       ) : null}
                     </blockquote>

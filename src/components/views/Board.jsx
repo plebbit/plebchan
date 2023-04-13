@@ -13,6 +13,7 @@ import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
+import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
@@ -231,17 +232,6 @@ const Board = () => {
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
-  };
-
-  // scroll to post when quote is clicked
-  function handleQuoteClick(reply, event) {
-    event.preventDefault();
-    const cid = reply.shortCid;
-    const targetElement = [...document.querySelectorAll('.post-reply')]
-      .find(el => el.innerHTML.includes(cid));
-    if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "instant" });
-    }
   };
 
 
@@ -641,10 +631,7 @@ const Board = () => {
                           {reply.content ? (
                               reply.content.length > 500 ?
                               <Fragment key={`fragment8-${reply.cid}`}>
-                                <blockquote key={`pm-${reply.cid}`} className="post-message">
-                                  <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
-                                    {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                                  </Link>
+                                <blockquote key={`pm-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} className="post-message">
                                   <Post content={reply.content.slice(0, 500)} key={`post-${reply.cid}`} />
                                   <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
                                   <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
@@ -654,10 +641,7 @@ const Board = () => {
                                 </blockquote>
                               </Fragment>
                             : <blockquote key={`pm-${reply.cid}`} className="post-message">
-                                <Link to={() => {}} key={`r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
-                                  {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                                </Link>
-                                <Post content={reply.content} key={`post-${reply.cid}`} />
+                                <Post content={reply.content} key={`post-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} />
                               </blockquote>)
                             : null}
                         </div>
@@ -852,10 +836,7 @@ const Board = () => {
                           reply.content.length > 500 ?
                           <Fragment key={`fragment15-${reply.cid}`}>
                             <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                              <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
-                                {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                              </Link>
-                              <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} />
+                              <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} />
                               <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                               Comment too long.&nbsp;
@@ -864,10 +845,7 @@ const Board = () => {
                             </blockquote>
                           </Fragment>
                         : <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                            <Link to={() => {}} key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, event)}>
-                              {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                            </Link>
-                            <Post content={reply.content} key={`post-mobile-${reply.cid}`} />
+                            <Post content={reply.content} key={`post-mobile-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} />
                           </blockquote>)
                         : null}
                       </div>

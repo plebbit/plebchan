@@ -13,6 +13,7 @@ import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
+import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import renderThreadComments from '../../utils/renderThreadComments';
 import useClickForm from '../../hooks/useClickForm';
@@ -213,17 +214,6 @@ const Thread = () => {
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
-  };
-
-  // scroll to post when quote is clicked
-  function handleQuoteClick(reply, event) {
-    event.preventDefault();
-    const cid = reply.shortCid;
-    const targetElement = [...document.querySelectorAll('.post-reply')]
-      .find(el => el.innerHTML.includes(cid));
-    if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "instant" });
-    }
   };
 
 
@@ -506,7 +496,7 @@ const Thread = () => {
                       </div>
                     </span>
                     <blockquote key={`blockquote-${comment.cid}`}>
-                      <Post content={comment.content} key={`post-${comment.cid}`} />
+                      <Post content={comment.content} handleQuoteClick={handleQuoteClick} comment={comment} key={`post-${comment.cid}`} />
                     </blockquote>
                   </div>
                 </div>
@@ -618,11 +608,7 @@ const Thread = () => {
                             </div>
                           ) : null}
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
-                          <Link to={() => {}} className="quote-link"
-                            onClick={(event) => handleQuoteClick(reply, event)}>
-                            {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                          </Link>
-                          <Post content={reply.content} key={`post-${reply.cid}`} />
+                          <Post content={reply.content} comment={reply} handleQuoteClick={handleQuoteClick} key={`post-${reply.cid}`} />
                         </blockquote>
                       </div>
                     </div>
@@ -717,7 +703,7 @@ const Thread = () => {
                     <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                       {comment.content ? (
                         <>
-                          <Post content={comment.content} key={`post-mobile-${comment.cid}`} /> 
+                          <Post content={comment.content} handleQuoteClick={handleQuoteClick} comment={comment} key={`post-mobile-${comment.cid}`} /> 
                         </>
                       ) : null}
                     </blockquote>
@@ -767,11 +753,7 @@ const Thread = () => {
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
-                        <Link to={() => {}} key={`mob-ql-${reply.cid}`} className="quotelink-mobile" 
-                        onClick={(event) => handleQuoteClick(reply, event)}>
-                          {`c/${reply.parentCid.slice(0, 8)}`}{<br />}
-                        </Link>
-                        <Post content={reply.content} key={`post-mobile-${reply.cid}`} />
+                        <Post content={reply.content} comment={reply} handleQuoteClick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
                       </blockquote>
                     </div>
                   </div>

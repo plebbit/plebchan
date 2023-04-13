@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import { visit } from 'unist-util-visit';
 import DOMPurify from 'dompurify';
 
@@ -24,7 +25,31 @@ const blockquoteToGreentext = () => (tree) => {
   });
 };
 
-const Post = ({ content }) => {
+const createQuotelink = (handleQuoteClick, comment, children) => {
+  const text = children.map((child) => (typeof child === 'string' ? child : child.props.children)).join('');
+  const regex = /(\s|^)(c\/[A-Za-z0-9]{12}|c\/[A-Za-z0-9]{45})(?=\s|$)/g;
+  const parts = text.split(regex);
+
+  return parts.flatMap((part, i) => {
+    if (regex.test(part)) {
+      return [
+        <Link
+          key={`link-${i}`}
+          className="quotelink"
+          to=""
+          onClick={handleQuoteClick}
+        >
+          {part.trim()}
+        </Link>,
+      ];
+    } else {
+      return [part];
+    }
+  });
+};
+
+
+const Post = ({ content, handleQuoteClick, comment }) => {
   const sanitizedContent = DOMPurify.sanitize(content);
 
   return (
@@ -36,7 +61,9 @@ const Post = ({ content }) => {
         video: () => null,
         source: () => null,
         gif: () => null,
-        a: () => null
+        p: ({ children }) => (
+          <p>{createQuotelink(handleQuoteClick, comment, children)}</p>
+        ),
       }}
     />
   );
