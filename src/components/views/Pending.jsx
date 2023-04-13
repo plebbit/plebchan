@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from '../styled/Board.styled';
@@ -22,7 +22,7 @@ const Pending = () => {
     isSettingsOpen, setIsSettingsOpen,
     pendingComment,
     selectedStyle,
-    selectedThread, setSelectedThread,
+    selectedThread,
     showPostFormLink
   } = useGeneralStore(state => state);
 
@@ -33,7 +33,6 @@ const Pending = () => {
   const [successMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
-  const { subplebbitAddress, threadCid } = useParams();
   const navigate = useNavigate();
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
@@ -41,15 +40,6 @@ const Pending = () => {
   const [selectedAddress, setSelectedAddress] = useState(comment.subplebbitAddress);
   const [selectedTitle, setSelectedTitle] = useState(null);
 
-  // temporary title from JSON, gets subplebbitAddress and threadCid from URL
-  useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
-    setSelectedThread(threadCid);
-    const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
-    if (selectedSubplebbit) {
-      setSelectedTitle(selectedSubplebbit.title);
-    }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
@@ -59,7 +49,6 @@ const Pending = () => {
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
-
 
   return (
     <Container>
