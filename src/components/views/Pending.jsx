@@ -21,8 +21,10 @@ const Pending = () => {
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
     pendingComment,
+    selectedAddress, setSelectedAddress,
     selectedStyle,
     selectedThread,
+    selectedTitle, setSelectedTitle,
     showPostFormLink
   } = useGeneralStore(state => state);
 
@@ -36,9 +38,6 @@ const Pending = () => {
   const navigate = useNavigate();
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
-
-  const [selectedAddress, setSelectedAddress] = useState(comment.subplebbitAddress);
-  const [selectedTitle, setSelectedTitle] = useState(null);
 
 
   // mobile navbar board select functionality
