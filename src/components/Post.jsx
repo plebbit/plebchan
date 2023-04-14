@@ -1,27 +1,28 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
-import { visit } from 'unist-util-visit';
 import DOMPurify from 'dompurify';
 
 const blockquoteToGreentext = () => (tree) => {
-  visit(tree, 'blockquote', (node) => {
-    node.children.forEach((child) => {
-      if (child.type === 'paragraph' && child.children.length > 0) {
-        const prefix = {
-          type: 'text',
-          value: '>',
-        };
-        child.children.unshift(prefix);
-      }
-    });
-    node.type = 'div';
-    node.data = {
-      hName: 'div',
-      hProperties: {
-        className: 'greentext',
-      },
-    };
+  tree.children.forEach((node) => {
+    if (node.type === 'blockquote') {
+      node.children.forEach((child) => {
+        if (child.type === 'paragraph' && child.children.length > 0) {
+          const prefix = {
+            type: 'text',
+            value: '>',
+          };
+          child.children.unshift(prefix);
+        }
+      });
+      node.type = 'div';
+      node.data = {
+        hName: 'div',
+        hProperties: {
+          className: 'greentext',
+        },
+      };
+    }
   });
 };
 

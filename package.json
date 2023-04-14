@@ -34,7 +34,6 @@
     "react-toastify": "^9.1.1",
     "react-tooltip": "^5.10.0",
     "styled-components": "^5.3.9",
-    "unist-util-visit": "^4.1.2",
     "web-vitals": "^3.3.0",
     "zustand": "^4.3.6"
   },
