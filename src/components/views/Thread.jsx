@@ -496,7 +496,7 @@ const Thread = () => {
                       </div>
                     </span>
                     <blockquote key={`blockquote-${comment.cid}`}>
-                      <Post content={comment.content} handleQuoteClick={handleQuoteClick} comment={comment} key={`post-${comment.cid}`} />
+                      <Post content={comment.content} handlequoteclick={handleQuoteClick} comment={comment} key={`post-${comment.cid}`} />
                     </blockquote>
                   </div>
                 </div>
@@ -608,7 +608,7 @@ const Thread = () => {
                             </div>
                           ) : null}
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
-                          <Post content={reply.content} comment={reply} handleQuoteClick={handleQuoteClick} key={`post-${reply.cid}`} />
+                          <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-${reply.cid}`} />
                         </blockquote>
                       </div>
                     </div>
@@ -703,7 +703,7 @@ const Thread = () => {
                     <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                       {comment.content ? (
                         <>
-                          <Post content={comment.content} handleQuoteClick={handleQuoteClick} comment={comment} key={`post-mobile-${comment.cid}`} /> 
+                          <Post content={comment.content} handlequoteclick={handleQuoteClick} comment={comment} key={`post-mobile-${comment.cid}`} /> 
                         </>
                       ) : null}
                     </blockquote>
@@ -753,7 +753,7 @@ const Thread = () => {
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
-                        <Post content={reply.content} comment={reply} handleQuoteClick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
+                        <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
                       </blockquote>
                     </div>
                   </div>

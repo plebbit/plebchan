@@ -620,8 +620,8 @@ const Board = () => {
                           {reply.content ? (
                               reply.content.length > 500 ?
                               <Fragment key={`fragment8-${reply.cid}`}>
-                                <blockquote key={`pm-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} className="post-message">
-                                  <Post content={reply.content.slice(0, 500)} key={`post-${reply.cid}`} />
+                                <blockquote key={`pm-${reply.cid}`} comment={reply} className="post-message">
+                                  <Post content={reply.content.slice(0, 500)} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} />
                                   <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
                                   <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
                                   Comment too long.&nbsp;
@@ -630,7 +630,7 @@ const Board = () => {
                                 </blockquote>
                               </Fragment>
                             : <blockquote key={`pm-${reply.cid}`} className="post-message">
-                                <Post content={reply.content} key={`post-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} />
+                                <Post content={reply.content} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                               </blockquote>)
                             : null}
                         </div>
@@ -825,7 +825,7 @@ const Board = () => {
                           reply.content.length > 500 ?
                           <Fragment key={`fragment15-${reply.cid}`}>
                             <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                              <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} />
+                              <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                               <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                               Comment too long.&nbsp;
@@ -834,7 +834,7 @@ const Board = () => {
                             </blockquote>
                           </Fragment>
                         : <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                            <Post content={reply.content} key={`post-mobile-${reply.cid}`} handleQuoteClick={handleQuoteClick} comment={reply} />
+                            <Post content={reply.content} key={`post-mobile-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                           </blockquote>)
                         : null}
                       </div>
