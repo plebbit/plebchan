@@ -44,8 +44,6 @@ const Board = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const onChallengeVerificationRef = useRef();
-
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -100,10 +98,12 @@ const Board = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       setSuccessMessage('Challenge success.', {publishedCid: challengeVerification.publication?.cid});
+      console.log("challenge success", challengeVerification.publication?.cid, challengeVerification)
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('Challenge failed.', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      console.log("challenge failed", challengeVerification.reason, challengeVerification.errors)
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
@@ -128,11 +128,12 @@ const Board = () => {
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: selectedAddress,
     onChallenge,
-    onChallengeVerification: onChallengeVerificationRef.current,
+    onChallengeVerification,
     onError: (error) => {
       setErrorMessage(error);
     },
   });
+  
 
   const { publishComment, index } = usePublishComment(publishCommentOptions);
 
@@ -142,9 +143,6 @@ const Board = () => {
       setSuccessMessage('Comment pending with index ' + index + '.');
     }
   }, [index]);
-  
-
-  onChallengeVerificationRef.current = onChallengeVerification;
 
   
   const resetFields = () => {
@@ -153,15 +151,6 @@ const Board = () => {
     commentRef.current.value = '';
     linkRef.current.value = '';
   };
-
-  
-  useEffect(() => {
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      subplebbitAddress: selectedAddress,
-      onChallengeVerification: onChallengeVerificationRef.current,
-    }));
-  }, [selectedAddress]);
 
 
   const handleSubmit = async (event) => {

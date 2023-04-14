@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -36,9 +36,8 @@ const Pending = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
   const navigate = useNavigate();
-  const commentMediaInfo = getCommentMediaInfo(comment);
+  const [commentMediaInfo, setCommentMediaInfo] = useState(null);
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
-
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
@@ -48,6 +47,15 @@ const Pending = () => {
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
+
+  // get comment media info
+  useEffect(() => {
+    if (comment && comment.link) {
+      const mediaInfo = getCommentMediaInfo(comment);
+      setCommentMediaInfo(mediaInfo);
+    }
+  }, [comment]);
+  
 
   return (
     <Container>
