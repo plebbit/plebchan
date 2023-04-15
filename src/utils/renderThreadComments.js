@@ -1,5 +1,5 @@
 function renderThreadComments(comments) {
-  const commentKeys = Object.keys(comments);
+  const commentKeys = Object.keys(comments? comments : {});
   const renderedComments = commentKeys.map(key => {
     const comment = comments[key];
     const { replies: { pages: { topAll: { comments: nestedComments = [] } = {} } = {} } = {} } = comment;
