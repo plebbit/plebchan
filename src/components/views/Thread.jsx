@@ -711,10 +711,8 @@ const Thread = () => {
                 </div>
                 {comment.replyCount === undefined ? <PostLoader /> : null}
                 {comment.replyCount > 0 && 
-                Object.keys(comment?.replies?.pages?.topAll.comments).map(() => {
-                  const renderedComments = renderThreadComments(comment?.replies?.pages?.topAll.comments);
-                  return renderedComments.map(reply => {
-                    return (
+                  renderedComments.map((reply) => {
+                  return (
                   <div key={`mob-rc-${reply.cid}-${Math.random()}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
@@ -759,7 +757,7 @@ const Thread = () => {
                   </div>
                   )
                 })
-              })}
+              }
             </div>
             <BottomBar selectedStyle={selectedStyle}>
                 <div id="bottombar-desktop">

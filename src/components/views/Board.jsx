@@ -23,7 +23,7 @@ import useSuccess from '../../hooks/useSuccess';
 
 const Board = () => {
   const {
-    captchaResponse, setCaptchaResponse,
+    setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
