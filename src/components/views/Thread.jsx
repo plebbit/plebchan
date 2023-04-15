@@ -61,6 +61,8 @@ const Thread = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
+  const renderedComments = renderThreadComments(comment?.replies?.pages?.topAll.comments);
+
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -503,9 +505,7 @@ const Thread = () => {
               </div>
               {comment.replyCount === undefined ? <PostLoader /> : null}
               {comment.replyCount > 0 && 
-              Object.keys(comment?.replies?.pages?.topAll.comments).map(() => {
-                const renderedComments = renderThreadComments(comment?.replies?.pages?.topAll.comments);
-                return renderedComments.map(reply => {
+              renderedComments.map((reply) => {
                   const replyMediaInfo = getCommentMediaInfo(reply);
                   const fallbackImgUrl = "/assets/filedeleted-res.gif";
                   return (
@@ -515,25 +515,25 @@ const Thread = () => {
                         <div key={`pi-${reply.cid}`} className="post-info">
                         &nbsp;
                           <span key={`nb-${reply.cid}`} className="nameblock">
-                          {reply.author.displayName
-                          ? reply.author.displayName.length > 20
+                          {reply.author?.displayName
+                          ? reply.author?.displayName.length > 20
                           ? <>
                               <span key={`mob-n-${reply.cid}`} className="name"
                               data-tooltip-id="tooltip"
-                              data-tooltip-content={reply.author.displayName}
+                              data-tooltip-content={reply.author?.displayName}
                               data-tooltip-place="top">
-                                {reply.author.displayName.slice(0, 20) + " (...)"}
+                                {reply.author?.displayName.slice(0, 20) + " (...)"}
                               </span>
                             </>
                             : <span key={`mob-n-${reply.cid}`} className="name">
-                              {reply.author.displayName}</span>
+                              {reply.author?.displayName}</span>
                           : <span key={`mob-n-${reply.cid}`} className="name">
                             Anonymous</span>}
                             &nbsp;
                             <span key={`pa-${reply.cid}`} className="poster-address">
                               (u/
                               <span key={`mob-ha-${reply.cid}`}>
-                                {reply.author.shortAddress}
+                                {reply.author?.shortAddress}
                               </span>)
                             </span>
                           </span>
@@ -614,7 +614,7 @@ const Thread = () => {
                     </div>
                   )
                 })
-              })}
+              }
             </div>
             <div className="thread-mobile" key="thread-mobile">
               <hr />
@@ -720,25 +720,25 @@ const Thread = () => {
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                         <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
-                          {reply.author.displayName
-                          ? reply.author.displayName.length > 12
+                          {reply.author?.displayName
+                          ? reply.author?.displayName.length > 12
                           ? <>
                               <span key={`mob-n-${reply.cid}`} className="name-mobile"
                               data-tooltip-id="tooltip"
-                              data-tooltip-content={reply.author.displayName}
+                              data-tooltip-content={reply.author?.displayName}
                               data-tooltip-place="top">
-                                {reply.author.displayName.slice(0, 12) + " (...)"}
+                                {reply.author?.displayName.slice(0, 12) + " (...)"}
                               </span>
                             </>
                             : <span key={`mob-n-${reply.cid}`} className="name-mobile">
-                              {reply.author.displayName}</span>
+                              {reply.author?.displayName}</span>
                           : <span key={`mob-n-${reply.cid}`} className="name-mobile">
                             Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
                             (u/
                             <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
-                              {reply.author.shortAddress}
+                              {reply.author?.shortAddress}
                             </span>
                             )
                           </span>
