@@ -481,7 +481,7 @@ const Thread = () => {
                       </span>&nbsp;&nbsp;
                       <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                       <div id="backlink-id" className="backlink">
-                        {comment.replies?.pages.topAll.comments
+                        {comment?.replies?.pages?.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
                           .map((reply) => (
                             <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
@@ -503,8 +503,8 @@ const Thread = () => {
               </div>
               {comment.replyCount === undefined ? <PostLoader /> : null}
               {comment.replyCount > 0 && 
-              Object.keys(comment.replies.pages.topAll.comments).map(() => {
-                const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
+              Object.keys(comment?.replies?.pages?.topAll.comments).map(() => {
+                const renderedComments = renderThreadComments(comment?.replies?.pages?.topAll.comments);
                 return renderedComments.map(reply => {
                   const replyMediaInfo = getCommentMediaInfo(reply);
                   const fallbackImgUrl = "/assets/filedeleted-res.gif";
@@ -548,7 +548,7 @@ const Thread = () => {
                           </span>&nbsp;
                           <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                           <div id="backlink-id" className="backlink">
-                            {reply.replies?.pages.topAll.comments
+                            {reply.replies?.pages?.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
                               .map((reply) => (
                                 <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
@@ -711,8 +711,8 @@ const Thread = () => {
                 </div>
                 {comment.replyCount === undefined ? <PostLoader /> : null}
                 {comment.replyCount > 0 && 
-                Object.keys(comment.replies.pages.topAll.comments).map(() => {
-                  const renderedComments = renderThreadComments(comment.replies.pages.topAll.comments);
+                Object.keys(comment?.replies?.pages?.topAll.comments).map(() => {
+                  const renderedComments = renderThreadComments(comment?.replies?.pages?.topAll.comments);
                   return renderedComments.map(reply => {
                     return (
                   <div key={`mob-rc-${reply.cid}-${Math.random()}`} className="reply-container">

@@ -375,7 +375,7 @@ const Board = () => {
               hasMore={hasMore}
             >
               {selectedFeed.map((thread) => {
-              const { replies: { pages: { topAll: { comments } } } } = thread;
+              const { replies: { pages: { topAll: { comments } = {} } = {} } = {} } = thread;
               const { renderedComments, omittedCount } = renderComments(comments);
               const commentMediaInfo = getCommentMediaInfo(thread);
               const fallbackImgUrl = "/assets/filedeleted-res.gif";
@@ -471,7 +471,7 @@ const Board = () => {
                           </span>&nbsp;
                           <button key={`pmb-${thread.cid}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                           <div key={`bi-${thread.cid}`} id="backlink-id" className="backlink">
-                            {thread.replies?.pages.topAll.comments
+                            {thread.replies?.pages?.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
                               .map((reply) => (
                                 <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
@@ -514,7 +514,7 @@ const Board = () => {
                       </span>
                     </span>) : null}
                   </span>
-                  {renderedComments.map((reply) => {
+                  {renderedComments?.map((reply) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
                     return (
@@ -558,7 +558,7 @@ const Board = () => {
                             </span>&nbsp;
                             <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                             <div id="backlink-id" className="backlink">
-                              {reply.replies?.pages.topAll.comments
+                              {reply.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
                                 .map((reply) => (
                                   <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
@@ -749,7 +749,7 @@ const Board = () => {
                       <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
                     </div>
                   </div>
-                  {renderedComments.map((reply) => {
+                  {renderedComments?.map((reply) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     return (
                     <div key={`mob-rc-${reply.cid}`} className="reply-container">

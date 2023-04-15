@@ -4,12 +4,12 @@ const getCommentMediaInfo = (comment) => {
   if (!comment?.thumbnailUrl && !comment?.link) {
     return;
   }
-  if (comment?.thumbnailUrl) {
-    return {
-      url: comment.link,
-      type: 'webpage'
-    };
-  }
+  // if (comment?.thumbnailUrl) {
+  //   return {
+  //     url: comment.link,
+  //     type: 'webpage'
+  //   };
+  // }
   if (comment?.link) {
     try {
       new URL(comment.link);
