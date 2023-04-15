@@ -188,9 +188,10 @@ const Board = () => {
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
   
-        const handleKeyDown = (event) => {
+        const handleKeyDown = async (event) => {
           if (event.key === 'Enter') {
-            resolve(captchaResponse);
+            const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
+            resolve(currentCaptchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
             event.preventDefault();
