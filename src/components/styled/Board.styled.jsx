@@ -2631,6 +2631,15 @@ export const BoardForm = styled.div`
         padding: 0;
         padding-left: 5px;
       }
+      
+      .backlink-mobile {
+        padding: 3px 5px;
+        clear: both !important;
+        line-height: 2;
+        background-color: #ead6ca;
+        border-top: 1px solid #d9bfb7;
+        display: block;
+      }
 
       .quote-link {
         color: navy;
@@ -2961,6 +2970,15 @@ export const BoardForm = styled.div`
         padding-left: 5px;
       }
 
+      .backlink-mobile {
+        padding: 3px 5px;
+        clear: both !important;
+        line-height: 2;
+        background-color: #ead6ca;
+        border-top: 1px solid #d9bfb7;
+        display: block;
+      }
+
       .quote-link {
         color: navy;
         text-decoration: underline;
@@ -3124,6 +3142,15 @@ export const BoardForm = styled.div`
         padding-left: 5px;
       }
 
+      .backlink-mobile {
+        padding: 3px 5px;
+        clear: both !important;
+        line-height: 2;
+        background-color: #c9cde8;
+        border-top: 1px solid #b7c5d9;
+        display: block;
+      }
+
       .quote-link {
         color: #34345C;
         text-decoration: underline;
@@ -3278,6 +3305,15 @@ export const BoardForm = styled.div`
         display: inline;
         padding: 0;
         padding-left: 5px;
+      }
+
+      .backlink-mobile {
+        padding: 3px 5px;
+        clear: both !important;
+        line-height: 2;
+        background-color: #212326;
+        border-top: 1px solid #2D2F33;
+        display: block;
       }
 
       .quote-link {
@@ -3452,6 +3488,15 @@ export const BoardForm = styled.div`
 
       .backlink span {
         padding: 0;
+      }
+
+      .backlink-mobile {
+        padding: 3px 5px;
+        clear: both !important;
+        line-height: 2;
+        background-color: #ddd;
+        border-top: 1px solid #ccc;
+        display: block;
       }
 
       blockquote {
