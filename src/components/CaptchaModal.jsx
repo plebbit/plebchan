@@ -62,9 +62,9 @@ const CaptchaModal = () => {
             <button className="icon" onClick={() => setIsCaptchaOpen(false)} title="close" />
           </div>
           <div id="form">
-            {pendingComment.displayName ? (
+            {pendingComment.author?.displayName ? (
               <div>
-                <input id="field" type="text" placeholder={pendingComment.displayName} disabled />
+                <input id="field" type="text" placeholder={pendingComment.author?.displayName} disabled />
               </div>
             ) : null}
             {pendingComment.title ? (

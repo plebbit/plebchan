@@ -98,7 +98,6 @@ const Board = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       setSuccessMessage('Challenge success.', {publishedCid: challengeVerification.publication?.cid});
-      console.log("challenge success", challengeVerification.publication?.cid, challengeVerification)
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
@@ -158,7 +157,9 @@ const Board = () => {
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
-      displayName: nameRef.current.value || undefined,
+      author: {
+        displayName: nameRef.current.value || undefined,
+      },
       title: subjectRef.current.value || undefined,
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,

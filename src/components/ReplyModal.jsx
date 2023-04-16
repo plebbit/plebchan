@@ -111,7 +111,9 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
-      displayName: nameRef.current.value || undefined,
+      author: {
+        displayName: nameRef.current.value || undefined,
+      },
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
       parentCid: selectedParentCid,

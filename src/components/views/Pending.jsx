@@ -223,18 +223,18 @@ const Pending = () => {
                           </span>) 
                         : null}
                       &nbsp;
-                      {comment.displayName
-                        ? comment.displayName.length > 20
+                      {comment.author?.displayName
+                        ? comment.author?.displayName.length > 20
                         ? <>
                             <span key={`n-${"pending"}`} className="name"
                             data-tooltip-id="tooltip"
-                            data-tooltip-content={comment.displayName}
+                            data-tooltip-content={comment.author?.displayName}
                             data-tooltip-place="top">
-                              {comment.displayName.slice(0, 20) + " (...)"}
+                              {comment.author?.displayName.slice(0, 20) + " (...)"}
                             </span>
                           </> 
                           : <span key={`n-${"pending"}`} className="name">
-                            {comment.displayName}</span>
+                            {comment.author?.displayName}</span>
                         : <span key={`n-${"pending"}`} className="name">
                           Anonymous</span>}
                         &nbsp;
@@ -269,18 +269,18 @@ const Pending = () => {
                     <div key={`mob-pi-${"pending"}`} className="post-info-mobile">
                       <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${"pending"}`} className="post-menu-button-mobile" onClick={() => {}}>...</button>
                       <span className="name-block-mobile">
-                        {comment.displayName
-                        ? comment.displayName.length > 15
+                        {comment.author?.displayName
+                        ? comment.author?.displayName.length > 15
                         ? <>
                             <span key={`mob-n-${"pending"}`} className="name-mobile"
                             data-tooltip-id="tooltip"
-                            data-tooltip-content={comment.displayName}
+                            data-tooltip-content={comment.author?.displayName}
                             data-tooltip-place="top">
-                              {comment.displayName.slice(0, 15) + " (...)"}
+                              {comment.author?.displayName.slice(0, 15) + " (...)"}
                             </span>
                           </> 
                           : <span key={`mob-n-${"pending"}`} className="name-mobile">
-                            {comment.displayName}</span>
+                            {comment.author?.displayName}</span>
                         : <span key={`mob-n-${"pending"}`} className="name-mobile">
                           Anonymous</span>}
                         &nbsp;

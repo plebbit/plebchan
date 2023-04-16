@@ -19,7 +19,7 @@ import useSuccess from '../../hooks/useSuccess';
 
 const Catalog = () => {
   const {
-    captchaResponse, setCaptchaResponse,
+    setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
@@ -37,8 +37,6 @@ const Catalog = () => {
   const subjectRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
-
-  const onChallengeVerificationRef = useRef();
 
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -84,10 +82,12 @@ const Catalog = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       setSuccessMessage('Challenge success.', {publishedCid: challengeVerification.publication?.cid});
+      console.log("challenge success", challengeVerification.publication?.cid, challengeVerification)
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('Challenge failed.', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      console.log("challenge failed", challengeVerification.reason, challengeVerification.errors)
       setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
@@ -107,17 +107,17 @@ const Catalog = () => {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
   };
-
   
+
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: selectedAddress,
     onChallenge,
-    onChallengeVerification: onChallengeVerificationRef.current,
+    onChallengeVerification,
     onError: (error) => {
       setErrorMessage(error);
     },
   });
-
+  
 
   const { publishComment, index } = usePublishComment(publishCommentOptions);
 
@@ -127,11 +127,8 @@ const Catalog = () => {
       setSuccessMessage('Comment pending with index ' + index + '.');
     }
   }, [index]);
+
   
-
-  onChallengeVerificationRef.current = onChallengeVerification;
-
-
   const resetFields = () => {
     nameRef.current.value = '';
     subjectRef.current.value = '';
@@ -140,21 +137,14 @@ const Catalog = () => {
   };
 
 
-  useEffect(() => {
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      subplebbitAddress: selectedAddress,
-      onChallengeVerification: onChallengeVerificationRef.current,
-    }));
-  }, [selectedAddress]);
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
-      displayName: nameRef.current.value || undefined,
+      author: {
+        displayName: nameRef.current.value || undefined,
+      },
       title: subjectRef.current.value || undefined,
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
@@ -184,9 +174,10 @@ const Catalog = () => {
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
   
-        const handleKeyDown = (event) => {
+        const handleKeyDown = async (event) => {
           if (event.key === 'Enter') {
-            resolve(captchaResponse);
+            const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
+            resolve(currentCaptchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
             event.preventDefault();
