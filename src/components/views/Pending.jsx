@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from '../styled/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from '../styled/Thread.styled';
@@ -20,7 +21,6 @@ const Pending = () => {
   const {
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
-    pendingComment,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     selectedThread,
@@ -28,7 +28,9 @@ const Pending = () => {
     showPostFormLink
   } = useGeneralStore(state => state);
 
-  const comment = pendingComment;
+  const { index } = useParams();
+
+  const comment = useAccountComment({commentIndex: index});
   
   const [visible] = useState(true);
   const [errorMessage] = useState(null);
