@@ -28,7 +28,7 @@ const Thread = () => {
     defaultSubplebbits,
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
-    setPendingComment,
+    pendingComment, setPendingComment,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
@@ -61,7 +61,7 @@ const Thread = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
-  const renderedComments = renderThreadComments(comment?.replies?.pages?.topAll.comments);
+  const renderedComments = renderThreadComments(comment, pendingComment);
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
@@ -90,7 +90,6 @@ const Thread = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
-      navigate(`/p/${selectedAddress}/c/${selectedThread}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -130,7 +129,7 @@ const Thread = () => {
 
   useEffect(() => {
     if (index !== undefined) {
-      navigate(`/profile/c/${index}`);
+      window.scrollTo(0, document.body.scrollHeight);
       setSuccessMessage('Comment pending with index ' + index + '.');
     }
   }, [index]);
@@ -160,7 +159,9 @@ const Thread = () => {
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
-      displayName: nameRef.current.value || undefined,
+      author: {
+        displayName: nameRef.current.value || undefined,
+      },
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
       parentCid: selectedThread,
@@ -526,14 +527,14 @@ const Thread = () => {
                               </span>
                             </>
                             : <span key={`mob-n-${reply.cid}`} className="name">
-                              {reply.author?.displayName}</span>
+                              {reply.author?.displayName ?? reply.displayName}</span>
                           : <span key={`mob-n-${reply.cid}`} className="name">
                             Anonymous</span>}
                             &nbsp;
                             <span key={`pa-${reply.cid}`} className="poster-address">
                               (u/
                               <span key={`mob-ha-${reply.cid}`}>
-                                {reply.author?.shortAddress}
+                                {reply.author?.shortAddress ?? reply.author.address}
                               </span>)
                             </span>
                           </span>
@@ -544,7 +545,9 @@ const Thread = () => {
                             <Link to="" key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                             <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={() => { 
                               setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
-                              }} title="Reply to this post">{reply.shortCid}</button>
+                              }} title="Reply to this post">{reply.shortCid ?? (
+                                <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
+                              )}</button>
                           </span>&nbsp;
                           <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                           <div id="backlink-id" className="backlink">

@@ -252,7 +252,6 @@ const Pending = () => {
                       &nbsp;
                       <span className="post-number">
                         <Link to="" onClick={() => {}} title="Link to this post">c/</Link>
-                        &nbsp;
                         <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                       </span>&nbsp;&nbsp;
                       <button key={`pmb-${"pending"}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
