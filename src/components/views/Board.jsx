@@ -746,7 +746,15 @@ const Board = () => {
                         : null}
                     </div>
                     <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
-                      <span key={`mob-info-${thread.cid}`} className="info-mobile">{thread.replyCount} Replies</span>
+                      <span key={`mob-info-${thread.cid}`} className="info-mobile">{
+                      thread.replyCount == 0 ?
+                      ("No replies")
+                      : thread.replyCount == 1 ?
+                      ("1 reply")
+                      : thread.replyCount > 1 ?
+                      (thread.replyCount + " replies")
+                      : null
+                      }</span>
                       <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
                     </div>
                   </div>
@@ -839,6 +847,21 @@ const Board = () => {
                             <Post content={reply.content} key={`post-mobile-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                           </blockquote>)
                         : null}
+                          {reply.replyCount > 0 ? (
+                            <div key={`back-mob-${reply.cid}`} className='backlink backlink-mobile'>
+                            {reply.replies?.pages?.topAll.comments
+                            .sort((a, b) => a.timestamp - b.timestamp)
+                            .map((reply) => (
+                              <div key={`div-back${reply.cid}`} style={{display: 'inline-block'}}>
+                              <Link key={`ql-${reply.cid}`}
+                              to={() => {}} className="quote-link" 
+                              onClick={(event) => handleQuoteClick(reply, event)}>
+                                c/{reply.shortCid}</Link>
+                                &nbsp;
+                              </div>
+                            ))}
+                            </div>
+                          ) : null}
                       </div>
                     </div>
                   )})}

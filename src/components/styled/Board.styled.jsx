@@ -2793,13 +2793,22 @@ export const BoardForm = styled.div`
         padding-left: 5px;
       }
 
+      .backlink-mobile {
+        padding: 3px 5px;
+        clear: both !important;
+        line-height: 2;
+        background-color: #c9cde8;
+        border-top: 1px solid #b7c5d9;
+        display: block;
+      }
+      
       .quote-link {
         color: #34345C;
         text-decoration: underline;
       }
 
       .quote-link:hover {
-        color: red;
+        color: #d00;
       }
 
       .backlink span {

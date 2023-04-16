@@ -753,6 +753,21 @@ const Thread = () => {
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
                         <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
                       </blockquote>
+                      {reply.replyCount > 0 ? (
+                        <div key={`back-mob-${reply.cid}`} className='backlink backlink-mobile'>
+                        {reply.replies?.pages?.topAll.comments
+                        .sort((a, b) => a.timestamp - b.timestamp)
+                        .map((reply) => (
+                          <div key={`div-back${reply.cid}`} style={{display: 'inline-block'}}>
+                          <Link key={`ql-${reply.cid}`}
+                          to={() => {}} className="quote-link" 
+                          onClick={(event) => handleQuoteClick(reply, event)}>
+                            c/{reply.shortCid}</Link>
+                            &nbsp;
+                          </div>
+                        ))}
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                   )
