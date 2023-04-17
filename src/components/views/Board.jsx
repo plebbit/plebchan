@@ -767,6 +767,7 @@ const Board = () => {
                   </div>
                   {renderedComments?.map((reply) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
+                    const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                     return (
                     <div key={`mob-rc-${reply.cid}`} className="reply-container">
                       <div key={`mob-pr-${reply.cid}`} className="post-reply">
@@ -851,6 +852,9 @@ const Board = () => {
                             </blockquote>
                           </Fragment>
                         : <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
+                            <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
+                              {`c/${shortParentCid}`}{<br />}
+                            </Link>
                             <Post content={reply.content} key={`post-mobile-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                           </blockquote>)
                         : null}

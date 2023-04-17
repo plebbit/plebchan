@@ -721,6 +721,7 @@ const Thread = () => {
                 {comment.replyCount === undefined ? <PostLoader /> : null}
                 {comment.replyCount > 0 && 
                   renderedComments.map((reply) => {
+                  const shortParentCid = findShortParentCid(reply.parentCid, comment);
                   return (
                   <div key={`mob-rc-${reply.cid}-${Math.random()}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
@@ -760,6 +761,10 @@ const Thread = () => {
                         </span>
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
+                        <Link to={() => {}} key={`mob-ql-${reply.cid}`} className="quotelink-mobile" 
+                        onClick={(event) => handleQuoteClick(reply, event)}>
+                          {`c/${shortParentCid}`}{<br />}
+                        </Link>
                         <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
                       </blockquote>
                       {reply.replyCount > 0 ? (
