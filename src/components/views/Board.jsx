@@ -11,7 +11,7 @@ import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
-import findParentShortCid from '../../utils/findParentShortCid';
+import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -521,7 +521,7 @@ const Board = () => {
                   {renderedComments?.map((reply) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
-                    const shortParentCid = findParentShortCid(reply.parentCid, selectedFeed);
+                    const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                     return (
                       <div key={`rc-${reply.cid}`} className="reply-container">
                         <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>

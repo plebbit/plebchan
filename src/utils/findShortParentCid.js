@@ -1,4 +1,4 @@
-function findParentShortCid(parentCid, input) {
+function findShortParentCid(parentCid, input) {
   const feed = Array.isArray(input) ? input : [input];
 
   for (const thread of feed) {
@@ -6,7 +6,7 @@ function findParentShortCid(parentCid, input) {
       return thread.shortCid;
     }
     if (thread.replyCount > 0 && thread.replies.pages.topAll.comments) {
-      const shortCid = findParentShortCid(parentCid, thread.replies.pages.topAll.comments);
+      const shortCid = findShortParentCid(parentCid, thread.replies.pages.topAll.comments);
       if (shortCid) {
         return shortCid;
       }
@@ -15,4 +15,4 @@ function findParentShortCid(parentCid, input) {
   return null;
 }
 
-export default findParentShortCid;
+export default findShortParentCid;
