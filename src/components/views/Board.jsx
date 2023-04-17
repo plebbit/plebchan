@@ -58,9 +58,6 @@ const Board = () => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
-  console.log(selectedFeed);
-
-
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -624,24 +621,27 @@ const Board = () => {
                             </div>
                           ) : null}
                           {reply.content ? (
-                              reply.content.length > 500 ?
-                              <Fragment key={`fragment8-${reply.cid}`}>
-                                <blockquote key={`pm-${reply.cid}`} comment={reply} className="post-message">
-                                  <Post content={reply.content.slice(0, 500)} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} />
-                                  <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
-                                  <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
-                                  Comment too long.&nbsp;
-                                    <Link key={`ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                  &nbsp;to view. </span>
-                                </blockquote>
-                              </Fragment>
-                            : <blockquote key={`pm-${reply.cid}`} className="post-message">
+                            reply.content.length > 500 ?
+                            <Fragment key={`fragment8-${reply.cid}`}>
+                              <blockquote key={`pm-${reply.cid}`} comment={reply} className="post-message">
                                 <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
                                     {`c/${shortParentCid}`}{<br />}
                                 </Link>
-                                <Post content={reply.content} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
-                              </blockquote>)
-                            : null}
+                                <Post content={reply.content.slice(0, 500)} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} />
+                                <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
+                                <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
+                                Comment too long.&nbsp;
+                                  <Link key={`ttl-l-${reply.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                &nbsp;to view. </span>
+                              </blockquote>
+                            </Fragment>
+                          : <blockquote key={`pm-${reply.cid}`} className="post-message">
+                              <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
+                                  {`c/${shortParentCid}`}{<br />}
+                              </Link>
+                              <Post content={reply.content} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
+                            </blockquote>)
+                          : null}
                         </div>
                       </div>
                       )
@@ -736,27 +736,27 @@ const Board = () => {
                         </div>
                       ) : null}
                       {thread.content ? (
-                          thread.content.length > 500 ?
-                          <Fragment key={`fragment12-${thread.cid}`}>
-                            <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
-                              <Post content={thread.content.slice(0, 500)} key={`post-mobile-${thread.cid}`} />
-                              <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
-                              <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
-                              Post too long.&nbsp;
-                                <Link key={`mob-ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                &nbsp;to view. </span>
-                            </blockquote>
-                          </Fragment>
-                        : <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
-                            <Post content={thread.content} key={`post-mobile-${thread.cid}`} />
-                          </blockquote>)
-                        : null}
+                        thread.content.length > 500 ?
+                        <Fragment key={`fragment12-${thread.cid}`}>
+                          <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
+                            <Post content={thread.content.slice(0, 500)} key={`post-mobile-${thread.cid}`} />
+                            <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
+                            <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
+                            Post too long.&nbsp;
+                              <Link key={`mob-ttl-l-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                              &nbsp;to view. </span>
+                          </blockquote>
+                        </Fragment>
+                      : <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
+                          <Post content={thread.content} key={`post-mobile-${thread.cid}`} />
+                        </blockquote>)
+                      : null}
                     </div>
                     <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
                       <span key={`mob-info-${thread.cid}`} className="info-mobile">{
-                      thread.replyCount == 0 ?
+                      thread.replyCount === 0 ?
                       ("No replies")
-                      : thread.replyCount == 1 ?
+                      : thread.replyCount === 1 ?
                       ("1 reply")
                       : thread.replyCount > 1 ?
                       (thread.replyCount + " replies")
@@ -807,7 +807,7 @@ const Board = () => {
                           </span>
                         </div>
                         {reply.link ? (
-                           <div key={`mob-f-${reply.cid}`} className="file-mobile">
+                          <div key={`mob-f-${reply.cid}`} className="file-mobile">
                             <a key={`link-a-${reply.cid}`} href={replyMediaInfo?.url} target="_blank" rel="noopener noreferrer">
                               {replyMediaInfo?.url ? (
                                 replyMediaInfo.type === "webpage" ? (
@@ -843,6 +843,9 @@ const Board = () => {
                           reply.content.length > 500 ?
                           <Fragment key={`fragment15-${reply.cid}`}>
                             <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
+                              <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
+                                {`c/${shortParentCid}`}{<br />}
+                              </Link>
                               <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                               <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
