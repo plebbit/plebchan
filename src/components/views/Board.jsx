@@ -11,6 +11,7 @@ import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
+import findParentShortCid from '../../utils/findParentShortCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -56,6 +57,8 @@ const Board = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
+
+  console.log(selectedFeed);
 
 
   // temporary title from JSON, gets subplebbitAddress from URL
@@ -518,6 +521,7 @@ const Board = () => {
                   {renderedComments?.map((reply) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
+                    const parentShortCid = findParentShortCid(reply.parentCid, selectedFeed);
                     return (
                       <div key={`rc-${reply.cid}`} className="reply-container">
                         <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
@@ -632,6 +636,9 @@ const Board = () => {
                                 </blockquote>
                               </Fragment>
                             : <blockquote key={`pm-${reply.cid}`} className="post-message">
+                                <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
+                                    {`c/${parentShortCid}`}{<br />}
+                                </Link>
                                 <Post content={reply.content} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                               </blockquote>)
                             : null}
