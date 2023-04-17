@@ -491,7 +491,7 @@ const Thread = () => {
                             <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
                             <Link to={() => {}} key={`ql-${reply.cid}`}
                               className="quote-link" 
-                              onClick={(event) => handleQuoteClick(reply, event)}>
+                              onClick={(event) => handleQuoteClick(reply, null, event)}>
                               c/{reply.shortCid}</Link>
                               &nbsp;
                             </div>
@@ -514,7 +514,7 @@ const Thread = () => {
                   return (
                     <div key={`pc-${reply.cid}-${Math.random()}`} className="reply-container">
                       <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                      <div key={`pr-${reply.cid}`} className="post-reply" id="post-reply">
+                      <div key={`pr-${reply.cid}`} className="post-reply">
                         <div key={`pi-${reply.cid}`} className="post-info">
                         &nbsp;
                           <span key={`nb-${reply.cid}`} className="nameblock">
@@ -559,7 +559,7 @@ const Thread = () => {
                                 <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
                                 <Link to={() => {}} key={`ql-${reply.cid}`}
                                   className="quote-link" 
-                                  onClick={(event) => handleQuoteClick(reply, event)}>
+                                  onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
                                   c/{reply.shortCid}</Link>
                                   &nbsp;
                                 </div>
@@ -614,7 +614,7 @@ const Thread = () => {
                           ) : null}
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
                           <Link to={() => {}} className="quote-link"
-                            onClick={(event) => handleQuoteClick(reply, event)}>
+                            onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}>
                             {`c/${shortParentCid}`}{<br />}
                           </Link>
                           <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-${reply.cid}`} />

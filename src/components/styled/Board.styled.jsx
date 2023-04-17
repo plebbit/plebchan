@@ -2701,6 +2701,13 @@ export const BoardForm = styled.div`
         margin: 4px 0;
       }
 
+      .highlighted {
+        background-color: #f0c0b0 !important;
+        border: 1px solid #d99f91 !important;
+        border-left: none !important;
+        border-top: none !important;
+      }
+
       hr {
         border: none;
         border-top: 1px solid #d9bfb7;
@@ -2867,6 +2874,13 @@ export const BoardForm = styled.div`
         margin: 4px 0;
       }
 
+      .highlighted {
+        background-color: #d6bad0 !important;
+        border: 1px solid #ba9dbf !important;
+        border-left: none !important;
+        border-top: none !important;
+      }
+
       hr {
         border: none;
         border-top: 1px solid #b7c5d9;
@@ -2980,7 +2994,7 @@ export const BoardForm = styled.div`
       }
 
       .quote-link {
-        color: navy;
+        color: #34345C;
         text-decoration: underline;
       }
 
@@ -3024,7 +3038,6 @@ export const BoardForm = styled.div`
 
       .post-reply {
         background-color: #f0e0d6;
-        border: 1px solid #d9bfb7;
         margin-top: 2px;
         border-left: none;
         border-top: none;
@@ -3035,6 +3048,10 @@ export const BoardForm = styled.div`
         word-break: break-word;
         max-width: 100%;
         margin: 4px 0
+      }
+
+      .highlighted {
+        background-color: #f0c0b0 !important;
       }
 
       hr {
@@ -3157,7 +3174,7 @@ export const BoardForm = styled.div`
       }
 
       .quote-link:hover {
-        color: red;
+        color: #dd0000;
       }
 
       .backlink span {
@@ -3202,6 +3219,10 @@ export const BoardForm = styled.div`
         word-break: break-word;
         max-width: 100%;
         margin: 4px 0
+      }
+
+      .highlighted {
+        background-color: #d6bad0 !important;
       }
 
       hr {
@@ -3376,6 +3397,11 @@ export const BoardForm = styled.div`
         margin: 4px 0
       }
 
+      .highlighted {
+        background-color: #1d1d21 !important;
+        border: 1px solid #111 !important;
+      }
+
       hr {
         border: none;
         border-top: 1px solid #282a2e;
@@ -3545,6 +3571,11 @@ export const BoardForm = styled.div`
         word-break: break-word;
         max-width: 100%;
         margin: 4px 0
+      }
+
+      .highlighted {
+        background-color: #ccc !important;
+        border: 1px solid #ccc !important;
       }
 
       hr {
