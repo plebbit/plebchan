@@ -615,7 +615,7 @@ const Thread = () => {
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
                           <Link to={() => {}} className="quote-link"
                             onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}>
-                            {`c/${shortParentCid}`}{<br />}
+                            {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </Link>
                           <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-${reply.cid}`} />
                         </blockquote>
@@ -763,7 +763,7 @@ const Thread = () => {
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
                         <Link to={() => {}} key={`mob-ql-${reply.cid}`} className="quotelink-mobile" 
                         onClick={(event) => handleQuoteClick(reply, event)}>
-                          {`c/${shortParentCid}`}{<br />}
+                          {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                         </Link>
                         <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
                       </blockquote>
