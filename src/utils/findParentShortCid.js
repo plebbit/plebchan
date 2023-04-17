@@ -1,5 +1,7 @@
-function findParentShortCid(parentCid, selectedFeed) {
-  for (const thread of selectedFeed) {
+function findParentShortCid(parentCid, input) {
+  const feed = Array.isArray(input) ? input : [input];
+
+  for (const thread of feed) {
     if (thread.cid === parentCid) {
       return thread.shortCid;
     }

@@ -521,7 +521,7 @@ const Board = () => {
                   {renderedComments?.map((reply) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
-                    const parentShortCid = findParentShortCid(reply.parentCid, selectedFeed);
+                    const shortParentCid = findParentShortCid(reply.parentCid, selectedFeed);
                     return (
                       <div key={`rc-${reply.cid}`} className="reply-container">
                         <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
@@ -637,7 +637,7 @@ const Board = () => {
                               </Fragment>
                             : <blockquote key={`pm-${reply.cid}`} className="post-message">
                                 <Link to="" key={`r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
-                                    {`c/${parentShortCid}`}{<br />}
+                                    {`c/${shortParentCid}`}{<br />}
                                 </Link>
                                 <Post content={reply.content} key={`post-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
                               </blockquote>)

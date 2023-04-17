@@ -11,6 +11,7 @@ import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
+import findParentShortCid from '../../utils/findParentShortCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -509,6 +510,7 @@ const Thread = () => {
               renderedComments.map((reply) => {
                   const replyMediaInfo = getCommentMediaInfo(reply);
                   const fallbackImgUrl = "/assets/filedeleted-res.gif";
+                  const shortParentCid = findParentShortCid(reply.parentCid, comment);
                   return (
                     <div key={`pc-${reply.cid}-${Math.random()}`} className="reply-container">
                       <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
@@ -611,6 +613,10 @@ const Thread = () => {
                             </div>
                           ) : null}
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
+                          <Link to={() => {}} className="quote-link"
+                            onClick={(event) => handleQuoteClick(reply, event)}>
+                            {`c/${shortParentCid}`}{<br />}
+                          </Link>
                           <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-${reply.cid}`} />
                         </blockquote>
                       </div>
