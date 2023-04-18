@@ -477,8 +477,8 @@ const Thread = () => {
                       &nbsp;
                       <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                       &nbsp;
-                      <span className="post-number">
-                        <Link to="" onClick={() => {}} title="Link to this post">c/</Link>
+                      <span className="post-number post-number-desktop">
+                        <Link to={() => {}} onClick={() => {}} title="Link to this post">c/</Link>
                         <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => {
                           setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
                           }} title="Reply to this post">{comment.shortCid}</button>
@@ -500,7 +500,7 @@ const Thread = () => {
                       </div>
                     </span>
                     <blockquote key={`blockquote-${comment.cid}`}>
-                      <Post content={comment.content} handlequoteclick={handleQuoteClick} comment={comment} key={`post-${comment.cid}`} />
+                      <Post content={comment.content} comment={comment} key={`post-${comment.cid}`} />
                     </blockquote>
                   </div>
                 </div>
@@ -514,7 +514,7 @@ const Thread = () => {
                   return (
                     <div key={`pc-${reply.cid}`} className="reply-container">
                       <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                      <div key={`pr-${reply.cid}`} className="post-reply">
+                      <div key={`pr-${reply.cid}`} className="post-reply post-reply-desktop">
                         <div key={`pi-${reply.cid}`} className="post-info">
                         &nbsp;
                           <span key={`nb-${reply.cid}`} className="nameblock">
@@ -543,8 +543,8 @@ const Thread = () => {
                           &nbsp;
                           <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
                           &nbsp;
-                          <span key={`pn-${reply.cid}`} className="post-number">
-                            <Link to="" key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                          <span key={`pn-${reply.cid}`} className="post-number post-number-desktop">
+                            <Link to={() => {}} key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                             <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={() => { 
                               setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
                               }} title="Reply to this post">{reply.shortCid ?? (
@@ -623,7 +623,7 @@ const Thread = () => {
                           >
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </Link>
-                          <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-${reply.cid}`} />
+                          <Post content={reply.content} comment={reply} key={`post-${reply.cid}`} />
                         </blockquote>
                       </div>
                     </div>
@@ -675,13 +675,13 @@ const Thread = () => {
                               {comment.title}
                             </span>) : null}
                       </span>
-                      <span key={`mob-dt-${comment.cid}`} className="date-time-mobile">
+                      <span key={`mob-dt-${comment.cid}`} className="date-time-mobile post-number-mobile">
                         {getDate(comment?.timestamp)}
                         &nbsp;
                         <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={() => {
                           setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
                           }} title="Link to this post">c/</button>
-                        <Link to="" key={`mob-no2-${comment.cid}`} onClick={() => {}} title="Reply to this post">{comment.shortCid}</Link>
+                        <Link to={() => {}} key={`mob-no2-${comment.cid}`} onClick={() => {}} title="Reply to this post">{comment.shortCid}</Link>
                       </span>
                     </div>
                     {commentMediaInfo?.url ? (
@@ -718,7 +718,7 @@ const Thread = () => {
                     <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                       {comment.content ? (
                         <>
-                          <Post content={comment.content} handlequoteclick={handleQuoteClick} comment={comment} key={`post-mobile-${comment.cid}`} /> 
+                          <Post content={comment.content} comment={comment} key={`post-mobile-${comment.cid}`} /> 
                         </>
                       ) : null}
                     </blockquote>
@@ -730,7 +730,7 @@ const Thread = () => {
                   const shortParentCid = findShortParentCid(reply.parentCid, comment);
                   return (
                   <div key={`mob-rc-${reply.cid}`} className="reply-container">
-                    <div key={`mob-pr-${reply.cid}`} className="post-reply">
+                    <div key={`mob-pr-${reply.cid}`} className="post-reply post-reply-mobile">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                         <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
@@ -758,9 +758,9 @@ const Thread = () => {
                           </span>
                           <br key={`mob-br-${reply.cid}`} />
                         </span>
-                        <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
+                        <span key={`mob-dt-${reply.cid}`} className="date-time-mobile post-number-mobile">
                           {getDate(reply?.timestamp)}&nbsp;
-                          <Link to="" key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                          <Link to={() => {}} key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                           <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={() => {
                             setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
                             }} title="Reply to this post">{reply.shortCid}</button>
@@ -771,7 +771,7 @@ const Thread = () => {
                         onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
                           {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                         </Link>
-                        <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
+                        <Post content={reply.content} comment={reply} key={`post-mobile-${reply.cid}`} />
                       </blockquote>
                       {reply.replyCount > 0 ? (
                         <div key={`back-mob-${reply.cid}`} className='backlink backlink-mobile'>
@@ -781,7 +781,7 @@ const Thread = () => {
                           <div key={`div-back${reply.cid}`} style={{display: 'inline-block'}}>
                           <Link key={`ql-${reply.cid}`}
                           to={() => {}} className="quote-link" 
-                          onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
+                          onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
                             c/{reply.shortCid}</Link>
                             &nbsp;
                           </div>
@@ -816,7 +816,7 @@ const Thread = () => {
                   </span>
                   <span className="quickreply-button">
                   [
-                  <Link to="" onClick={() => {}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
+                  <Link to={() => {}} onClick={() => {}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
                   ]
                   </span>
                   {comment.replyCount > 0 ? (
