@@ -1552,6 +1552,50 @@ export const BoardForm = styled.div`
     .summary {
       margin-top: 10px;
     }
+
+    ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `.highlighted {
+        background-color: #f0c0b0 !important;
+        border: 1px solid #d99f91 !important;
+        border-left: none !important;
+        border-top: none !important;
+      }`;
+
+      case 'Yotsuba-B':
+        return `.highlighted {
+        background-color: #d6bad0 !important;
+        border: 1px solid #ba9dbf !important;
+        border-left: none !important;
+        border-top: none !important;
+      }`;
+
+      case 'Futaba':
+        return `.highlighted {
+        background-color: #f0c0b0 !important;
+      }`;
+
+      case 'Burichan':
+        return `.highlighted {
+        background-color: #d6bad0 !important;
+      }`;
+
+      case 'Tomorrow':
+        return `.highlighted {
+        background-color: #1d1d21 !important;
+        border: 1px solid #111 !important;
+      }
+`;
+
+      case 'Photon':
+        return `.highlighted {
+        background-color: #ccc !important;
+        border: 1px solid #ccc !important;
+      }`;
+      
+    }
+    }}
   }
   
   .file {
@@ -1974,13 +2018,6 @@ export const BoardForm = styled.div`
         margin: 4px 0;
       }
 
-      .highlighted {
-        background-color: #f0c0b0 !important;
-        border: 1px solid #d99f91 !important;
-        border-left: none !important;
-        border-top: none !important;
-      }
-
       hr {
         border: none;
         border-top: 1px solid #d9bfb7;
@@ -2145,13 +2182,6 @@ export const BoardForm = styled.div`
         word-break: break-word;
         max-width: 100%;
         margin: 4px 0;
-      }
-
-      .highlighted {
-        background-color: #d6bad0 !important;
-        border: 1px solid #ba9dbf !important;
-        border-left: none !important;
-        border-top: none !important;
       }
 
       hr {
@@ -2323,10 +2353,6 @@ export const BoardForm = styled.div`
         margin: 4px 0
       }
 
-      .highlighted {
-        background-color: #f0c0b0 !important;
-      }
-
       hr {
         clear: both;
       }`;
@@ -2492,10 +2518,6 @@ export const BoardForm = styled.div`
         word-break: break-word;
         max-width: 100%;
         margin: 4px 0
-      }
-
-      .highlighted {
-        background-color: #d6bad0 !important;
       }
 
       hr {
@@ -2670,11 +2692,6 @@ export const BoardForm = styled.div`
         margin: 4px 0
       }
 
-      .highlighted {
-        background-color: #1d1d21 !important;
-        border: 1px solid #111 !important;
-      }
-
       hr {
         border: none;
         border-top: 1px solid #282a2e;
@@ -2846,11 +2863,6 @@ export const BoardForm = styled.div`
         margin: 4px 0
       }
 
-      .highlighted {
-        background-color: #ccc !important;
-        border: 1px solid #ccc !important;
-      }
-
       hr {
         border: none;
         border-top: 1px solid #ddd;
@@ -2883,6 +2895,44 @@ export const BoardForm = styled.div`
     #bottombar-desktop {
       display: none;
     }
+
+    ${({ selectedStyle }) => {
+      switch (selectedStyle) {
+        case 'Yotsuba':
+          return `.highlighted {
+          background-color: #f0c0b0 !important;
+          border-left: none !important;
+          border-top: none !important;
+        }`;
+
+        case 'Yotsuba-B':
+          return `.highlighted {
+          background-color: #d6bad0 !important;
+          border-left: none !important;
+          border-top: none !important;
+        }`;
+
+        case 'Futaba':
+          return `.highlighted {
+          background-color: #f0c0b0 !important;
+        }`;
+
+        case 'Burichan':
+          return `.highlighted {
+          background-color: #d6bad0 !important;
+        }`;
+
+        case 'Tomorrow':
+          return `.highlighted {
+          background-color: #1d1d21 !important;
+        }`;
+
+        case 'Photon':
+          return `.highlighted {
+          background-color: #ccc !important;
+        }`;
+      }
+    }}
 
     ${({ selectedStyle }) => {
       switch (selectedStyle) {
