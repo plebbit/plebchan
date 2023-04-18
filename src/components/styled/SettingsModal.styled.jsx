@@ -40,6 +40,115 @@ export const StyledModal = styled(Modal)`
     margin: 10px 0 5px;
   }
 
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+  }
+
+  .settings-cat-lbl {
+    font-weight: 700;
+    margin: 10px 0 5px;
+    padding-left: 5px;
+  }
+
+  .plus, .minus {
+    vertical-align: text-bottom;
+    margin-right: 5px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+  }
+
+  .settings-cat {
+    display: ${({ expanded }) => index => (expanded.includes(index) ? "block" : "none")};
+    margin: 5px;
+  }
+
+  input {
+    width: 80%;
+    margin-left: 7%;
+  }
+
+  .all-div {
+    text-align: center;
+  }
+
+  .center {
+    margin: auto;
+    margin-bottom: 5px;
+    display: block;
+    text-align: center;
+
+    button {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .settings-option {
+    margin: 5px 0 5px 0;
+    padding-left: 23px;
+    display: inline-block;
+  }
+
+  .settings-tip {
+    font-size: 0.85em;
+    margin: 0 0 5px 0;
+    padding-left: 23px;
+  }
+
+  .settings-option.disc::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: currentColor;
+    position: absolute;
+    margin-left: -15px;
+    margin-top: 6px;
+  }
+
+  .settings-option {
+    margin: 5px 0 5px 0;
+    padding-left: 23px;
+    display: inline-block;
+    position: relative;
+  }
+
+  .settings-input {
+    position: relative;
+    padding-left: 23px;
+  }
+
+  .settings-input::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 1px;
+    background-color: currentColor;
+    position: absolute;
+    left: 25px;
+    top: 50%;
+  }
+
+  .settings-input::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 8px;
+    background-color: currentColor;
+    position: absolute;
+    left: 25px;
+    top: calc(50% - 8px);
+  }
+
+
+
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
@@ -54,6 +163,22 @@ export const StyledModal = styled(Modal)`
 
         .icon {
           background-image: url(/assets/buttons/cross_red.png);
+        }
+        
+        .plus {
+          background-image: url(/assets/buttons/post_expand_plus_red.png);
+        }
+        
+        .minus {
+          background-image: url(/assets/buttons/post_expand_minus_red.png);
+        }
+        
+        .all-button {
+          color: #00e !important;
+          
+          :hover {
+            color: red !important;
+          }
         }`;
 
       case 'Yotsuba-B':
@@ -68,6 +193,22 @@ export const StyledModal = styled(Modal)`
         
         .icon {
           background-image: url(/assets/buttons/cross_blue.png);
+        }
+        
+        .plus {
+          background-image: url(/assets/buttons/post_expand_plus_blue.png);
+        }
+        
+        .minus {
+          background-image: url(/assets/buttons/post_expand_minus_blue.png);
+        }
+        
+        .all-button {
+          color: #34345c !important;
+          
+          :hover {
+            color: #d00 !important;
+          }
         }`;
 
       case 'Futaba':
@@ -82,6 +223,22 @@ export const StyledModal = styled(Modal)`
         
         .icon {
           background-image: url(/assets/buttons/cross_red.png);
+        }
+        
+        .plus {
+          background-image: url(/assets/buttons/post_expand_plus_red.png);
+        }
+        
+        .minus {
+          background-image: url(/assets/buttons/post_expand_minus_red.png);
+        }
+        
+        .all-button {
+          color: #00e !important;
+          
+          :hover {
+            color: red !important;
+          }
         }`;
 
       case 'Burichan':
@@ -96,6 +253,22 @@ export const StyledModal = styled(Modal)`
         
         .icon {
           background-image: url(/assets/buttons/cross_blue.png);
+        }
+        
+        .plus {
+          background-image: url(/assets/buttons/post_expand_plus_blue.png);
+        }
+        
+        .minus {
+          background-image: url(/assets/buttons/post_expand_minus_blue.png);
+        }
+        
+        .all-button {
+          color: #34345c !important;
+          
+          :hover {
+            color: #d00 !important;
+          }
         }`;
 
       case 'Tomorrow':
@@ -110,6 +283,26 @@ export const StyledModal = styled(Modal)`
         
         .icon {
           background-image: url(/assets/buttons/cross_dark.png);
+        }
+        
+        .plus {
+          background-image: url(/assets/buttons/post_expand_plus_dark.png);
+        }
+        
+        .minus {
+          background-image: url(/assets/buttons/post_expand_minus_dark.png);
+        }
+        
+        .all-button {
+          color: #81a2be !important;
+          
+          :hover {
+            color: #5f89ac !important;
+          }
+        }
+        
+        button {
+          filter: brightness(80%);
         }`;
 
       case 'Photon':
@@ -124,6 +317,22 @@ export const StyledModal = styled(Modal)`
         
         .icon {
           background-image: url(/assets/buttons/cross_photon.png);
+        }
+        
+        .plus {
+          background-image: url(/assets/buttons/post_expand_plus_photon.png);
+        }
+        
+        .minus {
+          background-image: url(/assets/buttons/post_expand_minus_photon.png);
+        }
+        
+        .all-button {
+          color: #f60 !important;
+          
+          :hover {
+            color: #f30 !important;
+          }
         }`;
       
     }
