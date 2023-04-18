@@ -512,7 +512,7 @@ const Thread = () => {
                   const fallbackImgUrl = "/assets/filedeleted-res.gif";
                   const shortParentCid = findShortParentCid(reply.parentCid, comment);
                   return (
-                    <div key={`pc-${reply.cid}-${Math.random()}`} className="reply-container">
+                    <div key={`pc-${reply.cid}`} className="reply-container">
                       <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
                       <div key={`pr-${reply.cid}`} className="post-reply">
                         <div key={`pi-${reply.cid}`} className="post-info">
@@ -723,7 +723,7 @@ const Thread = () => {
                   renderedComments.map((reply) => {
                   const shortParentCid = findShortParentCid(reply.parentCid, comment);
                   return (
-                  <div key={`mob-rc-${reply.cid}-${Math.random()}`} className="reply-container">
+                  <div key={`mob-rc-${reply.cid}`} className="reply-container">
                     <div key={`mob-pr-${reply.cid}`} className="post-reply">
                       <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
                         <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>

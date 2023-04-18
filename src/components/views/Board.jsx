@@ -692,7 +692,7 @@ const Board = () => {
                             </span>) 
                           : null}
                         </span>
-                        <span key={`mob-dt-${thread.cid}`} className="date-time-mobile">
+                        <span key={`mob-dt-${thread.cid}`} className="date-time-mobile post-number">
                           {getDate(thread.timestamp)}
                           &nbsp;
                           <Link to="" key={`mob-no-${thread.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
@@ -798,7 +798,7 @@ const Board = () => {
                             </span>
                             <br key={`mob-br-${reply.cid}`} />
                           </span>
-                          <span key={`mob-dt-${reply.cid}`} className="date-time-mobile">
+                          <span key={`mob-dt-${reply.cid}`} className="date-time-mobile post-number">
                           {getDate(reply.timestamp)}&nbsp;
                             <Link to="" key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
                             <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={() => {
@@ -843,7 +843,7 @@ const Board = () => {
                           reply.content.length > 500 ?
                           <Fragment key={`fragment15-${reply.cid}`}>
                             <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                              <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
+                              <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}>
                                 {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                               </Link>
                               <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
@@ -855,7 +855,7 @@ const Board = () => {
                             </blockquote>
                           </Fragment>
                         : <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
-                            <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={() => {}}>
+                            <Link to="" key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}>
                               {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                             </Link>
                             <Post content={reply.content} key={`post-mobile-${reply.cid}`} handlequoteclick={handleQuoteClick} comment={reply} />
@@ -868,7 +868,7 @@ const Board = () => {
                             .map((reply) => (
                               <div key={`div-back${reply.cid}`} style={{display: 'inline-block'}}>
                               <Link key={`ql-${reply.cid}`}
-                              to={() => {}} className="quote-link" 
+                              to={(event) => handleQuoteClick(reply, reply.shortCid, event)} className="quote-link" 
                               onClick={(event) => handleQuoteClick(reply, event)}>
                                 c/{reply.shortCid}</Link>
                                 &nbsp;
