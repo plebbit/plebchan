@@ -56,6 +56,23 @@ export const StyledModal = styled(Modal)`
     margin-top: 0.5px;
   }
 
+  .textarea-wrapper {
+    position: relative;
+  }
+
+  .textarea {
+    padding-top: 2em;
+  }
+
+  .fixed-text {
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    color: #999;
+    text-decoration: underline;
+    pointer-events: none;
+  }
+
   #captcha-container {
     position: relative;
     clear: both;
