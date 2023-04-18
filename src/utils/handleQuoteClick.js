@@ -1,5 +1,16 @@
-function handleQuoteClick(reply, parentCid) {
+function handleQuoteClick(reply, parentCid, threadCid) {
   const cid = parentCid ? parentCid : reply.shortCid;
+
+  if (threadCid && cid === threadCid) {
+    const highlightedElements = document.querySelectorAll('.highlighted');
+
+    highlightedElements.forEach(el => {
+      el.classList.remove('highlighted');
+    });
+    
+    return;
+  }
+
   const targetElement = [...document.querySelectorAll('.post-reply')]
     .find(el => {
       const postNumberElement = el.querySelector('.post-number');

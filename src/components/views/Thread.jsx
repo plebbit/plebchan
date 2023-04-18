@@ -614,7 +614,13 @@ const Thread = () => {
                           ) : null}
                         <blockquote key={`pm-${reply.cid}`} className="post-message">
                           <Link to={() => {}} className="quote-link"
-                            onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}>
+                            onClick={(event) => {
+                              handleQuoteClick(reply, shortParentCid, comment.shortCid, event);
+                              if (shortParentCid === comment.shortCid) {
+                                window.scrollTo(0, 0);
+                              }
+                            }}
+                          >
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </Link>
                           <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-${reply.cid}`} />
@@ -762,7 +768,7 @@ const Thread = () => {
                       </div>
                       <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
                         <Link to={() => {}} key={`mob-ql-${reply.cid}`} className="quotelink-mobile" 
-                        onClick={(event) => handleQuoteClick(reply, event)}>
+                        onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
                           {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                         </Link>
                         <Post content={reply.content} comment={reply} handlequoteclick={handleQuoteClick} key={`post-mobile-${reply.cid}`} />
@@ -775,7 +781,7 @@ const Thread = () => {
                           <div key={`div-back${reply.cid}`} style={{display: 'inline-block'}}>
                           <Link key={`ql-${reply.cid}`}
                           to={() => {}} className="quote-link" 
-                          onClick={(event) => handleQuoteClick(reply, event)}>
+                          onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
                             c/{reply.shortCid}</Link>
                             &nbsp;
                           </div>
