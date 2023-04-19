@@ -4,13 +4,24 @@ import Modal from 'react-modal';
 export const StyledModal = styled(Modal)`
   .panel {
     top: 60px;
-    width: 330px;
-    left: 50%;
+    width: 400px;
+    height: auto;
+    max-height: 80%;
+    left: calc(50% - 25px);
+    overflow-y: auto;
     margin-left: -178px;
     position: absolute;
     padding: 2px 5px 5px;
     font-size: 14px;
     box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+  }
+
+  @media (max-width: 768px) {
+    .panel {
+      width: 320px !important;
+      max-height: 60% !important;
+      left: calc(50% + 15px) !important;
+    }
   }
 
   .panel-header {
@@ -142,7 +153,7 @@ export const StyledModal = styled(Modal)`
     background-color: currentColor;
     position: absolute;
     left: 28px;
-    top: 13px; /* Change this value according to your needs */
+    top: 13px;
   }
 
   .settings-input::after {
@@ -153,7 +164,7 @@ export const StyledModal = styled(Modal)`
     background-color: currentColor;
     position: absolute;
     left: 28px;
-    top: 1px; /* Change this value according to your needs */
+    top: 1px;
   }
 
 

@@ -23,6 +23,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
+
   const handleCloseModal = () => {
     closeModal();
 
@@ -32,6 +33,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       navigate("/settings", { state: { from: location } });
     }
   };
+
 
   const toggleExpanded = (index) => {
     setExpanded((prevExpanded) => {
@@ -45,6 +47,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     });
   };
 
+
   const expandAll = () => {
     if (expanded.length === 3) {
       setExpanded([]);
@@ -52,6 +55,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setExpanded([0, 1, 2]);
     }
   };
+  
   
   useEffect(() => {
     if (localStorage.getItem("cacheCleared") === "true") {
