@@ -119,12 +119,18 @@ const SettingsModal = ({ isOpen, closeModal }) => {
         </ul>
         <ul>
           <li className="settings-cat-lbl">
-          <span className={`${expanded.includes(2) ? 'minus' : 'plus'}`}
-            onClick={() => toggleExpanded(2)}
-          />
-          <span className="settings-pointer" style={{cursor: "pointer"}}
-            onClick={() => toggleExpanded(2)}
-          >Plebbit Options</span>
+            <span className={`${expanded.includes(2) ? 'minus' : 'plus'}`}
+              onClick={() => toggleExpanded(2)}
+            />
+            <span className="settings-pointer" style={{cursor: "pointer"}}
+              onClick={() => toggleExpanded(2)}
+            >Plebbit Options</span>
+            <div className="plebbit-options-buttons"
+              style={{ display: expanded.includes(2) ? 'block' : 'none' }}
+            >
+              <button className="save-button">Save</button>
+              <button className="reset-button">Reset</button>
+             </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
@@ -178,10 +184,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
         >
           Clear Cache
         </button>
-        </div>
-        <div className="center">
-          <button className="save-button">Save</button>
-          <button className="reset-button">Reset</button>
         </div>
       </div>
     </StyledModal>

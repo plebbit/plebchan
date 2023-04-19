@@ -89,16 +89,14 @@ export const StyledModal = styled(Modal)`
     text-align: center;
   }
 
-  .center {
-    margin: auto;
-    margin-bottom: 5px;
+  .plebbit-options-buttons {
     display: block;
-    text-align: center;
+    position: relative;
+    float: right;
 
     button {
-      display: inline-block;
-      margin-right: 5px;
-      margin-left: 5px;
+      margin-right: 3px;
+      margin-left: 3px;
     }
   }
 
@@ -166,9 +164,6 @@ export const StyledModal = styled(Modal)`
     left: 28px;
     top: 1px;
   }
-
-
-
 
 
   ${({ selectedStyle }) => {
