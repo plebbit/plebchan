@@ -67,7 +67,7 @@ export default function App() {
   // preload banners
   useEffect(() => {
     const loadImages = async () => {
-      const images = await importAll(require.context('../public/assets/banners', false, /\.(png|jpe?g|svg)$/));
+      const images = await importAll(require.context('../public/assets', true, /\.(png|jpe?g|svg)$/));
       const imageUrls = images.map((image) => image.default);
       preloadImages(imageUrls);
     };
