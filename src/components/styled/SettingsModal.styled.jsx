@@ -68,9 +68,10 @@ export const StyledModal = styled(Modal)`
     margin: 5px;
   }
 
-  input {
+  textarea {
     width: 80%;
     margin-left: 7%;
+    min-height: 50px;
   }
 
   .all-div {
@@ -86,7 +87,15 @@ export const StyledModal = styled(Modal)`
     button {
       display: inline-block;
       margin-right: 5px;
+      margin-left: 5px;
     }
+  }
+
+  .cache-button {
+    margin: auto;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
   }
 
   .settings-option {
@@ -132,20 +141,22 @@ export const StyledModal = styled(Modal)`
     height: 1px;
     background-color: currentColor;
     position: absolute;
-    left: 25px;
-    top: 50%;
+    left: 28px;
+    top: 13px; /* Change this value according to your needs */
   }
 
   .settings-input::after {
     content: '';
     display: block;
     width: 1px;
-    height: 8px;
+    height: 12px;
     background-color: currentColor;
     position: absolute;
-    left: 25px;
-    top: calc(50% - 8px);
+    left: 28px;
+    top: 1px; /* Change this value according to your needs */
   }
+
+
 
 
 

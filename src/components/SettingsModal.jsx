@@ -111,10 +111,16 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
-              IPFS Gateway URL</li>
-            <li className="settings-tip">Optional URL of an IPFS gateway</li>
+              IPFS Gateways URLs</li>
+            <li className="settings-tip">Optional URLs of IPFS gateways</li>
             <div className="settings-input">
-              <input type="text" placeholder="IPFS Gateway URL" />
+              <textarea placeholder="IPFS Gateways URLs"
+                defaultValue={[
+                  "https://ipfs.io",
+                  "https://ipfsgateway.xyz",
+                  "https://cloudflare-ipfs.com"
+                ].join("\n")}
+              />
             </div>
           </ul>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
@@ -122,7 +128,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               IPFS HTTP Client Options</li>
             <li className="settings-tip">Optional URL of an IPFS API or IpfsHttpClientOptions, http://localhost:5001 to use a local IPFS node</li>
             <div className="settings-input">
-              <input type="text" placeholder="IpfsHttpClientOptions" />
+              <textarea placeholder="IpfsHttpClientOptions" />
             </div>
           </ul>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
@@ -130,10 +136,21 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               PubSub HTTP Client Options</li>
             <li className="settings-tip">Optional URL or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser</li>
             <div className="settings-input">
-              <input type="text" placeholder="pubsubHttpClientOptions" />
+              <textarea placeholder="pubsubHttpClientOptions" defaultValue="https://pubsubprovider.xyz/api/v0" />
+            </div>
+          </ul>
+          <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
+            <li className="settings-option disc">
+              Data Path (Node Only)</li>
+            <li className="settings-tip">(Node only) Optional folder path to create/resume the user and subplebbit databasesr</li>
+            <div className="settings-input">
+              <textarea placeholder="dataPath" />
             </div>
           </ul>
         </ul>
+        <div>
+          <button className="cache-button">Clear Cache</button>
+        </div>
         <div className="center">
           <button className="save-button">Save</button>
           <button className="reset-button">Reset</button>
