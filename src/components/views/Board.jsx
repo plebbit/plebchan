@@ -384,7 +384,7 @@ const Board = () => {
               <Fragment key={`fr-${thread.cid}`}>
                 <div key={`t-${thread.cid}`} className="thread">
                   <div key={`c-${thread.cid}`} className="op-container">
-                    <div key={`po-${thread.cid}`} className="post op">
+                    <div key={`po-${thread.cid}`} className="post op op-desktop">
                       <hr key={`hr-${thread.cid}`} />
                       <div key={`pi-${thread.cid}`} className="post-info">
                       {commentMediaInfo?.url ? (
@@ -650,7 +650,7 @@ const Board = () => {
                 <div key={`mob-t-${thread.cid}`} className="thread-mobile">
                   <hr key={`mob-hr-${thread.cid}`} />
                   <div key={`mob-c-${thread.cid}`} className="op-container">
-                    <div key={`mob-po-${thread.cid}`} className="post op">
+                    <div key={`mob-po-${thread.cid}`} className="post op op-mobile">
                       <div key={`mob-pi-${thread.cid}`} className="post-info-mobile">
                         <button key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" onClick={() => {}} style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                         <span key={`mob-nbm-${thread.cid}`} className="name-block-mobile">

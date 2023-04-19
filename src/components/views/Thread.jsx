@@ -402,7 +402,7 @@ const Thread = () => {
           <>
             <div className="thread">
               <div className="op-container">
-                <div className="post op">
+                <div className="post op op-desktop">
                   <div className="post-info">
                   {commentMediaInfo?.url ? (
                       <div key={`f-${comment.cid}`} className="file" style={{marginBottom: "5px"}}>
@@ -616,9 +616,6 @@ const Thread = () => {
                           <Link to={() => {}} className="quote-link"
                             onClick={(event) => {
                               handleQuoteClick(reply, shortParentCid, comment.shortCid, event);
-                              if (shortParentCid === comment.shortCid) {
-                                window.scrollTo(0, 0);
-                              }
                             }}
                           >
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
@@ -634,7 +631,7 @@ const Thread = () => {
             <div className="thread-mobile" key="thread-mobile">
               <hr />
               <div className="op-container" key="op-container">
-                  <div key={`mob-po-${comment.cid}`} className="post op">
+                  <div key={`mob-po-${comment.cid}`} className="post op op-mobile">
                     <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
                       <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile" onClick={() => {}}>...</button>
                       <span className="name-block-mobile">
