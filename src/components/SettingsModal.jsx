@@ -111,10 +111,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
-              IPFS Gateways URLs</li>
-            <li className="settings-tip">Optional URLs of IPFS gateways</li>
+              IPFS Gateway URLs</li>
+            <li className="settings-tip">Optional URLs of IPFS gateways.</li>
             <div className="settings-input">
-              <textarea placeholder="IPFS Gateways URLs"
+              <textarea placeholder="IPFS Gateway URLs"
                 defaultValue={[
                   "https://ipfs.io",
                   "https://ipfsgateway.xyz",
@@ -126,7 +126,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
               IPFS HTTP Client Options</li>
-            <li className="settings-tip">Optional URL of an IPFS API or IpfsHttpClientOptions, http://localhost:5001 to use a local IPFS node</li>
+            <li className="settings-tip">Optional URL of an IPFS API or IpfsHttpClientOptions, http://localhost:5001 to use a local IPFS node.</li>
             <div className="settings-input">
               <textarea placeholder="IpfsHttpClientOptions" />
             </div>
@@ -134,7 +134,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
               PubSub HTTP Client Options</li>
-            <li className="settings-tip">Optional URL or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser</li>
+            <li className="settings-tip">Optional URL or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser.</li>
             <div className="settings-input">
               <textarea placeholder="pubsubHttpClientOptions" defaultValue="https://pubsubprovider.xyz/api/v0" />
             </div>
@@ -142,7 +142,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
               Data Path (Node Only)</li>
-            <li className="settings-tip">(Node only) Optional folder path to create/resume the user and subplebbit databasesr</li>
+            <li className="settings-tip">Optional folder path to create/resume the user and subplebbit databases.</li>
             <div className="settings-input">
               <textarea placeholder="dataPath" />
             </div>
