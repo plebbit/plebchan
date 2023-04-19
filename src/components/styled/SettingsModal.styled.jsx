@@ -320,6 +320,12 @@ export const StyledModal = styled(Modal)`
         
         button {
           filter: brightness(80%);
+        }
+        
+        textarea {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          border: 1px solid #000;
         }`;
 
       case 'Photon':
