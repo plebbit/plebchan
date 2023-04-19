@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { StyledModal } from "./styled/SettingsModal.styled";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
+import { deleteCaches } from "@plebbit/plebbit-react-hooks";
+import { StyledModal } from "./styled/SettingsModal.styled";
 import useGeneralStore from "../hooks/stores/useGeneralStore";
+import useError from "../hooks/useError";
+import useSuccess from "../hooks/useSuccess";
 
 const customOverlayStyles = {
   overlay: {
@@ -15,6 +18,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
 
   const handleCloseModal = () => {
     closeModal();
@@ -46,6 +53,12 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     }
   };
   
+  useEffect(() => {
+    if (localStorage.getItem("cacheCleared") === "true") {
+      setSuccessMessage("Cache Cleared");
+      localStorage.removeItem("cacheCleared");
+    }
+  }, []);
   
   
   return (
@@ -149,7 +162,18 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </ul>
         </ul>
         <div>
-          <button className="cache-button">Clear Cache</button>
+        <button
+          className="cache-button"
+          onClick={async () => {
+            if (window.confirm("Are you sure you want to clear the cache?")) {
+              await deleteCaches();
+              localStorage.setItem("cacheCleared", "true");
+              window.location.reload();
+            }
+          }}
+        >
+          Clear Cache
+        </button>
         </div>
         <div className="center">
           <button className="save-button">Save</button>
