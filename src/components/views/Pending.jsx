@@ -34,7 +34,7 @@ const Pending = () => {
   
   const [visible] = useState(true);
   const [errorMessage] = useState(null);
-  const [successMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
   const navigate = useNavigate();
@@ -57,6 +57,16 @@ const Pending = () => {
       setCommentMediaInfo(mediaInfo);
     }
   }, [comment]);
+
+  useEffect(() => {
+    const toastFromStorage = localStorage.getItem("toastMessage");
+    if (toastFromStorage) {
+      setSuccessMessage(toastFromStorage);
+      localStorage.removeItem("toastMessage");
+    } else {
+      return;
+    }
+  }, []);
   
 
   return (

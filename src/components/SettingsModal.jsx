@@ -145,9 +145,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   }, []);
 
   useEffect(() => {
-    const successMessageFromStorage = localStorage.getItem("toastMessage");
-    if (successMessageFromStorage) {
-      setSuccessMessage(successMessageFromStorage);
+    const toastFromStorage = localStorage.getItem("toastMessage");
+    if (toastFromStorage) {
+      setSuccessMessage(toastFromStorage);
       localStorage.removeItem("toastMessage");
     }
   }, []);

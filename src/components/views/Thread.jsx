@@ -94,7 +94,6 @@ const Thread = () => {
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-      setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
 

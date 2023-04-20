@@ -45,7 +45,7 @@ const Catalog = () => {
   const { subplebbitAddress } = useParams();
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [successMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
@@ -81,14 +81,11 @@ const Catalog = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('Challenge success.', {publishedCid: challengeVerification.publication?.cid});
-      console.log("challenge success", challengeVerification.publication?.cid, challengeVerification)
+      localStorage.setItem("toastMessage", "Challenge Success");
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge failed.', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-      console.log("challenge failed", challengeVerification.reason, challengeVerification.errors)
-      setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
+      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -124,7 +121,7 @@ const Catalog = () => {
   useEffect(() => {
     if (index !== undefined) {
       navigate(`/profile/c/${index}`);
-      setSuccessMessage('Comment pending with index ' + index + '.');
+      localStorage.setItem("toastMessage", `Comment pending with index ${index}.`);
     }
   }, [index]);
 

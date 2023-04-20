@@ -33,19 +33,17 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const onChallengeVerificationRef = useRef();
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [successMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
-      navigate(`/p/${selectedAddress}/c/${selectedThread}`);
+      localStorage.setItem("toastMessage", "Challenge Success");
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-      setErrorMessage("Error: You seem to have mistyped the CAPTCHA. Please try again.");
     }
   };
 
@@ -81,8 +79,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   useEffect(() => {
     if (index !== undefined) {
-      navigate(`/profile/c/${index}`);
-      setSuccessMessage('Comment pending with index ' + index + '.');
+      navigate(`/p/${selectedAddress}/c/${selectedThread}`)
+      localStorage.setItem("toastMessage", `Comment pending with index ${index}.`);
     }
   }, [index]);
   
