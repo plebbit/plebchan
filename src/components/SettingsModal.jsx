@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { deleteCaches } from "@plebbit/plebbit-react-hooks";
+import { deleteCaches, setAccount, useAccount } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "./styled/SettingsModal.styled";
 import useGeneralStore from "../hooks/stores/useGeneralStore";
 import useError from "../hooks/useError";
@@ -22,6 +22,13 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
+
+  const account = useAccount();
+
+  const gatewayRef = useRef();
+  const ipfsRef = useRef();
+  const pubsubRef = useRef();
+  const dataPathRef = useRef();
 
 
   const handleCloseModal = () => {
@@ -89,7 +96,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </button>
           ]
         </div>
-        <ul>
+        {/* <ul>
           <li className="settings-cat-lbl">
           <span className={`${expanded.includes(0) ? 'minus' : 'plus'}`}
             onClick={() => toggleExpanded(0)}
@@ -116,7 +123,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <li>
             </li>
           </ul>
-        </ul>
+        </ul> */}
         <ul>
           <li className="settings-cat-lbl">
             <span className={`${expanded.includes(2) ? 'minus' : 'plus'}`}
@@ -143,23 +150,28 @@ const SettingsModal = ({ isOpen, closeModal }) => {
                   "https://ipfsgateway.xyz",
                   "https://cloudflare-ipfs.com"
                 ].join("\n")}
+                ref={gatewayRef}
               />
             </div>
           </ul>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
-              IPFS HTTP Client Options</li>
-            <li className="settings-tip">Optional URL of an IPFS API or IpfsHttpClientOptions, http://localhost:5001 to use a local IPFS node.</li>
+              IPFS HTTP Clients Options</li>
+            <li className="settings-tip">Optional URLs of IPFS APIs or IpfsHttpClientOptions, 'http://localhost:5001/api/v0' to use a local IPFS node.</li>
             <div className="settings-input">
-              <textarea placeholder="IpfsHttpClientOptions" />
+              <textarea placeholder="IpfsHttpClientsOptions" 
+                ref={ipfsRef}
+              />
             </div>
           </ul>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
-              PubSub HTTP Client Options</li>
-            <li className="settings-tip">Optional URL or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser.</li>
+              PubSub HTTP Clients Options</li>
+            <li className="settings-tip">Optional URLs or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser.</li>
             <div className="settings-input">
-              <textarea placeholder="pubsubHttpClientOptions" defaultValue="https://pubsubprovider.xyz/api/v0" />
+              <textarea placeholder="pubsubHttpClientsOptions" defaultValue="https://pubsubprovider.xyz/api/v0" 
+                ref={pubsubRef} 
+              />
             </div>
           </ul>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
@@ -167,9 +179,21 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               Data Path (Node Only)</li>
             <li className="settings-tip">Optional folder path to create/resume the user and subplebbit databases.</li>
             <div className="settings-input">
-              <textarea placeholder="dataPath" />
+              <textarea placeholder="dataPath"
+                ref={dataPathRef}
+              />
             </div>
           </ul>
+          {/* <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
+            <li className="settings-option disc">
+              Chain Providers</li>
+            <li className="settings-tip">Optional provider RPC URLs and chain IDs.</li>
+            <ul>
+              <li className="settings-option disc">Ethereum</li>
+              <li className="settings-option disc">Avalanche</li>
+              <li className="settings-option disc">Polygon</li>
+            </ul>
+          </ul> */}
         </ul>
         <div>
         <button
