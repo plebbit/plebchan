@@ -2901,15 +2901,11 @@ export const BoardForm = styled.div`
         case 'Yotsuba':
           return `.highlighted {
           background-color: #f0c0b0 !important;
-          border-left: none !important;
-          border-top: none !important;
         }`;
 
         case 'Yotsuba-B':
           return `.highlighted {
           background-color: #d6bad0 !important;
-          border-left: none !important;
-          border-top: none !important;
         }`;
 
         case 'Futaba':
