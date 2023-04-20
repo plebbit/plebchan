@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 const ImageBanner = () => {
   const [currentImage, setCurrentImage] = useState(null);
   const location = useLocation();
+  
+  const parentRoute = location.pathname.split('/').slice(0, 3).join('/');
 
   useEffect(() => {
     let isMounted = true;
@@ -27,7 +29,7 @@ const ImageBanner = () => {
     return () => {
       isMounted = false;
     };
-  }, [location.key]);
+  }, [parentRoute]);
 
   return (
     <>
