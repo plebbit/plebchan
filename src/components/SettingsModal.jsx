@@ -30,6 +30,79 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const pubsubRef = useRef();
   const dataPathRef = useRef();
 
+  const isValidURL = (url) => {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const handleSavePlebbitOptions = async () => {
+    const gatewayUrls = gatewayRef.current.value.split('\n').filter(url => url.trim());
+    const ipfsClientsOptions = ipfsRef.current.value.split('\n').filter(url => url.trim()) || undefined;
+    const pubsubClientsOptions = pubsubRef.current.value.split('\n').filter(url => url.trim());
+
+    const invalidUrls = [
+      ...gatewayUrls,
+      ...(ipfsClientsOptions || []),
+      ...pubsubClientsOptions,
+    ].filter((url) => !isValidURL(url));
+
+    if (invalidUrls.length > 0) {
+      setErrorMessage(`Invalid URL(s): ${invalidUrls.join(', ')}`);
+      return;
+    }
+
+    const plebbitOptions = {
+      ipfsGatewayUrls: gatewayUrls,
+      ipfsHttpClientsOptions: ipfsClientsOptions,
+      pubsubHttpClientsOptions: pubsubClientsOptions,
+    };
+
+    try {
+      await setAccount({ ...account, plebbitOptions });
+      localStorage.setItem("toastMessage", "Settings Saved");
+      window.location.reload();
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
+
+
+  const handleResetPlebbitOptions = async () => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    const defaultGatewayUrls = [
+      'https://ipfs.io',
+      'https://ipfsgateway.xyz',
+      'https://cloudflare-ipfs.com'
+    ];
+    const defaultPubsubHttpClientsOptions = ['https://pubsubprovider.xyz/api/v0'];
+
+    gatewayRef.current.value = defaultGatewayUrls.join('\n');
+    ipfsRef.current.value = "";
+    pubsubRef.current.value = defaultPubsubHttpClientsOptions.join('\n');
+    dataPathRef.current.value = "";
+
+    try {
+      await setAccount({
+        ...account,
+        plebbitOptions: {
+          ipfsGatewayUrls: defaultGatewayUrls,
+          ipfsHttpClientsOptions: undefined,
+          pubsubHttpClientsOptions: defaultPubsubHttpClientsOptions,
+        },
+      });
+      localStorage.setItem("toastMessage", "Settings Reset");
+      window.location.reload();
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
+
 
   const handleCloseModal = () => {
     closeModal();
@@ -70,6 +143,15 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       localStorage.removeItem("cacheCleared");
     }
   }, []);
+
+  useEffect(() => {
+    const successMessageFromStorage = localStorage.getItem("toastMessage");
+    if (successMessageFromStorage) {
+      setSuccessMessage(successMessageFromStorage);
+      localStorage.removeItem("toastMessage");
+    }
+  }, []);
+  
   
   
   return (
@@ -135,8 +217,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <div className="plebbit-options-buttons"
               style={{ display: expanded.includes(2) ? 'block' : 'none' }}
             >
-              <button className="save-button">Save</button>
-              <button className="reset-button">Reset</button>
+              <button className="save-button" onClick={handleSavePlebbitOptions}>Save</button>
+              <button className="reset-button"onClick={handleResetPlebbitOptions}>Reset</button>
              </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
@@ -145,11 +227,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <li className="settings-tip">Optional URLs of IPFS gateways.</li>
             <div className="settings-input">
               <textarea placeholder="IPFS Gateway URLs"
-                defaultValue={[
-                  "https://ipfs.io",
-                  "https://ipfsgateway.xyz",
-                  "https://cloudflare-ipfs.com"
-                ].join("\n")}
+                defaultValue={account?.plebbitOptions?.ipfsGatewayUrls.join("\n")}
                 ref={gatewayRef}
               />
             </div>
@@ -160,6 +238,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <li className="settings-tip">Optional URLs of IPFS APIs or IpfsHttpClientOptions, 'http://localhost:5001/api/v0' to use a local IPFS node.</li>
             <div className="settings-input">
               <textarea placeholder="IpfsHttpClientsOptions" 
+                defaultValue={account?.plebbitOptions?.ipfsHttpClientsOptions ? account?.plebbitOptions?.ipfsHttpClientsOptions.join("\n") : ''}
                 ref={ipfsRef}
               />
             </div>
@@ -169,7 +248,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               PubSub HTTP Clients Options</li>
             <li className="settings-tip">Optional URLs or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser.</li>
             <div className="settings-input">
-              <textarea placeholder="pubsubHttpClientsOptions" defaultValue="https://pubsubprovider.xyz/api/v0" 
+              <textarea placeholder="pubsubHttpClientsOptions" 
+                defaultValue={account?.plebbitOptions?.pubsubHttpClientsOptions.join("\n")} 
                 ref={pubsubRef} 
               />
             </div>
