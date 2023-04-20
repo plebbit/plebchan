@@ -14,6 +14,7 @@ import SettingsModal from '../SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
+import handleAddressClick from '../../utils/handleAddressClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import renderComments from '../../utils/renderComments';
@@ -449,7 +450,10 @@ const Board = () => {
                             Anonymous</span>}
                           &nbsp;
                           (u/
-                          <span key={`pa-${thread.cid}`} className="poster-address">
+                          <span key={`pa-${thread.cid}`} className="poster-address address-desktop"
+                          id="reply-button" style={{cursor: "pointer"}}
+                            onClick={() => handleAddressClick(thread.author.shortAddress)}
+                          >
                             {thread.author.shortAddress}
                           </span>)
                           &nbsp;
@@ -542,7 +546,10 @@ const Board = () => {
                                 : <span key={`mob-n-${reply.cid}`} className="name">
                                   Anonymous</span>}
                               &nbsp;
-                              <span key={`pa-${reply.cid}`} className="poster-address">
+                              <span key={`pa-${reply.cid}`} className="poster-address address-desktop"
+                                id="reply-button" style={{cursor: "pointer"}}
+                                onClick={() => handleAddressClick(reply.author.shortAddress)}
+                              >
                                 (u/
                                   <span key={`mob-ha-${reply.cid}`}>
                                     {reply.author.shortAddress}
@@ -675,7 +682,10 @@ const Board = () => {
                           : <span key={`mob-n-${thread.cid}`} className="name-mobile">
                             Anonymous</span>}
                           &nbsp;
-                          <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile">
+                          <span key={`mob-pa-${thread.cid}`} className="poster-address-mobile address-mobile"
+                            id="reply-button" style={{cursor: "pointer"}}
+                            onClick={() => handleAddressClick(thread.author.shortAddress)}
+                          >
                             (u/
                             <span key={`mob-ha-${thread.cid}`} className="highlight-address-mobile">
                               {thread.author.shortAddress}
@@ -801,7 +811,10 @@ const Board = () => {
                             : <span key={`mob-n-${reply.cid}`} className="name-mobile">
                               Anonymous</span>}
                             &nbsp;
-                            <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile">
+                            <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile address-mobile"
+                              id="reply-button" style={{cursor: "pointer"}}
+                              onClick={() => handleAddressClick(reply.author.shortAddress)}
+                            >
                               (u/
                               <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
                                 {reply.author.shortAddress}
