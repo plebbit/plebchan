@@ -835,7 +835,7 @@ const Thread = () => {
                     </span>
                     <span className="quickreply-button">
                     [
-                    <Link to={() => {}} onClick={() => {}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
+                      <a onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
                     ]
                     </span>
                     {comment.replyCount > 0 ? (
@@ -846,67 +846,71 @@ const Thread = () => {
                     <hr />
                   </div>
                 </BottomBar>
-              <div id="bottombar-mobile">
-                <TopBar selectedStyle={selectedStyle}>
-                  <hr />
-                  <span className="style-changer">
-                    Style:
-                     
-                    <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
-                      <option value="Yotsuba">Yotsuba</option>
-                      <option value="Yotsuba-B">Yotsuba B</option>
-                      <option value="Futaba">Futaba</option>
-                      <option value="Burichan">Burichan</option>
-                      <option value="Tomorrow">Tomorrow</option>
-                      <option value="Photon">Photon</option>
-                    </select>
-                  </span>
-                  {comment ? (
-                    comment.replyCount !== undefined ? (
-                      comment.replyCount > 0 ? (
-                        comment.replyCount === 1 ? (
-                          <span className="reply-stat">{comment.replyCount} reply</span>
+                {comment.replyCount > 5 ? (
+                  <div id="bottombar-mobile">
+                    <TopBar selectedStyle={selectedStyle} style={{marginTop: "20px"}}>
+                      <hr />
+                      <span className="style-changer">
+                        Style:
+                         
+                        <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
+                          <option value="Yotsuba">Yotsuba</option>
+                          <option value="Yotsuba-B">Yotsuba B</option>
+                          <option value="Futaba">Futaba</option>
+                          <option value="Burichan">Burichan</option>
+                          <option value="Tomorrow">Tomorrow</option>
+                          <option value="Photon">Photon</option>
+                        </select>
+                      </span>
+                      {comment ? (
+                        comment.replyCount !== undefined ? (
+                          comment.replyCount > 0 ? (
+                            comment.replyCount === 1 ? (
+                              <span className="reply-stat">{comment.replyCount} reply</span>
+                            ) : (
+                              <span className="reply-stat">{comment.replyCount} replies</span>
+                            )
+                          ) : (
+                            <span className="reply-stat">No replies yet</span>
+                          )
                         ) : (
-                          <span className="reply-stat">{comment.replyCount} replies</span>
+                          <span className="reply-stat">Loading...</span>
                         )
                       ) : (
-                        <span className="reply-stat">No replies yet</span>
-                      )
-                    ) : (
-                      <span className="reply-stat">Loading...</span>
-                    )
-                  ) : (
-                    null
-                  )}
-                  <hr />
-                </TopBar>
-                <ReplyFormLink id="post-form-link" selectedStyle={selectedStyle} >
-                  <div id="post-form-link-mobile" className="post-button-mobile">
-                    <span className="btn-wrap">
-                      <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
-                    </span>
+                        null
+                      )}
+                      <hr />
+                    </TopBar>
+                    <ReplyFormLink id="post-form-link" selectedStyle={selectedStyle} >
+                      <div id="post-form-link-mobile" className="post-button-mobile">
+                        <span className="btn-wrap">
+                          <a onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                        </span>
+                      </div>
+                      <div id="btns-container">
+                        <div id="return-button-mobile">
+                          <span className="btn-wrap">
+                            <Link to={`/p/${selectedAddress}`}>Return</Link>
+                          </span>
+                        </div>
+                        <div id="catalog-button-mobile" style={{paddingRight: "2px"}}>
+                          <span className="btn-wrap">
+                            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+                          </span>
+                        </div>
+                        <span className="bottom-bar-top">
+                          <span className="btn-wrap">
+                            <a onClick={() => window.scrollTo(0, 0)} 
+                            onMouseOver={(event) => event.target.style.cursor='pointer'} 
+                            onTouchStart={() => window.scrollTo(0, 0)}
+                            style={{marginRight: "10px", marginLeft: "10px"}}
+                            >Top</a>
+                          </span>
+                        </span>
+                      </div>
+                    </ReplyFormLink>
                   </div>
-                  <div id="btns-container">
-                    <div id="return-button-mobile">
-                      <span className="btn-wrap">
-                        <Link to={`/p/${selectedAddress}`}>Return</Link>
-                      </span>
-                    </div>
-                    <div id="catalog-button-mobile">
-                      <span className="btn-wrap">
-                        <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
-                      </span>
-                    </div>
-                    <span className="bottom-bar-top">
-                      <span className="btn-wrap">
-                        <a onClick={() => window.scrollTo(0, 0)} 
-                        onMouseOver={(event) => event.target.style.cursor='pointer'} 
-                        onTouchStart={() => window.scrollTo(0, 0)}>Top</a>
-                      </span>
-                    </span>
-                  </div>
-                </ReplyFormLink>
-              </div>
+                ) : (null)}
             </>
           ) : (
             <PostLoader />

@@ -10,7 +10,6 @@ export const ReplyFormLink = styled.div`
   }
 
   @media (max-width: 480px) {
-    display: ${props => (props.showReplyFormLink ? 'block' : 'none')};
 
     #post-form-link-desktop {
       display: none;
