@@ -68,7 +68,7 @@ export const StyledModal = styled(Modal)`
     position: absolute;
     top: 4px;
     left: 5px;
-    color: #999;
+    color: black;
     text-decoration: underline;
     pointer-events: none;
   }

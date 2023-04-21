@@ -11,7 +11,8 @@ const CaptchaModal = () => {
     pendingComment,
     selectedStyle,
     setCaptchaResponse,
-    isCaptchaOpen, setIsCaptchaOpen
+    isCaptchaOpen, setIsCaptchaOpen,
+    selectedShortCid,
    } = useGeneralStore(state => state);
 
   const [imageSources, setImageSources] = useState([]);
@@ -57,7 +58,7 @@ const CaptchaModal = () => {
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
             {pendingComment.parentCid ? 
-            ("Challenges for Reply c/" + pendingComment.cid) : 
+            ("Challenges for Reply to c/" + selectedShortCid) : 
             "Challenges for New Thread"}
             <button className="icon" onClick={() => setIsCaptchaOpen(false)} title="close" />
           </div>
@@ -102,13 +103,19 @@ const CaptchaModal = () => {
               <span style={{lineHeight: '1.7'}}>
                 Challenge {currentChallengeIndex + 1} of {totalChallenges}
               </span>
-              <button id="nav" onClick={() => {
-                setCurrentChallengeIndex((currentChallengeIndex + 1) % totalChallenges)
-              }
-              }>&gt;</button>
-              <button id="nav" onClick={()=> {
-                setCurrentChallengeIndex((currentChallengeIndex - 1 + totalChallenges) % totalChallenges)
-              }}>&lt;</button>
+              <button
+                id="nav"
+                onClick={() => {
+                  if (currentChallengeIndex + 1 < totalChallenges) {
+                    setCurrentChallengeIndex((currentChallengeIndex + 1) % totalChallenges);
+                  } else {
+                    setCaptchaResponse(responseRef.current.value);
+                    setIsCaptchaOpen(false);
+                  }
+                }}
+              >
+                {currentChallengeIndex + 1 < totalChallenges ? "Next" : "Post"}
+              </button>
             </div>
           </div>
         </div>

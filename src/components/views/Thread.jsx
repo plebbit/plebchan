@@ -308,12 +308,12 @@ const Thread = () => {
           </div>
           <div id="post-form-link-desktop">
             [
-              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+              <a onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
             ]
           </div>
           <div id="post-form-link-mobile">
             <span className="btn-wrap">
-              <a onClick={handleClickForm} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+              <a onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
             </span>
           </div>
         </ReplyFormLink>
