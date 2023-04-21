@@ -846,7 +846,7 @@ const Thread = () => {
                     <hr />
                   </div>
                 </BottomBar>
-                {comment.replyCount > 5 ? (
+                {comment.replyCount > 2 ? (
                   <div id="bottombar-mobile">
                     <TopBar selectedStyle={selectedStyle} style={{marginTop: "20px"}}>
                       <hr />

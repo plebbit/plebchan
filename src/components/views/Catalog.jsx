@@ -82,7 +82,6 @@ const Catalog = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      localStorage.setItem("toastMessage", "Challenge Success");
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
     }
     else if (challengeVerification.challengeSuccess === false) {
