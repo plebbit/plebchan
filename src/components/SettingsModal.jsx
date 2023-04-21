@@ -237,7 +237,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               IPFS HTTP Clients Options</li>
             <li className="settings-tip">Optional URLs of IPFS APIs or IpfsHttpClientOptions, 'http://localhost:5001/api/v0' to use a local IPFS node.</li>
             <div className="settings-input">
-              <textarea placeholder="IpfsHttpClientsOptions" 
+              <textarea placeholder="IPFS HTTP Clients Options" 
                 defaultValue={account?.plebbitOptions?.ipfsHttpClientsOptions ? account?.plebbitOptions?.ipfsHttpClientsOptions.join("\n") : ''}
                 ref={ipfsRef}
               />
@@ -248,7 +248,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               PubSub HTTP Clients Options</li>
             <li className="settings-tip">Optional URLs or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser.</li>
             <div className="settings-input">
-              <textarea placeholder="pubsubHttpClientsOptions" 
+              <textarea placeholder="PubSub HTTP Clients Options" 
                 defaultValue={account?.plebbitOptions?.pubsubHttpClientsOptions.join("\n")} 
                 ref={pubsubRef} 
               />
@@ -259,7 +259,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               Data Path (Node Only)</li>
             <li className="settings-tip">Optional folder path to create/resume the user and subplebbit databases.</li>
             <div className="settings-input">
-              <textarea placeholder="dataPath"
+              <textarea placeholder="Data Path (Node Only)"
                 ref={dataPathRef}
               />
             </div>
