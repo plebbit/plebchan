@@ -62,10 +62,8 @@ const Post = ({ content, handlequoteclick, comment }) => {
         video: () => null,
         source: () => null,
         gif: () => null,
-        p: ({ children }) => (
-          <p>{createQuotelink(handlequoteclick, comment, children)}</p>
-        ),
       }}
+      className='line-break'
     />
   );
 };

@@ -37,6 +37,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 3px;
     opacity: 100%;
   }
+
+  .line-break {
+    white-space: pre-line;
+  }
 `;
 
 const StyledContainer = styled(ToastContainer)`

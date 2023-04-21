@@ -227,7 +227,7 @@ const Thread = () => {
       <Helmet>
           <title>
             {(
-              (comment.content.slice(0, 40)) + " - " 
+              (comment.content?.slice(0, 40)) + " - " 
               + (selectedTitle ? selectedTitle : selectedAddress) 
               + " - plebchan"
             )}
