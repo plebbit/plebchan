@@ -41,6 +41,17 @@ const GlobalStyle = createGlobalStyle`
   .line-break {
     white-space: pre-line;
   }
+
+  .custom-paragraph {
+    margin: 0;
+    padding: 0;
+  }
+
+  .custom-linebreak {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const StyledContainer = styled(ToastContainer)`
