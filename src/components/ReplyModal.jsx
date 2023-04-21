@@ -124,6 +124,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       (async () => {
         await publishComment();
         resetFields();
+        closeModal();
       })();
     }
   }, [publishCommentOptions]);
