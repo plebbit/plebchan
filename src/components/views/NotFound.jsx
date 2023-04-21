@@ -1,4 +1,5 @@
 import React, { useEffect }  from 'react';
+import { Helmet } from 'react-helmet-async';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link } from "react-router-dom";
 import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/Home.styled';
@@ -17,28 +18,33 @@ const NotFound = ({ setBodyStyle }) => {
   }, [setBodyStyle, setSelectedStyle]);
 
   return (
-    <Container>
-      <Header>
-        <Logo>
-          <Link to="/">
-            <img alt="plebchan" src="/assets/logo/logo-transparent.png" />
-          </Link>
-        </Logo>
-      </Header>
-      <Page>
-        <Boards>
-          <BoardsTitle>
-            <h2 style={{textAlign: 'center'}}>404 Not Found</h2>
-          </BoardsTitle>
-          <img src="/assets/plebchan-husbando.jpg" alt="plebchan" style={{
-            display: "block",
-            margin: "auto",
-            padding: "15px", 
-            width: "50%"
-            }}></img>
-        </Boards>
-      </Page>
-    </Container>
+    <>
+      <Helmet>
+        <title>plebchan - 404 Not Found</title>
+      </Helmet>
+      <Container>
+        <Header>
+          <Logo>
+            <Link to="/">
+              <img alt="plebchan" src="/assets/logo/logo-transparent.png" />
+            </Link>
+          </Logo>
+        </Header>
+        <Page>
+          <Boards>
+            <BoardsTitle>
+              <h2 style={{textAlign: 'center'}}>404 Not Found</h2>
+            </BoardsTitle>
+            <img src="/assets/plebchan-husbando.jpg" alt="plebchan" style={{
+              display: "block",
+              margin: "auto",
+              padding: "15px", 
+              width: "50%"
+              }}></img>
+          </Boards>
+        </Page>
+      </Container>
+    </>
   );
 }
 
