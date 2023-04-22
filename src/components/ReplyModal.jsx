@@ -78,7 +78,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   useEffect(() => {
     if (index !== undefined) {
-      navigate(`/p/${selectedAddress}/c/${selectedThread}`)
+      navigate(`/p/${selectedAddress}/c/${selectedParentCid}`)
       localStorage.setItem("toastMessage", `Comment pending with index ${index}.`);
     }
   }, [index]);

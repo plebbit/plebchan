@@ -68,7 +68,6 @@ export const StyledModal = styled(Modal)`
     position: absolute;
     top: 4px;
     left: 5px;
-    color: black;
     text-decoration: underline;
     pointer-events: none;
   }
@@ -126,7 +125,7 @@ export const StyledModal = styled(Modal)`
         }
 
         span {
-          color: maroon;
+          color: #000;
         }`;
 
       case 'Yotsuba-B':
@@ -168,7 +167,7 @@ export const StyledModal = styled(Modal)`
         }
 
         span {
-          color: maroon;
+          color: #000;
         }`;
 
       case 'Burichan':
@@ -253,7 +252,7 @@ export const StyledModal = styled(Modal)`
         }
 
         span {
-          color: #333;
+          color: #000;
         }`; 
     }
   }}
