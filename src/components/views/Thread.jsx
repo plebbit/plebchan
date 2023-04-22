@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, BoardForm } from '../styled/Board.styled';
@@ -53,6 +53,7 @@ const Thread = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const account = useAccount();
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
@@ -553,9 +554,22 @@ const Thread = () => {
                                 onClick={() => handleAddressClick(reply.author?.shortAddress)}
                               >
                                 (u/
-                                <span key={`mob-ha-${index}`}>
-                                  {reply.author?.shortAddress ?? reply.author.address}
-                                </span>)
+                                  {reply.author?.shortAddress ?
+                                    (
+                                      <span key={`mob-ha-${index}`}>
+                                        {reply.author?.shortAddress}
+                                      </span>
+                                    ) : (
+                                      <span key={`mob-ha-${index}`}
+                                        data-tooltip-id="tooltip"
+                                        data-tooltip-content={account.author.address}
+                                        data-tooltip-place="top"
+                                      >
+                                        {account.author.address.slice(0, 10) + "(...)"}
+                                      </span>
+                                    )
+                                  }
+                                )
                               </span>
                             </span>
                             &nbsp;
@@ -563,11 +577,13 @@ const Thread = () => {
                             &nbsp;
                             <span key={`pn-${index}`} className="post-number post-number-desktop">
                               <Link to={() => {}} key={`pl1-${index}`} onClick={() => {}} title="Link to this post">c/</Link>
-                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${index}`} onClick={() => { 
-                                setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
-                                }} title="Reply to this post">{reply.shortCid ?? (
-                                  <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
-                                )}</button>
+                              {reply.shortCid ? (
+                                <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${index}`} onClick={() => {
+                                  setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
+                                  }} title="Reply to this post">{reply.shortCid}</button>
+                              ) : (
+                                <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
+                              )}
                             </span>&nbsp;
                             <button key={`pmb-${index}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                             <div id="backlink-id" className="backlink">
@@ -743,8 +759,7 @@ const Thread = () => {
                     </div>
                   </div>
                   {comment.replyCount === undefined ? <PostLoader /> : null}
-                  {comment.replyCount > 0 && 
-                    renderedComments.map((reply, index) => {
+                  {renderedComments.map((reply, index) => {
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     return (
                     <div key={`${index}mob-rc-${index}`} className="reply-container">
@@ -772,9 +787,21 @@ const Thread = () => {
                               onClick={() => handleAddressClick(reply.author?.shortAddress)}
                             >
                               (u/
-                              <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                {reply.author?.shortAddress}
-                              </span>
+                                {reply.author?.shortAddress ?
+                                  (
+                                  <span key={`mob-ha-${index}`} className="highlight-address-mobile">
+                                    {reply.author?.shortAddress}
+                                  </span>
+                                  ) : (
+                                    <span key={`mob-ha-${index}`} 
+                                      data-tooltip-id="tooltip"
+                                      data-tooltip-content={account.author.address}
+                                      data-tooltip-place="top"
+                                        >
+                                      {account.author.address.slice(0, 6) + "(...)"}
+                                    </span>
+                                  )
+                                }
                               )
                             </span>
                             <br key={`mob-br-${index}`} />
@@ -782,9 +809,13 @@ const Thread = () => {
                           <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply?.timestamp)}&nbsp;
                             <Link to={() => {}} key={`mob-pl1-${index}`} onClick={() => {}} title="Link to this post">c/</Link>
-                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${index}`} onClick={() => {
-                              setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
-                              }} title="Reply to this post">{reply.shortCid}</button>
+                            {reply.shortCid ? (
+                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${index}`} onClick={() => {
+                                setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
+                                }} title="Reply to this post">{reply.shortCid}</button>
+                            ) : (
+                              <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span> 
+                            )}
                           </span>
                         </div>
                         <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
