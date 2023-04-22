@@ -501,10 +501,10 @@ const Board = () => {
                             </div>
                           </span>
                           {thread.content ? (
-                            thread.content.length > 1000 ?
+                            thread.content?.length > 1000 ?
                             <Fragment key={`fragment5-${thread.cid}`}>
                               <blockquote key={`bq-${thread.cid}`}>
-                              <Post content={thread.content.slice(0, 1000)} key={`post-${thread.cid}`} />
+                              <Post content={thread.content?.slice(0, 1000)} key={`post-${thread.cid}`} />
                                 <span key={`ttl-s-${thread.cid}`} className="ttl"> (...) 
                                 <br key={`ttl-s-br1-${thread.cid}`} /><br key={`ttl-s-br2${thread.cid}`} />
                                 Post too long.&nbsp;
@@ -642,13 +642,13 @@ const Board = () => {
                               </div>
                             ) : null}
                             {reply.content ? (
-                              reply.content.length > 500 ?
+                              reply.content?.length > 500 ?
                               <Fragment key={`fragment8-${reply.cid}`}>
                                 <blockquote key={`pm-${reply.cid}`} comment={reply} className="post-message">
                                   <Link to={() => {}} key={`r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
                                       {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                   </Link>
-                                  <Post content={reply.content.slice(0, 500)} key={`post-${reply.cid}`} />
+                                  <Post content={reply.content?.slice(0, 500)} key={`post-${reply.cid}`} />
                                   <span key={`ttl-s-${reply.cid}`} className="ttl"> (...)
                                   <br key={`ttl-s-br1-${reply.cid}`} /><br key={`ttl-s-br2${reply.cid}`} />
                                   Comment too long.&nbsp;
@@ -766,10 +766,10 @@ const Board = () => {
                           </div>
                         ) : null}
                         {thread.content ? (
-                          thread.content.length > 500 ?
+                          thread.content?.length > 500 ?
                           <Fragment key={`fragment12-${thread.cid}`}>
                             <blockquote key={`mob-bq-${thread.cid}`} className="post-message-mobile">
-                              <Post content={thread.content.slice(0, 500)} key={`post-mobile-${thread.cid}`} />
+                              <Post content={thread.content?.slice(0, 500)} key={`post-mobile-${thread.cid}`} />
                               <span key={`mob-ttl-s-${thread.cid}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${thread.cid}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
@@ -879,13 +879,13 @@ const Board = () => {
                             </div>
                           ) : null}
                           {reply.content ? (
-                            reply.content.length > 500 ?
+                            reply.content?.length > 500 ?
                             <Fragment key={`fragment15-${reply.cid}`}>
                               <blockquote key={`mob-pm-${reply.cid}`} className="post-message">
                                 <Link to={() => {}} key={`mob-r-pm-${reply.cid}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
                                   {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
-                                <Post content={reply.content.slice(0, 500)} key={`post-mobile-${reply.cid}`} comment={reply} />
+                                <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${reply.cid}`} comment={reply} />
                                 <span key={`mob-ttl-s-${reply.cid}`} className="ttl"> (...)
                                 <br key={`mob-ttl-s-br1-${reply.cid}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;

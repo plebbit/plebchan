@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComment } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from '../styled/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from '../styled/Thread.styled';
@@ -31,6 +31,7 @@ const Pending = () => {
 
   const { index } = useParams();
 
+  const account = useAccount();
   const comment = useAccountComment({commentIndex: index});
   
   const [visible] = useState(true);
@@ -258,8 +259,12 @@ const Pending = () => {
                         &nbsp;
                         <span className="poster-address">
                           (u/
-                            <span key={`pa-${"pending"}`} className="poster-address">
-                            {comment.author?.address}
+                            <span key={`pa-${"pending"}`} className="poster-address"
+                              data-tooltip-id="tooltip"
+                              data-tooltip-content={account?.author?.address}
+                              data-tooltip-place="top"
+                            >
+                            {account?.author?.address.slice(0, 10) + "(...)"}
                           </span>)
                         </span>
                         &nbsp;
@@ -302,8 +307,12 @@ const Pending = () => {
                           &nbsp;
                           <span key={`mob-pa-${"pending"}`} className="poster-address-mobile">
                             (u/
-                            <span key={`mob-ha-${"pending"}`} className="highlight-address-mobile">
-                              {comment.author?.address}
+                            <span key={`mob-ha-${"pending"}`} className="poster-address-mobile"
+                              data-tooltip-id="tooltip"
+                              data-tooltip-content={account?.author?.address}
+                              data-tooltip-place="top"
+                            >
+                              {account?.author?.address.slice(0, 10) + "(...)"}
                             </span>
                             )&nbsp;
                           </span>
