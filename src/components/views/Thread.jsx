@@ -93,7 +93,7 @@ const Thread = () => {
   
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      return;
+      console.log('challenge success');
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -503,9 +503,9 @@ const Thread = () => {
                         <div id="backlink-id" className="backlink">
                           {comment?.replies?.pages?.topAll.comments
                             .sort((a, b) => a.timestamp - b.timestamp)
-                            .map((reply) => (
-                              <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
-                              <Link to={() => {}} key={`ql-${reply.cid}`}
+                            .map((reply, index) => (
+                              <div key={`div-${index}`} style={{display: 'inline-block'}}>
+                              <Link to={() => {}} key={`ql-${index}`}
                                 className="quote-link" 
                                 onClick={(event) => handleQuoteClick(reply, null, event)}>
                                 c/{reply.shortCid}</Link>
@@ -522,61 +522,60 @@ const Thread = () => {
                   </div>
                 </div>
                 {comment.replyCount === undefined ? <PostLoader /> : null}
-                {comment.replyCount > 0 && 
-                renderedComments.map((reply) => {
+                {renderedComments.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     return (
-                      <div key={`pc-${reply.cid}`} className="reply-container">
-                        <div key={`sa-${reply.cid}`} className="side-arrows">{'>>'}</div>
-                        <div key={`pr-${reply.cid}`} className="post-reply post-reply-desktop">
-                          <div key={`pi-${reply.cid}`} className="post-info">
+                      <div key={`pc-${index}`} className="reply-container">
+                        <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
+                        <div key={`pr-${index}`} className="post-reply post-reply-desktop">
+                          <div key={`pi-${index}`} className="post-info">
                           &nbsp;
-                            <span key={`nb-${reply.cid}`} className="nameblock">
+                            <span key={`nb-${index}`} className="nameblock">
                             {reply.author?.displayName
                             ? reply.author?.displayName.length > 20
                             ? <>
-                                <span key={`mob-n-${reply.cid}`} className="name"
+                                <span key={`mob-n-${index}`} className="name"
                                 data-tooltip-id="tooltip"
                                 data-tooltip-content={reply.author?.displayName}
                                 data-tooltip-place="top">
                                   {reply.author?.displayName.slice(0, 20) + " (...)"}
                                 </span>
                               </>
-                              : <span key={`mob-n-${reply.cid}`} className="name">
+                              : <span key={`mob-n-${index}`} className="name">
                                 {reply.author?.displayName ?? reply.displayName}</span>
-                            : <span key={`mob-n-${reply.cid}`} className="name">
+                            : <span key={`mob-n-${index}`} className="name">
                               Anonymous</span>}
                               &nbsp;
-                              <span key={`pa-${reply.cid}`} className="poster-address address-desktop"
+                              <span key={`pa-${index}`} className="poster-address address-desktop"
                                 id="reply-button" style={{cursor: "pointer"}}
                                 onClick={() => handleAddressClick(reply.author?.shortAddress)}
                               >
                                 (u/
-                                <span key={`mob-ha-${reply.cid}`}>
+                                <span key={`mob-ha-${index}`}>
                                   {reply.author?.shortAddress ?? reply.author.address}
                                 </span>)
                               </span>
                             </span>
                             &nbsp;
-                            <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
+                            <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
                             &nbsp;
-                            <span key={`pn-${reply.cid}`} className="post-number post-number-desktop">
-                              <Link to={() => {}} key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
-                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${reply.cid}`} onClick={() => { 
+                            <span key={`pn-${index}`} className="post-number post-number-desktop">
+                              <Link to={() => {}} key={`pl1-${index}`} onClick={() => {}} title="Link to this post">c/</Link>
+                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${index}`} onClick={() => { 
                                 setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
                                 }} title="Reply to this post">{reply.shortCid ?? (
                                   <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                                 )}</button>
                             </span>&nbsp;
-                            <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
+                            <button key={`pmb-${index}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                             <div id="backlink-id" className="backlink">
                               {reply.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
-                                .map((reply) => (
-                                  <div key={`div-${reply.cid}`} style={{display: 'inline-block'}}>
-                                  <Link to={() => {}} key={`ql-${reply.cid}`}
+                                .map((reply, index) => (
+                                  <div key={`div-${index}`} style={{display: 'inline-block'}}>
+                                  <Link to={() => {}} key={`ql-${index}`}
                                     className="quote-link" 
                                     onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
                                     c/{reply.shortCid}</Link>
@@ -587,51 +586,51 @@ const Thread = () => {
                             </div>
                           </div>
                           {replyMediaInfo?.url ? (
-                              <div key={`f-${reply.cid}`} className="file" 
+                              <div key={`f-${index}`} className="file" 
                               style={{marginBottom: "5px"}}>
-                                <div key={`ft-${reply.cid}`} className="reply-file-text">
+                                <div key={`ft-${index}`} className="reply-file-text">
                                   Link:&nbsp;
-                                  <a key={`fa-${reply.cid}`} href={replyMediaInfo.url} target="_blank">{
+                                  <a key={`fa-${index}`} href={replyMediaInfo.url} target="_blank">{
                                   replyMediaInfo?.url.length > 30 ?
                                   replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                   replyMediaInfo?.url
                                   }</a>&nbsp;({replyMediaInfo?.type})
                                 </div>
                                 {replyMediaInfo?.type === "webpage" ? (
-                                  <span key={`fta-${reply.cid}`} className="file-thumb-reply">
-                                    <img key={`fti-${reply.cid}`}
+                                  <span key={`fta-${index}`} className="file-thumb-reply">
+                                    <img key={`fti-${index}`}
                                     src={reply.thumbnailUrl} 
                                     alt="thumbnail" 
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>
                                 ) : null}
                                 {replyMediaInfo?.type === "image" ? (
-                                  <span key={`fta-${reply.cid}`} className="file-thumb-reply">
-                                    <img key={`fti-${reply.cid}`}
+                                  <span key={`fta-${index}`} className="file-thumb-reply">
+                                    <img key={`fti-${index}`}
                                     src={replyMediaInfo.url} 
                                     alt={replyMediaInfo.type} 
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>
                                 ) : null}
                                 {replyMediaInfo?.type === "video" ? (
-                                  <span key={`fta-${reply.cid}`} className="file-thumb-reply">
+                                  <span key={`fta-${index}`} className="file-thumb-reply">
                                     <video controls
-                                    key={`fti-${reply.cid}`} 
+                                    key={`fti-${index}`} 
                                     src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>
                                 ) : null}
                                 {replyMediaInfo?.type === "audio" ? (
-                                  <span key={`fta-${reply.cid}`} className="file-thumb-reply">
+                                  <span key={`fta-${index}`} className="file-thumb-reply">
                                     <audio controls 
-                                    key={`fti-${reply.cid}`}
+                                    key={`fti-${index}`}
                                     src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>
                                 ) : null}
                               </div>
                             ) : null}
-                          <blockquote key={`pm-${reply.cid}`} className="post-message">
+                          <blockquote key={`pm-${index}`} className="post-message">
                             <Link to={() => {}} className="quote-link"
                               onClick={(event) => {
                                 handleQuoteClick(reply, shortParentCid, comment.shortCid, event);
@@ -639,7 +638,7 @@ const Thread = () => {
                             >
                               {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                             </Link>
-                            <Post content={reply.content} comment={reply} key={`post-${reply.cid}`} />
+                            <Post content={reply.content} comment={reply} key={`post-${index}`} />
                           </blockquote>
                         </div>
                       </div>
@@ -745,63 +744,63 @@ const Thread = () => {
                   </div>
                   {comment.replyCount === undefined ? <PostLoader /> : null}
                   {comment.replyCount > 0 && 
-                    renderedComments.map((reply) => {
+                    renderedComments.map((reply, index) => {
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     return (
-                    <div key={`mob-rc-${reply.cid}`} className="reply-container">
-                      <div key={`mob-pr-${reply.cid}`} className="post-reply post-reply-mobile">
-                        <div key={`mob-pi-${reply.cid}`} className="post-info-mobile">
+                    <div key={`${index}mob-rc-${index}`} className="reply-container">
+                      <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
+                        <div key={`mob-pi-${index}`} className="post-info-mobile">
                           <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
-                          <span key={`mob-nb-${reply.cid}`} className="name-block-mobile">
+                          <span key={`mob-nb-${index}`} className="name-block-mobile">
                             {reply.author?.displayName
                             ? reply.author?.displayName.length > 12
                             ? <>
-                                <span key={`mob-n-${reply.cid}`} className="name-mobile"
+                                <span key={`mob-n-${index}`} className="name-mobile"
                                 data-tooltip-id="tooltip"
                                 data-tooltip-content={reply.author?.displayName}
                                 data-tooltip-place="top">
                                   {reply.author?.displayName.slice(0, 12) + " (...)"}
                                 </span>
                               </>
-                              : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                              : <span key={`mob-n-${index}`} className="name-mobile">
                                 {reply.author?.displayName}</span>
-                            : <span key={`mob-n-${reply.cid}`} className="name-mobile">
+                            : <span key={`mob-n-${index}`} className="name-mobile">
                               Anonymous</span>}
                             &nbsp;
-                            <span key={`mob-pa-${reply.cid}`} className="poster-address-mobile address-mobile"
+                            <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                               id="reply-button" style={{cursor: "pointer"}}
                               onClick={() => handleAddressClick(reply.author?.shortAddress)}
                             >
                               (u/
-                              <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
+                              <span key={`mob-ha-${index}`} className="highlight-address-mobile">
                                 {reply.author?.shortAddress}
                               </span>
                               )
                             </span>
-                            <br key={`mob-br-${reply.cid}`} />
+                            <br key={`mob-br-${index}`} />
                           </span>
-                          <span key={`mob-dt-${reply.cid}`} className="date-time-mobile post-number-mobile">
+                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply?.timestamp)}&nbsp;
-                            <Link to={() => {}} key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
-                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${reply.cid}`} onClick={() => {
+                            <Link to={() => {}} key={`mob-pl1-${index}`} onClick={() => {}} title="Link to this post">c/</Link>
+                            <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${index}`} onClick={() => {
                               setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
                               }} title="Reply to this post">{reply.shortCid}</button>
                           </span>
                         </div>
-                        <blockquote key={`mob-pm-${reply.cid}`} className="post-message-mobile">
-                          <Link to={() => {}} key={`mob-ql-${reply.cid}`} className="quotelink-mobile" 
+                        <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
+                          <Link to={() => {}} key={`mob-ql-${index}`} className="quotelink-mobile" 
                           onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </Link>
-                          <Post content={reply.content} comment={reply} key={`post-mobile-${reply.cid}`} />
+                          <Post content={reply.content} comment={reply} key={`post-mobile-${index}`} />
                         </blockquote>
                         {reply.replyCount > 0 ? (
-                          <div key={`back-mob-${reply.cid}`} className='backlink backlink-mobile'>
+                          <div key={`back-mob-${index}`} className='backlink backlink-mobile'>
                           {reply.replies?.pages?.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
-                          .map((reply) => (
-                            <div key={`div-back${reply.cid}`} style={{display: 'inline-block'}}>
-                            <Link key={`ql-${reply.cid}`}
+                          .map((reply, index) => (
+                            <div key={`div-back${index}`} style={{display: 'inline-block'}}>
+                            <Link key={`ql-${index}`}
                             to={() => {}} className="quote-link" 
                             onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
                               c/{reply.shortCid}</Link>

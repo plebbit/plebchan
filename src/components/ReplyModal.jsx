@@ -41,7 +41,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      return;
+      console.log('challenge success');
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});

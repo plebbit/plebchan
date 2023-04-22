@@ -12,11 +12,12 @@ function renderThreadComments(comment, pendingComment = null) {
     return [comment];
   }).flat();
 
+  const sortedComments = renderedComments.sort((a, b) => a.timestamp - b.timestamp);
+
   if (pendingComment?.parentCid === comment?.cid) {
-    renderedComments.push(pendingComment);
+    sortedComments.push(pendingComment);
   }
 
-  const sortedComments = renderedComments.sort((a, b) => a.timestamp - b.timestamp);
   return sortedComments;
 }
 

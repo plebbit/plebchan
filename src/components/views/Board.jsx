@@ -101,6 +101,7 @@ const Board = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
+      console.log('challenge success');
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
