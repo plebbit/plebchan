@@ -26,6 +26,7 @@ const Catalog = () => {
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
+    setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     setSelectedThread,
@@ -183,6 +184,8 @@ const Catalog = () => {
 
         setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
+        
+        setResolveCaptchaPromise(resolve);
       };
   
       challengeImg.onerror = () => {

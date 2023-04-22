@@ -15,6 +15,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     setChallengesArray,
     setIsCaptchaOpen,
     setPendingComment,
+    setResolveCaptchaPromise,
     selectedAddress,
     selectedParentCid,
     selectedShortCid,
@@ -40,7 +41,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      console.log('challenge success:', challengeVerification);
+      return;
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -153,6 +154,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
         setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
+
+        useGeneralStore.getState().setResolveCaptchaPromise(resolve);
       };
   
       challengeImg.onerror = () => {

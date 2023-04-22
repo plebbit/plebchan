@@ -193,7 +193,6 @@ const Board = () => {
           if (event.key === 'Enter') {
             const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
             resolve(currentCaptchaResponse);
-            console.log('captcha response', currentCaptchaResponse)
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
             event.preventDefault();
@@ -203,7 +202,7 @@ const Board = () => {
         setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
 
-        useGeneralStore.getState().setResolveCaptchaPromise(resolve);
+        setResolveCaptchaPromise(resolve);
       };
   
       challengeImg.onerror = () => {

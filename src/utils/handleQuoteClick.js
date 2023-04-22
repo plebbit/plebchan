@@ -21,7 +21,7 @@ function handleQuoteClick(reply, parentCid, threadCid) {
     if (opElement) {
       opElement.scrollIntoView({ behavior: "auto", block: "start" });
     } else {
-      console.log('Could not find OP element');
+      return;
     }
 
     return;
@@ -49,7 +49,7 @@ function handleQuoteClick(reply, parentCid, threadCid) {
     }
 
   } else {
-    console.log('Could not find target element');
+    return;
   }
 };
 

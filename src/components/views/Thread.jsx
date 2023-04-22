@@ -31,6 +31,7 @@ const Thread = () => {
     defaultSubplebbits,
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
+    setResolveCaptchaPromise,
     pendingComment, setPendingComment,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
@@ -92,7 +93,7 @@ const Thread = () => {
   
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      setSuccessMessage('challenge success', {publishedCid: challengeVerification.publication?.cid});
+      return;
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -204,6 +205,8 @@ const Thread = () => {
 
         setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
+
+        setResolveCaptchaPromise(resolve);
       };
   
       challengeImg.onerror = () => {

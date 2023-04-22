@@ -10,7 +10,6 @@ function handleAddressClick(shortAddress) {
   });
 
   if (matchingElements.length === 0) {
-    console.log('Could not find any matching elements');
     return;
   }
 
