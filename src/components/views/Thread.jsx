@@ -47,8 +47,6 @@ const Thread = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const onChallengeVerificationRef = useRef();
-
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -121,7 +119,7 @@ const Thread = () => {
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: selectedAddress,
     onChallenge,
-    onChallengeVerification: onChallengeVerificationRef.current,
+    onChallengeVerification,
     onError: (error) => {
       setErrorMessage(error);
     },
@@ -137,9 +135,6 @@ const Thread = () => {
       setSuccessMessage('Comment pending with index ' + index + '.');
     }
   }, [index]);
-  
-
-  onChallengeVerificationRef.current = onChallengeVerification;
 
   
   const resetFields = () => {
@@ -147,15 +142,6 @@ const Thread = () => {
     commentRef.current.value = '';
     linkRef.current.value = '';
   };
-
-
-  useEffect(() => {
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      subplebbitAddress: selectedAddress,
-      onChallengeVerification: onChallengeVerificationRef.current,
-    }));
-  }, [selectedAddress]);
 
 
   const handleSubmit = async (event) => {
@@ -195,9 +181,10 @@ const Thread = () => {
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
   
-        const handleKeyDown = (event) => {
+        const handleKeyDown = async (event) => {
           if (event.key === 'Enter') {
-            resolve(captchaResponse);
+            const currentCaptchaResponse = captchaResponse;
+            resolve(currentCaptchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
             event.preventDefault();
@@ -562,10 +549,10 @@ const Thread = () => {
                                     ) : (
                                       <span key={`mob-ha-${index}`}
                                         data-tooltip-id="tooltip"
-                                        data-tooltip-content={account.author.address}
+                                        data-tooltip-content={account?.author?.address}
                                         data-tooltip-place="top"
                                       >
-                                        {account.author.address.slice(0, 10) + "(...)"}
+                                        {account?.author?.address.slice(0, 10) + "(...)"}
                                       </span>
                                     )
                                   }
@@ -795,10 +782,10 @@ const Thread = () => {
                                   ) : (
                                     <span key={`mob-ha-${index}`} 
                                       data-tooltip-id="tooltip"
-                                      data-tooltip-content={account.author.address}
+                                      data-tooltip-content={account?.author?.address}
                                       data-tooltip-place="top"
                                         >
-                                      {account.author.address.slice(0, 6) + "(...)"}
+                                      {account?.author?.address.slice(0, 6) + "(...)"}
                                     </span>
                                   )
                                 }

@@ -31,8 +31,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const commentRef = useRef();
   const linkRef = useRef();
 
-  const onChallengeVerificationRef = useRef();
-
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
@@ -68,7 +66,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: selectedAddress,
     onChallenge,
-    onChallengeVerification: onChallengeVerificationRef.current,
+    onChallengeVerification,
     onError: (error) => {
       setErrorMessage(error);
     },
@@ -84,9 +82,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       localStorage.setItem("toastMessage", `Comment pending with index ${index}.`);
     }
   }, [index]);
-  
-
-  onChallengeVerificationRef.current = onChallengeVerification;
 
   
   const resetFields = () => {
@@ -94,15 +89,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     commentRef.current.value = '';
     linkRef.current.value = '';
   };
-
-
-  useEffect(() => {
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      subplebbitAddress: selectedAddress,
-      onChallengeVerification: onChallengeVerificationRef.current,
-    }));
-  }, [selectedAddress]);
 
 
   const handleSubmit = async (event) => {
@@ -143,9 +129,10 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
   
-        const handleKeyDown = (event) => {
+        const handleKeyDown = async (event) => {
           if (event.key === 'Enter') {
-            resolve(captchaResponse);
+            const currentCaptchaResponse = captchaResponse;
+            resolve(currentCaptchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
             event.preventDefault();
@@ -155,7 +142,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
         setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
 
-        useGeneralStore.getState().setResolveCaptchaPromise(resolve);
+        setResolveCaptchaPromise(resolve);
       };
   
       challengeImg.onerror = () => {

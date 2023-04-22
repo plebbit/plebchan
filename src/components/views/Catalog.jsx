@@ -20,7 +20,7 @@ import useSuccess from '../../hooks/useSuccess';
 
 const Catalog = () => {
   const {
-    setCaptchaResponse,
+    captchaResponse, setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
@@ -175,7 +175,7 @@ const Catalog = () => {
   
         const handleKeyDown = async (event) => {
           if (event.key === 'Enter') {
-            const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
+            const currentCaptchaResponse = captchaResponse;
             resolve(currentCaptchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
