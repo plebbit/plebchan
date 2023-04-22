@@ -232,7 +232,7 @@ export const Footer = styled.div`
   text-align: center;
   clear: both;
   padding-top: .5em;
-  padding-bottom: 5em;
+  padding-bottom: 2em;
 
   ul {
     border-top: 1px solid;

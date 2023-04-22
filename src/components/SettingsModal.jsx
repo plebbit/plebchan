@@ -165,6 +165,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     >
       <div className="panel">
         <div className="panel-header">
+          <span id="version">
+            v0.1.0
+          </span>
           Settings
           <Link to="" onClick={handleCloseModal}>
             <span className="icon" title="close" />

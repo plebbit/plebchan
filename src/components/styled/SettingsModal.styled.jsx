@@ -16,6 +16,13 @@ export const StyledModal = styled(Modal)`
     box-shadow: 0 0 5px rgba(0, 0, 0, .25);
   }
 
+  #version {
+    font-size: 11px;
+    position: absolute;
+    display: block;
+    margin-left: 5px;
+  }
+
   @media (max-width: 768px) {
     .panel {
       width: 320px !important;
