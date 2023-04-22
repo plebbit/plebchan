@@ -31,6 +31,9 @@ const useGeneralStore = create((set) => ({
 
   publishedComment: '',
   setPublishedComment: (comment) => set({ publishedComment: comment }),
+
+  resolveCaptchaPromise: null,
+  setResolveCaptchaPromise: (resolve) => set({ resolveCaptchaPromise: resolve }),
   
   selectedAddress: '',
   setSelectedAddress: (address) => set({ selectedAddress: address }),

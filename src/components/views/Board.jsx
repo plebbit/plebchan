@@ -32,6 +32,7 @@ const Board = () => {
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
+    setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
@@ -201,6 +202,8 @@ const Board = () => {
 
         setCaptchaResponse('');
         document.addEventListener('keydown', handleKeyDown);
+
+        useGeneralStore.getState().setResolveCaptchaPromise(resolve);
       };
   
       challengeImg.onerror = () => {

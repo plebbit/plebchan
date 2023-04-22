@@ -40,10 +40,26 @@ const CaptchaModal = () => {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      setCaptchaResponse(responseRef.current.value);
-      setIsCaptchaOpen(false);
+      submitCaptcha();
     }
   };
+
+  const handleReturnKeyDown = () => {
+    submitCaptcha((response) => {
+      useGeneralStore.getState().setCaptchaResponse(response);
+      useGeneralStore.getState().resolveCaptchaPromise(response);
+    });
+  };
+
+  
+  const submitCaptcha = (callback) => {
+    setCaptchaResponse(responseRef.current.value);
+    setIsCaptchaOpen(false);
+    if (callback) {
+      callback(responseRef.current.value);
+    }
+  };
+
 
   return (
     <StyledModal
@@ -109,8 +125,7 @@ const CaptchaModal = () => {
                   if (currentChallengeIndex + 1 < totalChallenges) {
                     setCurrentChallengeIndex((currentChallengeIndex + 1) % totalChallenges);
                   } else {
-                    setCaptchaResponse(responseRef.current.value);
-                    setIsCaptchaOpen(false);
+                    handleReturnKeyDown();
                   }
                 }}
               >
