@@ -53,7 +53,8 @@ const createQuotelink = (handlequoteclick, comment, children) => {
 
 
 const Post = ({ content, handlequoteclick, comment }) => {
-  const sanitizedContent = DOMPurify.sanitize(content);
+  const doubleNewlineContent = content.replaceAll(/\n(?!\n)/g, '\n\n');
+  const sanitizedContent = DOMPurify.sanitize(doubleNewlineContent);
 
   return (
     <ReactMarkdown
