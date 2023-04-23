@@ -47,9 +47,7 @@ const Catalog = () => {
   const { subplebbitAddress } = useParams();
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
@@ -123,7 +121,6 @@ const Catalog = () => {
   useEffect(() => {
     if (index !== undefined) {
       navigate(`/profile/c/${index}`);
-      localStorage.setItem("toastMessage", `Comment pending with index ${index}.`);
     }
   }, [index]);
 

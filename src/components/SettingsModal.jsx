@@ -143,14 +143,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       localStorage.removeItem("cacheCleared");
     }
   }, []);
-
-  useEffect(() => {
-    const toastFromStorage = localStorage.getItem("toastMessage");
-    if (toastFromStorage) {
-      setSuccessMessage(toastFromStorage);
-      localStorage.removeItem("toastMessage");
-    }
-  }, []);
   
   
   

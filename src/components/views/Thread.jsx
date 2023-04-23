@@ -60,9 +60,7 @@ const Thread = () => {
   const fallbackImgUrl = "/assets/filedeleted-res.gif";
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
 
   const renderedComments = renderThreadComments(comment, pendingComment);
 
@@ -132,7 +130,6 @@ const Thread = () => {
   useEffect(() => {
     if (index !== undefined) {
       window.scrollTo(0, document.body.scrollHeight);
-      setSuccessMessage('Comment pending with index ' + index + '.');
     }
   }, [index]);
 

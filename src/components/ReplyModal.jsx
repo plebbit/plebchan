@@ -32,10 +32,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const linkRef = useRef();
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
-
+  
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
