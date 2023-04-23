@@ -213,6 +213,10 @@ const Board = () => {
     setSelectedTitle(title);
     setSelectedAddress(address);
     setSelectedFeed(feed.filter(feed => feed.title === title));
+
+    if (subplebbitAddress === address) {
+      window.location.reload();
+    }
   };
 
   // mobile navbar board select functionality
