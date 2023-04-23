@@ -21,7 +21,6 @@ import handleStyleChange from '../../utils/handleStyleChange';
 import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
-import useSuccess from '../../hooks/useSuccess';
 
 
 const Board = () => {
@@ -921,6 +920,14 @@ const Board = () => {
             )}
           </div>
         </BoardForm>
+        <div style={{
+          textAlign: "center",
+          fontSize: "11px",
+          marginTop: "2em",
+          marginBottom: "2em",
+        }}>
+          plebchan v0.1.0. GPL-2.0
+        </div>
       </Container>
     </>
   );

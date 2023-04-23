@@ -410,6 +410,14 @@ const Catalog = () => {
           )}
         </Threads>
       </Container>
+      <div style={{
+          textAlign: "center",
+          fontSize: "11px",
+          marginTop: "2em",
+          marginBottom: "2em",
+        }}>
+          plebchan v0.1.0. GPL-2.0
+        </div>
     </>
   );
 }

@@ -44,14 +44,11 @@ const NotFound = ({ setBodyStyle }) => {
           </Boards>
         </Page>
         <div style={{
-          marginTop: "25px",
           textAlign: "center",
           fontSize: "11px",
-          marginBottom: "1em",
+          marginTop: "2em",
         }}>
-          v.0.1.0
-          <br />
-          Plebchan is free and open-source software distributed under GPL-2.0 license.
+          plebchan v0.1.0. GPL-2.0
         </div>
       </Container>
     </>

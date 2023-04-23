@@ -134,7 +134,7 @@ const Home = () => {
           fontSize: "11px",
           marginBottom: "2em",
         }}>
-          Plebchan v.0.1.0 is free and open-source software distributed under GPL-2.0 license.
+          plebchan v0.1.0. GPL-2.0
         </div>
       </Container>
     </>
