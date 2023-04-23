@@ -33,6 +33,7 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
     "react-tooltip": "^5.10.0",
+    "remark-breaks": "^3.0.2",
     "styled-components": "^5.3.9",
     "web-vitals": "^3.3.0",
     "zustand": "^4.3.6"

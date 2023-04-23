@@ -2,21 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 import DOMPurify from 'dompurify';
-
-const removeExtraNewlines = () => (tree) => {
-  let lastNodeWasNewline = false;
-  tree.children = tree.children.filter((node) => {
-    if (node.type === 'br') {
-      if (lastNodeWasNewline) {
-        return false;
-      }
-      lastNodeWasNewline = true;
-    } else {
-      lastNodeWasNewline = false;
-    }
-    return true;
-  });
-};
+import breaks from 'remark-breaks';
 
 
 const blockquoteToGreentext = () => (tree) => {
@@ -72,16 +58,14 @@ const Post = ({ content, handlequoteclick, comment }) => {
   return (
     <ReactMarkdown
       children={sanitizedContent}
-      remarkPlugins={[blockquoteToGreentext, removeExtraNewlines]}
+      remarkPlugins={[blockquoteToGreentext, breaks]}
       components={{
         img: () => null,
         video: () => null,
         source: () => null,
         gif: () => null,
         p: ({ children }) => <div className="custom-paragraph">{children}</div>,
-        br: () => <br className="custom-linebreak" />, 
       }}
-      className='line-break'
     />
   );
 };
