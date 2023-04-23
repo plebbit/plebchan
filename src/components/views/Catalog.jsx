@@ -42,7 +42,7 @@ const Catalog = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'topAll'});
   const { subplebbitAddress } = useParams();
 
   const [errorMessage, setErrorMessage] = useState(null);

@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from './styled/ReplyModal.styled';
 import useGeneralStore from '../hooks/stores/useGeneralStore';
@@ -19,10 +18,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     selectedParentCid,
     selectedShortCid,
     selectedStyle,
-    selectedThread,
   } = useGeneralStore(state => state);
-
-  const navigate = useNavigate();
 
   const nodeRef = useRef(null);
 
@@ -70,15 +66,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   });
 
 
-  const { publishComment, index } = usePublishComment(publishCommentOptions);
-
-
-  useEffect(() => {
-    if (index !== undefined) {
-      navigate(`/p/${selectedAddress}/c/${selectedParentCid}`)
-      localStorage.setItem("toastMessage", `Comment pending with index ${index}.`);
-    }
-  }, [index]);
+  const { publishComment } = usePublishComment(publishCommentOptions);
 
   
   const resetFields = () => {
