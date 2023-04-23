@@ -14,7 +14,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     setIsCaptchaOpen,
     setPendingComment,
     setResolveCaptchaPromise,
-    selectedAddress,
     selectedParentCid,
     selectedShortCid,
     selectedStyle,
@@ -28,7 +27,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
-  
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
@@ -57,7 +55,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   
   const [publishCommentOptions, setPublishCommentOptions] = useState({
-    subplebbitAddress: selectedAddress,
+    subplebbitAddress: selectedParentCid,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
