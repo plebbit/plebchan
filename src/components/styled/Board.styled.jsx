@@ -2873,6 +2873,8 @@ export const BoardForm = styled.div`
   }}
 
   @media (max-width: 480px) {
+    margin-top: -5%;
+
     .thread {
       display: none;
     }
