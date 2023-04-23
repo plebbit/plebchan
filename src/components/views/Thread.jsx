@@ -13,6 +13,7 @@ import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
+import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
@@ -387,10 +388,10 @@ const Thread = () => {
                 <span className="reply-stat">No replies yet</span>
               )
             ) : (
-              <span className="reply-stat">Fetching IPNS...</span>
+              <span className="reply-stat">{formatState(comment.state)}</span>
             )
           ) : (
-            <span className="reply-stat">Fetching IPNS...</span>
+            <span className="reply-stat">{formatState(comment.state)}</span>
           )}
           <hr />
         </TopBar>

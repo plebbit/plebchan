@@ -15,7 +15,6 @@ import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
-import useSuccess from '../../hooks/useSuccess';
 
 
 const Catalog = () => {

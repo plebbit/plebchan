@@ -10,6 +10,7 @@ import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import SettingsModal from '../SettingsModal';
+import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -166,11 +167,7 @@ const Pending = () => {
             <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
             ]
           </span>
-          {comment ? (
-            <span className="reply-stat">Preview</span>
-          ) : (
-            <span className="reply-stat">Fetching IPFS...</span>
-          )}
+            <span className="reply-stat">{formatState(comment.state)}</span>
           <hr />
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
