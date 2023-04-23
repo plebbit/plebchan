@@ -223,7 +223,7 @@ const Thread = () => {
       <Helmet>
           <title>
             {(
-              (comment.content?.slice(0, 40)) + " - " 
+              (comment.content?.slice(0, 40) ?? comment.title?.slice(0, 40) ?? "Thread") + " - " 
               + (selectedTitle ? selectedTitle : selectedAddress) 
               + " - plebchan"
             )}
