@@ -746,6 +746,7 @@ const Thread = () => {
                   </div>
                   {comment.replyCount === undefined ? <PostLoader /> : null}
                   {renderedComments.map((reply, index) => {
+                    const replyMediaInfo = getCommentMediaInfo(reply);
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     return (
                     <div key={`${index}mob-rc-${index}`} className="reply-container">
@@ -804,6 +805,39 @@ const Thread = () => {
                             )}
                           </span>
                         </div>
+                        {reply.link ? (
+                            <div key={`mob-f-${reply.cid}`} className="file-mobile">
+                              <a key={`link-a-${reply.cid}`} href={replyMediaInfo?.url} target="_blank" rel="noopener noreferrer">
+                                {replyMediaInfo?.url ? (
+                                  replyMediaInfo.type === "webpage" ? (
+                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                        <img key={`mob-img-${reply.cid}`} src={reply.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                      </span>
+                                  ) : replyMediaInfo.type === "image" ? (
+                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                        <img key={`mob-img-${reply.cid}`} src={replyMediaInfo.url} alt={replyMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                      </span>
+                                  ) : replyMediaInfo.type === "video" ? (
+                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                          <video key={`fti-${reply.cid}`} 
+                                          src={replyMediaInfo.url} 
+                                          alt={replyMediaInfo.type} 
+                                          style={{ pointerEvents: "none" }}
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                      </span>
+                                  ) : replyMediaInfo.type === "audio" ? (
+                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                        <audio key={`mob-img-${reply.cid}`} src={replyMediaInfo.url} alt={replyMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                      </span>
+                                  ) : null
+                                ) : null}
+                              </a>
+                            </div>
+                          ) : null}
                         <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
                           <Link to={() => {}} key={`mob-ql-${index}`} className="quotelink-mobile" 
                           onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
