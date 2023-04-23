@@ -15,7 +15,6 @@ import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
-import useSuccess from '../../hooks/useSuccess';
 
 
 const Pending = () => {

@@ -193,7 +193,9 @@ export default function App() {
           <Route path='post' element={<Catalog />} />
           <Route path='settings' element={<Catalog />} />
         </Route>
-        <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} /> } />
+        <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} /> }>
+          <Route path='settings' element={<Pending />} />
+        </Route>
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>
       <StyledContainer />

@@ -132,13 +132,9 @@ const Home = () => {
         <div style={{
           textAlign: "center",
           fontSize: "11px",
-          marginBottom: "1em",
+          marginBottom: "2em",
         }}>
-          Plebchan is free and open-source software distributed under GPL-2.0 license.
-          <br />
-          <br />
-          <br />
-          v.0.1.0
+          Plebchan v.0.1.0 is free and open-source software distributed under GPL-2.0 license.
         </div>
       </Container>
     </>
