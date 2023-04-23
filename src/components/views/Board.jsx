@@ -120,6 +120,14 @@ const Board = () => {
       await comment.publishChallengeAnswers(challengeAnswers)
     }
   };
+
+  
+  useEffect(() => {
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      subplebbitAddress: selectedAddress,
+    }));
+  }, [selectedAddress]);
   
 
   const [publishCommentOptions, setPublishCommentOptions] = useState({

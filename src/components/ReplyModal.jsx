@@ -56,6 +56,14 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   };
 
   
+  useEffect(() => {
+    setPublishCommentOptions((prevPublishCommentOptions) => ({
+      ...prevPublishCommentOptions,
+      subplebbitAddress: selectedAddress,
+    }));
+  }, [selectedAddress]);
+  
+  
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: selectedAddress,
     onChallenge,
