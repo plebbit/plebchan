@@ -14,7 +14,7 @@ const getCommentMediaInfo = (comment) => {
     try {
       new URL(comment.link);
     } catch (error) {
-      console.error("Invalid URL:", comment.link);
+      // console.error("Invalid URL:", comment.link);
       return;
     }
 
