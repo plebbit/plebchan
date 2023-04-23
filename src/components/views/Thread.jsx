@@ -21,7 +21,6 @@ import handleStyleChange from '../../utils/handleStyleChange';
 import renderThreadComments from '../../utils/renderThreadComments';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
-import useSuccess from '../../hooks/useSuccess';
 
 
 const Thread = () => {
@@ -388,10 +387,10 @@ const Thread = () => {
                 <span className="reply-stat">No replies yet</span>
               )
             ) : (
-              <span className="reply-stat">Fetching IPFS...</span>
+              <span className="reply-stat">Fetching IPNS...</span>
             )
           ) : (
-            <span className="reply-stat">Fetching IPFS...</span>
+            <span className="reply-stat">Fetching IPNS...</span>
           )}
           <hr />
         </TopBar>
@@ -506,7 +505,9 @@ const Thread = () => {
                     </div>
                   </div>
                 </div>
-                {comment.replyCount === undefined ? <PostLoader /> : null}
+                {comment.state === "fetching-ipns" ? 
+                (null) : 
+                (comment.replyCount === undefined ? (<PostLoader />) : (null))}
                 {renderedComments.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
