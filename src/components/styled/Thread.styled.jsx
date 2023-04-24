@@ -2801,7 +2801,7 @@ export const Footer = styled.div`
     }
 
     #version {
-      margin-top: 25px;
+      margin-top: 13px;
     }
   }
 

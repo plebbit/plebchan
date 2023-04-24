@@ -990,20 +990,20 @@ const Board = () => {
             plebchan v0.1.0. GPL-2.0
           </div>
           <div className="footer-links"
-          style={{
-            textAlign: "center",
-            fontSize: "x-small",
-            fontFamily: "arial",
-            marginTop: "10px",
-            marginBottom: "15px",
-          }}>
-            <a href="https://plebbit.com" target="_blank" rel="noopener noreferrer">About</a>
+            style={{
+              textAlign: "center",
+              fontSize: "x-small",
+              fontFamily: "arial",
+              marginTop: "5px",
+              marginBottom: "15px",
+            }}>
+            <a style={{textDecoration: 'underline'}} href="https://plebbit.com" target="_blank" rel="noopener noreferrer">About</a>
             &nbsp;•&nbsp;  
-            <a href="https://github.com/plebbit" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a style={{textDecoration: 'underline'}} href="https://github.com/plebbit" target="_blank" rel="noopener noreferrer">GitHub</a>
             &nbsp;•&nbsp;
-            <a href="https://twitter.com/getplebbit" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a style={{textDecoration: 'underline'}} href="https://twitter.com/getplebbit" target="_blank" rel="noopener noreferrer">Twitter</a>
             &nbsp;•&nbsp;  
-            <a href="https://t.me/plebbit" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a style={{textDecoration: 'underline'}} href="https://t.me/plebbit" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </Footer>
       </Container>
