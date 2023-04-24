@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComment, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable } from '../styled/Board.styled';
@@ -32,8 +32,8 @@ const Thread = () => {
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     setResolveCaptchaPromise,
-    pendingComment, setPendingComment,
-    setPendingCommentIndex,
+    setPendingComment,
+    pendingCommentIndex, setPendingCommentIndex,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
@@ -62,6 +62,8 @@ const Thread = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+
+  const pendingComment = useAccountComment({commentIndex: pendingCommentIndex});
 
   const renderedComments = renderThreadComments(comment, pendingComment);
 
