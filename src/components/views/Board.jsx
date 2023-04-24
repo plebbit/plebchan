@@ -1001,9 +1001,9 @@ const Board = () => {
             }}>
             <a style={{textDecoration: 'underline'}} href="https://plebbit.com" target="_blank" rel="noopener noreferrer">About</a>
             &nbsp;•&nbsp;  
-            <a style={{textDecoration: 'underline'}} href="https://github.com/plebbit" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a style={{textDecoration: 'underline'}} href="https://github.com/plebbit/plebchan/releases/latest" target="_blank" rel="noopener noreferrer">App</a>
             &nbsp;•&nbsp;
-            <a style={{textDecoration: 'underline'}} href="https://twitter.com/getplebbit" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a style={{textDecoration: 'underline'}} href="https://twitter.com/plebchan_eth" target="_blank" rel="noopener noreferrer">Twitter</a>
             &nbsp;•&nbsp;  
             <a style={{textDecoration: 'underline'}} href="https://t.me/plebbit" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
