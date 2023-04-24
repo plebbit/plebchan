@@ -2784,3 +2784,118 @@ export const BoardForm = styled.div`
     }}
   }
 `;
+
+export const Footer = styled.div`
+  #version {
+    text-align: center;
+    font-size: 11px;
+    font-family: "arial";
+  }
+  @media (min-width: 480px) {
+    #break {
+      display: none;
+    }
+
+    hr {
+      margin-top: -10px;
+    }
+
+    #version {
+      margin-top: 25px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 60px;
+
+    .style-changer {
+      display: none;
+    }
+
+    #version {
+      margin-top: -2em;
+    }
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
+        .footer-links {
+          a {
+            color: #00e;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: red;
+          }
+        }`;
+
+      case 'Yotsuba-B':
+        return `
+        .footer-links {
+          a {
+            color: #34345c;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: #d00;
+          }
+        }`;
+
+      case 'Futaba':
+        return `
+        .footer-links {
+          a {
+            color: #00e;
+            text-decoration: underline;
+          }
+
+          a:hover {
+            color: red;
+          }
+        }`;
+
+      case 'Burichan':
+        return `
+        .footer-links {
+          a {
+            color: #34345c;
+            text-decoration: underline;
+          }
+
+          a:hover {
+            color: #d00;
+          }
+        }`;
+
+      case 'Tomorrow':
+        return `
+        .footer-links {
+          a {
+            color: #81a2be;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: #5f89ac;
+          }
+        }`;
+
+      case 'Photon':
+        return `
+        .footer-links {
+          a {
+            color: #f60;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: #f30;
+          }
+        }`;
+    }
+  }}
+`;

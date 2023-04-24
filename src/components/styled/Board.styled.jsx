@@ -7,6 +7,10 @@ export const Container = styled.div`
   margin-top: 5px;
   padding-left: 5px;
   padding-right: 5px;
+
+  .footer-links {
+    text-decoration: none;
+  }
 `;
 
 export const NavBar = styled.div`
@@ -1535,6 +1539,7 @@ export const TopBar = styled.div`
 
 export const BoardForm = styled.div`
   @media (min-width: 480px) {
+    margin-bottom: 25px;
     .thread-mobile {
       display: none;
     }

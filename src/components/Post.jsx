@@ -53,7 +53,7 @@ const createQuotelink = (handlequoteclick, comment, children) => {
 
 
 const Post = ({ content, handlequoteclick, comment }) => {
-  const doubleNewlineContent = content.replaceAll(/\n(?!\n)/g, '\n\n');
+  const doubleNewlineContent = content?.replaceAll(/\n(?!\n)/g, '\n\n');
   const sanitizedContent = DOMPurify.sanitize(doubleNewlineContent);
 
   return (

@@ -7,7 +7,7 @@ import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from '../styled/Board.styled';
 import { Threads } from '../styled/Catalog.styled';
-import { TopBar } from '../styled/Thread.styled';
+import { TopBar, Footer } from '../styled/Thread.styled';
 import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import SettingsModal from '../SettingsModal';
@@ -417,15 +417,78 @@ const Catalog = () => {
             </InfiniteScroll>
           )}
         </Threads>
+        <Footer selectedStyle={selectedStyle}>
+          <Break id="break" selectedStyle={selectedStyle} style={{
+            marginTop: "-36px",
+            width: "100%",
+          }} />
+          <Break selectedStyle={selectedStyle} style={{
+            width: "100%",
+          }} />
+          <span className="style-changer" style={{
+            float: "right",
+            marginTop: "2px",
+          }}>
+            Style:
+             
+            <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
+              <option value="Yotsuba">Yotsuba</option>
+              <option value="Yotsuba-B">Yotsuba B</option>
+              <option value="Futaba">Futaba</option>
+              <option value="Burichan">Burichan</option>
+              <option value="Tomorrow">Tomorrow</option>
+              <option value="Photon">Photon</option>
+            </select>
+          </span>
+          <NavBar selectedStyle={selectedStyle} style={{
+            marginTop: "42px",
+          }}>
+            <>
+              {defaultSubplebbits.map(subplebbit => (
+                <span className="boardList" key={`span-${subplebbit.address}`}>
+                  [
+                  <Link key={`a-${subplebbit.address}`} 
+                  to={`/p/${subplebbit.address}`} 
+                  onClick={() => {
+                    setSelectedTitle(subplebbit.title);
+                    setSelectedAddress(subplebbit.address);
+                  }}
+                  >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                  ]&nbsp;
+                </span>
+              ))}
+              <span className="nav">
+                [
+                <Link to={`/p/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                ]
+                [
+                <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+                )}>Home</Link>
+                ]
+              </span>
+            </>
+          </NavBar>
+          <div id="version">
+            plebchan v0.1.0. GPL-2.0
+          </div>
+          <div className="footer-links"
+          style={{
+            textAlign: "center",
+            fontSize: "x-small",
+            fontFamily: "arial",
+            marginTop: "10px",
+            marginBottom: "15px",
+          }}>
+            <a href="https://plebbit.com" target="_blank" rel="noopener noreferrer">About</a>
+            &nbsp;•&nbsp;  
+            <a href="https://github.com/plebbit" target="_blank" rel="noopener noreferrer">GitHub</a>
+            &nbsp;•&nbsp;
+            <a href="https://twitter.com/getplebbit" target="_blank" rel="noopener noreferrer">Twitter</a>
+            &nbsp;•&nbsp;  
+            <a href="https://t.me/plebbit" target="_blank" rel="noopener noreferrer">Telegram</a>
+          </div>
+        </Footer>
       </Container>
-      <div style={{
-          textAlign: "center",
-          fontSize: "11px",
-          marginTop: "2em",
-          marginBottom: "2em",
-        }}>
-          plebchan v0.1.0. GPL-2.0
-        </div>
     </>
   );
 }
