@@ -42,7 +42,7 @@
     "zustand": "4.3.6"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "electron": "yarn electron:before && electron .",
