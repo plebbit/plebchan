@@ -6,7 +6,7 @@
     "@babel/core": "^7.21.3",
     "@babel/plugin-syntax-flow": "^7.18.6",
     "@babel/plugin-transform-react-jsx": "^7.21.0",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#604eab550a9c480cee42bf414581c624ec316f27",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#97b538693972e26f7c0f0f13ec6afab03b0e2e57",
     "@testing-library/dom": "^9.0.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^14.0.0",

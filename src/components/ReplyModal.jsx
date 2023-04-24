@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from './styled/ReplyModal.styled';
 import useGeneralStore from '../hooks/stores/useGeneralStore';
@@ -13,6 +14,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     setChallengesArray,
     setIsCaptchaOpen,
     setPendingComment,
+    setPendingCommentIndex,
     setResolveCaptchaPromise,
     selectedAddress,
     selectedParentCid,
@@ -29,6 +31,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   
+  const location = useLocation();
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
@@ -74,7 +77,13 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   });
 
 
-  const { publishComment } = usePublishComment(publishCommentOptions);
+  const { publishComment, index } = usePublishComment(publishCommentOptions);
+
+  useEffect(() => {
+    if (index !== undefined) {
+      setPendingCommentIndex(index);
+    }
+  }, [index, location]);
 
   
   const resetFields = () => {

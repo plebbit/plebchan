@@ -25,6 +25,7 @@ const Catalog = () => {
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
+    setPendingCommentIndex,
     setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     selectedStyle,
@@ -127,6 +128,7 @@ const Catalog = () => {
 
   useEffect(() => {
     if (index !== undefined) {
+      setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
   }, [index]);

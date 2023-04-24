@@ -29,6 +29,9 @@ const useGeneralStore = create((set) => ({
   pendingComment: '',
   setPendingComment: (comment) => set({ pendingComment: comment }),
 
+  pendingCommentIndex: null,
+  setPendingCommentIndex: (index) => set({ pendingCommentIndex: index }),
+
   publishedComment: '',
   setPublishedComment: (comment) => set({ publishedComment: comment }),
 

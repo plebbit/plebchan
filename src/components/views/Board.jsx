@@ -32,6 +32,7 @@ const Board = () => {
     setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
+    setPendingCommentIndex,
     setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
@@ -145,6 +146,7 @@ const Board = () => {
 
   useEffect(() => {
     if (index !== undefined) {
+      setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
   }, [index]);

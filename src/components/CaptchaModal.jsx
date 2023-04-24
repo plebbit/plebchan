@@ -39,7 +39,6 @@ const CaptchaModal = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault();
       submitCaptcha();
     }
   };

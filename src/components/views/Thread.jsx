@@ -33,6 +33,7 @@ const Thread = () => {
     isSettingsOpen, setIsSettingsOpen,
     setResolveCaptchaPromise,
     pendingComment, setPendingComment,
+    setPendingCommentIndex,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
@@ -137,7 +138,7 @@ const Thread = () => {
 
   useEffect(() => {
     if (index !== undefined) {
-      window.scrollTo(0, document.body.scrollHeight);
+      setPendingCommentIndex(index);
     }
   }, [index]);
 
@@ -151,6 +152,10 @@ const Thread = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 100)
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
