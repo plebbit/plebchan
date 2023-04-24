@@ -70,7 +70,7 @@ jobs:
         with:
           node-version: 16
       - run: yarn install --frozen-lockfile
-      - run: setx CI "" yarn build
+      - run: setx CI "" && yarn build
       - run: yarn electron:build:windows
       - run: dir dist
 
