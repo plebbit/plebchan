@@ -16,6 +16,8 @@ import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
+import packageJson from '../../../package.json'
+const {version} = packageJson
 
 
 const Pending = () => {
@@ -381,7 +383,7 @@ const Pending = () => {
           marginTop: "2em",
           marginBottom: "2em",
         }}>
-          plebchan v0.1.0. GPL-2.0
+          plebchan v{version}. GPL-2.0
         </div>
       </Container>
     </>

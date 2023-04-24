@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
+import packageJson from '../../../package.json'
+const {version} = packageJson
 
 
 const Home = () => {
@@ -134,7 +136,7 @@ const Home = () => {
           fontSize: "11px",
           marginBottom: "2em",
         }}>
-          plebchan v0.1.0. GPL-2.0
+          plebchan v{version}. GPL-2.0
         </div>
       </Container>
     </>

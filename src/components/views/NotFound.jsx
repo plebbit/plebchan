@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link } from "react-router-dom";
 import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/Home.styled';
+import packageJson from '../../../package.json'
+const {version} = packageJson
 
 
 const NotFound = ({ setBodyStyle }) => {
@@ -48,7 +50,7 @@ const NotFound = ({ setBodyStyle }) => {
           fontSize: "11px",
           marginTop: "2em",
         }}>
-          plebchan v0.1.0. GPL-2.0
+          plebchan v{version}. GPL-2.0
         </div>
       </Container>
     </>

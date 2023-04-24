@@ -22,6 +22,8 @@ import handleStyleChange from '../../utils/handleStyleChange';
 import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
+import packageJson from '../../../package.json'
+const {version} = packageJson
 
 
 const Board = () => {
@@ -987,7 +989,7 @@ const Board = () => {
             </>
           </NavBar>
           <div id="version">
-            plebchan v0.1.0. GPL-2.0
+            plebchan v{version}. GPL-2.0
           </div>
           <div className="footer-links"
             style={{

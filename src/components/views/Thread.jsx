@@ -22,6 +22,8 @@ import handleStyleChange from '../../utils/handleStyleChange';
 import renderThreadComments from '../../utils/renderThreadComments';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
+import packageJson from '../../../package.json'
+const {version} = packageJson
 
 
 const Thread = () => {
@@ -1032,7 +1034,7 @@ const Thread = () => {
             </>
           </NavBar>
           <div id="version">
-            plebchan v0.1.0. GPL-2.0
+            plebchan v{version}. GPL-2.0
           </div>
           <div className="footer-links"
             style={{

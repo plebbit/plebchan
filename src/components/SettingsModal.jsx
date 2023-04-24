@@ -6,6 +6,9 @@ import { StyledModal } from "./styled/SettingsModal.styled";
 import useGeneralStore from "../hooks/stores/useGeneralStore";
 import useError from "../hooks/useError";
 import useSuccess from "../hooks/useSuccess";
+import packageJson from '../../package.json'
+const {version} = packageJson
+
 
 const customOverlayStyles = {
   overlay: {
@@ -158,7 +161,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       <div className="panel">
         <div className="panel-header">
           <span id="version">
-            v0.1.0
+            v{version}
           </span>
           Settings
           <Link to="" onClick={handleCloseModal}>
