@@ -39,6 +39,7 @@ const CaptchaModal = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
+      event.preventDefault();
       submitCaptcha();
     }
   };
@@ -54,10 +55,11 @@ const CaptchaModal = () => {
   const submitCaptcha = (callback) => {
     setCaptchaResponse(responseRef.current.value);
     setIsCaptchaOpen(false);
+
     if (callback) {
       callback(responseRef.current.value);
     }
-  };
+};
 
 
   return (

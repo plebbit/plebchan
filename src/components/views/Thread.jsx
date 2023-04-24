@@ -152,10 +152,6 @@ const Thread = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    setTimeout(() => {
-      window.scrollTo(0, document.body.scrollHeight);
-    }, 100)
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
