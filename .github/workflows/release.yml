@@ -22,7 +22,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       # make sure the ipfs executable is executable (linux only)
       - run: node electron/downloadIpfs && sudo chmod +x bin/linux/ipfs
-      - run: yarn build
+      - run: CI='' yarn build
       - run: yarn electron:build:linux
       - run: ls dist
 
@@ -46,7 +46,7 @@ jobs:
         with:
           node-version: 16
       - run: yarn install --frozen-lockfile
-      - run: yarn build
+      - run: CI='' yarn build
       - run: yarn electron:build:mac
       - run: ls dist
 
@@ -70,7 +70,7 @@ jobs:
         with:
           node-version: 16
       - run: yarn install --frozen-lockfile
-      - run: yarn build
+      - run: set CI='' && yarn build
       - run: yarn electron:build:windows
       - run: dir dist
 
@@ -103,7 +103,7 @@ jobs:
 
   #     # build react app
   #     - run: yarn install --frozen-lockfile
-  #     - run: yarn build
+  #     - run: CI='' yarn build
   #     # build apk
   #     - run: npx cap update
   #     - run: npx cap copy
