@@ -4,6 +4,13 @@ import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 import { HashRouter } from 'react-router-dom';
 
+import PlebbitJs from '@plebbit/plebbit-js';
+// inject native functions into renderer
+// https://github.com/plebbit/plebbit-js/blob/master/docs/cross-platform-native-functions.md
+if (window.plebbitJsNativeFunctions) {
+  PlebbitJs.setNativeFunctions(window.plebbitJsNativeFunctions);
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
