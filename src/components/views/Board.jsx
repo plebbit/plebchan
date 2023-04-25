@@ -537,7 +537,7 @@ const Board = () => {
                             <span key={`dt-${thread.cid}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
                             &nbsp;
                             <span key={`pn-${thread.cid}`} className="post-number post-number-desktop">
-                              <Link to={() => {}} key={`pl1-${thread.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                              <Link to={() => {}} key={`pl1-${thread.cid}`} title="Link to this post">c/</Link>
                               <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${thread.cid}`} 
                               onClick={(e) => {
                                 if (e.button === 2) return;
@@ -650,7 +650,7 @@ const Board = () => {
                               <span key={`dt-${reply.cid}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                               &nbsp;
                               <span key={`pn-${reply.cid}`} className="post-number post-number-desktop">
-                                <Link to={() => {}} key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                                <Link to={() => {}} key={`pl1-${reply.cid}`} title="Link to this post">c/</Link>
                                 {reply.shortCid ? (
                                   <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${reply.cid}`} 
                                   onClick={(e) => {
@@ -664,7 +664,7 @@ const Board = () => {
                                   <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                                 )}
                               </span>&nbsp;
-                              <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
+                              <button key={`pmb-${reply.cid}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                               <div id="backlink-id" className="backlink">
                                 {reply.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
@@ -758,7 +758,7 @@ const Board = () => {
                     <div key={`mob-c-${thread.cid}`} className="op-container">
                       <div key={`mob-po-${thread.cid}`} className="post op op-mobile">
                         <div key={`mob-pi-${thread.cid}`} className="post-info-mobile">
-                          <button key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" onClick={() => {}} style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                          <button key={`mob-pb-${thread.cid}`} className="post-menu-button-mobile" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                           <span key={`mob-nbm-${thread.cid}`} className="name-block-mobile">
                             {thread.author.displayName
                             ? thread.author.displayName.length > 15
@@ -804,7 +804,7 @@ const Board = () => {
                           <span key={`mob-dt-${thread.cid}`} className="date-time-mobile post-number-mobile">
                             {getDate(thread.timestamp)}
                             &nbsp;
-                            <Link to={() => {}} key={`mob-no-${thread.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                            <Link to={() => {}} key={`mob-no-${thread.cid}`} title="Link to this post">c/</Link>
                             <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-no2-${thread.cid}`} 
                               onClick={(e) => {
                                 if (e.button === 2) return;
@@ -930,7 +930,7 @@ const Board = () => {
                             </span>
                             <span key={`mob-dt-${reply.cid}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply.timestamp)}&nbsp;
-                              <Link to={() => {}} key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
+                              <Link to={() => {}} key={`mob-pl1-${reply.cid}`} title="Link to this post">c/</Link>
                               {reply.shortCid ? (
                                 <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${reply.cid}`} 
                                   onClick={(e) => {

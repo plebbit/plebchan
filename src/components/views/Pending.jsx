@@ -258,10 +258,10 @@ const Pending = () => {
                         <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                         &nbsp;
                         <span className="post-number">
-                          <Link to="" onClick={() => {}} title="Link to this post">c/</Link>
+                          <Link to="" title="Link to this post">c/</Link>
                           <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                         </span>&nbsp;&nbsp;
-                        <button key={`pmb-${"pending"}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
+                        <button key={`pmb-${"pending"}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                       </span>
                       <blockquote key={`blockquote-${"pending"}`}>
                         <Post content={comment.content} comment={comment} handleQuoteClick={handleQuoteClick} key={`post-${"pending"}`} />

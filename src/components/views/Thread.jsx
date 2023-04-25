@@ -515,12 +515,12 @@ const Thread = () => {
                         <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                         &nbsp;
                         <span className="post-number post-number-desktop">
-                          <Link to={() => {}} onClick={() => {}} title="Link to this post">c/</Link>
+                          <Link to={() => {}} title="Link to this post">c/</Link>
                           <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => {
                             setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
                             }} title="Reply to this post">{comment.shortCid}</button>
                         </span>&nbsp;&nbsp;
-                        <button key={`pmb-${comment.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
+                        <button key={`pmb-${comment.cid}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                         <div id="backlink-id" className="backlink">
                           {comment?.replies?.pages?.topAll.comments
                             .sort((a, b) => a.timestamp - b.timestamp)
@@ -598,7 +598,7 @@ const Thread = () => {
                             <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
                             &nbsp;
                             <span key={`pn-${index}`} className="post-number post-number-desktop">
-                              <Link to={() => {}} key={`pl1-${index}`} onClick={() => {}} title="Link to this post">c/</Link>
+                              <Link to={() => {}} key={`pl1-${index}`} title="Link to this post">c/</Link>
                               {reply.shortCid ? (
                                 <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${index}`} onClick={() => {
                                   setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
@@ -607,7 +607,7 @@ const Thread = () => {
                                 <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                               )}
                             </span>&nbsp;
-                            <button key={`pmb-${index}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
+                            <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>▶</button>
                             <div id="backlink-id" className="backlink">
                               {reply.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
@@ -737,7 +737,7 @@ const Thread = () => {
                           <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={() => {
                             setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
                             }} title="Link to this post">c/</button>
-                          <Link to={() => {}} key={`mob-no2-${comment.cid}`} onClick={() => {}} title="Reply to this post">{comment.shortCid}</Link>
+                          <Link to={() => {}} key={`mob-no2-${comment.cid}`} title="Reply to this post">{comment.shortCid}</Link>
                         </span>
                       </div>
                       {commentMediaInfo?.url ? (
@@ -831,7 +831,7 @@ const Thread = () => {
                           </span>
                           <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply?.timestamp)}&nbsp;
-                            <Link to={() => {}} key={`mob-pl1-${index}`} onClick={() => {}} title="Link to this post">c/</Link>
+                            <Link to={() => {}} key={`mob-pl1-${index}`} title="Link to this post">c/</Link>
                             {reply.shortCid ? (
                               <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${index}`} onClick={() => {
                                 setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
