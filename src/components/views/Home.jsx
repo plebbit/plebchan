@@ -74,7 +74,7 @@ const Home = () => {
               <div id="content">
                 <p>Plebchan is a serverless, adminless, decentralized 4chan alternative that uses the <a href="https://plebbit.com" target="_blank" rel="noreferrer">plebbit protocol</a>. Users do not need to register an account before participating in the community; anyone can post comments, share media links, and create a board. Search for any board address above, or feel free to click on a popular board below that interests you and jump right in! </p>
                 <br />
-                <p>There are no global rules, each board is completely independent and their owners decide how they should be moderated.</p>
+                <p>There are no global rules, each board is completely independent and its owner decides how it should be moderated.</p>
               </div>
             </AboutContent>
           </About>
