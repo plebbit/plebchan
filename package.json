@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "3.6.0",
+    "@capacitor/core": "3.6.0",
     "@babel/core": "7.21.3",
     "@babel/plugin-syntax-flow": "7.18.6",
     "@babel/plugin-transform-react-jsx": "7.21.0",
@@ -54,7 +56,8 @@
     "electron:build:mac": "electron-builder build --publish never -m",
     "electron:before": "yarn electron:before:download-ipfs && yarn electron:before:delete-data",
     "electron:before:download-ipfs": "node electron/downloadIpfs",
-    "electron:before:delete-data": "rimraf .plebbit"
+    "electron:before:delete-data": "rimraf .plebbit",
+    "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#ffffff'"
   },
   "eslintConfig": {
     "extends": [
@@ -118,7 +121,9 @@
     "electron": "19.0.1",
     "electron-builder": "23.0.9",
     "typescript": "5.0.2",
-    "wait-on": "7.0.1"
+    "wait-on": "7.0.1",
+    "cordova-res": "0.15.4",
+    "@capacitor/cli": "3.6.0"
   },
   "resolutions": {
     "styled-components": "^5"
