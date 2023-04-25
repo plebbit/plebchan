@@ -42,8 +42,8 @@
     "zustand": "4.3.6"
   },
   "scripts": {
-    "start": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "electron": "yarn electron:before && electron .",
     "electron:no-delete-data": "yarn electron:before:download-ipfs && electron .",
