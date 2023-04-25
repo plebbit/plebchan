@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react';
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from '../styled/Board.styled';
@@ -19,7 +20,6 @@ import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
-import renderComments from '../../utils/renderComments';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import packageJson from '../../../package.json'
@@ -61,6 +61,62 @@ const Board = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+
+  const account = useAccount();
+
+
+  const flattenedRepliesByThread = useMemo(() => {
+    return selectedFeed.reduce((acc, thread) => {
+      const replies = flattenCommentsPages(thread.replies);
+      acc[thread.cid] = replies;
+      return acc;
+    }, {});
+  }, [selectedFeed]);
+  
+
+  const allParentCids = useMemo(() => {
+    const allRepliesCids = Object.values(flattenedRepliesByThread).flatMap(replies => replies.map(reply => reply.cid));
+    const allThreadCids = selectedFeed.map(thread => thread.cid);
+    return [...allThreadCids, ...allRepliesCids];
+  }, [flattenedRepliesByThread, selectedFeed]);  
+  
+
+  const filter = useMemo(() => ({
+    parentCids: allParentCids
+  }), [allParentCids]);
+  
+
+  const { accountComments } = useAccountComments({ filter });
+  
+
+  const filteredRepliesByThread = useMemo(() => {
+    const maxRepliesPerThread = 5;
+
+    const accountRepliesNotYetInCommentReplies = selectedFeed.reduce((acc, thread) => {
+      const replyCids = new Set(flattenedRepliesByThread[thread.cid].map(reply => reply.cid));
+      acc[thread.cid] = accountComments.filter(accountReply => !replyCids.has(accountReply.cid) && accountReply.parentCid === thread.cid);
+      return acc;
+    }, {});
+
+    return selectedFeed.reduce((acc, thread) => {
+      const combinedReplies = [...flattenedRepliesByThread[thread.cid], ...accountRepliesNotYetInCommentReplies[thread.cid]].sort((a, b) => a.timestamp - b.timestamp);
+      acc[thread.cid] = {
+        displayedReplies: combinedReplies.slice(0, maxRepliesPerThread),
+        omittedCount: Math.max(combinedReplies.length - maxRepliesPerThread, 0),
+      };
+      return acc;
+    }, {});
+  }, [flattenedRepliesByThread, accountComments, selectedFeed]);
+
+
+  const pendingReplyCounts = useMemo(() => {
+    return selectedFeed.reduce((acc, thread) => {
+      const replyCids = new Set(flattenedRepliesByThread[thread.cid].map(reply => reply.cid));
+      acc[thread.cid] = accountComments.filter(accountReply => !replyCids.has(accountReply.cid) && accountReply.parentCid === thread.cid).length;
+      return acc;
+    }, {});
+  }, [flattenedRepliesByThread, accountComments, selectedFeed]);
+  
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
@@ -396,8 +452,8 @@ const Board = () => {
                 hasMore={hasMore}
               >
                 {selectedFeed.map((thread) => {
-                const { replies: { pages: { topAll: { comments } = {} } = {} } = {} } = thread;
-                const { renderedComments, omittedCount } = renderComments(comments);
+                const { replies: { pages: { topAll: {} = {} } = {} } = {} } = thread;
+                const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                 const commentMediaInfo = getCommentMediaInfo(thread);
                 const fallbackImgUrl = "/assets/filedeleted-res.gif";
                 return (
@@ -542,7 +598,7 @@ const Board = () => {
                         </span>
                       </span>) : null}
                     </span>
-                    {renderedComments?.map((reply) => {
+                    {displayedReplies?.map((reply) => {
                       const replyMediaInfo = getCommentMediaInfo(reply);
                       const fallbackImgUrl = "/assets/filedeleted-res.gif";
                       const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
@@ -572,9 +628,21 @@ const Board = () => {
                                   onClick={() => handleAddressClick(reply.author.shortAddress)}
                                 >
                                   (u/
-                                    <span key={`mob-ha-${reply.cid}`}>
-                                      {reply.author.shortAddress}
-                                    </span>
+                                    {reply.author?.shortAddress ?
+                                      (
+                                        <span key={`mob-ha-${reply.cid}`}>
+                                          {reply.author?.shortAddress}
+                                        </span>
+                                      ) : (
+                                        <span key={`mob-ha-${reply.cid}`}
+                                          data-tooltip-id="tooltip"
+                                          data-tooltip-content={account?.author?.address}
+                                          data-tooltip-place="top"
+                                        >
+                                          {account?.author?.address.slice(0, 10) + "(...)"}
+                                        </span>
+                                      )
+                                    }
                                   )
                                 </span>
                               </span>
@@ -583,14 +651,18 @@ const Board = () => {
                               &nbsp;
                               <span key={`pn-${reply.cid}`} className="post-number post-number-desktop">
                                 <Link to={() => {}} key={`pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
-                                <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${reply.cid}`} 
-                                onClick={(e) => {
-                                  if (e.button === 2) return;
-                                  e.preventDefault();
-                                  setIsReplyOpen(true); 
-                                  setSelectedShortCid(reply.shortCid); 
-                                  setSelectedParentCid(reply.cid);
-                                }} title="Reply to this post">{reply.shortCid}</Link>
+                                {reply.shortCid ? (
+                                  <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${reply.cid}`} 
+                                  onClick={(e) => {
+                                    if (e.button === 2) return;
+                                    e.preventDefault();
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(reply.shortCid); 
+                                    setSelectedParentCid(reply.cid);
+                                  }} title="Reply to this post">{reply.shortCid}</Link>
+                                ) : (
+                                  <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
+                                )}
                               </span>&nbsp;
                               <button key={`pmb-${reply.cid}`} className="post-menu-button" onClick={() => {}} title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                               <div id="backlink-id" className="backlink">
@@ -797,18 +869,18 @@ const Board = () => {
                       </div>
                       <div key={`mob-pl-${thread.cid}`} className="post-link-mobile">
                         <span key={`mob-info-${thread.cid}`} className="info-mobile">{
-                        thread.replyCount === 0 ?
+                        (thread.replyCount + pendingReplyCounts[thread.cid]) === 0 ?
                         ("No replies")
-                        : thread.replyCount === 1 ?
+                        : (thread.replyCount + pendingReplyCounts[thread.cid]) === 1 ?
                         ("1 reply")
-                        : thread.replyCount > 1 ?
-                        (thread.replyCount + " replies")
+                        : (thread.replyCount + pendingReplyCounts[thread.cid]) > 1 ?
+                        ((thread.replyCount + pendingReplyCounts[thread.cid]) + " replies")
                         : null
                         }</span>
                         <Link key={`rl2-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
                       </div>
                     </div>
-                    {renderedComments?.map((reply) => {
+                    {displayedReplies?.map((reply) => {
                       const replyMediaInfo = getCommentMediaInfo(reply);
                       const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                       return (
@@ -837,9 +909,21 @@ const Board = () => {
                                 onClick={() => handleAddressClick(reply.author.shortAddress)}
                               >
                                 (u/
-                                <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
-                                  {reply.author.shortAddress}
-                                </span>
+                                  {reply.author?.shortAddress ?
+                                    (
+                                    <span key={`mob-ha-${reply.cid}`} className="highlight-address-mobile">
+                                      {reply.author?.shortAddress}
+                                    </span>
+                                    ) : (
+                                      <span key={`mob-ha-${reply.cid}`} 
+                                        data-tooltip-id="tooltip"
+                                        data-tooltip-content={account?.author?.address}
+                                        data-tooltip-place="top"
+                                          >
+                                        {account?.author?.address.slice(0, 8) + "(...)"}
+                                      </span>
+                                    )
+                                  }
                                 )&nbsp;
                               </span>
                               <br key={`mob-br-${reply.cid}`} />
@@ -847,15 +931,19 @@ const Board = () => {
                             <span key={`mob-dt-${reply.cid}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply.timestamp)}&nbsp;
                               <Link to={() => {}} key={`mob-pl1-${reply.cid}`} onClick={() => {}} title="Link to this post">c/</Link>
-                              <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${reply.cid}`} 
-                                onClick={(e) => {
-                                  if (e.button === 2) return;
-                                  e.preventDefault();
-                                  setIsReplyOpen(true); 
-                                  setSelectedShortCid(reply.shortCid); 
-                                  setSelectedParentCid(reply.cid);
-                                }} title="Reply to this post">{reply.shortCid}
-                              </Link>
+                              {reply.shortCid ? (
+                                <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${reply.cid}`} 
+                                  onClick={(e) => {
+                                    if (e.button === 2) return;
+                                    e.preventDefault();
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(reply.shortCid); 
+                                    setSelectedParentCid(reply.cid);
+                                  }} title="Reply to this post">{reply.shortCid}
+                                </Link>
+                              ) : (
+                                <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span> 
+                              )}
                             </span>
                           </div>
                           {reply.link ? (

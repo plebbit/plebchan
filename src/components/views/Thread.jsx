@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useAccountComment, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable } from '../styled/Board.styled';
@@ -19,7 +20,6 @@ import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
-import renderThreadComments from '../../utils/renderThreadComments';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import packageJson from '../../../package.json'
@@ -35,7 +35,7 @@ const Thread = () => {
     isSettingsOpen, setIsSettingsOpen,
     setResolveCaptchaPromise,
     setPendingComment,
-    pendingCommentIndex, setPendingCommentIndex,
+    setPendingCommentIndex,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
@@ -65,9 +65,32 @@ const Thread = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
 
-  const pendingComment = useAccountComment({commentIndex: pendingCommentIndex});
 
-  const renderedComments = renderThreadComments(comment, pendingComment);
+  const flattenedReplies = useMemo(() => 
+    flattenCommentsPages(comment.replies), [comment.replies]
+  );
+
+
+  const filter = useMemo(() => ({
+    parentCids: [
+      selectedThread || 'n/a', ...flattenedReplies.map(reply => reply.cid)
+    ]
+  }), [flattenedReplies]);
+
+
+  const { accountComments } = useAccountComments({filter});
+
+
+  const accountRepliesNotYetInCommentReplies = useMemo(() => {
+    const commentReplyCids = new Set(flattenedReplies.map(reply => reply.cid))
+    return accountComments.filter(accountReply => !commentReplyCids.has(accountReply.cid))
+  }, [flattenedReplies, accountComments]);
+
+
+  const sortedReplies = useMemo(() => [
+    ...accountRepliesNotYetInCommentReplies, ...flattenedReplies
+    ].sort((a, b) => a.timestamp - b.timestamp
+  ), [accountRepliesNotYetInCommentReplies, flattenedReplies]);
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
@@ -522,7 +545,7 @@ const Thread = () => {
                 {comment.state === "fetching-ipns" ? 
                 (null) : 
                 (comment.replyCount === undefined ? (<PostLoader />) : (null))}
-                {renderedComments.map((reply, index) => {
+                {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
@@ -758,7 +781,7 @@ const Thread = () => {
                     </div>
                   </div>
                   {comment.replyCount === undefined ? <PostLoader /> : null}
-                  {renderedComments.map((reply, index) => {
+                  {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     return (
@@ -798,7 +821,7 @@ const Thread = () => {
                                       data-tooltip-content={account?.author?.address}
                                       data-tooltip-place="top"
                                         >
-                                      {account?.author?.address.slice(0, 6) + "(...)"}
+                                      {account?.author?.address.slice(0, 8) + "(...)"}
                                     </span>
                                   )
                                 }
