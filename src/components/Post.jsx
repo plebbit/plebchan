@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
-import DOMPurify from 'dompurify';
+import rehypeSanitize from 'rehype-sanitize';
 import breaks from 'remark-breaks';
 
 
@@ -54,12 +54,12 @@ const createQuotelink = (handlequoteclick, comment, children) => {
 
 const Post = ({ content, handlequoteclick, comment }) => {
   const doubleNewlineContent = content?.replaceAll(/\n(?!\n)/g, '\n\n');
-  const sanitizedContent = DOMPurify.sanitize(doubleNewlineContent);
 
   return (
     <ReactMarkdown
-      children={sanitizedContent}
+      children={doubleNewlineContent}
       remarkPlugins={[blockquoteToGreentext, breaks]}
+      rehypePlugins={[rehypeSanitize]}
       components={{
         img: () => null,
         video: () => null,
