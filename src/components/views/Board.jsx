@@ -211,10 +211,18 @@ const Board = () => {
 
   
   const resetFields = () => {
-    nameRef.current.value = '';
-    subjectRef.current.value = '';
-    commentRef.current.value = '';
-    linkRef.current.value = '';
+    if (nameRef.current) {
+      nameRef.current.value = '';
+    }
+    if (subjectRef.current) {
+      subjectRef.current.value = '';
+    }
+    if (commentRef.current) {
+      commentRef.current.value = '';
+    }
+    if (linkRef.current) {
+      linkRef.current.value = '';
+    }
   };
 
 

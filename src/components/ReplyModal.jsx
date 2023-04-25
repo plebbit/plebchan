@@ -87,9 +87,15 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   
   const resetFields = () => {
-    nameRef.current.value = '';
-    commentRef.current.value = '';
-    linkRef.current.value = '';
+    if (nameRef.current) {
+      nameRef.current.value = '';
+    }
+    if (commentRef.current) {
+      commentRef.current.value = '';
+    }
+    if (linkRef.current) {
+      linkRef.current.value = '';
+    }
   };
 
 
