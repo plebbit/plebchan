@@ -364,7 +364,9 @@ export const StyledModal = styled(Modal)`
             color: #f30 !important;
           }
         }`;
-      
-    }
+        
+        default:
+          return '';
+      }
   }}
 `;

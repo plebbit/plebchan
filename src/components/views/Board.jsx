@@ -207,7 +207,7 @@ const Board = () => {
       setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
-  }, [index]);
+  }, [index, navigate, setPendingCommentIndex]);
 
   
   const resetFields = () => {
@@ -240,7 +240,7 @@ const Board = () => {
         resetFields();
       })();
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, publishComment]);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -369,12 +369,12 @@ const Board = () => {
         <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
           <div id="post-form-link-desktop">
               [
-                <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+                <a href={() => {}} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
               ]
             </div>
             <div id="post-form-link-mobile">
               <span className="btn-wrap">
-                <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+                <a href={() => {}} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
               </span>
             </div>
           </PostFormLink>
@@ -452,7 +452,6 @@ const Board = () => {
                 hasMore={hasMore}
               >
                 {selectedFeed.map((thread) => {
-                const { replies: { pages: { topAll: {} = {} } = {} } = {} } = thread;
                 const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                 const commentMediaInfo = getCommentMediaInfo(thread);
                 const fallbackImgUrl = "/assets/filedeleted-res.gif";

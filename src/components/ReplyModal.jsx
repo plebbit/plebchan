@@ -83,7 +83,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     if (index !== undefined) {
       setPendingCommentIndex(index);
     }
-  }, [index, location]);
+  }, [index, location, setPendingCommentIndex]);
 
   
   const resetFields = () => {
@@ -116,7 +116,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
         closeModal();
       })();
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, closeModal, publishComment]);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import rehypeSanitize from 'rehype-sanitize';
 import breaks from 'remark-breaks';
 
@@ -28,28 +28,28 @@ const blockquoteToGreentext = () => (tree) => {
   });
 };
 
-const createQuotelink = (handlequoteclick, comment, children) => {
-  const text = children.map((child) => (typeof child === 'string' ? child : child.props.children)).join('');
-  const regex = /(\s|^)(c\/[A-Za-z0-9]{12}|c\/[A-Za-z0-9]{45})(?=\s|$)/g;
-  const parts = text.split(regex);
+// const createQuotelink = (handlequoteclick, comment, children) => {
+//   const text = children.map((child) => (typeof child === 'string' ? child : child.props.children)).join('');
+//   const regex = /(\s|^)(c\/[A-Za-z0-9]{12}|c\/[A-Za-z0-9]{45})(?=\s|$)/g;
+//   const parts = text.split(regex);
 
-  return parts.flatMap((part, i) => {
-    if (regex.test(part)) {
-      return [
-        <Link
-          key={`link-${i}`}
-          className="quotelink"
-          to=""
-          onClick={handlequoteclick}
-        >
-          {part.trim()}
-        </Link>,
-      ];
-    } else {
-      return [part];
-    }
-  });
-};
+//   return parts.flatMap((part, i) => {
+//     if (regex.test(part)) {
+//       return [
+//         <Link
+//           key={`link-${i}`}
+//           className="quotelink"
+//           to=""
+//           onClick={handlequoteclick}
+//         >
+//           {part.trim()}
+//         </Link>,
+//       ];
+//     } else {
+//       return [part];
+//     }
+//   });
+// };
 
 
 const Post = ({ content, handlequoteclick, comment }) => {

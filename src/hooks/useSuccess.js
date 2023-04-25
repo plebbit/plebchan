@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-const useSuccess = (message, deps) => {
+const useSuccess = (message) => {
   useEffect(() => {
     if (message) {
       const toastId = toast.success(message.toString(), {
@@ -19,7 +19,7 @@ const useSuccess = (message, deps) => {
         toast.dismiss(toastId);
       };
     }
-  }, deps);
+  }, [message]);
 };
 
 export default useSuccess;

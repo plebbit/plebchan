@@ -133,7 +133,7 @@ const Catalog = () => {
       setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
-  }, [index]);
+  }, [index, navigate, setPendingCommentIndex]);
 
   
   const resetFields = () => {
@@ -166,7 +166,7 @@ const Catalog = () => {
         resetFields();
       })();
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, publishComment]);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -284,12 +284,12 @@ const Catalog = () => {
           <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
             <div id="post-form-link-desktop">
               [
-                <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+                <a href={() => {}} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
               ]
             </div>
             <div id="post-form-link-mobile">
               <span className="btn-wrap">
-                <a onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+                <a href={() => {}} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
               </span>
             </div>
           </PostFormLink>

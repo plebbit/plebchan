@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-const useError = (message, deps) => {
+const useError = (message) => {
   useEffect(() => {
     if (message) {
       const toastId = toast.error(message.toString(), {
@@ -19,7 +19,7 @@ const useError = (message, deps) => {
         toast.dismiss(toastId);
       };
     }
-  }, deps);
+  }, [message]);
 };
 
 export default useError;

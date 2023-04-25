@@ -184,7 +184,8 @@ const Pending = () => {
                         <div key={`f-${"pending"}`} className="file" style={{marginBottom: "5px"}}>
                           <div key={`ft-${"pending"}`} className="file-text">
                             Link:&nbsp;
-                            <a key={`fa-${"pending"}`} href={commentMediaInfo.url} target="_blank">{
+                            <a key={`fa-${"pending"}`} href={commentMediaInfo.url} 
+                            target="_blank" rel="noreferrer">{
                             commentMediaInfo?.url.length > 30 ?
                             commentMediaInfo?.url.slice(0, 30) + "(...)" :
                             commentMediaInfo?.url

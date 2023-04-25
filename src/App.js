@@ -125,7 +125,7 @@ export default function App() {
     return () => {
       darkModeMediaQuery.removeEventListener('change', darkModeListener);
     };
-  }, [isHomeRoute]);
+  }, [isHomeRoute, setBodyStyle, setSelectedStyle]);
   
   // fetch default subplebbits
   useEffect(() => {
@@ -143,7 +143,7 @@ export default function App() {
     return () => {
       didCancel = true;
     };
-  }, []);
+  }, [setDefaultSubplebbits]);
 
   // handle nested routes
   useEffect(() => {
@@ -162,7 +162,7 @@ export default function App() {
       setIsSettingsOpen(false);
     }
     
-  }, [location.pathname]);
+  }, [location.pathname, setIsSettingsOpen, setShowPostForm, setShowPostFormLink]);
 
   return (
   <div>

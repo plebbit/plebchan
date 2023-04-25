@@ -220,7 +220,10 @@ export const NavBar = styled.div`
           background-color: #ddd;
           border-bottom: 2px solid #ccc;
         }`;
-  }
+        
+        default:
+          return '';
+      }
   }}`;
 
 export const Header = styled.div`
@@ -410,7 +413,10 @@ export const Header = styled.div`
           margin-top: 5px;
           font-size: 9pt;
         }`;
-    }
+        
+        default:
+          return '';
+      }
   }}
 `;
 
@@ -445,8 +451,11 @@ export const Break = styled.hr`
         return `width: 90%;
         border: none;
         border-top: 1px solid #ddd;
-        height: 0;`;      
-    }
+        height: 0;`;
+        
+        default:
+          return '';
+      }
   }}
 `;
 
@@ -600,7 +609,9 @@ export const PostFormLink = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
-      
+        
+        default:
+          return '';
       }
     }}
 `;
@@ -1123,7 +1134,10 @@ export const PostFormTable = styled.table`
           width: 100%
         }
       }`;
-    }
+        
+        default:
+          return '';
+      }
   }}
 
   #t-help {
@@ -1224,8 +1238,10 @@ export const PostForm = styled.div`
       a:hover {
         color: #ff3300;
       }`;
-      
-    }
+        
+        default:
+          return '';
+      }
   }}
 `;
 
@@ -1369,8 +1385,10 @@ export const TopBar = styled.div`
         a:hover {
           color: #ff3300;
         }`;
-      
-    }
+        
+        default:
+          return '';
+      }
   }}
 
   @media (min-width: 480px) {
@@ -1533,6 +1551,9 @@ export const TopBar = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
+        
+        default:
+          return '';
       }
     }}
 `;
@@ -1598,8 +1619,10 @@ export const BoardForm = styled.div`
         background-color: #ccc !important;
         border: 1px solid #ccc !important;
       }`;
-      
-    }
+        
+        default:
+          return '';
+      }
     }}
   }
   
@@ -2873,8 +2896,10 @@ export const BoardForm = styled.div`
         border-top: 1px solid #ddd;
         height: 0;
       }`;
-      
-    }
+        
+        default:
+          return '';
+      }
   }}
 
   @media (max-width: 480px) {
@@ -2934,6 +2959,9 @@ export const BoardForm = styled.div`
           return `.highlighted {
           background-color: #ccc !important;
         }`;
+        
+        default:
+          return '';
       }
     }}
 
@@ -3635,6 +3663,9 @@ export const BoardForm = styled.div`
               }
             }
           }`;
+        
+        default:
+          return '';
       }
     }}
   }

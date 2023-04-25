@@ -164,6 +164,9 @@ export const ReplyFormLink = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
+      
+      default:
+        return '';
       }
     }}
 `;
@@ -386,7 +389,8 @@ export const TopBar = styled.div`
             color: #ff3300 !important;
           }
         }`;
-      
+      default:
+        return '';
     }
   }}
 
@@ -514,7 +518,9 @@ export const TopBar = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
-      
+        
+        default:
+          return '';
       }
     }}
 `;
@@ -678,7 +684,9 @@ export const BottomBar = styled.div`
           padding-bottom: 5px;
           padding-top: 5px;
         }`;
-      
+
+      default:
+        return '';
     }
   }}
 `;
@@ -735,16 +743,17 @@ export const BoardForm = styled.div`
         return `.highlighted {
         background-color: #1d1d21 !important;
         border: 1px solid #111 !important;
-      }
-`;
+      }`;
 
       case 'Photon':
         return `.highlighted {
         background-color: #ccc !important;
         border: 1px solid #ccc !important;
       }`;
-      
-    }
+
+        default:
+          return '';
+      }
     }}
   }
   
@@ -2018,7 +2027,9 @@ export const BoardForm = styled.div`
         border-top: 1px solid #ddd;
         height: 0;
       }`;
-      
+
+      default:
+        return '';
     }
   }}
 
@@ -2079,7 +2090,10 @@ export const BoardForm = styled.div`
           return `.highlighted {
           background-color: #ccc !important;
         }`;
-      }
+        
+      default:
+        return '';
+    }
     }}
 
     ${({ selectedStyle }) => {
@@ -2780,6 +2794,9 @@ export const BoardForm = styled.div`
               }
             }
           }`;
+        
+        default:
+          return '';
       }
     }}
   }
@@ -2896,6 +2913,9 @@ export const Footer = styled.div`
             color: #f30;
           }
         }`;
-    }
+        
+        default:
+          return '';
+      }
   }}
 `;

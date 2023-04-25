@@ -236,6 +236,9 @@ export const StyledModal = styled(Modal)`
         span {
           color: #333;
         }`; 
-    }
+        
+        default:
+          return '';
+      }
   }}
 `;

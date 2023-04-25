@@ -75,7 +75,7 @@ const Thread = () => {
     parentCids: [
       selectedThread || 'n/a', ...flattenedReplies.map(reply => reply.cid)
     ]
-  }), [flattenedReplies]);
+  }), [flattenedReplies, selectedThread]);
 
 
   const { accountComments } = useAccountComments({filter});
@@ -100,7 +100,7 @@ const Thread = () => {
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, setSelectedThread, threadCid]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -167,7 +167,7 @@ const Thread = () => {
     if (index !== undefined) {
       setPendingCommentIndex(index);
     }
-  }, [index]);
+  }, [index, setPendingCommentIndex]);
 
   
   const resetFields = () => {
@@ -199,7 +199,7 @@ const Thread = () => {
         resetFields();
       })();
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, publishComment]);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -338,17 +338,17 @@ const Thread = () => {
             </div>
             <div id="bottom-button-mobile">
               <span className="btn-wrap">
-                <a onClick={() => window.scrollTo(0, document.body.scrollHeight)} onMouseOver={(event) => event.target.style.cursor='pointer'}>Bottom</a>
+                <a href={()=> {}} onClick={() => window.scrollTo(0, document.body.scrollHeight)} onMouseOver={(event) => event.target.style.cursor='pointer'}>Bottom</a>
               </span>
             </div>
             <div id="post-form-link-desktop">
               [
-                <a onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                <a href={()=> {}} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
               ]
             </div>
             <div id="post-form-link-mobile">
               <span className="btn-wrap">
-                <a onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                <a href={()=> {}} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
               </span>
             </div>
           </ReplyFormLink>
@@ -407,7 +407,7 @@ const Thread = () => {
           </span>
           <span className="return-button catalog-button" id="bottom-button-desktop">
             [
-            <a onClick={() =>  window.scrollTo(0, document.body.scrollHeight)} 
+            <a href={()=> {}} onClick={() =>  window.scrollTo(0, document.body.scrollHeight)} 
             onMouseOver={(event) => event.target.style.cursor='pointer'} 
             onTouchStart={() =>  window.scrollTo(0, document.body.scrollHeight)}>Bottom</a>
             ]
@@ -443,7 +443,8 @@ const Thread = () => {
                         <div key={`f-${comment.cid}`} className="file" style={{marginBottom: "5px"}}>
                           <div key={`ft-${comment.cid}`} className="file-text">
                             Link:&nbsp;
-                            <a key={`fa-${comment.cid}`} href={commentMediaInfo.url} target="_blank">{
+                            <a key={`fa-${comment.cid}`} href={commentMediaInfo.url} 
+                            target="_blank" rel="noreferrer">{
                             commentMediaInfo?.url.length > 30 ?
                             commentMediaInfo?.url.slice(0, 30) + "(...)" :
                             commentMediaInfo?.url
@@ -628,7 +629,8 @@ const Thread = () => {
                               style={{marginBottom: "5px"}}>
                                 <div key={`ft-${index}`} className="reply-file-text">
                                   Link:&nbsp;
-                                  <a key={`fa-${index}`} href={replyMediaInfo.url} target="_blank">{
+                                  <a key={`fa-${index}`} href={replyMediaInfo.url} 
+                                  target="_blank" rel="noreferrer">{
                                   replyMediaInfo?.url.length > 30 ?
                                   replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                   replyMediaInfo?.url
@@ -917,14 +919,14 @@ const Thread = () => {
                     </span>
                     <span className="bottom-bar-top">
                       [
-                      <a onClick={() => window.scrollTo(0, 0)} 
+                      <a href={()=> {}} onClick={() => window.scrollTo(0, 0)} 
                       onMouseOver={(event) => event.target.style.cursor='pointer'} 
                       onTouchStart={() => window.scrollTo(0, 0)}>Top</a>
                       ]
                     </span>
                     <span className="quickreply-button">
                     [
-                      <a onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                      <a href={()=> {}} onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
                     ]
                     </span>
                     {comment.replyCount > 0 ? (
@@ -973,7 +975,7 @@ const Thread = () => {
                     <ReplyFormLink id="post-form-link" selectedStyle={selectedStyle} >
                       <div id="post-form-link-mobile" className="post-button-mobile">
                         <span className="btn-wrap">
-                          <a onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                          <a href={()=> {}} onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
                         </span>
                       </div>
                       <div id="btns-container">
@@ -989,7 +991,7 @@ const Thread = () => {
                         </div>
                         <span className="bottom-bar-top">
                           <span className="btn-wrap">
-                            <a onClick={() => window.scrollTo(0, 0)} 
+                            <a href={()=> {}} onClick={() => window.scrollTo(0, 0)} 
                             onMouseOver={(event) => event.target.style.cursor='pointer'} 
                             onTouchStart={() => window.scrollTo(0, 0)}
                             style={{marginRight: "10px", marginLeft: "10px"}}
