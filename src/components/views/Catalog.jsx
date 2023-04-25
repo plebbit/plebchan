@@ -373,30 +373,30 @@ const Catalog = () => {
               loadMore={tryLoadMore}
               hasMore={hasMore}
             >
-              {feed.map((thread) => {
+              {feed.map((thread, index) => {
                 const commentMediaInfo = getCommentMediaInfo(thread);
                 const fallbackImgUrl = "/assets/filedeleted-res.gif";
                 return (
-                  <Link style={{all: "unset", cursor: "pointer"}} key={`link-${thread.cid}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)}>
-                    <div key={`thread-${thread.cid}`} className="thread">
+                  <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)}>
+                    <div key={`thread-${index}`} className="thread">
                         {commentMediaInfo?.url ? (
                           <Fragment key="f-catalog">
                             {commentMediaInfo?.type === "webpage" ? (
-                              <img key={`img-${thread.cid}`} alt="thread" 
+                              <img key={`img-${index}`} alt="thread" 
                               src={commentMediaInfo.url} 
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
                                 e.target.onerror = null;}}  />
                             ) : null}
                             {commentMediaInfo?.type === "image" ? (
-                              <img key={`img-${thread.cid}`} alt="thread" 
+                              <img key={`img-${index}`} alt="thread" 
                               src={commentMediaInfo.url} 
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
                                 e.target.onerror = null;}}  />
                             ) : null}
                             {commentMediaInfo?.type === "video" ? (
-                              <video key={`fti-${thread.cid}`} 
+                              <video key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 
                               style={{ pointerEvents: "none" }}
@@ -404,7 +404,7 @@ const Catalog = () => {
                             ) : null}
                             {commentMediaInfo?.type === "audio" ? (
                               <audio controls 
-                              key={`fti-${thread.cid}`} 
+                              key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 
                               style={{ pointerEvents: "none" }}
@@ -412,15 +412,15 @@ const Catalog = () => {
                             ) : null}
                           </Fragment>
                         ) : null}
-                      {/* <div key={`ti-${thread.cid}`} className="thread-icons" >
-                        <span key={`si-${thread.cid}`} className="thread-icon sticky-icon" title="Sticky"></span>
+                      {/* <div key={`ti-${index}`} className="thread-icons" >
+                        <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"></span>
                       </div> */}
-                      <div key={`meta-${thread.cid}`} className="meta" title="(R)eplies / (I)mage Replies" >
+                      <div key={`meta-${index}`} className="meta" title="(R)eplies / (I)mage Replies" >
                         R:
-                        <b key={`b-${thread.cid}`}>{thread.replyCount}</b>
+                        <b key={`b-${index}`}>{thread.replyCount}</b>
                       </div>
-                      <div key={`t-${thread.cid}`} className="teaser">
-                          <b key={`b2-${thread.cid}`}>{thread.title ? `${thread.title}` : null}</b>
+                      <div key={`t-${index}`} className="teaser">
+                          <b key={`b2-${index}`}>{thread.title ? `${thread.title}` : null}</b>
                           {thread.content ? `: ${thread.content}` : null}
                       </div>
                     </div>

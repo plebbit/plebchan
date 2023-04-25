@@ -793,7 +793,7 @@ const Thread = () => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     return (
-                    <div key={`${index}mob-rc-${index}`} className="reply-container">
+                    <div key={`mob-rc-${index}`} className="reply-container">
                       <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
                         <div key={`mob-pi-${index}`} className="post-info-mobile">
                           <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
