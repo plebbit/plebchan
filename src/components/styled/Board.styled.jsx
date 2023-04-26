@@ -1922,12 +1922,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number a {
+      .post-number {
         text-decoration: none;
         color: maroon;
       }
 
-      .post-number a:hover {
+      .post-number {
         color: red;
       }
 
@@ -2092,12 +2092,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number a {
+      .post-number {
         text-decoration: none;
         color: #000;
       }
 
-      .post-number a:hover {
+      .post-number {
         color: #d00;
       }
 
@@ -2261,12 +2261,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number a {
+      .post-number {
         text-decoration: none;
         color: maroon;
       }
 
-      .post-number a:hover {
+      .post-number {
         color: red;
       }
 
@@ -2428,12 +2428,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number a {
+      .post-number {
         text-decoration: none;
         color: #000;
       }
 
-      .post-number a:hover {
+      .post-number {
         color: red;
       }
 
@@ -2592,12 +2592,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number a {
+      .post-number {
         text-decoration: none;
         color: #c5c8c6;
       }
 
-      .post-number a:hover {
+      .post-number {
         color: #5f89ab;
       }
 
@@ -2766,12 +2766,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number a {
+      .post-number {
         text-decoration: none;
         color: #333;
       }
 
-      .post-number a:hover {
+      .post-number {
         color: #ff3300;
       }
 

@@ -234,12 +234,12 @@ export const TopBar = styled.div`
         .return-button {
           margin-left: 10px;
 
-          a, a:visited {
+          a, a:visited, #button {
             color: #00e !important;
             text-decoration: none;
           }
           
-          a:hover {
+          a:hover, #button:hover {
             color: red !important;
           }
         }`;
@@ -260,12 +260,12 @@ export const TopBar = styled.div`
         .return-button {
           margin-left: 10px;
 
-          a, a:visited {
+          a, a:visited, #button {
             color: #34345c !important;
             text-decoration: none;
           }
 
-          a:hover {
+          a:hover, #button:hover {
             color: red !important;
           }
         }`;
@@ -286,12 +286,12 @@ export const TopBar = styled.div`
           padding-top: 2px;
           font-size: 12pt;
 
-          a, a:visited {
+          a, a:visited, #button {
             color: #00e !important;
             text-decoration: underline;
           }
 
-          a:hover {
+          a:hover, #button:hover {
             color: red !important;
           }
         }
@@ -317,12 +317,12 @@ export const TopBar = styled.div`
           padding-top: 2px;
           font-size: 12pt;
 
-          a, a:visited {
+          a, a:visited, #button {
             color: #34345c !important;
             text-decoration: underline;
           }
 
-          a:hover {
+          a:hover, #button:hover {
             color: red !important;
           }
         }
@@ -354,12 +354,12 @@ export const TopBar = styled.div`
         .return-button {
           margin-left: 10px;
 
-          a, a:visited {
+          a, a:visited, #button {
             color: #81a2be !important;
             text-decoration: none;
           }
 
-          a:hover {
+          a:hover, #button:hover {
             color: #5f89ab !important;
           }
         }`;
@@ -380,12 +380,12 @@ export const TopBar = styled.div`
         .return-button {
           margin-left: 10px;
 
-          a, a:visited {
+          a, a:visited, #button {
             color: #f60 !important;
             text-decoration: none;
           }
 
-          a:hover {
+          a:hover, #button:hover {
             color: #ff3300 !important;
           }
         }`;
@@ -563,12 +563,12 @@ export const BottomBar = styled.div`
     switch (selectedStyle) {
       case 'Yotsuba':
         return `
-        a, a:visited {
+        a, a:visited, #button {
           color: #00e !important;
           text-decoration: none;
         }
         
-        a:hover {
+        a:hover, #button:hover {
           color: red !important;
         }
 
@@ -581,12 +581,12 @@ export const BottomBar = styled.div`
 
       case 'Yotsuba-B':
         return `
-        a, a:visited {
+        a, a:visited, #button {
           color: #34345c !important;
           text-decoration: none;
         }
         
-        a:hover {
+        a:hover, #button:hover {
           color: red !important;
         }
 
@@ -599,12 +599,12 @@ export const BottomBar = styled.div`
 
       case 'Futaba':
         return `
-        a, a:visited {
+        a, a:visited, #button {
           color: #00e !important;
           text-decoration: underline;
         }
         
-        a:hover {
+        a:hover, #button:hover {
           color: red !important;
         }
 
@@ -625,12 +625,12 @@ export const BottomBar = styled.div`
 
       case 'Burichan':
         return `
-        a, a:visited {
+        a, a:visited, #button {
           color: #34345c !important;
           text-decoration: underline;
         }
         
-        a:hover {
+        a:hover, #button:hover {
           color: red !important;
         }
 
@@ -651,12 +651,12 @@ export const BottomBar = styled.div`
 
       case 'Tomorrow':
         return `
-        a, a:visited {
+        a, a:visited, #button {
           color: #81a2be !important;
           text-decoration: none;
         }
         
-        a:hover {
+        a:hover, #button:hover {
           color: #5f89ab !important;
         }
 
@@ -669,12 +669,12 @@ export const BottomBar = styled.div`
 
       case 'Photon':
         return `
-        a, a:visited {
+        a, a:visited, #button {
           color: #f60 !important;
           text-decoration: none;
         }
         
-        a:hover {
+        a:hover, #button:hover {
           color: #ff3300 !important;
         }
         
