@@ -75,7 +75,7 @@ const Thread = () => {
     parentCids: [
       selectedThread || 'n/a', ...flattenedReplies.map(reply => reply.cid)
     ]
-  }), [flattenedReplies, selectedThread]);
+  }), [flattenedReplies]);
 
 
   const { accountComments } = useAccountComments({filter});
@@ -100,7 +100,7 @@ const Thread = () => {
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, setSelectedThread, threadCid]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -167,7 +167,7 @@ const Thread = () => {
     if (index !== undefined) {
       setPendingCommentIndex(index);
     }
-  }, [index, setPendingCommentIndex]);
+  }, [index]);
 
   
   const resetFields = () => {
@@ -205,7 +205,7 @@ const Thread = () => {
         resetFields();
       })();
     }
-  }, [publishCommentOptions, publishComment]);
+  }, [publishCommentOptions]);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {

@@ -207,7 +207,7 @@ const Board = () => {
       setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
-  }, [index, navigate, setPendingCommentIndex]);
+  }, [index]);
 
   
   const resetFields = () => {
@@ -248,7 +248,7 @@ const Board = () => {
         resetFields();
       })();
     }
-  }, [publishCommentOptions, publishComment]);
+  }, [publishCommentOptions]);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {

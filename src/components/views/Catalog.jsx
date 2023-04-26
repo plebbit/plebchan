@@ -133,7 +133,7 @@ const Catalog = () => {
       setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
-  }, [index, navigate, setPendingCommentIndex]);
+  }, [index]);
 
   
   const resetFields = () => {
@@ -174,7 +174,7 @@ const Catalog = () => {
         resetFields();
       })();
     }
-  }, [publishCommentOptions, publishComment]);
+  }, [publishCommentOptions]);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {
