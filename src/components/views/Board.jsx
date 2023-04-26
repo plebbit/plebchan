@@ -377,12 +377,12 @@ const Board = () => {
         <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
           <div id="post-form-link-desktop">
               [
-                <a href={() => {}} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+                <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</Link>
               ]
             </div>
             <div id="post-form-link-mobile">
               <span className="btn-wrap">
-                <a href={() => {}} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</a>
+                <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</Link>
               </span>
             </div>
           </PostFormLink>

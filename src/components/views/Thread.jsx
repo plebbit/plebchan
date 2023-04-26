@@ -349,12 +349,12 @@ const Thread = () => {
             </div>
             <div id="post-form-link-desktop">
               [
-                <a href={()=> {}} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                <Link to={`/p/${subplebbitAddress}/c/${selectedThread}/post`} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
               ]
             </div>
             <div id="post-form-link-mobile">
               <span className="btn-wrap">
-                <a href={()=> {}} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</a>
+                <Link to={`/p/${subplebbitAddress}/c/${selectedThread}/post`} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
               </span>
             </div>
           </ReplyFormLink>
