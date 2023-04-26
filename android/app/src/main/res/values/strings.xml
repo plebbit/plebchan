@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">plebchan</string>
+    <string name="title_activity_main">plebchan</string>
+    <string name="package_name">plebchan.android</string>
+    <string name="custom_url_scheme">plebchan.android</string>
+</resources>

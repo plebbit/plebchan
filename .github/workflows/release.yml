@@ -83,46 +83,46 @@ jobs:
           body: "Progressive web app mirrors:\n- https://plebchan.eth.limo\n- https://plebchan.eth.link\n- https://cloudflare-ipfs.com/ipns/plebchan.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest"
           allowUpdates: true
 
-  # android:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-java@v3
-  #       with:
-  #         distribution: 'zulu'
-  #         java-version: '11'
-  #     - uses: gradle/gradle-build-action@v2
-  #       with:
-  #         gradle-version: 7.6
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 16
-  #     - run: sudo apt install -y apksigner zipalign
+  android:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.6
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: sudo apt install -y apksigner zipalign
 
-  #     # build react app
-  #     - run: yarn install --frozen-lockfile
-  #     - run: CI='' yarn build
-  #     # build apk
-  #     - run: npx cap update
-  #     - run: npx cap copy
-  #     - run: cd android && gradle bundle
-  #     - run: cd android && ./gradlew assembleRelease
-  #     # optimize apk
-  #     - run: cd android/app/build/outputs/apk/release && zipalign 4 app-release-unsigned.apk app-release-unsigned-zip.apk
-  #     # sign apk
-  #     # to create keystore: keytool -genkey -v -keystore plebbit.keystore -keyalg RSA -keysize 2048 -validity 10000 -alias release
-  #     - run: cd android/app/build/outputs/apk/release && apksigner sign --ks ../../../../../plebbit.keystore --ks-pass pass:${{ secrets.PLEBBIT_REACT_KEYSTORE_PASSWORD }} --ks-key-alias release --out app-release-signed.apk app-release-unsigned-zip.apk
-  #     # move apk to dist folder
-  #     - run: mkdir -p dist && mv android/app/build/outputs/apk/release/app-release-signed.apk dist/plebbit-$(node -e "console.log(require('./package.json').version)").apk
-  #     - run: ls dist
+      # build react app
+      - run: yarn install --frozen-lockfile
+      - run: CI='' yarn build
+      # build apk
+      - run: npx cap update
+      - run: npx cap copy
+      - run: cd android && gradle bundle
+      - run: cd android && ./gradlew assembleRelease
+      # optimize apk
+      - run: cd android/app/build/outputs/apk/release && zipalign 4 app-release-unsigned.apk app-release-unsigned-zip.apk
+      # sign apk
+      # to create keystore: keytool -genkey -v -keystore plebbit.keystore -keyalg RSA -keysize 2048 -validity 10000 -alias release
+      - run: cd android/app/build/outputs/apk/release && apksigner sign --ks ../../../../../plebbit.keystore --ks-pass pass:${{ secrets.PLEBBIT_REACT_KEYSTORE_PASSWORD }} --ks-key-alias release --out app-release-signed.apk app-release-unsigned-zip.apk
+      # move apk to dist folder
+      - run: mkdir -p dist && mv android/app/build/outputs/apk/release/app-release-signed.apk dist/plebchan-$(node -e "console.log(require('./package.json').version)").apk
+      - run: ls dist
 
-  #     # publish version release
-  #     - uses: ncipollo/release-action@v1
-  #       with:
-  #         artifacts: 'dist/plebbit*.apk'
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  #         replacesArtifacts: true
-  #         body: "Progressive web app mirrors:\n- https://plebchan.eth.limo\n- https://plebchan.eth.link\n- https://cloudflare-ipfs.com/ipns/plebchan.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest"
-  #         allowUpdates: true
+      # publish version release
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'dist/plebchan*.apk'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          replacesArtifacts: true
+          body: "Progressive web app mirrors:\n- https://plebchan.eth.limo\n- https://plebchan.eth.link\n- https://cloudflare-ipfs.com/ipns/plebchan.eth (insecure, no subdomain isolation)\n\nCLI client:\n- https://github.com/plebbit/plebbit-cli/releases/latest"
+          allowUpdates: true
