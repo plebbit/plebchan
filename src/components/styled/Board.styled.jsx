@@ -1866,7 +1866,7 @@ export const BoardForm = styled.div`
           float: right;
           text-align: right;
 
-          a {
+          a, #reply-button {
             text-decoration: none;
           }
         }
@@ -1923,11 +1923,15 @@ export const BoardForm = styled.div`
       }
 
       .post-number {
-        text-decoration: none;
         color: maroon;
+
+        a, #reply-button {
+          text-decoration: none;
+          color: maroon;
+        }
       }
 
-      .post-number {
+      #reply-button:hover {
         color: red;
       }
 
@@ -2093,11 +2097,15 @@ export const BoardForm = styled.div`
       }
 
       .post-number {
-        text-decoration: none;
         color: #000;
+
+        a, #reply-button {
+          text-decoration: none;
+          color: #000;
+        }
       }
 
-      .post-number {
+      #reply-button:hover {
         color: #d00;
       }
 
@@ -2262,11 +2270,15 @@ export const BoardForm = styled.div`
       }
 
       .post-number {
-        text-decoration: none;
         color: maroon;
+
+        a, #reply-button {
+          text-decoration: none;
+          color: maroon;
+        }
       }
 
-      .post-number {
+      #reply-button:hover {
         color: red;
       }
 
@@ -2429,11 +2441,15 @@ export const BoardForm = styled.div`
       }
 
       .post-number {
-        text-decoration: none;
         color: #000;
+
+        a, #reply-button {
+          text-decoration: none;
+          color: #000;
+        }
       }
 
-      .post-number {
+      #reply-button:hover {
         color: red;
       }
 
@@ -2593,11 +2609,15 @@ export const BoardForm = styled.div`
       }
 
       .post-number {
-        text-decoration: none;
         color: #c5c8c6;
+
+        a, #reply-button {
+          text-decoration: none;
+          color: #c5c8c6;
+        }
       }
 
-      .post-number {
+      #reply-button:hover {
         color: #5f89ab;
       }
 
@@ -2767,11 +2787,15 @@ export const BoardForm = styled.div`
       }
 
       .post-number {
-        text-decoration: none;
         color: #333;
+
+        a, #reply-button {
+          text-decoration: none;
+          color: #333;
+        }
       }
 
-      .post-number {
+      #reply-button:hover {
         color: #ff3300;
       }
 
@@ -2996,7 +3020,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: maroon;
 
-                a {
+                a, #reply-button {
                   text-decoration: none;
                   color: maroon;
                 }
@@ -3058,7 +3082,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: maroon;
 
-                  a {
+                  a, #reply-button {
                     color: maroon;
                   }
                 }
@@ -3113,7 +3137,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: #000;
 
-                a {
+                a, #reply-button {
                   text-decoration: none;
                   color: #000;
                 }
@@ -3175,7 +3199,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #000;
 
-                  a {
+                  a, #reply-button {
                     color: #000;
                   }
                 }
@@ -3226,7 +3250,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: maroon;
 
-                a {
+                a, #reply-button {
                   text-decoration: none;
                   color: maroon;
                 }
@@ -3288,7 +3312,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: maroon;
 
-                  a {
+                  a, #reply-button {
                     color: maroon;
                   }
                 }
@@ -3342,7 +3366,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: #000;
 
-                a {
+                a, #reply-button {
                   text-decoration: none;
                   color: #000;
                 }
@@ -3404,7 +3428,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #000;
 
-                  a {
+                  a, #reply-button {
                     color: #000;
                   }
                 }
@@ -3458,7 +3482,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: #707070;
 
-                a {
+                a, #reply-button {
                   text-decoration: none;
                   color: #707070;
                 }
@@ -3522,7 +3546,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #707070;
 
-                  a {
+                  a, #reply-button {
                     color: #707070;
                   }
                 }
@@ -3576,7 +3600,7 @@ export const BoardForm = styled.div`
             .date-time-mobile {
               color: #333;
 
-              a {
+              a, #reply-button {
                 text-decoration: none;
                 color: #333;
               }
@@ -3639,7 +3663,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #333;
 
-                  a {
+                  a, #reply-button {
                     color: #333;
                   }
                 }
