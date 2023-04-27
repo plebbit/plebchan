@@ -133,7 +133,7 @@ const Catalog = () => {
       setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
-  }, [index]);
+  }, [index, navigate, setPendingCommentIndex]);
 
   
   const resetFields = () => {

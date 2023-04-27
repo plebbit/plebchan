@@ -75,7 +75,7 @@ const Thread = () => {
     parentCids: [
       selectedThread || 'n/a', ...flattenedReplies.map(reply => reply.cid)
     ]
-  }), [flattenedReplies]);
+  }), [flattenedReplies, selectedThread]);
 
 
   const { accountComments } = useAccountComments({filter});
@@ -100,7 +100,7 @@ const Thread = () => {
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, setSelectedThread, threadCid]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -167,7 +167,7 @@ const Thread = () => {
     if (index !== undefined) {
       setPendingCommentIndex(index);
     }
-  }, [index]);
+  }, [index, setPendingCommentIndex]);
 
   
   const resetFields = () => {

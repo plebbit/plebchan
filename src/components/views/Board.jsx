@@ -64,7 +64,6 @@ const Board = () => {
 
   const account = useAccount();
 
-
   const flattenedRepliesByThread = useMemo(() => {
     return selectedFeed.reduce((acc, thread) => {
       const replies = flattenCommentsPages(thread.replies);
@@ -207,7 +206,7 @@ const Board = () => {
       setPendingCommentIndex(index);
       navigate(`/profile/c/${index}`);
     }
-  }, [index]);
+  }, [index, navigate, setPendingCommentIndex]);
 
   
   const resetFields = () => {
