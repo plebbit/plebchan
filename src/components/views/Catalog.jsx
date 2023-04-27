@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -50,6 +50,8 @@ const Catalog = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
@@ -136,7 +138,7 @@ const Catalog = () => {
   }, [index, navigate, setPendingCommentIndex]);
 
   
-  const resetFields = () => {
+  const resetFields = useCallback(() => {
     if (nameRef.current) {
       nameRef.current.value = '';
     }
@@ -149,7 +151,7 @@ const Catalog = () => {
     if (linkRef.current) {
       linkRef.current.value = '';
     }
-  };
+  }, []);
 
 
   const handleSubmit = async (event) => {
@@ -164,17 +166,19 @@ const Catalog = () => {
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
     }));
+
+    setTriggerPublishComment(true);
   };
   
   
   useEffect(() => {
-    if (publishCommentOptions.content) {
+    if (publishCommentOptions.content && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
       })();
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {

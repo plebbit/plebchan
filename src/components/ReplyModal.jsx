@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from './styled/ReplyModal.styled';
@@ -30,6 +30,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   
   const location = useLocation();
 
@@ -86,7 +88,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   }, [index, location, setPendingCommentIndex]);
 
   
-  const resetFields = () => {
+  const resetFields = useCallback(() => {
     if (nameRef.current) {
       nameRef.current.value = '';
     }
@@ -96,7 +98,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     if (linkRef.current) {
       linkRef.current.value = '';
     }
-  };
+  }, []);
 
 
   const handleSubmit = async (event) => {
@@ -111,18 +113,21 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       link: linkRef.current.value || undefined,
       parentCid: selectedParentCid,
     }));
+  
+    setTriggerPublishComment(true);
   };
   
   
   useEffect(() => {
-    if (publishCommentOptions.content) {
+    if (publishCommentOptions.content && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
         closeModal();
       })();
+      setTriggerPublishComment(false);
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields, closeModal]);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {

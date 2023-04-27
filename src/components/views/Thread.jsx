@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
@@ -64,6 +64,8 @@ const Thread = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
 
 
   const flattenedReplies = useMemo(() => 
@@ -170,7 +172,7 @@ const Thread = () => {
   }, [index, setPendingCommentIndex]);
 
   
-  const resetFields = () => {
+  const resetFields = useCallback(() => {
     if (nameRef.current) {
       nameRef.current.value = '';
     }
@@ -180,7 +182,7 @@ const Thread = () => {
     if (linkRef.current) {
       linkRef.current.value = '';
     }
-  };
+  }, []);
 
 
   const handleSubmit = async (event) => {
@@ -195,17 +197,19 @@ const Thread = () => {
       link: linkRef.current.value || undefined,
       parentCid: selectedThread,
     }));
+
+    setTriggerPublishComment(true);
   };
   
   
   useEffect(() => {
-    if (publishCommentOptions.content) {
+    if (publishCommentOptions.content && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
       })();
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {

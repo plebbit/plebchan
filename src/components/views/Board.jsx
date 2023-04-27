@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -63,6 +63,9 @@ const Board = () => {
   useError(errorMessage, [errorMessage]);
 
   const account = useAccount();
+
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+
 
   const flattenedRepliesByThread = useMemo(() => {
     return selectedFeed.reduce((acc, thread) => {
@@ -209,7 +212,7 @@ const Board = () => {
   }, [index, navigate, setPendingCommentIndex]);
 
   
-  const resetFields = () => {
+  const resetFields = useCallback(() => {
     if (nameRef.current) {
       nameRef.current.value = '';
     }
@@ -222,7 +225,7 @@ const Board = () => {
     if (linkRef.current) {
       linkRef.current.value = '';
     }
-  };
+  }, []);
 
 
   const handleSubmit = async (event) => {
@@ -237,17 +240,19 @@ const Board = () => {
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
     }));
+
+    setTriggerPublishComment(true);
   };
   
   
   useEffect(() => {
-    if (publishCommentOptions.content) {
+    if (publishCommentOptions.content && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
       })();
     }
-  }, [publishCommentOptions]);
+  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {
