@@ -462,7 +462,9 @@ const Thread = () => {
                           </div>
                           {commentMediaInfo?.type === "webpage" ? (
                             <span key={`fta-${comment.cid}`} className="file-thumb">
-                              <img key={`fti-${comment.cid}`} src={comment.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                              {comment.thumbnailUrl ? (
+                                <img key={`fti-${index}`} src={comment.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                              ) : null}
                             </span>
                           ) : null}
                           {commentMediaInfo?.type === "image" ? (
@@ -859,7 +861,9 @@ const Thread = () => {
                                 {replyMediaInfo?.url ? (
                                   replyMediaInfo.type === "webpage" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <img key={`mob-img-${reply.cid}`} src={reply.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                        {reply.thumbnailUrl ? (
+                                          <img key={`mob-img-${reply.cid}`} src={reply.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                        ) : null}
                                         <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
                                   ) : replyMediaInfo.type === "image" ? (

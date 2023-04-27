@@ -487,7 +487,9 @@ const Board = () => {
                             </div>
                             {commentMediaInfo?.type === "webpage" ? (
                               <span key={`fta-${index}`} className="file-thumb">
-                                <img key={`fti-${index}`} src={thread.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                {thread.thumbnailUrl ? (
+                                  <img key={`fti-${index}`} src={thread.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                ) : null}
                               </span>
                             ) : null}
                             {commentMediaInfo?.type === "image" ? (
@@ -705,10 +707,12 @@ const Board = () => {
                                 </div>
                                 {replyMediaInfo?.type === "webpage" ? (
                                   <span key={`fta-${index}`} className="file-thumb-reply">
-                                    <img key={`fti-${index}`}
-                                    src={reply.thumbnailUrl} 
-                                    alt="thumbnail" 
-                                    onError={(e) => e.target.src = fallbackImgUrl} />
+                                    {reply.thumbnailUrl ? (
+                                      <img key={`fti-${index}`}
+                                      src={reply.thumbnailUrl} 
+                                      alt="thumbnail" 
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
+                                    ) : null}
                                   </span>
                                 ) : null}
                                 {replyMediaInfo?.type === "image" ? (
@@ -834,7 +838,9 @@ const Board = () => {
                               {commentMediaInfo?.url ? (
                                 commentMediaInfo.type === "webpage" ? (
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <img key={`mob-img-${index}`} src={thread.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                      {thread.thumbnailUrl ? (
+                                        <img key={`mob-img-${index}`} src={thread.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                      ) : null}
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
                                     </span>
                                 ) : commentMediaInfo.type === "image" ? (
@@ -963,7 +969,9 @@ const Board = () => {
                                 {replyMediaInfo?.url ? (
                                   replyMediaInfo.type === "webpage" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <img key={`mob-img-${index}`} src={reply.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                        {reply.thumbnailUrl ? (
+                                          <img key={`mob-img-${index}`} src={reply.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                        ) : null}
                                         <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
                                   ) : replyMediaInfo.type === "image" ? (
