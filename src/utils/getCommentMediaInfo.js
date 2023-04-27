@@ -4,12 +4,7 @@ const getCommentMediaInfo = (comment) => {
   if (!comment?.thumbnailUrl && !comment?.link) {
     return;
   }
-  // if (comment?.thumbnailUrl) {
-  //   return {
-  //     url: comment.link,
-  //     type: 'webpage'
-  //   };
-  // }
+
   if (comment?.link) {
     try {
       new URL(comment.link);
@@ -23,23 +18,30 @@ const getCommentMediaInfo = (comment) => {
     if (mime?.startsWith('image')) {
       return {
         url: comment.link,
-        type: 'image'
+        type: 'image',
       };
     }
-  
+
     if (mime?.startsWith('video')) {
       return {
         url: comment.link,
-        type: 'video'
+        type: 'video',
       };
     }
 
     if (mime?.startsWith('audio')) {
       return {
         url: comment.link,
-        type: 'audio'
+        type: 'audio',
       };
     }
+  }
+
+  if (comment?.thumbnailUrl !== comment?.link) {
+    return {
+      url: comment.link,
+      type: 'webpage',
+    };
   }
 };
 
