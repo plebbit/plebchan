@@ -1,8 +1,18 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 // import { Link } from 'react-router-dom';
-import rehypeSanitize from 'rehype-sanitize';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import breaks from 'remark-breaks';
+
+
+const customSchema = {
+  ...defaultSchema,
+  tagNames: [...defaultSchema.tagNames, 'div'],
+  attributes: {
+    ...defaultSchema.attributes,
+    div: ['className'],
+  },
+};
 
 
 const blockquoteToGreentext = () => (tree) => {
@@ -27,6 +37,7 @@ const blockquoteToGreentext = () => (tree) => {
     }
   });
 };
+
 
 // const createQuotelink = (handlequoteclick, comment, children) => {
 //   const text = children.map((child) => (typeof child === 'string' ? child : child.props.children)).join('');
@@ -59,7 +70,7 @@ const Post = ({ content, handlequoteclick, comment }) => {
     <ReactMarkdown
       children={doubleNewlineContent}
       remarkPlugins={[blockquoteToGreentext, breaks]}
-      rehypePlugins={[rehypeSanitize]}
+      rehypePlugins={[[rehypeSanitize, customSchema]]}
       components={{
         img: () => null,
         video: () => null,
