@@ -1,6 +1,6 @@
 {
   "name": "plebchan",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@capacitor/android": "3.6.0",
