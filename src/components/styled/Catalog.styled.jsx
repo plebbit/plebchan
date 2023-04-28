@@ -1,9 +1,19 @@
 import styled from 'styled-components';
 
+export const GridContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+`;
+
 export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 
   .thread {
     width: 180px;
@@ -16,6 +26,7 @@ export const Threads = styled.div`
     margin-bottom: 20px;
     padding: 5px 0 3px;
     position: relative;
+    overflow: hidden;
   }
 
   video, audio, img {
