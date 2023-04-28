@@ -3,11 +3,11 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "3.6.0",
-    "@capacitor/core": "3.6.0",
     "@babel/core": "7.21.3",
     "@babel/plugin-syntax-flow": "7.18.6",
     "@babel/plugin-transform-react-jsx": "7.21.0",
+    "@capacitor/android": "3.6.0",
+    "@capacitor/core": "3.6.0",
     "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#97b538693972e26f7c0f0f13ec6afab03b0e2e57",
     "@testing-library/dom": "9.0.1",
     "@testing-library/jest-dom": "5.14.1",
@@ -29,7 +29,6 @@
     "react-dom": "18.2.0",
     "react-draggable": "4.4.5",
     "react-helmet-async": "1.3.0",
-    "react-infinite-scroller": "1.2.6",
     "react-is": "18.2.0",
     "react-markdown": "8.0.6",
     "react-modal": "3.16.1",
@@ -37,6 +36,7 @@
     "react-scripts": "5.0.1",
     "react-toastify": "9.1.1",
     "react-tooltip": "5.10.0",
+    "react-virtuoso": "^4.3.2",
     "rehype-sanitize": "5.0.1",
     "remark-breaks": "3.0.2",
     "styled-components": "5.3.9",
@@ -115,15 +115,15 @@
     }
   },
   "devDependencies": {
+    "@capacitor/cli": "3.6.0",
     "concurrently": "8.0.1",
+    "cordova-res": "0.15.4",
     "cross-env": "7.0.3",
     "decompress": "4.2.1",
     "electron": "19.0.1",
     "electron-builder": "23.0.9",
     "typescript": "5.0.2",
-    "wait-on": "7.0.1",
-    "cordova-res": "0.15.4",
-    "@capacitor/cli": "3.6.0"
+    "wait-on": "7.0.1"
   },
   "resolutions": {
     "styled-components": "^5"

@@ -31,6 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   .tooltip {
+    z-index: 999;
     border-radius: 0;
     max-width: 40%;
     font-size: 11px;

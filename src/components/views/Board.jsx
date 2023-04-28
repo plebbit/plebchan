@@ -1,8 +1,8 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
+import { Virtuoso } from 'react-virtuoso';
 import { useAccount, useAccountComments, useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
@@ -458,16 +458,14 @@ const Board = () => {
             {feed.length < 1 ? (
               <PostLoader />
             ) : (
-              <InfiniteScroll
-                pageStart={0}
-                loadMore={tryLoadMore}
-                hasMore={hasMore}
-              >
-                {selectedFeed.map((thread, index) => {
-                const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
-                const commentMediaInfo = getCommentMediaInfo(thread);
-                const fallbackImgUrl = "/assets/filedeleted-res.gif";
-                return (
+              <Virtuoso
+                increaseViewportBy={2000}
+                data={selectedFeed}
+                itemContent={(index, thread) => {
+                  const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
+                  const commentMediaInfo = getCommentMediaInfo(thread);
+                  const fallbackImgUrl = "/assets/filedeleted-res.gif";
+                  return (
                 <Fragment key={`fr-${index}`}>
                   <div key={`t-${index}`} className="thread">
                     <div key={`c-${index}`} className="op-container">
@@ -1039,8 +1037,12 @@ const Board = () => {
                     )})}
                   </div>
                 </Fragment>
-                )})}
-              </InfiniteScroll>
+                  );
+                }}
+                endReached={tryLoadMore}
+                useWindowScroll={true}
+                components={{ Footer: hasMore ? () => <PostLoader /> : null }}
+              />
             )}
           </div>
         </BoardForm>
