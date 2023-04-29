@@ -1,12 +1,12 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { VirtuosoGrid } from 'react-virtuoso';
+import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from '../styled/Board.styled';
-import { Threads, GridContainer } from '../styled/Catalog.styled';
+import { Threads } from '../styled/Catalog.styled';
 import { TopBar, Footer } from '../styled/Thread.styled';
 import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
@@ -372,12 +372,12 @@ const Catalog = () => {
           {feed.length < 1 ? (
             <CatalogLoader />
           ) : (
-            <VirtuosoGrid
-              style={{width: "100%", height: "100%"}}
-              data={feed}
-              increaseViewportBy={3000}
-              itemContent={(index) => {
-                const thread = feed[index];
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={tryLoadMore}
+              hasMore={hasMore}
+            >
+              {feed.map((thread, index) => {
                 const commentMediaInfo = getCommentMediaInfo(thread);
                 const fallbackImgUrl = "/assets/filedeleted-res.gif";
                 return (
@@ -429,15 +429,8 @@ const Catalog = () => {
                       </div>
                     </div>
                   </Link>
-                );
-              }}
-              endReached={tryLoadMore}
-              useWindowScroll={true}
-              components={{
-                List: GridContainer,
-                Footer: hasMore ? () => <CatalogLoader /> : null,
-              }}
-            />
+                )})}
+            </InfiniteScroll>
           )}
         </Threads>
         <Footer selectedStyle={selectedStyle}>
