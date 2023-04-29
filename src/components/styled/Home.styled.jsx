@@ -216,8 +216,8 @@ export const BoardsContent = styled.div`
   img {
     border: 1px solid #800;
     display: inline-block;
-    width: 150px;
-    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
   }
 
   .board-text {

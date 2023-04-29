@@ -89,7 +89,7 @@ export default function App() {
       {subplebbitAddresses: defaultSubplebbits.map(
         (subplebbit) => subplebbit.address
       ), sortType: 'new'},
-      {subplebbitAddresses: account.subscriptions, sortType: 'new'}
+      {subplebbitAddresses: account?.subscriptions, sortType: 'new'}
     ]
   });
   

@@ -1,10 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
 import packageJson from '../../../package.json'
 const {version} = packageJson
+
+
+const BoardAvatar = ({ address }) => {
+  const [avatarUrl, setAvatarUrl] = useState('assets/plebchan.png');
+  const subplebbit = useSubplebbit({ subplebbitAddress: address });
+
+  useEffect(() => {
+    if (subplebbit.suggested?.avatarUrl) {
+      setAvatarUrl(subplebbit.suggested.avatarUrl);
+    }
+    console.log(subplebbit);
+  }, [subplebbit.suggested?.avatarUrl, subplebbit]);
+
+  return <img alt="board logo" src={avatarUrl} />;
+};
 
 
 const Home = () => {
@@ -92,7 +108,7 @@ const Home = () => {
                       setSelectedTitle(subplebbit.title);
                       setSelectedAddress(subplebbit.address);
                     }} >
-                      <img alt="board logo" src="assets/plebchan.png" />
+                      <BoardAvatar address={subplebbit.address} />
                     </Link>
                     <div className="board-text">
                       <b>{subplebbit.address}</b>
