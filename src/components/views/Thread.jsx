@@ -444,6 +444,9 @@ const Thread = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           {comment !== undefined ? (
+            comment.state === "fetching-ipfs" ? (
+              <PostLoader />
+            ) : (
             <>
               <div className="thread">
                 <div className="op-container">
@@ -555,9 +558,7 @@ const Thread = () => {
                     </div>
                   </div>
                 </div>
-                {comment.state === "fetching-ipns" ? 
-                (null) : 
-                (comment.replyCount === undefined ? (<PostLoader />) : (null))}
+                {comment.state === "fetching-ipns" ? <PostLoader /> : null}
                 {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "/assets/filedeleted-res.gif";
@@ -946,10 +947,22 @@ const Thread = () => {
                       <span id="button" onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</span>
                     ]
                     </span>
-                    {comment.replyCount > 0 ? (
-                      <span className="reply-stat">{comment.replyCount} replies</span>
+                    {comment ? (
+                      comment.replyCount !== undefined ? (
+                        comment.replyCount > 0 ? (
+                          comment.replyCount === 1 ? (
+                            <span className="reply-stat">{comment.replyCount} reply</span>
+                          ) : (
+                            <span className="reply-stat">{comment.replyCount} replies</span>
+                          )
+                        ) : (
+                          <span className="reply-stat">No replies yet</span>
+                        )
+                      ) : (
+                        <span className="reply-stat">{formatState(comment.state)}</span>
+                      )
                     ) : (
-                      <span className="reply-stat">No replies yet</span>
+                      <span className="reply-stat">{formatState(comment.state)}</span>
                     )}
                     <hr />
                   </div>
@@ -1020,9 +1033,7 @@ const Thread = () => {
                   </div>
                 ) : (null)}
             </>
-          ) : (
-            <PostLoader />
-          )}
+          )) : null}
         </BoardForm>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{
