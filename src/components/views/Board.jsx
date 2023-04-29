@@ -464,7 +464,7 @@ const Board = () => {
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                   const commentMediaInfo = getCommentMediaInfo(thread);
-                  const fallbackImgUrl = "/assets/filedeleted-res.gif";
+                  const fallbackImgUrl = "assets/filedeleted-res.gif";
                   return (
                 <Fragment key={`fr-${index}`}>
                   <div key={`t-${index}`} className="thread">
@@ -611,7 +611,7 @@ const Board = () => {
                     </span>
                     {displayedReplies?.map((reply, index) => {
                       const replyMediaInfo = getCommentMediaInfo(reply);
-                      const fallbackImgUrl = "/assets/filedeleted-res.gif";
+                      const fallbackImgUrl = "assets/filedeleted-res.gif";
                       const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                       return (
                         <div key={`rc-${index}`} className="reply-container">

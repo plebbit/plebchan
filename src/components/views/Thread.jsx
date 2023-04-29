@@ -60,7 +60,7 @@ const Thread = () => {
   const handleClickForm = useClickForm();
 
   const commentMediaInfo = getCommentMediaInfo(comment);
-  const fallbackImgUrl = "/assets/filedeleted-res.gif";
+  const fallbackImgUrl = "assets/filedeleted-res.gif";
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
@@ -561,7 +561,7 @@ const Thread = () => {
                 {comment.state === "fetching-ipns" ? <PostLoader /> : null}
                 {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
-                    const fallbackImgUrl = "/assets/filedeleted-res.gif";
+                    const fallbackImgUrl = "assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     return (
                       <div key={`pc-${index}`} className="reply-container">

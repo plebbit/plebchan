@@ -8,7 +8,7 @@ const handleStyleChange = (event) => {
   switch (event.target.value) {
     case "Yotsuba":
       const yotsubaBodyStyle = {
-        background: "#ffe url(/assets/fade.png) top repeat-x",
+        background: "#ffe url(assets/fade.png) top repeat-x",
         color: "maroon",
         fontFamily: "Arial, Helvetica, sans-serif"
       };
@@ -20,7 +20,7 @@ const handleStyleChange = (event) => {
 
     case "Yotsuba-B":
       const yotsubaBBodyStyle = {
-        background: "#eef2ff url(/assets/fade-blue.png) top center repeat-x",
+        background: "#eef2ff url(assets/fade-blue.png) top center repeat-x",
         color: "#000",
         fontFamily: "Arial, Helvetica, sans-serif"
       };
@@ -80,7 +80,7 @@ const handleStyleChange = (event) => {
 
     default:
       const defaultBodyStyle = {
-        background: "#ffe url(/assets/fade.png) top repeat-x",
+        background: "#ffe url(assets/fade.png) top repeat-x",
         color: "maroon",
         fontFamily: "Arial, Helvetica, sans-serif"
       };

@@ -121,7 +121,7 @@ export const StyledModal = styled(Modal)`
         }
 
         .icon {
-          background-image: url(/assets/buttons/cross_red.png);
+          background-image: url(assets/buttons/cross_red.png);
         }
 
         span {
@@ -142,7 +142,7 @@ export const StyledModal = styled(Modal)`
         }
 
         .icon {
-          background-image: url(/assets/buttons/cross_blue.png);
+          background-image: url(assets/buttons/cross_blue.png);
         }
 
         span {
@@ -163,7 +163,7 @@ export const StyledModal = styled(Modal)`
         }
 
         .icon {
-          background-image: url(/assets/buttons/cross_red.png);
+          background-image: url(assets/buttons/cross_red.png);
         }
 
         span {
@@ -184,7 +184,7 @@ export const StyledModal = styled(Modal)`
         }
 
         .icon {
-          background-image: url(/assets/buttons/cross_blue.png);
+          background-image: url(assets/buttons/cross_blue.png);
         }
 
         span {
@@ -204,7 +204,7 @@ export const StyledModal = styled(Modal)`
         }
 
         .icon {
-          background-image: url(/assets/buttons/cross_dark.png);
+          background-image: url(assets/buttons/cross_dark.png);
         }
 
         #name {
@@ -248,7 +248,7 @@ export const StyledModal = styled(Modal)`
         }
 
         .icon {
-          background-image: url(/assets/buttons/cross_photon.png);
+          background-image: url(assets/buttons/cross_photon.png);
         }
 
         span {

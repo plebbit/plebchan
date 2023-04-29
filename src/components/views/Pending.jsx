@@ -42,7 +42,7 @@ const Pending = () => {
 
   const navigate = useNavigate();
   const [commentMediaInfo, setCommentMediaInfo] = useState(null);
-  const fallbackImgUrl = "/assets/filedeleted-res.gif";
+  const fallbackImgUrl = "assets/filedeleted-res.gif";
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {

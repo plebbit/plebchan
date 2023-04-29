@@ -22,7 +22,7 @@ const Home = () => {
   // prevent dark mode
   useEffect(() => {
     setBodyStyle({
-      background: "#ffe url(/assets/fade.png) top repeat-x",
+      background: "#ffe url(assets/fade.png) top repeat-x",
       color: "maroon",
       fontFamily: "Helvetica, Arial, sans-serif"
     });
@@ -39,7 +39,7 @@ const Home = () => {
         <Header>
           <Logo>
             <Link to="/">
-              <img alt="plebchan" src="/assets/logo/logo-transparent.png" />
+              <img alt="plebchan" src="assets/logo/logo-transparent.png" />
             </Link>
           </Logo>
         </Header>
@@ -92,7 +92,7 @@ const Home = () => {
                       setSelectedTitle(subplebbit.title);
                       setSelectedAddress(subplebbit.address);
                     }} >
-                      <img alt="board logo" src="/assets/plebchan.png" />
+                      <img alt="board logo" src="assets/plebchan.png" />
                     </Link>
                     <div className="board-text">
                       <b>{subplebbit.address}</b>

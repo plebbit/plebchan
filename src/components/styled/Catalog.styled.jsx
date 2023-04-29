@@ -40,7 +40,7 @@ export const Threads = styled.div`
   }
 
   .sticky-icon {
-    background-image: url(/assets/sticky.gif);
+    background-image: url(assets/sticky.gif);
     width: 16px;
     height: 16px;
     display: inline-block;

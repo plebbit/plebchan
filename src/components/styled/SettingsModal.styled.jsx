@@ -186,15 +186,15 @@ export const StyledModal = styled(Modal)`
         }
 
         .icon {
-          background-image: url(/assets/buttons/cross_red.png);
+          background-image: url(assets/buttons/cross_red.png);
         }
         
         .plus {
-          background-image: url(/assets/buttons/post_expand_plus_red.png);
+          background-image: url(assets/buttons/post_expand_plus_red.png);
         }
         
         .minus {
-          background-image: url(/assets/buttons/post_expand_minus_red.png);
+          background-image: url(assets/buttons/post_expand_minus_red.png);
         }
         
         .all-button {
@@ -216,15 +216,15 @@ export const StyledModal = styled(Modal)`
         }
         
         .icon {
-          background-image: url(/assets/buttons/cross_blue.png);
+          background-image: url(assets/buttons/cross_blue.png);
         }
         
         .plus {
-          background-image: url(/assets/buttons/post_expand_plus_blue.png);
+          background-image: url(assets/buttons/post_expand_plus_blue.png);
         }
         
         .minus {
-          background-image: url(/assets/buttons/post_expand_minus_blue.png);
+          background-image: url(assets/buttons/post_expand_minus_blue.png);
         }
         
         .all-button {
@@ -246,15 +246,15 @@ export const StyledModal = styled(Modal)`
         }
         
         .icon {
-          background-image: url(/assets/buttons/cross_red.png);
+          background-image: url(assets/buttons/cross_red.png);
         }
         
         .plus {
-          background-image: url(/assets/buttons/post_expand_plus_red.png);
+          background-image: url(assets/buttons/post_expand_plus_red.png);
         }
         
         .minus {
-          background-image: url(/assets/buttons/post_expand_minus_red.png);
+          background-image: url(assets/buttons/post_expand_minus_red.png);
         }
         
         .all-button {
@@ -276,15 +276,15 @@ export const StyledModal = styled(Modal)`
         }
         
         .icon {
-          background-image: url(/assets/buttons/cross_blue.png);
+          background-image: url(assets/buttons/cross_blue.png);
         }
         
         .plus {
-          background-image: url(/assets/buttons/post_expand_plus_blue.png);
+          background-image: url(assets/buttons/post_expand_plus_blue.png);
         }
         
         .minus {
-          background-image: url(/assets/buttons/post_expand_minus_blue.png);
+          background-image: url(assets/buttons/post_expand_minus_blue.png);
         }
         
         .all-button {
@@ -306,15 +306,15 @@ export const StyledModal = styled(Modal)`
         }
         
         .icon {
-          background-image: url(/assets/buttons/cross_dark.png);
+          background-image: url(assets/buttons/cross_dark.png);
         }
         
         .plus {
-          background-image: url(/assets/buttons/post_expand_plus_dark.png);
+          background-image: url(assets/buttons/post_expand_plus_dark.png);
         }
         
         .minus {
-          background-image: url(/assets/buttons/post_expand_minus_dark.png);
+          background-image: url(assets/buttons/post_expand_minus_dark.png);
         }
         
         .all-button {
@@ -346,15 +346,15 @@ export const StyledModal = styled(Modal)`
         }
         
         .icon {
-          background-image: url(/assets/buttons/cross_photon.png);
+          background-image: url(assets/buttons/cross_photon.png);
         }
         
         .plus {
-          background-image: url(/assets/buttons/post_expand_plus_photon.png);
+          background-image: url(assets/buttons/post_expand_plus_photon.png);
         }
         
         .minus {
-          background-image: url(/assets/buttons/post_expand_minus_photon.png);
+          background-image: url(assets/buttons/post_expand_minus_photon.png);
         }
         
         .all-button {

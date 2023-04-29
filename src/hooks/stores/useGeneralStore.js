@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 const useGeneralStore = create((set) => ({
   bodyStyle: JSON.parse(localStorage.getItem('bodyStyle')) || {
-    background: '#ffe url(/assets/fade.png) top repeat-x',
+    background: '#ffe url(assets/fade.png) top repeat-x',
     color: 'maroon',
     fontFamily: 'Helvetica, Arial, sans-serif',
   },

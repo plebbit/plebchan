@@ -379,7 +379,7 @@ const Catalog = () => {
             >
               {feed.map((thread, index) => {
                 const commentMediaInfo = getCommentMediaInfo(thread);
-                const fallbackImgUrl = "/assets/filedeleted-res.gif";
+                const fallbackImgUrl = "assets/filedeleted-res.gif";
                 return (
                   <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)}>
                     <div key={`thread-${index}`} className="thread">

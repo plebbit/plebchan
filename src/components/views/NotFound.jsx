@@ -12,7 +12,7 @@ const NotFound = ({ setBodyStyle }) => {
 
   useEffect(() => {
     setBodyStyle({
-      background: "#ffe url(/assets/fade.png) top repeat-x",
+      background: "#ffe url(assets/fade.png) top repeat-x",
       color: "maroon",
       fontFamily: "Helvetica, Arial, sans-serif"
     });
@@ -28,7 +28,7 @@ const NotFound = ({ setBodyStyle }) => {
         <Header>
           <Logo>
             <Link to="/">
-              <img alt="plebchan" src="/assets/logo/logo-transparent.png" />
+              <img alt="plebchan" src="assets/logo/logo-transparent.png" />
             </Link>
           </Logo>
         </Header>
@@ -37,7 +37,7 @@ const NotFound = ({ setBodyStyle }) => {
             <BoardsTitle>
               <h2 style={{textAlign: 'center'}}>404 Not Found</h2>
             </BoardsTitle>
-            <img src="/assets/plebchan-husbando.jpg" alt="plebchan" style={{
+            <img src="assets/plebchan-husbando.jpg" alt="plebchan" style={{
               display: "block",
               margin: "auto",
               padding: "15px", 

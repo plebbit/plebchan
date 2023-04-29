@@ -490,7 +490,7 @@ export const PostFormLink = styled.div`
       case 'Yotsuba':
         return `.btn-wrap {
           background-color: #f0e0d6;
-          background-image: url(/assets/buttonfade.png);
+          background-image: url(assets/buttonfade.png);
           border: 1px solid #c0a69d;
           color: #800;
           border-radius: 3px 3px 3px 3px;
@@ -511,7 +511,7 @@ export const PostFormLink = styled.div`
       case 'Yotsuba-B':
         return `.btn-wrap {
           background-color: #d6daf0;
-          background-image: url(/assets/buttonfade-blue.png);
+          background-image: url(assets/buttonfade-blue.png);
           border: 1px solid #b7c5d9;
           color: #34345c !important;
           border-radius: 3px 3px 3px 3px;
@@ -531,7 +531,7 @@ export const PostFormLink = styled.div`
       case 'Futaba':
         return `.btn-wrap {
           background-color: #f0e0d6;
-          background-image: url(/assets/buttonfade.png);
+          background-image: url(assets/buttonfade.png);
           border: 1px solid #c0a69d;
           color: #800;
           border-radius: 3px 3px 3px 3px;
@@ -552,7 +552,7 @@ export const PostFormLink = styled.div`
       case 'Burichan':
         return `.btn-wrap {
           background-color: #d6daf0;
-          background-image: url(/assets/buttonfade-blue.png);
+          background-image: url(assets/buttonfade-blue.png);
           border: 1px solid #b7c5d9;
           color: #34345c;
           border-radius: 3px 3px 3px 3px;
@@ -574,7 +574,7 @@ export const PostFormLink = styled.div`
       case 'Tomorrow':
         return `.btn-wrap {
           background-color: #1b1c1e;
-          background-image: url(/assets/buttonfade-dark.png);
+          background-image: url(assets/buttonfade-dark.png);
           border: 1px solid #282a2e;
           color: #707070;
           border-radius: 3px 3px 3px 3px;
@@ -1426,7 +1426,7 @@ export const TopBar = styled.div`
       case 'Yotsuba':
         return `.btn-wrap {
           background-color: #f0e0d6;
-          background-image: url(/assets/buttonfade.png);
+          background-image: url(assets/buttonfade.png);
           border: 1px solid #c0a69d;
           color: #800;
           border-radius: 3px 3px 3px 3px;
@@ -1447,7 +1447,7 @@ export const TopBar = styled.div`
       case 'Yotsuba-B':
         return `.btn-wrap {
           background-color: #d6daf0;
-          background-image: url(/assets/buttonfade-blue.png);
+          background-image: url(assets/buttonfade-blue.png);
           border: 1px solid #b7c5d9;
           color: #34345c !important;
           border-radius: 3px 3px 3px 3px;
@@ -1467,7 +1467,7 @@ export const TopBar = styled.div`
       case 'Futaba':
         return `.btn-wrap {
           background-color: #f0e0d6;
-          background-image: url(/assets/buttonfade.png);
+          background-image: url(assets/buttonfade.png);
           border: 1px solid #c0a69d;
           color: #800;
           border-radius: 3px 3px 3px 3px;
@@ -1488,7 +1488,7 @@ export const TopBar = styled.div`
       case 'Burichan':
         return `.btn-wrap {
           background-color: #d6daf0;
-          background-image: url(/assets/buttonfade-blue.png);
+          background-image: url(assets/buttonfade-blue.png);
           border: 1px solid #b7c5d9;
           color: #34345c;
           border-radius: 3px 3px 3px 3px;
@@ -1510,7 +1510,7 @@ export const TopBar = styled.div`
       case 'Tomorrow':
         return `.btn-wrap {
           background-color: #1b1c1e;
-          background-image: url(/assets/buttonfade-dark.png);
+          background-image: url(assets/buttonfade-dark.png);
           border: 1px solid #282a2e;
           color: #707070;
           border-radius: 3px 3px 3px 3px;
@@ -3053,7 +3053,7 @@ export const BoardForm = styled.div`
                 font-weight: 700;
                 background-color: #f0e0d6;
                 border: 1px solid #c0a69d;
-                background-image: url(/assets/buttonfade.png);
+                background-image: url(assets/buttonfade.png);
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
@@ -3170,7 +3170,7 @@ export const BoardForm = styled.div`
                 font-weight: 700;
                 background-color: #d6daf0;
                 border: 1px solid #b7c5d9;
-                background-image: url(/assets/buttonfade-blue.png);
+                background-image: url(assets/buttonfade-blue.png);
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
@@ -3283,7 +3283,7 @@ export const BoardForm = styled.div`
                 font-weight: 700;
                 background-color: #f0e0d6;
                 border: 1px solid #c0a69d;
-                background-image: url(/assets/buttonfade.png);
+                background-image: url(assets/buttonfade.png);
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
@@ -3399,7 +3399,7 @@ export const BoardForm = styled.div`
                 font-weight: 700;
                 background-color: #d6daf0;
                 border: 1px solid #b7c5d9;
-                background-image: url(/assets/buttonfade-blue.png);
+                background-image: url(assets/buttonfade-blue.png);
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
@@ -3516,7 +3516,7 @@ export const BoardForm = styled.div`
                 font-weight: 700;
                 background-color: rgb(27,28,30);
                 border: 1px solid #282A2E;
-                background-image: url(/assets/buttonfade-dark.png);
+                background-image: url(assets/buttonfade-dark.png);
                 background-repeat: repeat-x;
                 text-decoration: none;
               }
