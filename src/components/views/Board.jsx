@@ -459,7 +459,7 @@ const Board = () => {
               <PostLoader />
             ) : (
               <Virtuoso
-                increaseViewportBy={{bottom: 1000}}
+                increaseViewportBy={2000}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};

@@ -1560,7 +1560,8 @@ export const TopBar = styled.div`
 
 export const BoardForm = styled.div`
   @media (min-width: 480px) {
-    margin-bottom: 25px;
+    margin-bottom: 130px;
+
     .thread-mobile {
       display: none;
     }
@@ -2928,6 +2929,7 @@ export const BoardForm = styled.div`
 
   @media (max-width: 480px) {
     margin-top: -5%;
+    margin-bottom: 335px;
 
     .thread {
       display: none;
