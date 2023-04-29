@@ -54,6 +54,13 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+
+  .enlarged {
+    max-width: none !important;
+    max-height: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
 `;
 
 const StyledContainer = styled(ToastContainer)`

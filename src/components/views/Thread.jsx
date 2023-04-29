@@ -18,6 +18,7 @@ import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
+import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
@@ -466,23 +467,35 @@ const Thread = () => {
                           {commentMediaInfo?.type === "webpage" ? (
                             <span key={`fta-${comment.cid}`} className="file-thumb">
                               {comment.thumbnailUrl ? (
-                                <img key={`fti-${index}`} src={comment.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                <img key={`fti-${index}`} 
+                                src={comment.thumbnailUrl} alt={commentMediaInfo.type}
+                                onClick={handleImageClick}
+                                style={{cursor: "pointer"}} 
+                                onError={(e) => e.target.src = fallbackImgUrl} />
                               ) : null}
                             </span>
                           ) : null}
                           {commentMediaInfo?.type === "image" ? (
                             <span key={`fta-${comment.cid}`} className="file-thumb">
-                              <img key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                              <img key={`fti-${comment.cid}`} 
+                              src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                              onClick={handleImageClick}
+                              style={{cursor: "pointer"}} 
+                              onError={(e) => e.target.src = fallbackImgUrl} />
                             </span>
                           ) : null}
                           {commentMediaInfo?.type === "video" ? (
                             <span key={`fta-${comment.cid}`} className="file-thumb">
-                              <video controls key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                              <video controls key={`fti-${comment.cid}`} 
+                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                              onError={(e) => e.target.src = fallbackImgUrl} />
                             </span>
                           ) : null}
                           {commentMediaInfo?.type === "audio" ? (
                             <span key={`fta-${comment.cid}`} className="file-thumb">
-                              <audio controls key={`fti-${comment.cid}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                              <audio controls key={`fti-${comment.cid}`} 
+                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                              onError={(e) => e.target.src = fallbackImgUrl} />
                             </span>
                           ) : null}
                         </div>
@@ -653,8 +666,9 @@ const Thread = () => {
                                   <span key={`fta-${index}`} className="file-thumb-reply">
                                     {reply.thumbnailUrl ? (
                                       <img key={`fti-${index}`}
-                                      src={reply.thumbnailUrl} 
-                                      alt="thumbnail" 
+                                      src={reply.thumbnailUrl} alt="thumbnail" 
+                                      onClick={handleImageClick}
+                                      style={{cursor: "pointer"}}
                                       onError={(e) => e.target.src = fallbackImgUrl} />
                                     ) : null}
                                   </span>
@@ -662,23 +676,22 @@ const Thread = () => {
                                 {replyMediaInfo?.type === "image" ? (
                                   <span key={`fta-${index}`} className="file-thumb-reply">
                                     <img key={`fti-${index}`}
-                                    src={replyMediaInfo.url} 
-                                    alt={replyMediaInfo.type} 
+                                    src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                    onClick={handleImageClick}
+                                    style={{cursor: "pointer"}}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>
                                 ) : null}
                                 {replyMediaInfo?.type === "video" ? (
                                   <span key={`fta-${index}`} className="file-thumb-reply">
-                                    <video controls
-                                    key={`fti-${index}`} 
+                                    <video controls key={`fti-${index}`} 
                                     src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>
                                 ) : null}
                                 {replyMediaInfo?.type === "audio" ? (
                                   <span key={`fta-${index}`} className="file-thumb-reply">
-                                    <audio controls 
-                                    key={`fti-${index}`}
+                                    <audio controls key={`fti-${index}`}
                                     src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>

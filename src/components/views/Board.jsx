@@ -18,6 +18,7 @@ import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
+import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
@@ -486,23 +487,35 @@ const Board = () => {
                             {commentMediaInfo?.type === "webpage" ? (
                               <span key={`fta-${index}`} className="file-thumb">
                                 {thread.thumbnailUrl ? (
-                                  <img key={`fti-${index}`} src={thread.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                  <img key={`fti-${index}`} 
+                                  src={thread.thumbnailUrl} alt={commentMediaInfo.type}
+                                  onClick={handleImageClick}
+                                  style={{cursor: "pointer"}}
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
                                 ) : null}
                               </span>
                             ) : null}
                             {commentMediaInfo?.type === "image" ? (
                               <span key={`fta-${index}`} className="file-thumb">
-                                <img key={`fti-${index}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                <img key={`fti-${index}`} 
+                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                                onClick={handleImageClick}
+                                style={{cursor: "pointer"}}
+                                onError={(e) => e.target.src = fallbackImgUrl} />
                               </span>
                             ) : null}
                             {commentMediaInfo?.type === "video" ? (
                               <span key={`fta-${index}`} className="file-thumb">
-                                <video controls width="" key={`fti-${index}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                <video controls width="" key={`fti-${index}`} 
+                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                                onError={(e) => e.target.src = fallbackImgUrl} />
                               </span>
                             ) : null}
                             {commentMediaInfo?.type === "audio" ? (
                               <span key={`fta-${index}`} className="file-thumb">
-                                <audio controls key={`fti-${index}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                <audio controls key={`fti-${index}`} 
+                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                                onError={(e) => e.target.src = fallbackImgUrl} />
                               </span>
                             ) : null}
                           </div>
@@ -707,8 +720,9 @@ const Board = () => {
                                   <span key={`fta-${index}`} className="file-thumb-reply">
                                     {reply.thumbnailUrl ? (
                                       <img key={`fti-${index}`}
-                                      src={reply.thumbnailUrl} 
-                                      alt="thumbnail" 
+                                      src={reply.thumbnailUrl} alt={replyMediaInfo.type}
+                                      onClick={handleImageClick}
+                                      style={{cursor: "pointer"}}
                                       onError={(e) => e.target.src = fallbackImgUrl} />
                                     ) : null}
                                   </span>
@@ -716,8 +730,9 @@ const Board = () => {
                                 {replyMediaInfo?.type === "image" ? (
                                   <span key={`fta-${index}`} className="file-thumb-reply">
                                     <img key={`fti-${index}`}
-                                    src={replyMediaInfo.url} 
-                                    alt={replyMediaInfo.type} 
+                                    src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                    onClick={handleImageClick}
+                                    style={{cursor: "pointer"}}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                   </span>
                                 ) : null}
@@ -837,27 +852,32 @@ const Board = () => {
                                 commentMediaInfo.type === "webpage" ? (
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
                                       {thread.thumbnailUrl ? (
-                                        <img key={`mob-img-${index}`} src={thread.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <img key={`mob-img-${index}`} 
+                                        src={thread.thumbnailUrl} alt="thumbnail" 
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
                                       ) : null}
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
                                     </span>
                                 ) : commentMediaInfo.type === "image" ? (
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <img key={`mob-img-${index}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                      <img key={`mob-img-${index}`} 
+                                      src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
                                     </span>
                                 ) : commentMediaInfo.type === "video" ? (
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
                                       <video key={`fti-${index}`} 
-                                      src={commentMediaInfo.url} 
-                                      alt={commentMediaInfo.type}
+                                      src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                       style={{ pointerEvents: "none" }} 
                                       onError={(e) => e.target.src = fallbackImgUrl} />
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
                                     </span>
                                 ) : commentMediaInfo.type === "audio" ? (
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <audio key={`mob-img-${index}`} src={commentMediaInfo.url} alt={commentMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                      <audio key={`mob-img-${index}`} 
+                                      src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
                                     </span>
                                 ) : null
