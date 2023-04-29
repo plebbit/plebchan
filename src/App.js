@@ -56,10 +56,15 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .enlarged {
-    max-width: none !important;
-    max-height: none !important;
-    width: auto !important;
-    height: auto !important;
+    @media (min-width: 480px) {
+      max-width: none !important;
+      max-height: none !important;
+    }
+
+    @media (max-width: 480px) {
+      max-width: 100% !important;
+      max-height: 100% !important;
+    }
   }
 `;
 

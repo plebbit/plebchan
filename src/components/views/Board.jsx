@@ -846,14 +846,14 @@ const Board = () => {
                         </div>
                         {thread.link ? (
                           <div key={`mob-f-${index}`} className="file-mobile">
-                            <a key={`link-a-${index}`} href={commentMediaInfo?.url} target="_blank"
-                            rel="noopener noreferrer">
                               {commentMediaInfo?.url ? (
                                 commentMediaInfo.type === "webpage" ? (
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
                                       {thread.thumbnailUrl ? (
                                         <img key={`mob-img-${index}`} 
                                         src={thread.thumbnailUrl} alt="thumbnail" 
+                                        onClick={handleImageClick}
+                                        style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
                                       ) : null}
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
@@ -862,6 +862,8 @@ const Board = () => {
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
                                       <img key={`mob-img-${index}`} 
                                       src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                                      onClick={handleImageClick}
+                                      style={{cursor: "pointer"}}
                                       onError={(e) => e.target.src = fallbackImgUrl} />
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
                                     </span>
@@ -882,7 +884,6 @@ const Board = () => {
                                     </span>
                                 ) : null
                               ) : null}
-                            </a>
                           </div>
                         ) : null}
                         {thread.content ? (
@@ -983,37 +984,44 @@ const Board = () => {
                           </div>
                           {reply.link ? (
                             <div key={`mob-f-${index}`} className="file-mobile">
-                              <a key={`link-a-${index}`} href={replyMediaInfo?.url} target="_blank" rel="noopener noreferrer">
                                 {replyMediaInfo?.url ? (
                                   replyMediaInfo.type === "webpage" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                         {reply.thumbnailUrl ? (
-                                          <img key={`mob-img-${index}`} src={reply.thumbnailUrl} alt="thumbnail" onError={(e) => e.target.src = fallbackImgUrl} />
+                                          <img key={`mob-img-${index}`} 
+                                          src={reply.thumbnailUrl} alt="thumbnail" 
+                                          onClick={handleImageClick}
+                                          style={{cursor: "pointer"}}
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
                                         ) : null}
                                         <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
                                   ) : replyMediaInfo.type === "image" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <img key={`mob-img-${index}`} src={replyMediaInfo.url} alt={replyMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <img key={`mob-img-${index}`} 
+                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                        onClick={handleImageClick}
+                                        style={{cursor: "pointer"}}
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
                                         <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
                                   ) : replyMediaInfo.type === "video" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                           <video key={`fti-${index}`} 
-                                          src={replyMediaInfo.url} 
-                                          alt={replyMediaInfo.type} 
+                                          src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                           style={{ pointerEvents: "none" }}
                                           onError={(e) => e.target.src = fallbackImgUrl} />
                                         <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
                                   ) : replyMediaInfo.type === "audio" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <audio key={`mob-img-${index}`} src={replyMediaInfo.url} alt={replyMediaInfo.type} onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <audio key={`mob-img-${index}`} 
+                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
                                         <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
                                   ) : null
                                 ) : null}
-                              </a>
                             </div>
                           ) : null}
                           {reply.content ? (
