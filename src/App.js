@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAccount, useBufferedFeeds } from '@plebbit/plebbit-react-hooks';
-import styled, { createGlobalStyle } from 'styled-components';
-import { ToastContainer } from 'react-toastify';
 import 'react-tooltip/dist/react-tooltip.css';
 import 'react-toastify/dist/ReactToastify.css';
 import useGeneralStore from './hooks/stores/useGeneralStore';
+import { GlobalStyle } from './components/styled/GlobalStyle.styled';
+import { Toast } from './components/styled/Toast.styled';
 import Home from './components/views/Home';
 import Board from './components/views/Board';
 import Thread from './components/views/Thread';
@@ -16,67 +16,6 @@ import Pending from './components/views/Pending';
 import CaptchaModal from './components/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
-
-
-const GlobalStyle = createGlobalStyle`
-  *:focus {
-    outline: none;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    background: ${props => props.background};
-    color: ${props => props.color};
-    font-family: ${props => props.fontFamily};
-  }
-  
-  .tooltip {
-    z-index: 999;
-    border-radius: 0;
-    max-width: 40%;
-    font-size: 11px;
-    padding: 3px;
-    opacity: 100%;
-  }
-
-  .line-break {
-    white-space: pre-line;
-  }
-
-  .custom-paragraph {
-    margin: 0;
-    padding: 0;
-  }
-
-  .custom-linebreak {
-    display: block;
-    margin: 0;
-    padding: 0;
-  }
-
-  .enlarged {
-    @media (min-width: 480px) {
-      max-width: none !important;
-      max-height: none !important;
-    }
-
-    @media (max-width: 480px) {
-      max-width: 100% !important;
-      max-height: 100% !important;
-    }
-  }
-`;
-
-const StyledContainer = styled(ToastContainer)`
-  .Toastify__toast {
-    border-radius: 0px;
-    font-size: 11pt;
-    animation-duration: 0s;
-    border: 1px solid #fee9cd;
-    color: #c5c8c6;
-  }
-`;
 
 
 export default function App() {
@@ -224,7 +163,7 @@ export default function App() {
         </Route>
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>
-      <StyledContainer />
+      <Toast />
       <CaptchaModal 
         selectedStyle={selectedStyle}
         isOpen={isCaptchaOpen} 
