@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useAccount, useBufferedFeeds } from '@plebbit/plebbit-react-hooks';
 import styled, { createGlobalStyle } from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -69,7 +70,7 @@ const StyledContainer = styled(ToastContainer)`
 export default function App() {
   const { 
     bodyStyle, setBodyStyle,
-    setDefaultSubplebbits,
+    defaultSubplebbits, setDefaultSubplebbits,
     isCaptchaOpen, setIsCaptchaOpen,
     setIsSettingsOpen,
     selectedStyle, setSelectedStyle,
@@ -79,6 +80,18 @@ export default function App() {
 
   const location = useLocation();
   const isHomeRoute = location.pathname === "/";
+
+  const account = useAccount();
+
+  // preload default subs and subscriptions
+  useBufferedFeeds({
+    feedsOptions: [
+      {subplebbitAddresses: defaultSubplebbits.map(
+        (subplebbit) => subplebbit.address
+      ), sortType: 'new'},
+      {subplebbitAddresses: account.subscriptions, sortType: 'new'}
+    ]
+  });
   
   // preload banners
   useEffect(() => {
