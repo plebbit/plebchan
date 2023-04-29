@@ -43,6 +43,13 @@ const getCommentMediaInfo = (comment) => {
       type: 'webpage',
     };
   }
+
+  if (comment?.link) {
+    return {
+      url: comment.link,
+      type: 'webpage',
+    };
+  }
 };
 
 export default getCommentMediaInfo;
