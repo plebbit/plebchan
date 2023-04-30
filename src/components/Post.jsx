@@ -72,7 +72,7 @@ const Post = ({ content, handlequoteclick, comment }) => {
       remarkPlugins={[blockquoteToGreentext, breaks]}
       rehypePlugins={[[rehypeSanitize, customSchema]]}
       components={{
-        img: () => null,
+        img: ({ src }) => <span>{src}</span>,
         video: () => null,
         source: () => null,
         gif: () => null,
