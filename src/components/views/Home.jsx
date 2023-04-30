@@ -16,7 +16,6 @@ const BoardAvatar = ({ address }) => {
     if (subplebbit.suggested?.avatarUrl) {
       setAvatarUrl(subplebbit.suggested.avatarUrl);
     }
-    console.log(subplebbit);
   }, [subplebbit.suggested?.avatarUrl, subplebbit]);
 
   return <img alt="board logo" src={avatarUrl} />;
