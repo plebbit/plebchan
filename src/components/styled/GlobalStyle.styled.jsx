@@ -37,13 +37,18 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  .enlarged {
-    @media (min-width: 480px) {
-      max-width: none !important;
-      max-height: none !important;
-    }
+  .expanded-container {
+    display: inline-block;
+  }
 
-    @media (max-width: 480px) {
+  .enlarged {
+    display: block;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+
+  @media (max-width: 480px) {
+    .enlarged {
       max-width: 100% !important;
       max-height: 100% !important;
     }

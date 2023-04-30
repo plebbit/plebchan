@@ -465,24 +465,28 @@ const Thread = () => {
                             }</a>&nbsp;({commentMediaInfo?.type})
                           </div>
                           {commentMediaInfo?.type === "webpage" ? (
-                            <span key={`fta-${comment.cid}`} className="file-thumb">
-                              {comment.thumbnailUrl ? (
-                                <img key={`fti-${index}`} 
-                                src={comment.thumbnailUrl} alt={commentMediaInfo.type}
+                            <div key="enlarge" className="img-container">
+                              <span key={`fta-${comment.cid}`} className="file-thumb">
+                                {comment.thumbnailUrl ? (
+                                  <img key={`fti-${comment.cid}`} 
+                                  src={comment.thumbnailUrl} alt={commentMediaInfo.type}
+                                  onClick={handleImageClick}
+                                  style={{cursor: "pointer"}} 
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                ) : null}
+                              </span>
+                            </div>
+                          ) : null}
+                          {commentMediaInfo?.type === "image" ? (
+                            <div key="enlarge" className="img-container">
+                              <span key={`fta-${comment.cid}`} className="file-thumb">
+                                <img key={`fti-${comment.cid}`} 
+                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                 onClick={handleImageClick}
                                 style={{cursor: "pointer"}} 
                                 onError={(e) => e.target.src = fallbackImgUrl} />
-                              ) : null}
-                            </span>
-                          ) : null}
-                          {commentMediaInfo?.type === "image" ? (
-                            <span key={`fta-${comment.cid}`} className="file-thumb">
-                              <img key={`fti-${comment.cid}`} 
-                              src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                              onClick={handleImageClick}
-                              style={{cursor: "pointer"}} 
-                              onError={(e) => e.target.src = fallbackImgUrl} />
-                            </span>
+                              </span>
+                            </div>
                           ) : null}
                           {commentMediaInfo?.type === "video" ? (
                             <span key={`fta-${comment.cid}`} className="file-thumb">
@@ -663,24 +667,28 @@ const Thread = () => {
                                   }</a>&nbsp;({replyMediaInfo?.type})
                                 </div>
                                 {replyMediaInfo?.type === "webpage" ? (
-                                  <span key={`fta-${index}`} className="file-thumb-reply">
-                                    {reply.thumbnailUrl ? (
+                                  <div key="enlarge-reply" className="img-container">
+                                    <span key={`fta-${index}`} className="file-thumb-reply">
+                                      {reply.thumbnailUrl ? (
+                                        <img key={`fti-${index}`}
+                                        src={reply.thumbnailUrl} alt="thumbnail" 
+                                        onClick={handleImageClick}
+                                        style={{cursor: "pointer"}}
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
+                                      ) : null}
+                                    </span>
+                                  </div>
+                                ) : null}
+                                {replyMediaInfo?.type === "image" ? (
+                                  <div key="enlarge-reply" className="img-container">
+                                    <span key={`fta-${index}`} className="file-thumb-reply">
                                       <img key={`fti-${index}`}
-                                      src={reply.thumbnailUrl} alt="thumbnail" 
+                                      src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                       onClick={handleImageClick}
                                       style={{cursor: "pointer"}}
                                       onError={(e) => e.target.src = fallbackImgUrl} />
-                                    ) : null}
-                                  </span>
-                                ) : null}
-                                {replyMediaInfo?.type === "image" ? (
-                                  <span key={`fta-${index}`} className="file-thumb-reply">
-                                    <img key={`fti-${index}`}
-                                    src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                    onClick={handleImageClick}
-                                    style={{cursor: "pointer"}}
-                                    onError={(e) => e.target.src = fallbackImgUrl} />
-                                  </span>
+                                    </span>
+                                </div>
                                 ) : null}
                                 {replyMediaInfo?.type === "video" ? (
                                   <span key={`fta-${index}`} className="file-thumb-reply">
@@ -773,27 +781,31 @@ const Thread = () => {
                       {commentMediaInfo?.url ? (
                         commentMediaInfo.type === "webpage" ? (
                           <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                            <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                              {comment.thumbnailUrl ? (
-                                <img key={`mob-img-${comment.cid}`} 
-                                src={comment.thumbnailUrl} alt={commentMediaInfo.type} 
-                                onClick={handleImageClick}
-                                style={{cursor: "pointer"}}
-                                onError={(e) => e.target.src = fallbackImgUrl} />
-                                ) : null}
-                              <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
-                            </span>
+                            <div key="enlarge-reply-mob" className="img-container">
+                              <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                                {comment.thumbnailUrl ? (
+                                  <img key={`mob-img-${comment.cid}`} 
+                                  src={comment.thumbnailUrl} alt={commentMediaInfo.type} 
+                                  onClick={handleImageClick}
+                                  style={{cursor: "pointer"}}
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                  ) : null}
+                                <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
+                              </span>
+                            </div>
                           </div>
                         ) : commentMediaInfo.type === "image" ? (
                           <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                            <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                              <img key={`mob-img-${comment.cid}`} 
-                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                              onClick={handleImageClick}
-                              style={{cursor: "pointer"}}
-                              onError={(e) => e.target.src = fallbackImgUrl} />
-                              <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
-                            </span>
+                            <div key="enlarge-reply-mob" className="img-container">
+                              <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                                <img key={`mob-img-${comment.cid}`} 
+                                src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                                onClick={handleImageClick}
+                                style={{cursor: "pointer"}}
+                                onError={(e) => e.target.src = fallbackImgUrl} />
+                                <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
+                              </span>
+                            </div>
                           </div>
                         ) : commentMediaInfo.type === "video" ? (
                           <div key={`mob-f-${comment.cid}`} className="file-mobile">
@@ -889,6 +901,7 @@ const Thread = () => {
                             <div key={`mob-f-${reply.cid}`} className="file-mobile">
                                 {replyMediaInfo?.url ? (
                                   replyMediaInfo.type === "webpage" ? (
+                                    <div key="enlarge-reply-mob" className="img-container">
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                         {reply.thumbnailUrl ? (
                                           <img key={`mob-img-${reply.cid}`} 
@@ -899,7 +912,9 @@ const Thread = () => {
                                         ) : null}
                                         <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
+                                    </div>
                                   ) : replyMediaInfo.type === "image" ? (
+                                    <div key="enlarge-reply-mob" className="img-container">
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                         <img key={`mob-img-${reply.cid}`} 
                                         src={replyMediaInfo.url} alt={replyMediaInfo.type} 
@@ -908,6 +923,7 @@ const Thread = () => {
                                         onError={(e) => e.target.src = fallbackImgUrl} />
                                         <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
+                                    </div>
                                   ) : replyMediaInfo.type === "video" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                         <video key={`fti-${reply.cid}`} 
