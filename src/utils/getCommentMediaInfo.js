@@ -39,8 +39,9 @@ const getCommentMediaInfo = (comment) => {
 
   if (comment?.thumbnailUrl && comment?.thumbnailUrl !== comment?.link) {
     return {
-      url: comment.thumbnailUrl,
+      url: comment.link,
       type: 'webpage',
+      thumbnail: comment.thumbnailUrl,
     };
   }
 

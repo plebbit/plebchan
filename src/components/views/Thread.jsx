@@ -469,7 +469,7 @@ const Thread = () => {
                               <span key={`fta-${comment.cid}`} className="file-thumb">
                                 {comment.thumbnailUrl ? (
                                   <img key={`fti-${comment.cid}`} 
-                                  src={comment.thumbnailUrl} alt={commentMediaInfo.type}
+                                  src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                                   onClick={handleImageClick}
                                   style={{cursor: "pointer"}} 
                                   onError={(e) => e.target.src = fallbackImgUrl} />
@@ -671,7 +671,7 @@ const Thread = () => {
                                     <span key={`fta-${index}`} className="file-thumb-reply">
                                       {reply.thumbnailUrl ? (
                                         <img key={`fti-${index}`}
-                                        src={reply.thumbnailUrl} alt="thumbnail" 
+                                        src={replyMediaInfo.thumbnail} alt="thumbnail" 
                                         onClick={handleImageClick}
                                         style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
@@ -785,7 +785,7 @@ const Thread = () => {
                               <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
                                 {comment.thumbnailUrl ? (
                                   <img key={`mob-img-${comment.cid}`} 
-                                  src={comment.thumbnailUrl} alt={commentMediaInfo.type} 
+                                  src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type} 
                                   onClick={handleImageClick}
                                   style={{cursor: "pointer"}}
                                   onError={(e) => e.target.src = fallbackImgUrl} />
@@ -905,7 +905,7 @@ const Thread = () => {
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                         {reply.thumbnailUrl ? (
                                           <img key={`mob-img-${reply.cid}`} 
-                                          src={reply.thumbnailUrl} alt={replyMediaInfo.type} 
+                                          src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type} 
                                           onClick={handleImageClick}
                                           style={{cursor: "pointer"}}
                                           onError={(e) => e.target.src = fallbackImgUrl} />

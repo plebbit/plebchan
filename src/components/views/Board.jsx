@@ -489,7 +489,7 @@ const Board = () => {
                                 <span key={`fta-${index}`} className="file-thumb">
                                   {thread.thumbnailUrl ? (
                                     <img key={`fti-${index}`} 
-                                    src={thread.thumbnailUrl} alt={commentMediaInfo.type}
+                                    src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                                     onClick={handleImageClick}
                                     style={{cursor: "pointer"}}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
@@ -725,7 +725,7 @@ const Board = () => {
                                     <span key={`fta-${index}`} className="file-thumb-reply">
                                       {reply.thumbnailUrl ? (
                                         <img key={`fti-${index}`}
-                                        src={reply.thumbnailUrl} alt={replyMediaInfo.type}
+                                        src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type}
                                         onClick={handleImageClick}
                                         style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
@@ -860,7 +860,7 @@ const Board = () => {
                                     <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
                                       {thread.thumbnailUrl ? (
                                         <img key={`mob-img-${index}`} 
-                                        src={thread.thumbnailUrl} alt="thumbnail" 
+                                        src={commentMediaInfo.thumbnail} alt="thumbnail" 
                                         onClick={handleImageClick}
                                         style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
@@ -1002,7 +1002,7 @@ const Board = () => {
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                         {reply.thumbnailUrl ? (
                                           <img key={`mob-img-${index}`} 
-                                          src={reply.thumbnailUrl} alt="thumbnail" 
+                                          src={replyMediaInfo.thumbnail} alt="thumbnail" 
                                           onClick={handleImageClick}
                                           style={{cursor: "pointer"}}
                                           onError={(e) => e.target.src = fallbackImgUrl} />
