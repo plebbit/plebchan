@@ -213,11 +213,18 @@ export const BoardsContent = styled.div`
     margin-bottom: 5px;
   }
 
-  img {
+  .board-avatar-container {
+    width: 150px;
+    height: 150px;
     border: 1px solid #800;
     display: inline-block;
-    max-width: 150px;
-    max-height: 150px;
+    overflow: hidden;
+  }
+
+  .board-avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .board-text {
