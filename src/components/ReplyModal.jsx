@@ -29,11 +29,35 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const linkRef = useRef();
 
   const [errorMessage, setErrorMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
+  
+  useError(errorMessage, [errorMessage]);
   
   const location = useLocation();
+
+  
+  const onModalOpen = () => {
+    if (commentRef.current) {
+      commentRef.current.focus();
+    }
+  };
+  
+
+  const getSelectedText = useCallback(() => {
+    const text = document.getSelection().toString();
+    setSelectedText(text ? `>${text}\n` : '');
+  }, []);
+
+
+  useEffect(() => {
+    if (isOpen) {
+      getSelectedText();
+    } else {
+      setSelectedText('');
+    }
+  }, [isOpen, getSelectedText]);
+  
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
@@ -168,6 +192,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   return (
     <StyledModal
     isOpen={isOpen}
+    onAfterOpen={onModalOpen}
     onRequestClose={closeModal}
     contentLabel="Reply Modal"
     shouldCloseOnEsc={false}
@@ -189,7 +214,12 @@ const ReplyModal = ({ isOpen, closeModal }) => {
             </div>
             <div className="textarea-wrapper">
               <span className="fixed-text">{`c/${selectedShortCid}`}</span>
-              <textarea className="textarea" rows="4" placeholder="Comment" wrap="soft" ref={commentRef} />
+              <textarea className="textarea" 
+              rows="4" 
+              placeholder="Comment" 
+              defaultValue={selectedText}
+              wrap="soft" 
+              ref={commentRef} />
             </div>
             <div>
               <button id="next" onClick={handleSubmit}>Post</button>
