@@ -15,7 +15,7 @@ const ImageBanner = () => {
       const randomImage = Math.floor(Math.random() * images.length) + 1;
 
       const img = new Image();
-      img.src = `${process.env.PUBLIC_URL}assets/banners/banner-${randomImage}.jpg`;
+      img.src = `${process.env.PUBLIC_URL}/assets/banners/banner-${randomImage}.jpg`;
 
       img.onload = () => {
         if (isMounted) {
@@ -33,7 +33,7 @@ const ImageBanner = () => {
 
   return (
     <>
-      {currentImage && <img id="banner-img" src={`${process.env.PUBLIC_URL}assets/banners/banner-${currentImage}.jpg`} alt="banner" />}
+      {currentImage && <img id="banner-img" src={`${process.env.PUBLIC_URL}/assets/banners/banner-${currentImage}.jpg`} alt="banner" />}
     </>
   );
 };
