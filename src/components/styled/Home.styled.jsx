@@ -150,6 +150,11 @@ export const AboutContent = styled.div`
     min-height: 91px;
   }
 
+  button {
+    color: blue !important;
+    text-decoration: underline !important;
+  }
+
   a:visited {
     color: blue;
   }

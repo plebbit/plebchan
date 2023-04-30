@@ -86,15 +86,15 @@ export const NavBar = styled.div`
       return `font-size: 9pt;
       color: #b86;
       
-      a {
-        font-weight: 400;
-        padding: 1px;
-        text-decoration: none;
-        color: maroon;
+      a, button {
+        font-weight: 400 !important;
+        padding: 1px !important;
+        text-decoration: none !important;
+        color: maroon !important;
       }
 
-      a:hover {
-        color: red;
+      a:hover, button:hover {
+        color: red !important;
       }
       
       #board-nav-mobile {
@@ -114,15 +114,15 @@ export const NavBar = styled.div`
       return `font-size: 9pt;
       color: #89a;
       
-      a {
-        font-weight: 400;
-        padding: 1px;
-        text-decoration: none;
-        color: #34345c;
+      a, button {
+        font-weight: 400 !important;
+        padding: 1px !important;
+        text-decoration: none !important;
+        color: #34345c !important;
       }
 
-      a:hover {
-        color: #d00;
+      a:hover, button:hover {
+        color: #d00 !important;
       }
       
       strong {
@@ -132,15 +132,15 @@ export const NavBar = styled.div`
       case 'Futaba':
         return `font-size: 11pt;
         
-        a, a:visited {
-          font-weight: 400;
-          padding: 1px;
-          color: #00e;
-          text-decoration: underline;
+        a, a:visited, button {
+          font-weight: 400 !important;
+          padding: 1px !important;
+          color: #00e !important;
+          text-decoration: underline !important;
         }
 
-        a:hover {
-          color: red;
+        a:hover, button:hover {
+          color: red !important;
         }
       
         #board-nav-mobile {
@@ -157,15 +157,15 @@ export const NavBar = styled.div`
       case 'Burichan':
         return `font-size: 11pt;
         
-        a, a:visited {
-          font-weight: 400;
-          padding: 1px;
-          color: #34345c;
-          text-decoration: underline;
+        a, a:visited, button {
+          font-weight: 400 !important;
+          padding: 1px !important;
+          color: #34345c !important;
+          text-decoration: underline !important;
         }
 
-        a:hover {
-          color: #d00;
+        a:hover, button:hover {
+          color: #d00 !important;
         }
       
         #board-nav-mobile {
@@ -179,15 +179,15 @@ export const NavBar = styled.div`
         return `font-size: 9pt;
         color: #c5c8c6;
         
-        a, a:visited {
-          font-weight: 400;
-          padding: 1px;
-          text-decoration: none;
-          color: #81a2be;
+        a, a:visited, button {
+          font-weight: 400 !important;
+          padding: 1px !important;
+          text-decoration: none !important;
+          color: #81a2be !important;
         }
 
-        a:hover {
-          color: #5f89ab;
+        a:hover, button:hover {
+          color: #5f89ab !important;
         }
 
         #board-nav-mobile {
@@ -195,7 +195,7 @@ export const NavBar = styled.div`
           border-bottom: 2px solid #282a2e;
         }
         
-        #board-select-mobile {
+        #board-select-mobile {
           background-color: #282a2e;
           color: #c5c8c6;
           border: 1px solid #373b41;
@@ -205,15 +205,15 @@ export const NavBar = styled.div`
         return `font-size: 9pt;
         color: #333;
         
-        a, a:visited {
-          font-weight: 400;
-          padding: 1px;
-          text-decoration: none;
-          color: #f60;
+        a, a:visited, button {
+          font-weight: 400 !important;
+          padding: 1px !important;
+          text-decoration: none !important;
+          color: #f60 !important;
         }
 
-        a:hover {
-          color: #ff3300;
+        a:hover, button:hover {
+          color: #ff3300 !important;
         }
 
         #board-nav-mobile {
