@@ -1458,6 +1458,7 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
+          font-size: 10pt !important;
         }
 
         .btn-wrap a {
@@ -1499,7 +1500,12 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
-          font-size: 16px;
+          font-size: 16px !important;
+          font-family: times new roman !important;
+        }
+
+        .subscribe-button-mobile {
+          margin-top: -5px !important;
         }
 
         .btn-wrap a {
@@ -1520,7 +1526,12 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
-          font-size: 16px;
+          font-size: 16px !important;
+          font-family: times new roman !important;
+        }
+
+        .subscribe-button-mobile {
+          margin-top: -5px !important;
         }
 
         .btn-wrap a {

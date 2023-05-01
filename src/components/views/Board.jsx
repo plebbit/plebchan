@@ -463,20 +463,20 @@ const Board = () => {
             <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
             ]
           </div>
-            {feed.length > 0 ? (
-              <>
-                <span className="subscribe-button-desktop">
-                  [
-                  <button id="subscribe" style={{all: 'unset', cursor: 'pointer'}}>Subscribe</button>
-                  ]
-                </span>
-                <button className="subscribe-button-mobile btn-wrap">Subscribe</button>
-              </>
-            ) : (
+          {feed.length > 0 ? (
+            <>
+              <span className="subscribe-button-desktop">
+                [
+                <button id="subscribe" style={{all: 'unset', cursor: 'pointer'}}>Subscribe</button>
+                ]
+              </span>
+              <button className="subscribe-button-mobile btn-wrap">Subscribe</button>
+            </>
+          ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
               <span>Fetching IPFS...</span>
             </div>
-              )}
+          )}
           <div id="catalog-button-mobile">
             <span className="btn-wrap">
               <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
