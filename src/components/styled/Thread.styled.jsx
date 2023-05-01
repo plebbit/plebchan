@@ -217,7 +217,9 @@ export const TopBar = styled.div`
 
     .subscribe-button-mobile {
       margin-right: 10px;
-      float: right;
+      position: absolute;
+      right: 0;
+      font-size: 13.3333px !important;
 
       a {
         cursor: pointer;
