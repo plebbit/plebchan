@@ -1,6 +1,6 @@
 _Telegram group for this repo https://t.me/plebchanreact_
 
-_Demo https://plebchan.vercel.app and https://plebchan.eth.limo_
+_Demo https://plebchan.netlify.app and https://plebchan.eth.limo_
 
 ### Development:
 
