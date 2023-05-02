@@ -417,15 +417,18 @@ const Catalog = () => {
                         {commentMediaInfo?.url ? (
                           <Fragment key="f-catalog">
                             {commentMediaInfo?.type === "webpage" ? (
-                              <img key={`img-${index}`} alt="thread" 
-                              src={commentMediaInfo.url} 
+                              thread.thumbnailUrl ? (
+                              <img key={`img-${index}`}
+                              src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
-                                e.target.onerror = null;}}  />
+                                e.target.onerror = null;
+                              }}  />
+                              ) : null
                             ) : null}
                             {commentMediaInfo?.type === "image" ? (
-                              <img key={`img-${index}`} alt="thread" 
-                              src={commentMediaInfo.url} 
+                              <img key={`img-${index}`}
+                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
                                 e.target.onerror = null;}}  />
