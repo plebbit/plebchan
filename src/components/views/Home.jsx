@@ -112,7 +112,7 @@ const Home = () => {
                   <br />
                   {account?.subscriptions?.map((subscription, index) => (
                     <>
-                      <Link key={`sub-${index}`} className="boardlink" to={`/p/${subscription.subplebbitAddress}`}>
+                      <Link key={`sub-${index}`} className="boardlink" to={`/p/${subscription}`}>
                         <br id="mobile-br" />
                         {subscription}
                       </Link>
