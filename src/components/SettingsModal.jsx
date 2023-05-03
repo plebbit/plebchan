@@ -108,14 +108,14 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
 
   const handleCloseModal = () => {
-    closeModal();
-
-    if (location.pathname === "/settings") {
-      navigate(-1, { replace: true });
+    if (location.pathname.endsWith("/settings")) {
+      const newPath = location.pathname.slice(0, -9);
+      closeModal();
+      navigate(newPath, { replace: true });
     } else {
-      navigate("/settings", { state: { from: location } });
+      closeModal();
     }
-  };
+  };  
 
 
   const toggleExpanded = (index) => {
@@ -152,7 +152,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   return (
     <StyledModal
       isOpen={isOpen}
-      onRequestClose={closeModal}
+      onRequestClose={handleCloseModal}
       contentLabel="Settings"
       style={customOverlayStyles}
       selectedStyle={selectedStyle}
