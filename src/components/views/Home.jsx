@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
@@ -31,6 +31,7 @@ const Home = () => {
     setSelectedTitle
   } = useGeneralStore(state => state);
 
+  const account = useAccount();
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -98,9 +99,30 @@ const Home = () => {
               </div>
             </AboutContent>
           </About>
+          {account.subscriptions?.length > 0 ? (
+            <Boards style={{marginBottom: '6px'}}>
+                <BoardsTitle>
+                  <h2>Board Subscriptions</h2>
+                </BoardsTitle>
+                <BoardsContent id="subscriptions">
+                  <h3 style={{textDecoration: 'underline', display: 'inline'}}>
+                    You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}
+                  </h3>
+                  <br />
+                  {account.subscriptions.map((subscription, index) => (
+                    <>
+                      <Link key={`sub-${index}`} class="boardlink" to={`/p/${subscription.subplebbitAddress}`}>
+                        {subscription}
+                      </Link>
+                      <br />
+                    </>
+                  ))}
+                </BoardsContent>
+            </Boards>
+          ) : null}
           <Boards>
               <BoardsTitle>
-                <h2>Popular boards</h2>
+                <h2>Popular Boards</h2>
               </BoardsTitle>
               <BoardsContent>
                 {defaultSubplebbits.map(subplebbit => (
