@@ -73,9 +73,9 @@ const Post = ({ content, handlequoteclick, comment }) => {
       rehypePlugins={[[rehypeSanitize, customSchema]]}
       components={{
         img: ({ src }) => <span>{src}</span>,
-        video: () => null,
-        source: () => null,
-        gif: () => null,
+        video: ({ src }) => <span>{src}</span>,
+        source: ({ src }) => <span>{src}</span>,
+        gif: ({ src }) => <span>{src}</span>,
         p: ({ children }) => <div className="custom-paragraph">{children}</div>,
       }}
     />

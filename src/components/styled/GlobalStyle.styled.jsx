@@ -20,6 +20,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 11px;
     padding: 3px;
     opacity: 100%;
+    word-wrap: break-word;
   }
 
   .line-break {

@@ -180,6 +180,16 @@ export const TopBar = styled.div`
     .reply-stat {
       margin-top: 5px;
     }
+
+    .subscribe-button-desktop {
+      float: right;
+      margin-right: 10px;
+      margin-top: 3px;
+    }
+
+    .subscribe-button-mobile {
+      display: none;
+    }
   }
 
   @media (max-width: 480px) {
@@ -199,6 +209,21 @@ export const TopBar = styled.div`
 
     hr {
       display: none;
+    }
+
+    .subscribe-button-desktop {
+      display: none;
+    }
+
+    .subscribe-button-mobile {
+      margin-right: 10px;
+      position: absolute;
+      right: 0;
+      font-size: 13.3333px !important;
+
+      a {
+        cursor: pointer;
+      }
     }
   }
 
@@ -242,6 +267,15 @@ export const TopBar = styled.div`
           a:hover, #button:hover {
             color: red !important;
           }
+        }
+        
+        a, #subscribe {
+          color: #00e !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: red !important;
         }`;
 
       case 'Yotsuba-B':
@@ -268,6 +302,15 @@ export const TopBar = styled.div`
           a:hover, #button:hover {
             color: red !important;
           }
+        }
+        
+        a, #subscribe {
+          color: #34345c !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: #d00 !important;
         }`;
 
       case 'Futaba':
@@ -299,6 +342,16 @@ export const TopBar = styled.div`
         .reply-stat {
           font-size: 12pt;
           bottom: 2px;
+        }
+        
+        a, #subscribe {
+          color: #00e !important;
+          text-decoration: underline !important;
+          font-size: 12pt !important;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: red !important;
         }`;
 
       case 'Burichan':
@@ -330,6 +383,16 @@ export const TopBar = styled.div`
         .reply-stat {
           font-size: 12pt;
           bottom: 2px;
+        }
+        
+        a, #subscribe{
+          color: #34345c !important;
+          text-decoration: underline !important;
+          font-size: 12pt !important;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: red !important;
         }`;
 
       case 'Tomorrow':
@@ -362,6 +425,15 @@ export const TopBar = styled.div`
           a:hover, #button:hover {
             color: #5f89ab !important;
           }
+        }
+        
+        a, #subscribe {
+          color: #81a2be !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: #5f89ab !important;
         }`;
 
       case 'Photon':
@@ -388,6 +460,15 @@ export const TopBar = styled.div`
           a:hover, #button:hover {
             color: #ff3300 !important;
           }
+        }
+        
+        a, #subscribe {
+          color: #f60 !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: #ff3300 !important;
         }`;
       default:
         return '';
@@ -407,6 +488,7 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
+          font-size: 10pt !important;
         }
 
         .btn-wrap a {
@@ -448,8 +530,13 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
-          font-size: 16px;
+          font-size: 16px !important;
+          font-family: times new roman !important;
         }
+
+          .subscribe-button-mobile {
+            margin-top: -2px !important;
+          }
 
         .btn-wrap a {
           text-decoration: none !important;
@@ -469,7 +556,12 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
-          font-size: 16px;
+          font-size: 16px !important;
+          font-family: times new roman !important;
+        }
+
+        .subscribe-button-mobile {
+          margin-top: -2px !important;
         }
 
         .btn-wrap a {
