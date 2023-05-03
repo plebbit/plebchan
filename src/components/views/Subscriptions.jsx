@@ -35,7 +35,7 @@ const Subscriptions = () => {
     setSelectedShortCid,
     selectedStyle,
     setSelectedThread,
-    selectedTitle, setSelectedTitle,
+    setSelectedTitle,
   } = useGeneralStore(state => state);
 
   const account = useAccount();
@@ -103,21 +103,6 @@ const Subscriptions = () => {
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
-  
-
-  // temporary title from JSON, gets subplebbitAddress from URL
-  useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
-    const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
-    if (selectedSubplebbit) {
-      setSelectedTitle(selectedSubplebbit.title);
-    }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
-  
-  // sets useFeed to address from URL
-  useEffect(() => {
-    setSelectedFeed(feed);
-  }, [feed]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -165,7 +150,7 @@ const Subscriptions = () => {
   return (
     <>
       <Helmet>
-        <title>{((selectedTitle ? selectedTitle : selectedAddress) + " - plebchan")}</title>
+        <title>Subscriptions - plebchan</title>
       </Helmet>
       <Container>
         <ReplyModal 
@@ -201,7 +186,7 @@ const Subscriptions = () => {
               }>Create Board</button>
               ]
               [
-              <Link to={`/p/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/profile/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -226,7 +211,7 @@ const Subscriptions = () => {
                 }>Create Board</button>
               </div>
               <div className="page-jump">
-                <Link to={`/p/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/profile/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 &nbsp;
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                   )}>Home</Link>
@@ -383,7 +368,7 @@ const Subscriptions = () => {
                             &nbsp;
                             <span key={`pn-${index}`} className="post-number post-number-desktop">
                               <span key={`pl1-${index}`}>c/</span>
-                              <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
+                              <Link to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
@@ -404,7 +389,7 @@ const Subscriptions = () => {
                               </Link>
                               <span key={`rl1-${index}`}>&nbsp;&nbsp;
                                 [
-                                <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>
+                                <Link key={`rl2-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>
                                 ]
                               </span>
                             </span>&nbsp;
@@ -432,7 +417,7 @@ const Subscriptions = () => {
                                 <span key={`ttl-s-${index}`} className="ttl"> (...) 
                                 <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${thread.cid}`} />
                                 Post too long.&nbsp;
-                                  <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  <Link key={`ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. </span>
                               </blockquote>
                             </Fragment>
@@ -448,7 +433,7 @@ const Subscriptions = () => {
                       <span key={`oc-${index}`} className="ttl">
                         <span key={`oc1-${index}`}>
                           {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
-                          <Link key={`oc2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
+                          <Link key={`oc2-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
                           &nbsp;to view.
                         </span>
                       </span>) : null}
@@ -507,7 +492,7 @@ const Subscriptions = () => {
                               <span key={`pn-${index}`} className="post-number post-number-desktop">
                                 <span id="reply-button" style={{cursor: 'pointer'}} key={`pl1-${index}`} title="Link to this post">c/</span>
                                 {reply.shortCid ? (
-                                  <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
+                                  <Link to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
@@ -610,7 +595,7 @@ const Subscriptions = () => {
                                   <span key={`ttl-s-${index}`} className="ttl"> (...)
                                   <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${reply.cid}`} />
                                   Comment too long.&nbsp;
-                                    <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                    <Link key={`ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. </span>
                                 </blockquote>
                               </Fragment>
@@ -694,7 +679,7 @@ const Subscriptions = () => {
                             {getDate(thread.timestamp)}
                             &nbsp;
                             <span key={`mob-no-${index}`}>c/</span>
-                            <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-no2-${index}`} 
+                            <Link to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} id="reply-button" key={`mob-no2-${index}`} 
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
@@ -759,7 +744,7 @@ const Subscriptions = () => {
                               <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
                               <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
-                                <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                <Link key={`mob-ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                             </blockquote>
                           </Fragment>
@@ -845,7 +830,7 @@ const Subscriptions = () => {
                             {getDate(reply.timestamp)}&nbsp;
                               <span key={`mob-pl1-${index}`}>c/</span>
                               {reply.shortCid ? (
-                                <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${index}`} 
+                                <Link to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${index}`} 
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
@@ -916,7 +901,7 @@ const Subscriptions = () => {
                                 <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
                                 <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;
-                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                               </blockquote>
                             </Fragment>
@@ -1004,7 +989,7 @@ const Subscriptions = () => {
                 }>Create Board</button>
                 ]
                 [
-                <Link to={`/p/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/profile/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
