@@ -7,12 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import useGeneralStore from './hooks/stores/useGeneralStore';
 import { GlobalStyle } from './components/styled/GlobalStyle.styled';
 import { Toast } from './components/styled/Toast.styled';
-import Home from './components/views/Home';
 import Board from './components/views/Board';
-import Thread from './components/views/Thread';
 import Catalog from './components/views/Catalog';
+import Home from './components/views/Home';
 import NotFound from './components/views/NotFound';
 import Pending from './components/views/Pending';
+import Subscriptions from './components/views/Subscriptions';
+import Thread from './components/views/Thread';
 import CaptchaModal from './components/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
@@ -160,6 +161,9 @@ export default function App() {
         </Route>
         <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} /> }>
           <Route path='settings' element={<Pending />} />
+        </Route>
+        <Route path={`/profile/p/subscriptions`} element={<Subscriptions setBodyStyle={setBodyStyle} /> }>
+          <Route path='settings' element={<Subscriptions />} />
         </Route>
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>

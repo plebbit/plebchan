@@ -1,13 +1,13 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed, usePublishComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from '../styled/Board.styled';
+import { Container, NavBar, Header, Break, TopBar, BoardForm } from '../styled/Board.styled';
 import { Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
@@ -21,56 +21,35 @@ import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
-import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
-import useSuccess from '../../hooks/useSuccess';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
-const Board = () => {
+const Subscriptions = () => {
   const {
-    setCaptchaResponse,
-    setChallengesArray,
     defaultSubplebbits,
-    setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
-    setPendingComment,
-    setPendingCommentIndex,
-    setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
     setSelectedThread,
     selectedTitle, setSelectedTitle,
-    showPostForm,
-    showPostFormLink,
   } = useGeneralStore(state => state);
 
   const account = useAccount();
-
-  const nameRef = useRef();
-  const subjectRef = useRef();
-  const commentRef = useRef();
-  const linkRef = useRef();
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
-  const [selectedFeed, setSelectedFeed] = useState(feed);
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
+  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
   const { subplebbitAddress } = useParams();
 
-  const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
-
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -162,139 +141,6 @@ const Board = () => {
     }
   };
 
-
-  const onChallengeVerification = (challengeVerification) => {
-    if (challengeVerification.challengeSuccess === true) {
-      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
-      console.log('challenge success');
-    }
-    else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-    }
-  };
-
-
-  const onChallenge = async (challenges, comment) => {
-    setPendingComment(comment);
-    let challengeAnswers = [];
-    
-    try {
-      challengeAnswers = await getChallengeAnswersFromUser(challenges)
-    }
-    catch (error) {
-      setErrorMessage(error);
-    }
-    if (challengeAnswers) {
-      await comment.publishChallengeAnswers(challengeAnswers)
-    }
-  };
-
-  
-  useEffect(() => {
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      subplebbitAddress: selectedAddress,
-    }));
-  }, [selectedAddress]);
-  
-
-  const [publishCommentOptions, setPublishCommentOptions] = useState({
-    subplebbitAddress: selectedAddress,
-    onChallenge,
-    onChallengeVerification,
-    onError: (error) => {
-      setErrorMessage(error);
-    },
-  });
-  
-
-  const { publishComment, index } = usePublishComment(publishCommentOptions);
-
-  useEffect(() => {
-    if (index !== undefined) {
-      setPendingCommentIndex(index);
-      navigate(`/profile/c/${index}`);
-    }
-  }, [index, navigate, setPendingCommentIndex]);
-
-  
-  const resetFields = useCallback(() => {
-    if (nameRef.current) {
-      nameRef.current.value = '';
-    }
-    if (subjectRef.current) {
-      subjectRef.current.value = '';
-    }
-    if (commentRef.current) {
-      commentRef.current.value = '';
-    }
-    if (linkRef.current) {
-      linkRef.current.value = '';
-    }
-  }, []);
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      author: {
-        displayName: nameRef.current.value || undefined,
-      },
-      title: subjectRef.current.value || undefined,
-      content: commentRef.current.value || undefined,
-      link: linkRef.current.value || undefined,
-    }));
-
-    setTriggerPublishComment(true);
-  };
-  
-  
-  useEffect(() => {
-    if (publishCommentOptions.content && triggerPublishComment) {
-      (async () => {
-        await publishComment();
-        resetFields();
-      })();
-    }
-  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
-  
-  
-  const getChallengeAnswersFromUser = async (challenges) => {
-    setChallengesArray(challenges);
-    
-    return new Promise((resolve, reject) => {
-      const imageString = challenges?.challenges[0].challenge;
-      const imageSource = `data:image/png;base64,${imageString}`;
-      const challengeImg = new Image();
-      challengeImg.src = imageSource;
-  
-      challengeImg.onload = () => {
-        setIsCaptchaOpen(true);
-  
-        const handleKeyDown = async (event) => {
-          if (event.key === 'Enter') {
-            const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
-            resolve(currentCaptchaResponse);
-            setIsCaptchaOpen(false);
-            document.removeEventListener('keydown', handleKeyDown);
-            event.preventDefault();
-          }
-        };
-
-        setCaptchaResponse('');
-        document.addEventListener('keydown', handleKeyDown);
-
-        setResolveCaptchaPromise(resolve);
-      };
-  
-      challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
-      };
-    });
-  };
-
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
@@ -309,33 +155,12 @@ const Board = () => {
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
-
-    if (selected === 'subscriptions') {
-      navigate(`/profile/p/subscriptions`);
-      return;
-    }
-
-    const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
+    const selectedTitle = defaultSubplebbits?.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
 
-  const handleSubscribe = async () => {
-    try {
-      if (subscribed === false) {
-        await subscribe(selectedAddress);
-        setSuccessMessage(`Subscribed to ${selectedTitle ?? selectedAddress}`);
-      
-      } else if (subscribed === true) {
-        await unsubscribe(selectedAddress);
-        setSuccessMessage(`Unsubscribed from ${selectedTitle ?? selectedAddress}`);
-      }
-
-    } catch (error) {
-      setErrorMessage(error);
-    }
-  };
 
   return (
     <>
@@ -355,7 +180,7 @@ const Board = () => {
           <>
             <span className="boardList">
               [
-                <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
+                <Link to="" onClick={() => {}}>Subscriptions</Link>
               ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -387,8 +212,8 @@ const Board = () => {
               <div className="board-select">
                 <strong>Board</strong>
                 &nbsp;
-                <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
-                  <option value="subscriptions">Subscriptions</option>
+                <select id="board-select-mobile" value="subscriptions" onChange={handleSelectChange}>
+                  <option value="">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                       >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -417,59 +242,18 @@ const Board = () => {
               <ImageBanner />
             </div>
               <>
-              <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}</div>
+              <div className="board-title">Subscriptions</div>
+              {feed.length < 1 ? (
+                <div className="board-address">You haven't subscribed to any board yet.</div>
+              ) : (
+                <div className="board-address">
+                  You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}.
+                </div>
+              )}
               </>
           </>
         </Header>
         <Break selectedStyle={selectedStyle} />
-        <PostForm selectedStyle={selectedStyle}>
-        <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
-          <div id="post-form-link-desktop">
-            [
-              <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} style={{cursor: 'pointer'}}>Start a New Thread</Link>
-            ]
-          </div>
-          <div id="post-form-link-mobile">
-            <span className="btn-wrap">
-              <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} style={{cursor: 'pointer'}}>Start a New Thread</Link>
-            </span>
-          </div>
-        </PostFormLink>
-        <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
-          <tbody>
-            <tr data-type="Name">
-              <td id="td-name">Name</td>
-              <td>
-                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
-              </td>
-            </tr>
-            <tr data-type="Subject">
-              <td>Subject</td>
-              <td>
-                <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
-                <input id="post-button" type="submit" value="Post" tabIndex={6} 
-                onClick={handleSubmit} />
-              </td>
-            </tr>
-            <tr data-type="Comment">
-              <td>Comment</td>
-              <td>
-                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
-              </td>
-            </tr>
-            <tr data-type="File">
-              <td>Embed File</td>
-              <td>
-                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
-                <button id="t-help" type="button" onClick={
-                  () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
-                } data-tip="Help">?</button>
-              </td>
-            </tr>
-          </tbody>
-        </PostFormTable>
-        </PostForm>
         <TopBar selectedStyle={selectedStyle}>
           <hr />
           <span className="style-changer">
@@ -489,24 +273,6 @@ const Board = () => {
             <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
             ]
           </div>
-          {feed.length > 0 ? (
-            <>
-              <span className="subscribe-button-desktop">
-                [
-                <button id="subscribe" style={{all: 'unset', cursor: 'pointer'}}
-                  onClick={() => handleSubscribe()}>{subscribed ? "Unsubscribe" : "Subscribe"}
-                </button>
-                ]
-              </span>
-              <button className="subscribe-button-mobile btn-wrap"
-                onClick={() => handleSubscribe()}>{subscribed ? "Unsubscribe" : "Subscribe"}
-              </button>
-            </>
-          ) : (
-            <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>Fetching IPFS...</span>
-            </div>
-          )}
           <div id="catalog-button-mobile">
             <span className="btn-wrap">
               <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
@@ -516,8 +282,9 @@ const Board = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            {feed.length < 1 ? (
-              <PostLoader />
+            { feed.length < 1 ? (
+              // <PostLoader />
+              null
             ) : (
               <Virtuoso
                 increaseViewportBy={2000}
@@ -633,9 +400,13 @@ const Board = () => {
                                 setIsReplyOpen(true); 
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
-                                }} title="Reply to this post">{thread.shortCid}</Link>
-                              &nbsp;
-                              <span key={`rl1-${index}`}>&nbsp;
+                                }} title="Reply to this post">{thread.shortCid}
+                              </Link>
+                              &nbsp;p/
+                              <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
+                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                              </Link>
+                              <span key={`rl1-${index}`}>&nbsp;&nbsp;
                                 [
                                 <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>
                                 ]
@@ -738,7 +509,7 @@ const Board = () => {
                               <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
                               &nbsp;
                               <span key={`pn-${index}`} className="post-number post-number-desktop">
-                                <span key={`pl1-${index}`}>c/</span>
+                                <span id="reply-button" style={{cursor: 'pointer'}} key={`pl1-${index}`} title="Link to this post">c/</span>
                                 {reply.shortCid ? (
                                   <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
                                   onClick={(e) => {
@@ -751,6 +522,10 @@ const Board = () => {
                                 ) : (
                                   <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                                 )}
+                                &nbsp;p/
+                              <Link key={`p-r-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
+                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                              </Link>
                               </span>&nbsp;
                               <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                               <div id="backlink-id" className="backlink">
@@ -901,6 +676,14 @@ const Board = () => {
                               </span>) 
                             : null}
                           </span>
+                            <span key={`p-t-mob-span-${index}`} className="date-time-mobile highlight-address-mobile">
+                            p/
+                              <Link className="highlight-address-mobile" key={`p-t-mob-${index}`} to={`/p/${thread.subplebbitAddress}`}
+                              style={{color: "inherit", textDecoration: "none"}}
+                              id="reply-button" title="Visit this board">
+                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                              </Link>
+                            </span>
                           <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(thread.timestamp)}
                             &nbsp;
@@ -989,7 +772,7 @@ const Board = () => {
                         ((thread.replyCount + pendingReplyCounts[thread.cid]) + " replies")
                         : null
                         }</span>
-                        <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
+                        <Link key={`rl2-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
                       </div>
                     </div>
                     {displayedReplies?.map((reply, index) => {
@@ -1184,7 +967,7 @@ const Board = () => {
             <span className="boardList">
               [
                 <Link to="" onClick={() => {}}>Subscriptions</Link>
-              ]&nbsp;
+              ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -1237,4 +1020,4 @@ const Board = () => {
   );
 }
 
-export default Board;
+export default Subscriptions;

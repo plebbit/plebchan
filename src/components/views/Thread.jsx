@@ -250,6 +250,12 @@ const Thread = () => {
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
+
+    if (selected === 'subscriptions') {
+      navigate(`/profile/p/subscriptions`);
+      return;
+    }
+
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
@@ -281,7 +287,7 @@ const Thread = () => {
           <>
           <span className="boardList">
               [
-                <Link to="" onClick={() => {}}>Subscriptions</Link>
+                <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -317,6 +323,7 @@ const Thread = () => {
                 <strong>Board</strong>
                 &nbsp;
                 <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
+                  <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                       >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -564,7 +571,7 @@ const Thread = () => {
                         <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                         &nbsp;
                         <span className="post-number post-number-desktop">
-                          <span style={{cursor: 'pointer'}} id="reply-button" title="Link to this post">c/</span>
+                          <span style={{cursor: 'pointer'}}>c/</span>
                           <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => {
                             setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
                             }} title="Reply to this post">{comment.shortCid}</button>
@@ -645,7 +652,7 @@ const Thread = () => {
                             <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
                             &nbsp;
                             <span style={{cursor: 'pointer'}} key={`pn-${index}`} className="post-number post-number-desktop">
-                              <span id="reply-button" key={`pl1-${index}`} title="Link to this post">c/</span>
+                              <span key={`pl1-${index}`}>c/</span>
                               {reply.shortCid ? (
                                 <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${index}`} onClick={() => {
                                   setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
@@ -788,10 +795,11 @@ const Thread = () => {
                         <span key={`mob-dt-${comment.cid}`} className="date-time-mobile post-number-mobile">
                           {getDate(comment?.timestamp)}
                           &nbsp;
-                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-no-${comment.cid}`} onClick={() => {
+                          <span key={`mob-no-${comment.cid}`}>c/</span>
+                          <span id="reply-button" style={{cursor: 'pointer'}} key={`mob-no2-${comment.cid}`} title="Reply to this post"
+                          onClick={() => {
                             setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
-                            }} title="Link to this post">c/</button>
-                          <span id="reply-button" style={{cursor: 'pointer'}} key={`mob-no2-${comment.cid}`} title="Reply to this post">{comment.shortCid}</span>
+                            }}>{comment.shortCid}</span>
                         </span>
                       </div>
                       {commentMediaInfo?.url ? (
@@ -903,7 +911,7 @@ const Thread = () => {
                           </span>
                           <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply?.timestamp)}&nbsp;
-                            <span id="reply-button" style={{cursor: 'pointer'}} key={`mob-pl1-${index}`} title="Link to this post">c/</span>
+                            <span key={`mob-pl1-${index}`}>c/</span>
                             {reply.shortCid ? (
                               <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${index}`} onClick={() => {
                                 setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
@@ -1129,7 +1137,7 @@ const Thread = () => {
             <span className="boardList">
               [
                 <Link to="" onClick={() => {}}>Subscriptions</Link>
-              ]&nbsp;[
+              ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -1142,7 +1150,6 @@ const Thread = () => {
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
-              ]
             <span className="nav">
               [
               <button style={{all: 'unset', cursor: 'pointer'}} onClick={

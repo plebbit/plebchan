@@ -218,6 +218,12 @@ const Catalog = () => {
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
+
+    if (selected === 'subscriptions') {
+      navigate(`/profile/p/subscriptions`);
+      return;
+    }
+
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
@@ -239,7 +245,7 @@ const Catalog = () => {
           <>
           <span className="boardList">
               [
-                <Link to="" onClick={() => {}}>Subscriptions</Link>
+                <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -275,6 +281,7 @@ const Catalog = () => {
                 <strong>Board</strong>
                 &nbsp;
                 <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
+                  <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                       >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -497,7 +504,7 @@ const Catalog = () => {
             <span className="boardList">
               [
                 <Link to="" onClick={() => {}}>Subscriptions</Link>
-              ]&nbsp;[
+              ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -510,7 +517,6 @@ const Catalog = () => {
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
-              ]
               <span className="nav">
               [
               <button style={{all: 'unset', cursor: 'pointer'}} onClick={
