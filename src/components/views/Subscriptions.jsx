@@ -268,16 +268,6 @@ const Subscriptions = () => {
               <option value="Photon">Photon</option>
             </select>
           </span>
-          <div id="catalog-button-desktop">
-            [
-            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
-            ]
-          </div>
-          <div id="catalog-button-mobile">
-            <span className="btn-wrap">
-              <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
-            </span>
-          </div>
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
@@ -822,6 +812,14 @@ const Subscriptions = () => {
                                 )&nbsp;
                               </span>
                               <br key={`mob-br-${index}`} />
+                            </span>
+                            <span key={`p-t-mob-span-${index}`} className="date-time-mobile highlight-address-mobile">
+                            &nbsp;p/
+                              <Link className="highlight-address-mobile" key={`p-t-mob-${index}`} to={`/p/${thread.subplebbitAddress}`}
+                              style={{color: "inherit", textDecoration: "none"}}
+                              id="reply-button" title="Visit this board">
+                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                              </Link>
                             </span>
                             <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply.timestamp)}&nbsp;
