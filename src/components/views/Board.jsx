@@ -325,18 +325,16 @@ const Board = () => {
     try {
       if (subscribed === false) {
         await subscribe(selectedAddress);
-        setSuccessMessage(`Subscribed to ${selectedTitle ?? selectedAddress}`);
-      
+        setSuccessMessage(`Subscribed to ${selectedTitle ? selectedTitle : selectedAddress}`);
       } else if (subscribed === true) {
         await unsubscribe(selectedAddress);
-        setSuccessMessage(`Unsubscribed from ${selectedTitle ?? selectedAddress}`);
+        setSuccessMessage(`Unsubscribed from ${selectedTitle ? selectedTitle : selectedAddress}`);
       }
-
     } catch (error) {
       setErrorMessage(error);
     }
   };
-
+  
   return (
     <>
       <Helmet>

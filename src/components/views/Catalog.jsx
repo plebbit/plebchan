@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useFeed, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useFeed, usePublishComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from '../styled/Board.styled';
@@ -15,6 +15,7 @@ import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
+import useSuccess from '../../hooks/useSuccess';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -37,6 +38,8 @@ const Catalog = () => {
     showPostFormLink,
   } = useGeneralStore(state => state);
 
+  const account = useAccount();
+
   const nameRef = useRef();
   const subjectRef = useRef();
   const commentRef = useRef();
@@ -48,8 +51,12 @@ const Catalog = () => {
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const { subplebbitAddress } = useParams();
 
+  const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
+
   const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
 
@@ -230,6 +237,19 @@ const Catalog = () => {
     navigate(`/p/${selected}`);
   };
 
+  const handleSubscribe = async () => {
+    try {
+      if (subscribed === false) {
+        await subscribe(selectedAddress);
+        setSuccessMessage(`Subscribed to ${selectedTitle ? selectedTitle : selectedAddress}`);
+      } else if (subscribed === true) {
+        await unsubscribe(selectedAddress);
+        setSuccessMessage(`Unsubscribed from ${selectedTitle ? selectedTitle : selectedAddress}`);
+      }
+    } catch (error) {
+      setErrorMessage(error);
+    }
+  };
 
   return (
     <>
@@ -384,13 +404,17 @@ const Catalog = () => {
           </div>
           {feed.length > 0 ? (
             <>
-              <span className="subscribe-button-desktop">
-                [
-                <button id="subscribe" style={{all: 'unset', cursor: 'pointer'}}>Subscribe</button>
-                ]
-              </span>
-              <button className="subscribe-button-mobile btn-wrap">Subscribe</button>
-            </>
+            <span className="subscribe-button-desktop">
+              [
+              <button id="subscribe" style={{all: 'unset', cursor: 'pointer'}}
+                onClick={() => handleSubscribe()}>{subscribed ? "Unsubscribe" : "Subscribe"}
+              </button>
+              ]
+            </span>
+            <button className="subscribe-button-mobile btn-wrap"
+              onClick={() => handleSubscribe()}>{subscribed ? "Unsubscribe" : "Subscribe"}
+            </button>
+          </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
               <span>Fetching IPFS...</span>
