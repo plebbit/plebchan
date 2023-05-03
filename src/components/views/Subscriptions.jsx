@@ -394,7 +394,13 @@ const Subscriptions = () => {
                               </Link>
                               &nbsp;p/
                               <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
-                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : (
+                                  <span key={`short-add${index}`}
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={thread.subplebbitAddress}
+                                  data-tooltip-place="top"
+                                  >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
+                                  )}
                               </Link>
                               <span key={`rl1-${index}`}>&nbsp;&nbsp;
                                 [
@@ -513,8 +519,14 @@ const Subscriptions = () => {
                                   <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                                 )}
                                 &nbsp;p/
-                              <Link key={`p-r-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
-                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                                <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
+                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : (
+                                  <span key={`short-add${index}`}
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={thread.subplebbitAddress}
+                                  data-tooltip-place="top"
+                                  >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
+                                  )}
                               </Link>
                               </span>&nbsp;
                               <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
@@ -668,12 +680,16 @@ const Subscriptions = () => {
                           </span>
                             <span key={`p-t-mob-span-${index}`} className="date-time-mobile highlight-address-mobile">
                             p/
-                              <Link className="highlight-address-mobile" key={`p-t-mob-${index}`} to={`/p/${thread.subplebbitAddress}`}
-                              style={{color: "inherit", textDecoration: "none"}}
-                              id="reply-button" title="Visit this board">
-                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
-                              </Link>
-                            </span>
+                            <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
+                              {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : (
+                                <span key={`short-add${index}`}
+                                data-tooltip-id="tooltip"
+                                data-tooltip-content={thread.subplebbitAddress}
+                                data-tooltip-place="top"
+                                >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
+                                )}
+                            </Link>
+                          </span>
                           <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(thread.timestamp)}
                             &nbsp;
@@ -815,10 +831,14 @@ const Subscriptions = () => {
                             </span>
                             <span key={`p-t-mob-span-${index}`} className="date-time-mobile highlight-address-mobile">
                             &nbsp;p/
-                              <Link className="highlight-address-mobile" key={`p-t-mob-${index}`} to={`/p/${thread.subplebbitAddress}`}
-                              style={{color: "inherit", textDecoration: "none"}}
-                              id="reply-button" title="Visit this board">
-                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                            <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
+                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : (
+                                  <span key={`short-add${index}`}
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={thread.subplebbitAddress}
+                                  data-tooltip-place="top"
+                                  >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
+                                  )}
                               </Link>
                             </span>
                             <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
