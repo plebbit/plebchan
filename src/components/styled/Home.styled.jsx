@@ -171,6 +171,11 @@ export const Boards = styled.div`
   padding: 0;
   padding-bottom: .5em;
   background: #fff;
+  word-wrap: break-word;
+
+  #subscriptions {
+    text-align: left;
+  }
 `;
 
 export const BoardsTitle = styled.div`
@@ -236,6 +241,22 @@ export const BoardsContent = styled.div`
     margin-bottom: 5px;
     padding: 0 2px;
     white-space: pre-line;
+  }
+
+  h3 {
+    font-size: 100%;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .boardlink {
+    color: #800;
+    text-decoration: none;
+
+    :hover {
+      text-decoration: underline;
+      color: #e00
+    }
   }
 `;
 

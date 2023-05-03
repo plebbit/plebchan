@@ -1262,13 +1262,13 @@ export const TopBar = styled.div`
           font-size: 10pt;
         }
         
-        a {
-          color: #00e;
+        a, #subscribe {
+          color: #00e !important;
           text-decoration: none;
         }
         
-        a:hover {
-          color: red;
+        a:hover, #subscribe:hover {
+          color: red !important;
         }`;
 
       case 'Yotsuba-B':
@@ -1285,13 +1285,13 @@ export const TopBar = styled.div`
           font-size: 10pt;
         }
         
-        a {
-          color: #34345c;
+        a, #subscribe {
+          color: #34345c !important;
           text-decoration: none;
         }
         
-        a:hover {
-          color: #d00;
+        a:hover, #subscribe:hover {
+          color: #d00 !important;
         }`;
 
       case 'Futaba':
@@ -1308,13 +1308,13 @@ export const TopBar = styled.div`
           font-size: 12pt;
         }
         
-        a {
-          color: #00e;
+        a, #subscribe {
+          color: #00e !important;
           text-decoration: underline;
         }
         
-        a:hover {
-          color: red;
+        a:hover, #subscribe:hover {
+          color: red !important;
         }`;
 
       case 'Burichan':
@@ -1331,13 +1331,13 @@ export const TopBar = styled.div`
           font-size: 12pt;
         }
         
-        a {
-          color: #34345c;
+        a, #subscribe{
+          color: #34345c !important;
           text-decoration: underline;
         }
         
-        a:hover {
-          color: red;
+        a:hover, #subscribe:hover {
+          color: red !important;
         }`;
 
       case 'Tomorrow':
@@ -1354,13 +1354,13 @@ export const TopBar = styled.div`
           font-size: 10pt;
         }
         
-        a {
-          color: #81a2be;
+        a, #subscribe {
+          color: #81a2be !important;
           text-decoration: none;
         }
         
-        a:hover {
-          color: #5f89ab;
+        a:hover, #subscribe:hover {
+          color: #5f89ab !important;
         }`;
 
       case 'Photon':
@@ -1377,13 +1377,13 @@ export const TopBar = styled.div`
           font-size: 10pt;
         }
         
-        a {
-          color: #f60;
+        a, #subscribe {
+          color: #f60 !important;
           text-decoration: none;
         }
         
-        a:hover {
-          color: #ff3300;
+        a:hover, #subscribe:hover {
+          color: #ff3300 !important;
         }`;
         
         default:
@@ -1398,6 +1398,16 @@ export const TopBar = styled.div`
 
     #catalog-button-desktop {
       display: inline-block;
+    }
+
+    .subscribe-button-desktop {
+      float: right;
+      margin-right: 10px;
+      margin-top: 3px;
+    }
+
+    .subscribe-button-mobile {
+      display: none;
     }
   }
 
@@ -1419,6 +1429,22 @@ export const TopBar = styled.div`
       transform: translateX(-50%);
       font-size: 10pt;
     }
+
+    .subscribe-button-desktop {
+      display: none;
+    }
+
+    .subscribe-button-mobile {
+      margin-right: 10px;
+      margin-top: -2px;
+      position: absolute;
+      right: 0;
+      font-size: 13.3333px !important;
+
+      a {
+        cursor: pointer;
+      }
+    }
   }
 
   ${({ selectedStyle }) => {
@@ -1434,6 +1460,7 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
+          font-size: 10pt !important;
         }
 
         .btn-wrap a {
@@ -1475,7 +1502,12 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
-          font-size: 16px;
+          font-size: 16px !important;
+          font-family: times new roman !important;
+        }
+
+        .subscribe-button-mobile {
+          margin-top: -5px !important;
         }
 
         .btn-wrap a {
@@ -1496,7 +1528,12 @@ export const TopBar = styled.div`
           padding: 6px 10px 5px;
           background-repeat: repeat-x;
           cursor: pointer;
-          font-size: 16px;
+          font-size: 16px !important;
+          font-family: times new roman !important;
+        }
+
+        .subscribe-button-mobile {
+          margin-top: -5px !important;
         }
 
         .btn-wrap a {
@@ -2928,7 +2965,6 @@ export const BoardForm = styled.div`
   }}
 
   @media (max-width: 480px) {
-    margin-top: -5%;
     margin-bottom: 335px;
 
     .thread {
