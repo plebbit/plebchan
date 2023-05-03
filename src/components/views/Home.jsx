@@ -99,24 +99,27 @@ const Home = () => {
               </div>
             </AboutContent>
           </About>
-          {account.subscriptions?.length > 0 ? (
-            <Boards style={{marginBottom: '6px'}}>
+          {account?.subscriptions?.length > 0 ? (
+            <Boards>
                 <BoardsTitle>
                   <h2>Board Subscriptions</h2>
                 </BoardsTitle>
                 <BoardsContent id="subscriptions">
                   <h3 style={{textDecoration: 'underline', display: 'inline'}}>
-                    You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}
-                  </h3>
+                    You have subscribed to {account?.subscriptions?.length} board{account?.subscriptions?.length > 1 ? "s" : null}
+                  </h3>&nbsp;
+                  <Link to="/profile/p/subscriptions" id="view-all">[view all]</Link>
                   <br />
-                  {account.subscriptions.map((subscription, index) => (
+                  {account?.subscriptions?.map((subscription, index) => (
                     <>
-                      <Link key={`sub-${index}`} class="boardlink" to={`/p/${subscription.subplebbitAddress}`}>
+                      <Link key={`sub-${index}`} className="boardlink" to={`/p/${subscription.subplebbitAddress}`}>
+                        <br id="mobile-br" />
                         {subscription}
                       </Link>
                       <br />
                     </>
                   ))}
+                  <br id="mobile-br" />
                 </BoardsContent>
             </Boards>
           ) : null}

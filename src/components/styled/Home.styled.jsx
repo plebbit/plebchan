@@ -172,6 +172,7 @@ export const Boards = styled.div`
   padding-bottom: .5em;
   background: #fff;
   word-wrap: break-word;
+  margin-bottom: 6px;
 
   #subscriptions {
     text-align: left;
@@ -256,6 +257,28 @@ export const BoardsContent = styled.div`
     :hover {
       text-decoration: underline;
       color: #e00
+    }
+  }
+
+  #view-all {
+    color: #800;
+    font-weight: 700;
+    text-decoration: none;
+
+    :hover {
+      color: #e00;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .boardlink, #view-all {
+      font-size: 1.2em;
+    }
+  }
+
+  @media (min-width: 480px) {
+    #mobile-br {
+      display: none;
     }
   }
 `;
