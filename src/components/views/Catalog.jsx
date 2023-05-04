@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useAccount, useFeed, usePublishComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useFeed, usePublishComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from '../styled/Board.styled';
@@ -37,8 +37,6 @@ const Catalog = () => {
     showPostForm,
     showPostFormLink,
   } = useGeneralStore(state => state);
-
-  const account = useAccount();
 
   const nameRef = useRef();
   const subjectRef = useRef();

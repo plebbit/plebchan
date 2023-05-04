@@ -30,7 +30,7 @@ const Subscriptions = () => {
   const {
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
-    selectedAddress, setSelectedAddress,
+    setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,

@@ -3,20 +3,28 @@ import { toast } from "react-toastify";
 
 const useError = (message) => {
   useEffect(() => {
-    if (message) {
-      const toastId = toast.error(message.toString(), {
-        position: "top-right",
-        autoClose: false,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "dark",
-      });
+    if (message && message.length > 0) {
+      const showErrorToast = () => {
+        const toastId = toast.error(message.toString(), {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        return () => {
+          toast.dismiss(toastId);
+        };
+      };
+
+      const timeoutId = setTimeout(showErrorToast, 500);
 
       return () => {
-        toast.dismiss(toastId);
+        clearTimeout(timeoutId);
       };
     }
   }, [message]);
