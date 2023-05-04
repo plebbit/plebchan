@@ -262,10 +262,9 @@ const Catalog = () => {
         <NavBar selectedStyle={selectedStyle}>
           <>
           <span className="boardList">
-              [
-                <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
-              ]&nbsp;[
-            </span>
+            [
+              <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
+            ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
                 {index === 0 ? null : "\u00a0"}
@@ -277,7 +276,8 @@ const Catalog = () => {
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
-              ]
+            ]
+          </span>
             <span className="nav">
             [
               <button style={{all: 'unset', cursor: 'pointer'}} onClick={

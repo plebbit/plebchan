@@ -355,16 +355,16 @@ const Board = () => {
               [
                 <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
-            </span>
-            {defaultSubplebbits.map((subplebbit, index) => (
-              <span className="boardList" key={`span-${subplebbit.address}`}>
-                {index === 0 ? null : "\u00a0"}
-                <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
-                >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                {index !== defaultSubplebbits.length - 1 ? " /" : null}
-              </span>
-            ))}
+              {defaultSubplebbits.map((subplebbit, index) => (
+                <span className="boardList" key={`span-${subplebbit.address}`}>
+                  {index === 0 ? null : "\u00a0"}
+                  <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
+                  >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                  {index !== defaultSubplebbits.length - 1 ? " /" : null}
+                </span>
+              ))}
               ]
+            </span>
             <span className="nav">
               [
               <button style={{all: 'unset', cursor: 'pointer'}} onClick={
