@@ -16,7 +16,7 @@ const BoardAvatar = ({ address }) => {
   return (
     <div className="board-avatar-container">
       <img
-        className={isOnline ? "board-avatar" : "board-avatar offline"}
+        className="board-avatar"
         alt="board logo"
         src={avatarUrl}
       />

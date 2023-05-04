@@ -10,7 +10,7 @@ const BoardSubscription = ({ address }) => {
   return (
     <>
       &nbsp;{address}{!isOnline && (
-        <img className="disconnected" alt="offline" src="assets/disconnected.png" />
+        <img className="disconnected" alt="offline" src="assets/offline.png" />
       )}
     </>
   );

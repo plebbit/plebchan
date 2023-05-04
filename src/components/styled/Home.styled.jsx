@@ -246,11 +246,8 @@ export const BoardsContent = styled.div`
 
   .offline-indicator {
     position: absolute;
-    top: calc(50% - 10px);
-    left: 0;
-    width: 100%;
-    object-fit: cover;
-    z-index: 1;
+    top: 5px;
+    right: 5px;
   }
 
   .board-text {
@@ -298,7 +295,7 @@ export const BoardsContent = styled.div`
   }
 
   .disconnected {
-    width: 15px;
+    width: 13px;
     position: absolute;
   }
 `;

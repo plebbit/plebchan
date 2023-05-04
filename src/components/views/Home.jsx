@@ -125,9 +125,7 @@ const Home = () => {
                       setSelectedTitle(subplebbit.title);
                       setSelectedAddress(subplebbit.address);
                     }} >
-                      <div className="board-avatar-container">
-                        <BoardAvatar address={subplebbit.address} />
-                      </div>
+                      <BoardAvatar address={subplebbit.address} />
                     </Link>
                     <div className="board-text">
                       <b>{subplebbit.address}</b>
