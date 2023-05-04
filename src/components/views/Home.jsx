@@ -4,22 +4,9 @@ import { useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
+import BoardAvatar from '../BoardAvatar';
 import packageJson from '../../../package.json'
 const {version} = packageJson
-
-
-const BoardAvatar = ({ address }) => {
-  const [avatarUrl, setAvatarUrl] = useState('assets/plebchan.png');
-  const subplebbit = useSubplebbit({ subplebbitAddress: address });
-
-  useEffect(() => {
-    if (subplebbit.suggested?.avatarUrl) {
-      setAvatarUrl(subplebbit.suggested.avatarUrl);
-    }
-  }, [subplebbit.suggested?.avatarUrl, subplebbit]);
-
-  return <img alt="board logo" src={avatarUrl} />;
-};
 
 
 const Home = () => {

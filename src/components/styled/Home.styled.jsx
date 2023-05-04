@@ -230,12 +230,27 @@ export const BoardsContent = styled.div`
     border: 1px solid #800;
     display: inline-block;
     overflow: hidden;
+    position: relative;
   }
 
-  .board-avatar-container img {
+
+  .board-avatar-container img.board-avatar {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .board-avatar-container img.offline {
+    filter: brightness(50%);
+  }
+
+  .offline-indicator {
+    position: absolute;
+    top: calc(50% - 10px);
+    left: 0;
+    width: 100%;
+    object-fit: cover;
+    z-index: 1;
   }
 
   .board-text {
