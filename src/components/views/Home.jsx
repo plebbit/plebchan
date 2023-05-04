@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
 import BoardAvatar from '../BoardAvatar';
 import packageJson from '../../../package.json'
+import BoardSubscription from '../BoardSubscription';
 const {version} = packageJson
 
 
@@ -101,7 +102,7 @@ const Home = () => {
                     <>
                       <Link key={`sub-${index}`} className="boardlink" to={`/p/${subscription}`}>
                         <br id="mobile-br" />
-                        {subscription}
+                        <BoardSubscription address={subscription} />
                       </Link>
                       <br />
                     </>

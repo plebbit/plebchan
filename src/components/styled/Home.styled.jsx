@@ -296,6 +296,11 @@ export const BoardsContent = styled.div`
       display: none;
     }
   }
+
+  .disconnected {
+    width: 15px;
+    position: absolute;
+  }
 `;
 
 export const Footer = styled.div`
