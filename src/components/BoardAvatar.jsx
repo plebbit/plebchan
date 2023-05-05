@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSubplebbit } from "@plebbit/plebbit-react-hooks";
 
+
 const BoardAvatar = ({ address }) => {
   const [avatarUrl, setAvatarUrl] = useState("assets/plebchan.png");
   const subplebbit = useSubplebbit({ subplebbitAddress: address });
@@ -14,16 +15,21 @@ const BoardAvatar = ({ address }) => {
   }, [subplebbit.suggested?.avatarUrl, subplebbit]);
 
   return (
-    <div className="board-avatar-container">
-      <img
-        className="board-avatar"
-        alt="board logo"
-        src={avatarUrl}
-      />
-      {!isOnline && (
-        <img className="offline-indicator" alt="offline" src="assets/offline.png" />
-      )}
-    </div>
+    <>
+      <div className="board-avatar-container">
+        <img
+          className="board-avatar"
+          alt="board logo"
+          src={avatarUrl}
+        />
+        {!isOnline && (
+          <img className="offline-indicator" alt="offline" src="assets/offline.png"
+          data-tooltip-id="tooltip"
+          data-tooltip-content="OFFLINE"
+          data-tooltip-place="top" />
+        )}
+      </div>
+    </>
   );
 };
 

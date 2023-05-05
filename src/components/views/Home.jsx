@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
 import BoardAvatar from '../BoardAvatar';
-import packageJson from '../../../package.json'
 import BoardSubscription from '../BoardSubscription';
+import packageJson from '../../../package.json'
+import { Tooltip } from 'react-tooltip';
 const {version} = packageJson
 
 
@@ -40,6 +41,7 @@ const Home = () => {
         <title>plebchan</title>
       </Helmet>
       <Container>
+        <Tooltip id="tooltip" className="tooltip" />
         <Header>
           <Logo>
             <Link to="/">
