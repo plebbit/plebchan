@@ -2980,6 +2980,15 @@ export const BoardForm = styled.div`
   @media (max-width: 480px) {
     margin-bottom: 335px;
 
+    .offline-mobile-sub {
+      width: 18px;
+      margin-right: 5px;
+    }
+
+    .offline-mobile-sub-reply {
+      width: 15px;
+    }
+
     .thread {
       display: none;
     }

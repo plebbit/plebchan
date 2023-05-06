@@ -53,7 +53,7 @@ const Catalog = () => {
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [successMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
