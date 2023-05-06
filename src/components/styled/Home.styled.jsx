@@ -172,6 +172,7 @@ export const Boards = styled.div`
   padding-bottom: .5em;
   background: #fff;
   word-wrap: break-word;
+  margin-bottom: 6px;
 
   #subscriptions {
     text-align: left;
@@ -229,12 +230,24 @@ export const BoardsContent = styled.div`
     border: 1px solid #800;
     display: inline-block;
     overflow: hidden;
+    position: relative;
   }
 
-  .board-avatar-container img {
+
+  .board-avatar-container img.board-avatar {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .board-avatar-container img.offline {
+    filter: brightness(50%);
+  }
+
+  .offline-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
   }
 
   .board-text {
@@ -258,6 +271,43 @@ export const BoardsContent = styled.div`
       color: #e00
     }
   }
+
+  #view-all {
+    color: #800;
+    font-weight: 700;
+    text-decoration: none;
+
+    :hover {
+      color: #e00;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .boardlink, #view-all {
+      font-size: 1.2em;
+    }
+
+    .disconnected {
+      width: 15px;
+      margin-bottom: -1px;
+      position: absolute;
+    }
+  }
+
+  @media (min-width: 480px) {
+    #mobile-br {
+      display: none;
+    }
+
+    .disconnected {
+      width: 11px;
+      margin-bottom: -1px;
+      margin-top: 2px;
+      position: absolute;
+    }
+  }
+
+  
 `;
 
 export const Footer = styled.div`
