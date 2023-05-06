@@ -286,18 +286,28 @@ export const BoardsContent = styled.div`
     .boardlink, #view-all {
       font-size: 1.2em;
     }
+
+    .disconnected {
+      width: 15px;
+      margin-bottom: -1px;
+      position: absolute;
+    }
   }
 
   @media (min-width: 480px) {
     #mobile-br {
       display: none;
     }
+
+    .disconnected {
+      width: 11px;
+      margin-bottom: -1px;
+      margin-top: 2px;
+      position: absolute;
+    }
   }
 
-  .disconnected {
-    width: 13px;
-    position: absolute;
-  }
+  
 `;
 
 export const Footer = styled.div`

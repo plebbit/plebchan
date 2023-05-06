@@ -10,6 +10,7 @@ import { Threads } from '../styled/Catalog.styled';
 import { TopBar, Footer } from '../styled/Thread.styled';
 import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
+import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
@@ -239,10 +240,8 @@ const Catalog = () => {
     try {
       if (subscribed === false) {
         await subscribe(selectedAddress);
-        setSuccessMessage(`Subscribed to ${selectedTitle ? selectedTitle : selectedAddress}`);
       } else if (subscribed === true) {
         await unsubscribe(selectedAddress);
-        setSuccessMessage(`Unsubscribed from ${selectedTitle ? selectedTitle : selectedAddress}`);
       }
     } catch (error) {
       setErrorMessage(error);
@@ -273,6 +272,10 @@ const Catalog = () => {
                 setSelectedAddress(subplebbit.address);
                 }}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                <OfflineIndicator 
+                address={subplebbit.address} 
+                className="offline-nav"
+                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}

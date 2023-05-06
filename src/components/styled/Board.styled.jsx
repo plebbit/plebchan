@@ -30,6 +30,12 @@ export const NavBar = styled.div`
     #board-nav-mobile {
       display: none;
     }
+
+    .offline-nav {
+      width: 12px;
+      position: relative;
+      margin: 2px 2px -2px -2px;
+    }
   }
 
   @media (max-width: 480px) {
@@ -1615,6 +1621,13 @@ export const BoardForm = styled.div`
 
     .summary {
       margin-top: 10px;
+    }
+
+    .offline-sub {
+      width: 13px;
+      margin-right: -5px;
+      margin-bottom: -2px;
+      position: relative;
     }
 
     ${({ selectedStyle }) => {

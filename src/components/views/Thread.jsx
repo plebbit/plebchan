@@ -9,6 +9,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable } from '../styled/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
+import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
@@ -297,6 +298,10 @@ const Thread = () => {
                 setSelectedAddress(subplebbit.address);
                 }}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                <OfflineIndicator 
+                address={subplebbit.address} 
+                className="offline-nav"
+                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}

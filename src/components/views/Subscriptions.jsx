@@ -10,6 +10,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, TopBar, BoardForm } from '../styled/Board.styled';
 import { Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
+import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
@@ -173,6 +174,10 @@ const Subscriptions = () => {
                 {index === 0 ? null : "\u00a0"}
                 <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                <OfflineIndicator 
+                address={subplebbit.address} 
+                className="offline-nav"
+                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
@@ -387,6 +392,10 @@ const Subscriptions = () => {
                                   >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
                                   )}
                               </Link>
+                              <OfflineIndicator key={`oi-${index}`}
+                              address={thread.subplebbitAddress} 
+                              className="offline-sub"
+                              tooltipPlace="top" />
                               <span key={`rl1-${index}`}>&nbsp;&nbsp;
                                 [
                                 <Link key={`rl2-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>

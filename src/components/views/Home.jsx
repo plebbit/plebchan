@@ -5,7 +5,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
 import BoardAvatar from '../BoardAvatar';
-import BoardSubscription from '../BoardSubscription';
+import OfflineIndicator from '../OfflineIndicator';
 import packageJson from '../../../package.json'
 import { Tooltip } from 'react-tooltip';
 const {version} = packageJson
@@ -104,7 +104,11 @@ const Home = () => {
                     <>
                       <Link key={`sub-${index}`} className="boardlink" to={`/p/${subscription}`}>
                         <br id="mobile-br" />
-                        <BoardSubscription address={subscription} />
+                        {subscription}&nbsp;
+                        <OfflineIndicator 
+                        address={subscription} 
+                        className="disconnected"
+                        tooltipPlace="top" />
                       </Link>
                       <br />
                     </>

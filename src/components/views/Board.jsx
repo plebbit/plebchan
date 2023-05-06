@@ -10,6 +10,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from '../styled/Board.styled';
 import { Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
+import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
@@ -325,10 +326,8 @@ const Board = () => {
     try {
       if (subscribed === false) {
         await subscribe(selectedAddress);
-        setSuccessMessage(`Subscribed to ${selectedTitle ? selectedTitle : selectedAddress}`);
       } else if (subscribed === true) {
         await unsubscribe(selectedAddress);
-        setSuccessMessage(`Unsubscribed from ${selectedTitle ? selectedTitle : selectedAddress}`);
       }
     } catch (error) {
       setErrorMessage(error);
@@ -360,6 +359,10 @@ const Board = () => {
                   {index === 0 ? null : "\u00a0"}
                   <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
                   >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                  <OfflineIndicator 
+                  address={subplebbit.address} 
+                  className="offline-nav"
+                  tooltipPlace="bottom" />
                   {index !== defaultSubplebbits.length - 1 ? " /" : null}
                 </span>
               ))}
