@@ -47,6 +47,11 @@ const Subscriptions = () => {
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
+
+  useEffect(() => {
+    setSelectedFeed(feed.sort((a, b) => b.timestamp - a.timestamp));
+  }, [feed]);
+  
   const { subplebbitAddress } = useParams();
 
   const [errorMessage] = useState(null);
@@ -147,6 +152,10 @@ const Subscriptions = () => {
     navigate(`/p/${selected}`);
   };
 
+  useEffect(() => {
+    console.log(feed);
+  }, [feed]);
+  
 
   return (
     <>
