@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed, usePublishComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -16,6 +16,7 @@ import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
+import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
@@ -63,6 +64,7 @@ const Board = () => {
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const { subplebbitAddress } = useParams();
+  const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
 
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
@@ -322,6 +324,7 @@ const Board = () => {
     navigate(`/p/${selected}`);
   };
 
+  
   const handleSubscribe = async () => {
     try {
       if (subscribed === false) {
@@ -333,6 +336,7 @@ const Board = () => {
       setErrorMessage(error);
     }
   };
+
   
   return (
     <>
@@ -505,7 +509,7 @@ const Board = () => {
             </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>Fetching IPFS...</span>
+              <span>{formatState(subplebbit.state)}</span>
             </div>
           )}
           <div id="catalog-button-mobile">

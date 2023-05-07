@@ -152,10 +152,6 @@ const Subscriptions = () => {
     navigate(`/p/${selected}`);
   };
 
-  useEffect(() => {
-    console.log(feed);
-  }, [feed]);
-  
 
   return (
     <>

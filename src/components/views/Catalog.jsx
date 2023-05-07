@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useFeed, usePublishComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from '../styled/Board.styled';
@@ -12,6 +12,7 @@ import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../SettingsModal';
+import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
@@ -49,6 +50,7 @@ const Catalog = () => {
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const { subplebbitAddress } = useParams();
+  const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
 
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
@@ -248,6 +250,7 @@ const Catalog = () => {
     }
   };
 
+
   return (
     <>
       <Helmet>
@@ -418,16 +421,13 @@ const Catalog = () => {
           </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>Fetching IPFS...</span>
+              <span>{formatState(subplebbit.state)}</span>
             </div>
           )}
           <div id="return-button-mobile">
             <span className="btn-wrap-catalog btn-wrap">
               <Link to={`/p/${selectedAddress}`}>Return</Link>
             </span>
-          </div>
-          <div id="stats" style={{float: "right", marginTop: "5px"}}>
-            {feed.length > 0 ? (null) : (<span>Fetching IPFS...</span>)}
           </div>
           <hr />
         </TopBar>
