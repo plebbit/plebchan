@@ -12,7 +12,6 @@ import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../SettingsModal';
-import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
@@ -38,7 +37,7 @@ const SubscriptionsCatalog = () => {
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
 
   // mobile navbar scroll effect
