@@ -66,6 +66,13 @@ const Board = () => {
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
 
+  useEffect(() => {
+    if (subplebbit.error) {
+      const errorMessage = formatState(subplebbit.error);
+      setErrorMessage(errorMessage);
+    }
+  }, [subplebbit.error]);
+
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
   const [errorMessage, setErrorMessage] = useState(null);

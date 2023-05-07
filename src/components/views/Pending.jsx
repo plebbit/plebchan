@@ -35,11 +35,19 @@ const Pending = () => {
 
   const account = useAccount();
   const comment = useAccountComment({commentIndex: index});
-  const { publishingState } = useAccountComment({commentIndex: index});
+  const { publishingState, error } = useAccountComment({commentIndex: index});
   
   const [visible] = useState(true);
-  const [errorMessage] = useState(null);
+
+  const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+
+  useEffect(() => {
+    if (error) {
+      const errorMessage = formatState(error);
+      setErrorMessage(errorMessage);
+    }
+  }, [error]);
 
   const navigate = useNavigate();
   const [commentMediaInfo, setCommentMediaInfo] = useState(null);
