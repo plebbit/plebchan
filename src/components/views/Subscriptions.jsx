@@ -171,7 +171,7 @@ const Subscriptions = () => {
         <>
             <span className="boardList">
               [
-                <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -196,7 +196,7 @@ const Subscriptions = () => {
               }>Create Board</button>
               ]
               [
-              <Link to={`/profile/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -221,7 +221,7 @@ const Subscriptions = () => {
                 }>Create Board</button>
               </div>
               <div className="page-jump">
-                <Link to={`/profile/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 &nbsp;
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                   )}>Home</Link>
@@ -263,6 +263,16 @@ const Subscriptions = () => {
               <option value="Photon">Photon</option>
             </select>
           </span>
+          <div id="catalog-button-desktop">
+            [
+            <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
+            ]
+          </div>
+          <div id="catalog-button-mobile">
+            <span className="btn-wrap">
+              <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
+            </span>
+          </div>
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
@@ -1033,7 +1043,7 @@ const Subscriptions = () => {
                 }>Create Board</button>
                 ]
                 [
-                <Link to={`/profile/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}

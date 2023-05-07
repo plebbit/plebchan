@@ -253,7 +253,7 @@ const Thread = () => {
     const selected = event.target.value;
 
     if (selected === 'subscriptions') {
-      navigate(`/profile/p/subscriptions`);
+      navigate(`/p/subscriptions`);
       return;
     }
 
@@ -288,7 +288,7 @@ const Thread = () => {
           <>
           <span className="boardList">
             [
-              <Link to={`/profile/p/subscriptions`}>Subscriptions</Link>
+              <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
