@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
 import { useAccount, useAccountComments, useFeed } from '@plebbit/plebbit-react-hooks';
@@ -52,8 +52,6 @@ const Subscriptions = () => {
     setSelectedFeed(feed.sort((a, b) => b.timestamp - a.timestamp));
   }, [feed]);
   
-  const { subplebbitAddress } = useParams();
-
   const [errorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
 
@@ -137,10 +135,6 @@ const Subscriptions = () => {
     setSelectedTitle(title);
     setSelectedAddress(address);
     setSelectedFeed(feed.filter(feed => feed.title === title));
-
-    if (subplebbitAddress === address) {
-      window.location.reload();
-    }
   };
 
   // mobile navbar board select functionality
