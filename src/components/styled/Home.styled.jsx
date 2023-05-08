@@ -240,14 +240,11 @@ export const BoardsContent = styled.div`
     object-fit: cover;
   }
 
-  .board-avatar-container img.offline {
-    filter: brightness(50%);
-  }
-
   .offline-indicator {
     position: absolute;
     top: 5px;
     right: 5px;
+    width: 16px;
   }
 
   .board-text {

@@ -30,12 +30,6 @@ export const NavBar = styled.div`
     #board-nav-mobile {
       display: none;
     }
-
-    .offline-nav {
-      width: 12px;
-      position: relative;
-      margin: 2px 2px -2px -2px;
-    }
   }
 
   @media (max-width: 480px) {
@@ -244,13 +238,14 @@ export const Header = styled.div`
           margin: 5px auto;
           width: 300px;
           height: 100px;
+          
+          img {
+            border: none;
+            width: 300px;
+            height: 100px;
+          }
         }
 
-        img {
-          border: none;
-          width: 300px;
-          height: 100px;
-        }
 
         .board-title {
           font-family: Tahoma, sans-serif;
@@ -276,13 +271,14 @@ export const Header = styled.div`
           margin: 5px auto;
           width: 300px;
           height: 100px;
+          
+          img {
+            border: none;
+            width: 300px;
+            height: 100px;
+          }
         }
 
-        img {
-          border: none;
-          width: 300px;
-          height: 100px;
-        }
 
         .board-title {
           font-family: Tahoma, sans-serif;
@@ -307,13 +303,14 @@ export const Header = styled.div`
           margin: 5px auto;
           width: 300px;
           height: 100px;
+          
+          img {
+            border: none;
+            width: 300px;
+            height: 100px;
+          }
         }
 
-        img {
-          border: none;
-          width: 300px;
-          height: 100px;
-        }
 
         .board-title {
           font-size: 24pt;
@@ -336,13 +333,14 @@ export const Header = styled.div`
           margin: 5px auto;
           width: 300px;
           height: 100px;
+          
+          img {
+            border: none;
+            width: 300px;
+            height: 100px;
+          }
         }
 
-        img {
-          border: none;
-          width: 300px;
-          height: 100px;
-        }
 
         .board-title {
           font-size: 24pt;
@@ -366,12 +364,12 @@ export const Header = styled.div`
           width: 300px;
           height: 100px;
           max-width: 100%;
-        }
 
-        img {
-          border: none;
-          width: 300px;
-          height: 100px;
+          img {
+            border: none;
+            width: 300px;
+            height: 100px;
+          }
         }
 
         .board-title {
@@ -397,13 +395,14 @@ export const Header = styled.div`
           margin: 5px auto;
           width: 300px;
           height: 100px;
+          
+          img {
+            border: none;
+            width: 300px;
+            height: 100px;
+          }
         }
 
-        img {
-          border: none;
-          width: 300px;
-          height: 100px;
-        }
 
         .board-title {
           font-family: Tahoma, sans-serif;
@@ -424,6 +423,12 @@ export const Header = styled.div`
           return '';
       }
   }}
+
+  .offline {
+    width: 16px; 
+    position: relative;
+    margin: 2px 2px -4px 2px;
+  }
 `;
 
 export const Break = styled.hr`
@@ -1626,7 +1631,14 @@ export const BoardForm = styled.div`
     .offline-sub {
       width: 13px;
       margin-right: -5px;
-      margin-bottom: -2px;
+      margin-bottom: -3px;
+      position: relative;
+    }
+
+    .offline-reply {
+      width: 13px;
+      margin-right: 2px;
+      margin-bottom: -3px;
       position: relative;
     }
 
@@ -2981,12 +2993,14 @@ export const BoardForm = styled.div`
     margin-bottom: 335px;
 
     .offline-mobile-sub {
-      width: 18px;
+      width: 13px;
+      margin-top: 3px;
       margin-right: 5px;
     }
 
     .offline-mobile-sub-reply {
-      width: 15px;
+      width: 13px;
+      margin-top: 3px;
     }
 
     .thread {

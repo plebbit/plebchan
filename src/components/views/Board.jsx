@@ -370,10 +370,6 @@ const Board = () => {
                   {index === 0 ? null : "\u00a0"}
                   <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
                   >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                  <OfflineIndicator 
-                  address={subplebbit.address} 
-                  className="offline-nav"
-                  tooltipPlace="bottom" />
                   {index !== defaultSubplebbits.length - 1 ? " /" : null}
                 </span>
               ))}
@@ -428,10 +424,13 @@ const Board = () => {
             <div className="banner">
               <ImageBanner />
             </div>
-              <>
-              <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}</div>
-              </>
+            <div className="board-title">{selectedTitle}</div>
+            <div className="board-address">p/{selectedAddress}
+              <OfflineIndicator 
+              address={selectedAddress} 
+              className="offline"
+              tooltipPlace="top" />
+            </div>
           </>
         </Header>
         <Break selectedStyle={selectedStyle} />
