@@ -17,7 +17,7 @@ function formatState(str) {
       }
     });
 
-  if (formattedWords.includes("Failed")) {
+  if (formattedWords[0] === "Failed" || formattedWords[0] === "Succeeded") {
     return formattedWords.join(" ") + ".";
   }
 
