@@ -2613,51 +2613,9 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#84d03c4b622634418ce1561e09abdfe46b7d32b2":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#1073e876f52514195e87512281a9d2d7bbefbd6c":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#84d03c4b622634418ce1561e09abdfe46b7d32b2"
-  dependencies:
-    "@keyv/sqlite" "3.6.2"
-    "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
-    "@types/node-fetch" "2.6.2"
-    "@types/proper-lockfile" "4.1.2"
-    "@types/uuid" "8.3.4"
-    assert "2.0.0"
-    async-wait-until "2.0.12"
-    buffer "6.0.3"
-    captcha-canvas "3.2.1"
-    err-code "3.0.1"
-    ethers "5.7.2"
-    file-type "16.5.4"
-    form-data "4.0.0"
-    hpagent "1.2.0"
-    ipfs-http-client "56.0.3"
-    ipfs-only-hash "4.0.0"
-    is-ipfs "6.0.2"
-    jose "4.11.0"
-    js-sha256 "0.9.0"
-    keyv "4.5.2"
-    knex "2.3.0"
-    libp2p-crypto "0.21.2"
-    limiter "2.1.0"
-    localforage "1.10.0"
-    lodash-es "4.17.21"
-    open-graph-scraper "5.2.3"
-    p-limit "3.1.0"
-    peer-id "0.16.0"
-    proper-lockfile "github:plebbit/node-proper-lockfile"
-    retry "0.13.1"
-    safe-stable-stringify "2.4.1"
-    skia-canvas "1.0.0"
-    sqlite3 "5.1.2"
-    tiny-typed-emitter "2.1.0"
-    tinycache "1.1.2"
-    ts-custom-error "3.3.1"
-    uuid "9.0.0"
-
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#b3272c08bd3861322b7a5eef48992e1b73640098":
-  version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#b3272c08bd3861322b7a5eef48992e1b73640098"
+  resolved "https://github.com/plebbit/plebbit-js.git#1073e876f52514195e87512281a9d2d7bbefbd6c"
   dependencies:
     "@keyv/sqlite" "3.6.2"
     "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
@@ -2710,26 +2668,11 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#97b538693972e26f7c0f0f13ec6afab03b0e2e57":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#91ea5a494fde74836b085e912f671cc5489ecf09":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#97b538693972e26f7c0f0f13ec6afab03b0e2e57"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#91ea5a494fde74836b085e912f671cc5489ecf09"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#b3272c08bd3861322b7a5eef48992e1b73640098"
-    "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
-    assert "2.0.0"
-    ethers "5.6.9"
-    localforage "1.10.0"
-    lodash.isequal "4.5.0"
-    memoizee "0.4.15"
-    quick-lru "5.1.1"
-    uuid "8.3.2"
-    zustand "4.0.0"
-
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#ea1a110be2043e2d4dbc9fc369ec7b47d52979d4":
-  version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#ea1a110be2043e2d4dbc9fc369ec7b47d52979d4"
-  dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#84d03c4b622634418ce1561e09abdfe46b7d32b2"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#1073e876f52514195e87512281a9d2d7bbefbd6c"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
@@ -6299,10 +6242,10 @@ electron-to-chromium@^1.4.284:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.371.tgz#393983ef087268a20c926a89be30e9f0bfc803b0"
   integrity sha512-jlBzY4tFcJaiUjzhRTCWAqRvTO/fWzjA3Bls0mykzGZ7zvcMP7h05W6UcgzfT9Ca1SW2xyKDOFRyI0pQeRNZGw==
 
-electron@19.0.1:
-  version "19.0.1"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-19.0.1.tgz#9370cb4d43db959bbe1dfa85ba582b3a012af5aa"
-  integrity sha512-zuhJVV7nTDFrRZ7uAIylSD0Eoi1xcUV4UzGfpWsREI4W5GsxNGyZQeqQDpg43w8+7oED812oDrGfPh5kb9rcQA==
+electron@19.1.8:
+  version "19.1.8"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-19.1.8.tgz#3ce19c270ca86d05bbf0df5ceeaea2d23edc7083"
+  integrity sha512-UfPQdFjgKI0xCm1V5sV3iAVOs0kCwAE91xWzV5tI7ij14yOkxTdXp9BqTzFaSbQYLYxn6q1BUUe1nlzjJjzAnw==
   dependencies:
     "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
