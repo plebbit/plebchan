@@ -13,6 +13,7 @@ import Home from './components/views/Home';
 import NotFound from './components/views/NotFound';
 import Pending from './components/views/Pending';
 import Subscriptions from './components/views/Subscriptions';
+import SubscriptionsCatalog from './components/views/SubscriptionsCatalog';
 import Thread from './components/views/Thread';
 import CaptchaModal from './components/CaptchaModal';
 import { importAll } from './components/ImageBanner';
@@ -162,8 +163,11 @@ export default function App() {
         <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} /> }>
           <Route path='settings' element={<Pending />} />
         </Route>
-        <Route path={`/profile/p/subscriptions`} element={<Subscriptions setBodyStyle={setBodyStyle} /> }>
+        <Route path={`/p/subscriptions`} element={<Subscriptions setBodyStyle={setBodyStyle} /> }>
           <Route path='settings' element={<Subscriptions />} />
+        </Route>
+        <Route path={`p/subscriptions/catalog`} element={<SubscriptionsCatalog setBodyStyle={setBodyStyle} /> }>
+          <Route path='settings' element={<SubscriptionsCatalog />} />
         </Route>
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>

@@ -92,13 +92,13 @@ const Home = () => {
           {account?.subscriptions?.length > 0 ? (
             <Boards>
                 <BoardsTitle>
-                  <h2>Board Subscriptions</h2>
+                  <h2>Subscriptions</h2>
                 </BoardsTitle>
                 <BoardsContent id="subscriptions">
                   <h3 style={{textDecoration: 'underline', display: 'inline'}}>
                     You have subscribed to {account?.subscriptions?.length} board{account?.subscriptions?.length > 1 ? "s" : null}
                   </h3>&nbsp;
-                  <Link to="/profile/p/subscriptions" id="view-all">[view all]</Link>
+                  <Link to="/p/subscriptions" id="view-all">[view all]</Link>
                   <br />
                   {account?.subscriptions?.map((subscription, index) => (
                     <>

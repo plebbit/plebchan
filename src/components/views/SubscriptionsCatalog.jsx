@@ -1,81 +1,44 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAccount, useFeed } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable } from '../styled/Board.styled';
+import { Container, NavBar, Header, Break} from '../styled/Board.styled';
 import { Threads } from '../styled/Catalog.styled';
 import { TopBar, Footer } from '../styled/Thread.styled';
 import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../SettingsModal';
-import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
-import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
-import useSuccess from '../../hooks/useSuccess';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
-const Catalog = () => {
+const SubscriptionsCatalog = () => {
   const {
-    captchaResponse, setCaptchaResponse,
-    setChallengesArray,
     defaultSubplebbits,
-    setIsCaptchaOpen,
     isSettingsOpen, setIsSettingsOpen,
-    setPendingComment,
-    setPendingCommentIndex,
-    setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     setSelectedThread,
-    selectedTitle, setSelectedTitle,
-    showPostForm,
-    showPostFormLink,
+    setSelectedTitle,
   } = useGeneralStore(state => state);
 
-  const nameRef = useRef();
-  const subjectRef = useRef();
-  const commentRef = useRef();
-  const linkRef = useRef();
+  const account = useAccount();
 
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
-  const { subplebbitAddress } = useParams();
-  const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
+  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
-  useEffect(() => {
-    if (subplebbit.error) {
-      const errorMessage = formatState(subplebbit.error);
-      setErrorMessage(errorMessage);
-    }
-  }, [subplebbit.error]);
-
-  const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage] = useState(null);
+  const [errorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
-
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
-
-  // temporary title from JSON, gets subplebbitAddress from URL
-  useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
-    const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
-    if (selectedSubplebbit) {
-      setSelectedTitle(selectedSubplebbit.title);
-    }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -97,145 +60,18 @@ const Catalog = () => {
     {await new Promise(resolve => setTimeout(resolve, 1000))}
   };
 
-
-  const onChallengeVerification = (challengeVerification) => {
-    if (challengeVerification.challengeSuccess === true) {
-      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
-      console.log('challenge success');
-    }
-    else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
-    }
-  };
-
-
-  const onChallenge = async (challenges, comment) => {
-    setPendingComment(comment);
-    let challengeAnswers = [];
-    
-    try {
-      challengeAnswers = await getChallengeAnswersFromUser(challenges)
-    }
-    catch (error) {
-      setErrorMessage(error);
-    }
-    if (challengeAnswers) {
-      await comment.publishChallengeAnswers(challengeAnswers)
-    }
-  };
-  
-
-  useEffect(() => {
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      subplebbitAddress: selectedAddress,
-    }));
-  }, [selectedAddress]);
-  
-
-  const [publishCommentOptions, setPublishCommentOptions] = useState({
-    subplebbitAddress: selectedAddress,
-    onChallenge,
-    onChallengeVerification,
-    onError: (error) => {
-      setErrorMessage(error);
-    },
-  });
-  
-
-  const { publishComment, index } = usePublishComment(publishCommentOptions);
-
-  useEffect(() => {
-    if (index !== undefined) {
-      setPendingCommentIndex(index);
-      navigate(`/profile/c/${index}`);
-    }
-  }, [index, navigate, setPendingCommentIndex]);
-
-  
-  const resetFields = useCallback(() => {
-    if (nameRef.current) {
-      nameRef.current.value = '';
-    }
-    if (subjectRef.current) {
-      subjectRef.current.value = '';
-    }
-    if (commentRef.current) {
-      commentRef.current.value = '';
-    }
-    if (linkRef.current) {
-      linkRef.current.value = '';
-    }
-  }, []);
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    setPublishCommentOptions((prevPublishCommentOptions) => ({
-      ...prevPublishCommentOptions,
-      author: {
-        displayName: nameRef.current.value || undefined,
-      },
-      title: subjectRef.current.value || undefined,
-      content: commentRef.current.value || undefined,
-      link: linkRef.current.value || undefined,
-    }));
-
-    setTriggerPublishComment(true);
-  };
-  
-  
-  useEffect(() => {
-    if (publishCommentOptions.content && triggerPublishComment) {
-      (async () => {
-        await publishComment();
-        resetFields();
-      })();
-    }
-  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
-  
-  
-  const getChallengeAnswersFromUser = async (challenges) => {
-    setChallengesArray(challenges);
-    
-    return new Promise((resolve, reject) => {
-      const imageString = challenges?.challenges[0].challenge;
-      const imageSource = `data:image/png;base64,${imageString}`;
-      const challengeImg = new Image();
-      challengeImg.src = imageSource;
-  
-      challengeImg.onload = () => {
-        setIsCaptchaOpen(true);
-  
-        const handleKeyDown = async (event) => {
-          if (event.key === 'Enter') {
-            const currentCaptchaResponse = captchaResponse;
-            resolve(currentCaptchaResponse);
-            setIsCaptchaOpen(false);
-            document.removeEventListener('keydown', handleKeyDown);
-            event.preventDefault();
-          }
-        };
-
-        setCaptchaResponse('');
-        document.addEventListener('keydown', handleKeyDown);
-        
-        setResolveCaptchaPromise(resolve);
-      };
-  
-      challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
-      };
-    });
-  };
+    // desktop navbar board select functionality
+    const handleClickTitle = (title, address) => {
+      setSelectedTitle(title);
+      setSelectedAddress(address);
+      setSelectedFeed(feed.filter(feed => feed.title === title));
+    };
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
 
     if (selected === 'subscriptions') {
-      navigate(`/p/subscriptions`);
       return;
     }
 
@@ -245,23 +81,11 @@ const Catalog = () => {
     navigate(`/p/${selected}`);
   };
 
-  const handleSubscribe = async () => {
-    try {
-      if (subscribed === false) {
-        await subscribe(selectedAddress);
-      } else if (subscribed === true) {
-        await unsubscribe(selectedAddress);
-      }
-    } catch (error) {
-      setErrorMessage(error);
-    }
-  };
-
 
   return (
     <>
       <Helmet>
-        <title>{((selectedTitle ? selectedTitle : selectedAddress) + " - Catalog - plebchan")}</title>
+      <title>Subscriptions - Catalog - plebchan</title>
       </Helmet>
       <Container>
         <SettingsModal
@@ -341,59 +165,18 @@ const Catalog = () => {
               <ImageBanner />
             </div>
               <>
-              <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}</div>
+              <div className="board-title">Subscriptions</div>
+              {feed.length < 1 ? (
+                <div className="board-address">You haven't subscribed to any board yet.</div>
+              ) : (
+                <div className="board-address">
+                  You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}.
+                </div>
+              )}
               </>
           </>
         </Header>
         <Break selectedStyle={selectedStyle} />
-        <PostForm selectedStyle={selectedStyle}>
-          <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
-            <div id="post-form-link-desktop">
-              [
-                <Link to={`/p/${subplebbitAddress}/catalog/post`} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</Link>
-              ]
-            </div>
-            <div id="post-form-link-mobile">
-              <span className="btn-wrap">
-                <Link to={`/p/${subplebbitAddress}/catalog/post`} onClick={useClickForm()} onMouseOver={(event) => event.target.style.cursor='pointer'}>Start a New Thread</Link>
-              </span>
-            </div>
-          </PostFormLink>
-          <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
-            <tbody>
-              <tr data-type="Name">
-                <td id="td-name">Name</td>
-                <td>
-                  <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
-                </td>
-              </tr>
-              <tr data-type="Subject">
-                <td>Subject</td>
-                <td>
-                  <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
-                  <input id="post-button" type="submit" value="Post" tabIndex={6} 
-                  onClick={handleSubmit} />
-                </td>
-              </tr>
-              <tr data-type="Comment">
-                <td>Comment</td>
-                <td>
-                  <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
-                </td>
-              </tr>
-              <tr data-type="File">
-                <td>Embed File</td>
-                <td>
-                  <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
-                  <button id="t-help" type="button" onClick={
-                    () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
-                  } data-tip="Help">?</button>
-                </td>
-              </tr>
-            </tbody>
-          </PostFormTable>
-        </PostForm>
         <TopBar selectedStyle={selectedStyle}>
           <hr />
           <span className="style-changer">
@@ -410,36 +193,18 @@ const Catalog = () => {
           </span>
           <div className="return-button" id="return-button-desktop">
             [
-            <Link to={`/p/${selectedAddress}`}>Return</Link>
+            <Link to={`/p/subscriptions`}>Return</Link>
             ]
           </div>
-          {feed.length > 0 ? (
-            <>
-            <span className="subscribe-button-desktop">
-              [
-              <button id="subscribe" style={{all: 'unset', cursor: 'pointer'}}
-                onClick={() => handleSubscribe()}>{subscribed ? "Unsubscribe" : "Subscribe"}
-              </button>
-              ]
-            </span>
-            <button className="subscribe-button-mobile btn-wrap"
-              onClick={() => handleSubscribe()}>{subscribed ? "Unsubscribe" : "Subscribe"}
-            </button>
-          </>
-          ) : (
-            <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>{formatState(subplebbit.state)}</span>
-            </div>
-          )}
           <div id="return-button-mobile">
             <span className="btn-wrap-catalog btn-wrap">
-              <Link to={`/p/${selectedAddress}`}>Return</Link>
+              <Link to={`/p/subscriptions`}>Return</Link>
             </span>
           </div>
           <hr />
         </TopBar>
         <Threads selectedStyle={selectedStyle}>
-          {feed.length < 1 ? (
+          {selectedFeed.length < 1 ? (
             <CatalogLoader />
           ) : (
             <InfiniteScroll
@@ -532,23 +297,25 @@ const Catalog = () => {
           <NavBar selectedStyle={selectedStyle} style={{
             marginTop: "42px",
           }}>
-            <>
+          <>
             <span className="boardList">
               [
-                <Link to="" onClick={() => {}}>Subscriptions</Link>
-              ]&nbsp;
-            </span>
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+              ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
                 {index === 0 ? null : "\u00a0"}
-                <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => {
-                setSelectedTitle(subplebbit.title);
-                setSelectedAddress(subplebbit.address);
-                }}
+                <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                <OfflineIndicator 
+                address={subplebbit.address} 
+                className="offline-nav"
+                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
-              </span>
-            ))}
+                </span>
+              ))}
+              ]
+            </span>
               <span className="nav">
               [
               <button style={{all: 'unset', cursor: 'pointer'}} onClick={
@@ -592,4 +359,4 @@ const Catalog = () => {
   );
 }
 
-export default Catalog;
+export default SubscriptionsCatalog;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
@@ -35,10 +35,19 @@ const Pending = () => {
 
   const account = useAccount();
   const comment = useAccountComment({commentIndex: index});
+  const { publishingState, error } = useAccountComment({commentIndex: index});
   
   const [visible] = useState(true);
-  const [errorMessage] = useState(null);
+
+  const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
+
+  useEffect(() => {
+    if (error) {
+      const errorMessage = formatState(error);
+      setErrorMessage(errorMessage);
+    }
+  }, [error]);
 
   const navigate = useNavigate();
   const [commentMediaInfo, setCommentMediaInfo] = useState(null);
@@ -169,7 +178,7 @@ const Pending = () => {
             <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
             ]
           </span>
-            <span className="reply-stat">{formatState(comment.state)}</span>
+            <span className="reply-stat">{formatState(publishingState)}</span>
           <hr />
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
