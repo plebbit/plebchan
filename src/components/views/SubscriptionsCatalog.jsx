@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 import { useAccount, useFeed } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -106,10 +107,6 @@ const SubscriptionsCatalog = () => {
                 setSelectedAddress(subplebbit.address);
                 }}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                <OfflineIndicator 
-                address={subplebbit.address} 
-                className="offline-nav"
-                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
@@ -203,6 +200,7 @@ const SubscriptionsCatalog = () => {
           </div>
           <hr />
         </TopBar>
+        <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
           {selectedFeed.length < 1 ? (
             <CatalogLoader />
@@ -254,9 +252,21 @@ const SubscriptionsCatalog = () => {
                             ) : null}
                           </Fragment>
                         ) : null}
-                      {/* <div key={`ti-${index}`} className="thread-icons" >
-                        <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"></span>
-                      </div> */}
+                      <div key={`ti-${index}`} className="thread-icons" >
+                        {thread.link ? (
+                          // <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"></span> */
+                          <OfflineIndicator 
+                          address={thread.subplebbitAddress} 
+                          className="thread-icon offline-icon"
+                          tooltipPlace="top" />
+                        ) : (
+                          // <span key={`si-${index}`} className="thread-icon sticky-icon-no-link" title="Sticky"></span> */
+                          <OfflineIndicator 
+                          address={thread.subplebbitAddress} 
+                          className="thread-icon offline-icon-no-link"
+                          tooltipPlace="top" />
+                        ) }
+                      </div>
                       <div key={`meta-${index}`} className="meta" title="(R)eplies / (I)mage Replies" >
                         R:
                         <b key={`b-${index}`}>{thread.replyCount}</b>

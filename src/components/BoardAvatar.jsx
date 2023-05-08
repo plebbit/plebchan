@@ -25,7 +25,7 @@ const BoardAvatar = ({ address }) => {
         {!isOnline && (
           <img className="offline-indicator" alt="offline" src="assets/offline.png"
           data-tooltip-id="tooltip"
-          data-tooltip-content="OFFLINE"
+          data-tooltip-content="Offline"
           data-tooltip-place="top" />
         )}
       </div>

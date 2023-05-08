@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 import { useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -282,10 +283,6 @@ const Catalog = () => {
                 setSelectedAddress(subplebbit.address);
                 }}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                <OfflineIndicator 
-                address={subplebbit.address} 
-                className="offline-nav"
-                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
@@ -342,7 +339,12 @@ const Catalog = () => {
             </div>
               <>
               <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}</div>
+              <div className="board-address">p/{selectedAddress}
+                <OfflineIndicator 
+                address={selectedAddress} 
+                className="offline"
+                tooltipPlace="top" />
+              </div>
               </>
           </>
         </Header>
@@ -438,6 +440,7 @@ const Catalog = () => {
           </div>
           <hr />
         </TopBar>
+        <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
           {feed.length < 1 ? (
             <CatalogLoader />

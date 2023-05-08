@@ -39,6 +39,18 @@ export const Threads = styled.div`
     text-align: right;
   }
 
+  .offline-icon {
+    height: 16px;
+    margin: 2px;
+  }
+
+  .offline-icon-no-link {
+    height: 13px;
+    position: absolute;
+    margin-left: 13px;
+    margin-top: -2px;
+  }
+
   .sticky-icon {
     background-image: url(assets/sticky.gif);
     width: 16px;
