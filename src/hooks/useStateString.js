@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
+import isValidUrl from '../utils/isValidUrl'
 
 const useStateString = (clients) => {
-  const stateString = useMemo(() => {
+  return useMemo(() => {
     if (!clients) {
       return
     }
+
     const states = {}
     for (const clientType in clients) {
       for (const clientUrl in clients[clientType]) {
@@ -22,7 +24,12 @@ const useStateString = (clients) => {
     let stateString = ''
     for (const state in states) {
       const clientUrls = states[state]
-      const clientHosts = clientUrls.map(clientUrl => new URL(clientUrl).hostname)
+      const clientHosts = clientUrls.filter(isValidUrl).map(clientUrl => new URL(clientUrl).hostname)
+
+      // if there are no valid hosts, skip this state
+      if (clientHosts.length === 0) {
+        continue
+      }
 
       // separate 2 different states using ', '
       if (stateString) {
@@ -35,13 +42,16 @@ const useStateString = (clients) => {
     }
 
     // capitalize first letter
-    stateString = stateString.charAt(0).toUpperCase() + stateString.slice(1)
+    if (stateString) {
+      stateString = stateString.charAt(0).toUpperCase() + stateString.slice(1)
+
+      console.log("first log:", stateString);
+    }
 
     // if string is empty, return undefined instead
-    return stateString || undefined
+    console.log("second log:", stateString);
+    return stateString === '' ? undefined : stateString
   }, [clients])
-
-  return stateString
 }
 
 export default useStateString

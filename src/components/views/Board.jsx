@@ -68,6 +68,15 @@ const Board = () => {
 
   const stateString = useStateString(subplebbit?.clients);
 
+  const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
+
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+
   const errorString = useMemo(() => {
     if (subplebbit?.state === 'failed') {
       let errorString = 'Failed fetching board "' + selectedAddress + '".';
@@ -83,15 +92,6 @@ const Board = () => {
       setErrorMessage(errorString);
     }
   }, [errorString]);
-
-  const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
-
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -541,7 +541,7 @@ const Board = () => {
             {subplebbit?.state === "failed" ? (
               null
             ) : (
-              feed.length > 1 ? (
+              feed.length > 0 ? (
                 <Virtuoso
                 increaseViewportBy={2000}
                 data={selectedFeed}

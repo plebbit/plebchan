@@ -455,7 +455,7 @@ const Catalog = () => {
           {subplebbit?.state === "failed" ? (
             null
           ) : (
-            feed.length > 1 ? (
+            feed.length > 0 ? (
             <InfiniteScroll
               pageStart={0}
               loadMore={tryLoadMore}
