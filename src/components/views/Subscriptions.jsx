@@ -58,16 +58,22 @@ const Subscriptions = () => {
   
   const errorString = useMemo(() => {
     for (const subplebbit of subplebbits) {
-      if (subplebbit?.updatingState !== 'failed') {
+      if (subplebbit.updatingState !== 'failed') {
         return
       }
     }
     for (const subplebbit of subplebbits) {
-      if (subplebbit?.error) {
-        setErrorMessage(`Failed fetching subplebbit: ${subplebbit?.error.toString().slice(0, 300)}`);
+      if (subplebbit.error) {
+        return `Failed fetching subplebbit: ${subplebbit.error.toString().slice(0, 300)}`
       }
     }
   }, [subplebbits])
+
+  useEffect(() => {
+    if (errorString) {
+      setErrorMessage(errorString)
+    }
+  }, [errorString])
 
 
   useEffect(() => {

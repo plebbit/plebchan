@@ -44,12 +44,9 @@ const useStateString = (clients) => {
     // capitalize first letter
     if (stateString) {
       stateString = stateString.charAt(0).toUpperCase() + stateString.slice(1)
-
-      console.log("first log:", stateString);
     }
 
     // if string is empty, return undefined instead
-    console.log("second log:", stateString);
     return stateString === '' ? undefined : stateString
   }, [clients])
 }
