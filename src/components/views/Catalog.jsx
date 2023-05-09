@@ -452,9 +452,10 @@ const Catalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {feed.length < 1 ? (
-            <CatalogLoader />
+          {subplebbit?.state === "failed" ? (
+            null
           ) : (
+            feed.length > 1 ? (
             <InfiniteScroll
               pageStart={0}
               loadMore={tryLoadMore}
@@ -517,7 +518,8 @@ const Catalog = () => {
                   </Link>
                 )})}
             </InfiniteScroll>
-          )}
+          ) : (<CatalogLoader />)
+        )}
         </Threads>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{

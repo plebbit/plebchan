@@ -538,10 +538,11 @@ const Board = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            {feed.length < 1 ? (
-              <PostLoader />
+            {subplebbit?.state === "failed" ? (
+              null
             ) : (
-              <Virtuoso
+              feed.length > 1 ? (
+                <Virtuoso
                 increaseViewportBy={2000}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
@@ -1172,7 +1173,8 @@ const Board = () => {
                 endReached={tryLoadMore}
                 useWindowScroll={true}
                 components={{ Footer: hasMore ? () => <PostLoader /> : null }}
-              />
+                />
+              ) : (<PostLoader />)
             )}
           </div>
         </BoardForm>
