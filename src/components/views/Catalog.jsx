@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -13,11 +13,11 @@ import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../SettingsModal';
-import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
+import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -53,13 +53,23 @@ const Catalog = () => {
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
 
-  useEffect(() => {
-    if (subplebbit.error) {
-      const errorMessage = formatState(subplebbit.error);
-      setErrorMessage(errorMessage);
-    }
-  }, [subplebbit.error]);
+  const stateString = useStateString(subplebbit?.clients);
 
+  const errorString = useMemo(() => {
+    if (subplebbit?.state === 'failed') {
+      let errorString = 'Failed fetching board "' + selectedAddress + '".';
+      if (subplebbit.error) {
+        errorString += `: ${subplebbit.error.toString().slice(0, 300)}`
+      }
+      return errorString
+    }
+  }, [subplebbit?.state, subplebbit?.error, selectedAddress])
+
+  useEffect(() => {
+    if (errorString) {
+      setErrorMessage(errorString);
+    }
+  }, [errorString]);
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -430,7 +440,7 @@ const Catalog = () => {
           </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>{formatState(subplebbit.state)}</span>
+              <span>{stateString}</span>
             </div>
           )}
           <div id="return-button-mobile">

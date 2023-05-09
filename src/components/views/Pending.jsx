@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
@@ -10,12 +10,12 @@ import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import SettingsModal from '../SettingsModal';
-import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
+import useStateString from '../../hooks/useStateString';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -35,19 +35,29 @@ const Pending = () => {
 
   const account = useAccount();
   const comment = useAccountComment({commentIndex: index});
-  const { publishingState, error } = useAccountComment({commentIndex: index});
-  
+
+  const stateString = useStateString(comment?.clients)
+
+  const errorString = useMemo(() => {
+    if (comment?.state === 'failed') {
+      let errorString = 'Failed fetching pending thread. Pending index: ' + index;
+      if (comment.error) {
+        errorString += `: ${comment.error.toString().slice(0, 300)}`
+      }
+      return errorString
+    }
+  }, [comment?.state, comment?.error, index])
+
+  useEffect(() => {
+    if (errorString) {
+      setErrorMessage(errorString);
+    }
+  }, [errorString]);
+
   const [visible] = useState(true);
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
-
-  useEffect(() => {
-    if (error) {
-      const errorMessage = formatState(error);
-      setErrorMessage(errorMessage);
-    }
-  }, [error]);
 
   const navigate = useNavigate();
   const [commentMediaInfo, setCommentMediaInfo] = useState(null);
@@ -178,7 +188,7 @@ const Pending = () => {
             <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
             ]
           </span>
-            <span className="reply-stat">{formatState(publishingState)}</span>
+            <span className="reply-stat">{stateString}</span>
           <hr />
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
