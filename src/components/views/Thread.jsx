@@ -316,10 +316,6 @@ const Thread = () => {
                 setSelectedAddress(subplebbit.address);
                 }}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                <OfflineIndicator 
-                address={subplebbit.address} 
-                className="offline-nav"
-                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
@@ -376,7 +372,12 @@ const Thread = () => {
             </div>
               <>
               <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}</div>
+              <div className="board-address">p/{selectedAddress}
+                <OfflineIndicator 
+                address={selectedAddress} 
+                className="offline"
+                tooltipPlace="top" />
+              </div>
               </>
           </>
         </Header>
