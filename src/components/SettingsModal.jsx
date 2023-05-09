@@ -189,7 +189,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <li>
             </li>
           </ul>
-        </ul>
+        </ul>*/}
         <ul>
           <li className="settings-cat-lbl">
           <span className={`${expanded.includes(1) ? 'minus' : 'plus'}`}
@@ -197,13 +197,19 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           />
           <span className="settings-pointer" style={{cursor: "pointer"}}
             onClick={() => toggleExpanded(1)}
-          >Profile</span>
+          >Account</span>
+          <div className="plebbit-options-buttons"
+          style={{ display: expanded.includes(1) ? 'block' : 'none' }}
+          >
+            <button className="save-button">Export</button>
+            <button className="reset-button">Import</button> 
+          </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
             <li>
             </li>
           </ul>
-        </ul> */}
+        </ul>
         <ul>
           <li className="settings-cat-lbl">
             <span className={`${expanded.includes(2) ? 'minus' : 'plus'}`}
@@ -213,11 +219,11 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               onClick={() => toggleExpanded(2)}
             >Plebbit Options</span>
             <div className="plebbit-options-buttons"
-              style={{ display: expanded.includes(2) ? 'block' : 'none' }}
+            style={{ display: expanded.includes(2) ? 'block' : 'none' }}
             >
               <button className="save-button" onClick={handleSavePlebbitOptions}>Save</button>
-              <button className="reset-button"onClick={handleResetPlebbitOptions}>Reset</button>
-             </div>
+              <button className="reset-button"onClick={handleResetPlebbitOptions}>Reset</button> 
+            </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
