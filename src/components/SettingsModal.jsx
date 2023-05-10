@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { deleteCaches, exportAccount, importAccount, setAccount, useAccount } from "@plebbit/plebbit-react-hooks";
+import { deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "./styled/SettingsModal.styled";
 import useGeneralStore from "../hooks/stores/useGeneralStore";
 import useError from "../hooks/useError";
@@ -24,6 +24,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   useSuccess(successMessage, [successMessage]);
 
   const account = useAccount();
+  const { accounts } = useAccounts();
 
   useEffect(() => {
     if (account) {
@@ -174,6 +175,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setErrorMessage(error.message);
     }
   };
+
+  const handleAccountChange = (e) => {
+    setActiveAccount(e.target.value);
+  };
   
   
   return (
@@ -232,7 +237,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
             <li className="settings-option disc">
-              Export or Import Your Data</li>
+              Export or Import Your Data
+            </li>
               <div className="plebbit-options-buttons"
               style={{ display: expanded.includes(1) ? 'block' : 'none' }}
               >
@@ -248,6 +254,28 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <div className="settings-input">
               <textarea ref={importRef} value={accountJson} />
             </div>
+            <li className="settings-option disc">
+              Current Account: {account?.name}
+            </li>
+            <li className="settings-tip">
+              Select a different account to use in the dropdown below.
+            </li>
+          </ul>
+          <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
+            <li>
+              <div className="settings-input">
+                <select className="settings-select"
+                value={account?.name}
+                onChange={handleAccountChange}
+                >
+                  {accounts.map((account) => (
+                    <option key={account?.name} value={account?.name}>
+                      {account?.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </li>
           </ul>
         </ul>
         <ul>
@@ -269,8 +297,11 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
             <li className="settings-option disc">
-              IPFS Gateway URLs</li>
-            <li className="settings-tip">Optional URLs of IPFS gateways.</li>
+              IPFS Gateway URLs
+            </li>
+            <li className="settings-tip">
+              Optional URLs of IPFS gateways.
+            </li>
             <div className="settings-input">
               <textarea placeholder="IPFS Gateway URLs"
                 defaultValue={account?.plebbitOptions?.ipfsGatewayUrls.join("\n")}

@@ -172,6 +172,11 @@ export const StyledModal = styled(Modal)`
     top: 1px;
   }
 
+  .settings-select {
+    position: relative;
+    left: 23px;
+  }
+
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
