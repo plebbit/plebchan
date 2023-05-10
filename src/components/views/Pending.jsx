@@ -26,7 +26,6 @@ const Pending = () => {
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
-    selectedThread,
     selectedTitle, setSelectedTitle,
     showPostFormLink
   } = useGeneralStore(state => state);
@@ -35,6 +34,10 @@ const Pending = () => {
 
   const account = useAccount();
   const comment = useAccountComment({commentIndex: index});
+
+  useEffect(() => {
+    setSelectedAddress(comment?.subplebbitAddress);
+  }, [comment, setSelectedAddress]);
 
   const stateString = useStateString(comment?.clients)
 
