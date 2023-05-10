@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { deleteCaches, setAccount, useAccount } from "@plebbit/plebbit-react-hooks";
+import { deleteCaches, exportAccount, importAccount, setAccount, useAccount } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "./styled/SettingsModal.styled";
 import useGeneralStore from "../hooks/stores/useGeneralStore";
 import useError from "../hooks/useError";
@@ -10,17 +10,14 @@ import packageJson from '../../package.json'
 const {version} = packageJson
 
 
-const customOverlayStyles = {
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.25)'
-  }
-};
-
 const SettingsModal = ({ isOpen, closeModal }) => {
   const selectedStyle = useGeneralStore(state => state.selectedStyle);
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState([]);
+  const [accountJson, setAccountJson] = useState(null);
+  const [setImportSuccess] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
@@ -28,10 +25,18 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
   const account = useAccount();
 
+  useEffect(() => {
+    if (account) {
+      console.log(account);
+    }
+  }, [account]);
+
+
   const gatewayRef = useRef();
   const ipfsRef = useRef();
   const pubsubRef = useRef();
   const dataPathRef = useRef();
+  const importRef = useRef();
 
   const isValidURL = (url) => {
     try {
@@ -108,6 +113,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
 
   const handleCloseModal = () => {
+    setAccountJson(null);
+    
     if (location.pathname.endsWith("/settings")) {
       const newPath = location.pathname.slice(0, -9);
       closeModal();
@@ -146,7 +153,27 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       localStorage.removeItem("cacheCleared");
     }
   }, []);
-  
+
+
+  const handleExport = async () => {
+    const activeAccountJson = await exportAccount();
+    setAccountJson(activeAccountJson);
+  };
+
+
+  const handleImport = async () => {
+    const accountJson = importRef.current.value;
+
+    try {
+      await importAccount(accountJson);
+      setImportSuccess(true);
+      localStorage.setItem("toastMessage", "Account Imported");
+      window.location.reload();
+      
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
   
   
   return (
@@ -154,7 +181,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       isOpen={isOpen}
       onRequestClose={handleCloseModal}
       contentLabel="Settings"
-      style={customOverlayStyles}
+      style={{ overlay: { backgroundColor: "rgba(0,0,0,.25)" }}}
       selectedStyle={selectedStyle}
       expanded={expanded}
     >
@@ -201,13 +228,26 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           <div className="plebbit-options-buttons"
           style={{ display: expanded.includes(1) ? 'block' : 'none' }}
           >
-            <button className="save-button">Export</button>
-            <button className="reset-button">Import</button> 
           </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
-            <li>
+            <li className="settings-option disc">
+              Export or Import Your Data</li>
+              <div className="plebbit-options-buttons"
+              style={{ display: expanded.includes(1) ? 'block' : 'none' }}
+              >
+                <button className="save-button" 
+                onClick={handleExport}>Export</button>
+                <button className="reset-button" 
+                onClick={handleImport}
+                >Import</button> 
+              </div>
+            <li className="settings-tip">
+              To export, click "Export", then save your account data displayed below in a safe place. To import,  paste your account data into the box below, then click "Import".
             </li>
+            <div className="settings-input">
+              <textarea ref={importRef} value={accountJson} />
+            </div>
           </ul>
         </ul>
         <ul>
@@ -221,8 +261,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <div className="plebbit-options-buttons"
             style={{ display: expanded.includes(2) ? 'block' : 'none' }}
             >
-              <button className="save-button" onClick={handleSavePlebbitOptions}>Save</button>
-              <button className="reset-button"onClick={handleResetPlebbitOptions}>Reset</button> 
+              <button className="save-button" 
+              onClick={handleSavePlebbitOptions}>Save</button>
+              <button className="reset-button"
+              onClick={handleResetPlebbitOptions}>Reset</button> 
             </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
