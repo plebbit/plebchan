@@ -160,12 +160,12 @@ const Pending = () => {
           <ReplyFormLink id="post-form-link" showReplyFormLink={showPostFormLink} selectedStyle={selectedStyle} >
             <div id="return-button-mobile">
               <span className="btn-wrap">
-                <Link to={`/p/${selectedAddress}`}>Return</Link>
+                <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
               </span>
             </div>
             <div id="catalog-button-mobile">
               <span className="btn-wrap">
-                <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+                <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
               </span>
             </div>
             <div>&nbsp;</div>
@@ -187,12 +187,12 @@ const Pending = () => {
           </span>
           <span className="return-button" id="return-button-desktop">
             [
-            <Link to={`/p/${selectedAddress}`}>Return</Link>
+            <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
             ]
           </span>
           <span className="return-button catalog-button" id="catalog-button-desktop">
             [
-            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+            <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
             ]
           </span>
             <span className="reply-stat">{stateString}</span>

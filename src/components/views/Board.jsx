@@ -422,8 +422,7 @@ const Board = () => {
               <div className="page-jump">
                 <Link to={`/p/${selectedAddress}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 &nbsp;
-                <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
-                  )}>Home</Link>
+                <Link to="/" onClick={() => {handleStyleChange({target: {value: "Yotsuba"}}); window.scrollTo(0, 0);}}>Home</Link>
               </div>
             </div>
             <div id="separator-mobile">&nbsp;</div>
@@ -508,7 +507,7 @@ const Board = () => {
           </span>
           <div id="catalog-button-desktop">
             [
-            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+            <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
             ]
           </div>
           {feed.length > 0 ? (
@@ -531,7 +530,7 @@ const Board = () => {
           )}
           <div id="catalog-button-mobile">
             <span className="btn-wrap">
-              <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+              <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
             </span>
           </div>
         </TopBar>
@@ -1012,7 +1011,9 @@ const Board = () => {
                         ((thread.replyCount + pendingReplyCounts[thread.cid]) + " replies")
                         : null
                         }</span>
-                        <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="button-mobile" >View Thread</Link>
+                        <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
+                        onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}
+                         className="button-mobile" >View Thread</Link>
                       </div>
                     </div>
                     {displayedReplies?.map((reply, index) => {

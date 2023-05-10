@@ -422,7 +422,7 @@ const Catalog = () => {
           </span>
           <div className="return-button" id="return-button-desktop">
             [
-            <Link to={`/p/${selectedAddress}`}>Return</Link>
+            <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
             ]
           </div>
           {feed.length > 0 ? (
@@ -445,7 +445,7 @@ const Catalog = () => {
           )}
           <div id="return-button-mobile">
             <span className="btn-wrap-catalog btn-wrap">
-              <Link to={`/p/${selectedAddress}`}>Return</Link>
+              <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
             </span>
           </div>
           <hr />
@@ -465,7 +465,8 @@ const Catalog = () => {
                 const commentMediaInfo = getCommentMediaInfo(thread);
                 const fallbackImgUrl = "assets/filedeleted-res.gif";
                 return (
-                  <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)}>
+                  <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
+                  onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}>
                     <div key={`thread-${index}`} className="thread">
                         {commentMediaInfo?.url ? (
                           <Fragment key="f-catalog">
