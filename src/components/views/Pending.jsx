@@ -93,22 +93,26 @@ const Pending = () => {
         closeModal={() => setIsSettingsOpen(false)} />
         <NavBar selectedStyle={selectedStyle}>
           <>
-            {defaultSubplebbits.map(subplebbit => (
+          <span className="boardList">
+            [
+              <Link to={`/p/subscriptions`}>Subscriptions</Link>
+            ]&nbsp;[
+            {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
-                [
-                <Link key={`a-${subplebbit.address}`} 
-                to={`/p/${subplebbit.address}`} 
-                onClick={() => {
-                  setSelectedTitle(subplebbit.title);
-                  setSelectedAddress(subplebbit.address);
+                {index === 0 ? null : "\u00a0"}
+                <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => {
+                setSelectedTitle(subplebbit.title);
+                setSelectedAddress(subplebbit.address);
                 }}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                ]&nbsp;
+                {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
+            ]
+          </span>
             <span className="nav">
               [
-              <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/profile/c/${index}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -127,7 +131,7 @@ const Pending = () => {
                 </select>
               </div>
               <div className="page-jump">
-                <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/profile/c/${index}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 &nbsp;
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                   )}>Home</Link>

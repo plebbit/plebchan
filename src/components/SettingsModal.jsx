@@ -26,13 +26,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const account = useAccount();
   const { accounts } = useAccounts();
 
-  useEffect(() => {
-    if (account) {
-      console.log(account);
-    }
-  }, [account]);
-
-
   const gatewayRef = useRef();
   const ipfsRef = useRef();
   const pubsubRef = useRef();
