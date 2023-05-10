@@ -15,7 +15,6 @@ import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
-import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
@@ -24,6 +23,7 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
+import useStateString from '../../hooks/useStateString';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -52,6 +52,11 @@ const Thread = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -61,13 +66,28 @@ const Thread = () => {
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
 
+  const stateString = useStateString(comment?.clients);
+
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
 
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const errorString = useMemo(() => {
+    if (comment?.state === 'failed') {
+      let errorString = 'Failed fetching thread.'
+      if (comment.error) {
+        errorString += `: ${comment.error.toString().slice(0, 300)}`
+      }
+      return errorString
+    }
+  }, [comment?.state, comment?.error])
+
+
+  useEffect(() => {
+    if (errorString) {
+      setErrorMessage(errorString);
+    }
+  }, [errorString]);
 
 
   const flattenedReplies = useMemo(() => 
@@ -210,6 +230,7 @@ const Thread = () => {
         await publishComment();
         resetFields();
       })();
+      setTriggerPublishComment(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
 
@@ -298,10 +319,6 @@ const Thread = () => {
                 setSelectedAddress(subplebbit.address);
                 }}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                <OfflineIndicator 
-                address={subplebbit.address} 
-                className="offline-nav"
-                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
               </span>
             ))}
@@ -358,7 +375,12 @@ const Thread = () => {
             </div>
               <>
               <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}</div>
+              <div className="board-address">p/{selectedAddress}
+                <OfflineIndicator 
+                address={selectedAddress} 
+                className="offline"
+                tooltipPlace="top" />
+              </div>
               </>
           </>
         </Header>
@@ -463,10 +485,10 @@ const Thread = () => {
                 <span className="reply-stat">No replies yet</span>
               )
             ) : (
-              <span className="reply-stat">{formatState(comment.state)}</span>
+              <span className="reply-stat">{stateString}</span>
             )
           ) : (
-            <span className="reply-stat">{formatState(comment.state)}</span>
+            <span className="reply-stat">{stateString}</span>
           )}
           <hr />
         </TopBar>
@@ -1036,10 +1058,10 @@ const Thread = () => {
                           <span className="reply-stat">No replies yet</span>
                         )
                       ) : (
-                        <span className="reply-stat">{formatState(comment.state)}</span>
+                        <span className="reply-stat">{stateString}</span>
                       )
                     ) : (
-                      <span className="reply-stat">{formatState(comment.state)}</span>
+                      <span className="reply-stat">{stateString}</span>
                     )}
                     <hr />
                   </div>

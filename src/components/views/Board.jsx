@@ -16,7 +16,6 @@ import PostLoader from '../PostLoader';
 import ReplyModal from '../ReplyModal';
 import SettingsModal from '../SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
-import formatState from '../../utils/formatState';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
@@ -25,6 +24,7 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
+import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -66,12 +66,7 @@ const Board = () => {
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
 
-  useEffect(() => {
-    if (subplebbit.error) {
-      const errorMessage = formatState(subplebbit.error);
-      setErrorMessage(errorMessage);
-    }
-  }, [subplebbit.error]);
+  const stateString = useStateString(subplebbit?.clients);
 
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
@@ -81,6 +76,22 @@ const Board = () => {
   useSuccess(successMessage, [successMessage]);
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+
+  const errorString = useMemo(() => {
+    if (subplebbit?.state === 'failed') {
+      let errorString = 'Failed fetching board "' + selectedAddress + '".';
+      if (subplebbit.error) {
+        errorString += `: ${subplebbit.error.toString().slice(0, 300)}`
+      }
+      return errorString
+    }
+  }, [subplebbit?.state, subplebbit?.error, selectedAddress])
+
+  useEffect(() => {
+    if (errorString) {
+      setErrorMessage(errorString);
+    }
+  }, [errorString]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -370,10 +381,6 @@ const Board = () => {
                   {index === 0 ? null : "\u00a0"}
                   <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
                   >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                  <OfflineIndicator 
-                  address={subplebbit.address} 
-                  className="offline-nav"
-                  tooltipPlace="bottom" />
                   {index !== defaultSubplebbits.length - 1 ? " /" : null}
                 </span>
               ))}
@@ -428,10 +435,13 @@ const Board = () => {
             <div className="banner">
               <ImageBanner />
             </div>
-              <>
-              <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}</div>
-              </>
+            <div className="board-title">{selectedTitle}</div>
+            <div className="board-address">p/{selectedAddress}
+              <OfflineIndicator 
+              address={selectedAddress} 
+              className="offline"
+              tooltipPlace="top" />
+            </div>
           </>
         </Header>
         <Break selectedStyle={selectedStyle} />
@@ -516,7 +526,7 @@ const Board = () => {
             </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>{formatState(subplebbit.state)}</span>
+              <span>{stateString}</span>
             </div>
           )}
           <div id="catalog-button-mobile">
@@ -528,10 +538,11 @@ const Board = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            {feed.length < 1 ? (
-              <PostLoader />
+            {subplebbit?.state === "failed" ? (
+              null
             ) : (
-              <Virtuoso
+              feed.length > 0 ? (
+                <Virtuoso
                 increaseViewportBy={2000}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
@@ -1162,7 +1173,8 @@ const Board = () => {
                 endReached={tryLoadMore}
                 useWindowScroll={true}
                 components={{ Footer: hasMore ? () => <PostLoader /> : null }}
-              />
+                />
+              ) : (<PostLoader />)
             )}
           </div>
         </BoardForm>

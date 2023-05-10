@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -23,6 +23,7 @@ import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
+import useFeedStateString from '../../hooks/useFeedStateString';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -45,15 +46,39 @@ const Subscriptions = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
+  const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
+
+  const stateString = useFeedStateString(subplebbits);
+  
+  const errorString = useMemo(() => {
+    for (const subplebbit of subplebbits) {
+      if (subplebbit?.updatingState !== 'failed') {
+        return
+      }
+    }
+    for (const subplebbit of subplebbits) {
+      if (subplebbit?.error) {
+        return `Failed fetching subplebbit: ${subplebbit?.error.toString().slice(0, 300)}`
+      }
+    }
+  }, [subplebbits])
+
+  useEffect(() => {
+    if (errorString) {
+      setErrorMessage(errorString)
+    }
+  }, [errorString])
+
 
   useEffect(() => {
     setSelectedFeed(feed.sort((a, b) => b.timestamp - a.timestamp));
   }, [feed]);
-  
-  const [errorMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -172,10 +197,6 @@ const Subscriptions = () => {
                 {index === 0 ? null : "\u00a0"}
                 <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                <OfflineIndicator 
-                address={subplebbit.address} 
-                className="offline-nav"
-                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
                 </span>
               ))}
@@ -262,6 +283,13 @@ const Subscriptions = () => {
             <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
             ]
           </div>
+          {feed.length > 0 ? (
+            null
+          ) : (
+            <div id="stats" style={{float: "right", marginTop: "5px"}}>
+              <span>{stateString}</span>
+            </div>
+          )}
           <div id="catalog-button-mobile">
             <span className="btn-wrap">
               <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
@@ -523,12 +551,27 @@ const Subscriptions = () => {
                                 )}
                                 &nbsp;p/
                                 <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
-                                {thread.subplebbitAddress.includes(".eth") ? thread.subplebbitAddress : (
-                                  <span key={`short-add${index}`}
-                                  data-tooltip-id="tooltip"
-                                  data-tooltip-content={thread.subplebbitAddress}
-                                  data-tooltip-place="top"
-                                  >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
+                                {thread.subplebbitAddress.includes(".eth") ? 
+                                (
+                                  <>
+                                    {thread.subplebbitAddress}
+                                    <OfflineIndicator key={`offline-reply-${index}`} 
+                                    address={thread.subplebbitAddress}
+                                    tooltipPlace="top"
+                                    className="offline-reply" />
+                                  </>
+                                ) : (
+                                  <>
+                                    <span key={`short-add${index}`}
+                                    data-tooltip-id="tooltip"
+                                    data-tooltip-content={thread.subplebbitAddress}
+                                    data-tooltip-place="top"
+                                    >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
+                                    <OfflineIndicator key={`offline-reply-${index}`}
+                                    address={thread.subplebbitAddress}
+                                    tooltipPlace="top"
+                                    className="offline-reply" />
+                                  </>
                                   )}
                               </Link>
                               </span>&nbsp;
