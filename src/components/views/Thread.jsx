@@ -52,6 +52,11 @@ const Thread = () => {
   const commentRef = useRef();
   const linkRef = useRef();
 
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -63,6 +68,10 @@ const Thread = () => {
 
   const stateString = useStateString(comment?.clients);
 
+  const commentMediaInfo = getCommentMediaInfo(comment);
+  const fallbackImgUrl = "assets/filedeleted-res.gif";
+
+
   const errorString = useMemo(() => {
     if (comment?.state === 'failed') {
       let errorString = 'Failed fetching thread.'
@@ -73,19 +82,12 @@ const Thread = () => {
     }
   }, [comment?.state, comment?.error])
 
+
   useEffect(() => {
     if (errorString) {
       setErrorMessage(errorString);
     }
   }, [errorString]);
-
-  const commentMediaInfo = getCommentMediaInfo(comment);
-  const fallbackImgUrl = "assets/filedeleted-res.gif";
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
 
 
   const flattenedReplies = useMemo(() => 
@@ -228,6 +230,7 @@ const Thread = () => {
         await publishComment();
         resetFields();
       })();
+      setTriggerPublishComment(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
 

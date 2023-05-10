@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from './styled/ReplyModal.styled';
 import useGeneralStore from '../hooks/stores/useGeneralStore';
@@ -33,8 +32,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const [selectedText, setSelectedText] = useState('');
   
   useError(errorMessage, [errorMessage]);
-  
-  const location = useLocation();
+
 
   
   const onModalOpen = () => {
@@ -109,7 +107,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     if (index !== undefined) {
       setPendingCommentIndex(index);
     }
-  }, [index, location, setPendingCommentIndex]);
+  }, [index, setPendingCommentIndex]);
 
   
   const resetFields = useCallback(() => {
