@@ -18,8 +18,21 @@ const CaptchaModal = () => {
   const [imageSources, setImageSources] = useState([]);
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
   const [totalChallenges, setTotalChallenges] = useState(0);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   const responseRef = useRef();
   const nodeRef = useRef(null);
+
+
+    useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 480);
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [setIsMobile]);
+
 
   useEffect(() => {
     if (challengesArray) {
@@ -71,7 +84,7 @@ const CaptchaModal = () => {
     shouldCloseOnOverlayClick={false}
     selectedStyle={selectedStyle}
     overlayClassName="hide-modal-overlay">
-      <Draggable handle=".modal-header" nodeRef={nodeRef}>
+      <Draggable handle=".modal-header" nodeRef={nodeRef} disabled={isMobile}>
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
             {pendingComment.parentCid ? 
