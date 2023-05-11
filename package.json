@@ -8,7 +8,7 @@
     "@babel/plugin-transform-react-jsx": "7.21.0",
     "@capacitor/android": "3.6.0",
     "@capacitor/core": "3.6.0",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#36755ca6b159da9f07591d008082a93a2434d147",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#12def70256a61bc40500593f397f9d23975019e6",
     "@testing-library/dom": "9.0.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "14.0.0",
