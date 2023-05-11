@@ -16,7 +16,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const location = useLocation();
   const [expanded, setExpanded] = useState([]);
   const [accountJson, setAccountJson] = useState(null);
-  const [setImportSuccess] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -160,7 +159,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
     try {
       await importAccount(accountJson);
-      setImportSuccess(true);
       localStorage.setItem("toastMessage", "Account Imported");
       window.location.reload();
       
