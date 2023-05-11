@@ -18,7 +18,7 @@ const CaptchaModal = () => {
   const [imageSources, setImageSources] = useState([]);
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
   const [totalChallenges, setTotalChallenges] = useState(0);
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   const responseRef = useRef();
   const nodeRef = useRef(null);
 
