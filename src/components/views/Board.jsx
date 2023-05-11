@@ -257,6 +257,11 @@ const Board = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    if (subjectRef.current.value === "") {
+      setErrorMessage('Subject field is mandatory');
+      return;
+    }
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
@@ -273,7 +278,7 @@ const Board = () => {
   
   
   useEffect(() => {
-    if (publishCommentOptions.content && triggerPublishComment) {
+    if (publishCommentOptions.subject && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
