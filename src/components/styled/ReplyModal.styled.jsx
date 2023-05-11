@@ -2,10 +2,6 @@ import styled from "styled-components";
 import Modal from "react-modal";
 
 export const StyledModal = styled(Modal)`
-  .hide-modal-overlay {
-    display: none;
-  }
-
   .modal-content {
     position: fixed;
     top: calc(50% - 150px);

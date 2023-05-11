@@ -30,9 +30,20 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [selectedText, setSelectedText] = useState('');
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   
   useError(errorMessage, [errorMessage]);
 
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 480);
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [setIsMobile]);
 
   
   const onModalOpen = () => {
@@ -194,10 +205,10 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     onRequestClose={closeModal}
     contentLabel="Reply Modal"
     shouldCloseOnEsc={false}
-    shouldCloseOnOverlayClick={false}
+    shouldCloseOnOverlayClick={isMobile}
     selectedStyle={selectedStyle}
-    overlayClassName="hide-modal-overlay">
-      <Draggable handle=".modal-header" nodeRef={nodeRef}>
+    style={isMobile ? ({ overlay: { backgroundColor: "rgba(0,0,0,.25)" }}) : ({ overlay: { backgroundColor: "rgba(0,0,0,0)" }})}>
+      <Draggable handle=".modal-header" nodeRef={nodeRef} disabled={isMobile}>
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
             Reply to c/{selectedShortCid}

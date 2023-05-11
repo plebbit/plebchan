@@ -330,7 +330,7 @@ export const StyledModal = styled(Modal)`
           }
         }
         
-        button {
+        button, select {
           filter: brightness(80%);
         }
         

@@ -98,11 +98,13 @@ const Home = () => {
                   <h3 style={{textDecoration: 'underline', display: 'inline'}}>
                     You have subscribed to {account?.subscriptions?.length} board{account?.subscriptions?.length > 1 ? "s" : null}
                   </h3>&nbsp;
-                  <Link to="/p/subscriptions" id="view-all">[view all]</Link>
+                  <Link to="/p/subscriptions" id="view-all" onClick={()=> {window.scrollTo(0, 0)}}>[view all]</Link>
                   <br />
                   {account?.subscriptions?.map((subscription, index) => (
                     <>
-                      <Link key={`sub-${index}`} className="boardlink" to={`/p/${subscription}`}>
+                      <Link key={`sub-${index}`} className="boardlink" 
+                      onClick={()=> {window.scrollTo(0, 0)}}
+                      to={`/p/${subscription}`}>
                         <br id="mobile-br" />
                         {subscription}&nbsp;
                         <OfflineIndicator 
@@ -130,6 +132,7 @@ const Home = () => {
                     <Link to={`/p/${subplebbit.address}`} onClick={() => {
                       setSelectedTitle(subplebbit.title);
                       setSelectedAddress(subplebbit.address);
+                      window.scrollTo(0, 0);
                     }} >
                       <BoardAvatar address={subplebbit.address} />
                     </Link>

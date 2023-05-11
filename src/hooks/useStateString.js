@@ -21,10 +21,19 @@ const useStateString = (clients) => {
       }
     }
 
+    const getClientHost = (clientUrl) => {
+      try {
+        return new URL(clientUrl).hostname || clientUrl
+      }
+      catch (e) {
+        return clientUrl
+      }
+    }
+
     let stateString = ''
     for (const state in states) {
       const clientUrls = states[state]
-      const clientHosts = clientUrls.filter(isValidUrl).map(clientUrl => new URL(clientUrl).hostname)
+      const clientHosts = clientUrls.filter(isValidUrl).map(clientUrl => getClientHost(clientUrl))
 
       // if there are no valid hosts, skip this state
       if (clientHosts.length === 0) {
