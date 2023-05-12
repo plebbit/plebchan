@@ -137,6 +137,14 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (
+      commentRef.current.value === "" &&
+      linkRef.current.value === ""
+    ) {
+      setErrorMessage("Please enter a comment or link.");
+      return;
+    }
+
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
       author: {
@@ -152,7 +160,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   
   
   useEffect(() => {
-    if (publishCommentOptions.content && triggerPublishComment) {
+    if (publishCommentOptions && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
