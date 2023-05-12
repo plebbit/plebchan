@@ -278,7 +278,7 @@ const Board = () => {
   
   
   useEffect(() => {
-    if (publishCommentOptions.subject && triggerPublishComment) {
+    if (publishCommentOptions && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
