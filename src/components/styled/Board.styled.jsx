@@ -427,7 +427,7 @@ export const Header = styled.div`
   .offline {
     width: 16px; 
     position: relative;
-    margin: 2px 2px -4px 2px;
+    margin: 2px 2px -2px 2px;
   }
 `;
 

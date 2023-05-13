@@ -477,7 +477,7 @@ const Catalog = () => {
                           <Fragment key="f-catalog">
                             {commentMediaInfo?.type === "webpage" ? (
                               thread.thumbnailUrl ? (
-                              <img key={`img-${index}`}
+                              <img className="card" key={`img-${index}`}
                               src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
@@ -486,21 +486,21 @@ const Catalog = () => {
                               ) : null
                             ) : null}
                             {commentMediaInfo?.type === "image" ? (
-                              <img key={`img-${index}`}
+                              <img className="card" key={`img-${index}`}
                               src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
                                 e.target.onerror = null;}}  />
                             ) : null}
                             {commentMediaInfo?.type === "video" ? (
-                              <video key={`fti-${index}`} 
+                              <video className="card" key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 
                               style={{ pointerEvents: "none" }}
                               onError={(e) => e.target.src = fallbackImgUrl} /> 
                             ) : null}
                             {commentMediaInfo?.type === "audio" ? (
-                              <audio controls 
+                              <audio className="card" controls 
                               key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 

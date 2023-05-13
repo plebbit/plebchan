@@ -214,14 +214,14 @@ const SubscriptionsCatalog = () => {
                 const commentMediaInfo = getCommentMediaInfo(thread);
                 const fallbackImgUrl = "assets/filedeleted-res.gif";
                 return (
-                  <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
+                  <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
                   onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}>
                     <div key={`thread-${index}`} className="thread">
                         {commentMediaInfo?.url ? (
                           <Fragment key="f-catalog">
                             {commentMediaInfo?.type === "webpage" ? (
                               thread.thumbnailUrl ? (
-                              <img key={`img-${index}`}
+                              <img className="card" key={`img-${index}`}
                               src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
@@ -230,21 +230,21 @@ const SubscriptionsCatalog = () => {
                               ) : null
                             ) : null}
                             {commentMediaInfo?.type === "image" ? (
-                              <img key={`img-${index}`}
+                              <img className="card" key={`img-${index}`}
                               src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
                                 e.target.onerror = null;}}  />
                             ) : null}
                             {commentMediaInfo?.type === "video" ? (
-                              <video key={`fti-${index}`} 
+                              <video className="card" key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 
                               style={{ pointerEvents: "none" }}
                               onError={(e) => e.target.src = fallbackImgUrl} /> 
                             ) : null}
                             {commentMediaInfo?.type === "audio" ? (
-                              <audio controls 
+                              <audio className="card" controls 
                               key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 
@@ -254,14 +254,18 @@ const SubscriptionsCatalog = () => {
                           </Fragment>
                         ) : null}
                       <div key={`ti-${index}`} className="thread-icons" >
-                        {thread.link ? (
-                          // <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"></span> */
+                      {(commentMediaInfo && (
+                        commentMediaInfo.type === 'image' || 
+                        commentMediaInfo.type === 'video' || 
+                        (commentMediaInfo.type === 'webpage' && 
+                        commentMediaInfo.thumbnail))) ? (                          
+                          // <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky" /> */
                           <OfflineIndicator 
                           address={thread.subplebbitAddress} 
                           className="thread-icon offline-icon"
                           tooltipPlace="top" />
                         ) : (
-                          // <span key={`si-${index}`} className="thread-icon sticky-icon-no-link" title="Sticky"></span> */
+                          // <span key={`si-${index}`} className="thread-icon sticky-icon-no-link" title="Sticky" /> */
                           <OfflineIndicator 
                           address={thread.subplebbitAddress} 
                           className="thread-icon offline-icon-no-link"
@@ -318,10 +322,6 @@ const SubscriptionsCatalog = () => {
                 {index === 0 ? null : "\u00a0"}
                 <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => handleClickTitle(subplebbit.title, subplebbit.address)}
                 >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                <OfflineIndicator 
-                address={subplebbit.address} 
-                className="offline-nav"
-                tooltipPlace="bottom" />
                 {index !== defaultSubplebbits.length - 1 ? " /" : null}
                 </span>
               ))}
@@ -336,7 +336,7 @@ const SubscriptionsCatalog = () => {
               }>Create Board</button>
               ]
                 [
-                <Link to={`/p/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/subscriptions/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
