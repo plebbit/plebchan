@@ -2613,9 +2613,9 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#bcf4ec7ba024fdd7dc0bb2fab76c27c93597dd50":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#12def70256a61bc40500593f397f9d23975019e6":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#bcf4ec7ba024fdd7dc0bb2fab76c27c93597dd50"
+  resolved "https://github.com/plebbit/plebbit-js.git#12def70256a61bc40500593f397f9d23975019e6"
   dependencies:
     "@keyv/sqlite" "3.6.2"
     "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
@@ -2668,11 +2668,11 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#36755ca6b159da9f07591d008082a93a2434d147":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#5949b8cac5f786017395437960f842f4f9a9b1c2":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#36755ca6b159da9f07591d008082a93a2434d147"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#5949b8cac5f786017395437960f842f4f9a9b1c2"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#bcf4ec7ba024fdd7dc0bb2fab76c27c93597dd50"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#12def70256a61bc40500593f397f9d23975019e6"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
