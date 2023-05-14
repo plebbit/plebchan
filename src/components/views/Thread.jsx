@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useAccountComments, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useComment, usePublishComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -38,7 +38,7 @@ const Thread = () => {
     setResolveCaptchaPromise,
     setPendingComment,
     setPendingCommentIndex,
-    selectedAddress, setSelectedAddress,
+    setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
@@ -65,11 +65,23 @@ const Thread = () => {
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
+  const subplebbit = useSubplebbit({subplebbitAddress: comment.subplebbitAddress});
+  const selectedAddress = subplebbit.address;
 
   const stateString = useStateString(comment?.clients);
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
+
+  useEffect(() => {
+    if ( comment.state !== "initializing" && selectedAddress === undefined) {
+        navigate('/404');
+    }
+    else 
+    if (comment.state === "failed" && subplebbitAddress !== selectedAddress) {
+        navigate(`/p/${selectedAddress}/c/${threadCid}`);
+    }
+  }, [subplebbitAddress, selectedAddress, navigate, threadCid, comment.state]);
 
 
   const errorString = useMemo(() => {
