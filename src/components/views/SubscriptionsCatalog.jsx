@@ -214,7 +214,7 @@ const SubscriptionsCatalog = () => {
                 const fallbackImgUrl = "assets/filedeleted-res.gif";
                 return (
                   <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
-                  onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}>
+                  onClick={() => setSelectedThread(thread.cid)}>
                     <div key={`thread-${index}`} className="thread">
                         {commentMediaInfo?.url ? (
                           <Fragment key="f-catalog">

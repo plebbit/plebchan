@@ -471,8 +471,8 @@ const Catalog = () => {
                 const fallbackImgUrl = "assets/filedeleted-res.gif";
                 return (
                   <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
-                  onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}>
-                    <div key={`thread-${index}`} className="thread">
+                      onClick={() => setSelectedThread(thread.cid)}>
+                  <div key={`thread-${index}`} className="thread">
                         {commentMediaInfo?.url ? (
                           <Fragment key="f-catalog">
                             {commentMediaInfo?.type === "webpage" ? (
