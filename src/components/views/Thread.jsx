@@ -68,7 +68,7 @@ const Thread = () => {
   const subplebbit = useSubplebbit({subplebbitAddress: comment.subplebbitAddress});
   const selectedAddress = subplebbit.address;
 
-  const stateString = useStateString(comment?.clients);
+  const stateString = useStateString(comment);
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
