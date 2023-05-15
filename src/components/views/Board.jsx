@@ -66,7 +66,7 @@ const Board = () => {
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
 
-  const stateString = useStateString(subplebbit?.clients);
+  const stateString = useStateString(subplebbit);
 
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 

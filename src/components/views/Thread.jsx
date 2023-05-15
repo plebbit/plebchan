@@ -66,7 +66,7 @@ const Thread = () => {
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
 
-  const stateString = useStateString(comment?.clients);
+  const stateString = useStateString(comment);
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";

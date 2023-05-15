@@ -39,7 +39,7 @@ const Pending = () => {
     setSelectedAddress(comment?.subplebbitAddress);
   }, [comment, setSelectedAddress]);
 
-  const stateString = useStateString(comment?.clients)
+  const stateString = useStateString(comment)
 
   const errorString = useMemo(() => {
     if (comment?.state === 'failed') {
