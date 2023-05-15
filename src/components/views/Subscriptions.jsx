@@ -416,6 +416,7 @@ const Subscriptions = () => {
                                 setIsReplyOpen(true); 
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
+                                setSelectedAddress(thread.subplebbitAddress);
                                 }} title="Reply to this post">{thread.shortCid}
                               </Link>
                               &nbsp;p/
@@ -544,6 +545,7 @@ const Subscriptions = () => {
                                     setIsReplyOpen(true); 
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
+                                    setSelectedAddress(thread.subplebbitAddress);
                                   }} title="Reply to this post">{reply.shortCid}</Link>
                                 ) : (
                                   <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
@@ -761,6 +763,7 @@ const Subscriptions = () => {
                                 setIsReplyOpen(true); 
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
+                                setSelectedAddress(thread.subplebbitAddress);
                               }} title="Reply to this post">{thread.shortCid}
                             </Link>
                           </span>
@@ -927,6 +930,7 @@ const Subscriptions = () => {
                                     setIsReplyOpen(true); 
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
+                                    setSelectedAddress(thread.subplebbitAddress);
                                   }} title="Reply to this post">{reply.shortCid}
                                 </Link>
                               ) : (
