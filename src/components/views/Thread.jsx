@@ -73,8 +73,6 @@ const Thread = () => {
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
 
-  console.log(comment.state);
-
   useEffect(() => {
     if ( comment.state === "failed" && selectedAddress === undefined) {
       navigate('/404');

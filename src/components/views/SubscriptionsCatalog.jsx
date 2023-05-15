@@ -202,7 +202,7 @@ const SubscriptionsCatalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {selectedFeed.length < 1 ? (
+          { feed.length < 1 ? (
             <CatalogLoader />
           ) : (
             <InfiniteScroll
