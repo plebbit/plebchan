@@ -9,7 +9,6 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break} from '../styled/Board.styled';
 import { Threads } from '../styled/Catalog.styled';
 import { TopBar, Footer } from '../styled/Thread.styled';
-import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../SettingsModal';
@@ -36,7 +35,7 @@ const SubscriptionsCatalog = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
-  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
+  const [setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
   const [errorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
