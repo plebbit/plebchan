@@ -300,7 +300,6 @@ const Subscriptions = () => {
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
             { feed.length < 1 ? (
-              // <PostLoader />
               null
             ) : (
               <Virtuoso
