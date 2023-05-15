@@ -73,15 +73,13 @@ const Thread = () => {
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
 
+  console.log(comment.state);
+
   useEffect(() => {
-    if ( comment.state !== "initializing" && selectedAddress === undefined) {
-        navigate('/404');
+    if ( comment.state === "failed" && selectedAddress === undefined) {
+      navigate('/404');
     }
-    else 
-    if (comment.state === "failed" && subplebbitAddress !== selectedAddress) {
-        navigate(`/p/${selectedAddress}/c/${threadCid}`);
-    }
-  }, [subplebbitAddress, selectedAddress, navigate, threadCid, comment.state]);
+  }, [selectedAddress, navigate, comment.state]);
 
 
   const errorString = useMemo(() => {
