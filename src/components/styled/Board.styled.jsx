@@ -1631,14 +1631,14 @@ export const BoardForm = styled.div`
     .offline-sub {
       width: 13px;
       margin-right: -5px;
-      margin-bottom: -3px;
+      margin-bottom: -1px;
       position: relative;
     }
 
     .offline-reply {
       width: 13px;
       margin-right: 2px;
-      margin-bottom: -3px;
+      margin-bottom: -1px;
       position: relative;
     }
 
@@ -2994,13 +2994,13 @@ export const BoardForm = styled.div`
 
     .offline-mobile-sub {
       width: 13px;
-      margin-top: 3px;
+      margin-top: 4px;
       margin-right: 5px;
     }
 
     .offline-mobile-sub-reply {
       width: 13px;
-      margin-top: 3px;
+      margin-top: 4px;
     }
 
     .thread {

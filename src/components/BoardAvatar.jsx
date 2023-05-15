@@ -15,21 +15,11 @@ const BoardAvatar = ({ address }) => {
   }, [subplebbit.suggested?.avatarUrl, subplebbit]);
 
   return (
-    <>
-      <div className="board-avatar-container">
-        <img
-          className="board-avatar"
-          alt="board logo"
-          src={avatarUrl}
-        />
-        {!isOnline && (
-          <img className="offline-indicator" alt="offline" src="assets/offline.png"
-          data-tooltip-id="tooltip"
-          data-tooltip-content="Offline"
-          data-tooltip-place="top" />
-        )}
-      </div>
-    </>
+    <img
+      className="board-avatar"
+      alt="board logo"
+      src={avatarUrl}
+    />
   );
 };
 

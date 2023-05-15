@@ -427,7 +427,7 @@ const Subscriptions = () => {
                                   data-tooltip-content={thread.subplebbitAddress}
                                   data-tooltip-place="top"
                                   >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
-                                  )}
+                                )}
                               </Link>
                               <OfflineIndicator key={`oi-${index}`}
                               address={thread.subplebbitAddress} 
@@ -553,28 +553,20 @@ const Subscriptions = () => {
                                 &nbsp;p/
                                 <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
                                 {thread.subplebbitAddress.includes(".eth") ? 
+                                (thread.subplebbitAddress) : 
                                 (
-                                  <>
-                                    {thread.subplebbitAddress}
-                                    <OfflineIndicator key={`offline-reply-${index}`} 
-                                    address={thread.subplebbitAddress}
-                                    tooltipPlace="top"
-                                    className="offline-reply" />
-                                  </>
-                                ) : (
-                                  <>
-                                    <span key={`short-add${index}`}
+                                  <span key={`short-add${index}`}
                                     data-tooltip-id="tooltip"
                                     data-tooltip-content={thread.subplebbitAddress}
                                     data-tooltip-place="top"
-                                    >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
-                                    <OfflineIndicator key={`offline-reply-${index}`}
-                                    address={thread.subplebbitAddress}
-                                    tooltipPlace="top"
-                                    className="offline-reply" />
-                                  </>
-                                  )}
+                                    >{thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                                  </span>
+                                )}
                               </Link>
+                              <OfflineIndicator key={`offline-reply-${index}`} 
+                              address={thread.subplebbitAddress}
+                              tooltipPlace="top"
+                              className="offline-reply" />
                               </span>&nbsp;
                               <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
                               <div id="backlink-id" className="backlink">
@@ -729,28 +721,20 @@ const Subscriptions = () => {
                             p/
                             <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
                               {thread.subplebbitAddress.includes(".eth") ? 
+                              (thread.subplebbitAddress) : 
                               (
-                                <>
-                                  {thread.subplebbitAddress}
-                                  <OfflineIndicator key={`offline-indicator-${index}`}
-                                    address={thread.subplebbitAddress}
-                                    tooltipPlace="top"
-                                    className="offline-mobile-sub" />
-                                </>
-                                ) : (
-                                <>
-                                  <span key={`short-add${index}`}
+                                <span key={`short-add${index}`}
                                   data-tooltip-id="tooltip"
                                   data-tooltip-content={thread.subplebbitAddress}
                                   data-tooltip-place="top"
-                                  >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
-                                  <OfflineIndicator key={`offline-indicator-${index}`}
-                                   address={thread.subplebbitAddress}
-                                   tooltipPlace="top"
-                                   className="offline-mobile-sub"  />
-                                </>
-                                )}
+                                  >{thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                                </span>
+                              )}
                             </Link>
+                            <OfflineIndicator key={`offline-indicator-${index}`}
+                            address={thread.subplebbitAddress}
+                            tooltipPlace="top"
+                            className="offline-mobile-sub"  />
                           </span>
                           <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(thread.timestamp)}
@@ -894,30 +878,22 @@ const Subscriptions = () => {
                             </span>
                             <span key={`p-t-mob-span-${index}`} className="date-time-mobile highlight-address-mobile">
                             &nbsp;p/
-                            <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
+                              <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
                                 {thread.subplebbitAddress.includes(".eth") ? 
+                                (thread.subplebbitAddress) : 
                                 (
-                                  <>
-                                  {thread.subplebbitAddress}
-                                  <OfflineIndicator key={`offline-indicator-${index}`}
-                                  address={thread.subplebbitAddress}
-                                  tooltipPlace="top"
-                                  className="offline-mobile-sub-reply" />
-                                  </>
-                                  ) : (
-                                  <>
-                                    <span key={`short-add${index}`}
+                                  <span key={`short-add${index}`}
                                     data-tooltip-id="tooltip"
                                     data-tooltip-content={thread.subplebbitAddress}
                                     data-tooltip-place="top"
-                                    >{thread.subplebbitAddress.slice(0, 10) + "(...)"}</span>
-                                    <OfflineIndicator key={`offline-indicator-${index}`}
-                                    address={thread.subplebbitAddress}
-                                    tooltipPlace="top"
-                                    className="offline-mobile-sub-reply"  />
-                                  </>
-                                  )}
+                                    >{thread.subplebbitAddress.slice(0, 10) + "(...)"}
+                                  </span>
+                                )}
                               </Link>
+                              <OfflineIndicator key={`offline-indicator-${index}`}
+                              address={thread.subplebbitAddress}
+                              tooltipPlace="top"
+                              className="offline-mobile-sub-reply"  />
                             </span>
                             <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
                             {getDate(reply.timestamp)}&nbsp;
