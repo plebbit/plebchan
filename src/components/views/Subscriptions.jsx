@@ -287,7 +287,7 @@ const Subscriptions = () => {
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>{stateString}</span>
+              <span className={stateString ? "ellipsis" : ""}>{stateString}</span>
             </div>
           )}
           <div id="catalog-button-mobile">

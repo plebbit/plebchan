@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useFeed } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useFeed, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break} from '../styled/Board.styled';
@@ -15,6 +15,7 @@ import SettingsModal from '../SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
+import useFeedStateString from '../../hooks/useFeedStateString';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -36,6 +37,9 @@ const SubscriptionsCatalog = () => {
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
   const [setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
+  const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
+
+  const stateString = useFeedStateString(subplebbits);
 
   const [errorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
@@ -197,6 +201,13 @@ const SubscriptionsCatalog = () => {
               <Link to={`/p/subscriptions`}>Return</Link>
             </span>
           </div>
+          {feed.length > 0 ? (
+            null
+          ) : (
+            <div id="stats" style={{float: "right", marginTop: "5px"}}>
+              <span className={stateString ? "ellipsis" : ""}>{stateString}</span>
+            </div>
+          )}
           <hr />
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
