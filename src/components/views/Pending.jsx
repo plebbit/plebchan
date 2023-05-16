@@ -195,7 +195,7 @@ const Pending = () => {
             <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
             ]
           </span>
-            <span className="reply-stat">{stateString}</span>
+            <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
           <hr />
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />

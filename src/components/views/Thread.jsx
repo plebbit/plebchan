@@ -507,10 +507,10 @@ const Thread = () => {
                 <span className="reply-stat">No replies yet</span>
               )
             ) : (
-              <span className="reply-stat">{stateString}</span>
+              <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
             )
           ) : (
-            <span className="reply-stat">{stateString}</span>
+            <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
           )}
           <hr />
         </TopBar>
@@ -1080,10 +1080,10 @@ const Thread = () => {
                           <span className="reply-stat">No replies yet</span>
                         )
                       ) : (
-                        <span className="reply-stat">{stateString}</span>
+                        <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
                       )
                     ) : (
-                      <span className="reply-stat">{stateString}</span>
+                      <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
                     )}
                     <hr />
                   </div>
