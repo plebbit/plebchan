@@ -28,7 +28,7 @@ import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
-const Subscriptions = () => {
+const All = () => {
   const {
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
@@ -50,9 +50,10 @@ const Subscriptions = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
+  const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'new'});
+  const {subplebbits} = useSubplebbits({subplebbitAddresses: addresses, sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
-  const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
 
   const stateString = useFeedStateString(subplebbits);
   
@@ -173,7 +174,7 @@ const Subscriptions = () => {
       navigate(`/p/all`);
       return;
     }
-
+    
     const selectedTitle = defaultSubplebbits?.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
@@ -184,7 +185,7 @@ const Subscriptions = () => {
   return (
     <>
       <Helmet>
-        <title>Subscriptions - plebchan</title>
+        <title>p/All - plebchan</title>
       </Helmet>
       <Container>
         <ReplyModal 
@@ -222,7 +223,7 @@ const Subscriptions = () => {
               }>Create Board</button>
               ]
               [
-              <Link to={`/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/all/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -233,7 +234,7 @@ const Subscriptions = () => {
               <div className="board-select">
                 <strong>Board</strong>
                 &nbsp;
-                <select id="board-select-mobile" value="subscriptions" onChange={handleSelectChange}>
+                <select id="board-select-mobile" value="all" onChange={handleSelectChange}>
                   <option value="all">All</option>
                   <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
@@ -248,7 +249,7 @@ const Subscriptions = () => {
                 }>Create Board</button>
               </div>
               <div className="page-jump">
-                <Link to={`/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/all/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 &nbsp;
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                   )}>Home</Link>
@@ -264,14 +265,8 @@ const Subscriptions = () => {
               <ImageBanner />
             </div>
               <>
-              <div className="board-title">Subscriptions</div>
-              {feed.length < 1 ? (
-                <div className="board-address">You haven't subscribed to any board yet.</div>
-              ) : (
-                <div className="board-address">
-                  You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}.
-                </div>
-              )}
+              <div className="board-title">p/All</div>
+              <div className="board-address">Default boards currently curated by devs</div>
               </>
           </>
         </Header>
@@ -292,7 +287,7 @@ const Subscriptions = () => {
           </span>
           <div id="catalog-button-desktop">
             [
-            <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
+            <Link to={`/p/all/catalog`}>Catalog</Link>
             ]
           </div>
           {feed.length > 0 ? (
@@ -304,7 +299,7 @@ const Subscriptions = () => {
           )}
           <div id="catalog-button-mobile">
             <span className="btn-wrap">
-              <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
+              <Link to={`/p/all/catalog`}>Catalog</Link>
             </span>
           </div>
         </TopBar>
@@ -1051,7 +1046,9 @@ const Subscriptions = () => {
             <>
             <span className="boardList">
               [
-                <Link to="" onClick={() => {}}>Subscriptions</Link>
+                <Link to={`/p/all`}>All</Link>
+                 / 
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -1071,7 +1068,7 @@ const Subscriptions = () => {
                 }>Create Board</button>
                 ]
                 [
-                <Link to={`/p/subscriptions/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/all/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -1105,4 +1102,4 @@ const Subscriptions = () => {
   );
 }
 
-export default Subscriptions;
+export default All;

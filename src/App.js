@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import useGeneralStore from './hooks/stores/useGeneralStore';
 import { GlobalStyle } from './components/styled/GlobalStyle.styled';
 import { Toast } from './components/styled/Toast.styled';
+import All from './components/views/All';
+import AllCatalog from './components/views/AllCatalog';
 import Board from './components/views/Board';
 import Catalog from './components/views/Catalog';
 import Home from './components/views/Home';
@@ -190,6 +192,12 @@ export default function App() {
         </Route>
         <Route path={`p/subscriptions/catalog`} element={<SubscriptionsCatalog setBodyStyle={setBodyStyle} /> }>
           <Route path='settings' element={<SubscriptionsCatalog />} />
+        </Route>
+        <Route path={`p/all`} element={<All setBodyStyle={setBodyStyle} /> }>
+          <Route path='settings' element={<All />} />
+        </Route>
+        <Route path={`p/all/catalog`} element={<AllCatalog setBodyStyle={setBodyStyle} /> }>
+          <Route path='settings' element={<AllCatalog />} />
         </Route>
         <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
       </Routes>

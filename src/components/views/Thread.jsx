@@ -299,6 +299,9 @@ const Thread = () => {
     if (selected === 'subscriptions') {
       navigate(`/p/subscriptions`);
       return;
+    } else if (selected === 'all') {
+      navigate(`/p/all`);
+      return;
     }
 
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
@@ -332,6 +335,8 @@ const Thread = () => {
           <>
           <span className="boardList">
             [
+              <Link to={`/p/all`}>All</Link>
+                 / 
               <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -368,6 +373,7 @@ const Thread = () => {
                 <strong>Board</strong>
                 &nbsp;
                 <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
+                  <option value="all">All</option>
                   <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
@@ -1185,7 +1191,9 @@ const Thread = () => {
             <>
             <span className="boardList">
               [
-                <Link to="" onClick={() => {}}>Subscriptions</Link>
+                <Link to={`/p/all`}>All</Link>
+                 / 
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

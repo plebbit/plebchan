@@ -20,7 +20,7 @@ import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
-const SubscriptionsCatalog = () => {
+const AllCatalog = () => {
   const {
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
@@ -35,9 +35,10 @@ const SubscriptionsCatalog = () => {
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
+  const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'new'});
+  const {subplebbits} = useSubplebbits({subplebbitAddresses: addresses, sortType: 'new'});
   const [setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
-  const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
 
   const stateString = useFeedStateString(subplebbits);
 
@@ -93,7 +94,7 @@ const SubscriptionsCatalog = () => {
   return (
     <>
       <Helmet>
-      <title>Subscriptions - Catalog - plebchan</title>
+      <title>p/All - Catalog - plebchan</title>
       </Helmet>
       <Container>
         <SettingsModal
@@ -105,7 +106,7 @@ const SubscriptionsCatalog = () => {
           <span className="boardList">
             [
               <Link to={`/p/all`}>All</Link>
-               / 
+                 / 
               <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -130,7 +131,7 @@ const SubscriptionsCatalog = () => {
               }>Create Board</button>
               ]
               [
-              <Link to={`/p/subscriptions/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/all/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -141,8 +142,8 @@ const SubscriptionsCatalog = () => {
               <div className="board-select">
                 <strong>Board</strong>
                 &nbsp;
-                <select id="board-select-mobile" value="subscriptions" onChange={handleSelectChange}>
-                  <option value="all">All</option>
+                <select id="board-select-mobile" value="all" onChange={handleSelectChange}>
+                  <option value="All">All</option>
                   <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
@@ -156,7 +157,7 @@ const SubscriptionsCatalog = () => {
                   }>Create Board</button>
               </div>
               <div className="page-jump">
-                <Link to={`/p/subscriptions/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/all/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 &nbsp;
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                   )}>Home</Link>
@@ -171,16 +172,8 @@ const SubscriptionsCatalog = () => {
             <div className="banner">
               <ImageBanner />
             </div>
-              <>
-              <div className="board-title">Subscriptions</div>
-              {feed.length < 1 ? (
-                <div className="board-address">You haven't subscribed to any board yet.</div>
-              ) : (
-                <div className="board-address">
-                  You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}.
-                </div>
-              )}
-              </>
+            <div className="board-title">p/All</div>
+            <div className="board-address">Default boards currently curated by devs</div>
           </>
         </Header>
         <Break selectedStyle={selectedStyle} />
@@ -200,12 +193,12 @@ const SubscriptionsCatalog = () => {
           </span>
           <div className="return-button" id="return-button-desktop">
             [
-            <Link to={`/p/subscriptions`}>Return</Link>
+            <Link to={`/p/all`}>Return</Link>
             ]
           </div>
           <div id="return-button-mobile">
             <span className="btn-wrap-catalog btn-wrap">
-              <Link to={`/p/subscriptions`}>Return</Link>
+              <Link to={`/p/all`}>Return</Link>
             </span>
           </div>
           {feed.length > 0 ? (
@@ -332,6 +325,8 @@ const SubscriptionsCatalog = () => {
           <>
             <span className="boardList">
               [
+                <Link to={`/p/all`}>All</Link>
+                 / 
                 <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -353,7 +348,7 @@ const SubscriptionsCatalog = () => {
               }>Create Board</button>
               ]
                 [
-                <Link to={`/p/subscriptions/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/all/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -387,4 +382,4 @@ const SubscriptionsCatalog = () => {
   );
 }
 
-export default SubscriptionsCatalog;
+export default AllCatalog;

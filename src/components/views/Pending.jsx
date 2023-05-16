@@ -69,6 +69,15 @@ const Pending = () => {
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
+
+    if (selected === 'subscriptions') {
+      navigate(`/p/subscriptions`);
+      return;
+    } else if (selected === 'all') {
+      navigate(`/p/all`);
+      return;
+    }
+
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
     setSelectedTitle(selectedTitle);
     setSelectedAddress(selected);
@@ -98,6 +107,8 @@ const Pending = () => {
           <>
           <span className="boardList">
             [
+              <Link to={`/p/all`}>All</Link>
+                 / 
               <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -127,6 +138,8 @@ const Pending = () => {
                 <strong>Board</strong>
                 &nbsp;
                 <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
+                  <option value="all">All</option>
+                  <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                       >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
