@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAccount, useBufferedFeeds } from '@plebbit/plebbit-react-hooks';
@@ -18,6 +18,8 @@ import Thread from './components/views/Thread';
 import CaptchaModal from './components/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
+import useError from "./hooks/useError";
+import useSuccess from "./hooks/useSuccess";
 
 
 export default function App() {
@@ -35,6 +37,26 @@ export default function App() {
   const isHomeRoute = location.pathname === "/";
 
   const account = useAccount();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
+
+
+  useEffect(() => {
+    const successToast = localStorage.getItem("successToast");
+    const errorToast = localStorage.getItem("errorToast");
+    if (successToast) {
+      setSuccessMessage(successToast);
+      localStorage.removeItem("successToast");
+    } else if (errorToast) {
+      setErrorMessage(errorToast);
+      localStorage.removeItem("errorToast");
+    } else {
+      return;
+    }
+  }, [setErrorMessage, setSuccessMessage]);
 
   // preload default subs and subscriptions
   useBufferedFeeds({

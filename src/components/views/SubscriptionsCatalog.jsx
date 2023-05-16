@@ -120,7 +120,7 @@ const SubscriptionsCatalog = () => {
               }>Create Board</button>
               ]
               [
-              <Link to={`/p/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/subscriptions/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
@@ -145,7 +145,7 @@ const SubscriptionsCatalog = () => {
                   }>Create Board</button>
               </div>
               <div className="page-jump">
-                <Link to={`/p/${selectedAddress}/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/subscriptions/catalog/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 &nbsp;
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
                   )}>Home</Link>

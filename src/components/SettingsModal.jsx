@@ -64,7 +64,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
     try {
       await setAccount({ ...account, plebbitOptions });
-      localStorage.setItem("toastMessage", "Settings Saved");
+      localStorage.setItem("successToast", "Settings Saved");
       window.location.reload();
     } catch (error) {
       setErrorMessage(error.message);
@@ -97,7 +97,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           pubsubHttpClientsOptions: defaultPubsubHttpClientsOptions,
         },
       });
-      localStorage.setItem("toastMessage", "Settings Reset");
+      localStorage.setItem("successToast", "Settings Reset");
       window.location.reload();
     } catch (error) {
       setErrorMessage(error.message);
@@ -158,9 +158,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     const accountJson = importRef.current.value;
 
     try {
+      const parsedJson = JSON.parse(accountJson);
       await importAccount(accountJson);
-      localStorage.setItem("toastMessage", "Account Imported");
-      window.location.reload();
+      setActiveAccount(parsedJson.account?.name);
+      setSuccessMessage("Account Imported");
       
     } catch (error) {
       setErrorMessage(error.message);
