@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useAccountComments, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useComment, usePublishComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -38,7 +38,7 @@ const Thread = () => {
     setResolveCaptchaPromise,
     setPendingComment,
     setPendingCommentIndex,
-    selectedAddress, setSelectedAddress,
+    setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
@@ -65,11 +65,25 @@ const Thread = () => {
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
   const handleClickForm = useClickForm();
+  const subplebbit = useSubplebbit({subplebbitAddress: comment.subplebbitAddress});
+  const selectedAddress = subplebbit.address;
 
   const stateString = useStateString(comment);
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
+
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
+  useEffect(() => {
+    if ( comment.state === "failed" && selectedAddress === undefined) {
+      navigate('/404');
+    }
+  }, [selectedAddress, navigate, comment.state]);
 
 
   const errorString = useMemo(() => {
@@ -285,6 +299,9 @@ const Thread = () => {
     if (selected === 'subscriptions') {
       navigate(`/p/subscriptions`);
       return;
+    } else if (selected === 'all') {
+      navigate(`/p/all`);
+      return;
     }
 
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
@@ -318,6 +335,8 @@ const Thread = () => {
           <>
           <span className="boardList">
             [
+              <Link to={`/p/all`}>All</Link>
+                 / 
               <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -354,6 +373,7 @@ const Thread = () => {
                 <strong>Board</strong>
                 &nbsp;
                 <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
+                  <option value="all">All</option>
                   <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
@@ -493,10 +513,10 @@ const Thread = () => {
                 <span className="reply-stat">No replies yet</span>
               )
             ) : (
-              <span className="reply-stat">{stateString}</span>
+              <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
             )
           ) : (
-            <span className="reply-stat">{stateString}</span>
+            <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
           )}
           <hr />
         </TopBar>
@@ -1066,10 +1086,10 @@ const Thread = () => {
                           <span className="reply-stat">No replies yet</span>
                         )
                       ) : (
-                        <span className="reply-stat">{stateString}</span>
+                        <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
                       )
                     ) : (
-                      <span className="reply-stat">{stateString}</span>
+                      <span className={stateString ? "reply-stat ellipsis" : ""}>{stateString}</span>
                     )}
                     <hr />
                   </div>
@@ -1171,7 +1191,9 @@ const Thread = () => {
             <>
             <span className="boardList">
               [
-                <Link to="" onClick={() => {}}>Subscriptions</Link>
+                <Link to={`/p/all`}>All</Link>
+                 / 
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

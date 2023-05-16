@@ -23,7 +23,7 @@ export const Threads = styled.div`
     max-height: 150px;
   }
 
-  img {
+  .card {
     display: inline;
     margin: auto;
     box-shadow: 0 0 5px rgba(0, 0, 0, .25);
@@ -45,7 +45,7 @@ export const Threads = styled.div`
   }
 
   .offline-icon-no-link {
-    height: 13px;
+    height: 11px;
     position: absolute;
     margin-left: 13px;
     margin-top: -2px;

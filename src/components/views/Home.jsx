@@ -107,11 +107,11 @@ const Home = () => {
                       to={`/p/${subscription}`}>
                         <br id="mobile-br" />
                         {subscription}&nbsp;
-                        <OfflineIndicator 
+                      </Link>
+                      <OfflineIndicator 
                         address={subscription} 
                         className="disconnected"
                         tooltipPlace="top" />
-                      </Link>
                       <br />
                     </>
                   ))}
@@ -129,13 +129,19 @@ const Home = () => {
                     <div className="board-title">
                       {subplebbit.title ? subplebbit.title : <span style={{userSelect: "none"}}>&nbsp;</span>}
                     </div>
-                    <Link to={`/p/${subplebbit.address}`} onClick={() => {
-                      setSelectedTitle(subplebbit.title);
-                      setSelectedAddress(subplebbit.address);
-                      window.scrollTo(0, 0);
-                    }} >
-                      <BoardAvatar address={subplebbit.address} />
-                    </Link>
+                    <div className="board-avatar-container">
+                      <Link to={`/p/${subplebbit.address}`} onClick={() => {
+                        setSelectedTitle(subplebbit.title);
+                        setSelectedAddress(subplebbit.address);
+                        window.scrollTo(0, 0);
+                      }} >
+                        <BoardAvatar address={subplebbit.address} />
+                      </Link>
+                      <OfflineIndicator 
+                      address={subplebbit.address} 
+                      className="offline-indicator"
+                      tooltipPlace="top" />
+                    </div>
                     <div className="board-text">
                       <b>{subplebbit.address}</b>
                     </div>

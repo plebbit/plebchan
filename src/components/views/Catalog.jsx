@@ -253,6 +253,9 @@ const Catalog = () => {
     if (selected === 'subscriptions') {
       navigate(`/p/subscriptions`);
       return;
+    } else if (selected === 'all') {
+      navigate(`/p/all`);
+      return;
     }
 
     const selectedTitle = defaultSubplebbits.find((subplebbit) => subplebbit.address === selected).title;
@@ -288,6 +291,8 @@ const Catalog = () => {
           <>
           <span className="boardList">
             [
+              <Link to={`/p/all`}>All</Link>
+                 / 
               <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -324,6 +329,7 @@ const Catalog = () => {
                 <strong>Board</strong>
                 &nbsp;
                 <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
+                  <option value="all">All</option>
                   <option value="subscriptions">Subscriptions</option>
                   {defaultSubplebbits.map(subplebbit => (
                       <option key={`option-${subplebbit.address}`} value={subplebbit.address}
@@ -445,7 +451,7 @@ const Catalog = () => {
           </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span>{stateString}</span>
+              <span className={stateString ? "ellipsis" : ""}>{stateString}</span>
             </div>
           )}
           <div id="return-button-mobile">
@@ -471,13 +477,13 @@ const Catalog = () => {
                 const fallbackImgUrl = "assets/filedeleted-res.gif";
                 return (
                   <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
-                  onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}>
-                    <div key={`thread-${index}`} className="thread">
+                      onClick={() => setSelectedThread(thread.cid)}>
+                  <div key={`thread-${index}`} className="thread">
                         {commentMediaInfo?.url ? (
                           <Fragment key="f-catalog">
                             {commentMediaInfo?.type === "webpage" ? (
                               thread.thumbnailUrl ? (
-                              <img key={`img-${index}`}
+                              <img className="card" key={`img-${index}`}
                               src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
@@ -486,21 +492,21 @@ const Catalog = () => {
                               ) : null
                             ) : null}
                             {commentMediaInfo?.type === "image" ? (
-                              <img key={`img-${index}`}
+                              <img className="card" key={`img-${index}`}
                               src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                               onError={(e) => {
                                 e.target.src = fallbackImgUrl
                                 e.target.onerror = null;}}  />
                             ) : null}
                             {commentMediaInfo?.type === "video" ? (
-                              <video key={`fti-${index}`} 
+                              <video className="card" key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 
                               style={{ pointerEvents: "none" }}
                               onError={(e) => e.target.src = fallbackImgUrl} /> 
                             ) : null}
                             {commentMediaInfo?.type === "audio" ? (
-                              <audio controls 
+                              <audio className="card" controls 
                               key={`fti-${index}`} 
                               src={commentMediaInfo.url} 
                               alt={commentMediaInfo.type} 
@@ -556,7 +562,9 @@ const Catalog = () => {
             <>
             <span className="boardList">
               [
-                <Link to="" onClick={() => {}}>Subscriptions</Link>
+                <Link to={`/p/all`}>All</Link>
+                 / 
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

@@ -427,7 +427,7 @@ export const Header = styled.div`
   .offline {
     width: 16px; 
     position: relative;
-    margin: 2px 2px -4px 2px;
+    margin: 2px 2px -2px 2px;
   }
 `;
 
@@ -1402,6 +1402,31 @@ export const TopBar = styled.div`
       }
   }}
 
+  .ellipsis {
+    margin-right: 14px;
+  }
+
+  .ellipsis:after {
+    content: "\\2026";
+    position: absolute;
+    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+    animation: ellipsis steps(4,end) 1500ms infinite;
+    width: 0px;
+    overflow: hidden;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
   @media (min-width: 480px) {
     #catalog-button-mobile {
       display: none;
@@ -1631,14 +1656,14 @@ export const BoardForm = styled.div`
     .offline-sub {
       width: 13px;
       margin-right: -5px;
-      margin-bottom: -3px;
+      margin-bottom: -1px;
       position: relative;
     }
 
     .offline-reply {
       width: 13px;
       margin-right: 2px;
-      margin-bottom: -3px;
+      margin-bottom: -1px;
       position: relative;
     }
 
@@ -2994,13 +3019,13 @@ export const BoardForm = styled.div`
 
     .offline-mobile-sub {
       width: 13px;
-      margin-top: 3px;
+      margin-top: 4px;
       margin-right: 5px;
     }
 
     .offline-mobile-sub-reply {
       width: 13px;
-      margin-top: 3px;
+      margin-top: 4px;
     }
 
     .thread {
