@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useFeed, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useFeed, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break} from '../styled/Board.styled';
@@ -24,13 +24,11 @@ const AllCatalog = () => {
   const {
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
-    selectedAddress, setSelectedAddress,
+    setSelectedAddress,
     selectedStyle,
     setSelectedThread,
     setSelectedTitle,
   } = useGeneralStore(state => state);
-
-  const account = useAccount();
 
   const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
