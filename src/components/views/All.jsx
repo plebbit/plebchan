@@ -266,7 +266,7 @@ const All = () => {
             </div>
               <>
               <div className="board-title">p/All</div>
-              <div className="board-address">Default boards currently curated by devs</div>
+              <div className="board-address">Default boards, currently curated by devs.</div>
               </>
           </>
         </Header>
