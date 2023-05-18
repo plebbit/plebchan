@@ -415,7 +415,7 @@ const Board = () => {
   
   useEffect(() => {
     publishCommentEdit();
-  }, [publishCommentEditOptions]);
+  }, [publishCommentEditOptions, publishCommentEdit]);
   
   
   // desktop navbar board select functionality

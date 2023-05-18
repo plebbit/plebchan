@@ -388,7 +388,7 @@ const Thread = () => {
   
   useEffect(() => {
     publishCommentEdit();
-  }, [publishCommentEditOptions]);
+  }, [publishCommentEditOptions, publishCommentEdit]);
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {

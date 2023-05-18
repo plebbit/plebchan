@@ -24,7 +24,7 @@ const SubscriptionsCatalog = () => {
   const {
     defaultSubplebbits,
     isSettingsOpen, setIsSettingsOpen,
-    selectedAddress, setSelectedAddress,
+    setSelectedAddress,
     selectedStyle,
     setSelectedThread,
     setSelectedTitle,
