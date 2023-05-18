@@ -703,7 +703,7 @@ const Board = () => {
                             <div id="post-menu" className={`post-menu-thread post-menu-thread-${thread.cid}`}
                               style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
                               <ul>
-                                <li>Edit post</li>
+                                {/* <li>Edit post</li> */}
                                 <li>Hide thread</li>
                                 {(commentMediaInfo && (
                                   commentMediaInfo.type === 'image' || 
@@ -873,7 +873,7 @@ const Board = () => {
                               <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
                               style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
                                 <ul>
-                                  <li>Edit post</li>
+                                  {/* <li>Edit post</li> */}
                                   <li>Hide post</li>
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
