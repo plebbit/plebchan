@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -73,13 +73,37 @@ const Board = () => {
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
+  const [isModToolsOpen, setIsModToolsOpen] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
 
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
+
+  useEffect(() => {
+    if (subplebbit.roles !== undefined) { 
+    const role = subplebbit.roles[account.address]?.role;
+
+    if (role === 'moderator' || 'admin' || 'owner') {
+      setIsModerator(true);
+    } else {
+      setIsModerator(false);
+    }
+  }
+  }, [account?.address, subplebbit.roles]);
+
+
+  const handleOptionClick = (threadCid) => {
+    setRotatedStates(prevState => ({
+      ...prevState,
+      [threadCid]: false
+    }));
+  };
+  
 
   const errorString = useMemo(() => {
     if (subplebbit?.state === 'failed') {
@@ -191,8 +215,12 @@ const Board = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
-      console.log('challenge success');
+      if (challengeVerification.publication?.cid !== undefined) {
+        navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
+        console.log('challenge success');
+      } else {
+        setSuccessMessage('Challenge Success');
+      }
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -326,6 +354,70 @@ const Board = () => {
     });
   };
 
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
+    commentCid: commentCid,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+  
+  
+  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(error);
+    }
+  }, [error]);
+
+
+  const handleModToolClick = (tool, commentCid, currentState) => {
+    setCommentCid(commentCid);
+    handleOptionClick(commentCid);
+
+    switch (tool) {
+      case 'Pin':
+      case 'Unpin':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          pinned: !currentState.pinned,
+        }));
+        break;
+      case 'Close':
+      case 'Reopen':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          locked: !currentState.locked,
+        }));
+        break;
+      case 'Delete':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          removed: true,
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+  
+  
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: commentCid,
+    }));
+  }, [commentCid]);
+
+  
+  useEffect(() => {
+    publishCommentEdit();
+  }, [publishCommentEditOptions]);
+  
+  
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
@@ -703,8 +795,8 @@ const Board = () => {
                             <div id="post-menu" className={`post-menu-thread post-menu-thread-${thread.cid}`}
                               style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
                               <ul>
-                                {/* <li>Edit post</li> */}
-                                <li>Hide thread</li>
+                                {/* <li onClick={() => handleOptionClick(thread.cid)}>Edit post</li> */}
+                                <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
                                 {(commentMediaInfo && (
                                   commentMediaInfo.type === 'image' || 
                                   (commentMediaInfo.type === 'webpage' && 
@@ -715,19 +807,19 @@ const Board = () => {
                                       Image search »
                                       <ul className="dropdown-menu"
                                         style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                        <li>
+                                        <li onClick={() => handleModToolClick(thread.pinned ? 'Unpin' : 'Pin', thread.cid, { pinned: thread.pinned, locked: thread.locked })}>
                                           <a 
                                           href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Google</a>
                                         </li>
-                                        <li>
+                                        <li onClick={() => handleOptionClick(thread.cid)}>
                                           <a
                                           href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Yandex</a>
                                         </li>
-                                        <li>
+                                        <li onClick={() => handleOptionClick(thread.cid)}>
                                           <a
                                           href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
@@ -737,6 +829,35 @@ const Board = () => {
                                     </li>
                                   ) : null
                                 }
+                                {isModerator ? (
+                                  <li
+                                  onMouseOver={() => {setIsModToolsOpen(true)}}
+                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
+                                    Mod tools »
+                                    <ul className="dropdown-menu"
+                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => handleModToolClick(
+                                        thread.pinned ? 'Unpin' : 'Pin', 
+                                        thread.cid, 
+                                        { pinned: thread.pinned, locked: thread.locked }
+                                      )}>
+                                      {thread.pinned ? 'Unpin' : 'Pin'}
+                                    </li>
+                                    <li onClick={() => handleModToolClick(
+                                      thread.locked ? 'Reopen' : 'Close', 
+                                      thread.cid, 
+                                      { pinned: thread.pinned, locked: thread.locked }
+                                    )}>
+                                      {thread.locked ? 'Reopen' : 'Close'}
+                                      </li>
+                                      <li onClick={() => handleModToolClick(
+                                        'Delete', thread.cid
+                                      )}>
+                                      Delete
+                                      </li>
+                                    </ul>
+                                  </li>
+                                ) : null}
                               </ul>
                             </div>
                             <div key={`bi-${index}`} id="backlink-id" className="backlink">
@@ -873,8 +994,8 @@ const Board = () => {
                               <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
                               style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
                                 <ul>
-                                  {/* <li>Edit post</li> */}
-                                  <li>Hide post</li>
+                                  {/* <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li> */}
+                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
                                     (replyMediaInfo.type === 'webpage' && 
@@ -885,27 +1006,43 @@ const Board = () => {
                                       Image search »
                                       <ul className="dropdown-menu"
                                         style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                        <li>
+                                        <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a 
-                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo?.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Google</a>
                                         </li>
-                                        <li>
+                                        <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a
-                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                          href={`https://yandex.com/images/search?url=${commentMediaInfo?.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Yandex</a>
                                         </li>
-                                        <li>
+                                        <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a
-                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo?.url}`}
                                           target="_blank" rel="noreferrer"
                                           >SauceNAO</a>
                                         </li>
                                       </ul>
                                     </li>
-                                    ) : null}
+                                    ) : null
+                                  }
+                                  {isModerator ? (
+                                  <li
+                                  onMouseOver={() => {setIsModToolsOpen(true)}}
+                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
+                                    Mod tools »
+                                    <ul className="dropdown-menu"
+                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => handleModToolClick(
+                                        'Delete', reply.cid
+                                      )}>
+                                      Delete
+                                      </li>
+                                    </ul>
+                                  </li>
+                                ) : null}
                                 </ul>
                               </div>
                               <div id="backlink-id" className="backlink">
