@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useAccountComments, useComment, usePublishComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useComment, usePublishComment, usePublishCommentEdit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -25,6 +25,7 @@ import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
 import packageJson from '../../../package.json'
+import useSuccess from '../../hooks/useSuccess';
 const {version} = packageJson
 
 
@@ -60,13 +61,19 @@ const Thread = () => {
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
+  const [isModToolsOpen, setIsModToolsOpen] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
   
   useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
+
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: comment.subplebbitAddress});
@@ -76,6 +83,26 @@ const Thread = () => {
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
+
+
+  useEffect(() => {
+    if (subplebbit.roles !== undefined) { 
+    const role = subplebbit.roles[account.address]?.role;
+
+    if (role === 'moderator' || 'admin' || 'owner') {
+      setIsModerator(true);
+    } else {
+      setIsModerator(false);
+    }
+  }
+  }, [account?.address, subplebbit.roles]);
+
+  const handleOptionClick = (threadCid) => {
+    setRotatedStates(prevState => ({
+      ...prevState,
+      [threadCid]: false
+    }));
+  };
 
   
   useEffect(() => {
@@ -160,9 +187,12 @@ const Thread = () => {
   
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      console.log('challenge success');
-    }
-    else if (challengeVerification.challengeSuccess === false) {
+      if (challengeVerification.publication?.cid !== undefined) {
+        console.log('challenge success');
+      } else {
+      setSuccessMessage('Challenge Success');
+      }
+    } else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
@@ -295,6 +325,70 @@ const Thread = () => {
       };
     });
   };
+
+
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
+    commentCid: commentCid,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+  
+  
+  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(error);
+    }
+  }, [error]);
+
+
+  const handleModToolClick = (tool, commentCid, currentState) => {
+    setCommentCid(commentCid);
+    handleOptionClick(commentCid);
+
+    switch (tool) {
+      case 'Pin':
+      case 'Unpin':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          pinned: !currentState.pinned,
+        }));
+        break;
+      case 'Close':
+      case 'Reopen':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          locked: !currentState.locked,
+        }));
+        break;
+      case 'Delete':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          removed: true,
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+  
+  
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: commentCid,
+    }));
+  }, [commentCid]);
+
+  
+  useEffect(() => {
+    publishCommentEdit();
+  }, [publishCommentEditOptions]);
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
@@ -659,7 +753,7 @@ const Thread = () => {
                               style={{ display: rotatedStates[comment.cid] ? 'block' : 'none' }}>
                               <ul>
                                 {/* <li>Edit post</li> */}
-                                <li>Hide thread</li>
+                                <li onClick={() => {handleOptionClick(comment.cid)}}>Hide thread</li>
                                 {(commentMediaInfo && (
                                   commentMediaInfo.type === 'image' || 
                                   (commentMediaInfo.type === 'webpage' && 
@@ -692,6 +786,21 @@ const Thread = () => {
                                     </li>
                                   ) : null
                                 }
+                                {isModerator ? (
+                                  <li
+                                  onMouseOver={() => {setIsModToolsOpen(true)}}
+                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
+                                    Mod tools »
+                                    <ul className="dropdown-menu"
+                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => handleModToolClick(
+                                        'Delete', comment.cid
+                                      )}>
+                                      Delete
+                                      </li>
+                                    </ul>
+                                  </li>
+                                ) : null}
                               </ul>
                             </div>
                         <div id="backlink-id" className="backlink">
@@ -802,7 +911,7 @@ const Thread = () => {
                               style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
                                 <ul>
                                   {/* <li>Edit post</li> */}
-                                  <li>Hide post</li>
+                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
                                     (replyMediaInfo.type === 'webpage' && 
@@ -833,7 +942,23 @@ const Thread = () => {
                                         </li>
                                       </ul>
                                     </li>
-                                    ) : null}
+                                    ) : null
+                                  }
+                                  {isModerator ? (
+                                  <li
+                                  onMouseOver={() => {setIsModToolsOpen(true)}}
+                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
+                                    Mod tools »
+                                    <ul className="dropdown-menu"
+                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => handleModToolClick(
+                                        'Delete', reply.cid
+                                      )}>
+                                      Delete
+                                      </li>
+                                    </ul>
+                                  </li>
+                                ) : null}
                                 </ul>
                               </div>
                             <div id="backlink-id" className="backlink">
