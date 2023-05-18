@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
@@ -7,7 +7,7 @@ import { useAccount, useAccountComments, useFeed, useSubplebbits } from '@plebbi
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, TopBar, BoardForm } from '../styled/Board.styled';
+import { Container, NavBar, Header, Break, TopBar, BoardForm, PostMenu } from '../styled/Board.styled';
 import { Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
@@ -41,11 +41,16 @@ const Subscriptions = () => {
   } = useGeneralStore(state => state);
 
   const account = useAccount();
+  const navigate = useNavigate();
+
+  const threadMenuRefs = useRef({});
+  const replyMenuRefs = useRef({});
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
-  const navigate = useNavigate();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [rotatedStates, setRotatedStates] = useState({});
+  const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
@@ -451,7 +456,66 @@ const Subscriptions = () => {
                                 ]
                               </span>
                             </span>&nbsp;
-                            <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
+                            <PostMenu 
+                              key={`pmb-${index}`} 
+                              title="Post menu"
+                              ref={el => threadMenuRefs.current[thread.cid] = el}
+                              className='post-menu-button' 
+                              rotated={rotatedStates[thread.cid]}
+                              onClick={() => {
+                                const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
+                                const menu = document.querySelector(`.post-menu-thread-${thread.cid}`);
+                                const scrollY = window.scrollY || window.pageYOffset;
+                                menu.style.top = `calc(${rect.top + scrollY}px - 225px)`;
+                                menu.style.left = `${rect.left}px`;
+                              
+                                setRotatedStates(prevState => ({
+                                  ...prevState,
+                                  [thread.cid]: !prevState[thread.cid]
+                                }));
+                              }}                              
+                            >
+                              ▶
+                            </PostMenu>
+                            <div id="post-menu" className={`post-menu-thread post-menu-thread-${thread.cid}`}
+                              style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
+                              <ul>
+                                <li>Edit post</li>
+                                <li>Hide thread</li>
+                                {(commentMediaInfo && (
+                                  commentMediaInfo.type === 'image' || 
+                                  (commentMediaInfo.type === 'webpage' && 
+                                  commentMediaInfo.thumbnail))) ? ( 
+                                    <li 
+                                    onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                    onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                      Image search »
+                                      <ul className="dropdown-menu"
+                                        style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                        <li>
+                                          <a 
+                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Google</a>
+                                        </li>
+                                        <li>
+                                          <a
+                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Yandex</a>
+                                        </li>
+                                        <li>
+                                          <a
+                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >SauceNAO</a>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  ) : null
+                                }
+                              </ul>
+                            </div>
                             <div key={`bi-${index}`} id="backlink-id" className="backlink">
                               {thread.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
@@ -580,7 +644,65 @@ const Subscriptions = () => {
                               tooltipPlace="top"
                               className="offline-reply" />
                               </span>&nbsp;
-                              <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
+                              <PostMenu 
+                              key={`pmb-${index}`} 
+                              title="Post menu"
+                              ref={el => replyMenuRefs.current[reply.cid] = el}
+                              className='post-menu-button' 
+                              rotated={rotatedStates[reply.cid]}
+                              onClick={() => {
+                                const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
+                                const menu = document.querySelector(`.post-menu-reply-${reply.cid}`);
+                                const scrollY = window.scrollY || window.pageYOffset;
+                                menu.style.top = `calc(${rect.top + scrollY}px - 225px)`;
+                                menu.style.left = `${rect.left}px`;
+                              
+                                setRotatedStates(prevState => ({
+                                  ...prevState,
+                                  [reply.cid]: !prevState[reply.cid]
+                                }));
+                              }}                              
+                            >
+                              ▶
+                            </PostMenu>
+                              <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
+                              style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
+                                <ul>
+                                  <li>Edit post</li>
+                                  <li>Hide post</li>
+                                  {(replyMediaInfo && (
+                                    replyMediaInfo.type === 'image' || 
+                                    (replyMediaInfo.type === 'webpage' && 
+                                    replyMediaInfo.thumbnail))) ? ( 
+                                      <li 
+                                    onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                    onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                      Image search »
+                                      <ul className="dropdown-menu"
+                                        style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                        <li>
+                                          <a 
+                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Google</a>
+                                        </li>
+                                        <li>
+                                          <a
+                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Yandex</a>
+                                        </li>
+                                        <li>
+                                          <a
+                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >SauceNAO</a>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    ) : null}
+                                </ul>
+                              </div>
                               <div id="backlink-id" className="backlink">
                                 {reply.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
