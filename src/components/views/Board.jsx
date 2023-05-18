@@ -807,7 +807,7 @@ const Board = () => {
                                       Image search »
                                       <ul className="dropdown-menu"
                                         style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                        <li onClick={() => handleModToolClick(thread.pinned ? 'Unpin' : 'Pin', thread.cid, { pinned: thread.pinned, locked: thread.locked })}>
+                                        <li onClick={() => handleOptionClick(thread.cid)}>
                                           <a 
                                           href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
