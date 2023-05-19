@@ -151,10 +151,12 @@ const ModerationModal = ({ isOpen, closeModal }) => {
           </Link>
         </div>
         <ul className="settings-cat">
-          <li className="settings-cat-lbl"> 
-            <input type="checkbox" style={{marginRight: "10px"}}
-            checked={pin} onChange={() => setPin(!pin)} />
-            Pin thread
+          <li className="settings-cat-lbl">
+            <label>
+              <input type="checkbox" style={{marginRight: "10px"}}
+              checked={pin} onChange={() => setPin(!pin)} />
+              Pin thread
+            </label> 
           </li>
           <li className="settings-tip">
             Pin the thread to make it a sticky, showed at the top of the board even as new posts are submitted.
@@ -162,9 +164,11 @@ const ModerationModal = ({ isOpen, closeModal }) => {
         </ul>
         <ul className="settings-cat">
           <li className="settings-cat-lbl"> 
-            <input type="checkbox" style={{marginRight: "10px"}}
-            checked={deleteThread} onChange={() => setDeleteThread(!deleteThread)} />
-            Delete thread
+            <label>
+              <input type="checkbox" style={{marginRight: "10px"}}
+              checked={deleteThread} onChange={() => setDeleteThread(!deleteThread)} />
+              Delete thread              
+            </label>
           </li>
           <li className="settings-tip">
             The post will no longer visible to other users, but the person who posted it can still see it in their own account.
@@ -172,9 +176,11 @@ const ModerationModal = ({ isOpen, closeModal }) => {
         </ul>
         <ul className="settings-cat">
         <li className="settings-cat-lbl"> 
-          <input type="checkbox" style={{marginRight: "10px"}}
-          checked={close} onChange={() => setClose(!close)} />
-            Close thread
+          <label>
+            <input type="checkbox" style={{marginRight: "10px"}}
+            checked={close} onChange={() => setClose(!close)} />
+              Close thread
+          </label>
           </li>
           <li className="settings-tip">
             Closing a thread allows users to still see the content, but they cannot add any new replies to it.
