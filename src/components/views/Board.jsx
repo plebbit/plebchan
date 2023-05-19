@@ -415,7 +415,7 @@ const Board = () => {
     }));
   }, [commentCid]);
 
-  
+
   useEffect(() => {
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
@@ -779,6 +779,20 @@ const Board = () => {
                                 ]
                               </span>
                             </span>&nbsp;
+                            {thread.pinned ? (
+                              <>
+                                &nbsp;
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                                style={{marginBottom: "-3px"}} />
+                              </>
+                            ) : null}
+                            {thread.locked ? (
+                              <>
+                                &nbsp;
+                                <img src="assets/closed.gif" alt="Closed" title="Closed"
+                                style={{marginBottom: "-3px"}} />
+                              </>
+                            ) : null}
                             <PostMenu 
                               key={`pmb-${index}`} 
                               title="Post menu"
@@ -1184,6 +1198,16 @@ const Board = () => {
                                 {thread.author.shortAddress}
                               </span>
                               )&nbsp;
+                            </span>
+                            <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
+                              {thread.pinned ? (
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                                style={{marginBottom: "-3px", marginRight: "2px"}} />
+                              ) : null}
+                              {thread.locked ? (
+                                <img src="assets/closed.gif" alt="Closed" title="Closed"
+                                style={{marginBottom: "-3px", marginRight: "2px"}} />
+                              ) : null}
                             </span>
                             <br key={`mob-br1-${index}`} />
                             {thread.title ? (

@@ -58,6 +58,13 @@ export const Threads = styled.div`
     display: inline-block;
   }
 
+  .closed-icon {
+    background-image: url(assets/closed.gif);
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+  }
+
   .meta {
     cursor: help;
     font-size: 11px;

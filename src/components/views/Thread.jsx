@@ -736,7 +736,21 @@ const Thread = () => {
                           <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => {
                             setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
                             }} title="Reply to this post">{comment.shortCid}</button>
-                        </span>&nbsp;&nbsp;
+                        </span>&nbsp;
+                        {comment.pinned ? (
+                          <>
+                            &nbsp;
+                            <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                            style={{marginBottom: "-3px"}} />
+                          </>
+                        ) : null}
+                        {comment.locked ? (
+                          <>
+                            &nbsp;
+                            <img src="assets/closed.gif" alt="Closed" title="Closed"
+                            style={{marginBottom: "-3px"}} />
+                          </>
+                        ) : null}
                         <PostMenu 
                               key={`pmb-${index}`} 
                               title="Post menu"
