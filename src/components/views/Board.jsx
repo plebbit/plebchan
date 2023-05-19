@@ -10,6 +10,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu} from '../styled/Board.styled';
 import { Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
+import ModerationModal from '../ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
@@ -36,6 +37,7 @@ const Board = () => {
     setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
+    isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
     setPendingComment,
     setPendingCommentIndex,
@@ -483,6 +485,10 @@ const Board = () => {
         selectedStyle={selectedStyle}
         isOpen={isSettingsOpen}
         closeModal={() => setIsSettingsOpen(false)} />
+        <ModerationModal 
+        selectedStyle={selectedStyle}
+        isOpen={isModerationOpen}
+        closeModal={() => setIsModerationOpen(false)} />
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className="boardList">
@@ -858,18 +864,24 @@ const Board = () => {
                                     Mod tools »
                                     <ul className="dropdown-menu"
                                     style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => {
+                                        setIsModerationOpen(true);
+                                        handleOptionClick(thread.cid);
+                                      }}>
+                                        Open tools ↗
+                                      </li>
                                       <li onClick={() => handleModToolClick(
                                         thread.pinned ? 'Unpin' : 'Pin', 
                                         thread.cid, 
                                         { pinned: thread.pinned, locked: thread.locked }
                                       )}>
                                       {thread.pinned ? 'Unpin' : 'Pin'}
-                                    </li>
-                                    <li onClick={() => handleModToolClick(
-                                      thread.locked ? 'Reopen' : 'Close', 
-                                      thread.cid, 
-                                      { pinned: thread.pinned, locked: thread.locked }
-                                    )}>
+                                      </li>
+                                      <li onClick={() => handleModToolClick(
+                                        thread.locked ? 'Reopen' : 'Close', 
+                                        thread.cid, 
+                                        { pinned: thread.pinned, locked: thread.locked }
+                                      )}>
                                       {thread.locked ? 'Reopen' : 'Close'}
                                       </li>
                                       <li onClick={() => handleModToolClick(

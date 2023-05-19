@@ -23,6 +23,9 @@ const useGeneralStore = create((set) => ({
   isCaptchaOpen: false,
   setIsCaptchaOpen: (isOpen) => set({ isCaptchaOpen: isOpen }),
 
+  isModerationOpen: false,
+  setIsModerationOpen: (isOpen) => set({ isModerationOpen: isOpen }),
+
   isSettingsOpen: false,
   setIsSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),
 
