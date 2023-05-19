@@ -70,6 +70,7 @@ const Board = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
@@ -402,6 +403,8 @@ const Board = () => {
       default:
         break;
     }
+
+    setTriggerPublishCommentEdit(true);
   };
   
   
@@ -414,8 +417,13 @@ const Board = () => {
 
   
   useEffect(() => {
-    publishCommentEdit();
-  }, [publishCommentEditOptions, publishCommentEdit]);
+    if (publishCommentEditOptions && triggerPublishCommentEdit) {
+      (async () => {
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
+      })();
+    }
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
   
   
   // desktop navbar board select functionality

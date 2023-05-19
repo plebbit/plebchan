@@ -60,6 +60,7 @@ const Thread = () => {
   const replyMenuRefs = useRef({});
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
@@ -375,6 +376,8 @@ const Thread = () => {
       default:
         break;
     }
+
+    setTriggerPublishCommentEdit(true);
   };
   
   
@@ -387,8 +390,13 @@ const Thread = () => {
 
   
   useEffect(() => {
-    publishCommentEdit();
-  }, [publishCommentEditOptions, publishCommentEdit]);
+    if (publishCommentEditOptions && triggerPublishCommentEdit) {
+      (async () => {
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
+      })();
+    }
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
