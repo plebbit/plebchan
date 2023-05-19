@@ -92,7 +92,7 @@ const Board = () => {
     if (subplebbit.roles !== undefined) { 
     const role = subplebbit.roles[account.address]?.role;
 
-    if (role === 'moderator' || 'admin' || 'owner') {
+    if (role === 'moderator' || role === 'admin' || role === 'owner') {
       setIsModerator(true);
     } else {
       setIsModerator(false);
