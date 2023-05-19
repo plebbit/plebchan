@@ -29,6 +29,9 @@ const useGeneralStore = create((set) => ({
   isSettingsOpen: false,
   setIsSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),
 
+  moderatingCommentCid: '',
+  setModeratingCommentCid: (cid) => set({ moderatingCommentCid: cid }),
+
   pendingComment: '',
   setPendingComment: (comment) => set({ pendingComment: comment }),
 

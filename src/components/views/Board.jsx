@@ -39,6 +39,7 @@ const Board = () => {
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
+    setModeratingCommentCid,
     setPendingComment,
     setPendingCommentIndex,
     setResolveCaptchaPromise,
@@ -67,6 +68,8 @@ const Board = () => {
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
+
+
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -865,6 +868,7 @@ const Board = () => {
                                     <ul className="dropdown-menu"
                                     style={{display: isModToolsOpen ? 'block': 'none'}}>
                                       <li onClick={() => {
+                                        setModeratingCommentCid(thread.cid);
                                         setIsModerationOpen(true);
                                         handleOptionClick(thread.cid);
                                       }}>
