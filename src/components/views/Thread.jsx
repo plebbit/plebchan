@@ -9,6 +9,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } from '../styled/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
+import ModerationModal from '../ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
@@ -35,7 +36,9 @@ const Thread = () => {
     setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
+    isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
+    setModeratingCommentCid,
     setResolveCaptchaPromise,
     setPendingComment,
     setPendingCommentIndex,
@@ -437,6 +440,10 @@ const Thread = () => {
         selectedStyle={selectedStyle}
         isOpen={isSettingsOpen}
         closeModal={() => setIsSettingsOpen(false)} />
+        <ModerationModal 
+        selectedStyle={selectedStyle}
+        isOpen={isModerationOpen}
+        closeModal={() => setIsModerationOpen(false)} />
         <NavBar selectedStyle={selectedStyle}>
           <>
           <span className="boardList">
@@ -815,6 +822,27 @@ const Thread = () => {
                                     Mod tools »
                                     <ul className="dropdown-menu"
                                     style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(comment.cid);
+                                        setIsModerationOpen(true);
+                                        handleOptionClick(comment.cid);
+                                      }}>
+                                        Open tools ↗
+                                      </li>
+                                      <li onClick={() => handleModToolClick(
+                                        comment.pinned ? 'Unpin' : 'Pin', 
+                                        comment.cid, 
+                                        { pinned: comment.pinned, locked: comment.locked }
+                                      )}>
+                                      {comment.pinned ? 'Unpin' : 'Pin'}
+                                      </li>
+                                      <li onClick={() => handleModToolClick(
+                                        comment.locked ? 'Reopen' : 'Close', 
+                                        comment.cid, 
+                                        { pinned: comment.pinned, locked: comment.locked }
+                                      )}>
+                                      {comment.locked ? 'Reopen' : 'Close'}
+                                      </li>
                                       <li onClick={() => handleModToolClick(
                                         'Delete', comment.cid
                                       )}>

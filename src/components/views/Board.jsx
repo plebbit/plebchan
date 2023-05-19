@@ -69,8 +69,6 @@ const Board = () => {
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
 
-
-
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
