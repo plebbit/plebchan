@@ -90,15 +90,15 @@ const Board = () => {
 
   useEffect(() => {
     if (subplebbit.roles !== undefined) { 
-    const role = subplebbit.roles[account.address]?.role;
-
-    if (role === 'moderator' || role === 'admin' || role === 'owner') {
-      setIsModerator(true);
-    } else {
-      setIsModerator(false);
+      const role = subplebbit.roles[account.author.address]?.role;
+  
+      if (role === 'moderator' || role === 'admin' || role === 'owner') {
+        setIsModerator(true);
+      } else {
+        setIsModerator(false);
+      }
     }
-  }
-  }, [account?.address, subplebbit.roles]);
+  }, [account?.author.address, subplebbit.roles]);  
 
 
   const handleOptionClick = (threadCid) => {
