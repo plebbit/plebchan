@@ -828,6 +828,49 @@ export const BoardForm = styled.div`
       margin-top: 10px;
     }
 
+    #post-menu {
+      z-index: 999;
+      position: absolute;
+      font-size: 12px;
+      line-height: 1.3em;
+      left: 80%;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        white-space: nowrap;
+      }
+
+      li {
+        cursor: pointer;
+        position: relative;
+        padding: 2px 4px;
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        list-style: none;
+      }
+
+      .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
     ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
@@ -836,6 +879,23 @@ export const BoardForm = styled.div`
         border: 1px solid #d99f91 !important;
         border-left: none !important;
         border-top: none !important;
+      }
+      
+      #post-menu {
+        ul {
+          background-color: #f0e0d6;
+          border: 1px solid #d9bfb7;
+          border-bottom: 1px solid #d9bfb7;
+          border-right-width: 2px;
+        }
+
+        li {
+          border-bottom: 1px solid #ccc;
+
+          :hover {
+            background-color: #ffe;
+          }
+        }
       }`;
 
       case 'Yotsuba-B':
@@ -844,28 +904,112 @@ export const BoardForm = styled.div`
         border: 1px solid #ba9dbf !important;
         border-left: none !important;
         border-top: none !important;
+      }
+      
+      #post-menu {
+        ul {
+          background-color: #d6daf0;
+          border: 1px solid #b7c5d9;
+          border-right-width: 2px;
+        }
+
+        li {
+          border-bottom: 1px solid #b7c5d9;
+
+          :hover {
+            background-color: #eef2ff;
+          }
+        }
       }`;
 
       case 'Futaba':
         return `.highlighted {
         background-color: #f0c0b0 !important;
+      }
+      
+      #post-menu {
+        font-size: 13px !important;
+
+        ul {
+          background-color: #f0e0d6;
+          border: 1px solid #d9bfb7;
+          border-bottom: none;
+        }
+
+        li {
+          border-bottom: 1px solid #d9bfb7;
+
+          :hover {
+            background-color: #ffe;
+          }
+        }
       }`;
 
       case 'Burichan':
         return `.highlighted {
         background-color: #d6bad0 !important;
+      }
+      
+      #post-menu {
+        font-size: 13px !important;
+
+        ul {
+          background-color: #d6daf0;
+          border: 1px solid #b7c5d9;
+          border-bottom: none;
+        }
+
+        li {
+          border-bottom: 1px solid #b7c5d9;
+
+          :hover {
+            background-color: #eef2ff;
+          }
+        }
       }`;
 
       case 'Tomorrow':
         return `.highlighted {
         background-color: #1d1d21 !important;
         border: 1px solid #111 !important;
+      }
+      
+      #post-menu {
+        ul {
+          background-color: #282a2e;
+          border: 1px solid #000;
+          border-bottom: none;
+        }
+
+        li {
+          border-bottom: 1px solid #000;
+
+          :hover {
+            background-color: #1d1f21;
+          }
+        }
       }`;
 
       case 'Photon':
         return `.highlighted {
         background-color: #ccc !important;
         border: 1px solid #ccc !important;
+      }
+      
+      #post-menu {
+        ul {
+          background-color: #ddd;
+          border: 1px solid #ccc;
+          border-bottom: none;
+        }
+
+        li {
+          border-bottom: 1px solid #ccc;
+
+          :hover {
+            background-color: #eee;
+          }
+        }
       }`;
 
         default:

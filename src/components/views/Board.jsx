@@ -3,13 +3,14 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm } from '../styled/Board.styled';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu} from '../styled/Board.styled';
 import { Footer } from '../styled/Thread.styled';
 import ImageBanner from '../ImageBanner';
+import ModerationModal from '../ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
@@ -36,7 +37,9 @@ const Board = () => {
     setChallengesArray,
     defaultSubplebbits,
     setIsCaptchaOpen,
+    isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
+    setModeratingCommentCid,
     setPendingComment,
     setPendingCommentIndex,
     setResolveCaptchaPromise,
@@ -51,31 +54,60 @@ const Board = () => {
   } = useGeneralStore(state => state);
 
   const account = useAccount();
+  const navigate = useNavigate();
+  const { subplebbitAddress } = useParams();
 
   const nameRef = useRef();
   const subjectRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
+  const threadMenuRefs = useRef({});
+  const replyMenuRefs = useRef({});
 
-  const [isReplyOpen, setIsReplyOpen] = useState(false);
-  const navigate = useNavigate();
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
-  const [selectedFeed, setSelectedFeed] = useState(feed);
-  const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
-
+  const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
 
-  const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
+  const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
+  const [selectedFeed, setSelectedFeed] = useState(feed);
+  const [rotatedStates, setRotatedStates] = useState({});
+  const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
+  const [isModToolsOpen, setIsModToolsOpen] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
+
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+
+  useEffect(() => {
+    if (subplebbit.roles !== undefined) { 
+      const role = subplebbit.roles[account.author.address]?.role;
+  
+      if (role === 'moderator' || role === 'admin' || role === 'owner') {
+        setIsModerator(true);
+      } else {
+        setIsModerator(false);
+      }
+    }
+  }, [account?.author.address, subplebbit.roles]);  
+
+
+  const handleOptionClick = (threadCid) => {
+    setRotatedStates(prevState => ({
+      ...prevState,
+      [threadCid]: false
+    }));
+  };
+  
 
   const errorString = useMemo(() => {
     if (subplebbit?.state === 'failed') {
@@ -86,6 +118,7 @@ const Board = () => {
       return errorString
     }
   }, [subplebbit?.state, subplebbit?.error, selectedAddress])
+
 
   useEffect(() => {
     if (errorString) {
@@ -186,8 +219,12 @@ const Board = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
-      console.log('challenge success');
+      if (challengeVerification.publication?.cid !== undefined) {
+        navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
+        console.log('challenge success');
+      } else {
+        setSuccessMessage('Challenge Success');
+      }
     }
     else if (challengeVerification.challengeSuccess === false) {
       setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
@@ -321,6 +358,77 @@ const Board = () => {
     });
   };
 
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
+    commentCid: commentCid,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+  
+  
+  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(error);
+    }
+  }, [error]);
+
+
+  const handleModToolClick = (tool, commentCid, currentState) => {
+    setCommentCid(commentCid);
+    handleOptionClick(commentCid);
+
+    switch (tool) {
+      case 'Pin':
+      case 'Unpin':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          pinned: !currentState.pinned,
+        }));
+        break;
+      case 'Close':
+      case 'Reopen':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          locked: !currentState.locked,
+        }));
+        break;
+      case 'Delete':
+        setPublishCommentEditOptions(prevOptions => ({
+          ...prevOptions,
+          removed: true,
+        }));
+        break;
+      default:
+        break;
+    }
+
+    setTriggerPublishCommentEdit(true);
+  };
+  
+  
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: commentCid,
+    }));
+  }, [commentCid]);
+
+
+  useEffect(() => {
+    if (publishCommentEditOptions && triggerPublishCommentEdit) {
+      (async () => {
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
+      })();
+    }
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+  
+  
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
@@ -378,6 +486,10 @@ const Board = () => {
         selectedStyle={selectedStyle}
         isOpen={isSettingsOpen}
         closeModal={() => setIsSettingsOpen(false)} />
+        <ModerationModal 
+        selectedStyle={selectedStyle}
+        isOpen={isModerationOpen}
+        closeModal={() => setIsModerationOpen(false)} />
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className="boardList">
@@ -674,7 +786,116 @@ const Board = () => {
                                 ]
                               </span>
                             </span>&nbsp;
-                            <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
+                            {thread.pinned ? (
+                              <>
+                                &nbsp;
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                                style={{marginBottom: "-3px"}} />
+                              </>
+                            ) : null}
+                            {thread.locked ? (
+                              <>
+                                &nbsp;
+                                <img src="assets/closed.gif" alt="Closed" title="Closed"
+                                style={{marginBottom: "-3px"}} />
+                              </>
+                            ) : null}
+                            <PostMenu 
+                              key={`pmb-${index}`} 
+                              title="Post menu"
+                              ref={el => threadMenuRefs.current[thread.cid] = el}
+                              className='post-menu-button' 
+                              rotated={rotatedStates[thread.cid]}
+                              onClick={() => {
+                                const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
+                                const menu = document.querySelector(`.post-menu-thread-${thread.cid}`);
+                                const scrollY = window.scrollY || window.pageYOffset;
+                                menu.style.top = `calc(${rect.top + scrollY}px - 258px)`;
+                                menu.style.left = `${rect.left}px`;
+                              
+                                setRotatedStates(prevState => ({
+                                  ...prevState,
+                                  [thread.cid]: !prevState[thread.cid]
+                                }));
+                              }}                              
+                            >
+                              ▶
+                            </PostMenu>
+                            <div id="post-menu" className={`post-menu-thread post-menu-thread-${thread.cid}`}
+                              style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
+                              <ul>
+                                {/* <li onClick={() => handleOptionClick(thread.cid)}>Edit post</li> */}
+                                <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                                {(commentMediaInfo && (
+                                  commentMediaInfo.type === 'image' || 
+                                  (commentMediaInfo.type === 'webpage' && 
+                                  commentMediaInfo.thumbnail))) ? ( 
+                                    <li 
+                                    onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                    onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                      Image search »
+                                      <ul className="dropdown-menu"
+                                        style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                        <li onClick={() => handleOptionClick(thread.cid)}>
+                                          <a 
+                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Google</a>
+                                        </li>
+                                        <li onClick={() => handleOptionClick(thread.cid)}>
+                                          <a
+                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Yandex</a>
+                                        </li>
+                                        <li onClick={() => handleOptionClick(thread.cid)}>
+                                          <a
+                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >SauceNAO</a>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  ) : null
+                                }
+                                {isModerator ? (
+                                  <li
+                                  onMouseOver={() => {setIsModToolsOpen(true)}}
+                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
+                                    Mod tools »
+                                    <ul className="dropdown-menu"
+                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(thread.cid);
+                                        setIsModerationOpen(true);
+                                        handleOptionClick(thread.cid);
+                                      }}>
+                                        Open tools ↗
+                                      </li>
+                                      <li onClick={() => handleModToolClick(
+                                        thread.pinned ? 'Unpin' : 'Pin', 
+                                        thread.cid, 
+                                        { pinned: thread.pinned, locked: thread.locked }
+                                      )}>
+                                      {thread.pinned ? 'Unpin' : 'Pin'}
+                                      </li>
+                                      <li onClick={() => handleModToolClick(
+                                        thread.locked ? 'Reopen' : 'Close', 
+                                        thread.cid, 
+                                        { pinned: thread.pinned, locked: thread.locked }
+                                      )}>
+                                      {thread.locked ? 'Reopen' : 'Close'}
+                                      </li>
+                                      <li onClick={() => handleModToolClick(
+                                        'Delete', thread.cid
+                                      )}>
+                                      Delete
+                                      </li>
+                                    </ul>
+                                  </li>
+                                ) : null}
+                              </ul>
+                            </div>
                             <div key={`bi-${index}`} id="backlink-id" className="backlink">
                               {thread.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
@@ -785,7 +1006,81 @@ const Board = () => {
                                   <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
                                 )}
                               </span>&nbsp;
-                              <button key={`pmb-${index}`} className="post-menu-button" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }} data-cmd="post-menu">▶</button>
+                              <PostMenu 
+                              key={`pmb-${index}`} 
+                              title="Post menu"
+                              ref={el => replyMenuRefs.current[reply.cid] = el}
+                              className='post-menu-button' 
+                              rotated={rotatedStates[reply.cid]}
+                              onClick={() => {
+                                const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
+                                const menu = document.querySelector(`.post-menu-reply-${reply.cid}`);
+                                const scrollY = window.scrollY || window.pageYOffset;
+                                menu.style.top = `calc(${rect.top + scrollY}px - 258px)`;
+                                menu.style.left = `${rect.left}px`;
+                              
+                                setRotatedStates(prevState => ({
+                                  ...prevState,
+                                  [reply.cid]: !prevState[reply.cid]
+                                }));
+                              }}                              
+                            >
+                              ▶
+                            </PostMenu>
+                              <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
+                              style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
+                                <ul>
+                                  {/* <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li> */}
+                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                  {(replyMediaInfo && (
+                                    replyMediaInfo.type === 'image' || 
+                                    (replyMediaInfo.type === 'webpage' && 
+                                    replyMediaInfo.thumbnail))) ? ( 
+                                    <li 
+                                    onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                    onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                      Image search »
+                                      <ul className="dropdown-menu"
+                                        style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                        <li onClick={() => handleOptionClick(reply.cid)}>
+                                          <a 
+                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo?.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Google</a>
+                                        </li>
+                                        <li onClick={() => handleOptionClick(reply.cid)}>
+                                          <a
+                                          href={`https://yandex.com/images/search?url=${commentMediaInfo?.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >Yandex</a>
+                                        </li>
+                                        <li onClick={() => handleOptionClick(reply.cid)}>
+                                          <a
+                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo?.url}`}
+                                          target="_blank" rel="noreferrer"
+                                          >SauceNAO</a>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    ) : null
+                                  }
+                                  {isModerator ? (
+                                  <li
+                                  onMouseOver={() => {setIsModToolsOpen(true)}}
+                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
+                                    Mod tools »
+                                    <ul className="dropdown-menu"
+                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
+                                      <li onClick={() => handleModToolClick(
+                                        'Delete', reply.cid
+                                      )}>
+                                      Delete
+                                      </li>
+                                    </ul>
+                                  </li>
+                                ) : null}
+                                </ul>
+                              </div>
                               <div id="backlink-id" className="backlink">
                                 {reply.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
@@ -917,6 +1212,16 @@ const Board = () => {
                                 {thread.author.shortAddress}
                               </span>
                               )&nbsp;
+                            </span>
+                            <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
+                              {thread.pinned ? (
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                                style={{marginBottom: "-3px", marginRight: "2px"}} />
+                              ) : null}
+                              {thread.locked ? (
+                                <img src="assets/closed.gif" alt="Closed" title="Closed"
+                                style={{marginBottom: "-3px", marginRight: "2px"}} />
+                              ) : null}
                             </span>
                             <br key={`mob-br1-${index}`} />
                             {thread.title ? (

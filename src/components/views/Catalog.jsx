@@ -515,9 +515,14 @@ const Catalog = () => {
                             ) : null}
                           </Fragment>
                         ) : null}
-                      {/* <div key={`ti-${index}`} className="thread-icons" >
-                        <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"></span>
-                      </div> */}
+                      <div key={`ti-${index}`} className="thread-icons" >
+                        {thread.pinned ? (
+                          <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky" />
+                        ) : null}
+                        {thread.locked ? (
+                          <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed" />
+                        ) : null}
+                      </div>
                       <div key={`meta-${index}`} className="meta" title="(R)eplies / (I)mage Replies" >
                         R:
                         <b key={`b-${index}`}>{thread.replyCount}</b>
