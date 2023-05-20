@@ -875,7 +875,7 @@ const Thread = () => {
                     </div>
                   </div>
                 </div>
-                {comment.state === "fetching-ipns" ? <PostLoader /> : null}
+                {comment.replyCount === undefined ? <PostLoader /> : null}
                 {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
