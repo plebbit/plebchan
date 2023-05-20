@@ -154,7 +154,7 @@ const Home = () => {
           <ul>
             <li className="fill"></li>
             <li className="first">
-              <a href="https://snowtrace.io/token/0x625fc9bb971bb305a2ad63252665dcfe9098bee9" target="_blank" rel="noopener noreferrer">Token</a>
+              <a href="https://etherscan.io/token/0xEA81DaB2e0EcBc6B5c4172DE4c22B6Ef6E55Bd8f" target="_blank" rel="noopener noreferrer">Token</a>
             </li>
             <li>
               <a href="https://gitcoin.co/grants/5515/plebbit-a-serverless-adminless-decentralized-redd" target="_blank" rel="noopener noreferrer">Donate</a>
