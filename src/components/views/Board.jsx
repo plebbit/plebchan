@@ -81,11 +81,15 @@ const Board = () => {
   const [isModToolsOpen, setIsModToolsOpen] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
 
-
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
+
+
+  useEffect(() => {
+    setSelectedAddress(subplebbitAddress);
+  }, [subplebbitAddress, setSelectedAddress]);
 
 
   useEffect(() => {
@@ -98,7 +102,7 @@ const Board = () => {
         setIsModerator(false);
       }
     }
-  }, [account?.author.address, subplebbit.roles]);  
+  }, [account?.author.address, subplebbit.roles]);
 
 
   const handleOptionClick = (threadCid) => {

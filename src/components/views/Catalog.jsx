@@ -47,13 +47,27 @@ const Catalog = () => {
   const linkRef = useRef();
 
   const navigate = useNavigate();
+  
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
+  
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
 
   const stateString = useStateString(subplebbit);
+
+
+  useEffect(() => {
+    setSelectedAddress(subplebbitAddress);
+  }, [subplebbitAddress, setSelectedAddress]);
+
 
   const errorString = useMemo(() => {
     if (subplebbit?.state === 'failed') {
@@ -65,19 +79,13 @@ const Catalog = () => {
     }
   }, [subplebbit?.state, subplebbit?.error, selectedAddress])
 
+
   useEffect(() => {
     if (errorString) {
       setErrorMessage(errorString);
     }
   }, [errorString]);
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
-
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
 
   // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
