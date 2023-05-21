@@ -78,7 +78,6 @@ const Board = () => {
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
-  const [isModToolsOpen, setIsModToolsOpen] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -200,7 +199,7 @@ const Board = () => {
   // mobile navbar scroll effect
   useEffect(() => {
     const debouncedHandleScroll = debounce(() => {
-      const currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.scrollY;
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
     }, 50);
@@ -743,8 +742,7 @@ const Board = () => {
                               onClick={() => {
                                 const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
                                 const menu = document.querySelector(`.post-menu-thread-${thread.cid}`);
-                                const scrollY = window.scrollY || window.pageYOffset;
-                                menu.style.top = `calc(${rect.top + scrollY}px - 258px)`;
+                                menu.style.top = `calc(${rect.top}px + 17px)`;
                                 menu.style.left = `${rect.left}px`;
                               
                                 setRotatedStates(prevState => ({
@@ -780,8 +778,6 @@ const Board = () => {
                                       </li>
                                     )}
                                     <li
-                                    onMouseOver={() => {setIsModToolsOpen(true)}}
-                                    onMouseLeave={() => {setIsModToolsOpen(false)}}
                                     onClick={() => {
                                       setModeratingCommentCid(thread.cid)
                                       setIsModerationOpen(true); 
@@ -944,8 +940,7 @@ const Board = () => {
                               onClick={() => {
                                 const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
                                 const menu = document.querySelector(`.post-menu-reply-${reply.cid}`);
-                                const scrollY = window.scrollY || window.pageYOffset;
-                                menu.style.top = `calc(${rect.top + scrollY}px - 258px)`;
+                                menu.style.top = `calc(${rect.top + window.scrollY}px - 258px)`;
                                 menu.style.left = `${rect.left}px`;
                               
                                 setRotatedStates(prevState => ({
@@ -981,8 +976,6 @@ const Board = () => {
                                       </li>
                                     )}
                                     <li
-                                    onMouseOver={() => {setIsModToolsOpen(true)}}
-                                    onMouseLeave={() => {setIsModToolsOpen(false)}}
                                     onClick={() => {
                                       setModeratingCommentCid(reply.cid)
                                       setIsModerationOpen(true); 

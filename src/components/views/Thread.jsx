@@ -72,7 +72,6 @@ const Thread = () => {
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
-  const [isModToolsOpen, setIsModToolsOpen] = useState(false);
   
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
@@ -178,7 +177,7 @@ const Thread = () => {
   // mobile navbar scroll effect
   useEffect(() => {
     const debouncedHandleScroll = debounce(() => {
-      const currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.scrollY;
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
     }, 50);
@@ -734,8 +733,6 @@ const Thread = () => {
                                       </li>
                                     )}
                                     <li
-                                    onMouseOver={() => {setIsModToolsOpen(true)}}
-                                    onMouseLeave={() => {setIsModToolsOpen(false)}}
                                     onClick={() => {
                                       setModeratingCommentCid(comment.cid)
                                       setIsModerationOpen(true); 
@@ -908,8 +905,6 @@ const Thread = () => {
                                       </li>
                                     )}
                                     <li
-                                    onMouseOver={() => {setIsModToolsOpen(true)}}
-                                    onMouseLeave={() => {setIsModToolsOpen(false)}}
                                     onClick={() => {
                                       setModeratingCommentCid(reply.cid)
                                       setIsModerationOpen(true); 
