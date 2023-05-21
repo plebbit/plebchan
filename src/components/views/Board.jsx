@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -73,13 +73,12 @@ const Board = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
-  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [selectedFeed, setSelectedFeed] = useState(feed);
+  const [deletePost, setDeletePost] = useState(false);
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
   const [isModToolsOpen, setIsModToolsOpen] = useState(false);
-  const [commentCid, setCommentCid] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -361,76 +360,6 @@ const Board = () => {
       };
     });
   };
-
-  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
-    commentCid: commentCid,
-    subplebbitAddress: selectedAddress,
-    onChallenge,
-    onChallengeVerification,
-    onError: (error) => {
-      setErrorMessage(error);
-    },
-  });
-  
-  
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-  useEffect(() => {
-    if (error) {
-      setErrorMessage(error);
-    }
-  }, [error]);
-
-
-  const handleModToolClick = (tool, commentCid, currentState) => {
-    setCommentCid(commentCid);
-    handleOptionClick(commentCid);
-
-    switch (tool) {
-      case 'Pin':
-      case 'Unpin':
-        setPublishCommentEditOptions(prevOptions => ({
-          ...prevOptions,
-          pinned: !currentState.pinned,
-        }));
-        break;
-      case 'Close':
-      case 'Reopen':
-        setPublishCommentEditOptions(prevOptions => ({
-          ...prevOptions,
-          locked: !currentState.locked,
-        }));
-        break;
-      case 'Delete':
-        setPublishCommentEditOptions(prevOptions => ({
-          ...prevOptions,
-          removed: true,
-        }));
-        break;
-      default:
-        break;
-    }
-
-    setTriggerPublishCommentEdit(true);
-  };
-  
-  
-  useEffect(() => {
-    setPublishCommentEditOptions((prevOptions) => ({
-      ...prevOptions,
-      commentCid: commentCid,
-    }));
-  }, [commentCid]);
-
-
-  useEffect(() => {
-    if (publishCommentEditOptions && triggerPublishCommentEdit) {
-      (async () => {
-        await publishCommentEdit();
-        setTriggerPublishCommentEdit(false);
-      })();
-    }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
   
   
   // desktop navbar board select functionality
@@ -493,7 +422,8 @@ const Board = () => {
         <ModerationModal 
         selectedStyle={selectedStyle}
         isOpen={isModerationOpen}
-        closeModal={() => setIsModerationOpen(false)} />
+        closeModal={() => setIsModerationOpen(false)}
+        deletePost={deletePost} />
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className="boardList">
@@ -828,8 +758,39 @@ const Board = () => {
                             <div id="post-menu" className={`post-menu-thread post-menu-thread-${thread.cid}`}
                               style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
                               <ul>
-                                {/* <li onClick={() => handleOptionClick(thread.cid)}>Edit post</li> */}
                                 <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                                {thread.author.shortAddress === account.author.shortAddress ? (
+                                  <>
+                                    <li onClick={() => handleOptionClick(thread.cid)}>Edit post</li>
+                                    <li onClick={() => handleOptionClick(thread.cid)}>Delete post</li>
+                                  </>
+                                ) : null}
+                                {isModerator ? (
+                                  <>
+                                    {thread.author.shortAddress === account.author.shortAddress ? (
+                                      null
+                                    ) : (
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(thread.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(thread.cid);
+                                        setDeletePost(true);
+                                      }}>
+                                      Delete post
+                                      </li>
+                                    )}
+                                    <li
+                                    onMouseOver={() => {setIsModToolsOpen(true)}}
+                                    onMouseLeave={() => {setIsModToolsOpen(false)}}
+                                    onClick={() => {
+                                      setModeratingCommentCid(thread.cid)
+                                      setIsModerationOpen(true); 
+                                      handleOptionClick(thread.cid);
+                                    }}>
+                                      Mod tools
+                                    </li>
+                                  </>
+                                ) : null}
                                 {(commentMediaInfo && (
                                   commentMediaInfo.type === 'image' || 
                                   (commentMediaInfo.type === 'webpage' && 
@@ -862,42 +823,6 @@ const Board = () => {
                                     </li>
                                   ) : null
                                 }
-                                {isModerator ? (
-                                  <li
-                                  onMouseOver={() => {setIsModToolsOpen(true)}}
-                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
-                                    Mod tools »
-                                    <ul className="dropdown-menu"
-                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
-                                      <li onClick={() => {
-                                        setModeratingCommentCid(thread.cid);
-                                        setIsModerationOpen(true);
-                                        handleOptionClick(thread.cid);
-                                      }}>
-                                        Open tools ↗
-                                      </li>
-                                      <li onClick={() => handleModToolClick(
-                                        thread.pinned ? 'Unpin' : 'Pin', 
-                                        thread.cid, 
-                                        { pinned: thread.pinned, locked: thread.locked }
-                                      )}>
-                                      {thread.pinned ? 'Unpin' : 'Pin'}
-                                      </li>
-                                      <li onClick={() => handleModToolClick(
-                                        thread.locked ? 'Reopen' : 'Close', 
-                                        thread.cid, 
-                                        { pinned: thread.pinned, locked: thread.locked }
-                                      )}>
-                                      {thread.locked ? 'Reopen' : 'Close'}
-                                      </li>
-                                      <li onClick={() => handleModToolClick(
-                                        'Delete', thread.cid
-                                      )}>
-                                      Delete
-                                      </li>
-                                    </ul>
-                                  </li>
-                                ) : null}
                               </ul>
                             </div>
                             <div key={`bi-${index}`} id="backlink-id" className="backlink">
@@ -1031,15 +956,46 @@ const Board = () => {
                             >
                               ▶
                             </PostMenu>
-                              <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
+                            <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
                               style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
-                                <ul>
-                                  {/* <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li> */}
-                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  {(replyMediaInfo && (
-                                    replyMediaInfo.type === 'image' || 
-                                    (replyMediaInfo.type === 'webpage' && 
-                                    replyMediaInfo.thumbnail))) ? ( 
+                              <ul>
+                                <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                {reply.author.shortAddress === account.author.shortAddress ? (
+                                  <>
+                                    <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li>
+                                    <li onClick={() => handleOptionClick(reply.cid)}>Delete post</li>
+                                  </>
+                                ) : null}
+                                {isModerator ? (
+                                  <>
+                                    {reply.author.shortAddress === account.author.shortAddress ? (
+                                      null
+                                    ) : (
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(reply.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(reply.cid);
+                                        setDeletePost(true);
+                                      }}>
+                                      Delete post
+                                      </li>
+                                    )}
+                                    <li
+                                    onMouseOver={() => {setIsModToolsOpen(true)}}
+                                    onMouseLeave={() => {setIsModToolsOpen(false)}}
+                                    onClick={() => {
+                                      setModeratingCommentCid(reply.cid)
+                                      setIsModerationOpen(true); 
+                                      handleOptionClick(reply.cid);
+                                    }}>
+                                      Mod tools
+                                    </li>
+                                  </>
+                                ) : null}
+                                {(replyMediaInfo && (
+                                  replyMediaInfo.type === 'image' || 
+                                  (replyMediaInfo.type === 'webpage' && 
+                                  replyMediaInfo.thumbnail))) ? ( 
                                     <li 
                                     onMouseOver={() => {setIsImageSearchOpen(true)}}
                                     onMouseLeave={() => {setIsImageSearchOpen(false)}}>
@@ -1048,43 +1004,28 @@ const Board = () => {
                                         style={{display: isImageSearchOpen ? 'block': 'none'}}>
                                         <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a 
-                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo?.url}`}
+                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Google</a>
                                         </li>
                                         <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a
-                                          href={`https://yandex.com/images/search?url=${commentMediaInfo?.url}`}
+                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Yandex</a>
                                         </li>
                                         <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a
-                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo?.url}`}
+                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >SauceNAO</a>
                                         </li>
                                       </ul>
                                     </li>
-                                    ) : null
-                                  }
-                                  {isModerator ? (
-                                  <li
-                                  onMouseOver={() => {setIsModToolsOpen(true)}}
-                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
-                                    Mod tools »
-                                    <ul className="dropdown-menu"
-                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
-                                      <li onClick={() => handleModToolClick(
-                                        'Delete', reply.cid
-                                      )}>
-                                      Delete
-                                      </li>
-                                    </ul>
-                                  </li>
-                                ) : null}
-                                </ul>
-                              </div>
+                                  ) : null
+                                }
+                              </ul>
+                            </div>
                               <div id="backlink-id" className="backlink">
                                 {reply.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
