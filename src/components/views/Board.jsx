@@ -92,7 +92,7 @@ const Board = () => {
 
   useEffect(() => {
     if (subplebbit.roles !== undefined) { 
-      const role = subplebbit.roles[account.author.address]?.role;
+      const role = subplebbit.roles[account?.author.address]?.role;
   
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
         setIsModerator(true);
@@ -757,7 +757,7 @@ const Board = () => {
                               style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
                               <ul>
                                 <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                {thread.author.shortAddress === account.author.shortAddress ? (
+                                {thread.author.shortAddress === account?.author.shortAddress ? (
                                   <>
                                     <li onClick={() => handleOptionClick(thread.cid)}>Edit post</li>
                                     <li onClick={() => handleOptionClick(thread.cid)}>Delete post</li>
@@ -765,7 +765,7 @@ const Board = () => {
                                 ) : null}
                                 {isModerator ? (
                                   <>
-                                    {thread.author.shortAddress === account.author.shortAddress ? (
+                                    {thread.author.shortAddress === account?.author.shortAddress ? (
                                       null
                                     ) : (
                                       <li onClick={() => {
@@ -955,7 +955,7 @@ const Board = () => {
                               style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
                               <ul>
                                 <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                {reply.author.shortAddress === account.author.shortAddress ? (
+                                {reply.author.shortAddress === account?.author.shortAddress ? (
                                   <>
                                     <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li>
                                     <li onClick={() => handleOptionClick(reply.cid)}>Delete post</li>
@@ -963,7 +963,7 @@ const Board = () => {
                                 ) : null}
                                 {isModerator ? (
                                   <>
-                                    {reply.author.shortAddress === account.author.shortAddress ? (
+                                    {reply.author.shortAddress === account?.author.shortAddress ? (
                                       null
                                     ) : (
                                       <li onClick={() => {

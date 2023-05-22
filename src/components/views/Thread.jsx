@@ -89,7 +89,7 @@ const Thread = () => {
 
   useEffect(() => {
     if (subplebbit.roles !== undefined) { 
-      const role = subplebbit.roles[account.author.address]?.role;
+      const role = subplebbit.roles[account?.author?.address]?.role;
   
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
         setIsModerator(true);
@@ -641,28 +641,28 @@ const Thread = () => {
                             </span>) 
                           : null}
                         &nbsp;
-                        {comment.author?.displayName
-                          ? comment.author?.displayName.length > 20
+                        {comment?.author?.displayName
+                          ? comment?.author?.displayName.length > 20
                           ? <>
                               <span key={`n-${comment.cid}`} className="name"
                               data-tooltip-id="tooltip"
-                              data-tooltip-content={comment.author?.displayName}
+                              data-tooltip-content={comment?.author?.displayName}
                               data-tooltip-place="top">
-                                {comment.author?.displayName.slice(0, 20) + " (...)"}
+                                {comment?.author?.displayName.slice(0, 20) + " (...)"}
                               </span>
                             </> 
                             : <span key={`n-${comment.cid}`} className="name">
-                              {comment.author?.displayName}</span>
+                              {comment?.author?.displayName}</span>
                           : <span key={`n-${comment.cid}`} className="name">
                             Anonymous</span>}
                           &nbsp;
                         &nbsp;
                         <span className="poster-address address-desktop"
                           id="reply-button" style={{cursor: "pointer"}}
-                          onClick={() => handleAddressClick(comment.author?.shortAddress)}>
+                          onClick={() => handleAddressClick(comment?.author?.shortAddress)}>
                           (u/
                             <span key={`pa-${comment.cid}`} className="poster-address">
-                            {comment.author?.shortAddress}
+                            {comment?.author?.shortAddress}
                           </span>)
                         </span>
                         &nbsp;
@@ -712,7 +712,7 @@ const Thread = () => {
                               style={{ display: rotatedStates[comment.cid] ? 'block' : 'none' }}>
                               <ul>
                                 <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
-                                {comment.author.shortAddress === account.author.shortAddress ? (
+                                {comment?.author?.shortAddress === account?.author?.shortAddress ? (
                                   <>
                                     <li onClick={() => handleOptionClick(comment.cid)}>Edit post</li>
                                     <li onClick={() => handleOptionClick(comment.cid)}>Delete post</li>
@@ -720,7 +720,7 @@ const Thread = () => {
                                 ) : null}
                                 {isModerator ? (
                                   <>
-                                    {comment.author.shortAddress === account.author.shortAddress ? (
+                                    {comment?.author?.shortAddress === account?.author?.shortAddress ? (
                                       null
                                     ) : (
                                       <li onClick={() => {
@@ -884,7 +884,7 @@ const Thread = () => {
                               style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
                               <ul>
                                 <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                {reply.author.shortAddress === account.author.shortAddress ? (
+                                {reply.author.shortAddress === account?.author?.shortAddress ? (
                                   <>
                                     <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li>
                                     <li onClick={() => handleOptionClick(reply.cid)}>Delete post</li>
@@ -892,7 +892,7 @@ const Thread = () => {
                                 ) : null}
                                 {isModerator ? (
                                   <>
-                                    {reply.author.shortAddress === account.author.shortAddress ? (
+                                    {reply.author.shortAddress === account?.author?.shortAddress ? (
                                       null
                                     ) : (
                                       <li onClick={() => {
@@ -1038,28 +1038,28 @@ const Thread = () => {
                       <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
                         <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile">...</button>
                         <span className="name-block-mobile">
-                          {comment.author?.displayName
-                          ? comment.author?.displayName.length > 15
+                          {comment?.author?.displayName
+                          ? comment?.author?.displayName.length > 15
                           ? <>
                               <span key={`mob-n-${comment.cid}`} className="name-mobile"
                               data-tooltip-id="tooltip"
-                              data-tooltip-content={comment.author?.displayName}
+                              data-tooltip-content={comment?.author?.displayName}
                               data-tooltip-place="top">
-                                {comment.author?.displayName.slice(0, 15) + " (...)"}
+                                {comment?.author?.displayName.slice(0, 15) + " (...)"}
                               </span>
                             </> 
                             : <span key={`mob-n-${comment.cid}`} className="name-mobile">
-                              {comment.author?.displayName}</span>
+                              {comment?.author?.displayName}</span>
                           : <span key={`mob-n-${comment.cid}`} className="name-mobile">
                             Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile address-mobile"
                             id="reply-button" style={{cursor: "pointer"}}
-                            onClick={() => handleAddressClick(comment.author?.shortAddress)}
+                            onClick={() => handleAddressClick(comment?.author?.shortAddress)}
                           >
                             (u/
                             <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile">
-                              {comment.author?.shortAddress}
+                              {comment?.author?.shortAddress}
                             </span>
                             )&nbsp;
                           </span>
