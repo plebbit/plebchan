@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useAccountComments, useComment, usePublishComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useComment, usePublishComment, usePublishCommentEdit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } from '../styled/Board.styled';
-import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer } from '../styled/Thread.styled';
+import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer, AuthorDeleteAlert } from '../styled/Thread.styled';
+import EditModal from '../EditModal';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
@@ -63,15 +65,20 @@ const Thread = () => {
   const replyMenuRefs = useRef({});
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [deletePost, setDeletePost] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [originalCommentContent, setOriginalCommentContent] = useState(null);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
+  const [editedComment, setEditedComment] = useState(null);
   
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
@@ -330,6 +337,82 @@ const Thread = () => {
   };
 
 
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
+    commentCid: commentCid,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+  
+  
+  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(error);
+    }
+  }, [error]);
+
+
+  const handleAuthorDeleteClick = (commentCid) => {
+    handleOptionClick(commentCid);
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+            <div className='author-delete-alert'>
+              <p>Are you sure you want to delete this post?</p>
+              <button onClick={onClose}>No</button>
+              <button
+                onClick={() => {
+                  setCommentCid(commentCid);
+                  setPublishCommentEditOptions(prevOptions => ({
+                    ...prevOptions,
+                    deleted: true,
+                  }));
+                  setTriggerPublishCommentEdit(true);
+                  onClose();
+                }}
+              >
+                Yes
+              </button>
+            </div>
+          </AuthorDeleteAlert>
+        );
+      }
+    });
+  };
+
+  const handleAuthorEditClick = (comment) => {
+    handleOptionClick(comment.cid);
+    setCommentCid(comment.cid);
+    setOriginalCommentContent(comment.content);
+    setIsEditModalOpen(true);
+  }
+  
+  
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: commentCid,
+    }));
+  }, [commentCid]);
+
+  
+  useEffect(() => {
+    if (publishCommentEditOptions && triggerPublishCommentEdit) {
+      (async () => {
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
+      })();
+    }
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+
+
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
@@ -374,6 +457,11 @@ const Thread = () => {
         isOpen={isModerationOpen}
         closeModal={() => setIsModerationOpen(false)}
         deletePost={deletePost} />
+        <EditModal
+        selectedStyle={selectedStyle}
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        originalCommentContent={originalCommentContent} />
         <NavBar selectedStyle={selectedStyle}>
           <>
           <span className="boardList">
@@ -714,8 +802,8 @@ const Thread = () => {
                                 <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
                                 {comment?.author?.shortAddress === account?.author?.shortAddress ? (
                                   <>
-                                    <li onClick={() => handleOptionClick(comment.cid)}>Edit post</li>
-                                    <li onClick={() => handleOptionClick(comment.cid)}>Delete post</li>
+                                    <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
                                   </>
                                 ) : null}
                                 {isModerator ? (

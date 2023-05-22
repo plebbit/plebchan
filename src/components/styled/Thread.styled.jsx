@@ -3205,3 +3205,20 @@ export const Footer = styled.div`
       }
   }}
 `;
+
+export const AuthorDeleteAlert = styled.div`
+  .author-delete-alert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
