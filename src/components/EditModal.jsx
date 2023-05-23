@@ -7,6 +7,7 @@ import Draggable from 'react-draggable';
 
 const EditModal = ({ isOpen, closeModal, originalCommentContent }) => {
   const {
+    setEditedComment,
     selectedStyle,
   } = useGeneralStore(state => state);
 
@@ -27,6 +28,10 @@ const EditModal = ({ isOpen, closeModal, originalCommentContent }) => {
   }, [setIsMobile]);
 
 
+  const handleSaveEdit = () => {
+    setEditedComment(commentRef.current.value);
+    closeModal();
+  };
 
   return (
     <StyledModal
@@ -47,13 +52,14 @@ const EditModal = ({ isOpen, closeModal, originalCommentContent }) => {
             <div className="textarea-wrapper">
               <textarea className="textarea" 
               rows="4" 
+              style={{paddingTop: '0'}}
               placeholder="Comment" 
               defaultValue={originalCommentContent}
               wrap="soft" 
               ref={commentRef} />
             </div>
             <div>
-              <button id="next">Save</button>
+              <button id="next" onClick={handleSaveEdit}>Save</button>
             </div>
           </div>
         </div>
