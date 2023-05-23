@@ -1,14 +1,16 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed, usePublishComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu} from '../styled/Board.styled';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu, AuthorDeleteAlert} from '../styled/Board.styled';
 import { Footer } from '../styled/Thread.styled';
+import EditModal from '../EditModal';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
@@ -36,6 +38,7 @@ const Board = () => {
     setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
+    editedComment,
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
@@ -70,14 +73,18 @@ const Board = () => {
   const stateString = useStateString(subplebbit);
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [originalCommentContent, setOriginalCommentContent] = useState(null);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [selectedFeed, setSelectedFeed] = useState(feed);
   const [deletePost, setDeletePost] = useState(false);
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -222,7 +229,7 @@ const Board = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       if (challengeVerification.publication?.cid !== undefined) {
-        navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
+        navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
         setSuccessMessage('Challenge Success');
@@ -359,7 +366,90 @@ const Board = () => {
       };
     });
   };
+
+
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
+    commentCid: commentCid,
+    content: editedComment || undefined,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
   
+  
+  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(error);
+    }
+  }, [error]);
+
+
+  const handleAuthorDeleteClick = (commentCid) => {
+    handleOptionClick(commentCid);
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+            <div className="author-delete-buttons">
+              <button onClick={onClose}>No</button>
+              <button
+                onClick={() => {
+                  setCommentCid(commentCid);
+                  setPublishCommentEditOptions(prevOptions => ({
+                    ...prevOptions,
+                    deleted: true,
+                  }));
+                  setTriggerPublishCommentEdit(true);
+                  onClose();
+                }}
+              >
+                Yes
+              </button>
+            </div>
+          </AuthorDeleteAlert>
+        );
+      }
+    });
+  };
+
+  const handleAuthorEditClick = (comment) => {
+    handleOptionClick(comment.cid);
+    setCommentCid(comment.cid);
+    setOriginalCommentContent(comment.content);
+    setIsEditModalOpen(true);
+  }
+  
+  
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: commentCid,
+      content: editedComment || undefined,
+    }));
+  }, [commentCid, editedComment]);
+
+
+  useEffect(() => {
+    if (editedComment !== '') {
+      setTriggerPublishCommentEdit(true);
+    }
+  }, [editedComment]);
+
+  
+  useEffect(() => {
+    if (publishCommentEditOptions && triggerPublishCommentEdit) {
+      (async () => {
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
+      })();
+    }
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
   
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
@@ -423,6 +513,11 @@ const Board = () => {
         isOpen={isModerationOpen}
         closeModal={() => setIsModerationOpen(false)}
         deletePost={deletePost} />
+        <EditModal
+        selectedStyle={selectedStyle}
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        originalCommentContent={originalCommentContent} />
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className="boardList">
@@ -759,8 +854,8 @@ const Board = () => {
                                 <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
                                 {thread.author.shortAddress === account?.author.shortAddress ? (
                                   <>
-                                    <li onClick={() => handleOptionClick(thread.cid)}>Edit post</li>
-                                    <li onClick={() => handleOptionClick(thread.cid)}>Delete post</li>
+                                    <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
                                   </>
                                 ) : null}
                                 {isModerator ? (
@@ -957,8 +1052,8 @@ const Board = () => {
                                 <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
                                 {reply.author.shortAddress === account?.author.shortAddress ? (
                                   <>
-                                    <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li>
-                                    <li onClick={() => handleOptionClick(reply.cid)}>Delete post</li>
+                                    <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
                                   </>
                                 ) : null}
                                 {isModerator ? (

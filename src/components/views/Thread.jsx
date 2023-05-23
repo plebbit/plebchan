@@ -814,7 +814,7 @@ const Thread = () => {
                             {comment?.author?.shortAddress === account?.author?.shortAddress ? (
                               <>
                                 <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                <li onClick={() => handleAuthorDeleteClick(comment.cid, selectedStyle)}>Delete post</li>
+                                <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
                               </>
                             ) : null}
                             {isModerator ? (
@@ -985,8 +985,8 @@ const Thread = () => {
                                 <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
                                 {reply.author.shortAddress === account?.author?.shortAddress ? (
                                   <>
-                                    <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li>
-                                    <li onClick={() => handleOptionClick(reply.cid)}>Delete post</li>
+                                    <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
                                   </>
                                 ) : null}
                                 {isModerator ? (
