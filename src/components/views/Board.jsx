@@ -46,7 +46,7 @@ const Board = () => {
     setPendingComment,
     setPendingCommentIndex,
     setResolveCaptchaPromise,
-    selectedAddress, setSelectedAddress,
+    setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
@@ -67,6 +67,7 @@ const Board = () => {
   const threadMenuRefs = useRef({});
   const replyMenuRefs = useRef({});
 
+  const selectedAddress = subplebbitAddress || subplebbit.address;
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
@@ -90,11 +91,6 @@ const Board = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
-
-
-  useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
-  }, [subplebbitAddress, setSelectedAddress]);
 
 
   useEffect(() => {
