@@ -3210,7 +3210,7 @@ export const AuthorDeleteAlert = styled.div`
   .author-delete-alert {
     padding: 20px;
     border: 1px solid #ccc;
-    position: absolute;
+    position: fixed;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);

@@ -8,8 +8,8 @@ import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishC
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu, AuthorDeleteAlert} from '../styled/views/Board.styled';
-import { Footer } from '../styled/views/Thread.styled';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu} from '../styled/views/Board.styled';
+import { Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
@@ -396,21 +396,24 @@ const Board = () => {
       customUI: ({ onClose }) => {
         return (
           <AuthorDeleteAlert selectedStyle={selectedStyle}>
-            <div className="author-delete-buttons">
-              <button onClick={onClose}>No</button>
-              <button
-                onClick={() => {
-                  setCommentCid(commentCid);
-                  setPublishCommentEditOptions(prevOptions => ({
-                    ...prevOptions,
-                    deleted: true,
-                  }));
-                  setTriggerPublishCommentEdit(true);
-                  onClose();
-                }}
-              >
-                Yes
-              </button>
+            <div className='author-delete-alert'>
+              <p>Are you sure you want to delete this post?</p>
+              <div className="author-delete-buttons">
+                <button onClick={onClose}>No</button>
+                <button
+                  onClick={() => {
+                    setCommentCid(commentCid);
+                    setPublishCommentEditOptions(prevOptions => ({
+                      ...prevOptions,
+                      deleted: true,
+                    }));
+                    setTriggerPublishCommentEdit(true);
+                    onClose();
+                  }}
+                >
+                  Yes
+                </button>
+              </div>
             </div>
           </AuthorDeleteAlert>
         );
