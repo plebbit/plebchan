@@ -340,7 +340,7 @@ const Thread = () => {
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
     content: editedComment || undefined,
-    subplebbitAddress: selectedAddress,
+    subplebbitAddress: selectedAddress || subplebbitAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
