@@ -17,7 +17,7 @@ import Pending from './components/views/Pending';
 import Subscriptions from './components/views/Subscriptions';
 import SubscriptionsCatalog from './components/views/SubscriptionsCatalog';
 import Thread from './components/views/Thread';
-import CaptchaModal from './components/CaptchaModal';
+import CaptchaModal from './components/modals/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
 import useError from "./hooks/useError";

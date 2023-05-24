@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyledModal } from './styled/CaptchaModal.styled';
-import useGeneralStore from '../hooks/stores/useGeneralStore';
+import { StyledModal } from '../styled/modals/CaptchaModal.styled';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
 

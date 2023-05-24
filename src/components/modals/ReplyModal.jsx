@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { usePublishComment } from '@plebbit/plebbit-react-hooks';
-import { StyledModal } from './styled/ReplyModal.styled';
-import useGeneralStore from '../hooks/stores/useGeneralStore';
+import { StyledModal } from '../styled/modals/ReplyModal.styled';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
-import useError from '../hooks/useError';
+import useError from '../../hooks/useError';
 
 
 const ReplyModal = ({ isOpen, closeModal }) => {

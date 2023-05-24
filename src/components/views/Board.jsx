@@ -8,16 +8,16 @@ import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishC
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu, AuthorDeleteAlert} from '../styled/Board.styled';
-import { Footer } from '../styled/Thread.styled';
-import EditModal from '../EditModal';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu, AuthorDeleteAlert} from '../styled/views/Board.styled';
+import { Footer } from '../styled/views/Thread.styled';
+import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
-import ModerationModal from '../ModerationModal';
+import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
-import ReplyModal from '../ReplyModal';
-import SettingsModal from '../SettingsModal';
+import ReplyModal from '../modals/ReplyModal';
+import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';

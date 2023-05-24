@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import { usePublishCommentEdit } from "@plebbit/plebbit-react-hooks";
-import { StyledModal } from "./styled/ModerationModal.styled";
-import useGeneralStore from "../hooks/stores/useGeneralStore";
-import useError from "../hooks/useError";
-import useSuccess from "../hooks/useSuccess";
+import { StyledModal } from "../styled/modals/ModerationModal.styled";
+import useGeneralStore from "../../hooks/stores/useGeneralStore";
+import useError from "../../hooks/useError";
+import useSuccess from "../../hooks/useSuccess";
 
 
 const ModerationModal = ({ isOpen, closeModal, deletePost }) => {

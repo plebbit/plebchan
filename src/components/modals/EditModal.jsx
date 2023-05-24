@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyledModal } from './styled/ReplyModal.styled';
-import useGeneralStore from '../hooks/stores/useGeneralStore';
+import { StyledModal } from '../styled/modals/ReplyModal.styled';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
 
