@@ -1,3 +1,6 @@
+# scripts/deploy.sh env
+.deploy-env
+
 # electron builder binaries
 /bin
 
