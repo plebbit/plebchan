@@ -114,11 +114,12 @@ const Board = () => {
     setOpenMenuCid(null);
   };
 
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = useCallback((e) => {
     if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
       setOpenMenuCid(null);
     }
-  };
+  }, [openMenuCid, postMenuRef, postMenuCatalogRef]);
+  
 
   useEffect(() => {
     if (openMenuCid !== null) {
@@ -130,7 +131,7 @@ const Board = () => {
     return () => {
       document.removeEventListener('click', handleOutsideClick);
     };
-  }, [openMenuCid]);
+  }, [openMenuCid, handleOutsideClick]);
   
   
 
@@ -458,7 +459,7 @@ const Board = () => {
     if (editedComment !== '') {
       setTriggerPublishCommentEdit(true);
     }
-  }, [editedComment]);
+  }, [editedComment, setIsAuthorEdit]);
 
   
   useEffect(() => {
