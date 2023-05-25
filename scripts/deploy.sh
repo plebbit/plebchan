@@ -6,8 +6,8 @@
 cd "$(dirname "$0")"
 
 # add env vars
-if [ -f ../.env ]; then
-  export $(echo $(cat ../.env | sed 's/#.*//g'| xargs) | envsubst)
+if [ -f ../.deploy-env ]; then
+  export $(echo $(cat ../.deploy-env | sed 's/#.*//g'| xargs) | envsubst)
 fi
 
 # check creds
