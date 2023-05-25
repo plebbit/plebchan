@@ -796,7 +796,7 @@ const Thread = () => {
                           onClick={() => {
                             const rect = threadMenuRefs.current[comment.cid].getBoundingClientRect();
                             const menu = document.querySelector(`.post-menu-thread-${comment.cid}`);
-                            menu.style.top = `calc(${rect.top}px + 17px)`;
+                            menu.style.top = `calc(${rect.top + window.scrollY}px + 17px)`;
                             menu.style.left = `${rect.left}px`;
                           
                             setRotatedStates(prevState => ({
@@ -968,7 +968,7 @@ const Thread = () => {
                               onClick={() => {
                                 const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
                                 const menu = document.querySelector(`.post-menu-reply-${reply.cid}`);
-                                menu.style.top = `calc(${rect.top}px + 17px)`;
+                                menu.style.top = `calc(${rect.top + window.scrollY}px + 17px)`;
                                 menu.style.left = `${rect.left}px`;
                               
                                 setRotatedStates(prevState => ({

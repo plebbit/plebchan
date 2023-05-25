@@ -835,7 +835,7 @@ const Board = () => {
                               onClick={() => {
                                 const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
                                 const menu = document.querySelector(`.post-menu-thread-${thread.cid}`);
-                                menu.style.top = `calc(${rect.top}px + 17px)`;
+                                menu.style.top = `calc(${rect.top + window.scrollY}px - 258px)`;
                                 menu.style.left = `${rect.left}px`;
                               
                                 setRotatedStates(prevState => ({

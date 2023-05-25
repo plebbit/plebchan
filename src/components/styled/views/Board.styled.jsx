@@ -1721,15 +1721,13 @@ export const BoardForm = styled.div`
       }
       
       #post-menu {
-        ul {
-          background-color: #f0e0d6;
-          border: 1px solid #d9bfb7;
-          border-bottom: 1px solid #d9bfb7;
-          border-right-width: 2px;
-        }
+        border-right: 1px solid #d9bfb7;
+        border-bottom: 2px solid #d9bfb7;
 
         li {
-          border-bottom: 1px solid #ccc;
+          border: 1px solid #d9bfb7;
+          border-bottom: none;
+          background-color: #f0e0d6;
 
           :hover {
             background-color: #ffe;
@@ -1746,14 +1744,13 @@ export const BoardForm = styled.div`
       }
       
       #post-menu {
-        ul {
-          background-color: #d6daf0;
-          border: 1px solid #b7c5d9;
-          border-right-width: 2px;
-        }
-
+        border-right: 1px solid #b7c5d9;
+        border-bottom: 2px solid #b7c5d9;
+        
         li {
-          border-bottom: 1px solid #b7c5d9;
+          border: 1px solid #b7c5d9;
+          border-bottom: none;
+          background-color: #d6daf0;
 
           :hover {
             background-color: #eef2ff;
@@ -1768,14 +1765,11 @@ export const BoardForm = styled.div`
       
       #post-menu {
         font-size: 13px !important;
-
-        ul {
-          background-color: #f0e0d6;
-          border: 1px solid #d9bfb7;
-          border-bottom: none;
-        }
-
+        border: 1px solid #d9bfb7;
+        border-bottom: none;
+        
         li {
+          background-color: #f0e0d6;
           border-bottom: 1px solid #d9bfb7;
 
           :hover {
@@ -1791,14 +1785,11 @@ export const BoardForm = styled.div`
       
       #post-menu {
         font-size: 13px !important;
-
-        ul {
-          background-color: #d6daf0;
-          border: 1px solid #b7c5d9;
-          border-bottom: none;
-        }
-
+        border: 1px solid #b7c5d9;
+        border-bottom: none;
+        
         li {
+          background-color: #d6daf0;
           border-bottom: 1px solid #b7c5d9;
 
           :hover {
@@ -1814,21 +1805,18 @@ export const BoardForm = styled.div`
       }
       
       #post-menu {
-        ul {
-          background-color: #282a2e;
-          border: 1px solid #000;
-          border-bottom: none;
-        }
+        border: 1px solid #000;
+        border-bottom: none;
 
         li {
+          background-color: #282a2e;
           border-bottom: 1px solid #000;
 
           :hover {
             background-color: #1d1f21;
           }
         }
-      }
-`;
+      }`;
 
       case 'Photon':
         return `.highlighted {
@@ -1837,13 +1825,11 @@ export const BoardForm = styled.div`
       }
       
       #post-menu {
-        ul {
-          background-color: #ddd;
-          border: 1px solid #ccc;
-          border-bottom: none;
-        }
+        border: 1px solid #ccc;
+        border-bottom: none;
 
         li {
+          background-color: #ddd;
           border-bottom: 1px solid #ccc;
 
           :hover {
