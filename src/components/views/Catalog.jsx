@@ -53,6 +53,8 @@ const Catalog = () => {
   const commentRef = useRef();
   const linkRef = useRef();
   const threadMenuRefs = useRef({});
+  const postMenuRef = useRef(null);
+  const postMenuCatalogRef = useRef(null);
 
   const navigate = useNavigate();
   
@@ -100,6 +102,25 @@ const Catalog = () => {
   const handleOptionClick = () => {
     setOpenMenuCid(null);
   };
+
+  const handleOutsideClick = (e) => {
+    if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
+      setOpenMenuCid(null);
+    }
+  };
+
+  useEffect(() => {
+    if (openMenuCid !== null) {
+      document.addEventListener('click', handleOutsideClick);
+    } else {
+      document.removeEventListener('click', handleOutsideClick);
+    }
+    
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [openMenuCid]);
+  
 
 
   useEffect(() => {
@@ -683,11 +704,15 @@ const Catalog = () => {
                           zIndex: '999'}}
                           key={`pmb-${index}`} 
                           title="Post menu"
-                          ref={el => threadMenuRefs.current[thread.cid] = el}
+                          ref={el => { 
+                            threadMenuRefs.current[thread.cid] = el; 
+                            postMenuRef.current = el; 
+                          }}
                           className='post-menu-button' 
                           id='post-menu-button-catalog'
                           rotated={openMenuCid === thread.cid}
-                          onClick={() => {
+                          onClick={(event) => {
+                            event.stopPropagation();
                             const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
                             setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
                             setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
@@ -698,6 +723,8 @@ const Catalog = () => {
                         </div>
                         {createPortal(
                           <PostMenuCatalog selectedStyle={selectedStyle} 
+                            ref={el => {postMenuCatalogRef.current = el}}
+                            onClick={(event) => event.stopPropagation()}
                             style={{position: "absolute", 
                             top: menuPosition.top + 7, 
                             left: menuPosition.left}}>
