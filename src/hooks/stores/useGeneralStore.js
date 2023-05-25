@@ -20,6 +20,9 @@ const useGeneralStore = create((set) => ({
   defaultSubplebbits: [],
   setDefaultSubplebbits: (subplebbits) => set({ defaultSubplebbits: subplebbits }),
 
+  editedComment: '',
+  setEditedComment: (comment) => set({ editedComment: comment }),
+
   isCaptchaOpen: false,
   setIsCaptchaOpen: (isOpen) => set({ isCaptchaOpen: isOpen }),
 

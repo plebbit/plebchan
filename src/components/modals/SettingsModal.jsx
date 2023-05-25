@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from "@plebbit/plebbit-react-hooks";
-import { StyledModal } from "./styled/SettingsModal.styled";
-import useGeneralStore from "../hooks/stores/useGeneralStore";
-import useError from "../hooks/useError";
-import useSuccess from "../hooks/useSuccess";
-import packageJson from '../../package.json'
+import { StyledModal } from "../styled/modals/SettingsModal.styled";
+import useGeneralStore from "../../hooks/stores/useGeneralStore";
+import useError from "../../hooks/useError";
+import useSuccess from "../../hooks/useSuccess";
+import packageJson from '../../../package.json'
 const {version} = packageJson
 
 

@@ -7,14 +7,14 @@ import { useAccount, useAccountComments, useFeed, useSubplebbits } from '@plebbi
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, TopBar, BoardForm, PostMenu } from '../styled/Board.styled';
-import { Footer } from '../styled/Thread.styled';
+import { Container, NavBar, Header, Break, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
+import { Footer } from '../styled/views/Thread.styled';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
-import ReplyModal from '../ReplyModal';
-import SettingsModal from '../SettingsModal';
+import ReplyModal from '../modals/ReplyModal';
+import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';

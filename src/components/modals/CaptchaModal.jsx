@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyledModal } from './styled/CaptchaModal.styled';
-import useGeneralStore from '../hooks/stores/useGeneralStore';
+import { StyledModal } from '../styled/modals/CaptchaModal.styled';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
 
@@ -126,6 +126,9 @@ const CaptchaModal = () => {
               placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
               ref={responseRef}
               onKeyDown={handleKeyDown}
+              onInput={(e) => {
+                e.target.value = e.target.value.toUpperCase();
+              }}
               autoFocus />
               <img src={imageSources[currentChallengeIndex]} alt="captcha" />
             </div>

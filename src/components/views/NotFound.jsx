@@ -2,7 +2,7 @@ import React, { useEffect }  from 'react';
 import { Helmet } from 'react-helmet-async';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link } from "react-router-dom";
-import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/Home.styled';
+import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/views/Home.styled';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 

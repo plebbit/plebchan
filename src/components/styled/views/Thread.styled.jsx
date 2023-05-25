@@ -1,498 +1,42 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  font-size: 10pt;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-
-  .footer-links {
-    text-decoration: none;
-  }
-`;
-
-export const NavBar = styled.div`
+export const ReplyFormLink = styled.div`
   @media (min-width: 480px) {
-    .board-select, .page-jump {
-      display: none;
-    }
+    display: ${props => (props.showReplyFormLink ? 'block' : 'none')};
 
-    .nav {
-      float: right;
-    }
-
-    #separator-mobile {
-      display: none;
-    }
-
-    #board-nav-mobile {
+    #post-form-link-mobile, #return-button-mobile, #catalog-button-mobile, #bottom-button-mobile {
       display: none;
     }
   }
 
   @media (max-width: 480px) {
-    .boardList, .nav {
-      display: none;
-    }
-
-    #board-nav-mobile {
-      padding: 2px 4px;
-      background-color: #d6daf0;
-      overflow: hidden;
-      border-bottom: 2px solid #b7c5d9;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      font-size: x-small;
-      left: 0;
-      right: 0;
-      z-index: 9001;
-      display: block !important;
-      clear: left !important;
-      transition: top 0.3s ease-in-out;
-    }
-
-    .board-select {
-      float: left;
-    }
-
-    strong {
-      padding-right: 5px;
-    }
-
-    #board-select-mobile {
-      font-size: x-small;
-    }
-
-    .page-jump {
-      float: right;
-      padding-right: 5px;
-      padding-top: 2.5px;
-      font-size: 7.5pt;
-    }
-
-    .page-jump a {
-      text-decoration: none;
-      padding-right: 5px;
-    }
-
-  }
-
-  ${({ selectedStyle }) => {
-  switch (selectedStyle) {
-    case 'Yotsuba':
-      return `font-size: 9pt;
-      color: #b86;
-      
-      a, button {
-        font-weight: 400 !important;
-        padding: 1px !important;
-        text-decoration: none !important;
-        color: maroon !important;
-      }
-
-      a:hover, button:hover {
-        color: red !important;
-      }
-      
-      #board-nav-mobile {
-        background-color: #f0e0d6;
-        border-bottom: 2px solid #d9c5b7;
-      }
-
-      strong {
-        color: maroon;
-      }
-
-      .page-jump a {
-        color: navy;
-      }`;
-
-    case 'Yotsuba-B':
-      return `font-size: 9pt;
-      color: #89a;
-      
-      a, button {
-        font-weight: 400 !important;
-        padding: 1px !important;
-        text-decoration: none !important;
-        color: #34345c !important;
-      }
-
-      a:hover, button:hover {
-        color: #d00 !important;
-      }
-      
-      strong {
-        color: #000;
-      }`;
-
-      case 'Futaba':
-        return `font-size: 11pt;
-        
-        a, a:visited, button {
-          font-weight: 400 !important;
-          padding: 1px !important;
-          color: #00e !important;
-          text-decoration: underline !important;
-        }
-
-        a:hover, button:hover {
-          color: red !important;
-        }
-      
-        #board-nav-mobile {
-          background-color: #f0e0d6;
-          border-bottom: 2px solid #d9c5b7;
-          font: 10px arial, helvetica, sans-serif;
-          font-style: normal;
-        }
-
-        strong {
-          color: maroon;
-        }`;
-
-      case 'Burichan':
-        return `font-size: 11pt;
-        
-        a, a:visited, button {
-          font-weight: 400 !important;
-          padding: 1px !important;
-          color: #34345c !important;
-          text-decoration: underline !important;
-        }
-
-        a:hover, button:hover {
-          color: #d00 !important;
-        }
-      
-        #board-nav-mobile {
-          background-color: #d6daf0;
-          border-bottom: 2px solid #b7c5d9;
-          font: 10px arial, helvetica, sans-serif;
-          font-style: normal;
-        }`;
-
-      case 'Tomorrow':
-        return `font-size: 9pt;
-        color: #c5c8c6;
-        
-        a, a:visited, button {
-          font-weight: 400 !important;
-          padding: 1px !important;
-          text-decoration: none !important;
-          color: #81a2be !important;
-        }
-
-        a:hover, button:hover {
-          color: #5f89ab !important;
-        }
-
-        #board-nav-mobile {
-          background-color: #1d1f21;
-          border-bottom: 2px solid #282a2e;
-        }
-        
-        #board-select-mobile {
-          background-color: #282a2e;
-          color: #c5c8c6;
-          border: 1px solid #373b41;
-        }`;
-
-      case 'Photon':
-        return `font-size: 9pt;
-        color: #333;
-        
-        a, a:visited, button {
-          font-weight: 400 !important;
-          padding: 1px !important;
-          text-decoration: none !important;
-          color: #f60 !important;
-        }
-
-        a:hover, button:hover {
-          color: #ff3300 !important;
-        }
-
-        #board-nav-mobile {
-          background-color: #ddd;
-          border-bottom: 2px solid #ccc;
-        }`;
-        
-        default:
-          return '';
-      }
-  }}`;
-
-export const Header = styled.div`
-  ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `text-align: center;
-        clear: both;
-
-        .banner {
-          border: 1px solid #800;
-          margin: 5px auto;
-          width: 300px;
-          height: 100px;
-          
-          img {
-            border: none;
-            width: 300px;
-            height: 100px;
-          }
-        }
-
-
-        .board-title {
-          font-family: Tahoma, sans-serif;
-          font-size: 28px;
-          font-weight: 700;
-          letter-spacing: -2px;
-          margin-top: 0;
-          color: maroon;
-        }
-
-        .board-address {
-          font-size: 9pt;
-          margin-top: 5px;
-          font-size: 9pt;
-        }`;
-
-      case 'Yotsuba-B':
-        return `text-align: center;
-        clear: both;
-
-        .banner {
-          border: 1px solid #800;
-          margin: 5px auto;
-          width: 300px;
-          height: 100px;
-          
-          img {
-            border: none;
-            width: 300px;
-            height: 100px;
-          }
-        }
-
-
-        .board-title {
-          font-family: Tahoma, sans-serif;
-          font-size: 28px;
-          font-weight: 700;
-          letter-spacing: -2px;
-          margin-top: 0;
-          color: #af0a0f;
-        }
-
-        .board-address {
-          font-size: 9pt;
-          margin-top: 5px;
-          font-size: 9pt;
-        }`;
-
-      case 'Futaba':
-        return `text-align: center;
-        clear: both;
-
-        .banner {
-          margin: 5px auto;
-          width: 300px;
-          height: 100px;
-          
-          img {
-            border: none;
-            width: 300px;
-            height: 100px;
-          }
-        }
-
-
-        .board-title {
-          font-size: 24pt;
-          font-weight: 700;
-          margin-top: 0;
-          color: #af0a0f;
-        }
-
-        .board-address {
-          color: #af0a0f;
-          margin-top: 5px;
-          font-size: 10pt;
-        }`;
-
-      case 'Burichan':
-        return `text-align: center;
-        clear: both;
-
-        .banner {
-          margin: 5px auto;
-          width: 300px;
-          height: 100px;
-          
-          img {
-            border: none;
-            width: 300px;
-            height: 100px;
-          }
-        }
-
-
-        .board-title {
-          font-size: 24pt;
-          font-weight: 700;
-          margin-top: 0;
-          color: #af0a0f;
-        }
-
-        .board-address {
-          margin-top: 5px;
-          font-size: 10pt;
-        }`;
-
-      case 'Tomorrow':
-        return `text-align: center;
-        clear: both;
-
-        .banner {
-          border: 1px solid #000;
-          margin: 5px auto;
-          width: 300px;
-          height: 100px;
-          max-width: 100%;
-
-          img {
-            border: none;
-            width: 300px;
-            height: 100px;
-          }
-        }
-
-        .board-title {
-          font-family: Tahoma, sans-serif;
-          font-size: 28px;
-          font-weight: 700;
-          letter-spacing: -2px;
-          margin-top: 0;
-        }
-
-        .board-address {
-          font-size: 9pt;
-          margin-top: 5px;
-          font-size: 9pt;
-        }`;
-
-      case 'Photon':
-        return `text-align: center;
-        clear: both;
-
-        .banner {
-          border: 1px solid #000;
-          margin: 5px auto;
-          width: 300px;
-          height: 100px;
-          
-          img {
-            border: none;
-            width: 300px;
-            height: 100px;
-          }
-        }
-
-
-        .board-title {
-          font-family: Tahoma, sans-serif;
-          font-size: 28px;
-          font-weight: 700;
-          letter-spacing: -2px;
-          margin-top: 0;
-          color: #004a99;
-        }
-
-        .board-address {
-          font-size: 9pt;
-          margin-top: 5px;
-          font-size: 9pt;
-        }`;
-        
-        default:
-          return '';
-      }
-  }}
-
-  .offline {
-    width: 16px; 
-    position: relative;
-    margin: 2px 2px -2px 2px;
-  }
-`;
-
-export const Break = styled.hr`
-  ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `width: 90%;
-        border: none;
-        border-top: 1px solid #d9bfb7;
-        height: 0;`;
-
-      case 'Yotsuba-B':
-        return `width: 90%;
-        border: none;
-        border-top: 1px solid #b7c5d9;
-        height: 0;`;
-
-      case 'Futaba':
-        return `width: 90%;`;
-
-      case 'Burichan':
-        return `width: 90%;`;
-
-      case 'Tomorrow':
-        return `width: 90%;
-        border: none;
-        border-top: 1px solid #282a2e;
-        height: 0;`;
-
-      case 'Photon':
-        return `width: 90%;
-        border: none;
-        border-top: 1px solid #ddd;
-        height: 0;`;
-        
-        default:
-          return '';
-      }
-  }}
-`;
-
-export const PostFormLink = styled.div`
-  @media (min-width: 480px) {
-    display: ${props => (props.showPostFormLink ? 'block' : 'none')};
-
-    #post-form-link-mobile {
-      display: none;
-    }
-  }
-
-  @media (max-width: 480px) {
-    display: ${props => (props.showPostFormLink ? 'block' : 'none')};
-    line-height: 30px;
 
     #post-form-link-desktop {
       display: none;
     }
 
     #post-form-link-mobile {
-        margin: 11px 0;
-        font-size: 10pt;
-        text-align: center;
-        font-weight: 700;
-        display: block !important;
+      margin: 11px 0;
+      font-size: 13px;
+      text-align: center;
+      font-weight: 700;
+      display: block !important;
+      padding-top: 10px;
+    }
+
+    #return-button-mobile, #catalog-button-mobile, #bottom-button-mobile, #bottom-bar-top {
+      font-size: 10pt;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    .post-button-mobile {
+      padding-bottom: 10px;
+    }
+
+    #btns-container {
+      text-align: center;
+      margin-bottom: 50px;
     }
   }
 
@@ -620,790 +164,71 @@ export const PostFormLink = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
-        
-        default:
-          return '';
+      
+      default:
+        return '';
       }
     }}
 `;
 
-export const PostFormTable = styled.table`
-  display: ${props => (props.showPostForm ? 'table' : 'none')};
-  width: 418px;
-  border-spacing: 1px;
-  margin-left: auto;
-  margin-right: auto;
+export const TopBar = styled.div`
+  @media (min-width: 480px) {
+    #return-button-mobile {
+      display: none;
+    }
+
+    .reply-stat {
+      margin-top: 5px;
+    }
+
+    .subscribe-button-desktop {
+      float: right;
+      margin-right: 10px;
+      margin-top: 3px;
+    }
+
+    .subscribe-button-mobile {
+      display: none;
+    }
+  }
 
   @media (max-width: 480px) {
-    margin-bottom: 20px;
+    line-height: 30px;
+    
+    #return-button-desktop, #catalog-button-desktop, #bottom-button-desktop {
+      display: none;
+    }
+
+    #return-button-mobile {
+      position: absolute;
+      left: 50%;
+      display: inline-block;
+      transform: translateX(-50%);
+      font-size: 10pt;
+    }
+
+    hr {
+      display: none;
+    }
+
+    .subscribe-button-desktop {
+      display: none;
+    }
+
+    .subscribe-button-mobile {
+      margin-right: 10px;
+      position: absolute;
+      right: 0;
+      font-size: 13.3333px !important;
+
+      a {
+        cursor: pointer;
+      }
+    }
   }
-
-  ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `tbody > tr > td:first-child {
-        background-color: #ea8;
-        color: #800;
-        font-weight: 700;
-        border: 1px solid #800;
-        padding: 0 5px;
-        font-size: 10pt;
-      }
-
-      td {
-        padding: 0;
-        font-size: 10pt;
-      }
-      
-      tbody > tr > td > input[type="text"] {
-        width: 244px;
-      }
-      
-      input[type="text"], input[type="password"] > tbody textarea {
-        margin: 0;
-        margin-right: 2px;
-        padding: 2px 4px 3px;
-        border: 1px solid #aaa;
-        outline: none;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      textarea {
-        width: 292px;
-        margin-bottom: 0;
-        outline: none;
-        border-radius: none;
-        margin-top: 0px;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      #t-root {
-        position: relative;
-        overflow: hidden;
-        box-sizing: border-box;
-        background: #eee;
-        border: 1px solid #777;
-        margin: 0;
-        width: 300px;
-      }
-
-      #t-resp {
-        width: 254px;
-        box-sizing: border-box;
-        text-transform: uppercase;
-        font-size: 11px;
-        height: 18px;
-        margin: 0px;
-        margin-left: 1px;
-        padding: 0px 2px;
-        font-family: monospace;
-        vertical-align: middle;
-        -webkit-appearance: none;
-      }
-
-      #t-cnt {
-        height: 80px;
-        margin-top: 2px;
-        position: relative;
-
-        img {
-          height: 100%;
-          width: 100%
-        }
-      }`;
-
-      case 'Yotsuba-B':
-        return `tbody > tr > td:first-child {
-        background-color: #98e;
-        color: #000;
-        font-weight: 700;
-        border: 1px solid #000;
-        padding: 0 5px;
-        font-size: 10pt;
-      }
-
-      td {
-        padding: 0;
-        font-size: 10pt;
-      }
-      
-      tbody > tr > td > input[type="text"] {
-        width: 244px;
-      }
-      
-      input[type="text"], input[type="password"] > tbody textarea {
-        margin: 0;
-        margin-right: 2px;
-        padding: 2px 4px 3px;
-        border: 1px solid #aaa;
-        outline: none;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      textarea {
-        width: 292px;
-        margin-bottom: 0;
-        outline: none;
-        border-radius: none;
-        margin-top: 0px;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      #t-root {
-        position: relative;
-        overflow: hidden;
-        box-sizing: border-box;
-        background: #eee;
-        border: 1px solid #777;
-        margin: 0;
-        margin-bottom: 0px;
-        width: 300px;
-      }
-
-      #t-resp {
-        width: 254px;
-        box-sizing: border-box;
-        text-transform: uppercase;
-        font-size: 11px;
-        height: 18px;
-        margin: 0px;
-        margin-left: 1px;
-        padding: 0px 2px;
-        font-family: monospace;
-        vertical-align: middle;
-        -webkit-appearance: none;
-      }
-
-      #t-help {
-        font-size: 11px;
-        padding: 0;
-        width: 20px;
-        box-sizing: border-box;
-        margin: 0px 0px 0px 6px;
-        vertical-align: middle;
-        height: 18px;
-      }
-
-      #t-cnt {
-        height: 80px;
-        margin-top: 2px;
-        position: relative;
-
-        img {
-          height: 100%;
-          width: 100%
-        }
-      }`;
-
-      case 'Futaba':
-        return `tbody > tr > td:first-child {
-        background-color: #ea8;
-        color: #800;
-        font-weight: 700;
-        padding: 0;
-      }
-
-      td {
-        padding: 0;
-        font-size: 12pt;
-      }
-      
-      tbody > tr > td > input[type="text"] {
-        width: 244px;
-      }
-      
-      input[type="text"], input[type="password"] > tbody textarea {
-        margin: 0;
-        margin-right: 2px;
-        padding: 2px 4px 3px;
-        border: 1px solid #aaa;
-        outline: none;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      textarea {
-        width: 292px;
-        margin-bottom: 0;
-        outline: none;
-        border-radius: none;
-        margin-top: 0px;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      #t-root {
-        position: relative;
-        overflow: hidden;
-        box-sizing: border-box;
-        background: #eee;
-        border: 1px solid #777;
-        margin: 0;
-        width: 300px;
-        margin-bottom: 0px;
-      }
-
-      #t-resp {
-        width: 254px;
-        box-sizing: border-box;
-        text-transform: uppercase;
-        font-size: 11px;
-        height: 18px;
-        margin: 0px;
-        margin-left: 1px;
-        margin-bottom: 1px;
-        padding: 0px 2px;
-        font-family: monospace;
-        vertical-align: middle;
-        -webkit-appearance: none;
-      }
-
-      #t-help {
-        font-size: 11px;
-        padding: 0;
-        width: 20px;
-        box-sizing: border-box;
-        margin: 0px 0px 0px 6px;
-        vertical-align: middle;
-        height: 18px;
-      }
-
-      #t-cnt {
-        height: 80px;
-        margin-top: 2px;
-        position: relative;
-
-        img {
-          height: 100%;
-          width: 100%
-        }
-      }`;
-
-      case 'Burichan':
-        return `tbody > tr > td:first-child {
-        background-color: #98e;
-        color: #000;
-        font-weight: 700;
-        padding: 0;
-        font-size: 12pt;
-      }
-
-      td {
-        padding: 0;
-      }
-      
-      tbody > tr > td > input[type="text"] {
-        width: 244px;
-      }
-      
-      input[type="text"], input[type="password"] > tbody textarea {
-        margin: 0;
-        margin-right: 2px;
-        padding: 2px 4px 3px;
-        border: 1px solid #aaa;
-        outline: none;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      textarea {
-        width: 292px;
-        margin-bottom: 0;
-        outline: none;
-        border-radius: none;
-        margin-top: 0px;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      #t-root {
-        position: relative;
-        overflow: hidden;
-        box-sizing: border-box;
-        background: #eee;
-        border: 1px solid #777;
-        margin: 0;
-        width: 300px;
-        margin-bottom: 0px;
-      }
-
-      #t-resp {
-        width: 254px;
-        box-sizing: border-box;
-        text-transform: uppercase;
-        font-size: 11px;
-        height: 18px;
-        margin: 0px;
-        margin-left: 1px;
-        margin-top: 1px;
-        padding: 0px 2px;
-        font-family: monospace;
-        vertical-align: middle;
-        -webkit-appearance: none;
-      }
-
-      #t-help {
-        font-size: 11px;
-        padding: 0;
-        width: 20px;
-        box-sizing: border-box;
-        margin: 0px 0px 0px 6px;
-        vertical-align: middle;
-        height: 18px;
-      }
-
-      #t-cnt {
-        height: 80px;
-        margin-top: 2px;
-        position: relative;
-
-        img {
-          height: 100%;
-          width: 100%
-        }
-      }`;
-
-      case 'Tomorrow':
-        return `tbody > tr > td:first-child {
-        background-color: #282a2e;
-        color: #c5c8c6;
-        font-weight: 700;
-        border: 1px solid #111;
-        padding: 0 5px;
-        font-size: 10pt;
-      }
-
-      td {
-        padding: 0;
-        font-size: 10pt;
-      }
-      
-      tbody > tr > td > input[type="text"] {
-        width: 244px;
-      }
-      
-      input[type="text"], input[type="password"] > tbody textarea {
-        margin: 0;
-        margin-right: 2px;
-        padding: 2px 4px 3px;
-        border: 1px solid #000;
-        background-color: #282a2e;
-        color: #c5c8c6;
-        outline: none;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      textarea {
-        width: 292px;
-        margin-bottom: 0;
-        outline: none;
-        border-radius: none;
-        border: 1px solid #000;
-        background-color: #282a2e;
-        color: #c5c8c6;
-        margin-top: 0px;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      #t-root {
-        position: relative;
-        overflow: hidden;
-        box-sizing: border-box;
-        background: #2d2d2d;
-        border: 1px solid #777;
-        margin: 0;
-        width: 300px;
-        margin-bottom: 0px;
-      }
-
-      #t-resp {
-        width: 254px;
-        box-sizing: border-box;
-        text-transform: uppercase;
-        font-size: 11px;
-        height: 18px;
-        margin: 0px;
-        margin-left: 1px;
-        padding: 0px 2px;
-        font-family: monospace;
-        vertical-align: middle;
-        -webkit-appearance: none;
-      }
-
-      #t-help {
-        font-size: 11px;
-        padding: 0;
-        width: 20px;
-        box-sizing: border-box;
-        margin: 0px 0px 0px 6px;
-        vertical-align: middle;
-        height: 18px;
-      }
-
-      #t-cnt {
-        height: 80px;
-        margin-top: 2px;
-        position: relative;
-
-        img {
-          height: 100%;
-          width: 100%
-        }
-      }
-
-      #post-button, button {
-        filter: brightness(80%);
-      }`;
-
-      case 'Photon':
-        return `tbody > tr > td:first-child {
-        background-color: #ddd;
-        color: #333;
-        font-weight: 700;
-        border: 1px solid #ccc;
-        padding: 0 5px;
-        font-size: 10pt;
-      }
-
-      td {
-        padding: 0;
-        font-size: 10pt;
-      }
-      
-      tbody > tr > td > input[type="text"] {
-        width: 244px;
-      }
-      
-      input[type="text"], input[type="password"] > tbody textarea {
-        margin: 0;
-        margin-right: 2px;
-        padding: 2px 4px 3px;
-        border: 1px solid #aaa;
-        outline: none;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      textarea {
-        width: 292px;
-        margin-bottom: 0;
-        outline: none;
-        border-radius: none;
-        margin-top: 0px;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 10pt;
-      }
-
-      #t-root {
-        position: relative;
-        overflow: hidden;
-        box-sizing: border-box;
-        background: #eee;
-        border: 1px solid #777;
-        margin: 0;
-        width: 300px;
-        margin-bottom: 0px;
-      }
-
-      #t-resp {
-        width: 254px;
-        box-sizing: border-box;
-        text-transform: uppercase;
-        font-size: 11px;
-        height: 18px;
-        margin: 0px;
-        margin-left: 1px;
-        padding: 0px 2px;
-        font-family: monospace;
-        vertical-align: middle;
-        -webkit-appearance: none;
-      }
-
-      #t-help {
-        font-size: 11px;
-        padding: 0;
-        width: 20px;
-        box-sizing: border-box;
-        margin: 0px 0px 0px 6px;
-        vertical-align: middle;
-        height: 18px;
-      }
-
-      #t-cnt {
-        height: 80px;
-        margin-top: 2px;
-        position: relative;
-
-        img {
-          height: 100%;
-          width: 100%
-        }
-      }`;
-        
-        default:
-          return '';
-      }
-  }}
-
-  #t-help {
-    margin: 0;
-    margin-top: -5px
-  }
-`;
-
-export const PostForm = styled.div`
-  ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `#post-form-link {
-        font-size: 22px;
-        font-weight: 700;
-        text-align: center;
-      }
-
-      a, a:visited {
-        color: #00e;
-        text-decoration: none;
-      }
-      a:hover {
-        color: red;
-      }`;
-
-      case 'Yotsuba-B':
-        return `#post-form-link {
-        font-size: 22px;
-        font-weight: 700;
-        text-align: center;
-      }
-
-      a, a:visited {
-        color: #34345c;
-        text-decoration: none;
-      }
-      a:hover {
-        color: #d00;
-      }`;
-
-      case 'Futaba':
-        return `#post-form-link {
-        font-size: 22px;
-        font-weight: 700;
-        text-align: center;
-      }
-
-      a, a:visited {
-        color: #00e;
-        text-decoration: underline;
-      }
-      a:hover {
-        color: red;
-      }`;
-
-      case 'Burichan':
-        return `#post-form-link {
-        font-size: 22px;
-        font-weight: 700;
-        text-align: center;
-      }
-
-      a, a:visited {
-        color: #34345c;
-        text-decoration: underline;
-      }
-      a:hover {
-        color: red;
-      }`;
-
-      case 'Tomorrow':
-        return `#post-form-link {
-        font-size: 22px;
-        font-weight: 700;
-        text-align: center;
-      }
-
-      a, a:visited {
-        color: #81a2be;
-        text-decoration: none;
-      }
-      a:hover {
-        color: #5f89ab;
-      }`;
-
-      case 'Photon':
-        return `#post-form-link {
-        font-size: 22px;
-        font-weight: 700;
-        text-align: center;
-      }
-
-      a, a:visited {
-        color: #f60;
-        text-decoration: none;
-      }
-      a:hover {
-        color: #ff3300;
-      }`;
-        
-        default:
-          return '';
-      }
-  }}
-`;
-
-export const TopBar = styled.div`
-  ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `clear: both;
-        hr {
-          border: none;
-          border-top: 1px solid #d9bfb7;
-          height: 0;
-        }
-
-        .style-changer {
-          margin-left: 5px;
-          margin-right: 10px;
-          font-size: 10pt;
-        }
-        
-        a, #subscribe {
-          color: #00e !important;
-          text-decoration: none;
-        }
-        
-        a:hover, #subscribe:hover {
-          color: red !important;
-        }`;
-
-      case 'Yotsuba-B':
-        return `clear: both;
-        hr {
-          border: none;
-          border-top: 1px solid #b7c5d9;
-          height: 0;
-        }
-
-        .style-changer {
-          margin-left: 5px;
-          margin-right: 10px;
-          font-size: 10pt;
-        }
-        
-        a, #subscribe {
-          color: #34345c !important;
-          text-decoration: none;
-        }
-        
-        a:hover, #subscribe:hover {
-          color: #d00 !important;
-        }`;
-
-      case 'Futaba':
-        return `clear: both;
-        font-size: 12pt;
-        
-        hr {
-          clear: both;
-        }
-
-        .style-changer {
-          margin-left: 5px;
-          margin-right: 10px;
-          font-size: 12pt;
-        }
-        
-        a, #subscribe {
-          color: #00e !important;
-          text-decoration: underline;
-        }
-        
-        a:hover, #subscribe:hover {
-          color: red !important;
-        }`;
-
-      case 'Burichan':
-        return `clear: both;
-        font-size: 12pt;
-
-        hr {
-          clear: both;
-        }
-
-        .style-changer {
-          margin-left: 5px;
-          margin-right: 10px;
-          font-size: 12pt;
-        }
-        
-        a, #subscribe{
-          color: #34345c !important;
-          text-decoration: underline;
-        }
-        
-        a:hover, #subscribe:hover {
-          color: red !important;
-        }`;
-
-      case 'Tomorrow':
-        return `clear: both;
-        hr {
-          border: none;
-          border-top: 1px solid #282a2e;
-          height: 0;
-        }
-
-        .style-changer {
-          margin-left: 5px;
-          margin-right: 10px;
-          font-size: 10pt;
-        }
-        
-        a, #subscribe {
-          color: #81a2be !important;
-          text-decoration: none;
-        }
-        
-        a:hover, #subscribe:hover {
-          color: #5f89ab !important;
-        }`;
-
-      case 'Photon':
-        return `clear: both;
-        hr {
-          border: none;
-          border-top: 1px solid #ddd;
-          height: 0;
-        }
-
-        .style-changer {
-          margin-left: 5px;
-          margin-right: 10px;
-          font-size: 10pt;
-        }
-        
-        a, #subscribe {
-          color: #f60 !important;
-          text-decoration: none;
-        }
-        
-        a:hover, #subscribe:hover {
-          color: #ff3300 !important;
-        }`;
-        
-        default:
-          return '';
-      }
-  }}
 
   .ellipsis {
-    margin-right: 14px;
+    margin-right: 18px !important;
   }
 
   .ellipsis:after {
@@ -1427,61 +252,253 @@ export const TopBar = styled.div`
     }
   }
 
-  @media (min-width: 480px) {
-    #catalog-button-mobile {
-      display: none;
-    }
-
-    #catalog-button-desktop {
-      display: inline-block;
-    }
-
-    .subscribe-button-desktop {
-      float: right;
-      margin-right: 10px;
-      margin-top: 3px;
-    }
-
-    .subscribe-button-mobile {
-      display: none;
-    }
+  .return-button {
+    display: inline-block;
   }
 
-  @media (max-width: 480px) {
-    line-height: 25px;
-
-    hr {
-      display: none;
-    }
-
-    #catalog-button-desktop {
-      display: none;
-    }
-
-    #catalog-button-mobile {
-      position: absolute;
-      left: 50%;
-      display: inline-block;
-      transform: translateX(-50%);
-      font-size: 10pt;
-    }
-
-    .subscribe-button-desktop {
-      display: none;
-    }
-
-    .subscribe-button-mobile {
-      margin-right: 10px;
-      margin-top: -2px;
-      position: absolute;
-      right: 0;
-      font-size: 13.3333px !important;
-
-      a {
-        cursor: pointer;
-      }
-    }
+  .reply-stat { 
+    position: relative;
+    float: right;
+    margin-right: 5px;
   }
+
+  .catalog-button {
+    margin-left: 3px !important;
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `clear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #d9bfb7;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited, #button {
+            color: #00e !important;
+            text-decoration: none;
+          }
+          
+          a:hover, #button:hover {
+            color: red !important;
+          }
+        }
+        
+        a, #subscribe {
+          color: #00e !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: red !important;
+        }`;
+
+      case 'Yotsuba-B':
+        return `clear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #b7c5d9;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited, #button {
+            color: #34345c !important;
+            text-decoration: none;
+          }
+
+          a:hover, #button:hover {
+            color: red !important;
+          }
+        }
+        
+        a, #subscribe {
+          color: #34345c !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: #d00 !important;
+        }`;
+
+      case 'Futaba':
+        return `clear: both;
+        hr {
+          clear: both;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 12pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+          padding-top: 2px;
+          font-size: 12pt;
+
+          a, a:visited, #button {
+            color: #00e !important;
+            text-decoration: underline;
+          }
+
+          a:hover, #button:hover {
+            color: red !important;
+          }
+        }
+        
+        .reply-stat {
+          font-size: 12pt;
+          bottom: 2px;
+        }
+        
+        a, #subscribe {
+          color: #00e !important;
+          text-decoration: underline !important;
+          font-size: 12pt !important;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: red !important;
+        }`;
+
+      case 'Burichan':
+        return `clear: both;
+        hr {
+          clear: both;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 12pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+          padding-top: 2px;
+          font-size: 12pt;
+
+          a, a:visited, #button {
+            color: #34345c !important;
+            text-decoration: underline;
+          }
+
+          a:hover, #button:hover {
+            color: red !important;
+          }
+        }
+        
+        .reply-stat {
+          font-size: 12pt;
+          bottom: 2px;
+        }
+        
+        a, #subscribe{
+          color: #34345c !important;
+          text-decoration: underline !important;
+          font-size: 12pt !important;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: red !important;
+        }`;
+
+      case 'Tomorrow':
+        return `clear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #282a2e;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+
+        #style-selector {
+          background-color: #282a2e;
+          color: #c5c8c6;
+          border: 1px solid #373b41;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited, #button {
+            color: #81a2be !important;
+            text-decoration: none;
+          }
+
+          a:hover, #button:hover {
+            color: #5f89ab !important;
+          }
+        }
+        
+        a, #subscribe {
+          color: #81a2be !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: #5f89ab !important;
+        }`;
+
+      case 'Photon':
+        return `clear: both;
+        hr {
+          border: none;
+          border-top: 1px solid #ddd;
+          height: 0;
+        }
+
+        .style-changer {
+          margin-left: 5px;
+          font-size: 10pt;
+        }
+        
+        .return-button {
+          margin-left: 10px;
+
+          a, a:visited, #button {
+            color: #f60 !important;
+            text-decoration: none;
+          }
+
+          a:hover, #button:hover {
+            color: #ff3300 !important;
+          }
+        }
+        
+        a, #subscribe {
+          color: #f60 !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #subscribe:hover {
+          color: #ff3300 !important;
+        }`;
+      default:
+        return '';
+    }
+  }}
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
@@ -1542,9 +559,9 @@ export const TopBar = styled.div`
           font-family: times new roman !important;
         }
 
-        .subscribe-button-mobile {
-          margin-top: -5px !important;
-        }
+          .subscribe-button-mobile {
+            margin-top: -2px !important;
+          }
 
         .btn-wrap a {
           text-decoration: none !important;
@@ -1569,7 +586,7 @@ export const TopBar = styled.div`
         }
 
         .subscribe-button-mobile {
-          margin-top: -5px !important;
+          margin-top: -2px !important;
         }
 
         .btn-wrap a {
@@ -1594,16 +611,10 @@ export const TopBar = styled.div`
         }
 
         .btn-wrap a {
-          text-decoration: none;
+          text-decoration: none !important;
           border: none;
           color: #707070 !important;
           white-space: nowrap;
-        }
-        
-        #style-selector {
-          background-color: #282a2e;
-          color: #c5c8c6;
-          border: 1px solid #373b41;
         }`;
 
       case 'Photon':
@@ -1631,10 +642,199 @@ export const TopBar = styled.div`
     }}
 `;
 
+export const BottomBar = styled.div`
+  .ellipsis {
+    margin-right: 18px !important;
+  }
+
+  .ellipsis:after {
+    content: "\\2026";
+    position: absolute;
+    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+    animation: ellipsis steps(4,end) 1500ms infinite;
+    width: 0px;
+    overflow: hidden;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
+  .reply-stat { 
+    position: relative;
+    float: right;
+    margin-right: 5px;
+    transform: translateY(-50%);
+  }
+
+  .quickreply-button {
+    text-align: center;
+    width: 200px;
+    position: absolute;
+    margin-left: 50%;
+    left: -100px;
+    transform: translateY(-50%);
+  }
+
+  .bottom-bar-return {
+    position: absolute;
+    transform: translateY(-50%);
+  }
+
+  .bottom-bar-catalog {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 56px;
+  }
+
+  .bottom-bar-top {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 113px;
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
+        a, a:visited, #button {
+          color: #00e !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #button:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
+        }`;
+
+      case 'Yotsuba-B':
+        return `
+        a, a:visited, #button {
+          color: #34345c !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #button:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
+        }`;
+
+      case 'Futaba':
+        return `
+        a, a:visited, #button {
+          color: #00e !important;
+          text-decoration: underline;
+        }
+        
+        a:hover, #button:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          margin-top: 5px;
+          margin-bottom: 15px;
+        }
+        
+        .bottom-bar-catalog {
+          left: 62px;
+        }
+
+        .bottom-bar-top {
+          left: 125px;
+        }`;
+
+      case 'Burichan':
+        return `
+        a, a:visited, #button {
+          color: #34345c !important;
+          text-decoration: underline;
+        }
+        
+        a:hover, #button:hover {
+          color: red !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          margin-top: 5px;
+          margin-bottom: 15px;
+        }
+
+        .bottom-bar-catalog {
+          left: 62px;
+        }
+
+        .bottom-bar-top {
+          left: 125px;
+        }`;
+
+      case 'Tomorrow':
+        return `
+        a, a:visited, #button {
+          color: #81a2be !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #button:hover {
+          color: #5f89ab !important;
+        }
+
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
+        }`;
+
+      case 'Photon':
+        return `
+        a, a:visited, #button {
+          color: #f60 !important;
+          text-decoration: none;
+        }
+        
+        a:hover, #button:hover {
+          color: #ff3300 !important;
+        }
+        
+        hr {
+          height: 0;
+          clear: both;
+          padding-bottom: 5px;
+          padding-top: 5px;
+        }`;
+
+      default:
+        return '';
+    }
+  }}
+`;
+
 export const BoardForm = styled.div`
   @media (min-width: 480px) {
-    margin-bottom: 130px;
-
     .thread-mobile {
       display: none;
     }
@@ -1651,20 +851,6 @@ export const BoardForm = styled.div`
 
     .summary {
       margin-top: 10px;
-    }
-
-    .offline-sub {
-      width: 13px;
-      margin-right: -5px;
-      margin-bottom: -1px;
-      position: relative;
-    }
-
-    .offline-reply {
-      width: 13px;
-      margin-right: 2px;
-      margin-bottom: -1px;
-      position: relative;
     }
 
     #post-menu {
@@ -1827,8 +1013,7 @@ export const BoardForm = styled.div`
             background-color: #1d1f21;
           }
         }
-      }
-`;
+      }`;
 
       case 'Photon':
         return `.highlighted {
@@ -1852,7 +1037,6 @@ export const BoardForm = styled.div`
         }
       }`;
 
-        
         default:
           return '';
       }
@@ -2099,7 +1283,7 @@ export const BoardForm = styled.div`
           float: right;
           text-align: right;
 
-          a, #reply-button {
+          a {
             text-decoration: none;
           }
         }
@@ -2155,16 +1339,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number {
+      .post-number a {
+        text-decoration: none;
         color: maroon;
-
-        a, #reply-button {
-          text-decoration: none;
-          color: maroon;
-        }
       }
 
-      #reply-button:hover {
+      .post-number a:hover {
         color: red;
       }
 
@@ -2329,16 +1509,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number {
+      .post-number a {
+        text-decoration: none;
         color: #000;
-
-        a, #reply-button {
-          text-decoration: none;
-          color: #000;
-        }
       }
 
-      #reply-button:hover {
+      .post-number a:hover {
         color: #d00;
       }
 
@@ -2502,16 +1678,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number {
+      .post-number a {
+        text-decoration: none;
         color: maroon;
-
-        a, #reply-button {
-          text-decoration: none;
-          color: maroon;
-        }
       }
 
-      #reply-button:hover {
+      .post-number a:hover {
         color: red;
       }
 
@@ -2673,16 +1845,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number {
+      .post-number a {
+        text-decoration: none;
         color: #000;
-
-        a, #reply-button {
-          text-decoration: none;
-          color: #000;
-        }
       }
 
-      #reply-button:hover {
+      .post-number a:hover {
         color: red;
       }
 
@@ -2841,16 +2009,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number {
+      .post-number a {
+        text-decoration: none;
         color: #c5c8c6;
-
-        a, #reply-button {
-          text-decoration: none;
-          color: #c5c8c6;
-        }
       }
 
-      #reply-button:hover {
+      .post-number a:hover {
         color: #5f89ab;
       }
 
@@ -3019,16 +2183,12 @@ export const BoardForm = styled.div`
         font-weight: 700;
       }
 
-      .post-number {
+      .post-number a {
+        text-decoration: none;
         color: #333;
-
-        a, #reply-button {
-          text-decoration: none;
-          color: #333;
-        }
       }
 
-      #reply-button:hover {
+      .post-number a:hover {
         color: #ff3300;
       }
 
@@ -3153,25 +2313,14 @@ export const BoardForm = styled.div`
         border-top: 1px solid #ddd;
         height: 0;
       }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 
   @media (max-width: 480px) {
-    margin-bottom: 335px;
-
-    .offline-mobile-sub {
-      width: 13px;
-      margin-top: 4px;
-      margin-right: 5px;
-    }
-
-    .offline-mobile-sub-reply {
-      width: 13px;
-      margin-top: 4px;
-    }
+    margin-top: -7%;
 
     .thread {
       display: none;
@@ -3228,9 +2377,9 @@ export const BoardForm = styled.div`
           background-color: #ccc !important;
         }`;
         
-        default:
-          return '';
-      }
+      default:
+        return '';
+    }
     }}
 
     ${({ selectedStyle }) => {
@@ -3264,7 +2413,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: maroon;
 
-                a, #reply-button {
+                a {
                   text-decoration: none;
                   color: maroon;
                 }
@@ -3326,7 +2475,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: maroon;
 
-                  a, #reply-button {
+                  a {
                     color: maroon;
                   }
                 }
@@ -3381,7 +2530,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: #000;
 
-                a, #reply-button {
+                a {
                   text-decoration: none;
                   color: #000;
                 }
@@ -3443,7 +2592,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #000;
 
-                  a, #reply-button {
+                  a {
                     color: #000;
                   }
                 }
@@ -3494,7 +2643,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: maroon;
 
-                a, #reply-button {
+                a {
                   text-decoration: none;
                   color: maroon;
                 }
@@ -3556,7 +2705,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: maroon;
 
-                  a, #reply-button {
+                  a {
                     color: maroon;
                   }
                 }
@@ -3610,7 +2759,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: #000;
 
-                a, #reply-button {
+                a {
                   text-decoration: none;
                   color: #000;
                 }
@@ -3672,7 +2821,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #000;
 
-                  a, #reply-button {
+                  a {
                     color: #000;
                   }
                 }
@@ -3726,7 +2875,7 @@ export const BoardForm = styled.div`
               .date-time-mobile {
                 color: #707070;
 
-                a, #reply-button {
+                a {
                   text-decoration: none;
                   color: #707070;
                 }
@@ -3790,7 +2939,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #707070;
 
-                  a, #reply-button {
+                  a {
                     color: #707070;
                   }
                 }
@@ -3844,7 +2993,7 @@ export const BoardForm = styled.div`
             .date-time-mobile {
               color: #333;
 
-              a, #reply-button {
+              a {
                 text-decoration: none;
                 color: #333;
               }
@@ -3907,7 +3056,7 @@ export const BoardForm = styled.div`
                 .date-time-mobile {
                   color: #333;
 
-                  a, #reply-button {
+                  a {
                     color: #333;
                   }
                 }
@@ -3939,9 +3088,196 @@ export const BoardForm = styled.div`
   }
 `;
 
-export const PostMenu = styled.div`
-  display: inline-block;
-  cursor: pointer;
-  transition: transform 0.1s;
-  transform: ${props => props.rotated ? 'rotate(90deg)' : 'none'};
+export const Footer = styled.div`
+  #version {
+    text-align: center;
+    font-size: 11px;
+    font-family: "arial";
+  }
+  @media (min-width: 480px) {
+    #break {
+      display: none;
+    }
+
+    hr {
+      margin-top: -10px;
+    }
+
+    #version {
+      margin-top: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 60px;
+
+    .style-changer {
+      display: none;
+    }
+
+    #version {
+      margin-top: -2em;
+    }
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
+        .footer-links {
+          a {
+            color: #00e;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: red;
+          }
+        }`;
+
+      case 'Yotsuba-B':
+        return `
+        .footer-links {
+          a {
+            color: #34345c;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: #d00;
+          }
+        }`;
+
+      case 'Futaba':
+        return `
+        .footer-links {
+          a {
+            color: #00e;
+            text-decoration: underline;
+          }
+
+          a:hover {
+            color: red;
+          }
+        }`;
+
+      case 'Burichan':
+        return `
+        .footer-links {
+          a {
+            color: #34345c;
+            text-decoration: underline;
+          }
+
+          a:hover {
+            color: #d00;
+          }
+        }`;
+
+      case 'Tomorrow':
+        return `
+        .footer-links {
+          a {
+            color: #81a2be;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: #5f89ac;
+          }
+        }`;
+
+      case 'Photon':
+        return `
+        .footer-links {
+          a {
+            color: #f60;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: #f30;
+          }
+        }`;
+        
+        default:
+          return '';
+      }
+  }}
+`;
+
+export const AuthorDeleteAlert = styled.div`
+  .author-delete-alert {
+    padding: 20px;
+    border: 1px solid #ccc;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .author-delete-buttons {
+      display: flex;
+      justify-content: center;
+
+      & > button {
+        margin-top: 10px;
+      }
+    
+      & > button:first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+
+
+  
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
+        .author-delete-alert {
+          background-color: #f0e0d6;
+          border: 1px solid #d9bfb7;
+        }`;
+
+      case 'Yotsuba-B':
+        return `
+        .author-delete-alert {
+          background-color: #d6daf0;
+          border: 1px solid #b7c5d9;
+        }`;
+
+      case 'Futaba':
+        return `
+        .author-delete-alert {
+          background-color: #f0e0d6;
+          border: 1px solid #d9bfb7;
+        }`;
+
+      case 'Burichan':
+        return `
+        .author-delete-alert {
+          background-color: #d6daf0;
+          border: 1px solid #b7c5d9;
+        }`;
+
+      case 'Tomorrow':
+        return `
+        .author-delete-alert {
+          background-color: #282a2e;
+          border: 1px solid #111;
+        }`;
+
+      case 'Photon':
+        return `
+        .author-delete-alert {
+          background-color: #ddd;
+          border: 1px solid #ccc;
+        }`; 
+        
+        default:
+          return '';
+      }
+  }}
 `;

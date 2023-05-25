@@ -4,12 +4,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useAccount, useAccountComment } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostForm, BoardForm } from '../styled/Board.styled';
-import { ReplyFormLink, TopBar, BottomBar } from '../styled/Thread.styled';
+import { Container, NavBar, Header, Break, PostForm, BoardForm } from '../styled/views/Board.styled';
+import { ReplyFormLink, TopBar, BottomBar } from '../styled/views/Thread.styled';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
-import SettingsModal from '../SettingsModal';
+import SettingsModal from '../modals/SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -285,14 +285,7 @@ const Pending = () => {
                           &nbsp;
                         &nbsp;
                         <span className="poster-address">
-                          (u/
-                            <span key={`pa-${"pending"}`} className="poster-address"
-                              data-tooltip-id="tooltip"
-                              data-tooltip-content={account?.author?.address}
-                              data-tooltip-place="top"
-                            >
-                            {account?.author?.address.slice(0, 10) + "(...)"}
-                          </span>)
+                          (u/{account.author.shortAddress})
                         </span>
                         &nbsp;
                         <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
@@ -333,15 +326,7 @@ const Pending = () => {
                             Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${"pending"}`} className="poster-address-mobile">
-                            (u/
-                            <span key={`mob-ha-${"pending"}`} className="poster-address-mobile"
-                              data-tooltip-id="tooltip"
-                              data-tooltip-content={account?.author?.address}
-                              data-tooltip-place="top"
-                            >
-                              {account?.author?.address.slice(0, 10) + "(...)"}
-                            </span>
-                            )&nbsp;
+                            (u/{account.author.shortAddress})&nbsp;
                           </span>
                           <br key={`mob-br1-${"pending"}`} />
                           {comment.title ? (

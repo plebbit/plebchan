@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import { usePublishCommentEdit } from "@plebbit/plebbit-react-hooks";
-import { StyledModal } from "./styled/ModerationModal.styled";
-import useGeneralStore from "../hooks/stores/useGeneralStore";
-import useError from "../hooks/useError";
-import useSuccess from "../hooks/useSuccess";
+import { StyledModal } from "../styled/modals/ModerationModal.styled";
+import useGeneralStore from "../../hooks/stores/useGeneralStore";
+import useError from "../../hooks/useError";
+import useSuccess from "../../hooks/useSuccess";
 
 
-const ModerationModal = ({ isOpen, closeModal }) => {
+const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
   const {
     selectedAddress,
     selectedStyle,
@@ -20,7 +20,7 @@ const ModerationModal = ({ isOpen, closeModal }) => {
   } = useGeneralStore(state => state);
 
   const [pin, setPin] = useState(false);
-  const [deleteThread, setDeleteThread] = useState(false);
+  const [deleteThread, setDeleteThread] = useState(deletePost);
   const [close, setClose] = useState(false);
   const [reason, setReason] = useState('');
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
@@ -30,7 +30,19 @@ const ModerationModal = ({ isOpen, closeModal }) => {
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
 
+
+  useEffect(() => {
+    setDeleteThread(deletePost);
+  }, [deletePost]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setDeleteThread(deletePost);
+    }
+  }, [isOpen, deletePost]);
+
   const handleCloseModal = () => {
+    setDeleteThread(false);
     closeModal();
   };
 
@@ -155,11 +167,11 @@ const ModerationModal = ({ isOpen, closeModal }) => {
             <label>
               <input type="checkbox" style={{marginRight: "10px"}}
               checked={pin} onChange={() => setPin(!pin)} />
-              Pin thread
+              Pin post
             </label> 
           </li>
           <li className="settings-tip">
-            Pin the thread to make it a sticky, showed at the top of the board even as new posts are submitted.
+            Pin the post to make it a sticky, showed at the top of the board even as new posts are submitted.
           </li>
         </ul>
         <ul className="settings-cat">
@@ -167,7 +179,7 @@ const ModerationModal = ({ isOpen, closeModal }) => {
             <label>
               <input type="checkbox" style={{marginRight: "10px"}}
               checked={deleteThread} onChange={() => setDeleteThread(!deleteThread)} />
-              Delete thread              
+              Delete post              
             </label>
           </li>
           <li className="settings-tip">
@@ -179,11 +191,11 @@ const ModerationModal = ({ isOpen, closeModal }) => {
           <label>
             <input type="checkbox" style={{marginRight: "10px"}}
             checked={close} onChange={() => setClose(!close)} />
-              Close thread
+              Close post
           </label>
           </li>
           <li className="settings-tip">
-            Closing a thread allows users to still see the content, but they cannot add any new replies to it.
+            Closing a post allows users to still see the content, but they cannot add any new replies to it.
           </li>
         </ul>
         <ul className="settings-cat">

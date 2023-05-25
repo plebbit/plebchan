@@ -3,12 +3,14 @@ import { Helmet } from 'react-helmet-async';
 import { useAccount } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/Home.styled';
+import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/views/Home.styled';
 import BoardAvatar from '../BoardAvatar';
 import OfflineIndicator from '../OfflineIndicator';
 import packageJson from '../../../package.json'
 import { Tooltip } from 'react-tooltip';
 const {version} = packageJson
+// show commit ref on netlify to know which commit is being served for debugging
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : ''
 
 
 const Home = () => {
@@ -184,7 +186,7 @@ const Home = () => {
           fontSize: "11px",
           marginBottom: "2em",
         }}>
-          plebchan v{version}. GPL-2.0
+          plebchan v{version}{commitRef}. GPL-2.0
         </div>
       </Container>
     </>

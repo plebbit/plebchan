@@ -1,21 +1,23 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
 import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu} from '../styled/Board.styled';
-import { Footer } from '../styled/Thread.styled';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
+import { Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
+import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
-import ModerationModal from '../ModerationModal';
+import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
-import ReplyModal from '../ReplyModal';
-import SettingsModal from '../SettingsModal';
+import ReplyModal from '../modals/ReplyModal';
+import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
@@ -36,6 +38,7 @@ const Board = () => {
     setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
+    editedComment,
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
@@ -70,17 +73,18 @@ const Board = () => {
   const stateString = useStateString(subplebbit);
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [originalCommentContent, setOriginalCommentContent] = useState(null);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [selectedFeed, setSelectedFeed] = useState(feed);
+  const [deletePost, setDeletePost] = useState(false);
   const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
-  const [isModToolsOpen, setIsModToolsOpen] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
-
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -90,7 +94,7 @@ const Board = () => {
 
   useEffect(() => {
     if (subplebbit.roles !== undefined) { 
-      const role = subplebbit.roles[account.author.address]?.role;
+      const role = subplebbit.roles[account?.author.address]?.role;
   
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
         setIsModerator(true);
@@ -98,7 +102,7 @@ const Board = () => {
         setIsModerator(false);
       }
     }
-  }, [account?.author.address, subplebbit.roles]);  
+  }, [account?.author.address, subplebbit.roles]);
 
 
   const handleOptionClick = (threadCid) => {
@@ -197,7 +201,7 @@ const Board = () => {
   // mobile navbar scroll effect
   useEffect(() => {
     const debouncedHandleScroll = debounce(() => {
-      const currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.scrollY;
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
     }, 50);
@@ -220,7 +224,7 @@ const Board = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       if (challengeVerification.publication?.cid !== undefined) {
-        navigate(`/p/${selectedAddress}/c/${challengeVerification.publication?.cid}`);
+        navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
         setSuccessMessage('Challenge Success');
@@ -358,9 +362,11 @@ const Board = () => {
     });
   };
 
+
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
-    subplebbitAddress: selectedAddress,
+    content: editedComment || undefined,
+    subplebbitAddress: selectedAddress || subplebbitAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
@@ -378,47 +384,62 @@ const Board = () => {
   }, [error]);
 
 
-  const handleModToolClick = (tool, commentCid, currentState) => {
-    setCommentCid(commentCid);
+  const handleAuthorDeleteClick = (commentCid) => {
     handleOptionClick(commentCid);
 
-    switch (tool) {
-      case 'Pin':
-      case 'Unpin':
-        setPublishCommentEditOptions(prevOptions => ({
-          ...prevOptions,
-          pinned: !currentState.pinned,
-        }));
-        break;
-      case 'Close':
-      case 'Reopen':
-        setPublishCommentEditOptions(prevOptions => ({
-          ...prevOptions,
-          locked: !currentState.locked,
-        }));
-        break;
-      case 'Delete':
-        setPublishCommentEditOptions(prevOptions => ({
-          ...prevOptions,
-          removed: true,
-        }));
-        break;
-      default:
-        break;
-    }
-
-    setTriggerPublishCommentEdit(true);
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+            <div className='author-delete-alert'>
+              <p>Are you sure you want to delete this post?</p>
+              <div className="author-delete-buttons">
+                <button onClick={onClose}>No</button>
+                <button
+                  onClick={() => {
+                    setCommentCid(commentCid);
+                    setPublishCommentEditOptions(prevOptions => ({
+                      ...prevOptions,
+                      deleted: true,
+                    }));
+                    setTriggerPublishCommentEdit(true);
+                    onClose();
+                  }}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </AuthorDeleteAlert>
+        );
+      }
+    });
   };
+
+  const handleAuthorEditClick = (comment) => {
+    handleOptionClick(comment.cid);
+    setCommentCid(comment.cid);
+    setOriginalCommentContent(comment.content);
+    setIsEditModalOpen(true);
+  }
   
   
   useEffect(() => {
     setPublishCommentEditOptions((prevOptions) => ({
       ...prevOptions,
       commentCid: commentCid,
+      content: editedComment || undefined,
     }));
-  }, [commentCid]);
+  }, [commentCid, editedComment]);
 
 
+  useEffect(() => {
+    if (editedComment !== '') {
+      setTriggerPublishCommentEdit(true);
+    }
+  }, [editedComment]);
+
+  
   useEffect(() => {
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
@@ -427,7 +448,6 @@ const Board = () => {
       })();
     }
   }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
-  
   
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
@@ -489,7 +509,13 @@ const Board = () => {
         <ModerationModal 
         selectedStyle={selectedStyle}
         isOpen={isModerationOpen}
-        closeModal={() => setIsModerationOpen(false)} />
+        closeModal={() => setIsModerationOpen(false)}
+        deletePost={deletePost} />
+        <EditModal
+        selectedStyle={selectedStyle}
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        originalCommentContent={originalCommentContent} />
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className="boardList">
@@ -809,8 +835,7 @@ const Board = () => {
                               onClick={() => {
                                 const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
                                 const menu = document.querySelector(`.post-menu-thread-${thread.cid}`);
-                                const scrollY = window.scrollY || window.pageYOffset;
-                                menu.style.top = `calc(${rect.top + scrollY}px - 258px)`;
+                                menu.style.top = `calc(${rect.top}px + 17px)`;
                                 menu.style.left = `${rect.left}px`;
                               
                                 setRotatedStates(prevState => ({
@@ -824,8 +849,37 @@ const Board = () => {
                             <div id="post-menu" className={`post-menu-thread post-menu-thread-${thread.cid}`}
                               style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
                               <ul>
-                                {/* <li onClick={() => handleOptionClick(thread.cid)}>Edit post</li> */}
                                 <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                                {thread.author.shortAddress === account?.author.shortAddress ? (
+                                  <>
+                                    <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
+                                  </>
+                                ) : null}
+                                {isModerator ? (
+                                  <>
+                                    {thread.author.shortAddress === account?.author.shortAddress ? (
+                                      null
+                                    ) : (
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(thread.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(thread.cid);
+                                        setDeletePost(true);
+                                      }}>
+                                      Delete post
+                                      </li>
+                                    )}
+                                    <li
+                                    onClick={() => {
+                                      setModeratingCommentCid(thread.cid)
+                                      setIsModerationOpen(true); 
+                                      handleOptionClick(thread.cid);
+                                    }}>
+                                      Mod tools
+                                    </li>
+                                  </>
+                                ) : null}
                                 {(commentMediaInfo && (
                                   commentMediaInfo.type === 'image' || 
                                   (commentMediaInfo.type === 'webpage' && 
@@ -858,42 +912,6 @@ const Board = () => {
                                     </li>
                                   ) : null
                                 }
-                                {isModerator ? (
-                                  <li
-                                  onMouseOver={() => {setIsModToolsOpen(true)}}
-                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
-                                    Mod tools »
-                                    <ul className="dropdown-menu"
-                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
-                                      <li onClick={() => {
-                                        setModeratingCommentCid(thread.cid);
-                                        setIsModerationOpen(true);
-                                        handleOptionClick(thread.cid);
-                                      }}>
-                                        Open tools ↗
-                                      </li>
-                                      <li onClick={() => handleModToolClick(
-                                        thread.pinned ? 'Unpin' : 'Pin', 
-                                        thread.cid, 
-                                        { pinned: thread.pinned, locked: thread.locked }
-                                      )}>
-                                      {thread.pinned ? 'Unpin' : 'Pin'}
-                                      </li>
-                                      <li onClick={() => handleModToolClick(
-                                        thread.locked ? 'Reopen' : 'Close', 
-                                        thread.cid, 
-                                        { pinned: thread.pinned, locked: thread.locked }
-                                      )}>
-                                      {thread.locked ? 'Reopen' : 'Close'}
-                                      </li>
-                                      <li onClick={() => handleModToolClick(
-                                        'Delete', thread.cid
-                                      )}>
-                                      Delete
-                                      </li>
-                                    </ul>
-                                  </li>
-                                ) : null}
                               </ul>
                             </div>
                             <div key={`bi-${index}`} id="backlink-id" className="backlink">
@@ -1015,8 +1033,7 @@ const Board = () => {
                               onClick={() => {
                                 const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
                                 const menu = document.querySelector(`.post-menu-reply-${reply.cid}`);
-                                const scrollY = window.scrollY || window.pageYOffset;
-                                menu.style.top = `calc(${rect.top + scrollY}px - 258px)`;
+                                menu.style.top = `calc(${rect.top + window.scrollY}px - 258px)`;
                                 menu.style.left = `${rect.left}px`;
                               
                                 setRotatedStates(prevState => ({
@@ -1027,15 +1044,44 @@ const Board = () => {
                             >
                               ▶
                             </PostMenu>
-                              <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
+                            <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
                               style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
-                                <ul>
-                                  {/* <li onClick={() => handleOptionClick(reply.cid)}>Edit post</li> */}
-                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  {(replyMediaInfo && (
-                                    replyMediaInfo.type === 'image' || 
-                                    (replyMediaInfo.type === 'webpage' && 
-                                    replyMediaInfo.thumbnail))) ? ( 
+                              <ul>
+                                <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                {reply.author.shortAddress === account?.author.shortAddress ? (
+                                  <>
+                                    <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
+                                  </>
+                                ) : null}
+                                {isModerator ? (
+                                  <>
+                                    {reply.author.shortAddress === account?.author.shortAddress ? (
+                                      null
+                                    ) : (
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(reply.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(reply.cid);
+                                        setDeletePost(true);
+                                      }}>
+                                      Delete post
+                                      </li>
+                                    )}
+                                    <li
+                                    onClick={() => {
+                                      setModeratingCommentCid(reply.cid)
+                                      setIsModerationOpen(true); 
+                                      handleOptionClick(reply.cid);
+                                    }}>
+                                      Mod tools
+                                    </li>
+                                  </>
+                                ) : null}
+                                {(replyMediaInfo && (
+                                  replyMediaInfo.type === 'image' || 
+                                  (replyMediaInfo.type === 'webpage' && 
+                                  replyMediaInfo.thumbnail))) ? ( 
                                     <li 
                                     onMouseOver={() => {setIsImageSearchOpen(true)}}
                                     onMouseLeave={() => {setIsImageSearchOpen(false)}}>
@@ -1044,43 +1090,28 @@ const Board = () => {
                                         style={{display: isImageSearchOpen ? 'block': 'none'}}>
                                         <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a 
-                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo?.url}`}
+                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Google</a>
                                         </li>
                                         <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a
-                                          href={`https://yandex.com/images/search?url=${commentMediaInfo?.url}`}
+                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >Yandex</a>
                                         </li>
                                         <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a
-                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo?.url}`}
+                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
                                           target="_blank" rel="noreferrer"
                                           >SauceNAO</a>
                                         </li>
                                       </ul>
                                     </li>
-                                    ) : null
-                                  }
-                                  {isModerator ? (
-                                  <li
-                                  onMouseOver={() => {setIsModToolsOpen(true)}}
-                                  onMouseLeave={() => {setIsModToolsOpen(false)}}>
-                                    Mod tools »
-                                    <ul className="dropdown-menu"
-                                    style={{display: isModToolsOpen ? 'block': 'none'}}>
-                                      <li onClick={() => handleModToolClick(
-                                        'Delete', reply.cid
-                                      )}>
-                                      Delete
-                                      </li>
-                                    </ul>
-                                  </li>
-                                ) : null}
-                                </ul>
-                              </div>
+                                  ) : null
+                                }
+                              </ul>
+                            </div>
                               <div id="backlink-id" className="backlink">
                                 {reply.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
