@@ -8,7 +8,7 @@ import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishC
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu} from '../styled/views/Board.styled';
+import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
 import { Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
