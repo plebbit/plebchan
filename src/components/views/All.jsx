@@ -485,7 +485,7 @@ const All = () => {
                                     onMouseOver={() => {setIsImageSearchOpen(true)}}
                                     onMouseLeave={() => {setIsImageSearchOpen(false)}}>
                                       Image search »
-                                      <ul className="dropdown-menu"
+                                      <ul className="dropdown-menu post-menu-catalog"
                                         style={{display: isImageSearchOpen ? 'block': 'none'}}>
                                         <li>
                                           <a 
@@ -673,7 +673,7 @@ const All = () => {
                                     onMouseOver={() => {setIsImageSearchOpen(true)}}
                                     onMouseLeave={() => {setIsImageSearchOpen(false)}}>
                                       Image search »
-                                      <ul className="dropdown-menu"
+                                      <ul className="dropdown-menu post-menu-catalog"
                                         style={{display: isImageSearchOpen ? 'block': 'none'}}>
                                         <li>
                                           <a 

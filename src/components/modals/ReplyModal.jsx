@@ -225,8 +225,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           </div>
           <div id="form">
             <div>
-              {account.author.displayName ? (
-                <input id="name" type="text" value={account.author.displayName} ref={nameRef} disabled />
+              {account.author?.displayName ? (
+                <input id="name" type="text" value={account.author?.displayName} ref={nameRef} disabled />
               ) : (
                 <input id="name" type="text" placeholder="Anonymous" ref={nameRef} />
               )}

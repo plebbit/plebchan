@@ -83,6 +83,7 @@ export const GlobalStyle = createGlobalStyle`
       position: absolute;
       left: 100%;
       top: 0;
+      list-style: none;
     }
 
     .dropdown:hover .dropdown-menu {

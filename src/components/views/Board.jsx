@@ -926,7 +926,7 @@ const Board = () => {
                                       onMouseOver={() => {setIsImageSearchOpen(true)}}
                                       onMouseLeave={() => {setIsImageSearchOpen(false)}}>
                                         Image search »
-                                        <ul className="dropdown-menu"
+                                        <ul className="dropdown-menu post-menu-catalog"
                                           style={{display: isImageSearchOpen ? 'block': 'none'}}>
                                           <li onClick={() => handleOptionClick(thread.cid)}>
                                             <a 
@@ -1132,7 +1132,7 @@ const Board = () => {
                                       onMouseOver={() => {setIsImageSearchOpen(true)}}
                                       onMouseLeave={() => {setIsImageSearchOpen(false)}}>
                                         Image search »
-                                        <ul className="dropdown-menu"
+                                        <ul className="dropdown-menu post-menu-catalog"
                                           style={{display: isImageSearchOpen ? 'block': 'none'}}>
                                           <li onClick={() => handleOptionClick(reply.cid)}>
                                             <a 
