@@ -639,7 +639,11 @@ const Board = () => {
             <tr data-type="Name">
               <td id="td-name">Name</td>
               <td>
-                <input name="name" type="text" tabIndex={1} placeholder="Anonymous" ref={nameRef} />
+                {account.author.displayName ? (
+                  <input name="name" type="text" tabIndex={1} value={account.author.displayName} ref={nameRef} disabled />
+                ) : (
+                  <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
+                )}
               </td>
             </tr>
             <tr data-type="Subject">

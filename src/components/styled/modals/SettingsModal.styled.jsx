@@ -107,6 +107,13 @@ export const StyledModal = styled(Modal)`
     }
   }
 
+  #save-name {
+    display: inline-block;
+    margin-left: 10px;
+    height: 23px;
+    position: absolute;
+  }
+
   .cache-button {
     margin: auto;
     margin-bottom: 10px;
@@ -148,6 +155,12 @@ export const StyledModal = styled(Modal)`
   .settings-input {
     position: relative;
     padding-left: 23px;
+
+    input {
+      padding-left: 5px;
+      left: 4px;
+      font-family: monospace;
+    }
   }
 
   .settings-input::before {
