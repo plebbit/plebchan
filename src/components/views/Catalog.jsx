@@ -33,6 +33,8 @@ const Catalog = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    setIsAuthorDelete,
+    setIsAuthorEdit,
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
@@ -354,6 +356,8 @@ const Catalog = () => {
                 <button onClick={onClose}>No</button>
                 <button
                   onClick={() => {
+                    setIsAuthorDelete(true);
+                    setIsAuthorEdit(false);
                     setCommentCid(commentCid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
@@ -376,6 +380,8 @@ const Catalog = () => {
 
   const handleAuthorEditClick = (comment) => {
     handleOptionClick(comment.cid);
+    setIsAuthorEdit(true);
+    setIsAuthorDelete(false);
     setCommentCid(comment.cid);
     setOriginalCommentContent(comment.content);
     setIsEditModalOpen(true);

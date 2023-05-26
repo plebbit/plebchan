@@ -40,6 +40,8 @@ const Thread = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    setIsAuthorDelete,
+    setIsAuthorEdit,
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
@@ -391,6 +393,8 @@ const Thread = () => {
                 <button onClick={onClose}>No</button>
                 <button
                   onClick={() => {
+                    setIsAuthorDelete(true);
+                    setIsAuthorEdit(false);
                     setCommentCid(commentCid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
@@ -412,6 +416,8 @@ const Thread = () => {
 
   const handleAuthorEditClick = (comment) => {
     handleOptionClick(comment.cid);
+    setIsAuthorEdit(true);
+    setIsAuthorDelete(false);
     setCommentCid(comment.cid);
     setOriginalCommentContent(comment.content);
     setIsEditModalOpen(true);
@@ -837,7 +843,7 @@ const Thread = () => {
                           >
                             <ul className="post-menu-catalog">
                               <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
-                              {comment.author.shortAddress === account?.author.shortAddress ? (
+                              {comment.author?.shortAddress === account?.author.shortAddress ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
                                   <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
@@ -845,7 +851,7 @@ const Thread = () => {
                               ) : null}
                               {isModerator ? (
                                 <>
-                                  {comment.author.shortAddress === account?.author.shortAddress ? (
+                                  {comment.author?.shortAddress === account?.author.shortAddress ? (
                                     null
                                   ) : (
                                     <li onClick={() => {

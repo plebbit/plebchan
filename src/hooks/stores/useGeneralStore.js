@@ -23,11 +23,20 @@ const useGeneralStore = create((set) => ({
   editedComment: '',
   setEditedComment: (comment) => set({ editedComment: comment }),
 
+  isAuthorDelete: false,
+  setIsAuthorDelete: (isAuthorDelete) => set({ isAuthorDelete }),
+
+  isAuthorEdit: false,
+  setIsAuthorEdit: (isAuthorEdit) => set({ isAuthorEdit }),
+
   isCaptchaOpen: false,
   setIsCaptchaOpen: (isOpen) => set({ isCaptchaOpen: isOpen }),
 
   isModerationOpen: false,
   setIsModerationOpen: (isOpen) => set({ isModerationOpen: isOpen }),
+
+  isModEdit: false,
+  setIsModEdit: (isModEdit) => set({ isModEdit }),
 
   isSettingsOpen: false,
   setIsSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),

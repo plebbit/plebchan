@@ -41,6 +41,8 @@ const Board = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    setIsAuthorDelete,
+    setIsAuthorEdit,
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
@@ -419,6 +421,8 @@ const Board = () => {
                 <button onClick={onClose}>No</button>
                 <button
                   onClick={() => {
+                    setIsAuthorDelete(true);
+                    setIsAuthorEdit(false);
                     setCommentCid(commentCid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
@@ -440,6 +444,8 @@ const Board = () => {
 
   const handleAuthorEditClick = (comment) => {
     handleOptionClick(comment.cid);
+    setIsAuthorEdit(true);
+    setIsAuthorDelete(false);
     setCommentCid(comment.cid);
     setOriginalCommentContent(comment.content);
     setIsEditModalOpen(true);
