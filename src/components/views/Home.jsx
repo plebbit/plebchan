@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAccount } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
@@ -114,7 +114,7 @@ const Home = () => {
                   <Link to="/p/subscriptions" id="view-all" onClick={()=> {window.scrollTo(0, 0)}}>[view all]</Link>
                   <br />
                   {account?.subscriptions?.map((subscription, index) => (
-                    <>
+                    <Fragment key={`frag-${index}`}>
                       <Link key={`sub-${index}`} className="boardlink" 
                       onClick={()=> {window.scrollTo(0, 0)}}
                       to={`/p/${subscription}`}>
@@ -122,11 +122,12 @@ const Home = () => {
                         {subscription}&nbsp;
                       </Link>
                       <OfflineIndicator 
+                        key={`offline-${index}`}
                         address={subscription} 
                         className="disconnected"
                         tooltipPlace="top" />
-                      <br />
-                    </>
+                      <br key={`br-${index}`} />
+                    </Fragment>
                   ))}
                   <br id="mobile-br" />
                 </BoardsContent>
@@ -137,26 +138,27 @@ const Home = () => {
                 <h2>Popular Boards</h2>
               </BoardsTitle>
               <BoardsContent>
-                {defaultSubplebbits.map(subplebbit => (
-                  <div className="board" key={subplebbit.address}>
-                    <div className="board-title">
+                {defaultSubplebbits.map((subplebbit, index) => (
+                  <div className="board" key={`board-${index}`}>
+                    <div className="board-title" key="board-title">
                       {subplebbit.title ? subplebbit.title : <span style={{userSelect: "none"}}>&nbsp;</span>}
                     </div>
-                    <div className="board-avatar-container">
-                      <Link to={`/p/${subplebbit.address}`} onClick={() => {
+                    <div className="board-avatar-container" key="board-avatar-container">
+                      <Link to={`/p/${subplebbit.address}`} key="link" onClick={() => {
                         setSelectedTitle(subplebbit.title);
                         setSelectedAddress(subplebbit.address);
                         window.scrollTo(0, 0);
                       }} >
-                        <BoardAvatar address={subplebbit.address} />
+                        <BoardAvatar key="baordavatar" address={subplebbit.address} />
                       </Link>
                       <OfflineIndicator 
                       address={subplebbit.address} 
                       className="offline-indicator"
-                      tooltipPlace="top" />
+                      tooltipPlace="top" 
+                      key="oi2"/>
                     </div>
-                    <div className="board-text">
-                      <b>{subplebbit.address}</b>
+                    <div className="board-text" key="bt">
+                      <b key="b">{subplebbit.address}</b>
                     </div>
                   </div>
                 ))}
