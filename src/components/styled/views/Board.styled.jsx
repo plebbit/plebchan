@@ -87,14 +87,14 @@ export const NavBar = styled.div`
       return `font-size: 9pt;
       color: #b86;
       
-      a, span {
+      a, #button-span {
         font-weight: 400 !important;
         padding: 1px !important;
         text-decoration: none !important;
         color: maroon !important;
       }
 
-      a:hover, span:hover {
+      a:hover, #button-span:hover {
         color: red !important;
       }
       
@@ -115,14 +115,14 @@ export const NavBar = styled.div`
       return `font-size: 9pt;
       color: #89a;
       
-      a, span {
+      a, #button-span {
         font-weight: 400 !important;
         padding: 1px !important;
         text-decoration: none !important;
         color: #34345c !important;
       }
 
-      a:hover, span:hover {
+      a:hover, #button-span:hover {
         color: #d00 !important;
       }
       
@@ -133,14 +133,14 @@ export const NavBar = styled.div`
       case 'Futaba':
         return `font-size: 11pt;
         
-        a, a:visited, span {
+        a, a:visited, #button-span {
           font-weight: 400 !important;
           padding: 1px !important;
           color: #00e !important;
           text-decoration: underline !important;
         }
 
-        a:hover, span:hover {
+        a:hover, #button-span:hover {
           color: red !important;
         }
       
@@ -158,14 +158,14 @@ export const NavBar = styled.div`
       case 'Burichan':
         return `font-size: 11pt;
         
-        a, a:visited, span {
+        a, a:visited, #button-span {
           font-weight: 400 !important;
           padding: 1px !important;
           color: #34345c !important;
           text-decoration: underline !important;
         }
 
-        a:hover, span:hover {
+        a:hover, #button-span:hover {
           color: #d00 !important;
         }
       
@@ -180,14 +180,14 @@ export const NavBar = styled.div`
         return `font-size: 9pt;
         color: #c5c8c6;
         
-        a, a:visited, span {
+        a, a:visited, #button-span {
           font-weight: 400 !important;
           padding: 1px !important;
           text-decoration: none !important;
           color: #81a2be !important;
         }
 
-        a:hover, span:hover {
+        a:hover, #button-span:hover {
           color: #5f89ab !important;
         }
 
@@ -206,14 +206,14 @@ export const NavBar = styled.div`
         return `font-size: 9pt;
         color: #333;
         
-        a, a:visited, span {
+        a, a:visited, #button-span {
           font-weight: 400 !important;
           padding: 1px !important;
           text-decoration: none !important;
           color: #f60 !important;
         }
 
-        a:hover, span:hover {
+        a:hover, #button-span:hover {
           color: #ff3300 !important;
         }
 
