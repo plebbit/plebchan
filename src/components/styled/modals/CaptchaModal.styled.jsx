@@ -84,7 +84,7 @@ export const StyledModal = styled(Modal)`
   #nav {
     float: right;
     margin: 0;
-    width: 40px;
+    width: auto;
   }
 
   ${({ selectedStyle }) => {

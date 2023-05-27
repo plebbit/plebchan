@@ -7,7 +7,7 @@ import Draggable from 'react-draggable';
 
 const CaptchaModal = () => {
   const { 
-    challengesArray,
+    challengesArray, setChallengesArray,
     pendingComment,
     selectedStyle,
     setCaptchaResponse,
@@ -83,6 +83,8 @@ const CaptchaModal = () => {
   
   const submitCaptcha = (callback) => {
     setCaptchaResponse(responseRef.current.value);
+    setImageSources([]);
+    setChallengesArray([]);
     setIsCaptchaOpen(false);
 
     if (callback) {
@@ -96,6 +98,8 @@ const CaptchaModal = () => {
     isOpen={isCaptchaOpen}
     onRequestClose={() => {
       submitCaptcha();
+      setImageSources([]);
+      setChallengesArray([]);
       setIsCaptchaOpen(false);}}
     contentLabel="Captcha Modal"
     shouldCloseOnEsc={false}
@@ -167,7 +171,7 @@ const CaptchaModal = () => {
                   }
                 }}
               >
-                {currentChallengeIndex + 1 < totalChallenges ? "Next" : "Post"}
+                {currentChallengeIndex + 1 < totalChallenges ? "Next" : "Submit"}
               </button>
             </div>
           </div>
