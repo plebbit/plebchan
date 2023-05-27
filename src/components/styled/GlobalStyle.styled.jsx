@@ -54,4 +54,45 @@ export const GlobalStyle = createGlobalStyle`
       max-height: 100% !important;
     }
   }
+
+  .post-menu-catalog {
+    position: absolute;
+    font-size: 12px;
+    line-height: 1.3em;
+    list-style: none;
+
+    ul {
+      padding: 0;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    li {
+      cursor: pointer;
+      position: relative;
+      padding: 2px 4px;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      list-style: none;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
 `;

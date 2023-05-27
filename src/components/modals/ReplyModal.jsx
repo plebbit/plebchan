@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from '../styled/modals/ReplyModal.styled';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
@@ -21,8 +21,9 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     selectedStyle,
   } = useGeneralStore(state => state);
 
+  const account = useAccount();
+  
   const nodeRef = useRef(null);
-
   const nameRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
@@ -224,7 +225,11 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           </div>
           <div id="form">
             <div>
-              <input id="name" type="text" placeholder="Name" ref={nameRef} />
+              {account && account.author && account.author.displayName ? (
+                <input id="name" type="text" value={account.author?.displayName} ref={nameRef} disabled />
+              ) : (
+                <input id="name" type="text" placeholder="Anonymous" ref={nameRef} />
+              )}
             </div>
             <div>
               <input id="name" type="text" placeholder="Embed link" ref={linkRef} />

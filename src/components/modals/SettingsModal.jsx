@@ -11,7 +11,10 @@ const {version} = packageJson
 
 
 const SettingsModal = ({ isOpen, closeModal }) => {
-  const selectedStyle = useGeneralStore(state => state.selectedStyle);
+  const {
+    selectedStyle,
+  } = useGeneralStore(state => state);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState([]);
@@ -30,6 +33,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const pubsubRef = useRef();
   const dataPathRef = useRef();
   const importRef = useRef();
+  const nameRef = useRef();
 
   const isValidURL = (url) => {
     try {
@@ -171,6 +175,23 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const handleAccountChange = (e) => {
     setActiveAccount(e.target.value);
   };
+
+  const handleDisplayName = async () => {
+    const name = nameRef.current.value;
+
+    try {
+      await setAccount({ 
+        ...account, 
+        name: name || account.name,
+        author: {
+          ...account.author,
+          displayName: name,
+     }});
+      setSuccessMessage("Account Name Saved");
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
   
   
   return (
@@ -229,31 +250,27 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
             <li className="settings-option disc">
-              Export or Import Your Data
+              Account Data
             </li>
-              <div className="plebbit-options-buttons"
-              style={{ display: expanded.includes(1) ? 'block' : 'none' }}
-              >
-                <button className="save-button" 
-                onClick={handleExport}>Export</button>
-                <button className="reset-button" 
-                onClick={handleImport}
-                >Import</button> 
-              </div>
+            <div className="plebbit-options-buttons">
+              <button className="save-button" 
+              onClick={handleExport}>Export</button>
+              <button className="reset-button" 
+              onClick={handleImport}
+              >Import</button> 
+            </div>
             <li className="settings-tip">
               To export, click "Export", then save your account data displayed below in a safe place. To import,  paste your account data into the box below, then click "Import".
             </li>
             <div className="settings-input">
               <textarea ref={importRef} value={accountJson} />
             </div>
-            <li className="settings-option disc">
-              Current Account: {account?.name}
+            <li className="settings-option disc" style={{marginTop: '15px'}}>
+              Account Address: u/{account?.author.shortAddress}
             </li>
             <li className="settings-tip">
               Select a different account to use in the dropdown below.
             </li>
-          </ul>
-          <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
             <li>
               <div className="settings-input">
                 <select className="settings-select"
@@ -268,8 +285,24 @@ const SettingsModal = ({ isOpen, closeModal }) => {
                 </select>
               </div>
             </li>
+            <li className="settings-option disc" style={{marginTop: '15px'}}>
+              Account Name
+            </li>
+            <li className="settings-tip">
+              Change both your account name (default "Account 1") and display name (default "Anonymous"). This will not change your address.
+            </li>
+            <li>  
+              <div className="settings-input">
+                <input className="settings-input" style={{marginLeft: '20px'}}
+                type="text" ref={nameRef} defaultValue={account?.author.displayName}
+                placeholder="Anonymous"
+                />
+                <button className="save-button" id="save-name"
+                onClick={handleDisplayName}>Save</button>
+              </div>
+            </li>
           </ul>
-        </ul>
+          </ul>
         <ul>
           <li className="settings-cat-lbl">
             <span className={`${expanded.includes(2) ? 'minus' : 'plus'}`}

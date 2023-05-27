@@ -7,11 +7,15 @@ import Draggable from 'react-draggable';
 
 const CaptchaModal = () => {
   const { 
-    challengesArray,
+    challengesArray, setChallengesArray,
     pendingComment,
     selectedStyle,
     setCaptchaResponse,
+    isAuthorDelete, setIsAuthorDelete,
+    isAuthorEdit, setIsAuthorEdit,
     isCaptchaOpen, setIsCaptchaOpen,
+    isModEdit, setIsModEdit,
+    resolveCaptchaPromise,
     selectedShortCid,
    } = useGeneralStore(state => state);
 
@@ -22,8 +26,18 @@ const CaptchaModal = () => {
   const responseRef = useRef();
   const nodeRef = useRef(null);
 
+  
+  useEffect(() => {
+    if (!isCaptchaOpen) {
+      setIsAuthorDelete(false);
+      setIsAuthorEdit(false);
+      setIsModEdit(false);
+    }
+  }, [isCaptchaOpen, setIsAuthorDelete, setIsAuthorEdit, setIsModEdit]);
 
-    useEffect(() => {
+
+
+  useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);
     window.addEventListener('resize', handleResize);
 
@@ -50,6 +64,7 @@ const CaptchaModal = () => {
     }
   }, [challengesArray]);
 
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -57,28 +72,35 @@ const CaptchaModal = () => {
     }
   };
 
+
   const handleReturnKeyDown = () => {
-    submitCaptcha((response) => {
-      useGeneralStore.getState().setCaptchaResponse(response);
-      useGeneralStore.getState().resolveCaptchaPromise(response);
+      submitCaptcha((response) => {
+      setCaptchaResponse(response);
+      resolveCaptchaPromise(response);
     });
   };
 
   
   const submitCaptcha = (callback) => {
     setCaptchaResponse(responseRef.current.value);
+    setImageSources([]);
+    setChallengesArray([]);
     setIsCaptchaOpen(false);
 
     if (callback) {
       callback(responseRef.current.value);
     }
-};
+  };
 
 
   return (
     <StyledModal
     isOpen={isCaptchaOpen}
-    onRequestClose={() => setIsCaptchaOpen(false)}
+    onRequestClose={() => {
+      submitCaptcha();
+      setImageSources([]);
+      setChallengesArray([]);
+      setIsCaptchaOpen(false);}}
     contentLabel="Captcha Modal"
     shouldCloseOnEsc={false}
     shouldCloseOnOverlayClick={false}
@@ -87,7 +109,10 @@ const CaptchaModal = () => {
       <Draggable handle=".modal-header" nodeRef={nodeRef} disabled={isMobile}>
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
-            {pendingComment.parentCid ? 
+            {isModEdit ? "Challenge for Moderator Action" :
+            isAuthorEdit ? "Challenge for Editing Post" : 
+            isAuthorDelete ? "Challenge for Deleting Post" :
+            pendingComment.parentCid ? 
             ("Challenges for Reply to c/" + selectedShortCid) : 
             "Challenges for New Thread"}
             <button className="icon" onClick={() => setIsCaptchaOpen(false)} title="close" />
@@ -146,7 +171,7 @@ const CaptchaModal = () => {
                   }
                 }}
               >
-                {currentChallengeIndex + 1 < totalChallenges ? "Next" : "Post"}
+                {currentChallengeIndex + 1 < totalChallenges ? "Next" : "Submit"}
               </button>
             </div>
           </div>

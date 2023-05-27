@@ -15,6 +15,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
     setCaptchaResponse,
     setChallengesArray,
     setIsCaptchaOpen,
+    setIsModEdit,
     moderatingCommentCid,
     setResolveCaptchaPromise,
   } = useGeneralStore(state => state);
@@ -221,6 +222,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
               reason: reason
             }));
             setTriggerPublishCommentEdit(true);
+            setIsModEdit(true);
             handleCloseModal();
           }}
         >
