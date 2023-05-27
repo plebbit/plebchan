@@ -532,8 +532,7 @@ const Thread = () => {
               <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
-              <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
-              )}>Home</Link>
+              <Link to="/">Home</Link>
               ]
             </span>
             <div id="board-nav-mobile" style={{ top: visible ? 0 : '-23px' }}>

@@ -15,25 +15,36 @@ const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP
 
 const Home = () => {
   const { 
-    setBodyStyle,
+    bodyStyle, setBodyStyle,
     defaultSubplebbits,
     setSelectedAddress, 
-    setSelectedStyle,
+    selectedStyle, setSelectedStyle,
     setSelectedTitle
   } = useGeneralStore(state => state);
 
   const account = useAccount();
-  const inputRef = useRef(null);
   const navigate = useNavigate();
+  
+  const inputRef = useRef(null);
+  const prevStyle = useRef(selectedStyle);
+  const prevBodyStyle = useRef(bodyStyle);
 
   // prevent dark mode
   useEffect(() => {
+    const currentPrevStyle = prevStyle.current;
+    const currentPrevBodyStyle = prevBodyStyle.current;
+
     setBodyStyle({
       background: "#ffe url(assets/fade.png) top repeat-x",
       color: "maroon",
       fontFamily: "Helvetica, Arial, sans-serif"
     });
     setSelectedStyle("Yotsuba");
+
+    return () => {
+      setSelectedStyle(currentPrevStyle);
+      setBodyStyle(currentPrevBodyStyle);
+    };
   }, [setBodyStyle, setSelectedStyle]);
 
 
