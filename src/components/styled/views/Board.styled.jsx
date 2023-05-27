@@ -54,8 +54,10 @@ export const NavBar = styled.div`
       transition: top 0.3s ease-in-out;
     }
 
-    .board-select {
-      float: left;
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     strong {
@@ -77,7 +79,6 @@ export const NavBar = styled.div`
       text-decoration: none;
       padding-right: 5px;
     }
-
   }
 
   ${({ selectedStyle }) => {
@@ -86,14 +87,14 @@ export const NavBar = styled.div`
       return `font-size: 9pt;
       color: #b86;
       
-      a, button {
+      a, span {
         font-weight: 400 !important;
         padding: 1px !important;
         text-decoration: none !important;
         color: maroon !important;
       }
 
-      a:hover, button:hover {
+      a:hover, span:hover {
         color: red !important;
       }
       
@@ -114,14 +115,14 @@ export const NavBar = styled.div`
       return `font-size: 9pt;
       color: #89a;
       
-      a, button {
+      a, span {
         font-weight: 400 !important;
         padding: 1px !important;
         text-decoration: none !important;
         color: #34345c !important;
       }
 
-      a:hover, button:hover {
+      a:hover, span:hover {
         color: #d00 !important;
       }
       
@@ -132,14 +133,14 @@ export const NavBar = styled.div`
       case 'Futaba':
         return `font-size: 11pt;
         
-        a, a:visited, button {
+        a, a:visited, span {
           font-weight: 400 !important;
           padding: 1px !important;
           color: #00e !important;
           text-decoration: underline !important;
         }
 
-        a:hover, button:hover {
+        a:hover, span:hover {
           color: red !important;
         }
       
@@ -157,14 +158,14 @@ export const NavBar = styled.div`
       case 'Burichan':
         return `font-size: 11pt;
         
-        a, a:visited, button {
+        a, a:visited, span {
           font-weight: 400 !important;
           padding: 1px !important;
           color: #34345c !important;
           text-decoration: underline !important;
         }
 
-        a:hover, button:hover {
+        a:hover, span:hover {
           color: #d00 !important;
         }
       
@@ -179,14 +180,14 @@ export const NavBar = styled.div`
         return `font-size: 9pt;
         color: #c5c8c6;
         
-        a, a:visited, button {
+        a, a:visited, span {
           font-weight: 400 !important;
           padding: 1px !important;
           text-decoration: none !important;
           color: #81a2be !important;
         }
 
-        a:hover, button:hover {
+        a:hover, span:hover {
           color: #5f89ab !important;
         }
 
@@ -205,14 +206,14 @@ export const NavBar = styled.div`
         return `font-size: 9pt;
         color: #333;
         
-        a, a:visited, button {
+        a, a:visited, span {
           font-weight: 400 !important;
           padding: 1px !important;
           text-decoration: none !important;
           color: #f60 !important;
         }
 
-        a:hover, button:hover {
+        a:hover, span:hover {
           color: #ff3300 !important;
         }
 
@@ -511,7 +512,7 @@ export const PostFormLink = styled.div`
           cursor: pointer;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none;
           border: none;
           color: inherit !important;
@@ -532,7 +533,7 @@ export const PostFormLink = styled.div`
           cursor: pointer;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none;
           border: none;
           color: #34345c !important;
@@ -553,7 +554,7 @@ export const PostFormLink = styled.div`
           font-size: 16px;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none !important;
           border: none;
           color: inherit !important;
@@ -574,7 +575,7 @@ export const PostFormLink = styled.div`
           font-size: 16px;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none !important;
           border: none;
           color: inherit !important;
@@ -595,7 +596,7 @@ export const PostFormLink = styled.div`
           cursor: pointer;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none !important;
           border: none;
           color: #707070 !important;
@@ -614,7 +615,7 @@ export const PostFormLink = styled.div`
           cursor: pointer;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none;
           border: none;
           color: #333 !important;
@@ -1472,7 +1473,7 @@ export const TopBar = styled.div`
 
     .subscribe-button-mobile {
       margin-right: 10px;
-      margin-top: -2px;
+      margin-top: 1px;
       position: absolute;
       right: 0;
       font-size: 13.3333px !important;
@@ -1499,7 +1500,7 @@ export const TopBar = styled.div`
           font-size: 10pt !important;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none;
           border: none;
           color: inherit !important;
@@ -1520,7 +1521,7 @@ export const TopBar = styled.div`
           cursor: pointer;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none;
           border: none;
           color: #34345c !important;
@@ -1542,11 +1543,9 @@ export const TopBar = styled.div`
           font-family: times new roman !important;
         }
 
-        .subscribe-button-mobile {
-          margin-top: -5px !important;
-        }
+        
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none !important;
           border: none;
           color: inherit !important;
@@ -1569,10 +1568,10 @@ export const TopBar = styled.div`
         }
 
         .subscribe-button-mobile {
-          margin-top: -5px !important;
+          margin-top: 0px !important;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none !important;
           border: none;
           color: inherit !important;
@@ -1593,7 +1592,7 @@ export const TopBar = styled.div`
           cursor: pointer;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none;
           border: none;
           color: #707070 !important;
@@ -1618,7 +1617,7 @@ export const TopBar = styled.div`
           cursor: pointer;
         }
 
-        .btn-wrap a {
+        .btn-wrap a, .btn-wrap span {
           text-decoration: none;
           border: none;
           color: #333 !important;
