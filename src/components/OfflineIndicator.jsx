@@ -1,7 +1,6 @@
 import React from "react";
 import { useSubplebbit } from "@plebbit/plebbit-react-hooks";
 
-
 const OfflineIndicator = ({ address, className, tooltipPlace }) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: address });
   const isOnline = subplebbit.updatedAt > Date.now() / 1000 - 60 * 20;

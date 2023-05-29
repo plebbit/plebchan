@@ -71,7 +71,6 @@ export const NavBar = styled.div`
     .page-jump {
       float: right;
       padding-right: 5px;
-      padding-top: 2.5px;
       font-size: 7.5pt;
     }
 
@@ -426,9 +425,9 @@ export const Header = styled.div`
   }}
 
   .offline {
-    width: 16px; 
+    width: 16px;
     position: relative;
-    margin: 2px 2px -2px 2px;
+    margin: 3px 0 -3px 3px;
   }
 `;
 
@@ -1653,16 +1652,14 @@ export const BoardForm = styled.div`
     }
 
     .offline-sub {
-      width: 13px;
-      margin-right: -5px;
-      margin-bottom: -1px;
+      width: 16px;
+      margin: -5px -4px -4px 3px;
       position: relative;
     }
 
     .offline-reply {
-      width: 13px;
-      margin-right: 2px;
-      margin-bottom: -1px;
+      width: 16px;
+      margin: -5px -4px -4px 3px;
       position: relative;
     }
 
@@ -3148,14 +3145,12 @@ export const BoardForm = styled.div`
     margin-bottom: 335px;
 
     .offline-mobile-sub {
-      width: 13px;
-      margin-top: 4px;
+      width: 16px;
       margin-right: 5px;
     }
 
     .offline-mobile-sub-reply {
-      width: 13px;
-      margin-top: 4px;
+      width: 16px;
     }
 
     .thread {

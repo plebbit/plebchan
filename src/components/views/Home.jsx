@@ -125,7 +125,7 @@ const Home = () => {
                         key={`offline-${index}`}
                         address={subscription} 
                         className="disconnected"
-                        tooltipPlace="top" />
+                        isText={true} />
                       <br key={`br-${index}`} />
                     </Fragment>
                   ))}
