@@ -124,8 +124,8 @@ const Home = () => {
                       <OfflineIndicator 
                         key={`offline-${index}`}
                         address={subscription} 
-                        className="disconnected"
-                        tooltipPlace="top" />
+                        className="offline-text"
+                        isText={true} />
                       <br key={`br-${index}`} />
                     </Fragment>
                   ))}

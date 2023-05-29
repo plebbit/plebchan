@@ -242,8 +242,8 @@ export const BoardsContent = styled.div`
 
   .offline-indicator {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 3px;
+    right: 3px;
     width: 16px;
   }
 
@@ -284,10 +284,8 @@ export const BoardsContent = styled.div`
       font-size: 1.2em;
     }
 
-    .disconnected {
-      width: 15px;
-      margin-bottom: -1px;
-      position: absolute;
+    .offline-text {
+      
     }
   }
 
@@ -296,11 +294,10 @@ export const BoardsContent = styled.div`
       display: none;
     }
 
-    .disconnected {
-      width: 11px;
-      margin-bottom: -1px;
-      margin-top: 2px;
-      position: absolute;
+    .offline-text {
+      font-size: 9px;
+      color: red;
+      font-weight: 700;
     }
   }
 
