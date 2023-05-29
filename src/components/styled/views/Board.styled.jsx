@@ -71,7 +71,6 @@ export const NavBar = styled.div`
     .page-jump {
       float: right;
       padding-right: 5px;
-      padding-top: 2.5px;
       font-size: 7.5pt;
     }
 
