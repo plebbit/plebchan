@@ -974,11 +974,8 @@ const Thread = () => {
                                       </span>
                                     ) : (
                                       <span key={`mob-ha-${index}`}
-                                        data-tooltip-id="tooltip"
-                                        data-tooltip-content={account?.author?.address}
-                                        data-tooltip-place="top"
                                       >
-                                        {account?.author?.address.slice(0, 10) + "(...)"}
+                                        {account?.author?.shortAddress}
                                       </span>
                                     )
                                   }
