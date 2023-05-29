@@ -3146,14 +3146,12 @@ export const BoardForm = styled.div`
     margin-bottom: 335px;
 
     .offline-mobile-sub {
-      width: 13px;
-      margin-top: 4px;
+      width: 16px;
       margin-right: 5px;
     }
 
     .offline-mobile-sub-reply {
-      width: 13px;
-      margin-top: 4px;
+      width: 16px;
     }
 
     .thread {
