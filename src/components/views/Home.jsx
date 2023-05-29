@@ -124,7 +124,7 @@ const Home = () => {
                       <OfflineIndicator 
                         key={`offline-${index}`}
                         address={subscription} 
-                        className="offline-text"
+                        className="disconnected"
                         isText={true} />
                       <br key={`br-${index}`} />
                     </Fragment>

@@ -284,8 +284,10 @@ export const BoardsContent = styled.div`
       font-size: 1.2em;
     }
 
-    .offline-text {
-      
+    .disconnected {
+      width: 13px;
+      margin-bottom: -1px;
+      position: absolute;
     }
   }
 
@@ -294,10 +296,10 @@ export const BoardsContent = styled.div`
       display: none;
     }
 
-    .offline-text {
-      font-size: 9px;
-      color: red;
-      font-weight: 700;
+    .disconnected {
+      width: 13px;
+      margin-top: 0px;
+      position: absolute;
     }
   }
 
