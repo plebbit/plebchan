@@ -263,7 +263,11 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               To export, click "Export", then save your account data displayed below in a safe place. To import,  paste your account data into the box below, then click "Import".
             </li>
             <div className="settings-input">
-              <textarea ref={importRef} value={accountJson} />
+              {accountJson ? (
+                <textarea value={accountJson} readOnly />
+                ): (
+                <textarea ref={importRef} />
+              )}
             </div>
             <li className="settings-option disc" style={{marginTop: '15px'}}>
               Account Address: u/{account?.author.shortAddress}
