@@ -92,15 +92,19 @@ const CaptchaModal = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setImageSources([]);
+    setChallengesArray([]);
+    setIsCaptchaOpen(false);
+  };
+
 
   return (
     <StyledModal
     isOpen={isCaptchaOpen}
     onRequestClose={() => {
-      submitCaptcha();
-      setImageSources([]);
-      setChallengesArray([]);
-      setIsCaptchaOpen(false);}}
+      handleCloseModal();
+      submitCaptcha();}}
     contentLabel="Captcha Modal"
     shouldCloseOnEsc={false}
     shouldCloseOnOverlayClick={false}
@@ -115,7 +119,7 @@ const CaptchaModal = () => {
             pendingComment.parentCid ? 
             ("Challenges for Reply to c/" + selectedShortCid) : 
             "Challenges for New Thread"}
-            <button className="icon" onClick={() => setIsCaptchaOpen(false)} title="close" />
+            <button className="icon" onClick={() => handleCloseModal()} title="close" />
           </div>
           <div id="form">
             {pendingComment.author?.displayName ? (
