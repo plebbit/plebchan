@@ -457,7 +457,7 @@ const Catalog = () => {
         <ModerationModal 
         selectedStyle={selectedStyle}
         isOpen={isModerationOpen}
-        closeModal={() => setIsModerationOpen(false)}
+        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
         deletePost={deletePost} />
         <EditModal
         selectedStyle={selectedStyle}
