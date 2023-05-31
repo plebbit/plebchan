@@ -1039,12 +1039,8 @@ const Board = () => {
                                           {reply.author?.shortAddress}
                                         </span>
                                       ) : (
-                                        <span key={`mob-ha-${index}`}
-                                          data-tooltip-id="tooltip"
-                                          data-tooltip-content={account?.author?.address}
-                                          data-tooltip-place="top"
-                                        >
-                                          {account?.author?.address.slice(0, 10) + "(...)"}
+                                        <span key={`mob-ha-${index}`}>
+                                          {account?.author?.shortAddress}
                                         </span>
                                       )
                                     }
@@ -1451,12 +1447,8 @@ const Board = () => {
                                       {reply.author?.shortAddress}
                                     </span>
                                     ) : (
-                                      <span key={`mob-ha-${index}`} 
-                                        data-tooltip-id="tooltip"
-                                        data-tooltip-content={account?.author?.address}
-                                        data-tooltip-place="top"
-                                          >
-                                        {account?.author?.address.slice(0, 8) + "(...)"}
+                                      <span key={`mob-ha-${index}`}>
+                                        {account?.author?.shortAddress}
                                       </span>
                                     )
                                   }
