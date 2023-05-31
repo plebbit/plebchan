@@ -12,6 +12,7 @@ import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } f
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
+import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
@@ -931,6 +932,9 @@ const Thread = () => {
                       </span>
                       <blockquote key={`blockquote-${comment.cid}`}>
                         <Post content={comment.content} comment={comment} key={`post-${comment.cid}`} />
+                        <EditLabel key={`edit-label-thread-${index}`} 
+                        commentCid={comment.cid}
+                        className="ttl"/>
                       </blockquote>
                     </div>
                   </div>
@@ -1167,6 +1171,9 @@ const Thread = () => {
                               {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                             </span>
                             <Post content={reply.content} comment={reply} key={`post-${index}`} />
+                            <EditLabel key={`edit-label-reply-${index}`} 
+                            commentCid={reply.cid}
+                            className="ttl"/>
                           </blockquote>
                         </div>
                       </div>
@@ -1283,7 +1290,10 @@ const Thread = () => {
                       <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                         {comment.content ? (
                           <>
-                            <Post content={comment.content} comment={comment} key={`post-mobile-${comment.cid}`} /> 
+                            <Post content={comment.content} comment={comment} key={`post-mobile-${comment.cid}`} />
+                            <EditLabel key={`edit-label-thread-mob-${index}`} 
+                            commentCid={comment.cid}
+                            className="ttl"/>
                           </>
                         ) : null}
                       </blockquote>
@@ -1398,6 +1408,9 @@ const Thread = () => {
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </span>
                           <Post content={reply.content} comment={reply} key={`post-mobile-${index}`} />
+                          <EditLabel key={`edit-label-reply-mob-${index}`} 
+                          commentCid={reply.cid}
+                          className="ttl"/>
                         </blockquote>
                         {reply.replyCount > 0 ? (
                           <div key={`back-mob-${index}`} className='backlink backlink-mobile'>

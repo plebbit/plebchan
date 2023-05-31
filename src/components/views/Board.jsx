@@ -13,6 +13,7 @@ import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm
 import { Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
+import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
@@ -978,16 +979,24 @@ const Board = () => {
                             thread.content?.length > 1000 ?
                             <Fragment key={`fragment5-${index}`}>
                               <blockquote key={`bq-${index}`}>
-                              <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
+                                <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
                                 <span key={`ttl-s-${index}`} className="ttl"> (...) 
-                                <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${thread.cid}`} />
-                                Post too long.&nbsp;
+                                  <br key={`ttl-s-br1-${index}`} />
+                                  <EditLabel key={`edit-label-thread-${index}`} 
+                                  commentCid={thread.cid}
+                                  className="ttl"/>
+                                  <br key={`ttl-s-br2${index}`} />
+                                  Post too long.&nbsp;
                                   <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                  &nbsp;to view. </span>
+                                  &nbsp;to view. 
+                                </span>
                               </blockquote>
                             </Fragment>
                           : <blockquote key={`bq-${index}`}>
                               <Post content={thread.content} key={`post-${index}`} />
+                              <EditLabel key={`edit-label-thread-${index}`} 
+                              commentCid={thread.cid}
+                              className="ttl"/>
                             </blockquote>)
                           : null}
                         </div>
@@ -995,13 +1004,17 @@ const Board = () => {
                     </div>
                     <span key={`summary-${index}`} className="summary">
                       {omittedCount > 0 ? (
-                      <span key={`oc-${index}`} className="ttl">
-                        <span key={`oc1-${index}`}>
-                          {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
-                          <Link key={`oc2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
-                          &nbsp;to view.
-                        </span>
-                      </span>) : null}
+                        <>
+                          {thread.content ? null : <br />}
+                          <span key={`oc-${index}`} className="ttl">
+                            <span key={`oc1-${index}`}>
+                              {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
+                              <Link key={`oc2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
+                              &nbsp;to view.
+                            </span>
+                          </span>
+                        </>
+                      ) : null}
                     </span>
                     {displayedReplies?.map((reply, index) => {
                       const replyMediaInfo = getCommentMediaInfo(reply);
@@ -1239,7 +1252,11 @@ const Board = () => {
                                   </Link>
                                   <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
                                   <span key={`ttl-s-${index}`} className="ttl"> (...)
-                                  <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${reply.cid}`} />
+                                  <br key={`ttl-s-br1-${index}`} />
+                                  <EditLabel key={`edit-label-reply-${index}`} 
+                                  commentCid={reply.cid}
+                                  className="ttl"/>
+                                  <br key={`ttl-s-br2${index}`} />
                                   Comment too long.&nbsp;
                                     <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. </span>
@@ -1250,6 +1267,9 @@ const Board = () => {
                                     {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content} key={`post-${index}`} comment={reply} />
+                                <EditLabel key={`edit-label-reply-${index}`} 
+                                  commentCid={reply.cid}
+                                  className="ttl"/>
                               </blockquote>)
                             : null}
                           </div>
@@ -1386,7 +1406,11 @@ const Board = () => {
                             <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
                               <Post content={thread.content?.slice(0, 500)} key={`post-mobile-${index}`} />
                               <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                              <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
+                              <br key={`mob-ttl-s-br1-${index}`} />
+                              <EditLabel key={`edit-label-thread-mob-${index}`} 
+                              commentCid={thread.cid}
+                              className="ttl"/>
+                              <br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
                                 <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
@@ -1394,6 +1418,9 @@ const Board = () => {
                           </Fragment>
                         : <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
                             <Post content={thread.content} key={`post-mobile-${index}`} />
+                            <EditLabel key={`edit-label-thread-mob-${index}`} 
+                            commentCid={thread.cid}
+                            className="ttl"/>
                           </blockquote>)
                         : null}
                       </div>
@@ -1529,7 +1556,11 @@ const Board = () => {
                                 </Link>
                                 <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
                                 <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                                <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
+                                <br key={`mob-ttl-s-br1-${index}`} />
+                                <EditLabel key={`edit-label-reply-mob-${index}`} 
+                                commentCid={reply.cid}
+                                className="ttl"/>
+                                <br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;
                                   <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
@@ -1540,6 +1571,9 @@ const Board = () => {
                                 {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                               </Link>
                               <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
+                              <EditLabel key={`edit-label-reply-mob-${index}`} 
+                              commentCid={reply.cid}
+                              className="ttl"/>
                             </blockquote>)
                           : null}
                             {reply.replyCount > 0 ? (
