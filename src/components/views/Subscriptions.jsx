@@ -21,7 +21,9 @@ import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
+import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
+import removeHighlight from '../../utils/removeHighlight';
 import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import packageJson from '../../../package.json'
@@ -523,7 +525,9 @@ const Subscriptions = () => {
                                   <div key={`div-${index}`} style={{display: 'inline-block'}}>
                                   <Link key={`ql-${index}`}
                                   to={() => {}} className="quote-link" 
-                                  onClick={(event) => handleQuoteClick(reply, null, event)}>
+                                  onClick={(event) => handleQuoteClick(reply, null, event)}
+                                  onMouseOver={(event) => handleQuoteHover(reply, null, event)}
+                                  onMouseLeave={removeHighlight}>
                                     c/{reply.shortCid}</Link>
                                     &nbsp;
                                   </div>
@@ -710,7 +714,9 @@ const Subscriptions = () => {
                                     <div key={`div-${index}`} style={{display: 'inline-block'}}>
                                     <Link to={() => {}} key={`ql-${index}`}
                                       className="quote-link" 
-                                      onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
+                                      onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                                      onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
+                                      onMouseLeave={removeHighlight}>
                                       c/{reply.shortCid}</Link>
                                       &nbsp;
                                     </div>
@@ -776,7 +782,10 @@ const Subscriptions = () => {
                               reply.content?.length > 500 ?
                               <Fragment key={`fragment8-${index}`}>
                                 <blockquote key={`pm-${index}`} comment={reply} className="post-message">
-                                  <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                                  <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" 
+                                  onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}
+                                  onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, thread.shortCid, event)}
+                                  onMouseLeave={removeHighlight}>
                                       {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                   </Link>
                                   <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
@@ -788,7 +797,10 @@ const Subscriptions = () => {
                                 </blockquote>
                               </Fragment>
                             : <blockquote key={`pm-${index}`} className="post-message">
-                                <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                                <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" 
+                                onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}
+                                onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, thread.shortCid, event)}
+                                onMouseLeave={removeHighlight}>
                                     {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content} key={`post-${index}`} comment={reply} />
@@ -1098,7 +1110,10 @@ const Subscriptions = () => {
                             reply.content?.length > 500 ?
                             <Fragment key={`fragment15-${index}`}>
                               <blockquote key={`mob-pm-${index}`} className="post-message">
-                                <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                                <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                                onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}
+                                onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, thread.shortCid, event)}
+                                onMouseLeave={removeHighlight}>
                                   {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
@@ -1110,7 +1125,10 @@ const Subscriptions = () => {
                               </blockquote>
                             </Fragment>
                           : <blockquote key={`mob-pm-${index}`} className="post-message">
-                              <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                              <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                              onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}
+                              onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, thread.shortCid, event)}
+                              onMouseLeave={removeHighlight}>
                                 {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                               </Link>
                               <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
@@ -1123,7 +1141,10 @@ const Subscriptions = () => {
                               .map((reply, index) => (
                                 <div key={`div-back${index}`} style={{display: 'inline-block'}}>
                                 <Link key={`ql-${index}`} to={() => {}}
-                                onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)} className="quote-link">
+                                onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                                onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
+                                onMouseLeave={removeHighlight} 
+                                className="quote-link">
                                   c/{reply.shortCid}</Link>
                                   &nbsp;
                                 </div>
