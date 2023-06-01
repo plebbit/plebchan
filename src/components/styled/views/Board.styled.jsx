@@ -1630,6 +1630,31 @@ export const TopBar = styled.div`
 `;
 
 export const BoardForm = styled.div`
+  .ellipsis {
+    margin-right: 14px;
+  }
+
+  .ellipsis:after {
+    content: "\\2026";
+    position: absolute;
+    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+    animation: ellipsis steps(4,end) 1500ms infinite;
+    width: 0px;
+    overflow: hidden;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
   @media (min-width: 480px) {
     margin-bottom: 130px;
 

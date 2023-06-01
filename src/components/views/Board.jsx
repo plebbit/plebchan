@@ -19,6 +19,7 @@ import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
+import StateLabel from '../StateLabel';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -985,6 +986,9 @@ const Board = () => {
                                   <EditLabel key={`edit-label-thread-${index}`} 
                                   commentCid={thread.cid}
                                   className="ttl"/>
+                                  <StateLabel key={`state-label-thread-${index}`}
+                                  commentCid={thread.cid}
+                                  className="ttl ellipsis"/>
                                   <br key={`ttl-s-br2${index}`} />
                                   Post too long.&nbsp;
                                   <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
@@ -997,6 +1001,9 @@ const Board = () => {
                               <EditLabel key={`edit-label-thread-${index}`} 
                               commentCid={thread.cid}
                               className="ttl"/>
+                              <StateLabel key={`state-label-thread-${index}`}
+                              commentCid={thread.cid}
+                              className="ttl ellipsis"/>
                             </blockquote>)
                           : null}
                         </div>
@@ -1256,6 +1263,9 @@ const Board = () => {
                                   <EditLabel key={`edit-label-reply-${index}`} 
                                   commentCid={reply.cid}
                                   className="ttl"/>
+                                  <StateLabel key={`state-label-reply-${index}`}
+                                  commentCid={reply.cid}
+                                  className="ttl ellipsis"/>
                                   <br key={`ttl-s-br2${index}`} />
                                   Comment too long.&nbsp;
                                     <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
@@ -1270,6 +1280,9 @@ const Board = () => {
                                 <EditLabel key={`edit-label-reply-${index}`} 
                                   commentCid={reply.cid}
                                   className="ttl"/>
+                                <StateLabel key={`state-label-reply-${index}`}
+                                commentCid={reply.cid}
+                                className="ttl ellipsis"/>
                               </blockquote>)
                             : null}
                           </div>
@@ -1410,6 +1423,9 @@ const Board = () => {
                               <EditLabel key={`edit-label-thread-mob-${index}`} 
                               commentCid={thread.cid}
                               className="ttl"/>
+                              <StateLabel key={`state-label-thread-mob-${index}`}
+                              commentCid={thread.cid}
+                              className="ttl ellipsis"/>
                               <br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
                                 <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
@@ -1421,6 +1437,9 @@ const Board = () => {
                             <EditLabel key={`edit-label-thread-mob-${index}`} 
                             commentCid={thread.cid}
                             className="ttl"/>
+                            <StateLabel key={`state-label-thread-mob-${index}`}
+                            commentCid={thread.cid}
+                            className="ttl ellipsis"/>
                           </blockquote>)
                         : null}
                       </div>
@@ -1560,6 +1579,9 @@ const Board = () => {
                                 <EditLabel key={`edit-label-reply-mob-${index}`} 
                                 commentCid={reply.cid}
                                 className="ttl"/>
+                                <StateLabel key={`state-label-reply-mob-${index}`}
+                                commentCid={reply.cid}
+                                className="ttl ellipsis"/>
                                 <br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;
                                   <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
@@ -1574,6 +1596,9 @@ const Board = () => {
                               <EditLabel key={`edit-label-reply-mob-${index}`} 
                               commentCid={reply.cid}
                               className="ttl"/>
+                              <StateLabel key={`state-label-reply-mob-${index}`}
+                              commentCid={reply.cid}
+                              className="ttl ellipsis"/>
                             </blockquote>)
                           : null}
                             {reply.replyCount > 0 ? (

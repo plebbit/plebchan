@@ -18,6 +18,7 @@ import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
+import StateLabel from '../StateLabel';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -935,6 +936,9 @@ const Thread = () => {
                         <EditLabel key={`edit-label-thread-${index}`} 
                         commentCid={comment.cid}
                         className="ttl"/>
+                        <StateLabel key={`state-label-thread-${index}`}
+                        commentCid={comment.cid}
+                        className="ttl ellipsis"/>
                       </blockquote>
                     </div>
                   </div>
@@ -1174,6 +1178,9 @@ const Thread = () => {
                             <EditLabel key={`edit-label-reply-${index}`} 
                             commentCid={reply.cid}
                             className="ttl"/>
+                            <StateLabel key={`state-label-reply-${index}`}
+                            commentCid={reply.cid}
+                            className="ttl ellipsis"/>
                           </blockquote>
                         </div>
                       </div>
@@ -1294,6 +1301,9 @@ const Thread = () => {
                             <EditLabel key={`edit-label-thread-mob-${index}`} 
                             commentCid={comment.cid}
                             className="ttl"/>
+                            <StateLabel key={`state-label-thread-mob-${index}`}
+                            commentCid={comment.cid}
+                            className="ttl ellipsis"/> 
                           </>
                         ) : null}
                       </blockquote>
@@ -1411,6 +1421,9 @@ const Thread = () => {
                           <EditLabel key={`edit-label-reply-mob-${index}`} 
                           commentCid={reply.cid}
                           className="ttl"/>
+                          <StateLabel key={`state-label-reply-mob-${index}`}
+                          commentCid={reply.cid}
+                          className="ttl ellipsis"/>
                         </blockquote>
                         {reply.replyCount > 0 ? (
                           <div key={`back-mob-${index}`} className='backlink backlink-mobile'>
