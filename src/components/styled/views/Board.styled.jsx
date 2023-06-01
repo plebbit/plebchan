@@ -1822,7 +1822,7 @@ export const BoardForm = styled.div`
       case 'Tomorrow':
         return `.highlighted {
         background-color: #1d1d21 !important;
-        border: 1px solid #111 !important;
+        outline: 1px solid #111 !important;
       }
       
       #post-menu {
@@ -1842,7 +1842,7 @@ export const BoardForm = styled.div`
       case 'Photon':
         return `.highlighted {
         background-color: #ccc !important;
-        border: 1px solid #ccc !important;
+        outline: 1px solid #ccc !important;
       }
       
       #post-menu {

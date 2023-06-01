@@ -27,7 +27,9 @@ import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
+import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
+import removeHighlight from '../../utils/removeHighlight';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
@@ -923,7 +925,9 @@ const Thread = () => {
                               <div key={`div-${index}`} style={{display: 'inline-block'}}>
                               <span style={{cursor: 'pointer'}} key={`ql-${index}`}
                                 className="quote-link" 
-                                onClick={(event) => handleQuoteClick(reply, null, event)}>
+                                onClick={(event) => handleQuoteClick(reply, null, event)}
+                                onMouseOver={(event) => handleQuoteHover(reply, null, event)}
+                                onMouseLeave={removeHighlight}>
                                 c/{reply.shortCid}</span>
                                 &nbsp;
                               </div>
@@ -1106,7 +1110,9 @@ const Thread = () => {
                                   <div key={`div-${index}`} style={{display: 'inline-block'}}>
                                   <span style={{cursor: 'pointer'}} key={`ql-${index}`}
                                     className="quote-link" 
-                                    onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
+                                    onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                                    onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
+                                    onMouseLeave={removeHighlight}>
                                     c/{reply.shortCid}</span>
                                     &nbsp;
                                   </div>
@@ -1171,7 +1177,9 @@ const Thread = () => {
                               onClick={(event) => {
                                 handleQuoteClick(reply, shortParentCid, comment.shortCid, event);
                               }}
-                            >
+                              onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, comment.shortCid, event)}
+                              onMouseLeave={removeHighlight}
+                              >
                               {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                             </span>
                             <Post content={reply.content} comment={reply} key={`post-${index}`} />
@@ -1414,7 +1422,9 @@ const Thread = () => {
                           ) : null}
                         <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
                           <span style={{cursor: 'pointer'}} key={`mob-ql-${index}`} className="quotelink-mobile" 
-                          onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
+                          onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}
+                          onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, comment.shortCid, event)}
+                          onMouseLeave={removeHighlight}>
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </span>
                           <Post content={reply.content} comment={reply} key={`post-mobile-${index}`} />
@@ -1432,7 +1442,9 @@ const Thread = () => {
                           .map((reply, index) => (
                             <div key={`div-back${index}`} style={{display: 'inline-block'}}>
                             <span style={{cursor: 'pointer'}} key={`ql-${index}`} className="quote-link" 
-                            onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
+                            onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                            onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
+                            onMouseLeave={removeHighlight}>
                               c/{reply.shortCid}</span>
                               &nbsp;
                             </div>
