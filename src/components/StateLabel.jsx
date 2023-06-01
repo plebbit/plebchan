@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useComment } from "@plebbit/plebbit-react-hooks";
 import useStateString from "../hooks/useStateString";
 
