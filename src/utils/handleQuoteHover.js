@@ -1,4 +1,4 @@
-function handleQuoteHover(reply, parentCid) {
+function handleQuoteHover(reply, parentCid, onElementOutOfView) {
   const cid = parentCid ? parentCid : reply.shortCid;
   const isMobile = window.innerWidth <= 480;
   const postNumberSelector = isMobile ? '.post-number-mobile' : '.post-number-desktop';
@@ -23,6 +23,7 @@ function handleQuoteHover(reply, parentCid) {
     };
 
     if (isInViewport(targetElement)) {
+      onElementOutOfView(cid);
       const highlightedElements = document.querySelectorAll('.highlighted');
 
       highlightedElements.forEach(el => {

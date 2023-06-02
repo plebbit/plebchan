@@ -90,6 +90,7 @@ const Thread = () => {
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [outOfViewCid, setOutOfViewCid] = useState(null);
   
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
@@ -926,8 +927,11 @@ const Thread = () => {
                               <span style={{cursor: 'pointer'}} key={`ql-${index}`}
                                 className="quote-link" 
                                 onClick={(event) => handleQuoteClick(reply, null, event)}
-                                onMouseOver={(event) => handleQuoteHover(reply, null, event)}
-                                onMouseLeave={removeHighlight}>
+                                onMouseOver={() => handleQuoteHover(reply, null, (cid) => setOutOfViewCid(cid))}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }}>
                                 c/{reply.shortCid}</span>
                                 &nbsp;
                               </div>
@@ -1111,8 +1115,11 @@ const Thread = () => {
                                   <span style={{cursor: 'pointer'}} key={`ql-${index}`}
                                     className="quote-link" 
                                     onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                    onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
-                                    onMouseLeave={removeHighlight}>
+                                    onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                                    onMouseLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}>
                                     c/{reply.shortCid}</span>
                                     &nbsp;
                                   </div>
@@ -1177,8 +1184,11 @@ const Thread = () => {
                               onClick={(event) => {
                                 handleQuoteClick(reply, shortParentCid, comment.shortCid, event);
                               }}
-                              onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, comment.shortCid, event)}
-                              onMouseLeave={removeHighlight}
+                              onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}
                               >
                               {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                             </span>
@@ -1422,9 +1432,12 @@ const Thread = () => {
                           ) : null}
                         <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
                           <span style={{cursor: 'pointer'}} key={`mob-ql-${index}`} className="quotelink-mobile" 
-                          onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}
-                          onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, comment.shortCid, event)}
-                          onMouseLeave={removeHighlight}>
+                          onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                          onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                          onMouseLeave={() => {
+                            removeHighlight();
+                            setOutOfViewCid(null);
+                          }}>
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </span>
                           <Post content={reply.content} comment={reply} key={`post-mobile-${index}`} />
@@ -1443,8 +1456,11 @@ const Thread = () => {
                             <div key={`div-back${index}`} style={{display: 'inline-block'}}>
                             <span style={{cursor: 'pointer'}} key={`ql-${index}`} className="quote-link" 
                             onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                            onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
-                            onMouseLeave={removeHighlight}>
+                            onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                            onMouseLeave={() => {
+                              removeHighlight();
+                              setOutOfViewCid(null);
+                            }}>
                               c/{reply.shortCid}</span>
                               &nbsp;
                             </div>

@@ -96,6 +96,7 @@ const Board = () => {
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [outOfViewCid, setOutOfViewCid] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -971,8 +972,11 @@ const Board = () => {
                                   <Link key={`ql-${index}`}
                                   to={() => {}} className="quote-link" 
                                   onClick={(event) => handleQuoteClick(reply, null, event)}
-                                  onMouseOver={(event) => handleQuoteHover(reply, null, event)}
-                                  onMouseLeave={removeHighlight}>
+                                  onMouseOver={() => handleQuoteHover(reply, null, (cid) => setOutOfViewCid(cid))}
+                                  onMouseLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}>
                                     c/{reply.shortCid}</Link>
                                     &nbsp;
                                   </div>
@@ -1193,8 +1197,11 @@ const Board = () => {
                                     <Link to={() => {}} key={`ql-${index}`}
                                       className="quote-link" 
                                       onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                      onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
-                                      onMouseLeave={removeHighlight}>
+                                      onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                                      onMouseLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}>
                                       c/{reply.shortCid}</Link>
                                       &nbsp;
                                     </div>
@@ -1262,8 +1269,11 @@ const Board = () => {
                                 <blockquote key={`pm-${index}`} comment={reply} className="post-message">
                                   <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" 
                                   onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                                  onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, event)}
-                                  onMouseLeave={removeHighlight}>
+                                  onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                                  onMouseLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}>
                                       {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                   </Link>
                                   <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
@@ -1284,8 +1294,11 @@ const Board = () => {
                             : <blockquote key={`pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" 
                                 onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                                onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, event)}
-                                onMouseLeave={removeHighlight}>
+                                onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }}>
                                     {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content} key={`post-${index}`} comment={reply} />
@@ -1584,8 +1597,11 @@ const Board = () => {
                               <blockquote key={`mob-pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
                                 onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                                onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, event)}
-                                onMouseLeave={removeHighlight}>
+                                onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }}>
                                   {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
@@ -1606,8 +1622,11 @@ const Board = () => {
                           : <blockquote key={`mob-pm-${index}`} className="post-message">
                               <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
                               onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                              onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, event)}
-                              onMouseLeave={removeHighlight}>
+                              onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
                                 {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                               </Link>
                               <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
@@ -1627,8 +1646,11 @@ const Board = () => {
                                 <div key={`div-back${index}`} style={{display: 'inline-block'}}>
                                 <Link key={`ql-${index}`} to={() => {}}
                                 onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
-                                onMouseLeave={removeHighlight} 
+                                onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }} 
                                 className="quote-link">
                                   c/{reply.shortCid}</Link>
                                   &nbsp;
