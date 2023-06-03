@@ -75,7 +75,8 @@ const Thread = () => {
   const replyMenuRefs = useRef({});
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
-  const threadBacklinkRefs = useRef({});
+  const backlinkRefs = useRef({});
+  const quoteRefs = useRef({});
   const postOnHoverRef = useRef(null);
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
@@ -938,7 +939,7 @@ const Thread = () => {
                             .map((reply, index) => (
                               <div key={`div-${index}`} style={{display: 'inline-block'}} 
                               ref={el => {
-                                threadBacklinkRefs.current[reply.cid] = el;
+                                backlinkRefs.current[reply.cid] = el;
                               }}>
                               <Link key={`ql-${index}`}
                               to={() => {}} className="quote-link" 
@@ -947,7 +948,7 @@ const Thread = () => {
                                 event.stopPropagation();
                                 handleQuoteHover(reply, null, () => {
                                   setOutOfViewCid(reply.cid);
-                                  const rect = threadBacklinkRefs.current[reply.cid].getBoundingClientRect();
+                                  const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
                                   setOutOfViewPosition({
                                     top: rect.top + window.scrollY - rect.height / 2,
                                     left: rect.left + rect.width + 5,
@@ -1139,7 +1140,7 @@ const Thread = () => {
                                 .map((reply, index) => (
                                   <div key={`div-${index}`} style={{display: 'inline-block'}} 
                                   ref={el => {
-                                    threadBacklinkRefs.current[reply.cid] = el;
+                                    backlinkRefs.current[reply.cid] = el;
                                   }}>
                                   <Link key={`ql-${index}`}
                                   to={() => {}} className="quote-link" 
@@ -1148,7 +1149,7 @@ const Thread = () => {
                                     event.stopPropagation();
                                     handleQuoteHover(reply, null, () => {
                                       setOutOfViewCid(reply.cid);
-                                      const rect = threadBacklinkRefs.current[reply.cid].getBoundingClientRect();
+                                      const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
                                       setOutOfViewPosition({
                                         top: rect.top + window.scrollY - rect.height / 2,
                                         left: rect.left + rect.width + 5,
@@ -1219,18 +1220,32 @@ const Thread = () => {
                               </div>
                             ) : null}
                           <blockquote key={`pm-${index}`} className="post-message">
-                            <span style={{cursor: 'pointer'}} className="quote-link"
-                              onClick={(event) => {
-                                handleQuoteClick(reply, shortParentCid, comment.shortCid, event);
+                            <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
+                              ref={el => {
+                                quoteRefs.current[shortParentCid] = el;
                               }}
-                              onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, shortParentCid, () => {
+                                  if (shortParentCid === comment.shortCid) {
+                                    return;
+                                  } else {
+                                    setOutOfViewCid(reply.parentCid);
+                                    const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                    setOutOfViewPosition({
+                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      left: rect.left + rect.width + 5,
+                                    });
+                                  }
+                                });
+                              }}                                
                               onMouseLeave={() => {
                                 removeHighlight();
                                 setOutOfViewCid(null);
-                              }}
-                              >
-                              {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
-                            </span>
+                              }}>
+                                {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
+                              </Link>
                             <Post content={reply.content} comment={reply} key={`post-${index}`} />
                             <EditLabel key={`edit-label-reply-${index}`} 
                             commentCid={reply.cid}
