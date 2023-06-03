@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +18,7 @@ import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
+import PostOnHover from '../PostOnHover';
 import StateLabel from '../StateLabel';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
@@ -74,6 +75,8 @@ const Thread = () => {
   const replyMenuRefs = useRef({});
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
+  const threadBacklinkRefs = useRef({});
+  const postOnHoverRef = useRef(null);
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
@@ -91,6 +94,8 @@ const Thread = () => {
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
   const [outOfViewCid, setOutOfViewCid] = useState(null);
+  const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
+  const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   
   useError(errorMessage, [errorMessage]);
   useSuccess(successMessage, [successMessage]);
@@ -472,6 +477,14 @@ const Thread = () => {
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
+
+
+  useLayoutEffect(() => {
+    if (postOnHoverRef.current) {
+        const rect = postOnHoverRef.current.getBoundingClientRect();
+        setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
 
 
   return (
@@ -919,20 +932,33 @@ const Thread = () => {
                           </div>
                           </PostMenuCatalog>, document.body
                         )}
-                        <div id="backlink-id" className="backlink">
-                          {comment?.replies?.pages?.topAll.comments
+                        <div key={`bi-${index}`} id="backlink-id" className="backlink">
+                          {comment.replies?.pages?.topAll.comments
                             .sort((a, b) => a.timestamp - b.timestamp)
                             .map((reply, index) => (
-                              <div key={`div-${index}`} style={{display: 'inline-block'}}>
-                              <span style={{cursor: 'pointer'}} key={`ql-${index}`}
-                                className="quote-link" 
-                                onClick={(event) => handleQuoteClick(reply, null, event)}
-                                onMouseOver={() => handleQuoteHover(reply, null, (cid) => setOutOfViewCid(cid))}
-                                onMouseLeave={() => {
-                                  removeHighlight();
-                                  setOutOfViewCid(null);
-                                }}>
-                                c/{reply.shortCid}</span>
+                              <div key={`div-${index}`} style={{display: 'inline-block'}} 
+                              ref={el => {
+                                threadBacklinkRefs.current[reply.cid] = el;
+                              }}>
+                              <Link key={`ql-${index}`}
+                              to={() => {}} className="quote-link" 
+                              onClick={(event) => handleQuoteClick(reply, null, event)}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, null, () => {
+                                  setOutOfViewCid(reply.cid);
+                                  const rect = threadBacklinkRefs.current[reply.cid].getBoundingClientRect();
+                                  setOutOfViewPosition({
+                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    left: rect.left + rect.width + 5,
+                                  });
+                                });
+                              }}
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
+                                c/{reply.shortCid}</Link>
                                 &nbsp;
                               </div>
                             ))
@@ -1107,20 +1133,33 @@ const Thread = () => {
                               </div>
                               </PostMenuCatalog>, document.body
                             )}
-                            <div id="backlink-id" className="backlink">
+                            <div key={`bi-${index}`} id="backlink-id" className="backlink">
                               {reply.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
                                 .map((reply, index) => (
-                                  <div key={`div-${index}`} style={{display: 'inline-block'}}>
-                                  <span style={{cursor: 'pointer'}} key={`ql-${index}`}
-                                    className="quote-link" 
-                                    onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                    onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
-                                    onMouseLeave={() => {
-                                      removeHighlight();
-                                      setOutOfViewCid(null);
-                                    }}>
-                                    c/{reply.shortCid}</span>
+                                  <div key={`div-${index}`} style={{display: 'inline-block'}} 
+                                  ref={el => {
+                                    threadBacklinkRefs.current[reply.cid] = el;
+                                  }}>
+                                  <Link key={`ql-${index}`}
+                                  to={() => {}} className="quote-link" 
+                                  onClick={(event) => handleQuoteClick(reply, null, event)}
+                                  onMouseOver={(event) => {
+                                    event.stopPropagation();
+                                    handleQuoteHover(reply, null, () => {
+                                      setOutOfViewCid(reply.cid);
+                                      const rect = threadBacklinkRefs.current[reply.cid].getBoundingClientRect();
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        left: rect.left + rect.width + 5,
+                                      });
+                                    });
+                                  }}
+                                  onMouseLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}>
+                                    c/{reply.shortCid}</Link>
                                     &nbsp;
                                   </div>
                                 ))
@@ -1585,6 +1624,23 @@ const Thread = () => {
                 ) : (null)}
             </>
           )) : null}
+          {createPortal(
+            <div
+            ref={postOnHoverRef}
+              style={{
+                display: outOfViewCid ? "block" : "none",
+                position: "absolute",
+                top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
+                left: outOfViewPosition.left, 
+              }}
+              >
+                <PostOnHover
+                  cid={outOfViewCid}
+                  feed={comment}
+                />
+              </div>
+            , document.body
+          )}
         </BoardForm>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{

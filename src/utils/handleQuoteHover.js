@@ -23,7 +23,6 @@ function handleQuoteHover(reply, parentCid, onElementOutOfView) {
     };
 
     if (isInViewport(targetElement)) {
-      onElementOutOfView(cid);
       const highlightedElements = document.querySelectorAll('.highlighted');
 
       highlightedElements.forEach(el => {
@@ -33,9 +32,11 @@ function handleQuoteHover(reply, parentCid, onElementOutOfView) {
       if (!targetElement.classList.contains('op-mobile') && !targetElement.classList.contains('op-desktop')) {
         targetElement.classList.add('highlighted');
       }
+    } else {
+      onElementOutOfView();
     }
   } else {
-    return;
+    onElementOutOfView();
   }
 };
 
