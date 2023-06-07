@@ -9,12 +9,18 @@ const StateLabel = ({ commentCid, className }) => {
 
   return (
     comment.state === "succeeded" ? null : (
-    <span className={className}>
-        <>
-          <br />
-          {stateString || comment.state.charAt(0).toUpperCase() + comment.state.slice(1)}
-        </>
-    </span>
+      comment.state === "initializing" ? null : (
+        <span className="ttl">
+            <>
+              <br />
+              (
+                <span className={className}>
+                  {stateString}
+                </span>
+              )
+            </>
+        </span>
+      )
     )
   )
 };
