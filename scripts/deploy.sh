@@ -41,6 +41,7 @@ nohup ipfs daemon &
 # the CID of plebchan html, add this CID to ENS
 sleep 3
 echo \"\"
+CID=\`ipfs cid base32 \$CID\`
 echo $PLEBCHAN_HTML_NAME \"CID: \$CID\"
 echo \"\"
 "
