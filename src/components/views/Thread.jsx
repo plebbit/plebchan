@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -12,11 +12,14 @@ import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } f
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
+import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
+import PostOnHover from '../PostOnHover';
+import StateLabel from '../StateLabel';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -25,7 +28,9 @@ import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
+import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
+import removeHighlight from '../../utils/removeHighlight';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
@@ -63,6 +68,9 @@ const Thread = () => {
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
 
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
+
   const nameRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
@@ -70,12 +78,13 @@ const Thread = () => {
   const replyMenuRefs = useRef({});
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
+  const backlinkRefs = useRef({});
+  const quoteRefs = useRef({});
+  const postOnHoverRef = useRef(null);
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [deletePost, setDeletePost] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [originalCommentContent, setOriginalCommentContent] = useState(null);
@@ -86,9 +95,10 @@ const Thread = () => {
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [outOfViewCid, setOutOfViewCid] = useState(null);
+  const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
+  const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
 
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
@@ -164,7 +174,7 @@ const Thread = () => {
     if (errorString) {
       setErrorMessage(errorString);
     }
-  }, [errorString]);
+  }, [errorString, setErrorMessage]);
 
 
   const flattenedReplies = useMemo(() => 
@@ -377,7 +387,7 @@ const Thread = () => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error]);
+  }, [error, setErrorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -469,6 +479,14 @@ const Thread = () => {
   };
 
 
+  useLayoutEffect(() => {
+    if (postOnHoverRef.current) {
+        const rect = postOnHoverRef.current.getBoundingClientRect();
+        setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
+
+
   return (
     <>
       <Helmet>
@@ -492,7 +510,7 @@ const Thread = () => {
         <ModerationModal 
         selectedStyle={selectedStyle}
         isOpen={isModerationOpen}
-        closeModal={() => setIsModerationOpen(false)}
+        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
         deletePost={deletePost} />
         <EditModal
         selectedStyle={selectedStyle}
@@ -914,15 +932,33 @@ const Thread = () => {
                           </div>
                           </PostMenuCatalog>, document.body
                         )}
-                        <div id="backlink-id" className="backlink">
-                          {comment?.replies?.pages?.topAll.comments
+                        <div key={`bi-${index}`} id="backlink-id" className="backlink">
+                          {comment.replies?.pages?.topAll.comments
                             .sort((a, b) => a.timestamp - b.timestamp)
                             .map((reply, index) => (
-                              <div key={`div-${index}`} style={{display: 'inline-block'}}>
-                              <span style={{cursor: 'pointer'}} key={`ql-${index}`}
-                                className="quote-link" 
-                                onClick={(event) => handleQuoteClick(reply, null, event)}>
-                                c/{reply.shortCid}</span>
+                              <div key={`div-${index}`} style={{display: 'inline-block'}} 
+                              ref={el => {
+                                backlinkRefs.current[reply.cid] = el;
+                              }}>
+                              <Link key={`ql-${index}`}
+                              to={() => {}} className="quote-link" 
+                              onClick={(event) => handleQuoteClick(reply, null, event)}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, null, () => {
+                                  setOutOfViewCid(reply.cid);
+                                  const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                  setOutOfViewPosition({
+                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    left: rect.left + rect.width + 5,
+                                  });
+                                });
+                              }}
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
+                                c/{reply.shortCid}</Link>
                                 &nbsp;
                               </div>
                             ))
@@ -931,6 +967,12 @@ const Thread = () => {
                       </span>
                       <blockquote key={`blockquote-${comment.cid}`}>
                         <Post content={comment.content} comment={comment} key={`post-${comment.cid}`} />
+                        <EditLabel key={`edit-label-thread-${index}`} 
+                        commentCid={comment.cid}
+                        className="ttl"/>
+                        <StateLabel key={`state-label-thread-${index}`}
+                        commentCid={comment.cid}
+                        className="ttl ellipsis"/>
                       </blockquote>
                     </div>
                   </div>
@@ -1091,15 +1133,33 @@ const Thread = () => {
                               </div>
                               </PostMenuCatalog>, document.body
                             )}
-                            <div id="backlink-id" className="backlink">
+                            <div key={`bi-${index}`} id="backlink-id" className="backlink">
                               {reply.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
                                 .map((reply, index) => (
-                                  <div key={`div-${index}`} style={{display: 'inline-block'}}>
-                                  <span style={{cursor: 'pointer'}} key={`ql-${index}`}
-                                    className="quote-link" 
-                                    onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
-                                    c/{reply.shortCid}</span>
+                                  <div key={`div-${index}`} style={{display: 'inline-block'}} 
+                                  ref={el => {
+                                    backlinkRefs.current[reply.cid] = el;
+                                  }}>
+                                  <Link key={`ql-${index}`}
+                                  to={() => {}} className="quote-link" 
+                                  onClick={(event) => handleQuoteClick(reply, null, event)}
+                                  onMouseOver={(event) => {
+                                    event.stopPropagation();
+                                    handleQuoteHover(reply, null, () => {
+                                      setOutOfViewCid(reply.cid);
+                                      const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        left: rect.left + rect.width + 5,
+                                      });
+                                    });
+                                  }}
+                                  onMouseLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}>
+                                    c/{reply.shortCid}</Link>
                                     &nbsp;
                                   </div>
                                 ))
@@ -1159,14 +1219,39 @@ const Thread = () => {
                               </div>
                             ) : null}
                           <blockquote key={`pm-${index}`} className="post-message">
-                            <span style={{cursor: 'pointer'}} className="quote-link"
-                              onClick={(event) => {
-                                handleQuoteClick(reply, shortParentCid, comment.shortCid, event);
+                            <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
+                              ref={el => {
+                                quoteRefs.current[shortParentCid] = el;
                               }}
-                            >
-                              {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
-                            </span>
+                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, shortParentCid, () => {
+                                  if (shortParentCid === comment.shortCid) {
+                                    return;
+                                  } else {
+                                    setOutOfViewCid(reply.parentCid);
+                                    const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                    setOutOfViewPosition({
+                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      left: rect.left + rect.width + 5,
+                                    });
+                                  }
+                                });
+                              }}                                
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
+                                {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
+                              </Link>
                             <Post content={reply.content} comment={reply} key={`post-${index}`} />
+                            <EditLabel key={`edit-label-reply-${index}`} 
+                            commentCid={reply.cid}
+                            className="ttl"/>
+                            <StateLabel key={`state-label-reply-${index}`}
+                            commentCid={reply.cid}
+                            className="ttl ellipsis"/>
                           </blockquote>
                         </div>
                       </div>
@@ -1283,7 +1368,13 @@ const Thread = () => {
                       <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                         {comment.content ? (
                           <>
-                            <Post content={comment.content} comment={comment} key={`post-mobile-${comment.cid}`} /> 
+                            <Post content={comment.content} comment={comment} key={`post-mobile-${comment.cid}`} />
+                            <EditLabel key={`edit-label-thread-mob-${index}`} 
+                            commentCid={comment.cid}
+                            className="ttl"/>
+                            <StateLabel key={`state-label-thread-mob-${index}`}
+                            commentCid={comment.cid}
+                            className="ttl ellipsis"/> 
                           </>
                         ) : null}
                       </blockquote>
@@ -1325,12 +1416,8 @@ const Thread = () => {
                                     {reply.author?.shortAddress}
                                   </span>
                                   ) : (
-                                    <span key={`mob-ha-${index}`} 
-                                      data-tooltip-id="tooltip"
-                                      data-tooltip-content={account?.author?.address}
-                                      data-tooltip-place="top"
-                                        >
-                                      {account?.author?.address.slice(0, 8) + "(...)"}
+                                    <span key={`mob-ha-${index}`}>
+                                      {account?.author?.shortAddress}
                                     </span>
                                   )
                                 }
@@ -1398,10 +1485,21 @@ const Thread = () => {
                           ) : null}
                         <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
                           <span style={{cursor: 'pointer'}} key={`mob-ql-${index}`} className="quotelink-mobile" 
-                          onClick={(event) => handleQuoteClick(reply, shortParentCid, comment.shortCid, event)}>
+                          onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                          onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                          onMouseLeave={() => {
+                            removeHighlight();
+                            setOutOfViewCid(null);
+                          }}>
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </span>
                           <Post content={reply.content} comment={reply} key={`post-mobile-${index}`} />
+                          <EditLabel key={`edit-label-reply-mob-${index}`} 
+                          commentCid={reply.cid}
+                          className="ttl"/>
+                          <StateLabel key={`state-label-reply-mob-${index}`}
+                          commentCid={reply.cid}
+                          className="ttl ellipsis"/>
                         </blockquote>
                         {reply.replyCount > 0 ? (
                           <div key={`back-mob-${index}`} className='backlink backlink-mobile'>
@@ -1410,7 +1508,12 @@ const Thread = () => {
                           .map((reply, index) => (
                             <div key={`div-back${index}`} style={{display: 'inline-block'}}>
                             <span style={{cursor: 'pointer'}} key={`ql-${index}`} className="quote-link" 
-                            onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
+                            onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                            onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                            onMouseLeave={() => {
+                              removeHighlight();
+                              setOutOfViewCid(null);
+                            }}>
                               c/{reply.shortCid}</span>
                               &nbsp;
                             </div>
@@ -1535,6 +1638,23 @@ const Thread = () => {
                 ) : (null)}
             </>
           )) : null}
+          {createPortal(
+            <div
+            ref={postOnHoverRef}
+              style={{
+                display: outOfViewCid ? "block" : "none",
+                position: "absolute",
+                top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
+                left: outOfViewPosition.left, 
+              }}
+              >
+                <PostOnHover
+                  cid={outOfViewCid}
+                  feed={comment}
+                />
+              </div>
+            , document.body
+          )}
         </BoardForm>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{

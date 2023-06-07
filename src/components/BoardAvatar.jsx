@@ -15,7 +15,7 @@ const BoardAvatar = ({ address }) => {
   return (
     <img
       className="board-avatar"
-      alt="board logo"
+      alt="board avatar"
       src={avatarUrl}
     />
   );

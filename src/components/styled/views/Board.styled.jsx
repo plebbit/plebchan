@@ -1630,6 +1630,31 @@ export const TopBar = styled.div`
 `;
 
 export const BoardForm = styled.div`
+  .ellipsis {
+    margin-right: 14px;
+  }
+
+  .ellipsis:after {
+    content: "\\2026";
+    position: absolute;
+    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+    animation: ellipsis steps(4,end) 1500ms infinite;
+    width: 0px;
+    overflow: hidden;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
   @media (min-width: 480px) {
     margin-bottom: 130px;
 
@@ -1797,7 +1822,7 @@ export const BoardForm = styled.div`
       case 'Tomorrow':
         return `.highlighted {
         background-color: #1d1d21 !important;
-        border: 1px solid #111 !important;
+        outline: 1px solid #111 !important;
       }
       
       #post-menu {
@@ -1817,7 +1842,7 @@ export const BoardForm = styled.div`
       case 'Photon':
         return `.highlighted {
         background-color: #ccc !important;
-        border: 1px solid #ccc !important;
+        outline: 1px solid #ccc !important;
       }
       
       #post-menu {

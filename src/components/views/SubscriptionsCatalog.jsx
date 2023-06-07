@@ -14,7 +14,6 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
-import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -31,8 +30,8 @@ const SubscriptionsCatalog = () => {
   } = useGeneralStore(state => state);
 
   const account = useAccount();
-
   const navigate = useNavigate();
+
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
@@ -40,9 +39,6 @@ const SubscriptionsCatalog = () => {
   const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
 
   const stateString = useFeedStateString(subplebbits);
-
-  const [errorMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
 
   // mobile navbar scroll effect
   useEffect(() => {

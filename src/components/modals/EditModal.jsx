@@ -21,7 +21,6 @@ const EditModal = ({ isOpen, closeModal, originalCommentContent }) => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);
     window.addEventListener('resize', handleResize);
 
-    // Cleanup function
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -33,6 +32,7 @@ const EditModal = ({ isOpen, closeModal, originalCommentContent }) => {
     closeModal();
   };
 
+  
   return (
     <StyledModal
     isOpen={isOpen}

@@ -20,10 +20,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const [expanded, setExpanded] = useState([]);
   const [accountJson, setAccountJson] = useState(null);
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
 
   const account = useAccount();
   const { accounts } = useAccounts();
@@ -149,7 +147,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setSuccessMessage("Cache Cleared");
       localStorage.removeItem("cacheCleared");
     }
-  }, []);
+  }, [setSuccessMessage]);
 
 
   const handleExport = async () => {
@@ -263,7 +261,11 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               To export, click "Export", then save your account data displayed below in a safe place. To import,  paste your account data into the box below, then click "Import".
             </li>
             <div className="settings-input">
-              <textarea ref={importRef} value={accountJson} />
+              {accountJson ? (
+                <textarea value={accountJson} readOnly />
+                ): (
+                <textarea ref={importRef} />
+              )}
             </div>
             <li className="settings-option disc" style={{marginTop: '15px'}}>
               Account Address: u/{account?.author.shortAddress}

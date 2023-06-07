@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -13,11 +13,14 @@ import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm
 import { Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
+import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
+import PostOnHover from '../PostOnHover';
+import StateLabel from '../StateLabel';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -26,7 +29,9 @@ import getDate from '../../utils/getDate';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
+import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
+import removeHighlight from '../../utils/removeHighlight';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
@@ -63,6 +68,9 @@ const Board = () => {
   const account = useAccount();
   const navigate = useNavigate();
   const { subplebbitAddress } = useParams();
+  
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
 
   const nameRef = useRef();
   const subjectRef = useRef();
@@ -70,8 +78,10 @@ const Board = () => {
   const linkRef = useRef();
   const threadMenuRefs = useRef({});
   const replyMenuRefs = useRef({});
-  const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
+  const backlinkRefs = useRef({});
+  const quoteRefs = useRef({});
+  const postOnHoverRef = useRef(null);
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
@@ -92,11 +102,9 @@ const Board = () => {
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
+  const [outOfViewCid, setOutOfViewCid] = useState(null);
+  const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
+  const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
 
 
   useEffect(() => {
@@ -117,10 +125,10 @@ const Board = () => {
   };
 
   const handleOutsideClick = useCallback((e) => {
-    if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
+    if (openMenuCid !== null && !postMenuCatalogRef.current.contains(e.target)) {
       setOpenMenuCid(null);
     }
-  }, [openMenuCid, postMenuRef, postMenuCatalogRef]);
+  }, [openMenuCid, postMenuCatalogRef]);
   
 
   useEffect(() => {
@@ -152,7 +160,7 @@ const Board = () => {
     if (errorString) {
       setErrorMessage(errorString);
     }
-  }, [errorString]);
+  }, [errorString, setErrorMessage]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -348,6 +356,7 @@ const Board = () => {
         await publishComment();
         resetFields();
       })();
+      setTriggerPublishComment(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
@@ -405,7 +414,7 @@ const Board = () => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error]);
+  }, [error, setErrorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -519,6 +528,13 @@ const Board = () => {
     }
   };
 
+  useLayoutEffect(() => {
+    if (postOnHoverRef.current) {
+        const rect = postOnHoverRef.current.getBoundingClientRect();
+        setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
+
   
   return (
     <>
@@ -537,7 +553,7 @@ const Board = () => {
         <ModerationModal 
         selectedStyle={selectedStyle}
         isOpen={isModerationOpen}
-        closeModal={() => setIsModerationOpen(false)}
+        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
         deletePost={deletePost} />
         <EditModal
         selectedStyle={selectedStyle}
@@ -867,8 +883,7 @@ const Board = () => {
                               key={`pmb-${index}`} 
                               title="Post menu"
                               ref={el => { 
-                                threadMenuRefs.current[thread.cid] = el; 
-                                postMenuRef.current = el; 
+                                threadMenuRefs.current[thread.cid] = el;
                               }}
                               className='post-menu-button' 
                               rotated={openMenuCid === thread.cid}
@@ -963,12 +978,31 @@ const Board = () => {
                               {thread.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
                                 .map((reply, index) => (
-                                  <div key={`div-${index}`} style={{display: 'inline-block'}}>
-                                  <Link key={`ql-${index}`}
-                                  to={() => {}} className="quote-link" 
-                                  onClick={(event) => handleQuoteClick(reply, null, event)}>
-                                    c/{reply.shortCid}</Link>
-                                    &nbsp;
+                                  <div key={`div-${index}`} style={{display: 'inline-block'}} 
+                                  ref={el => {
+                                    backlinkRefs.current[reply.cid] = el;
+                                  }}>
+                                    <Link key={`ql-${index}`}
+                                    to={() => {}}
+                                    className="quote-link" 
+                                    onClick={(event) => handleQuoteClick(reply, null, event)}
+                                    onMouseOver={(event) => {
+                                      event.stopPropagation();
+                                      handleQuoteHover(reply, null, () => {
+                                        setOutOfViewCid(reply.cid);
+                                        const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                        setOutOfViewPosition({
+                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          left: rect.left + rect.width + 5,
+                                        });
+                                      });
+                                    }}                                
+                                    onMouseLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}>
+                                      c/{reply.shortCid}</Link>
+                                      &nbsp;
                                   </div>
                                 ))
                               }
@@ -978,16 +1012,30 @@ const Board = () => {
                             thread.content?.length > 1000 ?
                             <Fragment key={`fragment5-${index}`}>
                               <blockquote key={`bq-${index}`}>
-                              <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
+                                <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
                                 <span key={`ttl-s-${index}`} className="ttl"> (...) 
-                                <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${thread.cid}`} />
-                                Post too long.&nbsp;
+                                  <br key={`ttl-s-br1-${index}`} />
+                                  <EditLabel key={`edit-label-thread-${index}`} 
+                                  commentCid={thread.cid}
+                                  className="ttl"/>
+                                  <StateLabel key={`state-label-thread-${index}`}
+                                  commentCid={thread.cid}
+                                  className="ttl ellipsis"/>
+                                  <br key={`ttl-s-br2${index}`} />
+                                  Post too long.&nbsp;
                                   <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                  &nbsp;to view. </span>
+                                  &nbsp;to view. 
+                                </span>
                               </blockquote>
                             </Fragment>
                           : <blockquote key={`bq-${index}`}>
                               <Post content={thread.content} key={`post-${index}`} />
+                              <EditLabel key={`edit-label-thread-${index}`} 
+                              commentCid={thread.cid}
+                              className="ttl"/>
+                              <StateLabel key={`state-label-thread-${index}`}
+                              commentCid={thread.cid}
+                              className="ttl ellipsis"/>
                             </blockquote>)
                           : null}
                         </div>
@@ -995,13 +1043,17 @@ const Board = () => {
                     </div>
                     <span key={`summary-${index}`} className="summary">
                       {omittedCount > 0 ? (
-                      <span key={`oc-${index}`} className="ttl">
-                        <span key={`oc1-${index}`}>
-                          {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
-                          <Link key={`oc2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
-                          &nbsp;to view.
-                        </span>
-                      </span>) : null}
+                        <>
+                          {thread.content ? null : <br />}
+                          <span key={`oc-${index}`} className="ttl">
+                            <span key={`oc1-${index}`}>
+                              {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
+                              <Link key={`oc2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
+                              &nbsp;to view.
+                            </span>
+                          </span>
+                        </>
+                      ) : null}
                     </span>
                     {displayedReplies?.map((reply, index) => {
                       const replyMediaInfo = getCommentMediaInfo(reply);
@@ -1039,12 +1091,8 @@ const Board = () => {
                                           {reply.author?.shortAddress}
                                         </span>
                                       ) : (
-                                        <span key={`mob-ha-${index}`}
-                                          data-tooltip-id="tooltip"
-                                          data-tooltip-content={account?.author?.address}
-                                          data-tooltip-place="top"
-                                        >
-                                          {account?.author?.address.slice(0, 10) + "(...)"}
+                                        <span key={`mob-ha-${index}`}>
+                                          {account?.author?.shortAddress}
                                         </span>
                                       )
                                     }
@@ -1074,7 +1122,6 @@ const Board = () => {
                               title="Post menu"
                               ref={el => { 
                                 replyMenuRefs.current[reply.cid] = el; 
-                                postMenuRef.current = el; 
                               }}
                               className='post-menu-button' 
                               rotated={openMenuCid === reply.cid}
@@ -1165,14 +1212,32 @@ const Board = () => {
                               </div>
                               </PostMenuCatalog>, document.body
                             )}
-                              <div id="backlink-id" className="backlink">
+                              <div key={`bi-${index}`} id="backlink-id" className="backlink">
                                 {reply.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
                                   .map((reply, index) => (
-                                    <div key={`div-${index}`} style={{display: 'inline-block'}}>
-                                    <Link to={() => {}} key={`ql-${index}`}
-                                      className="quote-link" 
-                                      onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}>
+                                    <div key={`div-${index}`} style={{display: 'inline-block'}} 
+                                    ref={el => {
+                                      backlinkRefs.current[reply.cid] = el;
+                                    }}>
+                                    <Link key={`ql-${index}`}
+                                    to={() => {}} className="quote-link" 
+                                    onClick={(event) => handleQuoteClick(reply, null, event)}
+                                    onMouseOver={(event) => {
+                                      event.stopPropagation();
+                                      handleQuoteHover(reply, null, () => {
+                                        setOutOfViewCid(reply.cid);
+                                        const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                        setOutOfViewPosition({
+                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          left: rect.left + rect.width + 5,
+                                        });
+                                      });
+                                    }}
+                                    onMouseLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}>
                                       c/{reply.shortCid}</Link>
                                       &nbsp;
                                     </div>
@@ -1238,22 +1303,82 @@ const Board = () => {
                               reply.content?.length > 500 ?
                               <Fragment key={`fragment8-${index}`}>
                                 <blockquote key={`pm-${index}`} comment={reply} className="post-message">
-                                  <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                                  <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
+                                    ref={el => {
+                                      quoteRefs.current[shortParentCid] = el;
+                                    }}
+                                    onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                                    onMouseOver={(event) => {
+                                      event.stopPropagation();
+                                      handleQuoteHover(reply, shortParentCid, () => {
+                                        if (shortParentCid === thread.shortCid) {
+                                          return;
+                                        } else {
+                                          setOutOfViewCid(reply.parentCid);
+                                          console.log("risposta: ", reply.parentCid);
+                                          const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left + rect.width + 5,
+                                          });
+                                        }
+                                      });
+                                    }}                                
+                                    onMouseLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}>
                                       {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                   </Link>
                                   <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
                                   <span key={`ttl-s-${index}`} className="ttl"> (...)
-                                  <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${reply.cid}`} />
+                                  <br key={`ttl-s-br1-${index}`} />
+                                  <EditLabel key={`edit-label-reply-${index}`} 
+                                  commentCid={reply.cid}
+                                  className="ttl"/>
+                                  <StateLabel key={`state-label-reply-${index}`}
+                                  commentCid={reply.cid}
+                                  className="ttl ellipsis"/>
+                                  <br key={`ttl-s-br2${index}`} />
                                   Comment too long.&nbsp;
                                     <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. </span>
                                 </blockquote>
                               </Fragment>
                             : <blockquote key={`pm-${index}`} className="post-message">
-                                <Link to={() => {}} key={`r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                                <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
+                                  ref={el => {
+                                    quoteRefs.current[shortParentCid] = el;
+                                  }}
+                                  onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                                  onMouseOver={(event) => {
+                                    event.stopPropagation();
+                                    handleQuoteHover(reply, shortParentCid, () => {
+                                      if (shortParentCid === thread.shortCid) {
+                                        return;
+                                      } else {
+                                        setOutOfViewCid(reply.parentCid);
+                                        const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                        setOutOfViewPosition({
+                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          left: rect.left + rect.width + 5,
+                                        });
+                                      }
+                                    });
+                                  }}                                
+                                  onMouseLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}>
                                     {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content} key={`post-${index}`} comment={reply} />
+                                <EditLabel key={`edit-label-reply-${index}`} 
+                                  commentCid={reply.cid}
+                                  className="ttl"/>
+                                <StateLabel key={`state-label-reply-${index}`}
+                                commentCid={reply.cid}
+                                className="ttl ellipsis"/>
                               </blockquote>)
                             : null}
                           </div>
@@ -1390,7 +1515,14 @@ const Board = () => {
                             <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
                               <Post content={thread.content?.slice(0, 500)} key={`post-mobile-${index}`} />
                               <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                              <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
+                              <br key={`mob-ttl-s-br1-${index}`} />
+                              <EditLabel key={`edit-label-thread-mob-${index}`} 
+                              commentCid={thread.cid}
+                              className="ttl"/>
+                              <StateLabel key={`state-label-thread-mob-${index}`}
+                              commentCid={thread.cid}
+                              className="ttl ellipsis"/>
+                              <br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
                                 <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
@@ -1398,6 +1530,12 @@ const Board = () => {
                           </Fragment>
                         : <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
                             <Post content={thread.content} key={`post-mobile-${index}`} />
+                            <EditLabel key={`edit-label-thread-mob-${index}`} 
+                            commentCid={thread.cid}
+                            className="ttl"/>
+                            <StateLabel key={`state-label-thread-mob-${index}`}
+                            commentCid={thread.cid}
+                            className="ttl ellipsis"/>
                           </blockquote>)
                         : null}
                       </div>
@@ -1451,12 +1589,8 @@ const Board = () => {
                                       {reply.author?.shortAddress}
                                     </span>
                                     ) : (
-                                      <span key={`mob-ha-${index}`} 
-                                        data-tooltip-id="tooltip"
-                                        data-tooltip-content={account?.author?.address}
-                                        data-tooltip-place="top"
-                                          >
-                                        {account?.author?.address.slice(0, 8) + "(...)"}
+                                      <span key={`mob-ha-${index}`}>
+                                        {account?.author?.shortAddress}
                                       </span>
                                     )
                                   }
@@ -1532,22 +1666,47 @@ const Board = () => {
                             reply.content?.length > 500 ?
                             <Fragment key={`fragment15-${index}`}>
                               <blockquote key={`mob-pm-${index}`} className="post-message">
-                                <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                                <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                                onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                                onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }}>
                                   {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
                                 <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                                <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
+                                <br key={`mob-ttl-s-br1-${index}`} />
+                                <EditLabel key={`edit-label-reply-mob-${index}`} 
+                                commentCid={reply.cid}
+                                className="ttl"/>
+                                <StateLabel key={`state-label-reply-mob-${index}`}
+                                commentCid={reply.cid}
+                                className="ttl ellipsis"/>
+                                <br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;
                                   <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                               </blockquote>
                             </Fragment>
                           : <blockquote key={`mob-pm-${index}`} className="post-message">
-                              <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}>
+                              <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                              onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
                                 {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                               </Link>
                               <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
+                              <EditLabel key={`edit-label-reply-mob-${index}`} 
+                              commentCid={reply.cid}
+                              className="ttl"/>
+                              <StateLabel key={`state-label-reply-mob-${index}`}
+                              commentCid={reply.cid}
+                              className="ttl ellipsis"/>
                             </blockquote>)
                           : null}
                             {reply.replyCount > 0 ? (
@@ -1557,7 +1716,13 @@ const Board = () => {
                               .map((reply, index) => (
                                 <div key={`div-back${index}`} style={{display: 'inline-block'}}>
                                 <Link key={`ql-${index}`} to={() => {}}
-                                onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)} className="quote-link">
+                                onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                                onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }} 
+                                className="quote-link">
                                   c/{reply.shortCid}</Link>
                                   &nbsp;
                                 </div>
@@ -1578,6 +1743,23 @@ const Board = () => {
               ) : (<PostLoader />)
             )}
           </div>
+          {createPortal(
+            <div
+            ref={postOnHoverRef}
+              style={{
+                display: outOfViewCid ? "block" : "none",
+                position: "absolute",
+                top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
+                left: outOfViewPosition.left, 
+              }}
+              >
+                <PostOnHover
+                  cid={outOfViewCid}
+                  feed={feed}
+                />
+              </div>
+            , document.body
+          )}
         </BoardForm>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{
