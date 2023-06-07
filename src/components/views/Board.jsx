@@ -68,6 +68,9 @@ const Board = () => {
   const account = useAccount();
   const navigate = useNavigate();
   const { subplebbitAddress } = useParams();
+  
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
 
   const nameRef = useRef();
   const subjectRef = useRef();
@@ -102,11 +105,6 @@ const Board = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
 
 
   useEffect(() => {
@@ -162,7 +160,7 @@ const Board = () => {
     if (errorString) {
       setErrorMessage(errorString);
     }
-  }, [errorString]);
+  }, [errorString, setErrorMessage]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -358,6 +356,7 @@ const Board = () => {
         await publishComment();
         resetFields();
       })();
+      setTriggerPublishComment(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
@@ -415,7 +414,7 @@ const Board = () => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error]);
+  }, [error, setErrorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {

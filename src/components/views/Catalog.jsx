@@ -60,10 +60,8 @@ const Catalog = () => {
 
   const navigate = useNavigate();
   
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
   
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -145,7 +143,7 @@ const Catalog = () => {
     if (errorString) {
       setErrorMessage(errorString);
     }
-  }, [errorString]);
+  }, [errorString, setErrorMessage]);
 
   
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
@@ -283,6 +281,7 @@ const Catalog = () => {
         await publishComment();
         resetFields();
       })();
+      setTriggerPublishComment(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
@@ -340,7 +339,7 @@ const Catalog = () => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error]);
+  }, [error, setErrorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {

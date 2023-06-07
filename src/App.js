@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAccount, useBufferedFeeds } from '@plebbit/plebbit-react-hooks';
@@ -40,10 +40,8 @@ export default function App() {
 
   const account = useAccount();
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
 
 
   useEffect(() => {

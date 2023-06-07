@@ -68,6 +68,9 @@ const Thread = () => {
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
 
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
+
   const nameRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
@@ -82,8 +85,6 @@ const Thread = () => {
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [deletePost, setDeletePost] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [originalCommentContent, setOriginalCommentContent] = useState(null);
@@ -98,8 +99,6 @@ const Thread = () => {
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
 
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
@@ -175,7 +174,7 @@ const Thread = () => {
     if (errorString) {
       setErrorMessage(errorString);
     }
-  }, [errorString]);
+  }, [errorString, setErrorMessage]);
 
 
   const flattenedReplies = useMemo(() => 
@@ -388,7 +387,7 @@ const Thread = () => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error]);
+  }, [error, setErrorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
