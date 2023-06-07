@@ -22,18 +22,19 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   } = useGeneralStore(state => state);
 
   const account = useAccount();
-
-  const setErrorMessage = useError();
   
   const nodeRef = useRef(null);
   const nameRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
 
+  const [errorMessage, setErrorMessage] = useState(null);
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   
+  useError(errorMessage, [errorMessage]);
+
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);

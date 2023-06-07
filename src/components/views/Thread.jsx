@@ -68,9 +68,6 @@ const Thread = () => {
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
 
-  const setErrorMessage = useError();
-  const setSuccessMessage = useSuccess();
-
   const nameRef = useRef();
   const commentRef = useRef();
   const linkRef = useRef();
@@ -85,6 +82,8 @@ const Thread = () => {
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [deletePost, setDeletePost] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [originalCommentContent, setOriginalCommentContent] = useState(null);
@@ -98,6 +97,9 @@ const Thread = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
+  
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
 
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
@@ -173,7 +175,7 @@ const Thread = () => {
     if (errorString) {
       setErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage]);
+  }, [errorString]);
 
 
   const flattenedReplies = useMemo(() => 
@@ -325,17 +327,12 @@ const Thread = () => {
   useEffect(() => {
     if (publishCommentOptions && triggerPublishComment) {
       (async () => {
-        try {
-          await publishComment();
-          resetFields();
-        } catch (error) {
-          setErrorMessage(error);
-        } finally {
-          setTriggerPublishComment(false);
-        }
+        await publishComment();
+        resetFields();
       })();
+      setTriggerPublishComment(false);
     }
-  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields, setErrorMessage]);
+  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
 
 
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -391,7 +388,7 @@ const Thread = () => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error, setErrorMessage]);
+  }, [error]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -457,19 +454,11 @@ const Thread = () => {
   useEffect(() => {
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
-        try {
-          await publishCommentEdit();
-          setTriggerPublishCommentEdit(false);
-        } catch (error) {
-          setErrorMessage(error);
-        } finally {
-          setIsAuthorEdit(false);
-          setIsAuthorDelete(false);
-          setTriggerPublishCommentEdit(false);
-        }
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
       })();
     }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit, setIsAuthorEdit, setIsAuthorDelete, setTriggerPublishCommentEdit, setErrorMessage]);
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
 
 
   // mobile navbar board select functionality

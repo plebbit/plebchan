@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-const useSuccess = () => {
-  const [successMessage, setSuccessMessage] = useState('');
-  const [renderCount, setRenderCount] = useState(0);
-  
+const useSuccess = (message) => {
   useEffect(() => {
-    if (successMessage && successMessage.length > 0) {
+    if (message && message.length > 0) {
       const showSuccessToast = () => {
-        const toastId = toast.success(successMessage.toString(), {
+        const toastId = toast.success(message.toString(), {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -30,14 +27,7 @@ const useSuccess = () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [successMessage, renderCount]);
-
-  const setNewSuccessMessage = (message) => {
-    setSuccessMessage(message);
-    setRenderCount(prevCount => prevCount + 1);
-  };
-
-  return setNewSuccessMessage;
+  }, [message]);
 };
 
 export default useSuccess;

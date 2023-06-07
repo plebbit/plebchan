@@ -46,7 +46,6 @@ const All = () => {
 
   const account = useAccount();
   const navigate = useNavigate();
-  const setErrorMessage = useError();
 
   const threadMenuRefs = useRef({});
   const replyMenuRefs = useRef({});
@@ -58,11 +57,13 @@ const All = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [rotatedStates, setRotatedStates] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
 
+  useError(errorMessage, [errorMessage]);
 
   const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'new'});
@@ -88,7 +89,7 @@ const All = () => {
     if (errorString) {
       setErrorMessage(errorString)
     }
-  }, [errorString, setErrorMessage])
+  }, [errorString])
 
 
   useEffect(() => {

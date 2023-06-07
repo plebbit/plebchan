@@ -46,8 +46,6 @@ const Subscriptions = () => {
 
   const account = useAccount();
   const navigate = useNavigate();
-  
-  const setErrorMessage = useError();
 
   const threadMenuRefs = useRef({});
   const replyMenuRefs = useRef({});
@@ -63,6 +61,9 @@ const Subscriptions = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'new'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
@@ -87,7 +88,7 @@ const Subscriptions = () => {
     if (errorString) {
       setErrorMessage(errorString)
     }
-  }, [errorString, setErrorMessage])
+  }, [errorString])
 
 
   useEffect(() => {

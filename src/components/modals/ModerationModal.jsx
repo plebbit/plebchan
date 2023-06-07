@@ -26,8 +26,10 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
   const [reason, setReason] = useState('');
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
 
-  const setErrorMessage = useError();
-  const setSuccessMessage = useSuccess();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
 
 
   useEffect(() => {
@@ -124,7 +126,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error, setErrorMessage]);
+  }, [error]);
 
   
   useEffect(() => {
@@ -138,16 +140,11 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
   useEffect(() => {
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
-        try {
-          await publishCommentEdit();
-        } catch (error) {
-          setErrorMessage(error);
-        } finally {
-          setTriggerPublishCommentEdit(false);
-        }
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
       })();
     }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit, setErrorMessage]);
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
 
 
 

@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-const useError = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [renderCount, setRenderCount] = useState(0);
-
+const useError = (message) => {
   useEffect(() => {
-    if (errorMessage && errorMessage.length > 0) {
+    if (message && message.length > 0) {
       const showErrorToast = () => {
-        const toastId = toast.error(errorMessage.toString(), {
+        const toastId = toast.error(message.toString(), {
           position: "top-right",
           autoClose: false,
           hideProgressBar: true,
@@ -30,14 +27,7 @@ const useError = () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [errorMessage, renderCount]);
-
-  const setNewErrorMessage = (message) => {
-    setErrorMessage(message);
-    setRenderCount(prevCount => prevCount + 1);
-  };
-
-  return setNewErrorMessage;
+  }, [message]);
 };
 
 export default useError;

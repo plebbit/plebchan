@@ -60,8 +60,10 @@ const Catalog = () => {
 
   const navigate = useNavigate();
   
-  const setErrorMessage = useError();
-  const setSuccessMessage = useSuccess();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
+  useSuccess(successMessage, [successMessage]);
   
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -143,7 +145,7 @@ const Catalog = () => {
     if (errorString) {
       setErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage]);
+  }, [errorString]);
 
   
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
@@ -278,17 +280,11 @@ const Catalog = () => {
   useEffect(() => {
     if (publishCommentOptions && triggerPublishComment) {
       (async () => {
-        try {
-          await publishComment();
-          resetFields();
-        } catch (error) {
-          setErrorMessage(error);
-        } finally {
-          setTriggerPublishComment(false);
-        }
+        await publishComment();
+        resetFields();
       })();
     }
-  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields, setErrorMessage]);
+  }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
   
   const getChallengeAnswersFromUser = async (challenges) => {
@@ -344,7 +340,7 @@ const Catalog = () => {
     if (error) {
       setErrorMessage(error);
     }
-  }, [error, setErrorMessage]);
+  }, [error]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {

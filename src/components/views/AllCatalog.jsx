@@ -14,6 +14,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
+import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -30,7 +31,6 @@ const AllCatalog = () => {
   } = useGeneralStore(state => state);
 
   const navigate = useNavigate();
-
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
@@ -39,6 +39,9 @@ const AllCatalog = () => {
   const [setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
   const stateString = useFeedStateString(subplebbits);
+
+  const [errorMessage] = useState(null);
+  useError(errorMessage, [errorMessage]);
 
   // mobile navbar scroll effect
   useEffect(() => {
