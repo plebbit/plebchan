@@ -20,10 +20,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const [expanded, setExpanded] = useState([]);
   const [accountJson, setAccountJson] = useState(null);
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  useError(errorMessage, [errorMessage]);
-  useSuccess(successMessage, [successMessage]);
+  const setErrorMessage = useError();
+  const setSuccessMessage = useSuccess();
 
   const account = useAccount();
   const { accounts } = useAccounts();
@@ -149,7 +147,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setSuccessMessage("Cache Cleared");
       localStorage.removeItem("cacheCleared");
     }
-  }, []);
+  }, [setSuccessMessage]);
 
 
   const handleExport = async () => {
