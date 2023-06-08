@@ -37,7 +37,7 @@ const useError = () => {
     setRenderCount(prevCount => prevCount + 1);
   };
 
-  return setNewErrorMessage;
+  return [errorMessage, setNewErrorMessage];
 };
 
 export default useError;

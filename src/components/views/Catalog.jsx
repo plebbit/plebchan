@@ -60,7 +60,7 @@ const Catalog = () => {
 
   const navigate = useNavigate();
   
-  const setErrorMessage = useError();
+  const [errorMessage, setErrorMessage] = useError();
   const setSuccessMessage = useSuccess();
   
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
@@ -140,10 +140,10 @@ const Catalog = () => {
 
 
   useEffect(() => {
-    if (errorString) {
+    if (errorString && errorString !== errorMessage) {
       setErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage]);
+  }, [errorString, setErrorMessage, errorMessage]);
 
   
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
@@ -336,10 +336,10 @@ const Catalog = () => {
   const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
   useEffect(() => {
-    if (error) {
-      setErrorMessage(error);
+    if (error && error !== errorMessage) {
+        setErrorMessage(error);
     }
-  }, [error, setErrorMessage]);
+  }, [error, setErrorMessage, errorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {

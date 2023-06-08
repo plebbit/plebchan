@@ -47,7 +47,7 @@ const Subscriptions = () => {
   const account = useAccount();
   const navigate = useNavigate();
   
-  const setErrorMessage = useError();
+  const [errorMessage, setErrorMessage] = useError();
 
   const threadMenuRefs = useRef({});
   const replyMenuRefs = useRef({});
@@ -84,10 +84,10 @@ const Subscriptions = () => {
   }, [subplebbits])
 
   useEffect(() => {
-    if (errorString) {
-      setErrorMessage(errorString)
+    if (errorString && errorString !== errorMessage) {
+      setErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage])
+  }, [errorString, setErrorMessage, errorMessage]);
 
 
   useEffect(() => {

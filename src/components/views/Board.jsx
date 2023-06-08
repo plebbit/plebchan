@@ -69,7 +69,7 @@ const Board = () => {
   const navigate = useNavigate();
   const { subplebbitAddress } = useParams();
   
-  const setErrorMessage = useError();
+  const [errorMessage, setErrorMessage] = useError();
   const setSuccessMessage = useSuccess();
 
   const nameRef = useRef();
@@ -157,10 +157,10 @@ const Board = () => {
 
 
   useEffect(() => {
-    if (errorString) {
+    if (errorString && errorString !== errorMessage) {
       setErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage]);
+  }, [errorString, setErrorMessage, errorMessage]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -411,10 +411,10 @@ const Board = () => {
   const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
   useEffect(() => {
-    if (error) {
-      setErrorMessage(error);
+    if (error && error !== errorMessage) {
+        setErrorMessage(error);
     }
-  }, [error, setErrorMessage]);
+  }, [error, setErrorMessage, errorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
