@@ -12,6 +12,16 @@ const StateLabel = ({ commentCid, className }) => {
 
   return (
     !commentCid && stateString !== "Succeeded" ? (
+      comment.state === "failed" ? (
+        <span className="ttl">
+          <br />
+          (
+            <span className="ttl">
+              Failed
+            </span>
+          )
+          </span>
+      ) : (
       <span className="ttl">
         <br />
         (
@@ -20,6 +30,7 @@ const StateLabel = ({ commentCid, className }) => {
           </span>
         )
       </span>
+      )
     ) : null
   );
 };
