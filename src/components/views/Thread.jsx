@@ -972,7 +972,7 @@ const Thread = () => {
                         commentCid={comment.cid}
                         className="ttl"/>
                         <StateLabel key={`state-label-thread-${index}`}
-                        commentCid={comment.cid}
+                        commentIndex={comment.index}
                         className="ttl ellipsis"/>
                       </blockquote>
                     </div>
@@ -1251,7 +1251,7 @@ const Thread = () => {
                             commentCid={reply.cid}
                             className="ttl"/>
                             <StateLabel key={`state-label-reply-${index}`}
-                            commentCid={reply.cid}
+                            commentIndex={reply.index}
                             className="ttl ellipsis"/>
                           </blockquote>
                         </div>
@@ -1374,7 +1374,7 @@ const Thread = () => {
                             commentCid={comment.cid}
                             className="ttl"/>
                             <StateLabel key={`state-label-thread-mob-${index}`}
-                            commentCid={comment.cid}
+                            commentIndex={comment.index}
                             className="ttl ellipsis"/> 
                           </>
                         ) : null}
@@ -1499,7 +1499,7 @@ const Thread = () => {
                           commentCid={reply.cid}
                           className="ttl"/>
                           <StateLabel key={`state-label-reply-mob-${index}`}
-                          commentCid={reply.cid}
+                          commentIndex={reply.index}
                           className="ttl ellipsis"/>
                         </blockquote>
                         {reply.replyCount > 0 ? (

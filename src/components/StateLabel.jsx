@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAccountComment } from "@plebbit/plebbit-react-hooks";
 import useStateString from "../hooks/useStateString";
-import useGeneralStore from "../hooks/stores/useGeneralStore";
 
-
-const StateLabel = ({ commentCid, className }) => {
-  const { pendingCommentIndex } = useGeneralStore(state => state);
-
-  const comment = useAccountComment({commentIndex: pendingCommentIndex});
+const StateLabel = ({ commentIndex, className }) => {
+  const comment = useAccountComment({commentIndex: commentIndex});
   const stateString = useStateString(comment);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (commentIndex === undefined) return null;
+
+  console.log(commentIndex, stateString, comment);
+
   return (
-    !commentCid && stateString !== "Succeeded" ? (
-      comment.state === "failed" ? (
+    commentIndex && stateString !== "Succeeded" ? (
+      (comment.state === "failed" || (stateString === undefined && !isLoading)) ? (
         <span className="ttl">
           <br />
           (
@@ -20,16 +27,16 @@ const StateLabel = ({ commentCid, className }) => {
               Failed
             </span>
           )
-          </span>
+        </span>
       ) : (
-      <span className="ttl">
-        <br />
-        (
-          <span className={className}>
-            {stateString}
-          </span>
-        )
-      </span>
+        <span className="ttl">
+          <br />
+          (
+            <span className={className}>
+              {stateString}
+            </span>
+          )
+        </span>
       )
     ) : null
   );
