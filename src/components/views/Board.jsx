@@ -69,7 +69,7 @@ const Board = () => {
   const navigate = useNavigate();
   const { subplebbitAddress } = useParams();
   
-  const setErrorMessage = useError();
+  const [errorMessage, setErrorMessage] = useError();
   const setSuccessMessage = useSuccess();
 
   const nameRef = useRef();
@@ -157,10 +157,10 @@ const Board = () => {
 
 
   useEffect(() => {
-    if (errorString) {
+    if (errorString && errorString !== errorMessage) {
       setErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage]);
+  }, [errorString, setErrorMessage, errorMessage]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -411,10 +411,10 @@ const Board = () => {
   const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
   useEffect(() => {
-    if (error) {
-      setErrorMessage(error);
+    if (error && error !== errorMessage) {
+        setErrorMessage(error);
     }
-  }, [error, setErrorMessage]);
+  }, [error, setErrorMessage, errorMessage]);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -1019,7 +1019,7 @@ const Board = () => {
                                   commentCid={thread.cid}
                                   className="ttl"/>
                                   <StateLabel key={`state-label-thread-${index}`}
-                                  commentCid={thread.cid}
+                                  commentIndex={thread.index}
                                   className="ttl ellipsis"/>
                                   <br key={`ttl-s-br2${index}`} />
                                   Post too long.&nbsp;
@@ -1034,7 +1034,7 @@ const Board = () => {
                               commentCid={thread.cid}
                               className="ttl"/>
                               <StateLabel key={`state-label-thread-${index}`}
-                              commentCid={thread.cid}
+                              commentIndex={thread.index}
                               className="ttl ellipsis"/>
                             </blockquote>)
                           : null}
@@ -1337,7 +1337,7 @@ const Board = () => {
                                   commentCid={reply.cid}
                                   className="ttl"/>
                                   <StateLabel key={`state-label-reply-${index}`}
-                                  commentCid={reply.cid}
+                                  commentIndex={reply.index}
                                   className="ttl ellipsis"/>
                                   <br key={`ttl-s-br2${index}`} />
                                   Comment too long.&nbsp;
@@ -1377,7 +1377,7 @@ const Board = () => {
                                   commentCid={reply.cid}
                                   className="ttl"/>
                                 <StateLabel key={`state-label-reply-${index}`}
-                                commentCid={reply.cid}
+                                commentIndex={reply.index}
                                 className="ttl ellipsis"/>
                               </blockquote>)
                             : null}
@@ -1520,7 +1520,7 @@ const Board = () => {
                               commentCid={thread.cid}
                               className="ttl"/>
                               <StateLabel key={`state-label-thread-mob-${index}`}
-                              commentCid={thread.cid}
+                              commentIndex={thread.index}
                               className="ttl ellipsis"/>
                               <br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
@@ -1534,7 +1534,7 @@ const Board = () => {
                             commentCid={thread.cid}
                             className="ttl"/>
                             <StateLabel key={`state-label-thread-mob-${index}`}
-                            commentCid={thread.cid}
+                            commentIndex={thread.index}
                             className="ttl ellipsis"/>
                           </blockquote>)
                         : null}
@@ -1682,7 +1682,7 @@ const Board = () => {
                                 commentCid={reply.cid}
                                 className="ttl"/>
                                 <StateLabel key={`state-label-reply-mob-${index}`}
-                                commentCid={reply.cid}
+                                commentIndex={reply.index}
                                 className="ttl ellipsis"/>
                                 <br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;
@@ -1705,7 +1705,7 @@ const Board = () => {
                               commentCid={reply.cid}
                               className="ttl"/>
                               <StateLabel key={`state-label-reply-mob-${index}`}
-                              commentCid={reply.cid}
+                              commentIndex={reply.index}
                               className="ttl ellipsis"/>
                             </blockquote>)
                           : null}

@@ -68,7 +68,7 @@ const Thread = () => {
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
 
-  const setErrorMessage = useError();
+  const [errorMessage, setErrorMessage] = useError();
   const setSuccessMessage = useSuccess();
 
   const nameRef = useRef();
@@ -171,10 +171,10 @@ const Thread = () => {
 
 
   useEffect(() => {
-    if (errorString) {
+    if (errorString && errorString !== errorMessage) {
       setErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage]);
+  }, [errorString, setErrorMessage, errorMessage]);
 
 
   const flattenedReplies = useMemo(() => 
@@ -384,10 +384,11 @@ const Thread = () => {
   const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
   useEffect(() => {
-    if (error) {
-      setErrorMessage(error);
+    if (error && error !== errorMessage) {
+        setErrorMessage(error);
     }
-  }, [error, setErrorMessage]);
+  }, [error, setErrorMessage, errorMessage]);
+
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -971,7 +972,7 @@ const Thread = () => {
                         commentCid={comment.cid}
                         className="ttl"/>
                         <StateLabel key={`state-label-thread-${index}`}
-                        commentCid={comment.cid}
+                        commentIndex={comment.index}
                         className="ttl ellipsis"/>
                       </blockquote>
                     </div>
@@ -1250,7 +1251,7 @@ const Thread = () => {
                             commentCid={reply.cid}
                             className="ttl"/>
                             <StateLabel key={`state-label-reply-${index}`}
-                            commentCid={reply.cid}
+                            commentIndex={reply.index}
                             className="ttl ellipsis"/>
                           </blockquote>
                         </div>
@@ -1373,7 +1374,7 @@ const Thread = () => {
                             commentCid={comment.cid}
                             className="ttl"/>
                             <StateLabel key={`state-label-thread-mob-${index}`}
-                            commentCid={comment.cid}
+                            commentIndex={comment.index}
                             className="ttl ellipsis"/> 
                           </>
                         ) : null}
@@ -1498,7 +1499,7 @@ const Thread = () => {
                           commentCid={reply.cid}
                           className="ttl"/>
                           <StateLabel key={`state-label-reply-mob-${index}`}
-                          commentCid={reply.cid}
+                          commentIndex={reply.index}
                           className="ttl ellipsis"/>
                         </blockquote>
                         {reply.replyCount > 0 ? (

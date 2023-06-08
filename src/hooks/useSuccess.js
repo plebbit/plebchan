@@ -37,7 +37,7 @@ const useSuccess = () => {
     setRenderCount(prevCount => prevCount + 1);
   };
 
-  return setNewSuccessMessage;
+  return [successMessage, setNewSuccessMessage];
 };
 
 export default useSuccess;
