@@ -1,28 +1,27 @@
 import React from "react";
-import { useComment } from "@plebbit/plebbit-react-hooks";
+import { useAccountComment } from "@plebbit/plebbit-react-hooks";
 import useStateString from "../hooks/useStateString";
+import useGeneralStore from "../hooks/stores/useGeneralStore";
 
 
 const StateLabel = ({ commentCid, className }) => {
-  const comment = useComment({commentCid});
+  const { pendingCommentIndex } = useGeneralStore(state => state);
+
+  const comment = useAccountComment({commentIndex: pendingCommentIndex});
   const stateString = useStateString(comment);
 
   return (
-    comment.state === "succeeded" ? null : (
-      comment.state === "initializing" ? null : (
-        <span className="ttl">
-            <>
-              <br />
-              (
-                <span className={className}>
-                  {stateString}
-                </span>
-              )
-            </>
-        </span>
-      )
-    )
-  )
+    !commentCid && stateString !== "Succeeded" ? (
+      <span className="ttl">
+        <br />
+        (
+          <span className={className}>
+            {stateString}
+          </span>
+        )
+      </span>
+    ) : null
+  );
 };
 
 export default StateLabel;
