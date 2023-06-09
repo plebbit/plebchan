@@ -21,7 +21,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const [accountJson, setAccountJson] = useState(null);
 
   const setErrorMessage = useError();
-  const setSuccessMessage = useSuccess();
+  const [, setSuccessMessage] = useSuccess();
 
   const account = useAccount();
   const { accounts } = useAccounts();

@@ -61,7 +61,7 @@ const Catalog = () => {
   const navigate = useNavigate();
   
   const [errorMessage, setErrorMessage] = useError();
-  const setSuccessMessage = useSuccess();
+  const [, setSuccessMessage] = useSuccess();
   
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
