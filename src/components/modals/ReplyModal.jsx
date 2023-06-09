@@ -23,7 +23,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const account = useAccount();
 
-  const setErrorMessage = useError();
+  const [, setErrorMessage] = useError();
   
   const nodeRef = useRef(null);
   const nameRef = useRef();

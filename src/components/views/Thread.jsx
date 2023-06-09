@@ -69,7 +69,7 @@ const Thread = () => {
   const handleClickForm = useClickForm();
 
   const [errorMessage, setErrorMessage] = useError();
-  const setSuccessMessage = useSuccess();
+  const [, setSuccessMessage] = useSuccess();
 
   const nameRef = useRef();
   const commentRef = useRef();

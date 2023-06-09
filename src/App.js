@@ -40,8 +40,8 @@ export default function App() {
 
   const account = useAccount();
 
-  const setErrorMessage = useError();
-  const setSuccessMessage = useSuccess();
+  const [, setErrorMessage] = useError();
+  const [, setSuccessMessage] = useSuccess();
 
 
   useEffect(() => {

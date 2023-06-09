@@ -328,9 +328,7 @@ const All = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            { feed.length < 1 ? (
-              null
-            ) : (
+            {feed.length > 0 ? (
               <Virtuoso
                 increaseViewportBy={2000}
                 data={selectedFeed}
@@ -1245,6 +1243,8 @@ const All = () => {
                 useWindowScroll={true}
                 components={{ Footer: hasMore ? () => <PostLoader /> : null }}
               />
+            ) : (
+              <PostLoader />
             )}
           </div>
           {createPortal(

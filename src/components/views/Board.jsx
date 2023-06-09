@@ -70,7 +70,7 @@ const Board = () => {
   const { subplebbitAddress } = useParams();
   
   const [errorMessage, setErrorMessage] = useError();
-  const setSuccessMessage = useSuccess();
+  const [, setSuccessMessage] = useSuccess();
 
   const nameRef = useRef();
   const subjectRef = useRef();
