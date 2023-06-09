@@ -190,6 +190,11 @@ export const StyledModal = styled(Modal)`
     left: 23px;
   }
 
+  .anon-off {
+    padding-left: 3px;
+    padding-top: 15px;
+  }
+
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
