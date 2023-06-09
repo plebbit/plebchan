@@ -9,6 +9,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break} from '../styled/views/Board.styled';
 import { Threads } from '../styled/views/Catalog.styled';
 import { TopBar, Footer } from '../styled/views/Thread.styled';
+import CatalogLoader from '../CatalogLoader';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
@@ -207,9 +208,7 @@ const AllCatalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          { feed.length < 1 ? (
-            null
-          ) : (
+          {feed.length > 0 ? (
             <InfiniteScroll
               pageStart={0}
               loadMore={tryLoadMore}
@@ -289,6 +288,8 @@ const AllCatalog = () => {
                   </Link>
                 )})}
             </InfiniteScroll>
+          ) : (
+            <CatalogLoader />
           )}
         </Threads>
         <Footer selectedStyle={selectedStyle}>
