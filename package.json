@@ -1,6 +1,6 @@
 {
   "name": "plebchan",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "dependencies": {
     "@babel/core": "7.21.3",
@@ -8,7 +8,7 @@
     "@babel/plugin-transform-react-jsx": "7.21.0",
     "@capacitor/android": "3.6.0",
     "@capacitor/core": "3.6.0",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#5949b8cac5f786017395437960f842f4f9a9b1c2",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#06077b77cf0394ba925a7a292605d7a20048bfcc",
     "@testing-library/dom": "9.0.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "14.0.0",
