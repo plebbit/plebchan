@@ -1308,6 +1308,7 @@ const Subscriptions = () => {
                 position: "absolute",
                 top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
                 left: outOfViewPosition.left,
+                right: outOfViewPosition.right,
                 maxWidth: outOfViewPosition.maxWidth,
               }}
             >

@@ -953,15 +953,15 @@ const Thread = () => {
                                   if (distanceToRight < 200) {
                                     setOutOfViewPosition({
                                       top: rect.top + window.scrollY - rect.height / 2,
-                                      left: rect.left - rect.innerWidth - 5,
-                                      maxWidth: rect.left
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
                                     });
 
                                   } else {
                                     setOutOfViewPosition({
                                       top: rect.top + window.scrollY - rect.height / 2,
                                       left: rect.left + rect.width + 5,
-                                      maxWidth: window.innerWidth - rect.left - rect.width
+                                      maxWidth: window.innerWidth - rect.left - rect.width + 5
                                     });
                                   }
                                 });
@@ -1165,15 +1165,15 @@ const Thread = () => {
                                       if (distanceToRight < 200) {
                                         setOutOfViewPosition({
                                           top: rect.top + window.scrollY - rect.height / 2,
-                                          left: rect.left - rect.innerWidth - 5,
-                                          maxWidth: rect.left
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
                                         });
 
                                       } else {
                                         setOutOfViewPosition({
                                           top: rect.top + window.scrollY - rect.height / 2,
                                           left: rect.left + rect.width + 5,
-                                          maxWidth: window.innerWidth - rect.left - rect.width
+                                          maxWidth: window.innerWidth - rect.left - rect.width + 5
                                         });
                                       }
                                     });
@@ -1259,15 +1259,15 @@ const Thread = () => {
                                     if (distanceToRight < 200) {
                                       setOutOfViewPosition({
                                         top: rect.top + window.scrollY - rect.height / 2,
-                                        left: rect.left - rect.innerWidth - 5,
-                                        maxWidth: rect.left
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
                                       });
 
                                     } else {
                                       setOutOfViewPosition({
                                         top: rect.top + window.scrollY - rect.height / 2,
                                         left: rect.left + rect.width + 5,
-                                        maxWidth: window.innerWidth - rect.left - rect.width
+                                        maxWidth: window.innerWidth - rect.left - rect.width + 5
                                       });
                                     }
                                   }
@@ -1680,6 +1680,7 @@ const Thread = () => {
                 position: "absolute",
                 top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
                 left: outOfViewPosition.left,
+                right: outOfViewPosition.right,
                 maxWidth: outOfViewPosition.maxWidth,
               }}
             >

@@ -997,15 +997,15 @@ const Board = () => {
                                         if (distanceToRight < 200) {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
                                           });
 
                                         } else {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width + 5
                                           });
                                         }
                                         setOutOfViewCid(reply.cid);
@@ -1247,15 +1247,15 @@ const Board = () => {
                                         if (distanceToRight < 200) {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
                                           });
 
                                         } else {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width + 5
                                           });
                                         }
                                       });
@@ -1344,20 +1344,20 @@ const Board = () => {
                                           const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
                                           const distanceToRight = window.innerWidth - rect.right;
                                     
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
-                                          });
-
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
-                                          });
-                                        }
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top: rect.top + window.scrollY - rect.height / 2,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5
+                                            });
+  
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top: rect.top + window.scrollY - rect.height / 2,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                            });
+                                          }
                                         }
                                       });
                                     }}                                
@@ -1401,15 +1401,15 @@ const Board = () => {
                                         if (distanceToRight < 200) {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
                                           });
 
                                         } else {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width + 5
                                           });
                                         }
                                       }
@@ -1800,6 +1800,7 @@ const Board = () => {
                 position: "absolute",
                 top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
                 left: outOfViewPosition.left,
+                right: outOfViewPosition.right,
                 maxWidth: outOfViewPosition.maxWidth,
               }}
             >

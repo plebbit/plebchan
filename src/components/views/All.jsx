@@ -544,20 +544,20 @@ const All = () => {
                                       const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
                                       const distanceToRight = window.innerWidth - rect.right;
                                     
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
-                                          });
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
 
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
-                                          });
-                                        }
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                        });
+                                      }
                                     });
                                   }}
                                   onMouseLeave={() => {
@@ -764,15 +764,15 @@ const All = () => {
                                         if (distanceToRight < 200) {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
                                           });
 
                                         } else {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width + 5
                                           });
                                         }
                                       });
@@ -862,20 +862,20 @@ const All = () => {
                                           const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
                                           const distanceToRight = window.innerWidth - rect.right;
                                     
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
-                                          });
-
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
-                                          });
-                                        }
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top: rect.top + window.scrollY - rect.height / 2,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5
+                                            });
+  
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top: rect.top + window.scrollY - rect.height / 2,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                            });
+                                          }
                                         }
                                       });
                                     }}                                
@@ -912,15 +912,15 @@ const All = () => {
                                         if (distanceToRight < 200) {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
                                           });
 
                                         } else {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width + 5
                                           });
                                         }
                                       }
@@ -1303,6 +1303,7 @@ const All = () => {
                 position: "absolute",
                 top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
                 left: outOfViewPosition.left,
+                right: outOfViewPosition.right,
                 maxWidth: outOfViewPosition.maxWidth,
               }}
             >
