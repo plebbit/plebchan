@@ -22,8 +22,16 @@ const PostOnHover = ({ cid, feed }) => {
   const stateString = useStateString(reply);
 
   return (
-    <Container selectedStyle={selectedStyle} style={{margin: '0', padding: '0',
-      whiteSpace: 'nowrap', overflow: 'visible'}}>
+    <Container selectedStyle={selectedStyle} style={{
+      margin: '0', 
+      padding: '0',
+      whiteSpace: 'normal',
+      maxWidth: '100vw',
+      overflowWrap: 'break-word',
+      wordWrap: 'break-word',
+      wordBreak: 'break-all',
+      boxSizing: 'border-box',
+  }}>
       <BoardForm selectedStyle={selectedStyle} style={{margin: '0', padding: '0'}}>
         <div className="board" style={{margin: '0', padding: '0'}}>
           <div className="thread" style={{margin: '0', padding: '0'}}>

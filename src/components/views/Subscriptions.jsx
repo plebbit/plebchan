@@ -197,8 +197,8 @@ const Subscriptions = () => {
   
   useLayoutEffect(() => {
     if (postOnHoverRef.current) {
-        const rect = postOnHoverRef.current.getBoundingClientRect();
-        setPostOnHoverHeight(rect.height);
+      const rect = postOnHoverRef.current.getBoundingClientRect();
+      setPostOnHoverHeight(rect.height);
     }
   }, [outOfViewCid]);
   
@@ -549,10 +549,22 @@ const Subscriptions = () => {
                                     handleQuoteHover(reply, null, () => {
                                       setOutOfViewCid(reply.cid);
                                       const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                      setOutOfViewPosition({
-                                        top: rect.top + window.scrollY - rect.height / 2,
-                                        left: rect.left + rect.width + 5,
-                                      });
+                                      const distanceToRight = window.innerWidth - rect.right;
+                                    
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left - rect.innerWidth - 5,
+                                            maxWidth: rect.left
+                                          });
+
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left + rect.width - 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                          });
+                                        }
                                     });
                                   }}
                                   onMouseLeave={() => {
@@ -754,10 +766,22 @@ const Subscriptions = () => {
                                       handleQuoteHover(reply, null, () => {
                                         setOutOfViewCid(reply.cid);
                                         const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                        setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
-                                          left: rect.left + rect.width + 5,
-                                        });
+                                        const distanceToRight = window.innerWidth - rect.right;
+                                    
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left - rect.innerWidth - 5,
+                                            maxWidth: rect.left
+                                          });
+
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left + rect.width - 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                          });
+                                        }
                                       });
                                     }}
                                     onMouseLeave={() => {
@@ -843,10 +867,22 @@ const Subscriptions = () => {
                                           setOutOfViewCid(reply.parentCid);
                                           console.log("risposta: ", reply.parentCid);
                                           const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                          const distanceToRight = window.innerWidth - rect.right;
+                                    
+                                        if (distanceToRight < 200) {
                                           setOutOfViewPosition({
                                             top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width + 5,
+                                            left: rect.left - rect.innerWidth - 5,
+                                            maxWidth: rect.left
                                           });
+
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left + rect.width - 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                          });
+                                        }
                                         }
                                       });
                                     }}                                
@@ -878,10 +914,22 @@ const Subscriptions = () => {
                                       } else {
                                         setOutOfViewCid(reply.parentCid);
                                         const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
-                                        setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
-                                          left: rect.left + rect.width + 5,
-                                        });
+                                        const distanceToRight = window.innerWidth - rect.right;
+                                    
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left - rect.innerWidth - 5,
+                                            maxWidth: rect.left
+                                          });
+
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top: rect.top + window.scrollY - rect.height / 2,
+                                            left: rect.left + rect.width - 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                          });
+                                        }
                                       }
                                     });
                                   }}                                
@@ -1252,23 +1300,23 @@ const Subscriptions = () => {
               />
             )}
           </div>
-          {createPortal(
+          {outOfViewCid && outOfViewPosition && createPortal(
             <div
-            ref={postOnHoverRef}
+              ref={postOnHoverRef}
               style={{
-                display: outOfViewCid ? "block" : "none",
+                display: "block",
                 position: "absolute",
                 top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
-                left: outOfViewPosition.left, 
+                left: outOfViewPosition.left,
+                maxWidth: outOfViewPosition.maxWidth,
               }}
-              >
-                <PostOnHover
-                  cid={outOfViewCid}
-                  feed={feed}
-                />
-              </div>
-            , document.body
-          )}
+            >
+              <PostOnHover
+                cid={outOfViewCid}
+                feed={feed}
+              />
+            </div>
+          , document.body)}
         </BoardForm>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{

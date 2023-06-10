@@ -15,8 +15,6 @@ const StateLabel = ({ commentIndex, className }) => {
 
   if (commentIndex === undefined) return null;
 
-  console.log(commentIndex, stateString, comment);
-
   return (
     commentIndex && stateString !== "Succeeded" ? (
       (comment.state === "failed" || (stateString === undefined && !isLoading)) ? (
