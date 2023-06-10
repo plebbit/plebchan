@@ -98,6 +98,8 @@ const Thread = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
+  const backlinkRefsMobile = useRef({});
+  const quoteRefsMobile = useRef({});
   
 
   const comment = useComment({commentCid: selectedThread});
@@ -1519,12 +1521,41 @@ const Thread = () => {
                           ) : null}
                         <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
                           <span style={{cursor: 'pointer'}} key={`mob-ql-${index}`} className="quotelink-mobile" 
-                          onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                          onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
-                          onMouseLeave={() => {
-                            removeHighlight();
-                            setOutOfViewCid(null);
-                          }}>
+                            ref={el => {
+                              quoteRefsMobile.current[shortParentCid] = el;
+                            }}
+                            onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                            onMouseOver={(event) => {
+                              event.stopPropagation();
+                              handleQuoteHover(reply, shortParentCid, () => {
+                                if (shortParentCid === comment.shortCid) {
+                                  return;
+                                } else {
+                                  setOutOfViewCid(reply.parentCid);
+                                  const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
+                                  const distanceToRight = window.innerWidth - rect.right;
+                            
+                                  if (distanceToRight < 200) {
+                                    setOutOfViewPosition({
+                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
+                                    });
+
+                                  } else {
+                                    setOutOfViewPosition({
+                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      left: rect.left + rect.width + 5,
+                                      maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                    });
+                                  }
+                                }
+                              });
+                            }}
+                            onMouseLeave={() => {
+                              removeHighlight();
+                              setOutOfViewCid(null);
+                            }}>
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </span>
                           <Post content={reply.content} comment={reply} key={`post-mobile-${index}`} />
@@ -1540,14 +1571,39 @@ const Thread = () => {
                           {reply.replies?.pages?.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
                           .map((reply, index) => (
-                            <div key={`div-back${index}`} style={{display: 'inline-block'}}>
+                            <div key={`div-back${index}`} style={{display: 'inline-block'}} 
+                            ref={el => {
+                              backlinkRefsMobile.current[reply.cid] = el;
+                            }}>
                             <span style={{cursor: 'pointer'}} key={`ql-${index}`} className="quote-link" 
                             onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                            onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                            onMouseOver={(event) => {
+                              event.stopPropagation();
+                              handleQuoteHover(reply, reply.shortCid, () => {
+                                setOutOfViewCid(reply.cid)
+                                const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
+                                const distanceToRight = window.innerWidth - rect.right;
+
+                                if (distanceToRight < 200) {
+                                  setOutOfViewPosition({
+                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    right: window.innerWidth - rect.left - 10,
+                                    maxWidth: rect.left - 5
+                                  });
+
+                                } else {
+                                  setOutOfViewPosition({
+                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    left: rect.left + rect.width + 5,
+                                    maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                  });
+                                }
+                              });
+                            }}
                             onMouseLeave={() => {
                               removeHighlight();
                               setOutOfViewCid(null);
-                            }}>
+                            }} >
                               c/{reply.shortCid}</span>
                               &nbsp;
                             </div>

@@ -81,9 +81,11 @@ const Board = () => {
   const postMenuCatalogRef = useRef(null);
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
+  const backlinkRefsMobile = useRef({});
+  const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
@@ -1716,8 +1718,37 @@ const Board = () => {
                             <Fragment key={`fragment15-${index}`}>
                               <blockquote key={`mob-pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                                ref={el => {
+                                  quoteRefsMobile.current[shortParentCid] = el;
+                                }}
                                 onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                                onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseOver={(event) => {
+                                  event.stopPropagation();
+                                  handleQuoteHover(reply, shortParentCid, () => {
+                                    if (shortParentCid === thread.shortCid) {
+                                      return;
+                                    } else {
+                                      setOutOfViewCid(reply.parentCid);
+                                      const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
+                                      const distanceToRight = window.innerWidth - rect.right;
+                                
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
+
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                        });
+                                      }
+                                    }
+                                  });
+                                }}
                                 onMouseLeave={() => {
                                   removeHighlight();
                                   setOutOfViewCid(null);
@@ -1741,8 +1772,37 @@ const Board = () => {
                             </Fragment>
                           : <blockquote key={`mob-pm-${index}`} className="post-message">
                               <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                              ref={el => {
+                                quoteRefsMobile.current[shortParentCid] = el;
+                              }}
                               onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                              onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, shortParentCid, () => {
+                                  if (shortParentCid === thread.shortCid) {
+                                    return;
+                                  } else {
+                                    setOutOfViewCid(reply.parentCid);
+                                    const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                              
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                      });
+                                    }
+                                  }
+                                });
+                              }}
                               onMouseLeave={() => {
                                 removeHighlight();
                                 setOutOfViewCid(null);
@@ -1763,10 +1823,35 @@ const Board = () => {
                               {reply.replies?.pages?.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
                               .map((reply, index) => (
-                                <div key={`div-back${index}`} style={{display: 'inline-block'}}>
+                                <div key={`div-back${index}`} style={{display: 'inline-block'}} 
+                                ref={el => {
+                                  backlinkRefsMobile.current[reply.cid] = el;
+                                }}>
                                 <Link key={`ql-${index}`} to={() => {}}
                                 onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseOver={(event) => {
+                                  event.stopPropagation();
+                                  handleQuoteHover(reply, reply.shortCid, () => {
+                                    setOutOfViewCid(reply.cid)
+                                    const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                      });
+                                    }
+                                  });
+                                }}
                                 onMouseLeave={() => {
                                   removeHighlight();
                                   setOutOfViewCid(null);
