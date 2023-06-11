@@ -868,14 +868,14 @@ const All = () => {
                                 <blockquote key={`pm-${index}`} comment={reply} className="post-message">
                                   <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
                                     ref={el => {
-                                      quoteRefs.current[shortParentCid] = el;
+                                      quoteRefs.current[reply.cid] = el;
                                     }}
                                     onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
                                     onMouseOver={(event) => {
                                       event.stopPropagation();
                                       handleQuoteHover(reply, shortParentCid, () => {
                                       setOutOfViewCid(reply.parentCid);
-                                      const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                      const rect = quoteRefs.current[reply.cid].getBoundingClientRect();
                                       const distanceToRight = window.innerWidth - rect.right;
                                       const distanceToTop = rect.top;
                                       const distanceToBottom = window.innerHeight - rect.bottom;
@@ -921,14 +921,14 @@ const All = () => {
                             : <blockquote key={`pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
                                   ref={el => {
-                                    quoteRefs.current[shortParentCid] = el;
+                                    quoteRefs.current[reply.cid] = el;
                                   }}
                                   onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
                                   onMouseOver={(event) => {
                                     event.stopPropagation();
                                     handleQuoteHover(reply, shortParentCid, () => {
                                     setOutOfViewCid(reply.parentCid);
-                                    const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                    const rect = quoteRefs.current[reply.cid].getBoundingClientRect();
                                     const distanceToRight = window.innerWidth - rect.right;
                                     const distanceToTop = rect.top;
                                     const distanceToBottom = window.innerHeight - rect.bottom;
