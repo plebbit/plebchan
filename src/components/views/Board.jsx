@@ -1339,9 +1339,6 @@ const Board = () => {
                                     onMouseOver={(event) => {
                                       event.stopPropagation();
                                       handleQuoteHover(reply, shortParentCid, () => {
-                                        if (shortParentCid === thread.shortCid) {
-                                          return;
-                                        } else {
                                           setOutOfViewCid(reply.parentCid);
                                           const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
                                           const distanceToRight = window.innerWidth - rect.right;
@@ -1360,8 +1357,7 @@ const Board = () => {
                                               maxWidth: window.innerWidth - rect.left - rect.width + 5
                                             });
                                           }
-                                        }
-                                      });
+                                        });
                                     }}                                
                                     onMouseLeave={() => {
                                       removeHighlight();
@@ -1393,9 +1389,6 @@ const Board = () => {
                                   onMouseOver={(event) => {
                                     event.stopPropagation();
                                     handleQuoteHover(reply, shortParentCid, () => {
-                                      if (shortParentCid === thread.shortCid) {
-                                        return;
-                                      } else {
                                         setOutOfViewCid(reply.parentCid);
                                         const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
                                         const distanceToRight = window.innerWidth - rect.right;
@@ -1414,7 +1407,6 @@ const Board = () => {
                                             maxWidth: window.innerWidth - rect.left - rect.width + 5
                                           });
                                         }
-                                      }
                                     });
                                   }}                                
                                   onMouseLeave={() => {
@@ -1725,27 +1717,23 @@ const Board = () => {
                                 onMouseOver={(event) => {
                                   event.stopPropagation();
                                   handleQuoteHover(reply, shortParentCid, () => {
-                                    if (shortParentCid === thread.shortCid) {
-                                      return;
-                                    } else {
-                                      setOutOfViewCid(reply.parentCid);
-                                      const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
-                                      const distanceToRight = window.innerWidth - rect.right;
-                                
-                                      if (distanceToRight < 200) {
-                                        setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
-                                          right: window.innerWidth - rect.left - 10,
-                                          maxWidth: rect.left - 5
-                                        });
+                                    setOutOfViewCid(reply.parentCid);
+                                    const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                              
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
 
-                                      } else {
-                                        setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
-                                          left: rect.left + rect.width + 5,
-                                          maxWidth: window.innerWidth - rect.left - rect.width + 5
-                                        });
-                                      }
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top: rect.top + window.scrollY - rect.height / 2,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                      });
                                     }
                                   });
                                 }}
@@ -1779,27 +1767,23 @@ const Board = () => {
                               onMouseOver={(event) => {
                                 event.stopPropagation();
                                 handleQuoteHover(reply, shortParentCid, () => {
-                                  if (shortParentCid === thread.shortCid) {
-                                    return;
-                                  } else {
-                                    setOutOfViewCid(reply.parentCid);
-                                    const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
-                                    const distanceToRight = window.innerWidth - rect.right;
-                              
-                                    if (distanceToRight < 200) {
-                                      setOutOfViewPosition({
-                                        top: rect.top + window.scrollY - rect.height / 2,
-                                        right: window.innerWidth - rect.left - 10,
-                                        maxWidth: rect.left - 5
-                                      });
+                                  setOutOfViewCid(reply.parentCid);
+                                  const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
+                                  const distanceToRight = window.innerWidth - rect.right;
+                            
+                                  if (distanceToRight < 200) {
+                                    setOutOfViewPosition({
+                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
+                                    });
 
-                                    } else {
-                                      setOutOfViewPosition({
-                                        top: rect.top + window.scrollY - rect.height / 2,
-                                        left: rect.left + rect.width + 5,
-                                        maxWidth: window.innerWidth - rect.left - rect.width + 5
-                                      });
-                                    }
+                                  } else {
+                                    setOutOfViewPosition({
+                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      left: rect.left + rect.width + 5,
+                                      maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                    });
                                   }
                                 });
                               }}

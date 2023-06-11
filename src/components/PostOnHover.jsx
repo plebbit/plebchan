@@ -78,12 +78,8 @@ const PostOnHover = ({ cid, feed }) => {
                       &nbsp;
                       <span className="post-number post-number-desktop">
                         <span >c/</span>
-                        {reply.shortCid ? (
                           <Link to={() => {}} id="reply-button" 
                           title="Reply to this post">{reply.shortCid}</Link>
-                        ) : (
-                          <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
-                        )}
                       </span>&nbsp;
                       <div id="backlink-id" className="backlink">
                         {reply.replies?.pages?.topAll.comments
@@ -155,9 +151,11 @@ const PostOnHover = ({ cid, feed }) => {
                       reply.content?.length > 500 ?
                       <Fragment >
                         <blockquote comment={reply} className="post-message">
-                          <Link to={() => {}} className="quotelink">
-                              {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
-                          </Link>
+                          {shortParentCid ? (
+                            <Link to={() => {}} className="quotelink">
+                                {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
+                            </Link>
+                          ) : null}
                           <Post content={reply.content?.slice(0, 500)} />
                           <span className="ttl"> (...)
                           <br /> <EditLabel 
@@ -167,9 +165,11 @@ const PostOnHover = ({ cid, feed }) => {
                         </blockquote>
                       </Fragment>
                     : <blockquote className="post-message">
-                        <Link to={() => {}} className="quotelink">
-                            {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
-                        </Link>
+                        {shortParentCid ? (
+                          <Link to={() => {}} className="quotelink">
+                              {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
+                          </Link>
+                        ) : null}
                         <Post content={reply.content} comment={reply} />
                         <EditLabel 
                           commentCid={reply.cid}
@@ -277,9 +277,11 @@ const PostOnHover = ({ cid, feed }) => {
                   reply.content?.length > 500 ?
                   <Fragment>
                     <blockquote className="post-message">
+                    {shortParentCid ? (
                       <Link to={() => {}} className="quotelink">
                         {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                       </Link>
+                    ) : null}
                       <Post content={reply.content?.slice(0, 500)} comment={reply} />
                       <span className="ttl"> (...)
                       <br />
@@ -291,9 +293,11 @@ const PostOnHover = ({ cid, feed }) => {
                     </blockquote>
                   </Fragment>
                 : <blockquote className="post-message">
+                  {shortParentCid ? (
                     <Link to={() => {}} className="quotelink" >
                       {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                     </Link>
+                  ) : null}
                     <Post content={reply.content} comment={reply} />
                     <EditLabel 
                     commentCid={reply.cid}
