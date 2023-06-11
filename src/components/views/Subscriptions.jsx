@@ -550,21 +550,31 @@ const Subscriptions = () => {
                                       setOutOfViewCid(reply.cid);
                                       const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
                                       const distanceToRight = window.innerWidth - rect.right;
-                                    
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
-                                          });
+                                      const distanceToTop = rect.top;
+                                      const distanceToBottom = window.innerHeight - rect.bottom;
+                                      let top;
 
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
-                                          });
-                                        }
+                                      if (distanceToTop < postOnHoverHeight / 2) {
+                                        top = window.scrollY - 5;
+                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                      } else {
+                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                      }
+                                    
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                        });
+                                      }
                                     });
                                   }}
                                   onMouseLeave={() => {
@@ -767,19 +777,29 @@ const Subscriptions = () => {
                                         setOutOfViewCid(reply.cid);
                                         const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
                                         const distanceToRight = window.innerWidth - rect.right;
-                                    
+                                        const distanceToTop = rect.top;
+                                        const distanceToBottom = window.innerHeight - rect.bottom;
+                                        let top;
+
+                                        if (distanceToTop < postOnHoverHeight / 2) {
+                                          top = window.scrollY - 5;
+                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                        } else {
+                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                        }
+                                      
                                         if (distanceToRight < 200) {
                                           setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
+                                            top,
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
                                           });
-
                                         } else {
                                           setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
+                                            top,
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
                                           });
                                         }
                                       });
@@ -861,29 +881,34 @@ const Subscriptions = () => {
                                     onMouseOver={(event) => {
                                       event.stopPropagation();
                                       handleQuoteHover(reply, shortParentCid, () => {
-                                        if (shortParentCid === thread.shortCid) {
-                                          return;
-                                        } else {
-                                          setOutOfViewCid(reply.parentCid);
-                                          console.log("risposta: ", reply.parentCid);
-                                          const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
-                                          const distanceToRight = window.innerWidth - rect.right;
-                                    
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
-                                          });
+                                      setOutOfViewCid(reply.parentCid);
+                                      const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                      const distanceToRight = window.innerWidth - rect.right;
+                                      const distanceToTop = rect.top;
+                                      const distanceToBottom = window.innerHeight - rect.bottom;
+                                      let top;
 
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
-                                          });
-                                        }
-                                        }
+                                      if (distanceToTop < postOnHoverHeight / 2) {
+                                        top = window.scrollY - 5;
+                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                      } else {
+                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                      }
+                                    
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                        });
+                                      }
                                       });
                                     }}                                
                                     onMouseLeave={() => {
@@ -909,28 +934,34 @@ const Subscriptions = () => {
                                   onMouseOver={(event) => {
                                     event.stopPropagation();
                                     handleQuoteHover(reply, shortParentCid, () => {
-                                      if (shortParentCid === thread.shortCid) {
-                                        return;
-                                      } else {
-                                        setOutOfViewCid(reply.parentCid);
-                                        const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
-                                        const distanceToRight = window.innerWidth - rect.right;
-                                    
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left - rect.innerWidth - 5,
-                                            maxWidth: rect.left
-                                          });
+                                    setOutOfViewCid(reply.parentCid);
+                                    const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
 
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width - 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width
-                                          });
-                                        }
-                                      }
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+                                  
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
                                     });
                                   }}                                
                                   onMouseLeave={() => {
@@ -1306,9 +1337,9 @@ const Subscriptions = () => {
               style={{
                 display: "block",
                 position: "absolute",
-                top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
-                left: outOfViewPosition.left,
+                top: outOfViewPosition.top,
                 right: outOfViewPosition.right,
+                left: outOfViewPosition.left,
                 maxWidth: outOfViewPosition.maxWidth,
               }}
             >

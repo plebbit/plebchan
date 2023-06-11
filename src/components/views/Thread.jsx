@@ -951,19 +951,30 @@ const Thread = () => {
                                 handleQuoteHover(reply, null, () => {
                                   setOutOfViewCid(reply.cid);
                                   const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                  const distanceToRight = window.innerWidth - rect.right;                                    
+                                  const distanceToRight = window.innerWidth - rect.right;
+                                  const distanceToTop = rect.top;
+                                  const distanceToBottom = window.innerHeight - rect.bottom;
+                                  let top;
+
+                                  if (distanceToTop < postOnHoverHeight / 2) {
+                                    top = window.scrollY - 5;
+                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                  } else {
+                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  }
+                                
                                   if (distanceToRight < 200) {
                                     setOutOfViewPosition({
-                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      top,
                                       right: window.innerWidth - rect.left - 10,
                                       maxWidth: rect.left - 5
                                     });
-
                                   } else {
                                     setOutOfViewPosition({
-                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      top,
                                       left: rect.left + rect.width + 5,
-                                      maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
                                     });
                                   }
                                 });
@@ -1161,21 +1172,32 @@ const Thread = () => {
                                   onMouseOver={(event) => {
                                     event.stopPropagation();
                                     handleQuoteHover(reply, null, () => {
-                                      setOutOfViewCid(reply.cid);
-                                      const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                      const distanceToRight = window.innerWidth - rect.right;                                    
+                                    setOutOfViewCid(reply.cid);
+                                    const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                      const distanceToTop = rect.top;
+                                      const distanceToBottom = window.innerHeight - rect.bottom;
+                                      let top;
+
+                                      if (distanceToTop < postOnHoverHeight / 2) {
+                                        top = window.scrollY - 5;
+                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                      } else {
+                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                      }
+                                    
                                       if (distanceToRight < 200) {
                                         setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          top,
                                           right: window.innerWidth - rect.left - 10,
                                           maxWidth: rect.left - 5
                                         });
-
                                       } else {
                                         setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
+                                          top,
                                           left: rect.left + rect.width + 5,
-                                          maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
                                         });
                                       }
                                     });
@@ -1254,19 +1276,30 @@ const Thread = () => {
                                 handleQuoteHover(reply, shortParentCid, () => {
                                   setOutOfViewCid(reply.parentCid);
                                   const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
-                                  const distanceToRight = window.innerWidth - rect.right;                                    
+                                  const distanceToRight = window.innerWidth - rect.right;
+                                  const distanceToTop = rect.top;
+                                  const distanceToBottom = window.innerHeight - rect.bottom;
+                                  let top;
+
+                                  if (distanceToTop < postOnHoverHeight / 2) {
+                                    top = window.scrollY - 5;
+                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                  } else {
+                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  }
+                                
                                   if (distanceToRight < 200) {
                                     setOutOfViewPosition({
-                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      top,
                                       right: window.innerWidth - rect.left - 10,
                                       maxWidth: rect.left - 5
                                     });
-
                                   } else {
                                     setOutOfViewPosition({
-                                      top: rect.top + window.scrollY - rect.height / 2,
+                                      top,
                                       left: rect.left + rect.width + 5,
-                                      maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
                                     });
                                   }
                                 });
@@ -1527,19 +1560,29 @@ const Thread = () => {
                                 setOutOfViewCid(reply.parentCid);
                                 const rect = quoteRefsMobile.current[shortParentCid].getBoundingClientRect();
                                 const distanceToRight = window.innerWidth - rect.right;
-                          
+                                const distanceToTop = rect.top;
+                                const distanceToBottom = window.innerHeight - rect.bottom;
+                                let top;
+
+                                if (distanceToTop < postOnHoverHeight / 2) {
+                                  top = window.scrollY - 5;
+                                } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                  top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                } else {
+                                  top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                }
+                              
                                 if (distanceToRight < 200) {
                                   setOutOfViewPosition({
-                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    top,
                                     right: window.innerWidth - rect.left - 10,
                                     maxWidth: rect.left - 5
                                   });
-
                                 } else {
                                   setOutOfViewPosition({
-                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    top,
                                     left: rect.left + rect.width + 5,
-                                    maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                    maxWidth: window.innerWidth - rect.left - rect.width - 5
                                   });
                                 }
                               });
@@ -1575,19 +1618,29 @@ const Thread = () => {
                                 setOutOfViewCid(reply.cid)
                                 const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
                                 const distanceToRight = window.innerWidth - rect.right;
+                                const distanceToTop = rect.top;
+                                const distanceToBottom = window.innerHeight - rect.bottom;
+                                let top;
 
+                                if (distanceToTop < postOnHoverHeight / 2) {
+                                  top = window.scrollY - 5;
+                                } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                  top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                } else {
+                                  top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                }
+                              
                                 if (distanceToRight < 200) {
                                   setOutOfViewPosition({
-                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    top,
                                     right: window.innerWidth - rect.left - 10,
                                     maxWidth: rect.left - 5
                                   });
-
                                 } else {
                                   setOutOfViewPosition({
-                                    top: rect.top + window.scrollY - rect.height / 2,
+                                    top,
                                     left: rect.left + rect.width + 5,
-                                    maxWidth: window.innerWidth - rect.left - rect.width + 5
+                                    maxWidth: window.innerWidth - rect.left - rect.width - 5
                                   });
                                 }
                               });
@@ -1726,9 +1779,9 @@ const Thread = () => {
               style={{
                 display: "block",
                 position: "absolute",
-                top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
-                left: outOfViewPosition.left,
+                top: outOfViewPosition.top,
                 right: outOfViewPosition.right,
+                left: outOfViewPosition.left,
                 maxWidth: outOfViewPosition.maxWidth,
               }}
             >
