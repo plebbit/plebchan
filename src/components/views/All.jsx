@@ -1,20 +1,26 @@
-import React, { Fragment, useEffect, useLayoutEffect, useMemo, useState, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useState, useRef } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useAccountComments, useFeed, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useFeed, usePublishCommentEdit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
-import { Footer } from '../styled/views/Thread.styled';
+import { AuthorDeleteAlert, Footer } from '../styled/views/Thread.styled';
+import { PostMenuCatalog } from '../styled/views/Catalog.styled';
+import EditModal from '../modals/EditModal';
+import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
+import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import PostOnHover from '../PostOnHover';
+import StateLabel from '../StateLabel';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -28,6 +34,7 @@ import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
 import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
+import useSuccess from '../../hooks/useSuccess';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -35,7 +42,17 @@ const {version} = packageJson
 const All = () => {
   const {
     defaultSubplebbits,
+    editedComment,
     isSettingsOpen, setIsSettingsOpen,
+    setModeratingCommentCid,
+    selectedAddress,
+    setCaptchaResponse,
+    setChallengesArray,
+    setIsAuthorDelete,
+    setIsAuthorEdit,
+    setIsCaptchaOpen,
+    isModerationOpen, setIsModerationOpen,
+    setResolveCaptchaPromise,
     setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
@@ -47,22 +64,33 @@ const All = () => {
   const account = useAccount();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useError();
+  const [, setSuccessMessage] = useSuccess();
 
   const threadMenuRefs = useRef({});
   const replyMenuRefs = useRef({});
+  const postMenuCatalogRef = useRef(null);
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
+  const backlinkRefsMobile = useRef({});
+  const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [originalCommentContent, setOriginalCommentContent] = useState(null);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [rotatedStates, setRotatedStates] = useState({});
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
+  const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
+  const [openMenuCid, setOpenMenuCid] = useState(null);
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
-
+  const [deletePost, setDeletePost] = useState(false);
+  const [moderatorPermissions, setModeratorPermissions] = useState({});
 
   const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'new'});
@@ -71,6 +99,53 @@ const All = () => {
 
   const stateString = useFeedStateString(subplebbits);
   
+
+  useEffect(() => {
+    let permissions = {};
+
+    selectedFeed.forEach(thread => {
+      const subplebbit = subplebbits.find(s => s.address === thread.subplebbitAddress);
+
+      if (subplebbit && subplebbit.roles !== undefined) { 
+        const role = subplebbit.roles[account?.author.address]?.role;
+    
+        if (role === 'moderator' || role === 'admin' || role === 'owner') {
+          permissions[thread.subplebbitAddress] = true;
+        } else {
+          permissions[thread.subplebbitAddress] = false;
+        }
+      }
+    });
+
+    setModeratorPermissions(permissions);
+  }, [account?.author.address, selectedFeed, subplebbits]);
+
+
+  const handleOptionClick = () => {
+    setOpenMenuCid(null);
+  };
+
+
+  const handleOutsideClick = useCallback((e) => {
+    if (openMenuCid !== null && !postMenuCatalogRef.current.contains(e.target)) {
+      setOpenMenuCid(null);
+    }
+  }, [openMenuCid, postMenuCatalogRef]);
+  
+
+  useEffect(() => {
+    if (openMenuCid !== null) {
+      document.addEventListener('click', handleOutsideClick);
+    } else {
+      document.removeEventListener('click', handleOutsideClick);
+    }
+    
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [openMenuCid, handleOutsideClick]);
+
+
   const errorString = useMemo(() => {
     for (const subplebbit of subplebbits) {
       if (subplebbit?.updatingState !== 'failed') {
@@ -170,6 +245,154 @@ const All = () => {
     }
   };
 
+  const onChallengeVerification = (challengeVerification) => {
+    if (challengeVerification.challengeSuccess === true) {
+        setSuccessMessage('Challenge Success');
+    } 
+    else if (challengeVerification.challengeSuccess === false) {
+      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+    }
+  };
+
+
+  const onChallenge = async (challenges, comment) => {
+    let challengeAnswers = [];
+    try {
+      challengeAnswers = await getChallengeAnswersFromUser(challenges)
+    }
+    catch (error) {
+      setErrorMessage(error);
+    }
+    if (challengeAnswers) {
+      await comment.publishChallengeAnswers(challengeAnswers)
+    }
+  };
+
+
+  const getChallengeAnswersFromUser = async (challenges) => {
+    setChallengesArray(challenges);
+    
+    return new Promise((resolve, reject) => {
+      const imageString = challenges?.challenges[0].challenge;
+      const imageSource = `data:image/png;base64,${imageString}`;
+      const challengeImg = new Image();
+      challengeImg.src = imageSource;
+  
+      challengeImg.onload = () => {
+        setIsCaptchaOpen(true);
+  
+        const handleKeyDown = async (event) => {
+          if (event.key === 'Enter') {
+            const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
+            resolve(currentCaptchaResponse);
+            setIsCaptchaOpen(false);
+            document.removeEventListener('keydown', handleKeyDown);
+            event.preventDefault();
+          }
+        };
+
+        setCaptchaResponse('');
+        document.addEventListener('keydown', handleKeyDown);
+
+        setResolveCaptchaPromise(resolve);
+      };
+  
+      challengeImg.onerror = () => {
+        reject(setErrorMessage('Could not load challenges'));
+      };
+    });
+  };
+
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
+    commentCid: commentCid,
+    content: editedComment || undefined,
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setErrorMessage(error);
+    },
+  });
+  
+  
+  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  useEffect(() => {
+    if (error && error !== errorMessage) {
+        setErrorMessage(error);
+    }
+  }, [error, setErrorMessage, errorMessage]);
+
+
+  const handleAuthorDeleteClick = (commentCid) => {
+    handleOptionClick(commentCid);
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+            <div className='author-delete-alert'>
+              <p>Are you sure you want to delete this post?</p>
+              <div className="author-delete-buttons">
+                <button onClick={onClose}>No</button>
+                <button
+                  onClick={() => {
+                    setIsAuthorDelete(true);
+                    setIsAuthorEdit(false);
+                    setCommentCid(commentCid);
+                    setPublishCommentEditOptions(prevOptions => ({
+                      ...prevOptions,
+                      deleted: true,
+                    }));
+                    setTriggerPublishCommentEdit(true);
+                    onClose();
+                  }}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </AuthorDeleteAlert>
+        );
+      }
+    });
+  };
+
+  const handleAuthorEditClick = (comment) => {
+    handleOptionClick(comment.cid);
+    setIsAuthorEdit(true);
+    setIsAuthorDelete(false);
+    setCommentCid(comment.cid);
+    setOriginalCommentContent(comment.content);
+    setIsEditModalOpen(true);
+  }
+  
+  
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: commentCid,
+      content: editedComment || undefined,
+    }));
+  }, [commentCid, editedComment]);
+
+
+  useEffect(() => {
+    if (editedComment !== '') {
+      setTriggerPublishCommentEdit(true);
+    }
+  }, [editedComment, setIsAuthorEdit]);
+
+  
+  useEffect(() => {
+    if (publishCommentEditOptions && triggerPublishCommentEdit) {
+      (async () => {
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
+      })();
+    }
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
@@ -218,6 +441,16 @@ const All = () => {
         selectedStyle={selectedStyle}
         isOpen={isSettingsOpen}
         closeModal={() => setIsSettingsOpen(false)} />
+        <ModerationModal 
+        selectedStyle={selectedStyle}
+        isOpen={isModerationOpen}
+        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
+        deletePost={deletePost} />
+        <EditModal
+        selectedStyle={selectedStyle}
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        originalCommentContent={originalCommentContent} />
         <NavBar selectedStyle={selectedStyle}>
         <>
             <span className="boardList">
@@ -336,6 +569,7 @@ const All = () => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = "assets/filedeleted-res.gif";
+                  setIsModerator(moderatorPermissions[thread.subplebbitAddress]);
                   return (
                 <Fragment key={`fr-${index}`}>
                   <div key={`t-${index}`} className="thread">
@@ -469,63 +703,100 @@ const All = () => {
                             <PostMenu 
                               key={`pmb-${index}`} 
                               title="Post menu"
-                              ref={el => threadMenuRefs.current[thread.cid] = el}
+                              ref={el => { 
+                                threadMenuRefs.current[thread.cid] = el;
+                              }}
                               className='post-menu-button' 
-                              rotated={rotatedStates[thread.cid]}
-                              onClick={() => {
+                              rotated={openMenuCid === thread.cid}
+                              onClick={(event) => {
+                                event.stopPropagation();
                                 const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
-                                const menu = document.querySelector(`.post-menu-thread-${thread.cid}`);
-                                const scrollY = window.scrollY || window.pageYOffset;
-                                menu.style.top = `calc(${rect.top + scrollY}px - 225px)`;
-                                menu.style.left = `${rect.left}px`;
-                              
-                                setRotatedStates(prevState => ({
-                                  ...prevState,
-                                  [thread.cid]: !prevState[thread.cid]
-                                }));
+                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
                               }}                              
                             >
                               ▶
                             </PostMenu>
-                            <div id="post-menu" className={`post-menu-thread post-menu-thread-${thread.cid}`}
-                              style={{ display: rotatedStates[thread.cid] ? 'block' : 'none' }}>
-                              <ul>
-                                {/* <li>Edit post</li> */}
-                                <li>Hide thread</li>
-                                {(commentMediaInfo && (
-                                  commentMediaInfo.type === 'image' || 
-                                  (commentMediaInfo.type === 'webpage' && 
-                                  commentMediaInfo.thumbnail))) ? ( 
-                                    <li 
-                                    onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                    onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                                      Image search »
-                                      <ul className="dropdown-menu post-menu-catalog"
-                                        style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                        <li>
-                                          <a 
-                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >Google</a>
+                            {createPortal(
+                              <PostMenuCatalog selectedStyle={selectedStyle} 
+                              ref={el => {postMenuCatalogRef.current = el}}
+                              onClick={(event) => event.stopPropagation()}
+                              style={{position: "absolute", 
+                              top: menuPosition.top + 7, 
+                              left: menuPosition.left}}>
+                              <div className={`post-menu-thread post-menu-thread-${thread.cid}`}
+                              style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
+                              >
+                                <ul className="post-menu-catalog">
+                                  <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                                  {thread.author.shortAddress === account?.author.shortAddress ? (
+                                    <>
+                                      <li onClick={() => {handleAuthorEditClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
+                                      <li onClick={() => {handleAuthorDeleteClick(thread.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                    </>
+                                  ) : null}
+                                  {isModerator ? (
+                                    <>
+                                      {thread.author.shortAddress === account?.author.shortAddress ? (
+                                        null
+                                      ) : (
+                                        <li onClick={() => {
+                                          setSelectedAddress(thread.subplebbitAddress);
+                                          setModeratingCommentCid(thread.cid)
+                                          setIsModerationOpen(true); 
+                                          handleOptionClick(thread.cid);
+                                          setDeletePost(true);
+                                        }}>
+                                        Delete post
                                         </li>
-                                        <li>
-                                          <a
-                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >Yandex</a>
-                                        </li>
-                                        <li>
-                                          <a
-                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >SauceNAO</a>
-                                        </li>
-                                      </ul>
-                                    </li>
-                                  ) : null
-                                }
-                              </ul>
-                            </div>
+                                      )}
+                                      <li
+                                      onClick={() => {
+                                        setSelectedAddress(thread.subplebbitAddress);
+                                        setModeratingCommentCid(thread.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(thread.cid);
+                                      }}>
+                                        Mod tools
+                                      </li>
+                                    </>
+                                  ) : null}
+                                  {(commentMediaInfo && (
+                                    commentMediaInfo.type === 'image' || 
+                                    (commentMediaInfo.type === 'webpage' && 
+                                    commentMediaInfo.thumbnail))) ? ( 
+                                      <li 
+                                      onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                        Image search »
+                                        <ul className="dropdown-menu post-menu-catalog"
+                                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                          <li onClick={() => handleOptionClick(thread.cid)}>
+                                            <a 
+                                            href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Google</a>
+                                          </li>
+                                          <li onClick={() => handleOptionClick(thread.cid)}>
+                                            <a
+                                            href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Yandex</a>
+                                          </li>
+                                          <li onClick={() => handleOptionClick(thread.cid)}>
+                                            <a
+                                            href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                            >SauceNAO</a>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    ) : null
+                                  }
+                                </ul>
+                              </div>
+                              </PostMenuCatalog>, document.body
+                            )}
                             <div key={`bi-${index}`} id="backlink-id" className="backlink">
                               {thread.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
@@ -585,16 +856,30 @@ const All = () => {
                             thread.content?.length > 1000 ?
                             <Fragment key={`fragment5-${index}`}>
                               <blockquote key={`bq-${index}`}>
-                              <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
+                                <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
                                 <span key={`ttl-s-${index}`} className="ttl"> (...) 
-                                <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${thread.cid}`} />
-                                Post too long.&nbsp;
-                                  <Link key={`ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                  &nbsp;to view. </span>
+                                  <br key={`ttl-s-br1-${index}`} />
+                                  <EditLabel key={`edit-label-thread-${index}`} 
+                                  commentCid={thread.cid}
+                                  className="ttl"/>
+                                  <StateLabel key={`state-label-thread-${index}`}
+                                  commentIndex={thread.index}
+                                  className="ttl ellipsis"/>
+                                  <br key={`ttl-s-br2${index}`} />
+                                  Post too long.&nbsp;
+                                  <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  &nbsp;to view. 
+                                </span>
                               </blockquote>
                             </Fragment>
                           : <blockquote key={`bq-${index}`}>
                               <Post content={thread.content} key={`post-${index}`} />
+                              <EditLabel key={`edit-label-thread-${index}`} 
+                              commentCid={thread.cid}
+                              className="ttl"/>
+                              <StateLabel key={`state-label-thread-${index}`}
+                              commentIndex={thread.index}
+                              className="ttl ellipsis"/>
                             </blockquote>)
                           : null}
                         </div>
@@ -695,64 +980,102 @@ const All = () => {
                               className="offline-reply" />
                               </span>&nbsp;
                               <PostMenu 
-                              key={`pmb-${index}`} 
-                              title="Post menu"
-                              ref={el => replyMenuRefs.current[reply.cid] = el}
-                              className='post-menu-button' 
-                              rotated={rotatedStates[reply.cid]}
-                              onClick={() => {
-                                const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
-                                const menu = document.querySelector(`.post-menu-reply-${reply.cid}`);
-                                const scrollY = window.scrollY || window.pageYOffset;
-                                menu.style.top = `calc(${rect.top + scrollY}px - 225px)`;
-                                menu.style.left = `${rect.left}px`;
-                              
-                                setRotatedStates(prevState => ({
-                                  ...prevState,
-                                  [reply.cid]: !prevState[reply.cid]
-                                }));
-                              }}                              
-                            >
-                              ▶
+                                key={`pmb-${index}`} 
+                                title="Post menu"
+                                ref={el => { 
+                                  replyMenuRefs.current[reply.cid] = el; 
+                                }}
+                                className='post-menu-button' 
+                                rotated={openMenuCid === reply.cid}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
+                                  setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                  setOpenMenuCid(prevCid => (prevCid === reply.cid ? null : reply.cid));
+                                }} 
+                              >
+                                ▶
                             </PostMenu>
-                              <div id="post-menu" className={`post-menu-reply post-menu-reply-${reply.cid}`}
-                              style={{ display: rotatedStates[reply.cid] ? 'block' : 'none' }}>
-                                <ul>
-                                  {/* <li>Edit post</li> */}
-                                  <li>Hide post</li>
+                            {createPortal(
+                              <PostMenuCatalog selectedStyle={selectedStyle} 
+                              ref={el => {postMenuCatalogRef.current = el}}
+                              onClick={(event) => event.stopPropagation()}
+                              style={{position: "absolute", 
+                              top: menuPosition.top + 7, 
+                              left: menuPosition.left}}>
+                              <div className={`post-menu-reply post-menu-reply-${reply.cid}`}
+                              style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
+                              >
+                                <ul className="post-menu-catalog">
+                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                  {reply.author.shortAddress === account?.author.shortAddress ? (
+                                    <>
+                                      <li onClick={() => {handleAuthorEditClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
+                                      <li onClick={() => {handleAuthorDeleteClick(reply.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                    </>
+                                  ) : null}
+                                  {isModerator ? (
+                                    <>
+                                      {reply.author.shortAddress === account?.author.shortAddress ? (
+                                        null
+                                      ) : (
+                                        <li onClick={() => {
+                                          setSelectedAddress(thread.subplebbitAddress);
+                                          setModeratingCommentCid(reply.cid)
+                                          setIsModerationOpen(true); 
+                                          handleOptionClick(reply.cid);
+                                          setDeletePost(true);
+                                        }}>
+                                        Delete post
+                                        </li>
+                                      )}
+                                      <li
+                                      onClick={() => {
+                                        setSelectedAddress(thread.subplebbitAddress);
+                                        setModeratingCommentCid(reply.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(reply.cid);
+                                      }}>
+                                        Mod tools
+                                      </li>
+                                    </>
+                                  ) : null}
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
                                     (replyMediaInfo.type === 'webpage' && 
                                     replyMediaInfo.thumbnail))) ? ( 
-                                    <li 
-                                    onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                    onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                                      Image search »
-                                      <ul className="dropdown-menu post-menu-catalog"
-                                        style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                        <li>
-                                          <a 
-                                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >Google</a>
-                                        </li>
-                                        <li>
-                                          <a
-                                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >Yandex</a>
-                                        </li>
-                                        <li>
-                                          <a
-                                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >SauceNAO</a>
-                                        </li>
-                                      </ul>
-                                    </li>
-                                    ) : null}
+                                      <li 
+                                      onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                        Image search »
+                                        <ul className="dropdown-menu post-menu-catalog"
+                                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                          <li onClick={() => handleOptionClick(reply.cid)}>
+                                            <a 
+                                            href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Google</a>
+                                          </li>
+                                          <li onClick={() => handleOptionClick(reply.cid)}>
+                                            <a
+                                            href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Yandex</a>
+                                          </li>
+                                          <li onClick={() => handleOptionClick(reply.cid)}>
+                                            <a
+                                            href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                            >SauceNAO</a>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    ) : null
+                                  }
                                 </ul>
                               </div>
+                              </PostMenuCatalog>, document.body
+                            )}
                               <div key={`bi-${index}`} id="backlink-id" className="backlink">
                                 {reply.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
@@ -912,21 +1235,28 @@ const All = () => {
                                   </Link>
                                   <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
                                   <span key={`ttl-s-${index}`} className="ttl"> (...)
-                                  <br key={`ttl-s-br1-${index}`} /><br key={`ttl-s-br2${reply.cid}`} />
+                                  <br key={`ttl-s-br1-${index}`} />
+                                  <EditLabel key={`edit-label-reply-${index}`} 
+                                  commentCid={reply.cid}
+                                  className="ttl"/>
+                                  <StateLabel key={`state-label-reply-${index}`}
+                                  commentIndex={reply.index}
+                                  className="ttl ellipsis"/>
+                                  <br key={`ttl-s-br2${index}`} />
                                   Comment too long.&nbsp;
-                                    <Link key={`ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                    <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. </span>
                                 </blockquote>
                               </Fragment>
                             : <blockquote key={`pm-${index}`} className="post-message">
-                                <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
-                                  ref={el => {
-                                    quoteRefs.current[reply.cid] = el;
-                                  }}
-                                  onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                                  onMouseOver={(event) => {
-                                    event.stopPropagation();
-                                    handleQuoteHover(reply, shortParentCid, () => {
+                            <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
+                              ref={el => {
+                                quoteRefs.current[reply.cid] = el;
+                              }}
+                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, shortParentCid, () => {
                                     setOutOfViewCid(reply.parentCid);
                                     const rect = quoteRefs.current[reply.cid].getBoundingClientRect();
                                     const distanceToRight = window.innerWidth - rect.right;
@@ -955,19 +1285,25 @@ const All = () => {
                                         maxWidth: window.innerWidth - rect.left - rect.width - 5
                                       });
                                     }
-                                    });
-                                  }}                                
-                                  onMouseLeave={() => {
-                                    removeHighlight();
-                                    setOutOfViewCid(null);
-                                  }}>
-                                    {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
-                                </Link>
-                                <Post content={reply.content} key={`post-${index}`} comment={reply} />
-                              </blockquote>)
-                            : null}
-                          </div>
-                        </div>
+                                });
+                              }}                                
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
+                                {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
+                            </Link>
+                            <Post content={reply.content} key={`post-${index}`} comment={reply} />
+                            <EditLabel key={`edit-label-reply-${index}`} 
+                              commentCid={reply.cid}
+                              className="ttl"/>
+                            <StateLabel key={`state-label-reply-${index}`}
+                            commentIndex={reply.index}
+                            className="ttl ellipsis"/>
+                          </blockquote>)
+                        : null}
+                      </div>
+                    </div>
                         )
                     })}
                   </div>
@@ -1110,14 +1446,27 @@ const All = () => {
                             <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
                               <Post content={thread.content?.slice(0, 500)} key={`post-mobile-${index}`} />
                               <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                              <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${thread.cid}`} />
+                              <br key={`mob-ttl-s-br1-${index}`} />
+                              <EditLabel key={`edit-label-thread-mob-${index}`} 
+                              commentCid={thread.cid}
+                              className="ttl"/>
+                              <StateLabel key={`state-label-thread-mob-${index}`}
+                              commentIndex={thread.index}
+                              className="ttl ellipsis"/>
+                              <br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
-                                <Link key={`mob-ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                             </blockquote>
                           </Fragment>
                         : <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
                             <Post content={thread.content} key={`post-mobile-${index}`} />
+                            <EditLabel key={`edit-label-thread-mob-${index}`} 
+                            commentCid={thread.cid}
+                            className="ttl"/>
+                            <StateLabel key={`state-label-thread-mob-${index}`}
+                            commentIndex={thread.index}
+                            className="ttl ellipsis"/>
                           </blockquote>)
                         : null}
                       </div>
@@ -1271,27 +1620,116 @@ const All = () => {
                             <Fragment key={`fragment15-${index}`}>
                               <blockquote key={`mob-pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
-                                onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}
-                                onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, thread.shortCid, event)}
-                                onMouseLeave={removeHighlight}>
+                                ref={el => {
+                                  quoteRefsMobile.current[reply.cid] = el;
+                                }}
+                                onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                                onMouseOver={(event) => {
+                                  event.stopPropagation();
+                                  handleQuoteHover(reply, shortParentCid, () => {
+                                    setOutOfViewCid(reply.parentCid);
+                                    const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
+
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+                                  
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
+                                  });
+                                }}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }}>
                                   {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
                                 <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
                                 <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                                <br key={`mob-ttl-s-br1-${index}`} /><br key={`mob-ttl-s-br2${reply.cid}`} />
+                                <br key={`mob-ttl-s-br1-${index}`} />
+                                <EditLabel key={`edit-label-reply-mob-${index}`} 
+                                commentCid={reply.cid}
+                                className="ttl"/>
+                                <StateLabel key={`state-label-reply-mob-${index}`}
+                                commentIndex={reply.index}
+                                className="ttl ellipsis"/>
+                                <br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;
-                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                               </blockquote>
                             </Fragment>
                           : <blockquote key={`mob-pm-${index}`} className="post-message">
                               <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
-                              onClick={(event) => handleQuoteClick(reply, shortParentCid, thread.shortCid, event)}
-                              onMouseOver={(event) => handleQuoteHover(reply, shortParentCid, thread.shortCid, event)}
-                              onMouseLeave={removeHighlight}>
+                              ref={el => {
+                                quoteRefsMobile.current[reply.cid] = el;
+                              }}
+                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, shortParentCid, () => {
+                                  setOutOfViewCid(reply.parentCid);
+                                  const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
+                                  const distanceToRight = window.innerWidth - rect.right;
+                                  const distanceToTop = rect.top;
+                                  const distanceToBottom = window.innerHeight - rect.bottom;
+                                  let top;
+
+                                  if (distanceToTop < postOnHoverHeight / 2) {
+                                    top = window.scrollY - 5;
+                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                  } else {
+                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  }
+                                
+                                  if (distanceToRight < 200) {
+                                    setOutOfViewPosition({
+                                      top,
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
+                                    });
+                                  } else {
+                                    setOutOfViewPosition({
+                                      top,
+                                      left: rect.left + rect.width + 5,
+                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                    });
+                                  }
+                                });
+                              }}
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
                                 {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                               </Link>
                               <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
+                              <EditLabel key={`edit-label-reply-mob-${index}`} 
+                              commentCid={reply.cid}
+                              className="ttl"/>
+                              <StateLabel key={`state-label-reply-mob-${index}`}
+                              commentIndex={reply.index}
+                              className="ttl ellipsis"/>
                             </blockquote>)
                           : null}
                             {reply.replyCount > 0 ? (
@@ -1299,11 +1737,49 @@ const All = () => {
                               {reply.replies?.pages?.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
                               .map((reply, index) => (
-                                <div key={`div-back${index}`} style={{display: 'inline-block'}}>
+                                <div key={`div-back${index}`} style={{display: 'inline-block'}} 
+                                ref={el => {
+                                  backlinkRefsMobile.current[reply.cid] = el;
+                                }}>
                                 <Link key={`ql-${index}`} to={() => {}}
                                 onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                onMouseOver={(event) => handleQuoteHover(reply, reply.shortCid, event)}
-                                onMouseLeave={removeHighlight} 
+                                onMouseOver={(event) => {
+                                  event.stopPropagation();
+                                  handleQuoteHover(reply, reply.shortCid, () => {
+                                    setOutOfViewCid(reply.cid)
+                                    const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
+
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+                                  
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
+                                  });
+                                }}
+                                onMouseLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }} 
                                 className="quote-link">
                                   c/{reply.shortCid}</Link>
                                   &nbsp;
