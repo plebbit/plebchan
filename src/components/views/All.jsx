@@ -63,8 +63,8 @@ const All = () => {
 
   const account = useAccount();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
 
   const threadMenuRefs = useRef({});
   const replyMenuRefs = useRef({});
@@ -81,7 +81,6 @@ const All = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
-  const [isModerator, setIsModerator] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
@@ -93,8 +92,8 @@ const All = () => {
   const [moderatorPermissions, setModeratorPermissions] = useState({});
 
   const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'new'});
-  const {subplebbits} = useSubplebbits({subplebbitAddresses: addresses, sortType: 'new'});
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'active'});
+  const {subplebbits} = useSubplebbits({subplebbitAddresses: addresses, sortType: 'active'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
   const stateString = useFeedStateString(subplebbits);
@@ -102,11 +101,11 @@ const All = () => {
 
   useEffect(() => {
     let permissions = {};
-
+  
     selectedFeed.forEach(thread => {
-      const subplebbit = subplebbits.find(s => s.address === thread.subplebbitAddress);
-
-      if (subplebbit && subplebbit.roles !== undefined) { 
+      const subplebbit = subplebbits.find(s => s && s.address === thread.subplebbitAddress);
+  
+      if (subplebbit && subplebbit.roles) { 
         const role = subplebbit.roles[account?.author.address]?.role;
     
         if (role === 'moderator' || role === 'admin' || role === 'owner') {
@@ -116,9 +115,9 @@ const All = () => {
         }
       }
     });
-
+  
     setModeratorPermissions(permissions);
-  }, [account?.author.address, selectedFeed, subplebbits]);
+  }, [account?.author.address, selectedFeed, subplebbits]);  
 
 
   const handleOptionClick = () => {
@@ -160,11 +159,10 @@ const All = () => {
   }, [subplebbits])
 
   useEffect(() => {
-    if (errorString && errorString !== errorMessage) {
-      setErrorMessage(errorString);
+    if (errorString) {
+      setNewErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage, errorMessage]);
-
+  }, [errorString, setNewErrorMessage]);
 
   useEffect(() => {
     setSelectedFeed(feed.sort((a, b) => b.timestamp - a.timestamp));
@@ -247,10 +245,10 @@ const All = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-        setSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success');
     } 
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -261,7 +259,7 @@ const All = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -298,7 +296,7 @@ const All = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -310,18 +308,12 @@ const All = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
   
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-  useEffect(() => {
-    if (error && error !== errorMessage) {
-        setErrorMessage(error);
-    }
-  }, [error, setErrorMessage, errorMessage]);
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -569,7 +561,7 @@ const All = () => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = "assets/filedeleted-res.gif";
-                  setIsModerator(moderatorPermissions[thread.subplebbitAddress]);
+                  const isModerator = moderatorPermissions[thread.subplebbitAddress];
                   return (
                 <Fragment key={`fr-${index}`}>
                   <div key={`t-${index}`} className="thread">

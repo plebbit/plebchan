@@ -26,8 +26,8 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
   const [reason, setReason] = useState('');
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
 
-  const [errorMessage, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
 
 
   useEffect(() => {
@@ -48,9 +48,9 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-        setSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success');
     } else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -63,7 +63,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -100,7 +100,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -113,19 +113,12 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
   
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-
-  useEffect(() => {
-    if (error && error !== errorMessage) {
-        setErrorMessage(error);
-    }
-  }, [error, setErrorMessage, errorMessage]);
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
   
   useEffect(() => {

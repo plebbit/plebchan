@@ -60,8 +60,8 @@ const Catalog = () => {
 
   const navigate = useNavigate();
   
-  const [errorMessage, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
   
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -140,10 +140,10 @@ const Catalog = () => {
 
 
   useEffect(() => {
-    if (errorString && errorString !== errorMessage) {
-      setErrorMessage(errorString);
+    if (errorString) {
+      setNewErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage, errorMessage]);
+  }, [errorString, setNewErrorMessage]);
 
   
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
@@ -184,11 +184,11 @@ const Catalog = () => {
         navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
-        setSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success');
       }
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -201,7 +201,7 @@ const Catalog = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -222,7 +222,7 @@ const Catalog = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
@@ -257,7 +257,7 @@ const Catalog = () => {
     event.preventDefault();
     
     if (subjectRef.current.value === "") {
-      setErrorMessage('Subject field is mandatory');
+      setNewErrorMessage('Subject field is mandatory');
       return;
     }
 
@@ -315,7 +315,7 @@ const Catalog = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -328,18 +328,12 @@ const Catalog = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
   
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-  useEffect(() => {
-    if (error && error !== errorMessage) {
-        setErrorMessage(error);
-    }
-  }, [error, setErrorMessage, errorMessage]);
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -438,7 +432,7 @@ const Catalog = () => {
         await unsubscribe(selectedAddress);
       }
     } catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
   };
 

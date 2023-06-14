@@ -68,8 +68,8 @@ const Thread = () => {
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
 
-  const [errorMessage, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
 
   const nameRef = useRef();
   const commentRef = useRef();
@@ -173,10 +173,10 @@ const Thread = () => {
 
 
   useEffect(() => {
-    if (errorString && errorString !== errorMessage) {
-      setErrorMessage(errorString);
+    if (errorString) {
+      setNewErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage, errorMessage]);
+  }, [errorString, setNewErrorMessage]);
 
 
   const flattenedReplies = useMemo(() => 
@@ -232,12 +232,12 @@ const Thread = () => {
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       if (challengeVerification.publication?.cid !== undefined) {
-        console.log('challenge success');
+        return;
       } else {
-      setSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success');
       }
     } else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -250,7 +250,7 @@ const Thread = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -271,7 +271,7 @@ const Thread = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
 
@@ -306,7 +306,7 @@ const Thread = () => {
       commentRef.current.value === "" &&
       linkRef.current.value === ""
     ) {
-      setErrorMessage("Please enter a comment or link.");
+      setNewErrorMessage("Please enter a comment or link.");
       return;
     }
   
@@ -365,7 +365,7 @@ const Thread = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -374,23 +374,16 @@ const Thread = () => {
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
     content: editedComment || undefined,
-    subplebbitAddress: selectedAddress || subplebbitAddress,
+    subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
   
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-  useEffect(() => {
-    if (error && error !== errorMessage) {
-        setErrorMessage(error);
-    }
-  }, [error, setErrorMessage, errorMessage]);
-
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -461,7 +454,6 @@ const Thread = () => {
       })();
     }
   }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
-
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {

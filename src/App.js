@@ -40,31 +40,31 @@ export default function App() {
 
   const account = useAccount();
 
-  const [, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
 
 
   useEffect(() => {
     const successToast = localStorage.getItem("successToast");
     const errorToast = localStorage.getItem("errorToast");
     if (successToast) {
-      setSuccessMessage(successToast);
+      setNewSuccessMessage(successToast);
       localStorage.removeItem("successToast");
     } else if (errorToast) {
-      setErrorMessage(errorToast);
+      setNewErrorMessage(errorToast);
       localStorage.removeItem("errorToast");
     } else {
       return;
     }
-  }, [setErrorMessage, setSuccessMessage]);
+  }, [setNewErrorMessage, setNewSuccessMessage]);
 
   // preload default subs and subscriptions
   useBufferedFeeds({
     feedsOptions: [
       {subplebbitAddresses: defaultSubplebbits.map(
         (subplebbit) => subplebbit.address
-      ), sortType: 'new'},
-      {subplebbitAddresses: account?.subscriptions, sortType: 'new'}
+      ), sortType: 'active'},
+      {subplebbitAddresses: account?.subscriptions, sortType: 'active'}
     ]
   });
   

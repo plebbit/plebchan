@@ -69,8 +69,8 @@ const Board = () => {
   const navigate = useNavigate();
   const { subplebbitAddress } = useParams();
   
-  const [errorMessage, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
 
   const nameRef = useRef();
   const subjectRef = useRef();
@@ -159,10 +159,10 @@ const Board = () => {
 
 
   useEffect(() => {
-    if (errorString && errorString !== errorMessage) {
-      setErrorMessage(errorString);
+    if (errorString) {
+      setNewErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage, errorMessage]);
+  }, [errorString, setNewErrorMessage]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -261,11 +261,11 @@ const Board = () => {
         navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
-        setSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success');
       }
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -278,7 +278,7 @@ const Board = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -299,7 +299,7 @@ const Board = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
@@ -334,7 +334,7 @@ const Board = () => {
     event.preventDefault();
     
     if (subjectRef.current.value === "") {
-      setErrorMessage('Subject field is mandatory');
+      setNewErrorMessage('Subject field is mandatory');
       return;
     }
 
@@ -392,7 +392,7 @@ const Board = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -405,18 +405,12 @@ const Board = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
   
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-  useEffect(() => {
-    if (error && error !== errorMessage) {
-        setErrorMessage(error);
-    }
-  }, [error, setErrorMessage, errorMessage]);
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
   const handleAuthorDeleteClick = (commentCid) => {
@@ -526,7 +520,7 @@ const Board = () => {
         await unsubscribe(selectedAddress);
       }
     } catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
   };
 
