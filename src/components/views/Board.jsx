@@ -401,7 +401,7 @@ const Board = () => {
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
     content: editedComment || undefined,
-    subplebbitAddress: selectedAddress || subplebbitAddress,
+    subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
@@ -413,8 +413,8 @@ const Board = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (commentCid) => {
-    handleOptionClick(commentCid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -428,7 +428,7 @@ const Board = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(commentCid);
+                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -909,7 +909,7 @@ const Board = () => {
                                   {thread.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
@@ -1169,7 +1169,7 @@ const Board = () => {
                                   {reply.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (

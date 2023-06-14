@@ -214,8 +214,8 @@ const SubscriptionsCatalog = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (commentCid) => {
-    handleOptionClick(commentCid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -229,7 +229,7 @@ const SubscriptionsCatalog = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(commentCid);
+                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -557,7 +557,7 @@ const SubscriptionsCatalog = () => {
                               {thread.author.shortAddress === account?.author.shortAddress ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
+                                  <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                 </>
                               ) : null}
                               {isModerator ? (

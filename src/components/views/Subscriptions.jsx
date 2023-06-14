@@ -318,8 +318,8 @@ const Subscriptions = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (commentCid) => {
-    handleOptionClick(commentCid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -333,7 +333,7 @@ const Subscriptions = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(commentCid);
+                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -735,7 +735,7 @@ const Subscriptions = () => {
                                   {thread.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => {handleAuthorEditClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(thread.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                      <li onClick={() => {handleAuthorDeleteClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
@@ -1014,7 +1014,7 @@ const Subscriptions = () => {
                                   {reply.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => {handleAuthorEditClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(reply.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                      <li onClick={() => {handleAuthorDeleteClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (

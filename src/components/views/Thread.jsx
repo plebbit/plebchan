@@ -261,13 +261,13 @@ const Thread = () => {
   useEffect(() => {
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
-      subplebbitAddress: selectedAddress,
+      subplebbitAddress: comment.subplebbitAddress,
     }));
-  }, [selectedAddress]);
+  }, [comment.subplebbitAddress]);
 
   
   const [publishCommentOptions, setPublishCommentOptions] = useState({
-    subplebbitAddress: selectedAddress,
+    subplebbitAddress: comment.subplebbitAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
@@ -374,7 +374,7 @@ const Thread = () => {
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
     content: editedComment || undefined,
-    subplebbitAddress: selectedAddress,
+    subplebbitAddress: comment.subplebbitAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
@@ -386,8 +386,8 @@ const Thread = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (commentCid) => {
-    handleOptionClick(commentCid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -401,7 +401,7 @@ const Thread = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(commentCid);
+                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -864,7 +864,7 @@ const Thread = () => {
                               {comment.author?.shortAddress === account?.author.shortAddress ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
+                                  <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
                                 </>
                               ) : null}
                               {isModerator ? (
@@ -1087,7 +1087,7 @@ const Thread = () => {
                                   {reply.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
