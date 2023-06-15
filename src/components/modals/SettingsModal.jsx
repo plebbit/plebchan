@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
 import Modal from "react-modal";
 import { deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "../styled/modals/SettingsModal.styled";
+import { AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import useGeneralStore from "../../hooks/stores/useGeneralStore";
 import useError from "../../hooks/useError";
 import useSuccess from "../../hooks/useSuccess";
@@ -12,6 +14,7 @@ const {version} = packageJson
 
 const SettingsModal = ({ isOpen, closeModal }) => {
   const {
+    anonymousMode, setAnonymousMode,
     selectedStyle,
   } = useGeneralStore(state => state);
 
@@ -190,6 +193,38 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setErrorMessage(error.message);
     }
   };
+
+
+  const handleAnonymousMode = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+            <div className='author-delete-alert'>
+              <p>
+                { !anonymousMode ? 
+                  "Enabling anonymous mode will turn off all account-based features, such as subscribing to boards." : 
+                  "Disabling anonymous mode will turn on all account-based features, such as subscribing to boards."
+                }
+              </p>
+              <div className="author-delete-buttons">
+                <button onClick={onClose}>Cancel</button>
+                <button
+                  onClick={() => {
+                    setAnonymousMode(!anonymousMode);
+                    onClose();
+                  }}
+                >
+                  { !anonymousMode ? "Enable" : "Disable" }
+                </button>
+              </div>
+            </div>
+          </AuthorDeleteAlert>
+        )
+      }
+    })
+  };
+
   
   
   return (
@@ -304,7 +339,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               </div>
             </li>
           </ul>
-          </ul>
+        </ul>
         <ul>
           <li className="settings-cat-lbl">
             <span className={`${expanded.includes(2) ? 'minus' : 'plus'}`}
@@ -379,19 +414,34 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             </ul>
           </ul> */}
         </ul>
+        <ul>
+          <li className="anon-off">
+          <label title={ !anonymousMode ? 
+            "Enable anonymous mode (turns off all account-based features)" : 
+            "Disable anonymous mode (turns on all account-based features)"
+          }>
+            <input 
+              type="checkbox" 
+              checked={!anonymousMode} 
+              onChange={handleAnonymousMode}
+            />
+            Disable anonymous mode
+          </label>
+          </li>
+        </ul>
         <div>
-        <button
-          className="cache-button"
-          onClick={async () => {
-            if (window.confirm("Are you sure you want to clear the cache?")) {
-              await deleteCaches();
-              localStorage.setItem("cacheCleared", "true");
-              window.location.reload();
-            }
-          }}
-        >
-          Clear Cache
-        </button>
+          <button
+            className="cache-button"
+            onClick={async () => {
+              if (window.confirm("Are you sure you want to clear the cache?")) {
+                await deleteCaches();
+                localStorage.setItem("cacheCleared", "true");
+                window.location.reload();
+              }
+            }}
+          >
+            Clear Cache
+          </button>
         </div>
       </div>
     </StyledModal>

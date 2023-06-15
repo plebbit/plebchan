@@ -17,6 +17,7 @@ import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
+import PendingLabel from '../PendingLabel';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import PostOnHover from '../PostOnHover';
@@ -69,8 +70,8 @@ const Board = () => {
   const navigate = useNavigate();
   const { subplebbitAddress } = useParams();
   
-  const [errorMessage, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
 
   const nameRef = useRef();
   const subjectRef = useRef();
@@ -81,9 +82,11 @@ const Board = () => {
   const postMenuCatalogRef = useRef(null);
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
+  const backlinkRefsMobile = useRef({});
+  const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
@@ -157,10 +160,10 @@ const Board = () => {
 
 
   useEffect(() => {
-    if (errorString && errorString !== errorMessage) {
-      setErrorMessage(errorString);
+    if (errorString) {
+      setNewErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage, errorMessage]);
+  }, [errorString, setNewErrorMessage]);
 
 
   const flattenedRepliesByThread = useMemo(() => {
@@ -259,11 +262,11 @@ const Board = () => {
         navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
-        setSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success');
       }
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -276,7 +279,7 @@ const Board = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -297,7 +300,7 @@ const Board = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
@@ -332,7 +335,7 @@ const Board = () => {
     event.preventDefault();
     
     if (subjectRef.current.value === "") {
-      setErrorMessage('Subject field is mandatory');
+      setNewErrorMessage('Subject field is mandatory');
       return;
     }
 
@@ -390,7 +393,7 @@ const Board = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -399,26 +402,20 @@ const Board = () => {
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
     content: editedComment || undefined,
-    subplebbitAddress: selectedAddress || subplebbitAddress,
+    subplebbitAddress: selectedAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
   
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-  useEffect(() => {
-    if (error && error !== errorMessage) {
-        setErrorMessage(error);
-    }
-  }, [error, setErrorMessage, errorMessage]);
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (commentCid) => {
-    handleOptionClick(commentCid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -432,7 +429,7 @@ const Board = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(commentCid);
+                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -524,18 +521,20 @@ const Board = () => {
         await unsubscribe(selectedAddress);
       }
     } catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
   };
 
+
   useLayoutEffect(() => {
     if (postOnHoverRef.current) {
-        const rect = postOnHoverRef.current.getBoundingClientRect();
-        setPostOnHoverHeight(rect.height);
+      const rect = postOnHoverRef.current.getBoundingClientRect();
+      setPostOnHoverHeight(rect.height);
     }
   }, [outOfViewCid]);
 
   
+
   return (
     <>
       <Helmet>
@@ -911,7 +910,7 @@ const Board = () => {
                                   {thread.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
@@ -989,14 +988,36 @@ const Board = () => {
                                     onMouseOver={(event) => {
                                       event.stopPropagation();
                                       handleQuoteHover(reply, null, () => {
-                                        setOutOfViewCid(reply.cid);
                                         const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                        setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
-                                          left: rect.left + rect.width + 5,
-                                        });
+                                        const distanceToRight = window.innerWidth - rect.right;
+                                        const distanceToTop = rect.top;
+                                        const distanceToBottom = window.innerHeight - rect.bottom;
+                                        let top;
+
+                                        if (distanceToTop < postOnHoverHeight / 2) {
+                                          top = window.scrollY - 5;
+                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                        } else {
+                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                        }
+                                      
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top,
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
+                                          });
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top,
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                          });
+                                        }
+                                        setOutOfViewCid(reply.cid);
                                       });
-                                    }}                                
+                                    }}
                                     onMouseLeave={() => {
                                       removeHighlight();
                                       setOutOfViewCid(null);
@@ -1114,7 +1135,7 @@ const Board = () => {
                                     setSelectedParentCid(reply.cid);
                                   }} title="Reply to this post">{reply.shortCid}</Link>
                                 ) : (
-                                  <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
+                                  <PendingLabel key="pending" commentIndex={reply.index} />
                                 )}
                               </span>&nbsp;
                               <PostMenu 
@@ -1149,7 +1170,7 @@ const Board = () => {
                                   {reply.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
@@ -1228,10 +1249,32 @@ const Board = () => {
                                       handleQuoteHover(reply, null, () => {
                                         setOutOfViewCid(reply.cid);
                                         const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                        setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
-                                          left: rect.left + rect.width + 5,
-                                        });
+                                        const distanceToRight = window.innerWidth - rect.right;
+                                        const distanceToTop = rect.top;
+                                        const distanceToBottom = window.innerHeight - rect.bottom;
+                                        let top;
+
+                                        if (distanceToTop < postOnHoverHeight / 2) {
+                                          top = window.scrollY - 5;
+                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                        } else {
+                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                        }
+                                      
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top,
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
+                                          });
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top,
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                          });
+                                        }
                                       });
                                     }}
                                     onMouseLeave={() => {
@@ -1305,24 +1348,41 @@ const Board = () => {
                                 <blockquote key={`pm-${index}`} comment={reply} className="post-message">
                                   <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
                                     ref={el => {
-                                      quoteRefs.current[shortParentCid] = el;
+                                      quoteRefs.current[reply.cid] = el;
                                     }}
                                     onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
                                     onMouseOver={(event) => {
                                       event.stopPropagation();
                                       handleQuoteHover(reply, shortParentCid, () => {
-                                        if (shortParentCid === thread.shortCid) {
-                                          return;
-                                        } else {
                                           setOutOfViewCid(reply.parentCid);
-                                          console.log("risposta: ", reply.parentCid);
-                                          const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
-                                          setOutOfViewPosition({
-                                            top: rect.top + window.scrollY - rect.height / 2,
-                                            left: rect.left + rect.width + 5,
-                                          });
-                                        }
-                                      });
+                                          const rect = quoteRefs.current[reply.cid].getBoundingClientRect();
+                                          const distanceToRight = window.innerWidth - rect.right;
+                                          const distanceToTop = rect.top;
+                                          const distanceToBottom = window.innerHeight - rect.bottom;
+                                          let top;
+
+                                          if (distanceToTop < postOnHoverHeight / 2) {
+                                            top = window.scrollY - 5;
+                                          } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                            top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                          } else {
+                                            top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                          }
+                                        
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5
+                                            });
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                            });
+                                          }
+                                        });
                                     }}                                
                                     onMouseLeave={() => {
                                       removeHighlight();
@@ -1348,22 +1408,40 @@ const Board = () => {
                             : <blockquote key={`pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
                                   ref={el => {
-                                    quoteRefs.current[shortParentCid] = el;
+                                    quoteRefs.current[reply.cid] = el;
                                   }}
                                   onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
                                   onMouseOver={(event) => {
                                     event.stopPropagation();
                                     handleQuoteHover(reply, shortParentCid, () => {
-                                      if (shortParentCid === thread.shortCid) {
-                                        return;
-                                      } else {
                                         setOutOfViewCid(reply.parentCid);
-                                        const rect = quoteRefs.current[shortParentCid].getBoundingClientRect();
-                                        setOutOfViewPosition({
-                                          top: rect.top + window.scrollY - rect.height / 2,
-                                          left: rect.left + rect.width + 5,
-                                        });
-                                      }
+                                        const rect = quoteRefs.current[reply.cid].getBoundingClientRect();
+                                        const distanceToRight = window.innerWidth - rect.right;
+                                        const distanceToTop = rect.top;
+                                        const distanceToBottom = window.innerHeight - rect.bottom;
+                                        let top;
+
+                                        if (distanceToTop < postOnHoverHeight / 2) {
+                                          top = window.scrollY - 5;
+                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                        } else {
+                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                        }
+                                      
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top,
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
+                                          });
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top,
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                          });
+                                        }
                                     });
                                   }}                                
                                   onMouseLeave={() => {
@@ -1612,7 +1690,7 @@ const Board = () => {
                                   }} title="Reply to this post">{reply.shortCid}
                                 </Link>
                               ) : (
-                                <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span> 
+                                <PendingLabel key="pending-mob" commentIndex={reply.index} />
                               )}
                             </span>
                           </div>
@@ -1667,8 +1745,43 @@ const Board = () => {
                             <Fragment key={`fragment15-${index}`}>
                               <blockquote key={`mob-pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                                ref={el => {
+                                  quoteRefsMobile.current[reply.cid] = el;
+                                }}
                                 onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                                onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseOver={(event) => {
+                                  event.stopPropagation();
+                                  handleQuoteHover(reply, shortParentCid, () => {
+                                    setOutOfViewCid(reply.parentCid);
+                                    const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
+
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+                                  
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
+                                  });
+                                }}
                                 onMouseLeave={() => {
                                   removeHighlight();
                                   setOutOfViewCid(null);
@@ -1692,8 +1805,43 @@ const Board = () => {
                             </Fragment>
                           : <blockquote key={`mob-pm-${index}`} className="post-message">
                               <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                              ref={el => {
+                                quoteRefsMobile.current[reply.cid] = el;
+                              }}
                               onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                              onMouseOver={() => handleQuoteHover(reply, shortParentCid, (cid) => setOutOfViewCid(cid))}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, shortParentCid, () => {
+                                  setOutOfViewCid(reply.parentCid);
+                                  const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
+                                  const distanceToRight = window.innerWidth - rect.right;
+                                  const distanceToTop = rect.top;
+                                  const distanceToBottom = window.innerHeight - rect.bottom;
+                                  let top;
+
+                                  if (distanceToTop < postOnHoverHeight / 2) {
+                                    top = window.scrollY - 5;
+                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                  } else {
+                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  }
+                                
+                                  if (distanceToRight < 200) {
+                                    setOutOfViewPosition({
+                                      top,
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
+                                    });
+                                  } else {
+                                    setOutOfViewPosition({
+                                      top,
+                                      left: rect.left + rect.width + 5,
+                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                    });
+                                  }
+                                });
+                              }}
                               onMouseLeave={() => {
                                 removeHighlight();
                                 setOutOfViewCid(null);
@@ -1714,10 +1862,45 @@ const Board = () => {
                               {reply.replies?.pages?.topAll.comments
                               .sort((a, b) => a.timestamp - b.timestamp)
                               .map((reply, index) => (
-                                <div key={`div-back${index}`} style={{display: 'inline-block'}}>
+                                <div key={`div-back${index}`} style={{display: 'inline-block'}} 
+                                ref={el => {
+                                  backlinkRefsMobile.current[reply.cid] = el;
+                                }}>
                                 <Link key={`ql-${index}`} to={() => {}}
                                 onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                onMouseOver={() => handleQuoteHover(reply, reply.shortCid, (cid) => setOutOfViewCid(cid))}
+                                onMouseOver={(event) => {
+                                  event.stopPropagation();
+                                  handleQuoteHover(reply, reply.shortCid, () => {
+                                    setOutOfViewCid(reply.cid)
+                                    const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
+
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+                                  
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
+                                  });
+                                }}
                                 onMouseLeave={() => {
                                   removeHighlight();
                                   setOutOfViewCid(null);
@@ -1743,23 +1926,24 @@ const Board = () => {
               ) : (<PostLoader />)
             )}
           </div>
-          {createPortal(
+          {outOfViewCid && outOfViewPosition && createPortal(
             <div
-            ref={postOnHoverRef}
+              ref={postOnHoverRef}
               style={{
-                display: outOfViewCid ? "block" : "none",
+                display: "block",
                 position: "absolute",
-                top: outOfViewPosition.top - postOnHoverHeight / 2 + 10,
-                left: outOfViewPosition.left, 
+                top: outOfViewPosition.top,
+                right: outOfViewPosition.right,
+                left: outOfViewPosition.left,
+                maxWidth: outOfViewPosition.maxWidth,
               }}
-              >
-                <PostOnHover
-                  cid={outOfViewCid}
-                  feed={feed}
-                />
-              </div>
-            , document.body
-          )}
+            >
+              <PostOnHover
+                cid={outOfViewCid}
+                feed={feed}
+              />
+            </div>
+          , document.body)}
         </BoardForm>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{

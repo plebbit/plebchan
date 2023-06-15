@@ -23,7 +23,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const account = useAccount();
 
-  const [, setErrorMessage] = useError();
+  const [, setNewErrorMessage] = useError();
   
   const nodeRef = useRef(null);
   const nameRef = useRef();
@@ -73,7 +73,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       console.log('challenge success');
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -86,7 +86,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -107,7 +107,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
 
@@ -141,7 +141,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       commentRef.current.value === "" &&
       linkRef.current.value === ""
     ) {
-      setErrorMessage("Please enter a comment or link.");
+      setNewErrorMessage("Please enter a comment or link.");
       return;
     }
 
@@ -200,7 +200,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };

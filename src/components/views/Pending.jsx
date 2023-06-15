@@ -34,7 +34,7 @@ const Pending = () => {
 
   const account = useAccount();
   const comment = useAccountComment({commentIndex: index});
-  const [errorMessage, setErrorMessage] = useError();
+  const [, setNewErrorMessage] = useError();
 
   useEffect(() => {
     setSelectedAddress(comment?.subplebbitAddress);
@@ -53,10 +53,10 @@ const Pending = () => {
   }, [comment?.state, comment?.error, index])
 
   useEffect(() => {
-    if (errorString && errorString !== errorMessage) {
-      setErrorMessage(errorString);
+    if (errorString) {
+      setNewErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage, errorMessage]);
+  }, [errorString, setNewErrorMessage]);
 
   const [visible] = useState(true);
 

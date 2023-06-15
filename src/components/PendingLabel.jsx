@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAccountComment } from "@plebbit/plebbit-react-hooks";
 import useStateString from "../hooks/useStateString";
 
-const StateLabel = ({ commentIndex, className }) => {
+const PendingLabel = ({ commentIndex }) => {
   const comment = useAccountComment({commentIndex: commentIndex});
   const stateString = useStateString(comment);
 
@@ -14,30 +14,22 @@ const StateLabel = ({ commentIndex, className }) => {
   }, []);
 
   if (commentIndex === undefined) return null;
-
+  
   return (
-    commentIndex && stateString !== "Succeeded" ? (
-      (comment.state === "failed" || (stateString === undefined && !isLoading && comment.cid === undefined)) ? (
-        <span className="ttl">
-          <br />
-          (
-            <span className="ttl">
-              Failed
-            </span>
-          )
+    comment.cid ? (
+      <span>{comment.cid.slice(2, 14)}</span>
+    ) : (
+      (comment.state === "failed" || (stateString === undefined && !isLoading)) ? (
+        <span style={{color: 'red', fontWeight: '700'}}>
+          Failed
         </span>
       ) : (
-        <span className="ttl">
-          <br />
-          (
-            <span className={className}>
-              {stateString}
-            </span>
-          )
+        <span style={{color: 'red', fontWeight: '700'}}>
+          Pending
         </span>
       )
-    ) : null
+    )
   );
 };
 
-export default StateLabel;
+export default PendingLabel;

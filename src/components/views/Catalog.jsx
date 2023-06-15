@@ -60,8 +60,8 @@ const Catalog = () => {
 
   const navigate = useNavigate();
   
-  const [errorMessage, setErrorMessage] = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
   
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -78,7 +78,7 @@ const Catalog = () => {
   const [openMenuCid, setOpenMenuCid] = useState(null);
 
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'new'});
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   const account = useAccount();
@@ -140,10 +140,10 @@ const Catalog = () => {
 
 
   useEffect(() => {
-    if (errorString && errorString !== errorMessage) {
-      setErrorMessage(errorString);
+    if (errorString) {
+      setNewErrorMessage(errorString);
     }
-  }, [errorString, setErrorMessage, errorMessage]);
+  }, [errorString, setNewErrorMessage]);
 
   
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
@@ -184,11 +184,11 @@ const Catalog = () => {
         navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
-        setSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success');
       }
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 
@@ -201,7 +201,7 @@ const Catalog = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -222,7 +222,7 @@ const Catalog = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
@@ -257,7 +257,7 @@ const Catalog = () => {
     event.preventDefault();
     
     if (subjectRef.current.value === "") {
-      setErrorMessage('Subject field is mandatory');
+      setNewErrorMessage('Subject field is mandatory');
       return;
     }
 
@@ -315,7 +315,7 @@ const Catalog = () => {
       };
   
       challengeImg.onerror = () => {
-        reject(setErrorMessage('Could not load challenges'));
+        reject(setNewErrorMessage('Could not load challenges'));
       };
     });
   };
@@ -328,22 +328,16 @@ const Catalog = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     },
   });
   
   
-  const {error, publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-  useEffect(() => {
-    if (error && error !== errorMessage) {
-        setErrorMessage(error);
-    }
-  }, [error, setErrorMessage, errorMessage]);
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (commentCid) => {
-    handleOptionClick(commentCid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -357,7 +351,7 @@ const Catalog = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(commentCid);
+                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -438,7 +432,7 @@ const Catalog = () => {
         await unsubscribe(selectedAddress);
       }
     } catch (error) {
-      setErrorMessage(error);
+      setNewErrorMessage(error);
     }
   };
 
@@ -749,7 +743,7 @@ const Catalog = () => {
                                 {thread.author.shortAddress === account?.author.shortAddress ? (
                                   <>
                                     <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                    <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                   </>
                                 ) : null}
                                 {isModerator ? (

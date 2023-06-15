@@ -32,10 +32,20 @@ const useError = () => {
     }
   }, [errorMessage, renderCount]);
 
-  const setNewErrorMessage = (message) => {
+  const setNewErrorMessage = (error) => {
+    let message;
+    if (typeof error === 'string') {
+      message = error;
+    } else if (error instanceof Error) {
+      message = error.message;
+    } else {
+      message = JSON.stringify(error);
+    }
+    
     setErrorMessage(message);
     setRenderCount(prevCount => prevCount + 1);
   };
+  
 
   return [errorMessage, setNewErrorMessage];
 };
