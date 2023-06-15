@@ -16,6 +16,7 @@ import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
+import PendingLabel from '../PendingLabel';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import PostOnHover from '../PostOnHover';
@@ -1051,7 +1052,7 @@ const Thread = () => {
                                   setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
                                   }} title="Reply to this post">{reply.shortCid}</button>
                               ) : (
-                                <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
+                                <PendingLabel key="pending" commentIndex={reply.index} />
                               )}
                             </span>&nbsp;
                             <PostMenu 
@@ -1490,7 +1491,7 @@ const Thread = () => {
                                 setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
                                 }} title="Reply to this post">{reply.shortCid}</button>
                             ) : (
-                              <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span> 
+                              <PendingLabel key="pending-mob" commentIndex={reply.index} />
                             )}
                           </span>
                         </div>

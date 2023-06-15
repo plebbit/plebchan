@@ -17,6 +17,7 @@ import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
+import PendingLabel from '../PendingLabel';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
 import PostOnHover from '../PostOnHover';
@@ -951,7 +952,7 @@ const All = () => {
                                     setSelectedAddress(thread.subplebbitAddress);
                                   }} title="Reply to this post">{reply.shortCid}</Link>
                                 ) : (
-                                  <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span>
+                                  <PendingLabel key="pending" commentIndex={reply.index} />
                                 )}
                                 &nbsp;p/
                                 <Link key={`p-t-${index}`} to={`/p/${thread.subplebbitAddress}`} id="reply-button" title="Visit this board">
@@ -1557,7 +1558,7 @@ const All = () => {
                                   }} title="Reply to this post">{reply.shortCid}
                                 </Link>
                               ) : (
-                                <span key="pending" style={{color: 'red', fontWeight: '700'}}>Pending</span> 
+                                <PendingLabel key="pending-mob" commentIndex={reply.index} />
                               )}
                             </span>
                           </div>
