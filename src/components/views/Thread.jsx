@@ -238,7 +238,7 @@ const Thread = () => {
         setNewSuccessMessage('Challenge Success');
       }
     } else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
     }
   };
 

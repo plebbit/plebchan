@@ -14,9 +14,11 @@ const PendingLabel = ({ commentIndex }) => {
   }, []);
 
   if (commentIndex === undefined) return null;
-
+  
   return (
-    commentIndex && stateString !== "Succeeded" ? (
+    comment.cid ? (
+      <span>{comment.cid.slice(2, 14)}</span>
+    ) : (
       (comment.state === "failed" || (stateString === undefined && !isLoading)) ? (
         <span style={{color: 'red', fontWeight: '700'}}>
           Failed
@@ -26,7 +28,7 @@ const PendingLabel = ({ commentIndex }) => {
           Pending
         </span>
       )
-    ) : null
+    )
   );
 };
 

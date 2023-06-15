@@ -17,7 +17,7 @@ const StateLabel = ({ commentIndex, className }) => {
 
   return (
     commentIndex && stateString !== "Succeeded" ? (
-      (comment.state === "failed" || (stateString === undefined && !isLoading)) ? (
+      (comment.state === "failed" || (stateString === undefined && !isLoading && comment.cid === undefined)) ? (
         <span className="ttl">
           <br />
           (
