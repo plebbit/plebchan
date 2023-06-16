@@ -8,7 +8,6 @@ import { Virtuoso } from 'react-virtuoso';
 import { useAccount, useAccountComments, useFeed, usePublishCommentEdit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
 import { AuthorDeleteAlert, Footer } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
@@ -36,6 +35,8 @@ import removeHighlight from '../../utils/removeHighlight';
 import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -61,6 +62,8 @@ const All = () => {
     setSelectedThread,
     setSelectedTitle,
   } = useGeneralStore(state => state);
+  
+  const { anonymousMode } = useAnonModeStore();
 
   const account = useAccount();
   const navigate = useNavigate();
@@ -449,8 +452,12 @@ const All = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                 / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                {anonymousMode ? null : 
+                <>
+                   / 
+                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                </>
+                }
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -484,7 +491,7 @@ const All = () => {
                   &nbsp;
                   <select id="board-select-mobile" value="all" onChange={handleSelectChange}>
                     <option value="all">All</option>
-                    <option value="subscriptions">Subscriptions</option>
+                    {anonymousMode ? null : <option value="subscriptions">Subscriptions</option>}
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -1842,10 +1849,14 @@ const All = () => {
           }}>
             <>
             <span className="boardList">
-              [
-                <Link to={`/p/all`}>All</Link>
-                 / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+            [
+              <Link to={`/p/all`}>All</Link>
+                {anonymousMode ? null : 
+                <>
+                   / 
+                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                </>
+                }
               ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

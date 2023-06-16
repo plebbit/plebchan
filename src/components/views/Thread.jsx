@@ -7,7 +7,6 @@ import { Tooltip } from 'react-tooltip';
 import { useAccount, useAccountComments, useComment, usePublishComment, usePublishCommentEdit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } from '../styled/views/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
@@ -36,14 +35,15 @@ import useAnonMode from '../../hooks/useAnonMode';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
-import packageJson from '../../../package.json'
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
+import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
 const Thread = () => {
   const {
-    anonymousMode,
     captchaResponse, setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
@@ -67,6 +67,8 @@ const Thread = () => {
     showPostFormLink,
   } = useGeneralStore(state => state);
 
+  const { anonymousMode } = useAnonModeStore();
+  
   const account = useAccount();
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
@@ -530,8 +532,12 @@ const Thread = () => {
           <span className="boardList">
             [
               <Link to={`/p/all`}>All</Link>
-                 / 
-              <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                {anonymousMode ? null : 
+                <>
+                   / 
+                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                </>
+                }
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -568,7 +574,7 @@ const Thread = () => {
                   &nbsp;
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
-                    <option value="subscriptions">Subscriptions</option>
+                    {anonymousMode ? null : <option value="subscriptions">Subscriptions</option>}
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -1827,8 +1833,12 @@ const Thread = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                 / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                {anonymousMode ? null : 
+                <>
+                   / 
+                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                </>
+                }
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

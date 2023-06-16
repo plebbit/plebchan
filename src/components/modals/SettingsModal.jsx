@@ -5,18 +5,20 @@ import Modal from "react-modal";
 import { deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "../styled/modals/SettingsModal.styled";
 import { AuthorDeleteAlert } from '../styled/views/Thread.styled';
-import useGeneralStore from "../../hooks/stores/useGeneralStore";
 import useError from "../../hooks/useError";
 import useSuccess from "../../hooks/useSuccess";
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
 const SettingsModal = ({ isOpen, closeModal }) => {
   const {
-    anonymousMode, setAnonymousMode,
     selectedStyle,
   } = useGeneralStore(state => state);
+  
+  const { anonymousMode, setAnonymousMode } = useAnonModeStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -254,21 +256,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </button>
           ]
         </div>
-        {/* <ul>
-          <li className="settings-cat-lbl">
-          <span className={`${expanded.includes(0) ? 'minus' : 'plus'}`}
-            onClick={() => toggleExpanded(0)}
-          />
-          <span className="settings-pointer" style={{cursor: "pointer"}}
-            onClick={() => toggleExpanded(0)}
-          >Account</span>
-          </li>
-          <ul className="settings-cat" style={{ display: expanded.includes(0) ? 'block' : 'none' }}>
-            <li>
-            </li>
-          </ul>
-        </ul>*/}
-        <ul>
+        <ul style={{display: anonymousMode ? "none" : "block"}}>
           <li className="settings-cat-lbl">
           <span className={`${expanded.includes(1) ? 'minus' : 'plus'}`}
             onClick={() => toggleExpanded(1)}

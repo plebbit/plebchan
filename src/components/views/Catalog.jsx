@@ -7,7 +7,6 @@ import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
 import { useAccount, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable, PostMenu, BoardForm } from '../styled/views/Board.styled';
 import { Threads, PostMenuCatalog } from '../styled/views/Catalog.styled';
 import { TopBar, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
@@ -24,13 +23,14 @@ import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
 const Catalog = () => {
   const {
-    anonymousMode,
     captchaResponse, setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
@@ -51,6 +51,8 @@ const Catalog = () => {
     showPostForm,
     showPostFormLink,
   } = useGeneralStore(state => state);
+  
+  const { anonymousMode } = useAnonModeStore();
 
   const nameRef = useRef();
   const subjectRef = useRef();
@@ -81,8 +83,6 @@ const Catalog = () => {
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
 
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
-
-
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const { subplebbitAddress } = useParams();
@@ -475,8 +475,12 @@ const Catalog = () => {
           <span className="boardList">
             [
               <Link to={`/p/all`}>All</Link>
+              {anonymousMode ? null : 
+              <>
                  / 
-              <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+              </>
+              }
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -513,7 +517,7 @@ const Catalog = () => {
                   &nbsp;
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
-                    <option value="subscriptions">Subscriptions</option>
+                    {anonymousMode ? null : <option value="subscriptions">Subscriptions</option>}
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -625,20 +629,24 @@ const Catalog = () => {
           </div>
           {feed.length > 0 ? (
             <>
-            <span className="subscribe-button-desktop">
-                [
-                <span id="subscribe" style={{cursor: 'pointer'}}>
-                  <span onClick={() => handleSubscribe()}>
-                    {subscribed ? "Unsubscribe" : "Subscribe"}
+              {anonymousMode ? null : (
+                <>
+                  <span className="subscribe-button-desktop">
+                    [
+                    <span id="subscribe" style={{cursor: 'pointer'}}>
+                      <span onClick={() => handleSubscribe()}>
+                        {subscribed ? "Unsubscribe" : "Subscribe"}
+                      </span>
+                    </span>
+                    ]
                   </span>
-                </span>
-                ]
-              </span>
-              <span className="subscribe-button-mobile">
-                <span className="btn-wrap" onClick={() => handleSubscribe()}>
-                {subscribed ? "Unsubscribe" : "Subscribe"}
-                </span>
-              </span>
+                  <span className="subscribe-button-mobile">
+                    <span className="btn-wrap" onClick={() => handleSubscribe()}>
+                    {subscribed ? "Unsubscribe" : "Subscribe"}
+                    </span>
+                  </span>
+                </>
+              )}
             </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -863,8 +871,12 @@ const Catalog = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                 / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                {anonymousMode ? null : 
+                <>
+                   / 
+                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                </>
+                }
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

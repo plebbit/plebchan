@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAccount } from '@plebbit/plebbit-react-hooks';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/views/Home.styled';
 import BoardAvatar from '../BoardAvatar';
 import OfflineIndicator from '../OfflineIndicator';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 import { Tooltip } from 'react-tooltip';
 const {version} = packageJson
@@ -14,13 +15,15 @@ const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP
 
 
 const Home = () => {
-  const { 
+  const {
     bodyStyle, setBodyStyle,
     defaultSubplebbits,
     setSelectedAddress, 
     selectedStyle, setSelectedStyle,
     setSelectedTitle
   } = useGeneralStore(state => state);
+  
+  const { anonymousMode } = useAnonModeStore();
 
   const account = useAccount();
   const navigate = useNavigate();
@@ -102,7 +105,7 @@ const Home = () => {
               </div>
             </AboutContent>
           </About>
-          {account?.subscriptions?.length > 0 ? (
+          {account?.subscriptions?.length > 0 && !anonymousMode ? (
             <Boards>
                 <BoardsTitle>
                   <h2>Subscriptions</h2>

@@ -8,7 +8,6 @@ import { Virtuoso } from 'react-virtuoso';
 import { useAccount, useAccountComments, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostFormLink, PostFormTable, PostForm, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
 import { Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
@@ -38,13 +37,14 @@ import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
 const Board = () => {
   const {
-    anonymousMode,
     setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
@@ -67,7 +67,9 @@ const Board = () => {
     showPostForm,
     showPostFormLink,
   } = useGeneralStore(state => state);
-
+  
+  const { anonymousMode } = useAnonModeStore();
+  
   const account = useAccount();
   const navigate = useNavigate();
   const { subplebbitAddress } = useParams();
@@ -576,8 +578,12 @@ const Board = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                 / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                {anonymousMode ? null : 
+                <>
+                   / 
+                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                </>
+                }
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -611,7 +617,7 @@ const Board = () => {
                   &nbsp;
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
-                    <option value="subscriptions">Subscriptions</option>
+                    {anonymousMode ? null : <option value="subscriptions">Subscriptions</option>}
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -721,20 +727,24 @@ const Board = () => {
           </div>
           {feed.length > 0 ? (
             <>
-              <span className="subscribe-button-desktop">
-                [
-                <span id="subscribe" style={{cursor: 'pointer'}}>
-                  <span onClick={() => handleSubscribe()}>
-                    {subscribed ? "Unsubscribe" : "Subscribe"}
+              {anonymousMode ? null : (
+                <>
+                  <span className="subscribe-button-desktop">
+                    [
+                    <span id="subscribe" style={{cursor: 'pointer'}}>
+                      <span onClick={() => handleSubscribe()}>
+                        {subscribed ? "Unsubscribe" : "Subscribe"}
+                      </span>
+                    </span>
+                    ]
                   </span>
-                </span>
-                ]
-              </span>
-              <span className="subscribe-button-mobile">
-                <span className="btn-wrap" onClick={() => handleSubscribe()}>
-                {subscribed ? "Unsubscribe" : "Subscribe"}
-                </span>
-              </span>
+                  <span className="subscribe-button-mobile">
+                    <span className="btn-wrap" onClick={() => handleSubscribe()}>
+                    {subscribed ? "Unsubscribe" : "Subscribe"}
+                    </span>
+                  </span>
+                </>
+              )}
             </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -1987,8 +1997,12 @@ const Board = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                 / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                {anonymousMode ? null : 
+                <>
+                   / 
+                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                </>
+                }
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
