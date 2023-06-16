@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import { createAccount, setActiveAccount, useAccounts } from "@plebbit/plebbit-react-hooks";
+import useAnonModeStore from "./stores/useAnonModeStore";
 
 const useAnonMode = (threadCid, execute) => {
   const {accounts} = useAccounts();
+  const { anonymousMode } = useAnonModeStore();
 
   useEffect(() => {
     const handleAnonMode = async () => {
       let storedAccounts = JSON.parse(localStorage.getItem('storedAccounts')) || {};
+
+      if (!anonymousMode) return;
 
       if (!storedAccounts[threadCid] && execute) {
         await createAccount();
@@ -21,7 +25,7 @@ const useAnonMode = (threadCid, execute) => {
     }
 
     handleAnonMode();
-  }, [threadCid, execute, accounts]);
+  }, [threadCid, execute, accounts, anonymousMode]);
 
   return;
 }
