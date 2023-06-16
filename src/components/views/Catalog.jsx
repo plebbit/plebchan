@@ -19,6 +19,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
+import useAnonMode from '../../hooks/useAnonMode';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
@@ -29,6 +30,7 @@ const {version} = packageJson
 
 const Catalog = () => {
   const {
+    anonymousMode,
     captchaResponse, setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
@@ -44,7 +46,7 @@ const Catalog = () => {
     setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     selectedStyle,
-    setSelectedThread,
+    selectedThread, setSelectedThread,
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
@@ -76,6 +78,10 @@ const Catalog = () => {
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  useAnonMode(selectedThread, anonymousMode && executeAnonMode);
+
 
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
@@ -273,6 +279,13 @@ const Catalog = () => {
 
     setTriggerPublishComment(true);
   };
+
+
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThread]);
   
   
   useEffect(() => {

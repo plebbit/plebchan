@@ -32,6 +32,7 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
+import useAnonMode from '../../hooks/useAnonMode';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
@@ -42,6 +43,7 @@ const {version} = packageJson
 
 const Thread = () => {
   const {
+    anonymousMode,
     captchaResponse, setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
@@ -82,6 +84,8 @@ const Thread = () => {
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
   const postOnHoverRef = useRef(null);
+  const backlinkRefsMobile = useRef({});
+  const quoteRefsMobile = useRef({});
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
@@ -99,9 +103,9 @@ const Thread = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
-  const backlinkRefsMobile = useRef({});
-  const quoteRefsMobile = useRef({});
-  
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
@@ -323,7 +327,15 @@ const Thread = () => {
     }));
 
     setTriggerPublishComment(true);
+    setExecuteAnonMode(false);
   };
+
+
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThread]);
   
   
   useEffect(() => {

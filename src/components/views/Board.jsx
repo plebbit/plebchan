@@ -33,6 +33,7 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
+import useAnonMode from '../../hooks/useAnonMode';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
@@ -43,6 +44,7 @@ const {version} = packageJson
 
 const Board = () => {
   const {
+    anonymousMode,
     setCaptchaResponse,
     setChallengesArray,
     defaultSubplebbits,
@@ -60,7 +62,7 @@ const Board = () => {
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
-    setSelectedThread,
+    selectedThread, setSelectedThread,
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
@@ -108,6 +110,9 @@ const Board = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
 
   useEffect(() => {
@@ -351,6 +356,13 @@ const Board = () => {
 
     setTriggerPublishComment(true);
   };
+
+
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThread]);
   
   
   useEffect(() => {
