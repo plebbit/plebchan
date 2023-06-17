@@ -32,12 +32,10 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
-import useAnonMode from '../../hooks/useAnonMode';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
-import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -62,13 +60,12 @@ const Board = () => {
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
-    selectedThread, setSelectedThread,
+    setSelectedThread,
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
   } = useGeneralStore(state => state);
   
-  const { anonymousMode } = useAnonModeStore();
   
   const account = useAccount();
   const navigate = useNavigate();
@@ -112,9 +109,6 @@ const Board = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
-  const [executeAnonMode, setExecuteAnonMode] = useState(false);
-
-  useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
 
   useEffect(() => {
@@ -361,13 +355,6 @@ const Board = () => {
 
 
   useEffect(() => {
-    if (anonymousMode) {
-      setExecuteAnonMode(true);
-    }
-  }, [anonymousMode, selectedThread]);
-  
-  
-  useEffect(() => {
     if (publishCommentOptions && triggerPublishComment) {
       (async () => {
         await publishComment();
@@ -578,12 +565,8 @@ const Board = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                {anonymousMode ? null : 
-                <>
                    / 
-                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
-                </>
-                }
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -617,7 +600,7 @@ const Board = () => {
                   &nbsp;
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
-                    {anonymousMode ? null : <option value="subscriptions">Subscriptions</option>}
+                    <option value="subscriptions">Subscriptions</option>
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -727,24 +710,20 @@ const Board = () => {
           </div>
           {feed.length > 0 ? (
             <>
-              {anonymousMode ? null : (
-                <>
-                  <span className="subscribe-button-desktop">
-                    [
-                    <span id="subscribe" style={{cursor: 'pointer'}}>
-                      <span onClick={() => handleSubscribe()}>
-                        {subscribed ? "Unsubscribe" : "Subscribe"}
-                      </span>
-                    </span>
-                    ]
-                  </span>
-                  <span className="subscribe-button-mobile">
-                    <span className="btn-wrap" onClick={() => handleSubscribe()}>
+              <span className="subscribe-button-desktop">
+                [
+                <span id="subscribe" style={{cursor: 'pointer'}}>
+                  <span onClick={() => handleSubscribe()}>
                     {subscribed ? "Unsubscribe" : "Subscribe"}
-                    </span>
                   </span>
-                </>
-              )}
+                </span>
+                ]
+              </span>
+              <span className="subscribe-button-mobile">
+                <span className="btn-wrap" onClick={() => handleSubscribe()}>
+                {subscribed ? "Unsubscribe" : "Subscribe"}
+                </span>
+              </span>
             </>
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -1136,6 +1115,7 @@ const Board = () => {
                                 onClick={(e) => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
+                                  setSelectedThread(thread.cid);
                                   setIsReplyOpen(true); 
                                   setSelectedShortCid(thread.shortCid); 
                                   setSelectedParentCid(thread.cid);
@@ -1413,7 +1393,8 @@ const Board = () => {
                                     onClick={(e) => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
-                                      setIsReplyOpen(true); 
+                                      setSelectedThread(thread.cid);
+                                      setIsReplyOpen(true);  
                                       setSelectedShortCid(reply.shortCid); 
                                       setSelectedParentCid(reply.cid);
                                     }} title="Reply to this post">{reply.shortCid}</Link>
@@ -1817,7 +1798,8 @@ const Board = () => {
                                 onClick={(e) => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
-                                  setIsReplyOpen(true); 
+                                  setSelectedThread(thread.cid);
+                                  setIsReplyOpen(true);  
                                   setSelectedShortCid(thread.shortCid); 
                                   setSelectedParentCid(thread.cid);
                                 }} title="Reply to this post">{thread.shortCid}
@@ -1967,7 +1949,8 @@ const Board = () => {
                                     onClick={(e) => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
-                                      setIsReplyOpen(true); 
+                                      setSelectedThread(thread.cid);
+                                      setIsReplyOpen(true);  
                                       setSelectedShortCid(reply.shortCid); 
                                       setSelectedParentCid(reply.cid);
                                     }} title="Reply to this post">{reply.shortCid}
@@ -2259,12 +2242,8 @@ const Board = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                {anonymousMode ? null : 
-                <>
-                   / 
-                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
-                </>
-                }
+                 / 
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

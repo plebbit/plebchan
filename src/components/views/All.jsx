@@ -35,7 +35,6 @@ import removeHighlight from '../../utils/removeHighlight';
 import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
-import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -63,7 +62,6 @@ const All = () => {
     setSelectedTitle,
   } = useGeneralStore(state => state);
   
-  const { anonymousMode } = useAnonModeStore();
 
   const account = useAccount();
   const navigate = useNavigate();
@@ -452,12 +450,8 @@ const All = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                {anonymousMode ? null : 
-                <>
-                   / 
-                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
-                </>
-                }
+                 / 
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -491,7 +485,7 @@ const All = () => {
                   &nbsp;
                   <select id="board-select-mobile" value="all" onChange={handleSelectChange}>
                     <option value="all">All</option>
-                    {anonymousMode ? null : <option value="subscriptions">Subscriptions</option>}
+                    <option value="subscriptions">Subscriptions</option>
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -674,7 +668,8 @@ const All = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
-                                setIsReplyOpen(true); 
+                                setIsReplyOpen(true);  
+                                setSelectedThread(thread.cid);
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -953,7 +948,8 @@ const All = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
-                                    setIsReplyOpen(true); 
+                                    setIsReplyOpen(true);  
+                                    setSelectedThread(thread.cid);
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
@@ -1386,7 +1382,8 @@ const All = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
-                                setIsReplyOpen(true); 
+                                setIsReplyOpen(true);  
+                                setSelectedThread(thread.cid);
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -1558,7 +1555,8 @@ const All = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
-                                    setIsReplyOpen(true); 
+                                    setIsReplyOpen(true);  
+                                    setSelectedThread(thread.cid);
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
@@ -1851,12 +1849,8 @@ const All = () => {
             <span className="boardList">
             [
               <Link to={`/p/all`}>All</Link>
-                {anonymousMode ? null : 
-                <>
-                   / 
-                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
-                </>
-                }
+               / 
+              <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

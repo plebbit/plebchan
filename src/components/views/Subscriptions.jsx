@@ -678,7 +678,8 @@ const Subscriptions = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
-                                setIsReplyOpen(true); 
+                                setIsReplyOpen(true);  
+                                setSelectedThread(thread.cid);
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -957,7 +958,8 @@ const Subscriptions = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
-                                    setIsReplyOpen(true); 
+                                    setIsReplyOpen(true);  
+                                    setSelectedThread(thread.cid);
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
@@ -1390,7 +1392,8 @@ const Subscriptions = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
-                                setIsReplyOpen(true); 
+                                setIsReplyOpen(true);  
+                                setSelectedThread(thread.cid);
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -1562,7 +1565,8 @@ const Subscriptions = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
-                                    setIsReplyOpen(true); 
+                                    setIsReplyOpen(true);  
+                                    setSelectedThread(thread.cid);
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);

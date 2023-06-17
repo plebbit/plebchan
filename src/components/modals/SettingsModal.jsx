@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert";
 import Modal from "react-modal";
 import { deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "../styled/modals/SettingsModal.styled";
-import { AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import useError from "../../hooks/useError";
 import useSuccess from "../../hooks/useSuccess";
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
@@ -196,38 +194,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     }
   };
 
-
-  const handleAnonymousMode = () => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <AuthorDeleteAlert selectedStyle={selectedStyle}>
-            <div className='author-delete-alert'>
-              <p>
-                { !anonymousMode ? 
-                  "Enabling anonymous mode will turn off all account-based features, such as subscribing to boards." : 
-                  "Disabling anonymous mode will turn on all account-based features, such as subscribing to boards."
-                }
-              </p>
-              <div className="author-delete-buttons">
-                <button onClick={onClose}>Cancel</button>
-                <button
-                  onClick={() => {
-                    setAnonymousMode(!anonymousMode);
-                    onClose();
-                  }}
-                >
-                  { !anonymousMode ? "Enable" : "Disable" }
-                </button>
-              </div>
-            </div>
-          </AuthorDeleteAlert>
-        )
-      }
-    })
-  };
-
-  
   
   return (
     <StyledModal
@@ -256,7 +222,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </button>
           ]
         </div>
-        <ul style={{display: anonymousMode ? "none" : "block"}}>
+        <ul>
           <li className="settings-cat-lbl">
           <span className={`${expanded.includes(1) ? 'minus' : 'plus'}`}
             onClick={() => toggleExpanded(1)}
@@ -270,6 +236,22 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
+            <li className="anon-off">
+              <label title={ !anonymousMode ? 
+                "Enable anon mode" : 
+                "Disable anon mode"
+              }>
+                <input 
+                  type="checkbox" 
+                  checked={anonymousMode} 
+                  onChange={() => {setAnonymousMode(!anonymousMode)}}
+                />
+                &nbsp;Anon mode
+              </label>
+            </li>
+            <li className="settings-tip anon-tip">
+              Automatically uses a different account (u/address) per thread.
+            </li>
             <li className="settings-option disc">
               Account Data
             </li>
@@ -401,21 +383,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               <li className="settings-option disc">Polygon</li>
             </ul>
           </ul> */}
-        </ul>
-        <ul>
-          <li className="anon-off">
-          <label title={ !anonymousMode ? 
-            "Enable anonymous mode (turns off all account-based features)" : 
-            "Disable anonymous mode (turns on all account-based features)"
-          }>
-            <input 
-              type="checkbox" 
-              checked={!anonymousMode} 
-              onChange={handleAnonymousMode}
-            />
-            Disable anonymous mode
-          </label>
-          </li>
         </ul>
         <div>
           <button

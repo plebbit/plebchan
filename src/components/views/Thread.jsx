@@ -532,12 +532,8 @@ const Thread = () => {
           <span className="boardList">
             [
               <Link to={`/p/all`}>All</Link>
-                {anonymousMode ? null : 
-                <>
-                   / 
-                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
-                </>
-                }
+               / 
+              <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -574,7 +570,7 @@ const Thread = () => {
                   &nbsp;
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
-                    {anonymousMode ? null : <option value="subscriptions">Subscriptions</option>}
+                    <option value="subscriptions">Subscriptions</option>
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -1833,12 +1829,8 @@ const Thread = () => {
             <span className="boardList">
               [
                 <Link to={`/p/all`}>All</Link>
-                {anonymousMode ? null : 
-                <>
-                   / 
-                  <Link to={`/p/subscriptions`}>Subscriptions</Link>
-                </>
-                }
+                 / 
+                <Link to={`/p/subscriptions`}>Subscriptions</Link>
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

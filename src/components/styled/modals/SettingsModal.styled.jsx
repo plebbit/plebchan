@@ -191,8 +191,33 @@ export const StyledModal = styled(Modal)`
   }
 
   .anon-off {
-    padding-left: 3px;
-    padding-top: 15px;
+    margin: 10px 0 5px -2px
+  }
+
+  .anon-tip {
+    margin-bottom: 10px;
+  }
+
+  .anon-tip::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 1px;
+    background-color: currentColor;
+    position: absolute;
+    left: 18px;
+    top: 116px;
+  }
+
+  .anon-tip::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 12px;
+    background-color: currentColor;
+    position: absolute;
+    left: 18px;
+    top: 105px;
   }
 
 
