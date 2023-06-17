@@ -766,6 +766,7 @@ const Board = () => {
               feed.length > 0 ? (
                 <>
                 {subplebbit.rules ? 
+                <>
                   <div className="thread">
                     <div className="op-container">
                       <div className="post op op-desktop">
@@ -838,98 +839,189 @@ const Board = () => {
                       </div>
                     </div>
                   </div>
+                  <div className="thread-mobile">
+                    <hr style={{marginTop: "10px"}} />
+                    <div className="op-container">
+                      <div className="post op op-mobile">
+                        <div className="post-info-mobile">
+                          <button className="post-menu-button-mobile"
+                           style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                          <span className="name-block-mobile">
+                            <span className="name-mobile capcode">## Board Admins</span>
+                            &nbsp;
+                            <span className="thread-icons-mobile"
+                            style={{float: "right", marginRight: "18px"}}>
+                              <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                              &nbsp;
+                              <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                            </span>
+                            <br />
+                            <span className="subject-mobile">Rules</span>
+                            &nbsp;
+                          </span>
+                          <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                          &nbsp;
+                        </div>
+                        <blockquote className="post-message-mobile">
+                          <div className="custom-paragraph">
+                            {subplebbit.rules.map((rule, index) => (
+                              <React.Fragment key={index}>
+                                {index + 1}. {rule}
+                                <br />
+                              </React.Fragment>
+                            ))}
+                          </div>
+                        </blockquote>
+                      </div>
+                      <div className="post-link-mobile">
+                        <Link to={() => {}} className="button-mobile">View Thread</Link>
+                      </div>
+                    </div>
+                  </div>
+                </>
                 : null}
                 {subplebbit.description ?
-                <div className="thread" style={{
-                  display: subplebbit.rules ? "grid" : "block"
-                  }}>
-                  <div className="op-container">
-                    <div className="post op op-desktop">
-                      <hr />
-                      <div className="post-info">
-                        {subplebbit.suggested?.avatarUrl ? (
-                          <div className="file" style={{marginBottom: "5px"}}>
-                            <div className="file-text">
-                              Link:&nbsp;
-                              <a href={subplebbit.suggested?.avatarUrl} 
-                              target="_blank" rel="noopener noreferrer">{
-                              subplebbit.suggested?.avatarUrl.length > 30 ?
-                              subplebbit.suggested?.avatarUrl.slice(0, 30) + "..." :
-                              subplebbit.suggested?.avatarUrl
-                              }
-                              </a>&nbsp;(image)
+                <>
+                  <div className="thread">
+                    <div className="op-container" style={{
+                    display: subplebbit.rules ? "grid" : "block"
+                    }}>
+                      <div className="post op op-desktop">
+                        <hr />
+                        <div className="post-info">
+                          {subplebbit.suggested?.avatarUrl ? (
+                            <div className="file" style={{marginBottom: "5px"}}>
+                              <div className="file-text">
+                                Link:&nbsp;
+                                <a href={subplebbit.suggested?.avatarUrl} 
+                                target="_blank" rel="noopener noreferrer">{
+                                subplebbit.suggested?.avatarUrl.length > 30 ?
+                                subplebbit.suggested?.avatarUrl.slice(0, 30) + "..." :
+                                subplebbit.suggested?.avatarUrl
+                                }
+                                </a>&nbsp;(image)
+                              </div>
+                              <div className="img-container">
+                                <span className="file-thumb">
+                                  <img src={subplebbit.suggested?.avatarUrl} alt="board avatar"
+                                  onClick={handleImageClick}
+                                  style={{cursor: "pointer"}} />
+                                </span>
+                              </div>
                             </div>
+                            ) : null}
+                          <span className="name-block">
+                            <span className="title">Welcome to {subplebbit.title || subplebbit.address}</span>
+                            &nbsp;
+                            <span className="name capcode">## Board Admins</span>
+                            &nbsp;
+                            <span className="date-time">{getDate(subplebbit.createdAt)}</span>
+                            &nbsp;
+                            <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                            &nbsp;
+                            <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                            <span>&nbsp;
+                                [
+                                <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                ]
+                            </span>
+                            <PostMenu 
+                              title="Post menu"
+                              ref={el => { 
+                                threadMenuRefs.current[subplebbit.pubsubTopic] = el;
+                              }}
+                              className='post-menu-button' 
+                              rotated={openMenuCid === subplebbit.pubsubTopic}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                const rect = threadMenuRefs.current[subplebbit.pubsubTopic].getBoundingClientRect();
+                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                setOpenMenuCid(prevCid => (prevCid === subplebbit.pubsubTopic ? null : subplebbit.pubsubTopic));
+                              }}
+                            >
+                              ▶
+                            </PostMenu>
+                            {createPortal(
+                              <PostMenuCatalog selectedStyle={selectedStyle} 
+                              ref={el => {postMenuCatalogRef.current = el}}
+                              onClick={(event) => event.stopPropagation()}
+                              style={{position: "absolute", 
+                              top: menuPosition.top + 7, 
+                              left: menuPosition.left}}>
+                              <div className={`post-menu-thread post-menu-thread-${subplebbit.pubsubTopic}`}
+                              style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
+                              >
+                                <ul className="post-menu-catalog">
+                                  <li onClick={() => handleOptionClick(subplebbit.pubsubTopic)}>Hide thread</li>
+                                  {/* {isModerator ? (
+                                    <>
+                                      change description
+                                    </>
+                                  ) : null} */}
+                                </ul>
+                              </div>
+                              </PostMenuCatalog>, document.body
+                            )}
+                          </span>
+                          <blockquote>
+                            <div className="custom-paragraph">
+                              {subplebbit.description}
+                            </div>
+                          </blockquote>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="thread-mobile">
+                    {subplebbit.rules ?
+                      <hr /> :
+                      <hr style={{marginTop: "10px"}} />
+                    }
+                    <div className="op-container">
+                      <div className="post op op-mobile">
+                        <div className="post-info-mobile">
+                          <button className="post-menu-button-mobile"
+                           style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                          <span className="name-block-mobile">
+                            <span className="name-mobile capcode">## Board Admins</span>
+                            &nbsp;
+                            <span className="thread-icons-mobile"
+                            style={{float: "right", marginRight: "18px"}}>
+                              <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                              &nbsp;
+                              <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                            </span>
+                            <br />
+                            <span className="subject-mobile">Welcome to {subplebbit.title || subplebbit.address}</span>
+                            &nbsp;
+                          </span>
+                          <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                          &nbsp;
+                        </div>
+                        {subplebbit.suggested?.avatarUrl ? (
+                          <div className="file-mobile">
                             <div className="img-container">
-                              <span className="file-thumb">
-                                <img src={subplebbit.suggested?.avatarUrl} alt="board avatar"
+                              <span className="file-thumb-mobile">
+                                <img src={subplebbit.suggested.avatarUrl} alt="board avatar"
                                 onClick={handleImageClick}
                                 style={{cursor: "pointer"}} />
+                                <div className="file-info-mobile">image</div>
                               </span>
                             </div>
                           </div>
-                          ) : null}
-                        <span className="name-block">
-                          <span className="title">Welcome to {subplebbit.title || subplebbit.address}</span>
-                          &nbsp;
-                          <span className="name capcode">## Board Admins</span>
-                          &nbsp;
-                          <span className="date-time">{getDate(subplebbit.createdAt)}</span>
-                          &nbsp;
-                          <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
-                          &nbsp;
-                          <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
-                          <span>&nbsp;
-                              [
-                              <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
-                              ]
-                          </span>
-                          <PostMenu 
-                            title="Post menu"
-                            ref={el => { 
-                              threadMenuRefs.current[subplebbit.pubsubTopic] = el;
-                            }}
-                            className='post-menu-button' 
-                            rotated={openMenuCid === subplebbit.pubsubTopic}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              const rect = threadMenuRefs.current[subplebbit.pubsubTopic].getBoundingClientRect();
-                              setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                              setOpenMenuCid(prevCid => (prevCid === subplebbit.pubsubTopic ? null : subplebbit.pubsubTopic));
-                            }}
-                          >
-                            ▶
-                          </PostMenu>
-                          {createPortal(
-                            <PostMenuCatalog selectedStyle={selectedStyle} 
-                            ref={el => {postMenuCatalogRef.current = el}}
-                            onClick={(event) => event.stopPropagation()}
-                            style={{position: "absolute", 
-                            top: menuPosition.top + 7, 
-                            left: menuPosition.left}}>
-                            <div className={`post-menu-thread post-menu-thread-${subplebbit.pubsubTopic}`}
-                            style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
-                            >
-                              <ul className="post-menu-catalog">
-                                <li onClick={() => handleOptionClick(subplebbit.pubsubTopic)}>Hide thread</li>
-                                {/* {isModerator ? (
-                                  <>
-                                    change description
-                                  </>
-                                ) : null} */}
-                              </ul>
-                            </div>
-                            </PostMenuCatalog>, document.body
-                          )}
-                        </span>
-                        <blockquote>
+                        ) : null}
+                        <blockquote className="post-message-mobile">
                           <div className="custom-paragraph">
                             {subplebbit.description}
                           </div>
                         </blockquote>
                       </div>
+                      <div className="post-link-mobile">
+                        <Link to={() => {}} className="button-mobile">View Thread</Link>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </>
                 : null}
                 <Virtuoso
                 increaseViewportBy={2000}
@@ -1654,7 +1746,7 @@ const Board = () => {
                     })}
                   </div>
                   <div key={`mob-t-${index}`} className="thread-mobile">
-                    {index === 0 ? (
+                  {index === 0 && (!subplebbit.rules && !subplebbit.description) ? (
                       <hr key={`mob-hr-${index}`} style={{marginTop: '10px'}} />
                     ) : (
                       <hr key={`mob-hr-${index}`} />
