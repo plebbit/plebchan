@@ -3266,6 +3266,9 @@ export const BoardForm = styled.div`
       switch (selectedStyle) {
         case 'Yotsuba':
           return `
+            .capcode {
+              color: purple !important;
+            }
             .op-container {
               background-color: #f5e9e1;
               border: 1px solid #d9bfb7 !important;
@@ -3383,6 +3386,9 @@ export const BoardForm = styled.div`
 
         case 'Yotsuba-B':
           return `
+          .capcode {
+            color: purple !important;
+          }
             .op-container {
               background-color: #d6daf0;
               border: 1px solid #b7c5d9 !important;
@@ -3496,6 +3502,9 @@ export const BoardForm = styled.div`
 
         case 'Futaba':
           return `
+          .capcode {
+            color: purple !important;
+          }
             .op-container {
               background-color: #f5e9e1;
               border: 1px solid #d9bfb7 !important;
@@ -3612,6 +3621,9 @@ export const BoardForm = styled.div`
 
         case 'Burichan':
           return `
+          .capcode {
+            color: purple !important;
+          }
             .op-container {
               background-color: #d6daf0;
               border: 1px solid #b7c5d9 !important;
@@ -3724,6 +3736,10 @@ export const BoardForm = styled.div`
 
         case 'Tomorrow':
           return `
+          .capcode {
+            color: #81a2be !important;
+          }
+
             .op-container {
               background-color: #282A2E;
               border: 1px solid #2D2F33 !important;
@@ -3846,6 +3862,9 @@ export const BoardForm = styled.div`
 
         case 'Photon':
           return `
+          .capcode {
+            color: #f60 !important;
+          }
             .op-container {
               background-color: #eee;
               border: 1px solid #ccc !important;

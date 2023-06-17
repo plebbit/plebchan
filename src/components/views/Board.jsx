@@ -765,868 +765,930 @@ const Board = () => {
             ) : (
               feed.length > 0 ? (
                 <>
-                {subplebbit.rules ? 
-                <>
-                  <div className="thread">
-                    <div className="op-container">
-                      <div className="post op op-desktop">
-                        <hr />
-                        <div className="post-info">
-                          <span className="name-block">
-                            <span className="title">Rules</span>
-                            &nbsp;
-                            <span className="name capcode">## Board Admins</span>
-                            &nbsp;
-                            <span className="date-time">{getDate(subplebbit.createdAt)}</span>
-                            &nbsp;
-                            <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
-                            &nbsp;
-                            <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
-                            <span>&nbsp;
-                                [
-                                <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
-                                ]
-                            </span>
-                            <PostMenu 
-                              title="Post menu"
-                              ref={el => { 
-                                threadMenuRefs.current[subplebbit.statsCid] = el;
-                              }}
-                              className='post-menu-button' 
-                              rotated={openMenuCid === subplebbit.statsCid}
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                const rect = threadMenuRefs.current[subplebbit.statsCid].getBoundingClientRect();
-                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                                setOpenMenuCid(prevCid => (prevCid === subplebbit.statsCid ? null : subplebbit.statsCid));
-                              }}
-                            >
-                              ▶
-                            </PostMenu>
-                            {createPortal(
-                              <PostMenuCatalog selectedStyle={selectedStyle} 
-                              ref={el => {postMenuCatalogRef.current = el}}
-                              onClick={(event) => event.stopPropagation()}
-                              style={{position: "absolute", 
-                              top: menuPosition.top + 7, 
-                              left: menuPosition.left}}>
-                              <div className={`post-menu-thread post-menu-thread-${subplebbit.statsCid}`}
-                              style={{ display: openMenuCid === subplebbit.statsCid ? 'block' : 'none' }}
-                              >
-                                <ul className="post-menu-catalog">
-                                  <li onClick={() => handleOptionClick(subplebbit.statsCid)}>Hide thread</li>
-                                  {/* {isModerator ? (
-                                    <>
-                                      change rules
-                                    </>
-                                  ) : null} */}
-                                </ul>
-                              </div>
-                              </PostMenuCatalog>, document.body
-                            )}
-                          </span>
-                          <blockquote>
-                            <div className="custom-paragraph">
-                              {subplebbit.rules.map((rule, index) => (
-                                <React.Fragment key={index}>
-                                  {index + 1}. {rule}
-                                  <br />
-                                </React.Fragment>
-                              ))}
-                            </div>
-                          </blockquote>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="thread-mobile">
-                    <hr style={{marginTop: "10px"}} />
-                    <div className="op-container">
-                      <div className="post op op-mobile">
-                        <div className="post-info-mobile">
-                          <button className="post-menu-button-mobile"
-                           style={{ all: 'unset', cursor: 'pointer' }}>...</button>
-                          <span className="name-block-mobile">
-                            <span className="name-mobile capcode">## Board Admins</span>
-                            &nbsp;
-                            <span className="thread-icons-mobile"
-                            style={{float: "right", marginRight: "18px"}}>
-                              <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
-                              &nbsp;
-                              <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
-                            </span>
-                            <br />
-                            <span className="subject-mobile">Rules</span>
-                            &nbsp;
-                          </span>
-                          <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
-                          &nbsp;
-                        </div>
-                        <blockquote className="post-message-mobile">
-                          <div className="custom-paragraph">
-                            {subplebbit.rules.map((rule, index) => (
-                              <React.Fragment key={index}>
-                                {index + 1}. {rule}
-                                <br />
-                              </React.Fragment>
-                            ))}
-                          </div>
-                        </blockquote>
-                      </div>
-                      <div className="post-link-mobile">
-                        <Link to={() => {}} className="button-mobile">View Thread</Link>
-                      </div>
-                    </div>
-                  </div>
-                </>
-                : null}
-                {subplebbit.description ?
-                <>
-                  <div className="thread">
-                    <div className="op-container" style={{
-                    display: subplebbit.rules ? "grid" : "block"
-                    }}>
-                      <div className="post op op-desktop">
-                        <hr />
-                        <div className="post-info">
-                          {subplebbit.suggested?.avatarUrl ? (
-                            <div className="file" style={{marginBottom: "5px"}}>
-                              <div className="file-text">
-                                Link:&nbsp;
-                                <a href={subplebbit.suggested?.avatarUrl} 
-                                target="_blank" rel="noopener noreferrer">{
-                                subplebbit.suggested?.avatarUrl.length > 30 ?
-                                subplebbit.suggested?.avatarUrl.slice(0, 30) + "..." :
-                                subplebbit.suggested?.avatarUrl
-                                }
-                                </a>&nbsp;(image)
-                              </div>
-                              <div className="img-container">
-                                <span className="file-thumb">
-                                  <img src={subplebbit.suggested?.avatarUrl} alt="board avatar"
-                                  onClick={handleImageClick}
-                                  style={{cursor: "pointer"}} />
+                  {subplebbit.rules ? 
+                    <>
+                      <div className="thread">
+                        <div className="op-container">
+                          <div className="post op op-desktop">
+                            <hr />
+                            <div className="post-info">
+                              <span className="name-block">
+                                <span className="title">Rules</span>
+                                &nbsp;
+                                <span className="name capcode">## Board Admins</span>
+                                &nbsp;
+                                <span className="date-time">{getDate(subplebbit.createdAt)}</span>
+                                &nbsp;
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                &nbsp;
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                <span>&nbsp;
+                                    [
+                                    <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                    ]
                                 </span>
-                              </div>
-                            </div>
-                            ) : null}
-                          <span className="name-block">
-                            <span className="title">Welcome to {subplebbit.title || subplebbit.address}</span>
-                            &nbsp;
-                            <span className="name capcode">## Board Admins</span>
-                            &nbsp;
-                            <span className="date-time">{getDate(subplebbit.createdAt)}</span>
-                            &nbsp;
-                            <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
-                            &nbsp;
-                            <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
-                            <span>&nbsp;
-                                [
-                                <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
-                                ]
-                            </span>
-                            <PostMenu 
-                              title="Post menu"
-                              ref={el => { 
-                                threadMenuRefs.current[subplebbit.pubsubTopic] = el;
-                              }}
-                              className='post-menu-button' 
-                              rotated={openMenuCid === subplebbit.pubsubTopic}
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                const rect = threadMenuRefs.current[subplebbit.pubsubTopic].getBoundingClientRect();
-                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                                setOpenMenuCid(prevCid => (prevCid === subplebbit.pubsubTopic ? null : subplebbit.pubsubTopic));
-                              }}
-                            >
-                              ▶
-                            </PostMenu>
-                            {createPortal(
-                              <PostMenuCatalog selectedStyle={selectedStyle} 
-                              ref={el => {postMenuCatalogRef.current = el}}
-                              onClick={(event) => event.stopPropagation()}
-                              style={{position: "absolute", 
-                              top: menuPosition.top + 7, 
-                              left: menuPosition.left}}>
-                              <div className={`post-menu-thread post-menu-thread-${subplebbit.pubsubTopic}`}
-                              style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
-                              >
-                                <ul className="post-menu-catalog">
-                                  <li onClick={() => handleOptionClick(subplebbit.pubsubTopic)}>Hide thread</li>
-                                  {/* {isModerator ? (
-                                    <>
-                                      change description
-                                    </>
-                                  ) : null} */}
-                                </ul>
-                              </div>
-                              </PostMenuCatalog>, document.body
-                            )}
-                          </span>
-                          <blockquote>
-                            <div className="custom-paragraph">
-                              {subplebbit.description}
-                            </div>
-                          </blockquote>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="thread-mobile">
-                    {subplebbit.rules ?
-                      <hr /> :
-                      <hr style={{marginTop: "10px"}} />
-                    }
-                    <div className="op-container">
-                      <div className="post op op-mobile">
-                        <div className="post-info-mobile">
-                          <button className="post-menu-button-mobile"
-                           style={{ all: 'unset', cursor: 'pointer' }}>...</button>
-                          <span className="name-block-mobile">
-                            <span className="name-mobile capcode">## Board Admins</span>
-                            &nbsp;
-                            <span className="thread-icons-mobile"
-                            style={{float: "right", marginRight: "18px"}}>
-                              <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
-                              &nbsp;
-                              <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
-                            </span>
-                            <br />
-                            <span className="subject-mobile">Welcome to {subplebbit.title || subplebbit.address}</span>
-                            &nbsp;
-                          </span>
-                          <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
-                          &nbsp;
-                        </div>
-                        {subplebbit.suggested?.avatarUrl ? (
-                          <div className="file-mobile">
-                            <div className="img-container">
-                              <span className="file-thumb-mobile">
-                                <img src={subplebbit.suggested.avatarUrl} alt="board avatar"
-                                onClick={handleImageClick}
-                                style={{cursor: "pointer"}} />
-                                <div className="file-info-mobile">image</div>
+                                <PostMenu 
+                                  title="Post menu"
+                                  ref={el => { 
+                                    threadMenuRefs.current["rules"] = el;
+                                  }}
+                                  className='post-menu-button' 
+                                  rotated={openMenuCid === "rules"}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    const rect = threadMenuRefs.current["rules"].getBoundingClientRect();
+                                    setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                    setOpenMenuCid(prevCid => (prevCid === "rules" ? null : "rules"));
+                                  }}
+                                >
+                                  ▶
+                                </PostMenu>
+                                {createPortal(
+                                  <PostMenuCatalog selectedStyle={selectedStyle} 
+                                  ref={el => {postMenuCatalogRef.current = el}}
+                                  onClick={(event) => event.stopPropagation()}
+                                  style={{position: "absolute", 
+                                  top: menuPosition.top + 7, 
+                                  left: menuPosition.left}}>
+                                  <div className={`post-menu-thread post-menu-thread-${"rules"}`}
+                                  style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
+                                  >
+                                    <ul className="post-menu-catalog">
+                                      <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                                      {/* {isModerator ? (
+                                        <>
+                                          change rules
+                                        </>
+                                      ) : null} */}
+                                    </ul>
+                                  </div>
+                                  </PostMenuCatalog>, document.body
+                                )}
                               </span>
+                              <blockquote>
+                                <div className="custom-paragraph">
+                                  {subplebbit.rules.map((rule, index) => (
+                                    <React.Fragment key={index}>
+                                      {index + 1}. {rule}
+                                      <br />
+                                    </React.Fragment>
+                                  ))}
+                                </div>
+                              </blockquote>
                             </div>
                           </div>
-                        ) : null}
-                        <blockquote className="post-message-mobile">
-                          <div className="custom-paragraph">
-                            {subplebbit.description}
-                          </div>
-                        </blockquote>
+                        </div>
                       </div>
-                      <div className="post-link-mobile">
-                        <Link to={() => {}} className="button-mobile">View Thread</Link>
-                      </div>
-                    </div>
-                  </div>
-                </>
-                : null}
-                <Virtuoso
-                increaseViewportBy={2000}
-                data={selectedFeed}
-                itemContent={(index, thread) => {
-                  const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
-                  const commentMediaInfo = getCommentMediaInfo(thread);
-                  const fallbackImgUrl = "assets/filedeleted-res.gif";
-                  return (
-                <Fragment key={`fr-${index}`}>
-                  <div key={`t-${index}`} className="thread">
-                    <div key={`c-${index}`} className="op-container">
-                      <div key={`po-${index}`} className="post op op-desktop">
-                        <hr key={`hr-${index}`} />
-                        <div key={`pi-${index}`} className="post-info">
-                        {commentMediaInfo?.url ? (
-                          <div key={`f-${index}`} className="file" style={{marginBottom: "5px"}}>
-                            <div key={`ft-${index}`} className="file-text">
-                              Link:&nbsp;
-                              <a key={`fa-${index}`} href={commentMediaInfo.url} target="_blank"
-                              rel="noopener noreferrer">{
-                              commentMediaInfo?.url.length > 30 ?
-                              commentMediaInfo?.url.slice(0, 30) + "(...)" :
-                              commentMediaInfo?.url
-                              }</a>&nbsp;({commentMediaInfo?.type})
+                      <div className="thread-mobile">
+                        <hr style={{marginTop: "10px"}} />
+                        <div className="op-container">
+                          <div className="post op op-mobile">
+                            <div className="post-info-mobile">
+                              <button className="post-menu-button-mobile"
+                              style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                              <span className="name-block-mobile">
+                                <span className="name-mobile capcode">## Board Admins</span>
+                                &nbsp;
+                                <span className="thread-icons-mobile"
+                                style={{float: "right", marginRight: "18px"}}>
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                  &nbsp;
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                </span>
+                                <br />
+                                <span className="subject-mobile"
+                              style={{marginBottom: "-15px"}}>Rules</span>
+                                &nbsp;
+                              </span>
+                              <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                              &nbsp;
                             </div>
-                            {commentMediaInfo?.type === "webpage" ? (
-                              <div key={`enlarge-${index}`} className="img-container">
-                                <span key={`fta-${index}`} className="file-thumb">
-                                  {thread.thumbnailUrl ? (
+                            <blockquote className="post-message-mobile">
+                              <div className="custom-paragraph">
+                                {subplebbit.rules.map((rule, index) => (
+                                  <React.Fragment key={index}>
+                                    {index + 1}. {rule}
+                                    <br />
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                            </blockquote>
+                          </div>
+                          <div className="post-link-mobile">
+                            <Link to={() => {}} className="button-mobile">View Thread</Link>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  : null}
+                  {subplebbit.description ?
+                    <>
+                      <div className="thread">
+                        <div className="op-container" style={{
+                        display: subplebbit.rules ? "grid" : "block"
+                        }}>
+                          <div className="post op op-desktop">
+                            <hr />
+                            <div className="post-info">
+                              {subplebbit.suggested?.avatarUrl ? (
+                                <div className="file" style={{marginBottom: "5px"}}>
+                                  <div className="file-text">
+                                    Link:&nbsp;
+                                    <a href={subplebbit.suggested?.avatarUrl} 
+                                    target="_blank" rel="noopener noreferrer">{
+                                    subplebbit.suggested?.avatarUrl.length > 30 ?
+                                    subplebbit.suggested?.avatarUrl.slice(0, 30) + "..." :
+                                    subplebbit.suggested?.avatarUrl
+                                    }
+                                    </a>&nbsp;(image)
+                                  </div>
+                                  <div className="img-container">
+                                    <span className="file-thumb">
+                                      <img src={subplebbit.suggested?.avatarUrl} alt="board avatar"
+                                      onClick={handleImageClick}
+                                      style={{cursor: "pointer"}} />
+                                    </span>
+                                  </div>
+                                </div>
+                                ) : null}
+                              <span className="name-block">
+                                <span className="title">Welcome to {subplebbit.title || subplebbit.address}</span>
+                                &nbsp;
+                                <span className="name capcode">## Board Admins</span>
+                                &nbsp;
+                                <span className="date-time">{getDate(subplebbit.createdAt)}</span>
+                                &nbsp;
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                &nbsp;
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                <span>&nbsp;
+                                    [
+                                    <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                    ]
+                                </span>
+                                <PostMenu 
+                                  title="Post menu"
+                                  ref={el => { 
+                                    threadMenuRefs.current[subplebbit.pubsubTopic] = el;
+                                  }}
+                                  className='post-menu-button' 
+                                  rotated={openMenuCid === subplebbit.pubsubTopic}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    const rect = threadMenuRefs.current[subplebbit.pubsubTopic].getBoundingClientRect();
+                                    setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                    setOpenMenuCid(prevCid => (prevCid === subplebbit.pubsubTopic ? null : subplebbit.pubsubTopic));
+                                  }}
+                                >
+                                  ▶
+                                </PostMenu>
+                                {createPortal(
+                                  <PostMenuCatalog selectedStyle={selectedStyle} 
+                                  ref={el => {postMenuCatalogRef.current = el}}
+                                  onClick={(event) => event.stopPropagation()}
+                                  style={{position: "absolute", 
+                                  top: menuPosition.top + 7, 
+                                  left: menuPosition.left}}>
+                                  <div className={`post-menu-thread post-menu-thread-${subplebbit.pubsubTopic}`}
+                                  style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
+                                  >
+                                    <ul className="post-menu-catalog">
+                                      <li onClick={() => handleOptionClick(subplebbit.pubsubTopic)}>Hide thread</li>
+                                      {/* {isModerator ? (
+                                        <>
+                                          change description
+                                        </>
+                                      ) : null} */}
+                                    </ul>
+                                  </div>
+                                  </PostMenuCatalog>, document.body
+                                )}
+                              </span>
+                              <blockquote>
+                                <div className="custom-paragraph">
+                                  {subplebbit.description}
+                                </div>
+                              </blockquote>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="thread-mobile">
+                        {subplebbit.rules ?
+                          <hr /> :
+                          <hr style={{marginTop: "10px"}} />
+                        }
+                        <div className="op-container">
+                          <div className="post op op-mobile">
+                            <div className="post-info-mobile">
+                              <button className="post-menu-button-mobile"
+                              style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                              <span className="name-block-mobile">
+                                <span className="name-mobile capcode">## Board Admins</span>
+                                &nbsp;
+                                <span className="thread-icons-mobile"
+                                style={{float: "right", marginRight: "18px"}}>
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                  &nbsp;
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                </span>
+                                <br />
+                                <span className="subject-mobile"
+                              style={{marginBottom: "-15px"}}>Welcome to {subplebbit.title || subplebbit.address}</span>
+                                &nbsp;
+                              </span>
+                              <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                              &nbsp;
+                            </div>
+                            {subplebbit.suggested?.avatarUrl ? (
+                              <div className="file-mobile">
+                                <div className="img-container">
+                                  <span className="file-thumb-mobile">
+                                    <img src={subplebbit.suggested.avatarUrl} alt="board avatar"
+                                    onClick={handleImageClick}
+                                    style={{cursor: "pointer"}} />
+                                    <div className="file-info-mobile">image</div>
+                                  </span>
+                                </div>
+                              </div>
+                            ) : null}
+                            <blockquote className="post-message-mobile">
+                              <div className="custom-paragraph">
+                                {subplebbit.description}
+                              </div>
+                            </blockquote>
+                          </div>
+                          <div className="post-link-mobile">
+                            <Link to={() => {}} className="button-mobile">View Thread</Link>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  : null}
+                  <Virtuoso
+                  increaseViewportBy={2000}
+                  data={selectedFeed}
+                  itemContent={(index, thread) => {
+                    const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
+                    const commentMediaInfo = getCommentMediaInfo(thread);
+                    const fallbackImgUrl = "assets/filedeleted-res.gif";
+                    return (
+                  <Fragment key={`fr-${index}`}>
+                    <div key={`t-${index}`} className="thread">
+                      <div key={`c-${index}`} className="op-container">
+                        <div key={`po-${index}`} className="post op op-desktop">
+                          <hr key={`hr-${index}`} />
+                          <div key={`pi-${index}`} className="post-info">
+                          {commentMediaInfo?.url ? (
+                            <div key={`f-${index}`} className="file" style={{marginBottom: "5px"}}>
+                              <div key={`ft-${index}`} className="file-text">
+                                Link:&nbsp;
+                                <a key={`fa-${index}`} href={commentMediaInfo.url} target="_blank"
+                                rel="noopener noreferrer">{
+                                commentMediaInfo?.url.length > 30 ?
+                                commentMediaInfo?.url.slice(0, 30) + "(...)" :
+                                commentMediaInfo?.url
+                                }</a>&nbsp;({commentMediaInfo?.type})
+                              </div>
+                              {commentMediaInfo?.type === "webpage" ? (
+                                <div key={`enlarge-${index}`} className="img-container">
+                                  <span key={`fta-${index}`} className="file-thumb">
+                                    {thread.thumbnailUrl ? (
+                                      <img key={`fti-${index}`} 
+                                      src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+                                      onClick={handleImageClick}
+                                      style={{cursor: "pointer"}}
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
+                                    ) : null}
+                                  </span>
+                                </div>
+                              ) : null}
+                              {commentMediaInfo?.type === "image" ? (
+                                <div key={`enlarge-${index}`} className="img-container">
+                                  <span key={`fta-${index}`} className="file-thumb">
                                     <img key={`fti-${index}`} 
-                                    src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+                                    src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                     onClick={handleImageClick}
                                     style={{cursor: "pointer"}}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
-                                  ) : null}
-                                </span>
-                              </div>
-                            ) : null}
-                            {commentMediaInfo?.type === "image" ? (
-                              <div key={`enlarge-${index}`} className="img-container">
+                                  </span>
+                                </div>
+                              ) : null}
+                              {commentMediaInfo?.type === "video" ? (
                                 <span key={`fta-${index}`} className="file-thumb">
-                                  <img key={`fti-${index}`} 
+                                  <video controls width="" key={`fti-${index}`} 
                                   src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                  onClick={handleImageClick}
-                                  style={{cursor: "pointer"}}
                                   onError={(e) => e.target.src = fallbackImgUrl} />
                                 </span>
-                              </div>
-                            ) : null}
-                            {commentMediaInfo?.type === "video" ? (
-                              <span key={`fta-${index}`} className="file-thumb">
-                                <video controls width="" key={`fti-${index}`} 
-                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                onError={(e) => e.target.src = fallbackImgUrl} />
-                              </span>
-                            ) : null}
-                            {commentMediaInfo?.type === "audio" ? (
-                              <span key={`fta-${index}`} className="file-thumb">
-                                <audio controls key={`fti-${index}`} 
-                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                onError={(e) => e.target.src = fallbackImgUrl} />
-                              </span>
-                            ) : null}
-                          </div>
-                        ) : null}
-                          <span key={`nb-${index}`} className="name-block">
-                            {thread.title ? (
-                              thread.title.length > 75 ?
-                              <Fragment key={`fragment2-${index}`}>
-                                <span key={`q-${index}`} className="title"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={thread.title}
-                                data-tooltip-place="top">
-                                  {thread.title.slice(0, 75) + " (...)"}
+                              ) : null}
+                              {commentMediaInfo?.type === "audio" ? (
+                                <span key={`fta-${index}`} className="file-thumb">
+                                  <audio controls key={`fti-${index}`} 
+                                  src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
                                 </span>
-                              </Fragment>
-                            : <span key={`q-${index}`} className="title">
-                              {thread.title}
-                              </span>) 
-                            : null}&nbsp;
-                            {thread.author.displayName
-                            ? thread.author.displayName.length > 20
-                            ? <Fragment key={`fragment3-${index}`}>
-                                <span key={`n-${index}`} className="name"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={thread.author.displayName}
-                                data-tooltip-place="top">
-                                  {thread.author.displayName.slice(0, 20) + " (...)"}
-                                </span>
-                              </Fragment> 
-                              : <span key={`n-${index}`} className="name">
-                                {thread.author.displayName}</span>
-                            : <span key={`n-${index}`} className="name">
-                              Anonymous</span>}
-                            &nbsp;
-                            (u/
-                            <span key={`pa-${index}`} className="poster-address address-desktop"
-                            id="reply-button" style={{cursor: "pointer"}}
-                              onClick={() => handleAddressClick(thread.author.shortAddress)}
-                            >
-                              {thread.author.shortAddress}
-                            </span>)
-                            &nbsp;
-                            <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
-                            &nbsp;
-                            <span key={`pn-${index}`} className="post-number post-number-desktop">
-                              <span key={`pl1-${index}`}>c/</span>
-                              <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
-                              onClick={(e) => {
-                                if (e.button === 2) return;
-                                e.preventDefault();
-                                setIsReplyOpen(true); 
-                                setSelectedShortCid(thread.shortCid); 
-                                setSelectedParentCid(thread.cid);
-                                }} title="Reply to this post">{thread.shortCid}</Link>
-                              &nbsp;
-                            {thread.pinned ? (
-                              <>
-                                &nbsp;
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                style={{marginBottom: "-3px"}} />
-                              </>
-                            ) : null}
-                            {thread.locked ? (
-                              <>
-                                &nbsp;
-                                <img src="assets/closed.gif" alt="Closed" title="Closed"
-                                style={{marginBottom: "-3px"}} />
-                              </>
-                            ) : null}
-                              <span key={`rl1-${index}`}>&nbsp;
-                                [
-                                <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>
-                                ]
-                              </span>
-                            </span>
-                            <PostMenu 
-                              key={`pmb-${index}`} 
-                              title="Post menu"
-                              ref={el => { 
-                                threadMenuRefs.current[thread.cid] = el;
-                              }}
-                              className='post-menu-button' 
-                              rotated={openMenuCid === thread.cid}
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
-                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                                setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
-                              }}                              
-                            >
-                              ▶
-                            </PostMenu>
-                            {createPortal(
-                              <PostMenuCatalog selectedStyle={selectedStyle} 
-                              ref={el => {postMenuCatalogRef.current = el}}
-                              onClick={(event) => event.stopPropagation()}
-                              style={{position: "absolute", 
-                              top: menuPosition.top + 7, 
-                              left: menuPosition.left}}>
-                              <div className={`post-menu-thread post-menu-thread-${thread.cid}`}
-                              style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
-                              >
-                                <ul className="post-menu-catalog">
-                                  <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                  {thread.author.shortAddress === account?.author.shortAddress ? (
-                                    <>
-                                      <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
-                                    </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                      {thread.author.shortAddress === account?.author.shortAddress ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
-                                          setModeratingCommentCid(thread.cid)
-                                          setIsModerationOpen(true); 
-                                          handleOptionClick(thread.cid);
-                                          setDeletePost(true);
-                                        }}>
-                                        Delete post
-                                        </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setModeratingCommentCid(thread.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(thread.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
-                                    </>
-                                  ) : null}
-                                  {(commentMediaInfo && (
-                                    commentMediaInfo.type === 'image' || 
-                                    (commentMediaInfo.type === 'webpage' && 
-                                    commentMediaInfo.thumbnail))) ? ( 
-                                      <li 
-                                      onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                                        Image search »
-                                        <ul className="dropdown-menu post-menu-catalog"
-                                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                          <li onClick={() => handleOptionClick(thread.cid)}>
-                                            <a 
-                                            href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
-                                            >Google</a>
-                                          </li>
-                                          <li onClick={() => handleOptionClick(thread.cid)}>
-                                            <a
-                                            href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
-                                            >Yandex</a>
-                                          </li>
-                                          <li onClick={() => handleOptionClick(thread.cid)}>
-                                            <a
-                                            href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
-                                            >SauceNAO</a>
-                                          </li>
-                                        </ul>
-                                      </li>
-                                    ) : null
-                                  }
-                                </ul>
-                              </div>
-                              </PostMenuCatalog>, document.body
-                            )}
-                            <div key={`bi-${index}`} id="backlink-id" className="backlink">
-                              {thread.replies?.pages?.topAll.comments
-                                .sort((a, b) => a.timestamp - b.timestamp)
-                                .map((reply, index) => (
-                                  <div key={`div-${index}`} style={{display: 'inline-block'}} 
-                                  ref={el => {
-                                    backlinkRefs.current[reply.cid] = el;
-                                  }}>
-                                    <Link key={`ql-${index}`}
-                                    to={() => {}}
-                                    className="quote-link" 
-                                    onClick={(event) => handleQuoteClick(reply, null, event)}
-                                    onMouseOver={(event) => {
-                                      event.stopPropagation();
-                                      handleQuoteHover(reply, null, () => {
-                                        const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                        const distanceToRight = window.innerWidth - rect.right;
-                                        const distanceToTop = rect.top;
-                                        const distanceToBottom = window.innerHeight - rect.bottom;
-                                        let top;
-
-                                        if (distanceToTop < postOnHoverHeight / 2) {
-                                          top = window.scrollY - 5;
-                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                        } else {
-                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                        }
-                                      
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top,
-                                            right: window.innerWidth - rect.left - 10,
-                                            maxWidth: rect.left - 5
-                                          });
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top,
-                                            left: rect.left + rect.width + 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                          });
-                                        }
-                                        setOutOfViewCid(reply.cid);
-                                      });
-                                    }}
-                                    onMouseLeave={() => {
-                                      removeHighlight();
-                                      setOutOfViewCid(null);
-                                    }}>
-                                      c/{reply.shortCid}</Link>
-                                      &nbsp;
-                                  </div>
-                                ))
-                              }
+                              ) : null}
                             </div>
-                          </span>
-                          {thread.content ? (
-                            thread.content?.length > 1000 ?
-                            <Fragment key={`fragment5-${index}`}>
-                              <blockquote key={`bq-${index}`}>
-                                <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
-                                <span key={`ttl-s-${index}`} className="ttl"> (...) 
-                                  <br key={`ttl-s-br1-${index}`} />
-                                  <EditLabel key={`edit-label-thread-${index}`} 
-                                  commentCid={thread.cid}
-                                  className="ttl"/>
-                                  <StateLabel key={`state-label-thread-${index}`}
-                                  commentIndex={thread.index}
-                                  className="ttl ellipsis"/>
-                                  <br key={`ttl-s-br2${index}`} />
-                                  Post too long.&nbsp;
-                                  <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                  &nbsp;to view. 
-                                </span>
-                              </blockquote>
-                            </Fragment>
-                          : <blockquote key={`bq-${index}`}>
-                              <Post content={thread.content} key={`post-${index}`} />
-                              <EditLabel key={`edit-label-thread-${index}`} 
-                              commentCid={thread.cid}
-                              className="ttl"/>
-                              <StateLabel key={`state-label-thread-${index}`}
-                              commentIndex={thread.index}
-                              className="ttl ellipsis"/>
-                            </blockquote>)
-                          : null}
-                        </div>
-                      </div>
-                    </div>
-                    <span key={`summary-${index}`} className="summary">
-                      {omittedCount > 0 ? (
-                        <>
-                          {thread.content ? null : <br />}
-                          <span key={`oc-${index}`} className="ttl">
-                            <span key={`oc1-${index}`}>
-                              {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
-                              <Link key={`oc2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
-                              &nbsp;to view.
-                            </span>
-                          </span>
-                        </>
-                      ) : null}
-                    </span>
-                    {displayedReplies?.map((reply, index) => {
-                      const replyMediaInfo = getCommentMediaInfo(reply);
-                      const fallbackImgUrl = "assets/filedeleted-res.gif";
-                      const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
-                      return (
-                        <div key={`rc-${index}`} className="reply-container">
-                          <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
-                          <div key={`pr-${index}`} className="post-reply post-reply-desktop">
-                            <div key={`pi-${index}`} className="post-info">
-                              <span key={`nb-${index}`} className="nameblock">
-                                {reply.author.displayName
-                                  ? reply.author.displayName.length > 20
-                                  ? <Fragment key={`fragment6-${index}`}>
-                                      <span key={`mob-n-${index}`} className="name"
-                                      data-tooltip-id="tooltip"
-                                      data-tooltip-content={reply.author.displayName}
-                                      data-tooltip-place="top">
-                                        {reply.author.displayName.slice(0, 20) + " (...)"}
-                                      </span>
-                                    </Fragment>
-                                    : <span key={`mob-n-${index}`} className="name">
-                                      {reply.author.displayName}</span>
-                                  : <span key={`mob-n-${index}`} className="name">
-                                    Anonymous</span>}
-                                &nbsp;
-                                <span key={`pa-${index}`} className="poster-address address-desktop"
-                                  id="reply-button" style={{cursor: "pointer"}}
-                                  onClick={() => handleAddressClick(reply.author.shortAddress)}
-                                >
-                                  (u/
-                                    {reply.author?.shortAddress ?
-                                      (
-                                        <span key={`mob-ha-${index}`}>
-                                          {reply.author?.shortAddress}
-                                        </span>
-                                      ) : (
-                                        <span key={`mob-ha-${index}`}>
-                                          {account?.author?.shortAddress}
-                                        </span>
-                                      )
-                                    }
-                                  )
-                                </span>
-                              </span>
+                          ) : null}
+                            <span key={`nb-${index}`} className="name-block">
+                              {thread.title ? (
+                                thread.title.length > 75 ?
+                                <Fragment key={`fragment2-${index}`}>
+                                  <span key={`q-${index}`} className="title"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={thread.title}
+                                  data-tooltip-place="top">
+                                    {thread.title.slice(0, 75) + " (...)"}
+                                  </span>
+                                </Fragment>
+                              : <span key={`q-${index}`} className="title">
+                                {thread.title}
+                                </span>) 
+                              : null}&nbsp;
+                              {thread.author.displayName
+                              ? thread.author.displayName.length > 20
+                              ? <Fragment key={`fragment3-${index}`}>
+                                  <span key={`n-${index}`} className="name"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={thread.author.displayName}
+                                  data-tooltip-place="top">
+                                    {thread.author.displayName.slice(0, 20) + " (...)"}
+                                  </span>
+                                </Fragment> 
+                                : <span key={`n-${index}`} className="name">
+                                  {thread.author.displayName}</span>
+                              : <span key={`n-${index}`} className="name">
+                                Anonymous</span>}
                               &nbsp;
-                              <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
+                              (u/
+                              <span key={`pa-${index}`} className="poster-address address-desktop"
+                              id="reply-button" style={{cursor: "pointer"}}
+                                onClick={() => handleAddressClick(thread.author.shortAddress)}
+                              >
+                                {thread.author.shortAddress}
+                              </span>)
+                              &nbsp;
+                              <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
                               &nbsp;
                               <span key={`pn-${index}`} className="post-number post-number-desktop">
                                 <span key={`pl1-${index}`}>c/</span>
-                                {reply.shortCid ? (
-                                  <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
-                                  onClick={(e) => {
-                                    if (e.button === 2) return;
-                                    e.preventDefault();
-                                    setIsReplyOpen(true); 
-                                    setSelectedShortCid(reply.shortCid); 
-                                    setSelectedParentCid(reply.cid);
-                                  }} title="Reply to this post">{reply.shortCid}</Link>
-                                ) : (
-                                  <PendingLabel key="pending" commentIndex={reply.index} />
-                                )}
-                              </span>&nbsp;
+                                <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
+                                onClick={(e) => {
+                                  if (e.button === 2) return;
+                                  e.preventDefault();
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(thread.shortCid); 
+                                  setSelectedParentCid(thread.cid);
+                                  }} title="Reply to this post">{thread.shortCid}</Link>
+                                &nbsp;
+                              {thread.pinned ? (
+                                <>
+                                  &nbsp;
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                                  style={{marginBottom: "-3px"}} />
+                                </>
+                              ) : null}
+                              {thread.locked ? (
+                                <>
+                                  &nbsp;
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed"
+                                  style={{marginBottom: "-3px"}} />
+                                </>
+                              ) : null}
+                                <span key={`rl1-${index}`}>&nbsp;
+                                  [
+                                  <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="reply-link" >Reply</Link>
+                                  ]
+                                </span>
+                              </span>
                               <PostMenu 
-                              key={`pmb-${index}`} 
-                              title="Post menu"
-                              ref={el => { 
-                                replyMenuRefs.current[reply.cid] = el; 
-                              }}
-                              className='post-menu-button' 
-                              rotated={openMenuCid === reply.cid}
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
-                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                                setOpenMenuCid(prevCid => (prevCid === reply.cid ? null : reply.cid));
-                              }} 
-                            >
-                              ▶
-                            </PostMenu>
-                            {createPortal(
-                              <PostMenuCatalog selectedStyle={selectedStyle} 
-                              ref={el => {postMenuCatalogRef.current = el}}
-                              onClick={(event) => event.stopPropagation()}
-                              style={{position: "absolute", 
-                              top: menuPosition.top + 7, 
-                              left: menuPosition.left}}>
-                              <div className={`post-menu-reply post-menu-reply-${reply.cid}`}
-                              style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
+                                key={`pmb-${index}`} 
+                                title="Post menu"
+                                ref={el => { 
+                                  threadMenuRefs.current[thread.cid] = el;
+                                }}
+                                className='post-menu-button' 
+                                rotated={openMenuCid === thread.cid}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
+                                  setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                  setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
+                                }}                              
                               >
-                                <ul className="post-menu-catalog">
-                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  {reply.author.shortAddress === account?.author.shortAddress ? (
-                                    <>
-                                      <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
-                                    </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                      {reply.author.shortAddress === account?.author.shortAddress ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
-                                          setModeratingCommentCid(reply.cid)
+                                ▶
+                              </PostMenu>
+                              {createPortal(
+                                <PostMenuCatalog selectedStyle={selectedStyle} 
+                                ref={el => {postMenuCatalogRef.current = el}}
+                                onClick={(event) => event.stopPropagation()}
+                                style={{position: "absolute", 
+                                top: menuPosition.top + 7, 
+                                left: menuPosition.left}}>
+                                <div className={`post-menu-thread post-menu-thread-${thread.cid}`}
+                                style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
+                                >
+                                  <ul className="post-menu-catalog">
+                                    <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                                    {thread.author.shortAddress === account?.author.shortAddress ? (
+                                      <>
+                                        <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                                        <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                                      </>
+                                    ) : null}
+                                    {isModerator ? (
+                                      <>
+                                        {thread.author.shortAddress === account?.author.shortAddress ? (
+                                          null
+                                        ) : (
+                                          <li onClick={() => {
+                                            setModeratingCommentCid(thread.cid)
+                                            setIsModerationOpen(true); 
+                                            handleOptionClick(thread.cid);
+                                            setDeletePost(true);
+                                          }}>
+                                          Delete post
+                                          </li>
+                                        )}
+                                        <li
+                                        onClick={() => {
+                                          setModeratingCommentCid(thread.cid)
                                           setIsModerationOpen(true); 
-                                          handleOptionClick(reply.cid);
-                                          setDeletePost(true);
+                                          handleOptionClick(thread.cid);
                                         }}>
-                                        Delete post
+                                          Mod tools
                                         </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setModeratingCommentCid(reply.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(reply.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
-                                    </>
-                                  ) : null}
-                                  {(replyMediaInfo && (
-                                    replyMediaInfo.type === 'image' || 
-                                    (replyMediaInfo.type === 'webpage' && 
-                                    replyMediaInfo.thumbnail))) ? ( 
-                                      <li 
-                                      onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                                        Image search »
-                                        <ul className="dropdown-menu post-menu-catalog"
-                                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                          <li onClick={() => handleOptionClick(reply.cid)}>
-                                            <a 
-                                            href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
-                                            >Google</a>
-                                          </li>
-                                          <li onClick={() => handleOptionClick(reply.cid)}>
-                                            <a
-                                            href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
-                                            >Yandex</a>
-                                          </li>
-                                          <li onClick={() => handleOptionClick(reply.cid)}>
-                                            <a
-                                            href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
-                                            >SauceNAO</a>
-                                          </li>
-                                        </ul>
-                                      </li>
-                                    ) : null
-                                  }
-                                </ul>
-                              </div>
-                              </PostMenuCatalog>, document.body
-                            )}
+                                      </>
+                                    ) : null}
+                                    {(commentMediaInfo && (
+                                      commentMediaInfo.type === 'image' || 
+                                      (commentMediaInfo.type === 'webpage' && 
+                                      commentMediaInfo.thumbnail))) ? ( 
+                                        <li 
+                                        onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                        onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                          Image search »
+                                          <ul className="dropdown-menu post-menu-catalog"
+                                            style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                            <li onClick={() => handleOptionClick(thread.cid)}>
+                                              <a 
+                                              href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
+                                              >Google</a>
+                                            </li>
+                                            <li onClick={() => handleOptionClick(thread.cid)}>
+                                              <a
+                                              href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
+                                              >Yandex</a>
+                                            </li>
+                                            <li onClick={() => handleOptionClick(thread.cid)}>
+                                              <a
+                                              href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
+                                              >SauceNAO</a>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                      ) : null
+                                    }
+                                  </ul>
+                                </div>
+                                </PostMenuCatalog>, document.body
+                              )}
                               <div key={`bi-${index}`} id="backlink-id" className="backlink">
-                                {reply.replies?.pages?.topAll.comments
+                                {thread.replies?.pages?.topAll.comments
                                   .sort((a, b) => a.timestamp - b.timestamp)
                                   .map((reply, index) => (
                                     <div key={`div-${index}`} style={{display: 'inline-block'}} 
                                     ref={el => {
                                       backlinkRefs.current[reply.cid] = el;
                                     }}>
-                                    <Link key={`ql-${index}`}
-                                    to={() => {}} className="quote-link" 
-                                    onClick={(event) => handleQuoteClick(reply, null, event)}
-                                    onMouseOver={(event) => {
-                                      event.stopPropagation();
-                                      handleQuoteHover(reply, null, () => {
-                                        setOutOfViewCid(reply.cid);
-                                        const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                        const distanceToRight = window.innerWidth - rect.right;
-                                        const distanceToTop = rect.top;
-                                        const distanceToBottom = window.innerHeight - rect.bottom;
-                                        let top;
+                                      <Link key={`ql-${index}`}
+                                      to={() => {}}
+                                      className="quote-link" 
+                                      onClick={(event) => handleQuoteClick(reply, null, event)}
+                                      onMouseOver={(event) => {
+                                        event.stopPropagation();
+                                        handleQuoteHover(reply, null, () => {
+                                          const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                          const distanceToRight = window.innerWidth - rect.right;
+                                          const distanceToTop = rect.top;
+                                          const distanceToBottom = window.innerHeight - rect.bottom;
+                                          let top;
 
-                                        if (distanceToTop < postOnHoverHeight / 2) {
-                                          top = window.scrollY - 5;
-                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                        } else {
-                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                        }
-                                      
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top,
-                                            right: window.innerWidth - rect.left - 10,
-                                            maxWidth: rect.left - 5
-                                          });
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top,
-                                            left: rect.left + rect.width + 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                          });
-                                        }
-                                      });
-                                    }}
-                                    onMouseLeave={() => {
-                                      removeHighlight();
-                                      setOutOfViewCid(null);
-                                    }}>
-                                      c/{reply.shortCid}</Link>
-                                      &nbsp;
+                                          if (distanceToTop < postOnHoverHeight / 2) {
+                                            top = window.scrollY - 5;
+                                          } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                            top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                          } else {
+                                            top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                          }
+                                        
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5
+                                            });
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                            });
+                                          }
+                                          setOutOfViewCid(reply.cid);
+                                        });
+                                      }}
+                                      onMouseLeave={() => {
+                                        removeHighlight();
+                                        setOutOfViewCid(null);
+                                      }}>
+                                        c/{reply.shortCid}</Link>
+                                        &nbsp;
                                     </div>
                                   ))
                                 }
                               </div>
-                            </div>
-                            {replyMediaInfo?.url ? (
-                              <div key={`f-${index}`} className="file" 
-                              style={{marginBottom: "5px"}}>
-                                <div key={`ft-${index}`} className="reply-file-text">
-                                  Link:&nbsp;
-                                  <a key={`fa-${index}`} href={replyMediaInfo.url} target="_blank"
-                                  rel="noopener noreferrer">{
-                                  replyMediaInfo?.url.length > 30 ?
-                                  replyMediaInfo?.url.slice(0, 30) + "(...)" :
-                                  replyMediaInfo?.url
-                                  }</a>&nbsp;({replyMediaInfo?.type})
+                            </span>
+                            {thread.content ? (
+                              thread.content?.length > 1000 ?
+                              <Fragment key={`fragment5-${index}`}>
+                                <blockquote key={`bq-${index}`}>
+                                  <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
+                                  <span key={`ttl-s-${index}`} className="ttl"> (...) 
+                                    <br key={`ttl-s-br1-${index}`} />
+                                    <EditLabel key={`edit-label-thread-${index}`} 
+                                    commentCid={thread.cid}
+                                    className="ttl"/>
+                                    <StateLabel key={`state-label-thread-${index}`}
+                                    commentIndex={thread.index}
+                                    className="ttl ellipsis"/>
+                                    <br key={`ttl-s-br2${index}`} />
+                                    Post too long.&nbsp;
+                                    <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                    &nbsp;to view. 
+                                  </span>
+                                </blockquote>
+                              </Fragment>
+                            : <blockquote key={`bq-${index}`}>
+                                <Post content={thread.content} key={`post-${index}`} />
+                                <EditLabel key={`edit-label-thread-${index}`} 
+                                commentCid={thread.cid}
+                                className="ttl"/>
+                                <StateLabel key={`state-label-thread-${index}`}
+                                commentIndex={thread.index}
+                                className="ttl ellipsis"/>
+                              </blockquote>)
+                            : null}
+                          </div>
+                        </div>
+                      </div>
+                      <span key={`summary-${index}`} className="summary">
+                        {omittedCount > 0 ? (
+                          <>
+                            {thread.content ? null : <br />}
+                            <span key={`oc-${index}`} className="ttl">
+                              <span key={`oc1-${index}`}>
+                                {omittedCount} post{omittedCount > 1 ? "s" : ""} omitted. Click&nbsp;
+                                <Link key={`oc2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">here</Link>
+                                &nbsp;to view.
+                              </span>
+                            </span>
+                          </>
+                        ) : null}
+                      </span>
+                      {displayedReplies?.map((reply, index) => {
+                        const replyMediaInfo = getCommentMediaInfo(reply);
+                        const fallbackImgUrl = "assets/filedeleted-res.gif";
+                        const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                        return (
+                          <div key={`rc-${index}`} className="reply-container">
+                            <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
+                            <div key={`pr-${index}`} className="post-reply post-reply-desktop">
+                              <div key={`pi-${index}`} className="post-info">
+                                <span key={`nb-${index}`} className="nameblock">
+                                  {reply.author.displayName
+                                    ? reply.author.displayName.length > 20
+                                    ? <Fragment key={`fragment6-${index}`}>
+                                        <span key={`mob-n-${index}`} className="name"
+                                        data-tooltip-id="tooltip"
+                                        data-tooltip-content={reply.author.displayName}
+                                        data-tooltip-place="top">
+                                          {reply.author.displayName.slice(0, 20) + " (...)"}
+                                        </span>
+                                      </Fragment>
+                                      : <span key={`mob-n-${index}`} className="name">
+                                        {reply.author.displayName}</span>
+                                    : <span key={`mob-n-${index}`} className="name">
+                                      Anonymous</span>}
+                                  &nbsp;
+                                  <span key={`pa-${index}`} className="poster-address address-desktop"
+                                    id="reply-button" style={{cursor: "pointer"}}
+                                    onClick={() => handleAddressClick(reply.author.shortAddress)}
+                                  >
+                                    (u/
+                                      {reply.author?.shortAddress ?
+                                        (
+                                          <span key={`mob-ha-${index}`}>
+                                            {reply.author?.shortAddress}
+                                          </span>
+                                        ) : (
+                                          <span key={`mob-ha-${index}`}>
+                                            {account?.author?.shortAddress}
+                                          </span>
+                                        )
+                                      }
+                                    )
+                                  </span>
+                                </span>
+                                &nbsp;
+                                <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
+                                &nbsp;
+                                <span key={`pn-${index}`} className="post-number post-number-desktop">
+                                  <span key={`pl1-${index}`}>c/</span>
+                                  {reply.shortCid ? (
+                                    <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`pl2-${index}`} 
+                                    onClick={(e) => {
+                                      if (e.button === 2) return;
+                                      e.preventDefault();
+                                      setIsReplyOpen(true); 
+                                      setSelectedShortCid(reply.shortCid); 
+                                      setSelectedParentCid(reply.cid);
+                                    }} title="Reply to this post">{reply.shortCid}</Link>
+                                  ) : (
+                                    <PendingLabel key="pending" commentIndex={reply.index} />
+                                  )}
+                                </span>&nbsp;
+                                <PostMenu 
+                                key={`pmb-${index}`} 
+                                title="Post menu"
+                                ref={el => { 
+                                  replyMenuRefs.current[reply.cid] = el; 
+                                }}
+                                className='post-menu-button' 
+                                rotated={openMenuCid === reply.cid}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
+                                  setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                  setOpenMenuCid(prevCid => (prevCid === reply.cid ? null : reply.cid));
+                                }} 
+                              >
+                                ▶
+                              </PostMenu>
+                              {createPortal(
+                                <PostMenuCatalog selectedStyle={selectedStyle} 
+                                ref={el => {postMenuCatalogRef.current = el}}
+                                onClick={(event) => event.stopPropagation()}
+                                style={{position: "absolute", 
+                                top: menuPosition.top + 7, 
+                                left: menuPosition.left}}>
+                                <div className={`post-menu-reply post-menu-reply-${reply.cid}`}
+                                style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
+                                >
+                                  <ul className="post-menu-catalog">
+                                    <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                    {reply.author.shortAddress === account?.author.shortAddress ? (
+                                      <>
+                                        <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                        <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                      </>
+                                    ) : null}
+                                    {isModerator ? (
+                                      <>
+                                        {reply.author.shortAddress === account?.author.shortAddress ? (
+                                          null
+                                        ) : (
+                                          <li onClick={() => {
+                                            setModeratingCommentCid(reply.cid)
+                                            setIsModerationOpen(true); 
+                                            handleOptionClick(reply.cid);
+                                            setDeletePost(true);
+                                          }}>
+                                          Delete post
+                                          </li>
+                                        )}
+                                        <li
+                                        onClick={() => {
+                                          setModeratingCommentCid(reply.cid)
+                                          setIsModerationOpen(true); 
+                                          handleOptionClick(reply.cid);
+                                        }}>
+                                          Mod tools
+                                        </li>
+                                      </>
+                                    ) : null}
+                                    {(replyMediaInfo && (
+                                      replyMediaInfo.type === 'image' || 
+                                      (replyMediaInfo.type === 'webpage' && 
+                                      replyMediaInfo.thumbnail))) ? ( 
+                                        <li 
+                                        onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                        onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                          Image search »
+                                          <ul className="dropdown-menu post-menu-catalog"
+                                            style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                            <li onClick={() => handleOptionClick(reply.cid)}>
+                                              <a 
+                                              href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
+                                              >Google</a>
+                                            </li>
+                                            <li onClick={() => handleOptionClick(reply.cid)}>
+                                              <a
+                                              href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
+                                              >Yandex</a>
+                                            </li>
+                                            <li onClick={() => handleOptionClick(reply.cid)}>
+                                              <a
+                                              href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
+                                              >SauceNAO</a>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                      ) : null
+                                    }
+                                  </ul>
                                 </div>
-                                {replyMediaInfo?.type === "webpage" ? (
-                                  <div key={`enlarge-reply-${index}`} className="img-container">
-                                    <span key={`fta-${index}`} className="file-thumb-reply">
-                                      {reply.thumbnailUrl ? (
+                                </PostMenuCatalog>, document.body
+                              )}
+                                <div key={`bi-${index}`} id="backlink-id" className="backlink">
+                                  {reply.replies?.pages?.topAll.comments
+                                    .sort((a, b) => a.timestamp - b.timestamp)
+                                    .map((reply, index) => (
+                                      <div key={`div-${index}`} style={{display: 'inline-block'}} 
+                                      ref={el => {
+                                        backlinkRefs.current[reply.cid] = el;
+                                      }}>
+                                      <Link key={`ql-${index}`}
+                                      to={() => {}} className="quote-link" 
+                                      onClick={(event) => handleQuoteClick(reply, null, event)}
+                                      onMouseOver={(event) => {
+                                        event.stopPropagation();
+                                        handleQuoteHover(reply, null, () => {
+                                          setOutOfViewCid(reply.cid);
+                                          const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                          const distanceToRight = window.innerWidth - rect.right;
+                                          const distanceToTop = rect.top;
+                                          const distanceToBottom = window.innerHeight - rect.bottom;
+                                          let top;
+
+                                          if (distanceToTop < postOnHoverHeight / 2) {
+                                            top = window.scrollY - 5;
+                                          } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                            top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                          } else {
+                                            top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                          }
+                                        
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5
+                                            });
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                            });
+                                          }
+                                        });
+                                      }}
+                                      onMouseLeave={() => {
+                                        removeHighlight();
+                                        setOutOfViewCid(null);
+                                      }}>
+                                        c/{reply.shortCid}</Link>
+                                        &nbsp;
+                                      </div>
+                                    ))
+                                  }
+                                </div>
+                              </div>
+                              {replyMediaInfo?.url ? (
+                                <div key={`f-${index}`} className="file" 
+                                style={{marginBottom: "5px"}}>
+                                  <div key={`ft-${index}`} className="reply-file-text">
+                                    Link:&nbsp;
+                                    <a key={`fa-${index}`} href={replyMediaInfo.url} target="_blank"
+                                    rel="noopener noreferrer">{
+                                    replyMediaInfo?.url.length > 30 ?
+                                    replyMediaInfo?.url.slice(0, 30) + "(...)" :
+                                    replyMediaInfo?.url
+                                    }</a>&nbsp;({replyMediaInfo?.type})
+                                  </div>
+                                  {replyMediaInfo?.type === "webpage" ? (
+                                    <div key={`enlarge-reply-${index}`} className="img-container">
+                                      <span key={`fta-${index}`} className="file-thumb-reply">
+                                        {reply.thumbnailUrl ? (
+                                          <img key={`fti-${index}`}
+                                          src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type}
+                                          onClick={handleImageClick}
+                                          style={{cursor: "pointer"}}
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                        ) : null}
+                                      </span>
+                                    </div>
+                                  ) : null}
+                                  {replyMediaInfo?.type === "image" ? (
+                                    <div key={`enlarge-reply-${index}`} className="img-container">
+                                      <span key={`fta-${index}`} className="file-thumb-reply">
                                         <img key={`fti-${index}`}
-                                        src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type}
+                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                         onClick={handleImageClick}
                                         style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
-                                      ) : null}
-                                    </span>
-                                  </div>
-                                ) : null}
-                                {replyMediaInfo?.type === "image" ? (
-                                  <div key={`enlarge-reply-${index}`} className="img-container">
+                                      </span>
+                                    </div>
+                                  ) : null}
+                                  {replyMediaInfo?.type === "video" ? (
                                     <span key={`fta-${index}`} className="file-thumb-reply">
-                                      <img key={`fti-${index}`}
+                                      <video controls
+                                      key={`fti-${index}`} 
                                       src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                      onClick={handleImageClick}
-                                      style={{cursor: "pointer"}}
                                       onError={(e) => e.target.src = fallbackImgUrl} />
                                     </span>
-                                  </div>
-                                ) : null}
-                                {replyMediaInfo?.type === "video" ? (
-                                  <span key={`fta-${index}`} className="file-thumb-reply">
-                                    <video controls
-                                    key={`fti-${index}`} 
-                                    src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                    onError={(e) => e.target.src = fallbackImgUrl} />
-                                  </span>
-                                ) : null}
-                                {replyMediaInfo?.type === "audio" ? (
-                                  <span key={`fta-${index}`} className="file-thumb-reply">
-                                    <audio controls 
-                                    key={`fti-${index}`}
-                                    src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                    onError={(e) => e.target.src = fallbackImgUrl} />
-                                  </span>
-                                ) : null}
-                              </div>
-                            ) : null}
-                            {reply.content ? (
-                              reply.content?.length > 500 ?
-                              <Fragment key={`fragment8-${index}`}>
-                                <blockquote key={`pm-${index}`} comment={reply} className="post-message">
+                                  ) : null}
+                                  {replyMediaInfo?.type === "audio" ? (
+                                    <span key={`fta-${index}`} className="file-thumb-reply">
+                                      <audio controls 
+                                      key={`fti-${index}`}
+                                      src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
+                                    </span>
+                                  ) : null}
+                                </div>
+                              ) : null}
+                              {reply.content ? (
+                                reply.content?.length > 500 ?
+                                <Fragment key={`fragment8-${index}`}>
+                                  <blockquote key={`pm-${index}`} comment={reply} className="post-message">
+                                    <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
+                                      ref={el => {
+                                        quoteRefs.current[reply.cid] = el;
+                                      }}
+                                      onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                                      onMouseOver={(event) => {
+                                        event.stopPropagation();
+                                        handleQuoteHover(reply, shortParentCid, () => {
+                                            setOutOfViewCid(reply.parentCid);
+                                            const rect = quoteRefs.current[reply.cid].getBoundingClientRect();
+                                            const distanceToRight = window.innerWidth - rect.right;
+                                            const distanceToTop = rect.top;
+                                            const distanceToBottom = window.innerHeight - rect.bottom;
+                                            let top;
+
+                                            if (distanceToTop < postOnHoverHeight / 2) {
+                                              top = window.scrollY - 5;
+                                            } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                              top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                            } else {
+                                              top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                            }
+                                          
+                                            if (distanceToRight < 200) {
+                                              setOutOfViewPosition({
+                                                top,
+                                                right: window.innerWidth - rect.left - 10,
+                                                maxWidth: rect.left - 5
+                                              });
+                                            } else {
+                                              setOutOfViewPosition({
+                                                top,
+                                                left: rect.left + rect.width + 5,
+                                                maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                              });
+                                            }
+                                          });
+                                      }}                                
+                                      onMouseLeave={() => {
+                                        removeHighlight();
+                                        setOutOfViewCid(null);
+                                      }}>
+                                        {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
+                                    </Link>
+                                    <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
+                                    <span key={`ttl-s-${index}`} className="ttl"> (...)
+                                    <br key={`ttl-s-br1-${index}`} />
+                                    <EditLabel key={`edit-label-reply-${index}`} 
+                                    commentCid={reply.cid}
+                                    className="ttl"/>
+                                    <StateLabel key={`state-label-reply-${index}`}
+                                    commentIndex={reply.index}
+                                    className="ttl ellipsis"/>
+                                    <br key={`ttl-s-br2${index}`} />
+                                    Comment too long.&nbsp;
+                                      <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                    &nbsp;to view. </span>
+                                  </blockquote>
+                                </Fragment>
+                              : <blockquote key={`pm-${index}`} className="post-message">
                                   <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
                                     ref={el => {
                                       quoteRefs.current[reply.cid] = el;
@@ -1663,7 +1725,7 @@ const Board = () => {
                                               maxWidth: window.innerWidth - rect.left - rect.width - 5
                                             });
                                           }
-                                        });
+                                      });
                                     }}                                
                                     onMouseLeave={() => {
                                       removeHighlight();
@@ -1671,360 +1733,360 @@ const Board = () => {
                                     }}>
                                       {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                   </Link>
-                                  <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
-                                  <span key={`ttl-s-${index}`} className="ttl"> (...)
-                                  <br key={`ttl-s-br1-${index}`} />
+                                  <Post content={reply.content} key={`post-${index}`} comment={reply} />
                                   <EditLabel key={`edit-label-reply-${index}`} 
-                                  commentCid={reply.cid}
-                                  className="ttl"/>
+                                    commentCid={reply.cid}
+                                    className="ttl"/>
                                   <StateLabel key={`state-label-reply-${index}`}
                                   commentIndex={reply.index}
                                   className="ttl ellipsis"/>
-                                  <br key={`ttl-s-br2${index}`} />
-                                  Comment too long.&nbsp;
-                                    <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                  &nbsp;to view. </span>
-                                </blockquote>
-                              </Fragment>
-                            : <blockquote key={`pm-${index}`} className="post-message">
-                                <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
-                                  ref={el => {
-                                    quoteRefs.current[reply.cid] = el;
-                                  }}
-                                  onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                                  onMouseOver={(event) => {
-                                    event.stopPropagation();
-                                    handleQuoteHover(reply, shortParentCid, () => {
-                                        setOutOfViewCid(reply.parentCid);
-                                        const rect = quoteRefs.current[reply.cid].getBoundingClientRect();
-                                        const distanceToRight = window.innerWidth - rect.right;
-                                        const distanceToTop = rect.top;
-                                        const distanceToBottom = window.innerHeight - rect.bottom;
-                                        let top;
-
-                                        if (distanceToTop < postOnHoverHeight / 2) {
-                                          top = window.scrollY - 5;
-                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                        } else {
-                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                        }
-                                      
-                                        if (distanceToRight < 200) {
-                                          setOutOfViewPosition({
-                                            top,
-                                            right: window.innerWidth - rect.left - 10,
-                                            maxWidth: rect.left - 5
-                                          });
-                                        } else {
-                                          setOutOfViewPosition({
-                                            top,
-                                            left: rect.left + rect.width + 5,
-                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                          });
-                                        }
-                                    });
-                                  }}                                
-                                  onMouseLeave={() => {
-                                    removeHighlight();
-                                    setOutOfViewCid(null);
-                                  }}>
-                                    {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
-                                </Link>
-                                <Post content={reply.content} key={`post-${index}`} comment={reply} />
-                                <EditLabel key={`edit-label-reply-${index}`} 
-                                  commentCid={reply.cid}
-                                  className="ttl"/>
-                                <StateLabel key={`state-label-reply-${index}`}
-                                commentIndex={reply.index}
-                                className="ttl ellipsis"/>
-                              </blockquote>)
-                            : null}
+                                </blockquote>)
+                              : null}
+                            </div>
                           </div>
-                        </div>
-                        )
-                    })}
-                  </div>
-                  <div key={`mob-t-${index}`} className="thread-mobile">
-                  {index === 0 && (!subplebbit.rules && !subplebbit.description) ? (
-                      <hr key={`mob-hr-${index}`} style={{marginTop: '10px'}} />
-                    ) : (
-                      <hr key={`mob-hr-${index}`} />
-                    )}
-                    <div key={`mob-c-${index}`} className="op-container">
-                      <div key={`mob-po-${index}`} className="post op op-mobile">
-                        <div key={`mob-pi-${index}`} className="post-info-mobile">
-                          <button key={`mob-pb-${index}`} className="post-menu-button-mobile" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
-                          <span key={`mob-nbm-${index}`} className="name-block-mobile">
-                            {thread.author.displayName
-                            ? thread.author.displayName.length > 20
-                            ? <Fragment key={`fragment9-${index}`}>
-                                <span key={`mob-n-${index}`} className="name-mobile"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={thread.author.displayName}
-                                data-tooltip-place="top">
-                                  {thread.author.displayName.slice(0, 20) + " (...)"}
-                                </span>
-                              </Fragment> 
+                          )
+                      })}
+                    </div>
+                    <div key={`mob-t-${index}`} className="thread-mobile">
+                    {index === 0 && (!subplebbit.rules && !subplebbit.description) ? (
+                        <hr key={`mob-hr-${index}`} style={{marginTop: '10px'}} />
+                      ) : (
+                        <hr key={`mob-hr-${index}`} />
+                      )}
+                      <div key={`mob-c-${index}`} className="op-container">
+                        <div key={`mob-po-${index}`} className="post op op-mobile">
+                          <div key={`mob-pi-${index}`} className="post-info-mobile">
+                            <button key={`mob-pb-${index}`} className="post-menu-button-mobile" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                            <span key={`mob-nbm-${index}`} className="name-block-mobile">
+                              {thread.author.displayName
+                              ? thread.author.displayName.length > 20
+                              ? <Fragment key={`fragment9-${index}`}>
+                                  <span key={`mob-n-${index}`} className="name-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={thread.author.displayName}
+                                  data-tooltip-place="top">
+                                    {thread.author.displayName.slice(0, 20) + " (...)"}
+                                  </span>
+                                </Fragment> 
+                                : <span key={`mob-n-${index}`} className="name-mobile">
+                                  {thread.author.displayName}</span>
                               : <span key={`mob-n-${index}`} className="name-mobile">
-                                {thread.author.displayName}</span>
-                            : <span key={`mob-n-${index}`} className="name-mobile">
-                              Anonymous</span>}
-                            &nbsp;
-                            <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
-                              id="reply-button" style={{cursor: "pointer"}}
-                              onClick={() => handleAddressClick(thread.author.shortAddress)}
-                            >
-                              (u/
-                              <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                {thread.author.shortAddress}
-                              </span>
-                              )&nbsp;
-                            </span>
-                            <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
-                              {thread.pinned ? (
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                style={{marginBottom: "-3px", marginRight: "2px"}} />
-                              ) : null}
-                              {thread.locked ? (
-                                <img src="assets/closed.gif" alt="Closed" title="Closed"
-                                style={{marginBottom: "-3px", marginRight: "2px"}} />
-                              ) : null}
-                            </span>
-                            <br key={`mob-br1-${index}`} />
-                            {thread.title ? (
-                              thread.title.length > 30 ?
-                              <Fragment key={`fragment11-${index}`}>
-                                <span key={`mob-t-${index}`} className="subject-mobile"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={thread.title}
-                                data-tooltip-place="top">
-                                  {thread.title.slice(0, 30) + " (...)"}
+                                Anonymous</span>}
+                              &nbsp;
+                              <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
+                                id="reply-button" style={{cursor: "pointer"}}
+                                onClick={() => handleAddressClick(thread.author.shortAddress)}
+                              >
+                                (u/
+                                <span key={`mob-ha-${index}`} className="highlight-address-mobile">
+                                  {thread.author.shortAddress}
                                 </span>
-                              </Fragment>
-                            : <span key={`mob-t-${index}`} className="subject-mobile">
-                              {thread.title}
-                              </span>) 
-                            : null}
-                          </span>
-                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
-                            {getDate(thread.timestamp)}
-                            &nbsp;
-                            <span key={`mob-no-${index}`}>c/</span>
-                            <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-no2-${index}`} 
-                              onClick={(e) => {
-                                if (e.button === 2) return;
-                                e.preventDefault();
-                                setIsReplyOpen(true); 
-                                setSelectedShortCid(thread.shortCid); 
-                                setSelectedParentCid(thread.cid);
-                              }} title="Reply to this post">{thread.shortCid}
-                            </Link>
-                          </span>
-                        </div>
-                        {thread.link ? (
-                          <div key={`mob-f-${index}`} className="file-mobile">
-                              {commentMediaInfo?.url ? (
-                                commentMediaInfo.type === "webpage" ? (
-                                  <div key={`enlarge-mob-${index}`} className="img-container">
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      {thread.thumbnailUrl ? (
+                                )&nbsp;
+                              </span>
+                              <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
+                                {thread.pinned ? (
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                                  style={{marginBottom: "-3px", marginRight: "2px"}} />
+                                ) : null}
+                                {thread.locked ? (
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed"
+                                  style={{marginBottom: "-3px", marginRight: "2px"}} />
+                                ) : null}
+                              </span>
+                              <br key={`mob-br1-${index}`} />
+                              {thread.title ? (
+                                thread.title.length > 30 ?
+                                <Fragment key={`fragment11-${index}`}>
+                                  <span key={`mob-t-${index}`} className="subject-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={thread.title}
+                                  data-tooltip-place="top">
+                                    {thread.title.slice(0, 30) + " (...)"}
+                                  </span>
+                                </Fragment>
+                              : <span key={`mob-t-${index}`} className="subject-mobile">
+                                {thread.title}
+                                </span>) 
+                              : null}
+                            </span>
+                            <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                              {getDate(thread.timestamp)}
+                              &nbsp;
+                              <span key={`mob-no-${index}`}>c/</span>
+                              <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-no2-${index}`} 
+                                onClick={(e) => {
+                                  if (e.button === 2) return;
+                                  e.preventDefault();
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(thread.shortCid); 
+                                  setSelectedParentCid(thread.cid);
+                                }} title="Reply to this post">{thread.shortCid}
+                              </Link>
+                            </span>
+                          </div>
+                          {thread.link ? (
+                            <div key={`mob-f-${index}`} className="file-mobile">
+                                {commentMediaInfo?.url ? (
+                                  commentMediaInfo.type === "webpage" ? (
+                                    <div key={`enlarge-mob-${index}`} className="img-container">
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                        {thread.thumbnailUrl ? (
+                                          <img key={`mob-img-${index}`} 
+                                          src={commentMediaInfo.thumbnail} alt="thumbnail" 
+                                          onClick={handleImageClick}
+                                          style={{cursor: "pointer"}}
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                        ) : null}
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                      </span>
+                                    </div>
+                                  ) : commentMediaInfo.type === "image" ? (
+                                    <div key={`enlarge-mob-${index}`} className="img-container">
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
                                         <img key={`mob-img-${index}`} 
-                                        src={commentMediaInfo.thumbnail} alt="thumbnail" 
+                                        src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                                         onClick={handleImageClick}
                                         style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
-                                      ) : null}
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                  </div>
-                                ) : commentMediaInfo.type === "image" ? (
-                                  <div key={`enlarge-mob-${index}`} className="img-container">
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <img key={`mob-img-${index}`} 
-                                      src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                                      onClick={handleImageClick}
-                                      style={{cursor: "pointer"}}
-                                      onError={(e) => e.target.src = fallbackImgUrl} />
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                  </div>
-                                ) : commentMediaInfo.type === "video" ? (
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <video key={`fti-${index}`} 
-                                      src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                      style={{ pointerEvents: "none" }} 
-                                      onError={(e) => e.target.src = fallbackImgUrl} />
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                ) : commentMediaInfo.type === "audio" ? (
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <audio key={`mob-img-${index}`} 
-                                      src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                                      onError={(e) => e.target.src = fallbackImgUrl} />
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                ) : null
-                              ) : null}
-                          </div>
-                        ) : null}
-                        {thread.content ? (
-                          thread.content?.length > 500 ?
-                          <Fragment key={`fragment12-${index}`}>
-                            <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
-                              <Post content={thread.content?.slice(0, 500)} key={`post-mobile-${index}`} />
-                              <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                              <br key={`mob-ttl-s-br1-${index}`} />
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                      </span>
+                                    </div>
+                                  ) : commentMediaInfo.type === "video" ? (
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                        <video key={`fti-${index}`} 
+                                        src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                                        style={{ pointerEvents: "none" }} 
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                      </span>
+                                  ) : commentMediaInfo.type === "audio" ? (
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                        <audio key={`mob-img-${index}`} 
+                                        src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                      </span>
+                                  ) : null
+                                ) : null}
+                            </div>
+                          ) : null}
+                          {thread.content ? (
+                            thread.content?.length > 500 ?
+                            <Fragment key={`fragment12-${index}`}>
+                              <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
+                                <Post content={thread.content?.slice(0, 500)} key={`post-mobile-${index}`} />
+                                <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
+                                <br key={`mob-ttl-s-br1-${index}`} />
+                                <EditLabel key={`edit-label-thread-mob-${index}`} 
+                                commentCid={thread.cid}
+                                className="ttl"/>
+                                <StateLabel key={`state-label-thread-mob-${index}`}
+                                commentIndex={thread.index}
+                                className="ttl ellipsis"/>
+                                <br key={`mob-ttl-s-br2${thread.cid}`} />
+                                Post too long.&nbsp;
+                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  &nbsp;to view. </span>
+                              </blockquote>
+                            </Fragment>
+                          : <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
+                              <Post content={thread.content} key={`post-mobile-${index}`} />
                               <EditLabel key={`edit-label-thread-mob-${index}`} 
                               commentCid={thread.cid}
                               className="ttl"/>
                               <StateLabel key={`state-label-thread-mob-${index}`}
                               commentIndex={thread.index}
                               className="ttl ellipsis"/>
-                              <br key={`mob-ttl-s-br2${thread.cid}`} />
-                              Post too long.&nbsp;
-                                <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                &nbsp;to view. </span>
-                            </blockquote>
-                          </Fragment>
-                        : <blockquote key={`mob-bq-${index}`} className="post-message-mobile">
-                            <Post content={thread.content} key={`post-mobile-${index}`} />
-                            <EditLabel key={`edit-label-thread-mob-${index}`} 
-                            commentCid={thread.cid}
-                            className="ttl"/>
-                            <StateLabel key={`state-label-thread-mob-${index}`}
-                            commentIndex={thread.index}
-                            className="ttl ellipsis"/>
-                          </blockquote>)
-                        : null}
+                            </blockquote>)
+                          : null}
+                        </div>
+                        <div key={`mob-pl-${index}`} className="post-link-mobile">
+                          <span key={`mob-info-${index}`} className="info-mobile">{
+                          (thread.replyCount + pendingReplyCounts[thread.cid]) === 0 ?
+                          ("No replies")
+                          : (thread.replyCount + pendingReplyCounts[thread.cid]) === 1 ?
+                          ("1 reply")
+                          : (thread.replyCount + pendingReplyCounts[thread.cid]) > 1 ?
+                          ((thread.replyCount + pendingReplyCounts[thread.cid]) + " replies")
+                          : null
+                          }</span>
+                          <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
+                          onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}
+                          className="button-mobile" >View Thread</Link>
+                        </div>
                       </div>
-                      <div key={`mob-pl-${index}`} className="post-link-mobile">
-                        <span key={`mob-info-${index}`} className="info-mobile">{
-                        (thread.replyCount + pendingReplyCounts[thread.cid]) === 0 ?
-                        ("No replies")
-                        : (thread.replyCount + pendingReplyCounts[thread.cid]) === 1 ?
-                        ("1 reply")
-                        : (thread.replyCount + pendingReplyCounts[thread.cid]) > 1 ?
-                        ((thread.replyCount + pendingReplyCounts[thread.cid]) + " replies")
-                        : null
-                        }</span>
-                        <Link key={`rl2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
-                        onClick={() => {setSelectedThread(thread.cid); window.scrollTo(0, 0);}}
-                         className="button-mobile" >View Thread</Link>
-                      </div>
-                    </div>
-                    {displayedReplies?.map((reply, index) => {
-                      const replyMediaInfo = getCommentMediaInfo(reply);
-                      const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
-                      return (
-                      <div key={`mob-rc-${index}`} className="reply-container">
-                        <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
-                          <div key={`mob-pi-${index}`} className="post-info-mobile">
-                            <button key={`pmbm-${index}`} className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
-                            <span key={`mob-nb-${index}`} className="name-block-mobile">
-                              {reply.author.displayName
-                              ? reply.author.displayName.length > 20
-                              ? <Fragment key={`fragment13-${index}`}>
-                                  <span key={`mob-n-${index}`} className="name-mobile"
-                                  data-tooltip-id="tooltip"
-                                  data-tooltip-content={reply.author.displayName}
-                                  data-tooltip-place="top">
-                                    {reply.author.displayName.slice(0, 20) + " (...)"}
-                                  </span>
-                                </Fragment>
-                                : <span key={`mob-n-${index}`} className="name-mobile">
-                                  {reply.author.displayName}</span>
-                              : <span key={`mob-n-${index}`} className="name-mobile">
-                                Anonymous</span>}
-                              &nbsp;
-                              <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
-                                id="reply-button" style={{cursor: "pointer"}}
-                                onClick={() => handleAddressClick(reply.author.shortAddress)}
-                              >
-                                (u/
-                                  {reply.author?.shortAddress ?
-                                    (
-                                    <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                      {reply.author?.shortAddress}
+                      {displayedReplies?.map((reply, index) => {
+                        const replyMediaInfo = getCommentMediaInfo(reply);
+                        const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                        return (
+                        <div key={`mob-rc-${index}`} className="reply-container">
+                          <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
+                            <div key={`mob-pi-${index}`} className="post-info-mobile">
+                              <button key={`pmbm-${index}`} className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                              <span key={`mob-nb-${index}`} className="name-block-mobile">
+                                {reply.author.displayName
+                                ? reply.author.displayName.length > 20
+                                ? <Fragment key={`fragment13-${index}`}>
+                                    <span key={`mob-n-${index}`} className="name-mobile"
+                                    data-tooltip-id="tooltip"
+                                    data-tooltip-content={reply.author.displayName}
+                                    data-tooltip-place="top">
+                                      {reply.author.displayName.slice(0, 20) + " (...)"}
                                     </span>
-                                    ) : (
-                                      <span key={`mob-ha-${index}`}>
-                                        {account?.author?.shortAddress}
+                                  </Fragment>
+                                  : <span key={`mob-n-${index}`} className="name-mobile">
+                                    {reply.author.displayName}</span>
+                                : <span key={`mob-n-${index}`} className="name-mobile">
+                                  Anonymous</span>}
+                                &nbsp;
+                                <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
+                                  id="reply-button" style={{cursor: "pointer"}}
+                                  onClick={() => handleAddressClick(reply.author.shortAddress)}
+                                >
+                                  (u/
+                                    {reply.author?.shortAddress ?
+                                      (
+                                      <span key={`mob-ha-${index}`} className="highlight-address-mobile">
+                                        {reply.author?.shortAddress}
                                       </span>
-                                    )
-                                  }
-                                )&nbsp;
+                                      ) : (
+                                        <span key={`mob-ha-${index}`}>
+                                          {account?.author?.shortAddress}
+                                        </span>
+                                      )
+                                    }
+                                  )&nbsp;
+                                </span>
+                                <br key={`mob-br-${index}`} />
                               </span>
-                              <br key={`mob-br-${index}`} />
-                            </span>
-                            <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
-                            {getDate(reply.timestamp)}&nbsp;
-                              <span key={`mob-pl1-${index}`}>c/</span>
-                              {reply.shortCid ? (
-                                <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${index}`} 
-                                  onClick={(e) => {
-                                    if (e.button === 2) return;
-                                    e.preventDefault();
-                                    setIsReplyOpen(true); 
-                                    setSelectedShortCid(reply.shortCid); 
-                                    setSelectedParentCid(reply.cid);
-                                  }} title="Reply to this post">{reply.shortCid}
-                                </Link>
-                              ) : (
-                                <PendingLabel key="pending-mob" commentIndex={reply.index} />
-                              )}
-                            </span>
-                          </div>
-                          {reply.link ? (
-                            <div key={`mob-f-${index}`} className="file-mobile">
-                                {replyMediaInfo?.url ? (
-                                  replyMediaInfo.type === "webpage" ? (
-                                    <div key={`enlarge-mob-reply-${index}`} className="img-container">
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        {reply.thumbnailUrl ? (
+                              <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                              {getDate(reply.timestamp)}&nbsp;
+                                <span key={`mob-pl1-${index}`}>c/</span>
+                                {reply.shortCid ? (
+                                  <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${index}`} 
+                                    onClick={(e) => {
+                                      if (e.button === 2) return;
+                                      e.preventDefault();
+                                      setIsReplyOpen(true); 
+                                      setSelectedShortCid(reply.shortCid); 
+                                      setSelectedParentCid(reply.cid);
+                                    }} title="Reply to this post">{reply.shortCid}
+                                  </Link>
+                                ) : (
+                                  <PendingLabel key="pending-mob" commentIndex={reply.index} />
+                                )}
+                              </span>
+                            </div>
+                            {reply.link ? (
+                              <div key={`mob-f-${index}`} className="file-mobile">
+                                  {replyMediaInfo?.url ? (
+                                    replyMediaInfo.type === "webpage" ? (
+                                      <div key={`enlarge-mob-reply-${index}`} className="img-container">
+                                        <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                          {reply.thumbnailUrl ? (
+                                            <img key={`mob-img-${index}`} 
+                                            src={replyMediaInfo.thumbnail} alt="thumbnail" 
+                                            onClick={handleImageClick}
+                                            style={{cursor: "pointer"}}
+                                            onError={(e) => e.target.src = fallbackImgUrl} />
+                                          ) : null}
+                                          <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        </span>
+                                      </div>
+                                    ) : replyMediaInfo.type === "image" ? (
+                                      <div key={`enlarge-mob-reply-${index}`} className="img-container">
+                                        <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                           <img key={`mob-img-${index}`} 
-                                          src={replyMediaInfo.thumbnail} alt="thumbnail" 
+                                          src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                           onClick={handleImageClick}
                                           style={{cursor: "pointer"}}
                                           onError={(e) => e.target.src = fallbackImgUrl} />
-                                        ) : null}
-                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                    </div>
-                                  ) : replyMediaInfo.type === "image" ? (
-                                    <div key={`enlarge-mob-reply-${index}`} className="img-container">
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <img key={`mob-img-${index}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                        onClick={handleImageClick}
-                                        style={{cursor: "pointer"}}
-                                        onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                    </div>
-                                  ) : replyMediaInfo.type === "video" ? (
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                          <video key={`fti-${index}`} 
+                                          <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        </span>
+                                      </div>
+                                    ) : replyMediaInfo.type === "video" ? (
+                                        <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                            <video key={`fti-${index}`} 
+                                            src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                            style={{ pointerEvents: "none" }}
+                                            onError={(e) => e.target.src = fallbackImgUrl} />
+                                          <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        </span>
+                                    ) : replyMediaInfo.type === "audio" ? (
+                                        <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                          <audio key={`mob-img-${index}`} 
                                           src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                          style={{ pointerEvents: "none" }}
                                           onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                  ) : replyMediaInfo.type === "audio" ? (
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <audio key={`mob-img-${index}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                        onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                  ) : null
-                                ) : null}
-                            </div>
-                          ) : null}
-                          {reply.content ? (
-                            reply.content?.length > 500 ?
-                            <Fragment key={`fragment15-${index}`}>
-                              <blockquote key={`mob-pm-${index}`} className="post-message">
+                                          <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        </span>
+                                    ) : null
+                                  ) : null}
+                              </div>
+                            ) : null}
+                            {reply.content ? (
+                              reply.content?.length > 500 ?
+                              <Fragment key={`fragment15-${index}`}>
+                                <blockquote key={`mob-pm-${index}`} className="post-message">
+                                  <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
+                                  ref={el => {
+                                    quoteRefsMobile.current[reply.cid] = el;
+                                  }}
+                                  onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                                  onMouseOver={(event) => {
+                                    event.stopPropagation();
+                                    handleQuoteHover(reply, shortParentCid, () => {
+                                      setOutOfViewCid(reply.parentCid);
+                                      const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
+                                      const distanceToRight = window.innerWidth - rect.right;
+                                      const distanceToTop = rect.top;
+                                      const distanceToBottom = window.innerHeight - rect.bottom;
+                                      let top;
+
+                                      if (distanceToTop < postOnHoverHeight / 2) {
+                                        top = window.scrollY - 5;
+                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                      } else {
+                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                      }
+                                    
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                        });
+                                      }
+                                    });
+                                  }}
+                                  onMouseLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}>
+                                    {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
+                                  </Link>
+                                  <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
+                                  <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
+                                  <br key={`mob-ttl-s-br1-${index}`} />
+                                  <EditLabel key={`edit-label-reply-mob-${index}`} 
+                                  commentCid={reply.cid}
+                                  className="ttl"/>
+                                  <StateLabel key={`state-label-reply-mob-${index}`}
+                                  commentIndex={reply.index}
+                                  className="ttl ellipsis"/>
+                                  <br key={`mob-ttl-s-br2${reply.cid}`} />
+                                  Comment too long.&nbsp;
+                                    <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  &nbsp;to view. </span>
+                                </blockquote>
+                              </Fragment>
+                            : <blockquote key={`mob-pm-${index}`} className="post-message">
                                 <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
                                 ref={el => {
                                   quoteRefsMobile.current[reply.cid] = el;
@@ -2069,141 +2131,81 @@ const Board = () => {
                                 }}>
                                   {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
-                                <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
-                                <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
-                                <br key={`mob-ttl-s-br1-${index}`} />
+                                <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
                                 <EditLabel key={`edit-label-reply-mob-${index}`} 
                                 commentCid={reply.cid}
                                 className="ttl"/>
                                 <StateLabel key={`state-label-reply-mob-${index}`}
                                 commentIndex={reply.index}
                                 className="ttl ellipsis"/>
-                                <br key={`mob-ttl-s-br2${reply.cid}`} />
-                                Comment too long.&nbsp;
-                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
-                                &nbsp;to view. </span>
-                              </blockquote>
-                            </Fragment>
-                          : <blockquote key={`mob-pm-${index}`} className="post-message">
-                              <Link to={() => {}} key={`mob-r-pm-${index}`} className="quotelink" 
-                              ref={el => {
-                                quoteRefsMobile.current[reply.cid] = el;
-                              }}
-                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                              onMouseOver={(event) => {
-                                event.stopPropagation();
-                                handleQuoteHover(reply, shortParentCid, () => {
-                                  setOutOfViewCid(reply.parentCid);
-                                  const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
-                                  const distanceToRight = window.innerWidth - rect.right;
-                                  const distanceToTop = rect.top;
-                                  const distanceToBottom = window.innerHeight - rect.bottom;
-                                  let top;
+                              </blockquote>)
+                            : null}
+                              {reply.replyCount > 0 ? (
+                                <div key={`back-mob-${index}`} className='backlink backlink-mobile'>
+                                {reply.replies?.pages?.topAll.comments
+                                .sort((a, b) => a.timestamp - b.timestamp)
+                                .map((reply, index) => (
+                                  <div key={`div-back${index}`} style={{display: 'inline-block'}} 
+                                  ref={el => {
+                                    backlinkRefsMobile.current[reply.cid] = el;
+                                  }}>
+                                  <Link key={`ql-${index}`} to={() => {}}
+                                  onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                                  onMouseOver={(event) => {
+                                    event.stopPropagation();
+                                    handleQuoteHover(reply, reply.shortCid, () => {
+                                      setOutOfViewCid(reply.cid)
+                                      const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
+                                      const distanceToRight = window.innerWidth - rect.right;
+                                      const distanceToTop = rect.top;
+                                      const distanceToBottom = window.innerHeight - rect.bottom;
+                                      let top;
 
-                                  if (distanceToTop < postOnHoverHeight / 2) {
-                                    top = window.scrollY - 5;
-                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                  } else {
-                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                  }
-                                
-                                  if (distanceToRight < 200) {
-                                    setOutOfViewPosition({
-                                      top,
-                                      right: window.innerWidth - rect.left - 10,
-                                      maxWidth: rect.left - 5
+                                      if (distanceToTop < postOnHoverHeight / 2) {
+                                        top = window.scrollY - 5;
+                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                      } else {
+                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                      }
+                                    
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                        });
+                                      }
                                     });
-                                  } else {
-                                    setOutOfViewPosition({
-                                      top,
-                                      left: rect.left + rect.width + 5,
-                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                    });
-                                  }
-                                });
-                              }}
-                              onMouseLeave={() => {
-                                removeHighlight();
-                                setOutOfViewCid(null);
-                              }}>
-                                {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
-                              </Link>
-                              <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
-                              <EditLabel key={`edit-label-reply-mob-${index}`} 
-                              commentCid={reply.cid}
-                              className="ttl"/>
-                              <StateLabel key={`state-label-reply-mob-${index}`}
-                              commentIndex={reply.index}
-                              className="ttl ellipsis"/>
-                            </blockquote>)
-                          : null}
-                            {reply.replyCount > 0 ? (
-                              <div key={`back-mob-${index}`} className='backlink backlink-mobile'>
-                              {reply.replies?.pages?.topAll.comments
-                              .sort((a, b) => a.timestamp - b.timestamp)
-                              .map((reply, index) => (
-                                <div key={`div-back${index}`} style={{display: 'inline-block'}} 
-                                ref={el => {
-                                  backlinkRefsMobile.current[reply.cid] = el;
-                                }}>
-                                <Link key={`ql-${index}`} to={() => {}}
-                                onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                                onMouseOver={(event) => {
-                                  event.stopPropagation();
-                                  handleQuoteHover(reply, reply.shortCid, () => {
-                                    setOutOfViewCid(reply.cid)
-                                    const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
-                                    const distanceToRight = window.innerWidth - rect.right;
-                                    const distanceToTop = rect.top;
-                                    const distanceToBottom = window.innerHeight - rect.bottom;
-                                    let top;
-
-                                    if (distanceToTop < postOnHoverHeight / 2) {
-                                      top = window.scrollY - 5;
-                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                    } else {
-                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                    }
-                                  
-                                    if (distanceToRight < 200) {
-                                      setOutOfViewPosition({
-                                        top,
-                                        right: window.innerWidth - rect.left - 10,
-                                        maxWidth: rect.left - 5
-                                      });
-                                    } else {
-                                      setOutOfViewPosition({
-                                        top,
-                                        left: rect.left + rect.width + 5,
-                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                      });
-                                    }
-                                  });
-                                }}
-                                onMouseLeave={() => {
-                                  removeHighlight();
-                                  setOutOfViewCid(null);
-                                }} 
-                                className="quote-link">
-                                  c/{reply.shortCid}</Link>
-                                  &nbsp;
+                                  }}
+                                  onMouseLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }} 
+                                  className="quote-link">
+                                    c/{reply.shortCid}</Link>
+                                    &nbsp;
+                                  </div>
+                                ))}
                                 </div>
-                              ))}
-                              </div>
-                            ) : null}
+                              ) : null}
+                          </div>
                         </div>
-                      </div>
-                    )})}
-                  </div>
-                </Fragment>
-                  );
-                }}
-                endReached={tryLoadMore}
-                useWindowScroll={true}
-                components={{ Footer: hasMore ? () => <PostLoader /> : null }}
-                />
+                      )})}
+                    </div>
+                  </Fragment>
+                    );
+                  }}
+                  endReached={tryLoadMore}
+                  useWindowScroll={true}
+                  components={{ Footer: hasMore ? () => <PostLoader /> : null }}
+                  />
                 </>
               ) : (<PostLoader />)
             )}
