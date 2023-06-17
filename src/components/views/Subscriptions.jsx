@@ -33,9 +33,11 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
+import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -62,6 +64,8 @@ const Subscriptions = () => {
     setSelectedTitle,
   } = useGeneralStore(state => state);
 
+  const { anonymousMode } = useAnonModeStore();
+
   const account = useAccount();
   const navigate = useNavigate();
   const [, setNewErrorMessage] = useError();
@@ -75,6 +79,7 @@ const Subscriptions = () => {
   const backlinkRefsMobile = useRef({});
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
+  const selectedThreadCidRef = useRef(null);
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -91,6 +96,13 @@ const Subscriptions = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [deletePost, setDeletePost] = useState(false);
   const [moderatorPermissions, setModeratorPermissions] = useState({});
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  const setSelectedThreadCid = (cid) => {
+    selectedThreadCidRef.current = cid;
+  }
+
+  useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
@@ -314,6 +326,13 @@ const Subscriptions = () => {
       setNewErrorMessage(error);
     },
   });
+
+
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThreadCidRef]);
 
 
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
@@ -678,6 +697,7 @@ const Subscriptions = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
+                                setSelectedThreadCid(thread.cid);
                                 setIsReplyOpen(true);  
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
@@ -957,6 +977,7 @@ const Subscriptions = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
+                                    setSelectedThreadCid(thread.cid);
                                     setIsReplyOpen(true);  
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
@@ -1390,6 +1411,7 @@ const Subscriptions = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
+                                setSelectedThreadCid(thread.cid);
                                 setIsReplyOpen(true);  
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
@@ -1562,6 +1584,7 @@ const Subscriptions = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
+                                    setSelectedThreadCid(thread.cid);
                                     setIsReplyOpen(true);  
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);

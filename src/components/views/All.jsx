@@ -32,9 +32,11 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
+import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -62,6 +64,7 @@ const All = () => {
     setSelectedTitle,
   } = useGeneralStore(state => state);
   
+  const { anonymousMode } = useAnonModeStore();
 
   const account = useAccount();
   const navigate = useNavigate();
@@ -76,6 +79,7 @@ const All = () => {
   const backlinkRefsMobile = useRef({});
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
+  const selectedThreadCidRef = useRef(null);
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -92,6 +96,13 @@ const All = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [deletePost, setDeletePost] = useState(false);
   const [moderatorPermissions, setModeratorPermissions] = useState({});
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  const setSelectedThreadCid = (cid) => {
+    selectedThreadCidRef.current = cid;
+  }
+
+  useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
   const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'active'});
@@ -302,6 +313,14 @@ const All = () => {
       };
     });
   };
+
+  
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThreadCidRef]);
+
 
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
@@ -668,6 +687,7 @@ const All = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
+                                  setSelectedThreadCid(thread.cid);
                                 setIsReplyOpen(true);  
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
@@ -947,6 +967,7 @@ const All = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
+                                    setSelectedThreadCid(thread.cid);
                                     setIsReplyOpen(true);  
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
@@ -1380,6 +1401,7 @@ const All = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
+                                setSelectedThreadCid(thread.cid);
                                 setIsReplyOpen(true);  
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
@@ -1552,6 +1574,7 @@ const All = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
+                                    setSelectedThreadCid(thread.cid);
                                     setIsReplyOpen(true);  
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);

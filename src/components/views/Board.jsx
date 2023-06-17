@@ -32,10 +32,12 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
+import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -65,7 +67,8 @@ const Board = () => {
     showPostForm,
     showPostFormLink,
   } = useGeneralStore(state => state);
-  
+
+  const { anonymousMode } = useAnonModeStore();
   
   const account = useAccount();
   const navigate = useNavigate();
@@ -86,6 +89,7 @@ const Board = () => {
   const backlinkRefsMobile = useRef({});
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
+  const selectedThreadCidRef = useRef(null);
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
@@ -109,6 +113,13 @@ const Board = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  const setSelectedThreadCid = (cid) => {
+    selectedThreadCidRef.current = cid;
+  }
+
+  useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
 
   useEffect(() => {
@@ -351,7 +362,15 @@ const Board = () => {
     }));
 
     setTriggerPublishComment(true);
+    setExecuteAnonMode(false);
   };
+
+
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThreadCidRef]);
 
 
   useEffect(() => {
@@ -1115,6 +1134,7 @@ const Board = () => {
                                 onClick={(e) => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
+                                  setSelectedThreadCid(thread.cid);
                                   setIsReplyOpen(true); 
                                   setSelectedShortCid(thread.shortCid); 
                                   setSelectedParentCid(thread.cid);
@@ -1392,6 +1412,7 @@ const Board = () => {
                                     onClick={(e) => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
+                                      setSelectedThreadCid(thread.cid);
                                       setIsReplyOpen(true);  
                                       setSelectedShortCid(reply.shortCid); 
                                       setSelectedParentCid(reply.cid);
@@ -1796,6 +1817,7 @@ const Board = () => {
                                 onClick={(e) => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
+                                  setSelectedThreadCid(thread.cid);
                                   setIsReplyOpen(true);  
                                   setSelectedShortCid(thread.shortCid); 
                                   setSelectedParentCid(thread.cid);
@@ -1946,6 +1968,7 @@ const Board = () => {
                                     onClick={(e) => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
+                                      setSelectedThreadCid(thread.cid);
                                       setIsReplyOpen(true);  
                                       setSelectedShortCid(reply.shortCid); 
                                       setSelectedParentCid(reply.cid);
