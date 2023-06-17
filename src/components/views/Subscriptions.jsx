@@ -679,7 +679,6 @@ const Subscriptions = () => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
                                 setIsReplyOpen(true);  
-                                setSelectedThread(thread.cid);
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -959,7 +958,6 @@ const Subscriptions = () => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
                                     setIsReplyOpen(true);  
-                                    setSelectedThread(thread.cid);
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
@@ -1393,7 +1391,6 @@ const Subscriptions = () => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
                                 setIsReplyOpen(true);  
-                                setSelectedThread(thread.cid);
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -1566,7 +1563,6 @@ const Subscriptions = () => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
                                     setIsReplyOpen(true);  
-                                    setSelectedThread(thread.cid);
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);

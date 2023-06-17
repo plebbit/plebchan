@@ -4,13 +4,11 @@ import { StyledModal } from '../styled/modals/ReplyModal.styled';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
-import useAnonMode from '../../hooks/useAnonMode';
 import useError from '../../hooks/useError';
 
 
 const ReplyModal = ({ isOpen, closeModal }) => {
   const {
-    anonymousMode,
     captchaResponse, setCaptchaResponse,
     setChallengesArray,
     setIsCaptchaOpen,
@@ -21,7 +19,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     selectedParentCid,
     selectedShortCid,
     selectedStyle,
-    selectedThread,
   } = useGeneralStore(state => state);
 
   const account = useAccount();
@@ -36,9 +33,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
-  const [executeAnonMode, setExecuteAnonMode] = useState(false);
-
-  useAnonMode(selectedThread, anonymousMode && executeAnonMode);
   
 
   useEffect(() => {
@@ -163,13 +157,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   
     setTriggerPublishComment(true);
   };
-
-
-  useEffect(() => {
-    if (anonymousMode) {
-      setExecuteAnonMode(true);
-    }
-  }, [anonymousMode, selectedThread]);
   
   
   useEffect(() => {

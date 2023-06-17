@@ -1115,7 +1115,6 @@ const Board = () => {
                                 onClick={(e) => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
-                                  setSelectedThread(thread.cid);
                                   setIsReplyOpen(true); 
                                   setSelectedShortCid(thread.shortCid); 
                                   setSelectedParentCid(thread.cid);
@@ -1393,7 +1392,6 @@ const Board = () => {
                                     onClick={(e) => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
-                                      setSelectedThread(thread.cid);
                                       setIsReplyOpen(true);  
                                       setSelectedShortCid(reply.shortCid); 
                                       setSelectedParentCid(reply.cid);
@@ -1798,7 +1796,6 @@ const Board = () => {
                                 onClick={(e) => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
-                                  setSelectedThread(thread.cid);
                                   setIsReplyOpen(true);  
                                   setSelectedShortCid(thread.shortCid); 
                                   setSelectedParentCid(thread.cid);
@@ -1949,7 +1946,6 @@ const Board = () => {
                                     onClick={(e) => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
-                                      setSelectedThread(thread.cid);
                                       setIsReplyOpen(true);  
                                       setSelectedShortCid(reply.shortCid); 
                                       setSelectedParentCid(reply.cid);

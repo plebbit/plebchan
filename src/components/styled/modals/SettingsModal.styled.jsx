@@ -206,7 +206,7 @@ export const StyledModal = styled(Modal)`
     background-color: currentColor;
     position: absolute;
     left: 18px;
-    top: 116px;
+    top: 120px;
   }
 
   .anon-tip::after {
@@ -217,7 +217,7 @@ export const StyledModal = styled(Modal)`
     background-color: currentColor;
     position: absolute;
     left: 18px;
-    top: 105px;
+    top: 108px;
   }
 
 
