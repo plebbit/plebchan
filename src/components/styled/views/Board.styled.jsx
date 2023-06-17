@@ -1740,6 +1740,10 @@ export const BoardForm = styled.div`
         border-left: none !important;
         border-top: none !important;
       }
+
+      .capcode {
+        color: purple !important;
+      }
       
       #post-menu {
         border-right: 1px solid #d9bfb7;
@@ -1763,6 +1767,10 @@ export const BoardForm = styled.div`
         border-left: none !important;
         border-top: none !important;
       }
+
+      .capcode {
+        color: purple !important;
+      }
       
       #post-menu {
         border-right: 1px solid #b7c5d9;
@@ -1783,6 +1791,10 @@ export const BoardForm = styled.div`
         return `.highlighted {
         background-color: #f0c0b0 !important;
       }
+
+      .capcode {
+        color: purple !important;
+      }
       
       #post-menu {
         font-size: 13px !important;
@@ -1802,6 +1814,10 @@ export const BoardForm = styled.div`
       case 'Burichan':
         return `.highlighted {
         background-color: #d6bad0 !important;
+      }
+
+      .capcode {
+        color: purple !important;
       }
       
       #post-menu {
@@ -1824,6 +1840,10 @@ export const BoardForm = styled.div`
         background-color: #1d1d21 !important;
         outline: 1px solid #111 !important;
       }
+
+      .capcode {
+        color: #81a2be !important;
+      }
       
       #post-menu {
         border: 1px solid #000;
@@ -1843,6 +1863,10 @@ export const BoardForm = styled.div`
         return `.highlighted {
         background-color: #ccc !important;
         outline: 1px solid #ccc !important;
+      }
+
+      .capcode {
+        color: #f60 !important;
       }
       
       #post-menu {
