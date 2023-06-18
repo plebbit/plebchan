@@ -434,8 +434,8 @@ const Board = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (comment) => {
-    handleOptionClick(comment.cid);
+  const handleAuthorDeleteClick = (cid) => {
+    handleOptionClick(cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -449,7 +449,7 @@ const Board = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(comment.cid);
+                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -1192,7 +1192,7 @@ const Board = () => {
                                     {thread.author.shortAddress === account?.author.shortAddress ? (
                                       <>
                                         <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                        <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                                        <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
                                       </>
                                     ) : null}
                                     {isModerator ? (
@@ -1453,7 +1453,7 @@ const Board = () => {
                                     {reply.author.shortAddress === account?.author.shortAddress ? (
                                       <>
                                         <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                        <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                        <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
                                       </>
                                     ) : null}
                                     {isModerator ? (

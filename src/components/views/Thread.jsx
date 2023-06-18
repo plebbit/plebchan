@@ -401,8 +401,8 @@ const Thread = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (comment) => {
-    handleOptionClick(comment.cid);
+  const handleAuthorDeleteClick = (cid) => {
+    handleOptionClick(cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -416,7 +416,7 @@ const Thread = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(comment.cid);
+                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -879,7 +879,7 @@ const Thread = () => {
                               {comment.author?.shortAddress === account?.author.shortAddress ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
+                                  <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
                                 </>
                               ) : null}
                               {isModerator ? (
@@ -1102,7 +1102,7 @@ const Thread = () => {
                                   {reply.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
