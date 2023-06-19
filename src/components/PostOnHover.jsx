@@ -190,15 +190,15 @@ const PostOnHover = ({ cid, feed }) => {
               <div className="post-reply post-reply-mobile">
                 <div className="post-info-mobile">
                   <span className="name-block-mobile">
-                    {reply.author.displayName
-                    ? reply.author.displayName.length > 20
+                    {reply.author?.displayName
+                    ? reply.author?.displayName.length > 20
                     ? <Fragment>
                         <span className="name-mobile">
-                          {reply.author.displayName.slice(0, 20) + " (...)"}
+                          {reply.author?.displayName.slice(0, 20) + " (...)"}
                         </span>
                       </Fragment>
                       : <span className="name-mobile">
-                        {reply.author.displayName}</span>
+                        {reply.author?.displayName}</span>
                     : <span className="name-mobile">
                       Anonymous</span>}
                     &nbsp;
