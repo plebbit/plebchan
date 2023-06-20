@@ -3,7 +3,7 @@ import { createAccount, setActiveAccount, useAccounts } from "@plebbit/plebbit-r
 import useAnonModeStore from "./stores/useAnonModeStore";
 
 const useAnonMode = (threadCid, execute) => {
-  const {accounts} = useAccounts();
+  const { accounts } = useAccounts();
   const { anonymousMode } = useAnonModeStore();
 
   useEffect(() => {
@@ -14,6 +14,12 @@ const useAnonMode = (threadCid, execute) => {
 
       if (!storedAccounts[threadCid] && execute) {
         await createAccount();
+
+        if(accounts.length === 0) {
+          console.log("No accounts available");
+          return;
+        }
+        
         const lastAccount = accounts[accounts.length - 1];
         await setActiveAccount(lastAccount.name);
         storedAccounts[threadCid] = lastAccount.name;
