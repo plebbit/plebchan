@@ -7,7 +7,6 @@ import { Tooltip } from 'react-tooltip';
 import { useAccount, useAccountComments, useComment, usePublishComment, usePublishCommentEdit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } from '../styled/views/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
@@ -32,11 +31,14 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
+import useAnonMode from '../../hooks/useAnonMode';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
-import packageJson from '../../../package.json'
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
+import packageJson from '../../../package.json'
 const {version} = packageJson
 
 
@@ -65,6 +67,8 @@ const Thread = () => {
     showPostFormLink,
   } = useGeneralStore(state => state);
 
+  const { anonymousMode } = useAnonModeStore();
+  
   const account = useAccount();
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
@@ -82,6 +86,8 @@ const Thread = () => {
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
   const postOnHoverRef = useRef(null);
+  const backlinkRefsMobile = useRef({});
+  const quoteRefsMobile = useRef({});
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
@@ -99,9 +105,9 @@ const Thread = () => {
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
-  const backlinkRefsMobile = useRef({});
-  const quoteRefsMobile = useRef({});
-  
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
   const comment = useComment({commentCid: selectedThread});
   const { subplebbitAddress, threadCid } = useParams();
@@ -323,7 +329,15 @@ const Thread = () => {
     }));
 
     setTriggerPublishComment(true);
+    setExecuteAnonMode(false);
   };
+
+
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThread]);
   
   
   useEffect(() => {
@@ -387,8 +401,8 @@ const Thread = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (comment) => {
-    handleOptionClick(comment.cid);
+  const handleAuthorDeleteClick = (cid) => {
+    handleOptionClick(cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -402,7 +416,7 @@ const Thread = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(comment.cid);
+                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -518,7 +532,7 @@ const Thread = () => {
           <span className="boardList">
             [
               <Link to={`/p/all`}>All</Link>
-                 / 
+               / 
               <Link to={`/p/subscriptions`}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
@@ -865,7 +879,7 @@ const Thread = () => {
                               {comment.author?.shortAddress === account?.author.shortAddress ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
+                                  <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
                                 </>
                               ) : null}
                               {isModerator ? (
@@ -1088,7 +1102,7 @@ const Thread = () => {
                                   {reply.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (

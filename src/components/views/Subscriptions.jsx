@@ -33,9 +33,11 @@ import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
+import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
 
@@ -62,6 +64,8 @@ const Subscriptions = () => {
     setSelectedTitle,
   } = useGeneralStore(state => state);
 
+  const { anonymousMode } = useAnonModeStore();
+
   const account = useAccount();
   const navigate = useNavigate();
   const [, setNewErrorMessage] = useError();
@@ -75,6 +79,7 @@ const Subscriptions = () => {
   const backlinkRefsMobile = useRef({});
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
+  const selectedThreadCidRef = useRef(null);
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -91,6 +96,13 @@ const Subscriptions = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [deletePost, setDeletePost] = useState(false);
   const [moderatorPermissions, setModeratorPermissions] = useState({});
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+
+  const setSelectedThreadCid = (cid) => {
+    selectedThreadCidRef.current = cid;
+  }
+
+  useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
@@ -316,11 +328,18 @@ const Subscriptions = () => {
   });
 
 
+  useEffect(() => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
+    }
+  }, [anonymousMode, selectedThreadCidRef]);
+
+
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (comment) => {
-    handleOptionClick(comment.cid);
+  const handleAuthorDeleteClick = (cid) => {
+    handleOptionClick(cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -334,7 +353,7 @@ const Subscriptions = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(comment.cid);
+                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
                       deleted: true,
@@ -678,7 +697,8 @@ const Subscriptions = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
-                                setIsReplyOpen(true); 
+                                setSelectedThreadCid(thread.cid);
+                                setIsReplyOpen(true);  
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -736,7 +756,7 @@ const Subscriptions = () => {
                                   {thread.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => {handleAuthorEditClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                      <li onClick={() => {handleAuthorDeleteClick(thread.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
@@ -957,7 +977,8 @@ const Subscriptions = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
-                                    setIsReplyOpen(true); 
+                                    setSelectedThreadCid(thread.cid);
+                                    setIsReplyOpen(true);  
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
@@ -1015,7 +1036,7 @@ const Subscriptions = () => {
                                   {reply.author.shortAddress === account?.author.shortAddress ? (
                                     <>
                                       <li onClick={() => {handleAuthorEditClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                      <li onClick={() => {handleAuthorDeleteClick(reply.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
@@ -1390,7 +1411,8 @@ const Subscriptions = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
-                                setIsReplyOpen(true); 
+                                setSelectedThreadCid(thread.cid);
+                                setIsReplyOpen(true);  
                                 setSelectedShortCid(thread.shortCid); 
                                 setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
@@ -1562,7 +1584,8 @@ const Subscriptions = () => {
                                   onClick={(e) => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
-                                    setIsReplyOpen(true); 
+                                    setSelectedThreadCid(thread.cid);
+                                    setIsReplyOpen(true);  
                                     setSelectedShortCid(reply.shortCid); 
                                     setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);

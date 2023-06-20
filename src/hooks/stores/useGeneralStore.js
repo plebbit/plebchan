@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 
 const useGeneralStore = create((set) => ({
-  anonymousMode: true,
-  setAnonymousMode: (mode) => set({ anonymousMode: mode }),
-
   bodyStyle: JSON.parse(localStorage.getItem('bodyStyle')) || {
     background: '#ffe url(assets/fade.png) top repeat-x',
     color: 'maroon',

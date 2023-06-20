@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import breaks from 'remark-breaks';
 
@@ -39,31 +39,60 @@ const blockquoteToGreentext = () => (tree) => {
 };
 
 
-// const createQuotelink = (handlequoteclick, comment, children) => {
-//   const text = children.map((child) => (typeof child === 'string' ? child : child.props.children)).join('');
-//   const regex = /(\s|^)(c\/[A-Za-z0-9]{12}|c\/[A-Za-z0-9]{45})(?=\s|$)/g;
-//   const parts = text.split(regex);
+const createQuotelink = (children) => {
+  const regexC = /(c\/[A-Za-z0-9]{46}|c\/[A-Za-z0-9]{12})/g;
+  const regexP = /(p\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth))/g;
+  const regexU = /(u\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth))/g;
+  const regexPC = /(p\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth)\/c\/[A-Za-z0-9]{46})/g;  
 
-//   return parts.flatMap((part, i) => {
-//     if (regex.test(part)) {
-//       return [
-//         <Link
-//           key={`link-${i}`}
-//           className="quotelink"
-//           to=""
-//           onClick={handlequoteclick}
-//         >
-//           {part.trim()}
-//         </Link>,
-//       ];
-//     } else {
-//       return [part];
-//     }
-//   });
-// };
+  const regexArray = [regexU, regexPC, regexP, regexC];
+  let parts = [children];
+
+  regexArray.forEach(regex => {
+    parts = parts.flatMap((child, i) => {
+      if (typeof child === 'string') {
+        const newParts = [];
+        let match;
+        let lastIndex = 0;
+
+        while ((match = regex.exec(child)) !== null) {
+          const matchedText = match[0];
+          const index = match.index;
+
+          if (index > lastIndex) {
+            newParts.push(child.substring(lastIndex, index));
+          }
+
+          newParts.push(
+            <Link
+              key={`link-${i}-${matchedText}`}
+              className="quotelink"
+              to={() => {}}
+            >
+              {matchedText}
+            </Link>
+          );
+          
+          lastIndex = index + matchedText.length;
+        }
+
+        if (lastIndex < child.length) {
+          newParts.push(child.substring(lastIndex));
+        }
+
+        return newParts;
+      } else {
+        return child;
+      }
+    });
+  });
+
+  return parts;
+};
 
 
-const Post = ({ content, handlequoteclick, comment }) => {
+
+const Post = ({ content }) => {
   const doubleNewlineContent = content?.replaceAll(/\n(?!\n)/g, '\n\n');
 
   return (
@@ -76,10 +105,10 @@ const Post = ({ content, handlequoteclick, comment }) => {
         video: ({ src }) => <span>{src}</span>,
         source: ({ src }) => <span>{src}</span>,
         gif: ({ src }) => <span>{src}</span>,
-        p: ({ children }) => <div className="custom-paragraph">{children}</div>,
+        p: ({ children }) => <div className='custom-paragraph'>{createQuotelink(children)}</div>,
       }}
     />
   );
 };
 
-export default Post;
+export default React.memo(Post);
