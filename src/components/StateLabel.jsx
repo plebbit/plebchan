@@ -17,16 +17,18 @@ const StateLabel = ({ commentIndex, className }) => {
 
   return (
     commentIndex && stateString !== "Succeeded" ? (
-      (comment.state === "failed" || (stateString === undefined && !isLoading && comment.cid === undefined)) ? (
-        <span className="ttl">
-          <br />
-          (
-            <span className="ttl">
-              Failed
-            </span>
-          )
-        </span>
+      (comment.state === "failed") ? (
+        null
       ) : (
+        stateString === undefined && !isLoading && comment.cid === undefined ? (
+          <span className="ttl">
+            <br />
+            (
+              <span className={className}>
+              </span>
+            )
+          </span>
+        ) : (
         <span className="ttl">
           <br />
           (
@@ -35,7 +37,7 @@ const StateLabel = ({ commentIndex, className }) => {
             </span>
           )
         </span>
-      )
+      ))
     ) : null
   );
 };
