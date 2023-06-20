@@ -7,7 +7,6 @@
   resolved "https://registry.yarnpkg.com/7zip-bin/-/7zip-bin-5.1.1.tgz#9274ec7460652f9c632c59addf24efb1684ef876"
   integrity sha512-sAP4LldeWNz0lNzmTird3uWfFDWWTeg6V/MsmyyLR9X1idwKBWIgt/ZvinqQldJm3LecKEs1emkbquO6PCiLVQ==
 
-
 "@adraffy/ens-normalize@1.8.3", "@adraffy/ens-normalize@1.9.0", "@adraffy/ens-normalize@1.9.2":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@adraffy/ens-normalize/-/ens-normalize-1.8.3.tgz#6084dd00eac37a99bcf91a3a3249cc737cbcb005"
@@ -2592,12 +2591,11 @@
   resolved "https://registry.yarnpkg.com/@noble/ed25519/-/ed25519-1.7.3.tgz#57e1677bf6885354b466c38e2b620c62f45a7123"
   integrity sha512-iR8GBkDt0Q3GyaVcIu7mSsVIqnFbkbRzGLWlvhwunacoLwt4J3swfKhfaM6rN6WY+TBGoYT1GtT1mIh2/jGbRQ==
 
-
 "@noble/hashes@1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.1.2.tgz#e9e035b9b166ca0af657a7848eb2718f0f22f183"
   integrity sha512-KYRCASVTv6aeUi1tsF8/vpyR7zpfs3FUzy2Jqm+MU+LmUKhQ0y2FpfwqkCcxSg2ua4GALJd8k2R76WxwZGbQpA==
-  
+
 "@noble/hashes@1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.0.tgz#085fd70f6d7d9d109671090ccae1d3bec62554a1"
@@ -2607,7 +2605,6 @@
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.1.tgz#8831ef002114670c603c458ab8b11328406953a9"
   integrity sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA==
-
 
 "@noble/secp256k1@1.7.1", "@noble/secp256k1@^1.3.0":
   version "1.7.1"
@@ -2651,55 +2648,9 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#574d1730da725a6266da6d69f2fa01f027dadb96":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#77a05093408982086c02afea24e1d1923e1ae8a8":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#220c709566d8b680e7dc13722f4e81c8d0f13b3b"
-  dependencies:
-    "@adraffy/ens-normalize" "1.9.2"
-    "@keyv/sqlite" "3.6.2"
-    "@plebbit/plebbit-logger" "github:plebbit/plebbit-logger"
-    "@types/node-fetch" "2.6.2"
-    "@types/proper-lockfile" "4.1.2"
-    "@types/uuid" "8.3.4"
-    assert "2.0.0"
-    async-wait-until "2.0.12"
-    buffer "6.0.3"
-    captcha-canvas "3.2.1"
-    err-code "3.0.1"
-    file-type "16.5.4"
-    form-data "4.0.0"
-    hpagent "1.2.0"
-    ipfs-http-client "56.0.3"
-    ipfs-only-hash "4.0.0"
-    is-ipfs "6.0.2"
-    jose "4.11.0"
-    js-sha256 "0.9.0"
-    keyv "4.5.2"
-    knex "2.4.2"
-    libp2p-crypto "0.21.2"
-    limiter "2.1.0"
-    localforage "1.10.0"
-    lodash-es "4.17.21"
-    lru-cache "7.18.3"
-    open-graph-scraper "5.2.3"
-    p-limit "3.1.0"
-    peer-id "0.16.0"
-    proper-lockfile "github:plebbit/node-proper-lockfile"
-    retry "0.13.1"
-    safe-stable-stringify "2.4.1"
-    sha1-uint8array "0.10.3"
-    skia-canvas "1.0.0"
-    sqlite3 "5.1.6"
-    tiny-typed-emitter "2.1.0"
-    tinycache "1.1.2"
-    ts-custom-error "3.3.1"
-    uuid "9.0.0"
-    viem "1.0.7"
-
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#27df54b8c591c9245deb91e131d15de2bc8bf4d3":
-  version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#574d1730da725a6266da6d69f2fa01f027dadb96"
+  resolved "https://github.com/plebbit/plebbit-js.git#77a05093408982086c02afea24e1d1923e1ae8a8"
   dependencies:
     "@adraffy/ens-normalize" "1.8.3"
     "@keyv/sqlite" "3.6.2"
@@ -2756,27 +2707,11 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#99c0cffaa39f70cc0716d7bc4f0e5b462a767df2":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#efa802a1af8c75362e0d9a9afe1bc769f54e34cd":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#99c0cffaa39f70cc0716d7bc4f0e5b462a767df2"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#efa802a1af8c75362e0d9a9afe1bc769f54e34cd"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#574d1730da725a6266da6d69f2fa01f027dadb96"
-    "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
-    assert "2.0.0"
-    ethers "5.6.9"
-    localforage "1.10.0"
-    lodash.isequal "4.5.0"
-    memoizee "0.4.15"
-    quick-lru "5.1.1"
-    uuid "8.3.2"
-    zustand "4.0.0"
-
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#338324289dffa20ecde429fa5f428a2894851512":
-  version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#338324289dffa20ecde429fa5f428a2894851512"
-  dependencies:
-    "@adraffy/ens-normalize" "1.9.2"
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#220c709566d8b680e7dc13722f4e81c8d0f13b3b"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#77a05093408982086c02afea24e1d1923e1ae8a8"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
@@ -2901,28 +2836,6 @@
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.3.2.tgz#31b9c510d8cada9683549e1dbb4284cca5001faf"
   integrity sha512-V+MvGwaHH03hYhY+k6Ef/xKd6RYlc4q8WBx+2ANmipHJcKuktNcI/NgEsJgdSUF6Lw32njT6OnrRsKYCdgHjYw==
-
-"@scure/base@~1.1.0":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@scure/base/-/base-1.1.1.tgz#ebb651ee52ff84f420097055f4bf46cfba403938"
-  integrity sha512-ZxOhsSyxYwLJj3pLZCefNitxsj093tb2vq90mp2txoYeBqbcjDjqFhyM8eUjq/uFm6zJ+mUuqxlS2FkuSY1MTA==
-
-"@scure/bip32@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@scure/bip32/-/bip32-1.3.0.tgz#6c8d980ef3f290987736acd0ee2e0f0d50068d87"
-  integrity sha512-bcKpo1oj54hGholplGLpqPHRbIsnbixFtc06nwuNM5/dwSXOq/AAYoIBRsBmnZJSdfeNW5rnff7NTAz3ZCqR9Q==
-  dependencies:
-    "@noble/curves" "~1.0.0"
-    "@noble/hashes" "~1.3.0"
-    "@scure/base" "~1.1.0"
-
-"@scure/bip39@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@scure/bip39/-/bip39-1.2.0.tgz#a207e2ef96de354de7d0002292ba1503538fc77b"
-  integrity sha512-SX/uKq52cuxm4YFXWFaVByaSHJh2w3BnokVSeUJVCv6K7WulT9u2BuNRBhuFl8vAuYnzx9bEu9WgpcNYTrYieg==
-  dependencies:
-    "@noble/hashes" "~1.3.0"
-    "@scure/base" "~1.1.0"
 
 "@scure/base@~1.1.0":
   version "1.1.1"
@@ -3803,7 +3716,6 @@
   dependencies:
     "@webassemblyjs/floating-point-hex-parser" "1.11.6"
     "@webassemblyjs/helper-api-error" "1.11.6"
-
     "@xtuc/long" "4.2.2"
 
 "@webassemblyjs/helper-wasm-bytecode@1.11.6":
