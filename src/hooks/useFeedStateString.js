@@ -24,6 +24,16 @@ const useFeedStateString = (subplebbits) => {
             addClientUrl(subplebbit.clients.chainProviders[chainTicker][clientUrl], clientUrl)
           }
         }
+        // find subplebbit pages states
+        if (subplebbit?.posts?.clients) {
+          for (const clientType in subplebbit.posts.clients) {
+            for (const sortType in subplebbit.posts.clients[clientType]) {
+              for (const clientUrl in subplebbit.posts.clients[clientType][sortType]) {
+                addClientUrl(subplebbit.posts.clients[clientType][sortType][clientUrl], clientUrl)
+              }
+            }
+          }
+        }
       }
       return [...clientUrls]
     }
@@ -35,6 +45,15 @@ const useFeedStateString = (subplebbits) => {
     const states = {}
     for (const subplebbit of subplebbits) {
       states[subplebbit?.updatingState] = (states[subplebbit?.updatingState] || 0) + 1
+      // find subplebbit pages states
+      for (const clientType in subplebbit?.posts?.clients) {
+        for (const sortType in subplebbit.posts.clients[clientType]) {
+          for (const clientUrl in subplebbit.posts.clients[clientType][sortType]) {
+            const state = subplebbit.posts.clients[clientType][sortType][clientUrl].state
+            states[state] = (states[state] || 0) + 1
+          }
+        }
+      }
     }
 
     // e.g. Resolving 2 addresses from infura.io, fetching 2 IPNS, 1 IPFS from cloudflare-ipfs.com, ipfs.io
@@ -58,7 +77,7 @@ const useFeedStateString = (subplebbits) => {
         if (states['fetching-ipns']) {
           stateString += ', '
         }
-        stateString += `${states['fetching-ipfs']} IPNS`
+        stateString += `${states['fetching-ipfs']} IPFS`
       }
       const clientUrls = getClientUrls(/ipfs|ipns/)
       if (clientUrls.length) {

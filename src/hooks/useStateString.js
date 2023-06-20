@@ -39,7 +39,6 @@ const useStateString = (commentOrSubplebbit) => {
               continue
             }
             state += `-page-${sortType}`
-            console.log(clientType, sortType, clientUrl, state)
             if (!states[state]) {
               states[state] = []
             }
