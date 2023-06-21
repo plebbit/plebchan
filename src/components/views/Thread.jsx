@@ -110,23 +110,6 @@ const Thread = () => {
   const [cidTracker, setCidTracker] = useState({});
 
 
-  useEffect(() => {
-    const newCidTracker = {};
-    sortedReplies.forEach((reply) => {
-      newCidTracker[reply.shortCid] = reply.cid;
-    });
-    setCidTracker(newCidTracker);
-  }, [sortedReplies]);
-
-  // useEffect(() => {
-  //   console.log("postrefs cidtracker", cidTracker);
-  // }, [cidTracker]);
-
-    // useEffect(() => {
-  //   console.log("postRefs: ", postRefs)
-  // }, [postRefs]);
-
-
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
   const comment = useComment({commentCid: selectedThread});
@@ -231,6 +214,24 @@ const Thread = () => {
     ...accountRepliesNotYetInCommentReplies, ...flattenedReplies
     ].sort((a, b) => a.timestamp - b.timestamp
   ), [accountRepliesNotYetInCommentReplies, flattenedReplies]);
+
+
+    useEffect(() => {
+    const newCidTracker = {};
+    sortedReplies.forEach((reply) => {
+      newCidTracker[reply.shortCid] = reply.cid;
+    });
+    setCidTracker(newCidTracker);
+  }, [sortedReplies]);
+
+  // useEffect(() => {
+  //   console.log("postrefs cidtracker", cidTracker);
+  // }, [cidTracker]);
+
+    // useEffect(() => {
+  //   console.log("postRefs: ", postRefs)
+  // }, [postRefs]);
+
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
