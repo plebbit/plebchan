@@ -36,21 +36,20 @@ function handleQuoteClick(reply, parentCid, threadCid) {
     });
 
   if (targetElement) {
-    const highlightedElements = document.querySelectorAll('.highlighted');
-
+    const highlightedElements = document.querySelectorAll('.highlighted-click');
+  
     highlightedElements.forEach(el => {
-      el.classList.remove('highlighted');
+      el.classList.remove('highlighted-click');
     });
-
+  
     targetElement.scrollIntoView({ behavior: "auto", block: "start" });
-
+  
     if (!targetElement.classList.contains('op-mobile') && !targetElement.classList.contains('op-desktop')) {
-      targetElement.classList.add('highlighted');
+      targetElement.classList.add('highlighted-click');
     }
-
   } else {
     return;
-  }
+  }    
 };
 
 export default handleQuoteClick;

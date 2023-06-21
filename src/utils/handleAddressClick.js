@@ -13,16 +13,26 @@ function handleAddressClick(shortAddress) {
     return;
   }
 
-  const highlightedElements = document.querySelectorAll('.highlighted');
-  highlightedElements.forEach(el => {
-    el.classList.remove('highlighted');
-  });
+  const highlightedElements = document.querySelectorAll('.highlighted-address');
 
+  let allHighlighted = true;
   matchingElements.forEach(el => {
-    if (!el.classList.contains('op-mobile') && !el.classList.contains('op-desktop')) {
-      el.classList.add('highlighted');
+    if (!el.classList.contains('highlighted-address')) {
+      allHighlighted = false;
     }
   });
+
+  highlightedElements.forEach(el => {
+    el.classList.remove('highlighted-address');
+  });
+
+  if (!allHighlighted) {
+    matchingElements.forEach(el => {
+      if (!el.classList.contains('op-mobile') && !el.classList.contains('op-desktop')) {
+        el.classList.add('highlighted-address');
+      }
+    });
+  }
 }
 
 export default handleAddressClick;
