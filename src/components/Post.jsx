@@ -5,7 +5,7 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import breaks from 'remark-breaks';
 
 
-const Post = ({ content }) => {
+const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, postQuoteRef }) => {
   const doubleNewlineContent = useMemo(() => content?.replaceAll(/\n(?!\n)/g, '\n\n'), [content]);
 
   const customSchema = useMemo(() => ({
@@ -42,7 +42,7 @@ const Post = ({ content }) => {
   };
 
 
-  const createQuotelink = (children) => {
+  const createQuotelink = (children, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, postQuoteRef) => {
     const regexC = /(c\/[A-Za-z0-9]{46}|c\/[A-Za-z0-9]{12})/g;
     const regexP = /(p\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth))/g;
     const regexU = /(u\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth))/g;
@@ -66,13 +66,27 @@ const Post = ({ content }) => {
               newParts.push(child.substring(lastIndex, index));
             }
 
+            const cid = matchedText.replace('c/', '');
+
             newParts.push(
               <Link
                 key={`link-${i}-${matchedText}`}
                 className="quotelink"
                 to={() => {}}
+                ref={(el) => {
+                  if (typeof postQuoteRef === 'function') {
+                    postQuoteRef(cid, el);
+                  } else {
+                    return;
+                  }
+                }}
+                onClick={() => {postQuoteOnClick(cid)}}
+                onMouseOver={() => {postQuoteOnOver(cid)}}
+                onMouseLeave={() => {
+                  postQuoteOnLeave();
+                }}
               >
-                {matchedText}
+                  {matchedText}
               </Link>
             );
             
@@ -104,7 +118,9 @@ const Post = ({ content }) => {
         video: ({ src }) => <span>{src}</span>,
         source: ({ src }) => <span>{src}</span>,
         gif: ({ src }) => <span>{src}</span>,
-        p: ({ children }) => <div className='custom-paragraph'>{createQuotelink(children)}</div>,
+        p: ({ children }) => <div className='custom-paragraph'>
+          {createQuotelink(children, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, postQuoteRef)}
+        </div>,
       }}
     />
   );
