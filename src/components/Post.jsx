@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-router-dom';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import breaks from 'remark-breaks';
+import ForwardRefLink from './ForwardRefLink';
 
 
 const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, postQuoteRef }) => {
@@ -67,28 +67,31 @@ const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, po
             }
 
             const cid = matchedText.replace('c/', '');
+            const linkRef = React.createRef(); 
 
             newParts.push(
-              <Link
+              <ForwardRefLink
                 key={`link-${i}-${matchedText}`}
                 className="quotelink"
                 to={() => {}}
-                ref={(el) => {
+                ref={linkRef}
+                setRefAndCid={(ref) => {
                   if (typeof postQuoteRef === 'function') {
-                    postQuoteRef(cid, el);
-                  } else {
-                    return;
+                    postQuoteRef(cid, ref);
                   }
                 }}
                 onClick={() => {postQuoteOnClick(cid)}}
-                onMouseOver={() => {postQuoteOnOver(cid)}}
+                onMouseOver={() => {
+                  postQuoteOnOver(cid);
+                }}
                 onMouseLeave={() => {
                   postQuoteOnLeave();
                 }}
               >
-                  {matchedText}
-              </Link>
+                {matchedText}
+              </ForwardRefLink>
             );
+
             
             lastIndex = index + matchedText.length;
           }

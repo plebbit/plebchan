@@ -215,23 +215,14 @@ const Thread = () => {
     ].sort((a, b) => a.timestamp - b.timestamp
   ), [accountRepliesNotYetInCommentReplies, flattenedReplies]);
 
-
-    useEffect(() => {
+  // let post.jsx access full cid of user-typed short cid
+  useEffect(() => {
     const newCidTracker = {};
     sortedReplies.forEach((reply) => {
       newCidTracker[reply.shortCid] = reply.cid;
     });
     setCidTracker(newCidTracker);
   }, [sortedReplies]);
-
-  // useEffect(() => {
-  //   console.log("postrefs cidtracker", cidTracker);
-  // }, [cidTracker]);
-
-    // useEffect(() => {
-  //   console.log("postRefs: ", postRefs)
-  // }, [postRefs]);
-
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
@@ -1341,46 +1332,48 @@ const Thread = () => {
                             </Link>
                             <Post key={`post-${index}`} 
                               content={reply.content}
-                              postQuoteRef={(cid, ref) => {
-                                postRefs.current[cid] = ref;
+                              postQuoteRef={(quoteShortParentCid, ref) => {
+                                postRefs.current[quoteShortParentCid] = ref;
                               }}
                               postQuoteOnClick={(quoteShortParentCid) => {
                                 handleQuoteClick(reply, quoteShortParentCid, null)
                               }}
                               postQuoteOnOver={(quoteShortParentCid) => {
-                                handleQuoteHover(reply, quoteShortParentCid, () => {
-                                  const quoteParentCid = cidTracker[quoteShortParentCid];
-                                  setOutOfViewCid(quoteParentCid);
+                                const quoteParentCid = cidTracker[quoteShortParentCid];
+                                if (outOfViewCid !== quoteParentCid) {
+                                  handleQuoteHover(reply, quoteShortParentCid, () => {
+                                    setOutOfViewCid(quoteParentCid);
 
-                                  // const rect = postRefs.current[quoteParentCid].getBoundingClientRect();
-                                  // const distanceToRight = window.innerWidth - rect.right;
-                                  // const distanceToTop = rect.top;
-                                  // const distanceToBottom = window.innerHeight - rect.bottom;
-                                  // let top;
+                                  const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                  const distanceToRight = window.innerWidth - rect.right;
+                                  const distanceToTop = rect.top;
+                                  const distanceToBottom = window.innerHeight - rect.bottom;
+                                  let top;
 
-                                  // if (distanceToTop < postOnHoverHeight / 2) {
-                                  //   top = window.scrollY - 5;
-                                  // } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                  //   top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                  // } else {
-                                  //   top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                  // }
+                                  if (distanceToTop < postOnHoverHeight / 2) {
+                                    top = window.scrollY - 5;
+                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                  } else {
+                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  }
                                 
-                                  // if (distanceToRight < 200) {
-                                  //   setOutOfViewPosition({
-                                  //     top,
-                                  //     right: window.innerWidth - rect.left - 10,
-                                  //     maxWidth: rect.left - 5
-                                  //   });
-                                  // } else {
-                                  //   setOutOfViewPosition({
-                                  //     top,
-                                  //     left: rect.left + rect.width + 5,
-                                  //     maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                  //   });
-                                  // }
+                                  if (distanceToRight < 200) {
+                                    setOutOfViewPosition({
+                                      top,
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
+                                    });
+                                  } else {
+                                    setOutOfViewPosition({
+                                      top,
+                                      left: rect.left + rect.width + 5,
+                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                    });
+                                  }
                                 })
                               }}
+                            }
                               postQuoteOnLeave={() => {
                                 removeHighlight();
                                 setOutOfViewCid(null);
