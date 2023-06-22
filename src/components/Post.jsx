@@ -50,7 +50,7 @@ const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, po
     
     const regex = new RegExp(`${patternC}|${patternPC}|${patternU}|${patternP}`, 'g');
   
-    return children.flatMap((child, i) => {
+    return children?.flatMap((child, i) => {
       if (typeof child !== 'string') {
         return child;
       }
