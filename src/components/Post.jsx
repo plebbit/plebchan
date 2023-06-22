@@ -43,72 +43,77 @@ const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, po
 
 
   const createQuotelink = (children, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, postQuoteRef) => {
-    const regexC = /(c\/[A-Za-z0-9]{46}|c\/[A-Za-z0-9]{12})/g;
-    const regexP = /(p\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth))/g;
-    const regexU = /(u\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth))/g;
-    const regexPC = /(p\/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\.eth)\/c\/[A-Za-z0-9]{46})/g;  
-
-    const regexArray = [regexU, regexPC, regexP, regexC];
-    let parts = [children];
-
-    regexArray.forEach(regex => {
-      parts = parts.flatMap((child, i) => {
-        if (typeof child === 'string') {
-          const newParts = [];
-          let match;
-          let lastIndex = 0;
-
-          while ((match = regex.exec(child)) !== null) {
-            const matchedText = match[0];
-            const index = match.index;
-
-            if (index > lastIndex) {
-              newParts.push(child.substring(lastIndex, index));
-            }
-
-            const cid = matchedText.replace('c/', '');
-            const linkRef = React.createRef(); 
-
-            newParts.push(
-              <ForwardRefLink
-                key={`link-${i}-${matchedText}`}
-                className="quotelink"
-                to={() => {}}
-                ref={linkRef}
-                setRefAndCid={(ref) => {
-                  if (typeof postQuoteRef === 'function') {
-                    postQuoteRef(cid, ref);
-                  }
-                }}
-                onClick={() => {postQuoteOnClick(cid)}}
-                onMouseOver={() => {
-                  postQuoteOnOver(cid);
-                }}
-                onMouseLeave={() => {
-                  postQuoteOnLeave();
-                }}
-              >
-                {matchedText}
-              </ForwardRefLink>
-            );
-
-            
-            lastIndex = index + matchedText.length;
-          }
-
-          if (lastIndex < child.length) {
-            newParts.push(child.substring(lastIndex));
-          }
-
-          return newParts;
-        } else {
-          return child;
+    const patternC = "(c/[A-Za-z0-9]{46}|c/[A-Za-z0-9]{12})";
+    const patternP = "(p/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\\.eth))";
+    const patternU = "(u/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\\.eth))";
+    const patternPC = "(p/([A-Za-z0-9]{52}|[A-Za-z0-9-.]*\\.eth)/c/[A-Za-z0-9]{46})";
+    
+    const regex = new RegExp(`${patternC}|${patternPC}|${patternU}|${patternP}`, 'g');
+  
+    return children.flatMap((child, i) => {
+      if (typeof child !== 'string') {
+        return child;
+      }
+      
+      const parts = [];
+      let match;
+      let lastIndex = 0;
+  
+      while ((match = regex.exec(child)) !== null) {
+        const matchedText = match[0];
+        const index = match.index;
+  
+        if (index > lastIndex) {
+          parts.push(child.substring(lastIndex, index));
         }
-      });
+  
+        const cid = matchedText.replace('c/', '');
+        const linkRef = React.createRef();
+  
+        let linkTo = () => {};
+        const linkTarget = matchedText.startsWith('u/') ? "_blank" : "_self";
+  
+        if (matchedText.startsWith('u/')) {
+          linkTo = `https://plebbitapp.eth.limo/#/${cid}`;
+        } else if (matchedText.startsWith('p/') || matchedText.startsWith('p/')) {
+          linkTo = `/${matchedText}`;
+        }
+  
+        parts.push(
+          <ForwardRefLink
+            key={`link-${i}-${matchedText}`}
+            className="quotelink"
+            to={linkTo}
+            target={linkTarget}
+            ref={linkRef}
+            setRefAndCid={(ref) => {
+              if (typeof postQuoteRef === 'function') {
+                postQuoteRef(cid, ref);
+              }
+            }}
+            onClick={() => {postQuoteOnClick(cid)}}
+            onMouseOver={() => {
+              postQuoteOnOver(cid);
+            }}
+            onMouseLeave={() => {
+              postQuoteOnLeave();
+            }}
+          >
+            {matchedText}
+          </ForwardRefLink>
+        );
+  
+        lastIndex = index + matchedText.length;
+      }
+  
+      if (lastIndex < child.length) {
+        parts.push(child.substring(lastIndex));
+      }
+  
+      return parts;
     });
-
-    return parts;
   };
+  
 
 
   return (
