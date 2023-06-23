@@ -1754,7 +1754,7 @@ const Board = () => {
                                     ref={el => {
                                       quoteRefs.current[reply.cid] = el;
                                     }}
-                                    onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                                    onClick={() => handleQuoteClick(reply, shortParentCid, null)}
                                     onMouseOver={(event) => {
                                       event.stopPropagation();
                                       handleQuoteHover(reply, shortParentCid, () => {

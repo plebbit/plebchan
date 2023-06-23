@@ -839,10 +839,13 @@ const Thread = () => {
                         <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                         &nbsp;
                         <span className="post-number post-number-desktop">
-                          <span style={{cursor: 'pointer'}}>c/</span>
-                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => {
-                            setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
-                            }} title="Reply to this post">{comment.shortCid}</button>
+                          <span>c/</span>
+                          <Link to={() => {}} id="reply-button" style={{ cursor: 'pointer' }} 
+                          onClick={() => {
+                            setIsReplyOpen(true); 
+                            setSelectedParentCid(comment.cid); 
+                            setSelectedShortCid(comment.shortCid);
+                            }} title="Reply to this post">{comment.shortCid}</Link>
                         </span>&nbsp;
                         {comment.pinned ? (
                           <>
@@ -1069,17 +1072,21 @@ const Thread = () => {
                               </span>
                             </span>
                             &nbsp;
-                            <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
-                            &nbsp;
-                            <span style={{cursor: 'pointer'}} key={`pn-${index}`} className="post-number post-number-desktop">
+                            <span key={`dt-${index}`} className="date-time">
+                              {getDate(reply?.timestamp)}&nbsp;
+                            <span key={`pn-${index}`} className="post-number post-number-desktop">
                               <span key={`pl1-${index}`}>c/</span>
                               {reply.shortCid ? (
-                                <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${index}`} onClick={() => {
-                                  setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
-                                  }} title="Reply to this post">{reply.shortCid}</button>
+                                <Link id="reply-button" key={`pl2-${index}`}
+                                 onClick={() => {
+                                  setIsReplyOpen(true); 
+                                  setSelectedParentCid(reply.cid); 
+                                  setSelectedShortCid(reply.shortCid);
+                                  }} title="Reply to this post">{reply.shortCid}</Link>
                               ) : (
                                 <PendingLabel key="pending" commentIndex={reply.index} />
                               )}
+                              </span>
                             </span>&nbsp;
                             <PostMenu 
                               key={`pmb-${index}`} 
@@ -1443,10 +1450,12 @@ const Thread = () => {
                           {getDate(comment?.timestamp)}
                           &nbsp;
                           <span key={`mob-no-${comment.cid}`}>c/</span>
-                          <span id="reply-button" style={{cursor: 'pointer'}} key={`mob-no2-${comment.cid}`} title="Reply to this post"
+                          <Link to={() => {}} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
                           onClick={() => {
-                            setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
-                            }}>{comment.shortCid}</span>
+                            setIsReplyOpen(true); 
+                            setSelectedParentCid(comment.cid); 
+                            setSelectedShortCid(comment.shortCid);
+                            }}>{comment.shortCid}</Link>
                         </span>
                       </div>
                       {commentMediaInfo?.url ? (
@@ -1562,9 +1571,12 @@ const Thread = () => {
                             {getDate(reply?.timestamp)}&nbsp;
                             <span key={`mob-pl1-${index}`}>c/</span>
                             {reply.shortCid ? (
-                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${index}`} onClick={() => {
-                                setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
-                                }} title="Reply to this post">{reply.shortCid}</button>
+                              <Link id="reply-button" key={`mob-pl2-${index}`} 
+                              onClick={() => {
+                                setIsReplyOpen(true); 
+                                setSelectedParentCid(reply.cid); 
+                                setSelectedShortCid(reply.shortCid);
+                                }} title="Reply to this post">{reply.shortCid}</Link>
                             ) : (
                               <PendingLabel key="pending-mob" commentIndex={reply.index} />
                             )}
