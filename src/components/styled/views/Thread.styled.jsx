@@ -2974,12 +2974,12 @@ export const BoardForm = styled.div`
               }
 
               .quotelink-mobile {
-                color: #81A2BE;
+                color: #5F89AC;
                 text-decoration: underline;
               }
 
               .quotelink-mobile:hover {
-                color: #5F89AC;
+                color: #81A2BE;
               }
 
               p:first-of-type::before {
