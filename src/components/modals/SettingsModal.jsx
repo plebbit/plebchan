@@ -23,8 +23,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const [expanded, setExpanded] = useState([]);
   const [accountJson, setAccountJson] = useState(null);
 
-  const setErrorMessage = useError();
-  const [, setSuccessMessage] = useSuccess();
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
 
   const account = useAccount();
   const { accounts } = useAccounts();
@@ -57,7 +57,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     ].filter((url) => !isValidURL(url));
 
     if (invalidUrls.length > 0) {
-      setErrorMessage(`Invalid URL(s): ${invalidUrls.join(', ')}`);
+      setNewErrorMessage(`Invalid URL(s): ${invalidUrls.join(', ')}`);
       return;
     }
 
@@ -72,14 +72,14 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       localStorage.setItem("successToast", "Settings Saved");
       window.location.reload();
     } catch (error) {
-      setErrorMessage(error.message);
+      setNewErrorMessage(error.message);
     }
   };
 
 
   const handleResetPlebbitOptions = async () => {
-    setErrorMessage(null);
-    setSuccessMessage(null);
+    setNewErrorMessage(null);
+    setNewSuccessMessage(null);
 
     const defaultGatewayUrls = [
       'https://ipfs.io',
@@ -105,7 +105,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       localStorage.setItem("successToast", "Settings Reset");
       window.location.reload();
     } catch (error) {
-      setErrorMessage(error.message);
+      setNewErrorMessage(error.message);
     }
   };
 
@@ -147,10 +147,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   
   useEffect(() => {
     if (localStorage.getItem("cacheCleared") === "true") {
-      setSuccessMessage("Cache Cleared");
+      setNewSuccessMessage("Cache Cleared");
       localStorage.removeItem("cacheCleared");
     }
-  }, [setSuccessMessage]);
+  }, [setNewSuccessMessage]);
 
 
   const handleExport = async () => {
@@ -166,10 +166,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       const parsedJson = JSON.parse(accountJson);
       await importAccount(accountJson);
       setActiveAccount(parsedJson.account?.name);
-      setSuccessMessage("Account Imported");
+      setNewSuccessMessage("Account Imported");
       
     } catch (error) {
-      setErrorMessage(error.message);
+      setNewErrorMessage(error.message);
     }
   };
 
@@ -188,9 +188,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           ...account.author,
           displayName: name,
      }});
-      setSuccessMessage("Account Name Saved");
+      setNewSuccessMessage("Account Name Saved");
     } catch (error) {
-      setErrorMessage(error.message);
+      setNewErrorMessage(error.message);
     }
   };
 

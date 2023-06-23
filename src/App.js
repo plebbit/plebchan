@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useAccount, useBufferedFeeds } from '@plebbit/plebbit-react-hooks';
 import 'react-tooltip/dist/react-tooltip.css';
 import 'react-toastify/dist/ReactToastify.css';
 import useGeneralStore from './hooks/stores/useGeneralStore';
@@ -27,7 +26,7 @@ import useSuccess from "./hooks/useSuccess";
 export default function App() {
   const { 
     bodyStyle, setBodyStyle,
-    defaultSubplebbits, setDefaultSubplebbits,
+    setDefaultSubplebbits,
     isCaptchaOpen, setIsCaptchaOpen,
     setIsSettingsOpen,
     selectedStyle, setSelectedStyle,
@@ -37,8 +36,6 @@ export default function App() {
 
   const location = useLocation();
   const isHomeRoute = location.pathname === "/";
-
-  const account = useAccount();
 
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
@@ -57,16 +54,6 @@ export default function App() {
       return;
     }
   }, [setNewErrorMessage, setNewSuccessMessage]);
-
-  // preload default subs and subscriptions
-  useBufferedFeeds({
-    feedsOptions: [
-      {subplebbitAddresses: defaultSubplebbits.map(
-        (subplebbit) => subplebbit.address
-      ), sortType: 'active'},
-      {subplebbitAddresses: account?.subscriptions, sortType: 'active'}
-    ]
-  });
   
   // preload banners
   useEffect(() => {

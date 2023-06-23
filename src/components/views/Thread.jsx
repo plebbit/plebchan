@@ -85,6 +85,7 @@ const Thread = () => {
   const postMenuCatalogRef = useRef(null);
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
+  const postRefs = useRef({});
   const postOnHoverRef = useRef(null);
   const backlinkRefsMobile = useRef({});
   const quoteRefsMobile = useRef({});
@@ -106,6 +107,8 @@ const Thread = () => {
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
+  const [cidTracker, setCidTracker] = useState({});
+
 
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
@@ -211,6 +214,15 @@ const Thread = () => {
     ...accountRepliesNotYetInCommentReplies, ...flattenedReplies
     ].sort((a, b) => a.timestamp - b.timestamp
   ), [accountRepliesNotYetInCommentReplies, flattenedReplies]);
+
+  // let post.jsx access full cid of user-typed short cid
+  useEffect(() => {
+    const newCidTracker = {};
+    sortedReplies.forEach((reply) => {
+      newCidTracker[reply.shortCid] = reply.cid;
+    });
+    setCidTracker(newCidTracker);
+  }, [sortedReplies]);
 
   // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
@@ -827,10 +839,13 @@ const Thread = () => {
                         <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
                         &nbsp;
                         <span className="post-number post-number-desktop">
-                          <span style={{cursor: 'pointer'}}>c/</span>
-                          <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} onClick={() => {
-                            setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
-                            }} title="Reply to this post">{comment.shortCid}</button>
+                          <span>c/</span>
+                          <Link to={() => {}} id="reply-button" style={{ cursor: 'pointer' }} 
+                          onClick={() => {
+                            setIsReplyOpen(true); 
+                            setSelectedParentCid(comment.cid); 
+                            setSelectedShortCid(comment.shortCid);
+                            }} title="Reply to this post">{comment.shortCid}</Link>
                         </span>&nbsp;
                         {comment.pinned ? (
                           <>
@@ -1057,17 +1072,21 @@ const Thread = () => {
                               </span>
                             </span>
                             &nbsp;
-                            <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply?.timestamp)}</span>
-                            &nbsp;
-                            <span style={{cursor: 'pointer'}} key={`pn-${index}`} className="post-number post-number-desktop">
+                            <span key={`dt-${index}`} className="date-time">
+                              {getDate(reply?.timestamp)}&nbsp;
+                            <span key={`pn-${index}`} className="post-number post-number-desktop">
                               <span key={`pl1-${index}`}>c/</span>
                               {reply.shortCid ? (
-                                <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`pl2-${index}`} onClick={() => {
-                                  setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
-                                  }} title="Reply to this post">{reply.shortCid}</button>
+                                <Link id="reply-button" key={`pl2-${index}`}
+                                 onClick={() => {
+                                  setIsReplyOpen(true); 
+                                  setSelectedParentCid(reply.cid); 
+                                  setSelectedShortCid(reply.shortCid);
+                                  }} title="Reply to this post">{reply.shortCid}</Link>
                               ) : (
                                 <PendingLabel key="pending" commentIndex={reply.index} />
                               )}
+                              </span>
                             </span>&nbsp;
                             <PostMenu 
                               key={`pmb-${index}`} 
@@ -1277,7 +1296,7 @@ const Thread = () => {
                               ref={el => {
                                 quoteRefs.current[reply.cid] = el;
                               }}
-                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                              onClick={() => handleQuoteClick(reply, shortParentCid, null)}
                               onMouseOver={(event) => {
                                 event.stopPropagation();
                                 handleQuoteHover(reply, shortParentCid, () => {
@@ -1314,10 +1333,59 @@ const Thread = () => {
                               onMouseLeave={() => {
                                 removeHighlight();
                                 setOutOfViewCid(null);
-                              }}>
-                                {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
-                              </Link>
-                            <Post content={reply.content} comment={reply} key={`post-${index}`} />
+                              }}
+                            >
+                              {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
+                            </Link>
+                            <Post key={`post-${index}`} 
+                              content={reply.content}
+                              postQuoteRef={(quoteShortParentCid, ref) => {
+                                postRefs.current[quoteShortParentCid] = ref;
+                              }}
+                              postQuoteOnClick={(quoteShortParentCid) => {
+                                handleQuoteClick(reply, quoteShortParentCid, null)
+                              }}
+                              postQuoteOnOver={(quoteShortParentCid) => {
+                                const quoteParentCid = cidTracker[quoteShortParentCid];
+                                if (outOfViewCid !== quoteParentCid) {
+                                  handleQuoteHover(reply, quoteShortParentCid, () => {
+                                    setOutOfViewCid(quoteParentCid);
+
+                                  const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                  const distanceToRight = window.innerWidth - rect.right;
+                                  const distanceToTop = rect.top;
+                                  const distanceToBottom = window.innerHeight - rect.bottom;
+                                  let top;
+
+                                  if (distanceToTop < postOnHoverHeight / 2) {
+                                    top = window.scrollY - 5;
+                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                  } else {
+                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  }
+                                
+                                  if (distanceToRight < 200) {
+                                    setOutOfViewPosition({
+                                      top,
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
+                                    });
+                                  } else {
+                                    setOutOfViewPosition({
+                                      top,
+                                      left: rect.left + rect.width + 5,
+                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                    });
+                                  }
+                                })
+                              }}
+                            }
+                              postQuoteOnLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}
+                            />
                             <EditLabel key={`edit-label-reply-${index}`} 
                             commentCid={reply.cid}
                             className="ttl"/>
@@ -1382,10 +1450,12 @@ const Thread = () => {
                           {getDate(comment?.timestamp)}
                           &nbsp;
                           <span key={`mob-no-${comment.cid}`}>c/</span>
-                          <span id="reply-button" style={{cursor: 'pointer'}} key={`mob-no2-${comment.cid}`} title="Reply to this post"
+                          <Link to={() => {}} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
                           onClick={() => {
-                            setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);
-                            }}>{comment.shortCid}</span>
+                            setIsReplyOpen(true); 
+                            setSelectedParentCid(comment.cid); 
+                            setSelectedShortCid(comment.shortCid);
+                            }}>{comment.shortCid}</Link>
                         </span>
                       </div>
                       {commentMediaInfo?.url ? (
@@ -1501,9 +1571,12 @@ const Thread = () => {
                             {getDate(reply?.timestamp)}&nbsp;
                             <span key={`mob-pl1-${index}`}>c/</span>
                             {reply.shortCid ? (
-                              <button id="reply-button" style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pl2-${index}`} onClick={() => {
-                                setIsReplyOpen(true); setSelectedParentCid(reply.cid); setSelectedShortCid(reply.shortCid);
-                                }} title="Reply to this post">{reply.shortCid}</button>
+                              <Link id="reply-button" key={`mob-pl2-${index}`} 
+                              onClick={() => {
+                                setIsReplyOpen(true); 
+                                setSelectedParentCid(reply.cid); 
+                                setSelectedShortCid(reply.shortCid);
+                                }} title="Reply to this post">{reply.shortCid}</Link>
                             ) : (
                               <PendingLabel key="pending-mob" commentIndex={reply.index} />
                             )}
@@ -1600,7 +1673,55 @@ const Thread = () => {
                             }}>
                             {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                           </span>
-                          <Post content={reply.content} comment={reply} key={`post-mobile-${index}`} />
+                          <Post key={`post-mobile-${index}`}
+                            content={reply.content} 
+                            postQuoteRef={(quoteShortParentCid, ref) => {
+                              postRefs.current[quoteShortParentCid] = ref;
+                            }}
+                            postQuoteOnClick={(quoteShortParentCid) => {
+                              handleQuoteClick(reply, quoteShortParentCid, null)
+                            }}
+                            postQuoteOnOver={(quoteShortParentCid) => {
+                              const quoteParentCid = cidTracker[quoteShortParentCid];
+                              if (outOfViewCid !== quoteParentCid) {
+                                handleQuoteHover(reply, quoteShortParentCid, () => {
+                                  setOutOfViewCid(quoteParentCid);
+
+                                const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                const distanceToRight = window.innerWidth - rect.right;
+                                const distanceToTop = rect.top;
+                                const distanceToBottom = window.innerHeight - rect.bottom;
+                                let top;
+
+                                if (distanceToTop < postOnHoverHeight / 2) {
+                                  top = window.scrollY - 5;
+                                } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                  top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                } else {
+                                  top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                }
+                              
+                                if (distanceToRight < 200) {
+                                  setOutOfViewPosition({
+                                    top,
+                                    right: window.innerWidth - rect.left - 10,
+                                    maxWidth: rect.left - 5
+                                  });
+                                } else {
+                                  setOutOfViewPosition({
+                                    top,
+                                    left: rect.left + rect.width + 5,
+                                    maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                  });
+                                }
+                              })
+                            }}
+                          }
+                            postQuoteOnLeave={() => {
+                              removeHighlight();
+                              setOutOfViewCid(null);
+                            }}
+                          />
                           <EditLabel key={`edit-label-reply-mob-${index}`} 
                           commentCid={reply.cid}
                           className="ttl"/>

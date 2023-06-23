@@ -114,7 +114,7 @@ export const PostMenuCatalog = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
         border: 1px solid #d99f91 !important;
         border-left: none !important;
@@ -137,7 +137,7 @@ export const PostMenuCatalog = styled.div`
       }`;
 
       case 'Yotsuba-B':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
         border: 1px solid #ba9dbf !important;
         border-left: none !important;
@@ -160,7 +160,7 @@ export const PostMenuCatalog = styled.div`
       }`;
 
       case 'Futaba':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
       }
       
@@ -180,7 +180,7 @@ export const PostMenuCatalog = styled.div`
       }`;
 
       case 'Burichan':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
       }
       
@@ -200,7 +200,7 @@ export const PostMenuCatalog = styled.div`
       }`;
 
       case 'Tomorrow':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #1d1d21 !important;
         border: 1px solid #111 !important;
       }
@@ -220,7 +220,7 @@ export const PostMenuCatalog = styled.div`
       }`;
 
       case 'Photon':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #ccc !important;
         border: 1px solid #ccc !important;
       }

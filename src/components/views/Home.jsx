@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAccount } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBufferedFeeds } from '@plebbit/plebbit-react-hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/views/Home.styled';
 import BoardAvatar from '../BoardAvatar';
@@ -28,6 +28,16 @@ const Home = () => {
   const inputRef = useRef(null);
   const prevStyle = useRef(selectedStyle);
   const prevBodyStyle = useRef(bodyStyle);
+
+  // preload default subs and subscriptions
+  useBufferedFeeds({
+    feedsOptions: [
+      {subplebbitAddresses: defaultSubplebbits.map(
+        (subplebbit) => subplebbit.address
+      ), sortType: 'active'},
+      {subplebbitAddresses: account?.subscriptions, sortType: 'active'}
+    ]
+  });
 
   // prevent dark mode
   useEffect(() => {

@@ -76,6 +76,7 @@ const Subscriptions = () => {
   const postMenuCatalogRef = useRef(null);
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
+  const postRefs = useRef({});
   const backlinkRefsMobile = useRef({});
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
@@ -97,10 +98,21 @@ const Subscriptions = () => {
   const [deletePost, setDeletePost] = useState(false);
   const [moderatorPermissions, setModeratorPermissions] = useState({});
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
+  const [cidTracker, setCidTracker] = useState({});
+  const [displayedReplies, setDisplayedReplies] = useState([]);
 
   const setSelectedThreadCid = (cid) => {
     selectedThreadCidRef.current = cid;
   }
+
+  // let post.jsx access full cid of user-typed short cid
+  useEffect(() => {
+    const newCidTracker = {};
+    displayedReplies.forEach((reply) => {
+      newCidTracker[reply.shortCid] = reply.cid;
+    });
+    setCidTracker(newCidTracker);
+  }, [displayedReplies]);
 
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
@@ -590,6 +602,7 @@ const Subscriptions = () => {
                 data={selectedFeed}
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
+                  setDisplayedReplies(displayedReplies);
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = "assets/filedeleted-res.gif";
                   const isModerator = moderatorPermissions[thread.subplebbitAddress];
@@ -1258,7 +1271,55 @@ const Subscriptions = () => {
                                     }}>
                                       {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                   </Link>
-                                  <Post content={reply.content?.slice(0, 500)} key={`post-${index}`} />
+                                  <Post key={`post-${index}`}
+                                    content={reply.content?.slice(0, 500)}
+                                    postQuoteRef={(quoteShortParentCid, ref) => {
+                                      postRefs.current[quoteShortParentCid] = ref;
+                                    }}
+                                    postQuoteOnClick={(quoteShortParentCid) => {
+                                      handleQuoteClick(reply, quoteShortParentCid, null)
+                                    }}
+                                    postQuoteOnOver={(quoteShortParentCid) => {
+                                      const quoteParentCid = cidTracker[quoteShortParentCid];
+                                      if (outOfViewCid !== quoteParentCid) {
+                                        handleQuoteHover(reply, quoteShortParentCid, () => {
+                                          setOutOfViewCid(quoteParentCid);
+      
+                                        const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                        const distanceToRight = window.innerWidth - rect.right;
+                                        const distanceToTop = rect.top;
+                                        const distanceToBottom = window.innerHeight - rect.bottom;
+                                        let top;
+      
+                                        if (distanceToTop < postOnHoverHeight / 2) {
+                                          top = window.scrollY - 5;
+                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                        } else {
+                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                        }
+                                      
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top,
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
+                                          });
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top,
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                          });
+                                        }
+                                      })
+                                    }}
+                                  }
+                                    postQuoteOnLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}
+                                  />
                                   <span key={`ttl-s-${index}`} className="ttl"> (...)
                                   <br key={`ttl-s-br1-${index}`} />
                                   <EditLabel key={`edit-label-reply-${index}`} 
@@ -1318,7 +1379,55 @@ const Subscriptions = () => {
                                   }}>
                                     {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
-                                <Post content={reply.content} key={`post-${index}`} comment={reply} />
+                                <Post key={`post-${index}`}
+                                  content={reply.content}
+                                  postQuoteRef={(quoteShortParentCid, ref) => {
+                                    postRefs.current[quoteShortParentCid] = ref;
+                                  }}
+                                  postQuoteOnClick={(quoteShortParentCid) => {
+                                    handleQuoteClick(reply, quoteShortParentCid, null)
+                                  }}
+                                  postQuoteOnOver={(quoteShortParentCid) => {
+                                    const quoteParentCid = cidTracker[quoteShortParentCid];
+                                    if (outOfViewCid !== quoteParentCid) {
+                                      handleQuoteHover(reply, quoteShortParentCid, () => {
+                                        setOutOfViewCid(quoteParentCid);
+    
+                                      const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                      const distanceToRight = window.innerWidth - rect.right;
+                                      const distanceToTop = rect.top;
+                                      const distanceToBottom = window.innerHeight - rect.bottom;
+                                      let top;
+    
+                                      if (distanceToTop < postOnHoverHeight / 2) {
+                                        top = window.scrollY - 5;
+                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                      } else {
+                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                      }
+                                    
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                        });
+                                      }
+                                    })
+                                  }}
+                                }
+                                  postQuoteOnLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}
+                                />
                                 <EditLabel key={`edit-label-reply-${index}`} 
                                   commentCid={reply.cid}
                                   className="ttl"/>
@@ -1690,7 +1799,55 @@ const Subscriptions = () => {
                                 }}>
                                   {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                                 </Link>
-                                <Post content={reply.content?.slice(0, 500)} key={`post-mobile-${index}`} comment={reply} />
+                                <Post key={`post-mobile-${index}`}
+                                  content={reply.content?.slice(0, 500)}
+                                  postQuoteRef={(quoteShortParentCid, ref) => {
+                                    postRefs.current[quoteShortParentCid] = ref;
+                                  }}
+                                  postQuoteOnClick={(quoteShortParentCid) => {
+                                    handleQuoteClick(reply, quoteShortParentCid, null)
+                                  }}
+                                  postQuoteOnOver={(quoteShortParentCid) => {
+                                    const quoteParentCid = cidTracker[quoteShortParentCid];
+                                    if (outOfViewCid !== quoteParentCid) {
+                                      handleQuoteHover(reply, quoteShortParentCid, () => {
+                                        setOutOfViewCid(quoteParentCid);
+    
+                                      const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                      const distanceToRight = window.innerWidth - rect.right;
+                                      const distanceToTop = rect.top;
+                                      const distanceToBottom = window.innerHeight - rect.bottom;
+                                      let top;
+    
+                                      if (distanceToTop < postOnHoverHeight / 2) {
+                                        top = window.scrollY - 5;
+                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                      } else {
+                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                      }
+                                    
+                                      if (distanceToRight < 200) {
+                                        setOutOfViewPosition({
+                                          top,
+                                          right: window.innerWidth - rect.left - 10,
+                                          maxWidth: rect.left - 5
+                                        });
+                                      } else {
+                                        setOutOfViewPosition({
+                                          top,
+                                          left: rect.left + rect.width + 5,
+                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                        });
+                                      }
+                                    })
+                                  }}
+                                }
+                                  postQuoteOnLeave={() => {
+                                    removeHighlight();
+                                    setOutOfViewCid(null);
+                                  }}
+                                />
                                 <span key={`mob-ttl-s-${index}`} className="ttl"> (...)
                                 <br key={`mob-ttl-s-br1-${index}`} />
                                 <EditLabel key={`edit-label-reply-mob-${index}`} 
@@ -1750,7 +1907,55 @@ const Subscriptions = () => {
                               }}>
                                 {`c/${shortParentCid}`}{shortParentCid === thread.shortCid ? " (OP)" : null}
                               </Link>
-                              <Post content={reply.content} key={`post-mobile-${index}`} comment={reply} />
+                              <Post key={`post-mobile-${index}`}
+                                content={reply.content} 
+                                postQuoteRef={(quoteShortParentCid, ref) => {
+                                  postRefs.current[quoteShortParentCid] = ref;
+                                }}
+                                postQuoteOnClick={(quoteShortParentCid) => {
+                                  handleQuoteClick(reply, quoteShortParentCid, null)
+                                }}
+                                postQuoteOnOver={(quoteShortParentCid) => {
+                                  const quoteParentCid = cidTracker[quoteShortParentCid];
+                                  if (outOfViewCid !== quoteParentCid) {
+                                    handleQuoteHover(reply, quoteShortParentCid, () => {
+                                      setOutOfViewCid(quoteParentCid);
+  
+                                    const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
+  
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+                                  
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
+                                  })
+                                }}
+                              }
+                                postQuoteOnLeave={() => {
+                                  removeHighlight();
+                                  setOutOfViewCid(null);
+                                }}
+                              />
                               <EditLabel key={`edit-label-reply-mob-${index}`} 
                               commentCid={reply.cid}
                               className="ttl"/>

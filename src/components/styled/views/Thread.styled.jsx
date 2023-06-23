@@ -923,7 +923,7 @@ export const BoardForm = styled.div`
     ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
         border: 1px solid #d99f91 !important;
         border-left: none !important;
@@ -948,7 +948,7 @@ export const BoardForm = styled.div`
       }`;
 
       case 'Yotsuba-B':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
         border: 1px solid #ba9dbf !important;
         border-left: none !important;
@@ -972,7 +972,7 @@ export const BoardForm = styled.div`
       }`;
 
       case 'Futaba':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
       }
       
@@ -995,7 +995,7 @@ export const BoardForm = styled.div`
       }`;
 
       case 'Burichan':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
       }
       
@@ -1018,7 +1018,7 @@ export const BoardForm = styled.div`
       }`;
 
       case 'Tomorrow':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #1d1d21 !important;
         outline: 1px solid #111 !important;
       }
@@ -1040,7 +1040,7 @@ export const BoardForm = styled.div`
       }`;
 
       case 'Photon':
-        return `.highlighted {
+        return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #ccc !important;
         outline: 1px solid #ccc !important;
       }
@@ -2372,32 +2372,32 @@ export const BoardForm = styled.div`
     ${({ selectedStyle }) => {
       switch (selectedStyle) {
         case 'Yotsuba':
-          return `.highlighted {
+          return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #f0c0b0 !important;
         }`;
 
         case 'Yotsuba-B':
-          return `.highlighted {
+          return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #d6bad0 !important;
         }`;
 
         case 'Futaba':
-          return `.highlighted {
+          return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #f0c0b0 !important;
         }`;
 
         case 'Burichan':
-          return `.highlighted {
+          return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #d6bad0 !important;
         }`;
 
         case 'Tomorrow':
-          return `.highlighted {
+          return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #1d1d21 !important;
         }`;
 
         case 'Photon':
-          return `.highlighted {
+          return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #ccc !important;
         }`;
         
@@ -2974,12 +2974,12 @@ export const BoardForm = styled.div`
               }
 
               .quotelink-mobile {
-                color: #81A2BE;
+                color: #5F89AC;
                 text-decoration: underline;
               }
 
               .quotelink-mobile:hover {
-                color: #5F89AC;
+                color: #81A2BE;
               }
 
               p:first-of-type::before {

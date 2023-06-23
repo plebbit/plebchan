@@ -21,13 +21,7 @@ const StateLabel = ({ commentIndex, className }) => {
         null
       ) : (
         stateString === undefined && !isLoading && comment.cid === undefined ? (
-          <span className="ttl">
-            <br />
-            (
-              <span className={className}>
-              </span>
-            )
-          </span>
+          null
         ) : (
         <span className="ttl">
           <br />
