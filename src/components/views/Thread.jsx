@@ -54,6 +54,7 @@ const Thread = () => {
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
     setModeratingCommentCid,
+    setReplyQuoteCid,
     setResolveCaptchaPromise,
     setPendingComment,
     setPendingCommentIndex,
@@ -842,10 +843,13 @@ const Thread = () => {
                           <span>c/</span>
                           <Link to={() => {}} id="reply-button" style={{ cursor: 'pointer' }} 
                           onClick={() => {
-                            setIsReplyOpen(true); 
-                            setSelectedParentCid(comment.cid); 
-                            setSelectedShortCid(comment.shortCid);
-                            }} title="Reply to this post">{comment.shortCid}</Link>
+                            if (isReplyOpen) {
+                              setReplyQuoteCid(comment.shortCid);
+                            } else {
+                              setIsReplyOpen(true); 
+                              setSelectedShortCid(comment.shortCid);
+                              setSelectedParentCid(comment.cid); 
+                            }}} title="Reply to this post">{comment.shortCid}</Link>
                         </span>&nbsp;
                         {comment.pinned ? (
                           <>
@@ -1079,9 +1083,13 @@ const Thread = () => {
                               {reply.shortCid ? (
                                 <Link id="reply-button" key={`pl2-${index}`}
                                  onClick={() => {
-                                  setIsReplyOpen(true); 
-                                  setSelectedParentCid(reply.cid); 
-                                  setSelectedShortCid(reply.shortCid);
+                                  if (isReplyOpen) {
+                                    setReplyQuoteCid(reply.shortCid);
+                                  } else {
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(reply.shortCid);
+                                    setSelectedParentCid(reply.cid); 
+                                  }
                                   }} title="Reply to this post">{reply.shortCid}</Link>
                               ) : (
                                 <PendingLabel key="pending" commentIndex={reply.index} />
@@ -1452,10 +1460,13 @@ const Thread = () => {
                           <span key={`mob-no-${comment.cid}`}>c/</span>
                           <Link to={() => {}} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
                           onClick={() => {
-                            setIsReplyOpen(true); 
-                            setSelectedParentCid(comment.cid); 
-                            setSelectedShortCid(comment.shortCid);
-                            }}>{comment.shortCid}</Link>
+                            if (isReplyOpen) {
+                              setReplyQuoteCid(comment.shortCid);
+                            } else {
+                              setIsReplyOpen(true); 
+                              setSelectedShortCid(comment.shortCid);
+                              setSelectedParentCid(comment.cid); 
+                            }}}>{comment.shortCid}</Link>
                         </span>
                       </div>
                       {commentMediaInfo?.url ? (
@@ -1573,10 +1584,13 @@ const Thread = () => {
                             {reply.shortCid ? (
                               <Link id="reply-button" key={`mob-pl2-${index}`} 
                               onClick={() => {
-                                setIsReplyOpen(true); 
-                                setSelectedParentCid(reply.cid); 
-                                setSelectedShortCid(reply.shortCid);
-                                }} title="Reply to this post">{reply.shortCid}</Link>
+                                if (isReplyOpen) {
+                                  setReplyQuoteCid(reply.shortCid);
+                                } else {
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(reply.shortCid);
+                                  setSelectedParentCid(reply.cid); 
+                                }}} title="Reply to this post">{reply.shortCid}</Link>
                             ) : (
                               <PendingLabel key="pending-mob" commentIndex={reply.index} />
                             )}

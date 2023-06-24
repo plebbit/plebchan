@@ -55,6 +55,7 @@ const Subscriptions = () => {
     setIsAuthorEdit,
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
+    setReplyQuoteCid,
     setResolveCaptchaPromise,
     setSelectedAddress,
     setSelectedParentCid,
@@ -711,10 +712,14 @@ const Subscriptions = () => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
                                 setSelectedThreadCid(thread.cid);
-                                setIsReplyOpen(true);  
-                                setSelectedShortCid(thread.shortCid); 
-                                setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
+                                if (isReplyOpen) {
+                                  setReplyQuoteCid(thread.shortCid)
+                                } else {
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(thread.shortCid); 
+                                  setSelectedParentCid(thread.cid);
+                                }
                                 }} title="Reply to this post">{thread.shortCid}
                               </Link>
                               &nbsp;p/
@@ -991,10 +996,14 @@ const Subscriptions = () => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
                                     setSelectedThreadCid(thread.cid);
-                                    setIsReplyOpen(true);  
-                                    setSelectedShortCid(reply.shortCid); 
-                                    setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
+                                    if (isReplyOpen) {
+                                      setReplyQuoteCid(reply.shortCid)
+                                    } else {
+                                      setIsReplyOpen(true); 
+                                      setSelectedShortCid(reply.shortCid); 
+                                      setSelectedParentCid(reply.cid);
+                                    }
                                   }} title="Reply to this post">{reply.shortCid}</Link>
                                 ) : (
                                   <PendingLabel key="pending" commentIndex={reply.index} />
@@ -1521,10 +1530,14 @@ const Subscriptions = () => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
                                 setSelectedThreadCid(thread.cid);
-                                setIsReplyOpen(true);  
-                                setSelectedShortCid(thread.shortCid); 
-                                setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
+                                if (isReplyOpen) {
+                                  setReplyQuoteCid(thread.shortCid)
+                                } else {
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(thread.shortCid); 
+                                  setSelectedParentCid(thread.cid);
+                                }
                               }} title="Reply to this post">{thread.shortCid}
                             </Link>
                           </span>
@@ -1694,10 +1707,14 @@ const Subscriptions = () => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
                                     setSelectedThreadCid(thread.cid);
-                                    setIsReplyOpen(true);  
-                                    setSelectedShortCid(reply.shortCid); 
-                                    setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
+                                    if (isReplyOpen) {
+                                      setReplyQuoteCid(reply.shortCid)
+                                    } else {
+                                      setIsReplyOpen(true); 
+                                      setSelectedShortCid(reply.shortCid); 
+                                      setSelectedParentCid(reply.cid);
+                                    }
                                   }} title="Reply to this post">{reply.shortCid}
                                 </Link>
                               ) : (

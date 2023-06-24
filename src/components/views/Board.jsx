@@ -57,6 +57,7 @@ const Board = () => {
     setModeratingCommentCid,
     setPendingComment,
     setPendingCommentIndex,
+    setReplyQuoteCid,
     setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
@@ -1148,9 +1149,13 @@ const Board = () => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
-                                  setIsReplyOpen(true); 
-                                  setSelectedShortCid(thread.shortCid); 
-                                  setSelectedParentCid(thread.cid);
+                                  if (isReplyOpen) {
+                                    setReplyQuoteCid(thread.shortCid)
+                                  } else {
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(thread.shortCid); 
+                                    setSelectedParentCid(thread.cid);
+                                  }
                                   }} title="Reply to this post">{thread.shortCid}</Link>
                                 &nbsp;
                               {thread.pinned ? (
@@ -1426,9 +1431,13 @@ const Board = () => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
-                                      setIsReplyOpen(true);  
-                                      setSelectedShortCid(reply.shortCid); 
-                                      setSelectedParentCid(reply.cid);
+                                      if (isReplyOpen) {
+                                        setReplyQuoteCid(reply.shortCid)
+                                      } else {
+                                        setIsReplyOpen(true); 
+                                        setSelectedShortCid(reply.shortCid); 
+                                        setSelectedParentCid(reply.cid);
+                                      }
                                     }} title="Reply to this post">{reply.shortCid}</Link>
                                   ) : (
                                     <PendingLabel key="pending" commentIndex={reply.index} />
@@ -1927,9 +1936,13 @@ const Board = () => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
-                                  setIsReplyOpen(true);  
-                                  setSelectedShortCid(thread.shortCid); 
-                                  setSelectedParentCid(thread.cid);
+                                  if (isReplyOpen) {
+                                    setReplyQuoteCid(thread.shortCid)
+                                  } else {
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(thread.shortCid); 
+                                    setSelectedParentCid(thread.cid);
+                                  }
                                 }} title="Reply to this post">{thread.shortCid}
                               </Link>
                             </span>
@@ -2078,9 +2091,13 @@ const Board = () => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
-                                      setIsReplyOpen(true);  
-                                      setSelectedShortCid(reply.shortCid); 
-                                      setSelectedParentCid(reply.cid);
+                                      if (isReplyOpen) {
+                                        setReplyQuoteCid(reply.shortCid)
+                                      } else {
+                                        setIsReplyOpen(true); 
+                                        setSelectedShortCid(reply.shortCid); 
+                                        setSelectedParentCid(reply.cid);
+                                      }
                                     }} title="Reply to this post">{reply.shortCid}
                                   </Link>
                                 ) : (

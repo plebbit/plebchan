@@ -53,6 +53,9 @@ const useGeneralStore = create((set) => ({
   publishedComment: '',
   setPublishedComment: (comment) => set({ publishedComment: comment }),
 
+  replyQuoteCid: '',
+  setReplyQuoteCid: (cid) => set({ replyQuoteCid: cid }),
+
   resolveCaptchaPromise: null,
   setResolveCaptchaPromise: (resolve) => set({ resolveCaptchaPromise: resolve }),
   
