@@ -66,6 +66,7 @@ const Thread = () => {
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
+    setTriggerInsertion,
   } = useGeneralStore(state => state);
 
   const { anonymousMode } = useAnonModeStore();
@@ -845,6 +846,7 @@ const Thread = () => {
                           onClick={() => {
                             if (isReplyOpen) {
                               setReplyQuoteCid(comment.shortCid);
+                              setTriggerInsertion(Date.now());
                             } else {
                               setIsReplyOpen(true); 
                               setSelectedShortCid(comment.shortCid);
@@ -1085,6 +1087,7 @@ const Thread = () => {
                                  onClick={() => {
                                   if (isReplyOpen) {
                                     setReplyQuoteCid(reply.shortCid);
+                                    setTriggerInsertion(Date.now());
                                   } else {
                                     setIsReplyOpen(true); 
                                     setSelectedShortCid(reply.shortCid);
@@ -1462,6 +1465,7 @@ const Thread = () => {
                           onClick={() => {
                             if (isReplyOpen) {
                               setReplyQuoteCid(comment.shortCid);
+                              setTriggerInsertion(Date.now());
                             } else {
                               setIsReplyOpen(true); 
                               setSelectedShortCid(comment.shortCid);
@@ -1586,6 +1590,7 @@ const Thread = () => {
                               onClick={() => {
                                 if (isReplyOpen) {
                                   setReplyQuoteCid(reply.shortCid);
+                                  setTriggerInsertion(Date.now());
                                 } else {
                                   setIsReplyOpen(true); 
                                   setSelectedShortCid(reply.shortCid);

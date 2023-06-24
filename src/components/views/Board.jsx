@@ -67,6 +67,7 @@ const Board = () => {
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
+    setTriggerInsertion,
   } = useGeneralStore(state => state);
 
   const { anonymousMode } = useAnonModeStore();
@@ -1150,7 +1151,8 @@ const Board = () => {
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
                                   if (isReplyOpen) {
-                                    setReplyQuoteCid(thread.shortCid)
+                                    setReplyQuoteCid(thread.shortCid);
+                                    setTriggerInsertion(Date.now());
                                   } else {
                                     setIsReplyOpen(true); 
                                     setSelectedShortCid(thread.shortCid); 
@@ -1432,7 +1434,8 @@ const Board = () => {
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
                                       if (isReplyOpen) {
-                                        setReplyQuoteCid(reply.shortCid)
+                                        setReplyQuoteCid(reply.shortCid);
+                                        setTriggerInsertion(Date.now());
                                       } else {
                                         setIsReplyOpen(true); 
                                         setSelectedShortCid(reply.shortCid); 
@@ -1937,7 +1940,8 @@ const Board = () => {
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
                                   if (isReplyOpen) {
-                                    setReplyQuoteCid(thread.shortCid)
+                                    setReplyQuoteCid(thread.shortCid);
+                                    setTriggerInsertion(Date.now());
                                   } else {
                                     setIsReplyOpen(true); 
                                     setSelectedShortCid(thread.shortCid); 
@@ -2092,7 +2096,8 @@ const Board = () => {
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
                                       if (isReplyOpen) {
-                                        setReplyQuoteCid(reply.shortCid)
+                                        setReplyQuoteCid(reply.shortCid);
+                                        setTriggerInsertion(Date.now());
                                       } else {
                                         setIsReplyOpen(true); 
                                         setSelectedShortCid(reply.shortCid); 

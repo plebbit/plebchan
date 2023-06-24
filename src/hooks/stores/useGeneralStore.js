@@ -86,6 +86,9 @@ const useGeneralStore = create((set) => ({
   showPostFormLink: true,
   setShowPostFormLink: (show) => set({ showPostFormLink: show }),
 
+  triggerInsertion: 0,
+  setTriggerInsertion: (trigger) => set({ triggerInsertion: trigger }),
+  
 }));
 
 export default useGeneralStore;

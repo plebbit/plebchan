@@ -63,6 +63,7 @@ const All = () => {
     selectedStyle,
     setSelectedThread,
     setSelectedTitle,
+    setTriggerInsertion,
   } = useGeneralStore(state => state);
   
   const { anonymousMode } = useAnonModeStore();
@@ -706,7 +707,8 @@ const All = () => {
                                 setSelectedThreadCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
                                 if (isReplyOpen) {
-                                  setReplyQuoteCid(thread.shortCid)
+                                  setReplyQuoteCid(thread.shortCid);
+                                  setTriggerInsertion(Date.now());
                                 } else {
                                   setIsReplyOpen(true); 
                                   setSelectedShortCid(thread.shortCid); 
@@ -990,7 +992,8 @@ const All = () => {
                                     setSelectedThreadCid(thread.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
                                     if (isReplyOpen) {
-                                      setReplyQuoteCid(reply.shortCid)
+                                      setReplyQuoteCid(reply.shortCid);
+                                      setTriggerInsertion(Date.now());
                                     } else {
                                       setIsReplyOpen(true); 
                                       setSelectedShortCid(reply.shortCid); 
@@ -1524,7 +1527,8 @@ const All = () => {
                                 setSelectedThreadCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
                                 if (isReplyOpen) {
-                                  setReplyQuoteCid(thread.shortCid)
+                                  setReplyQuoteCid(thread.shortCid);
+                                  setTriggerInsertion(Date.now());
                                 } else {
                                   setIsReplyOpen(true); 
                                   setSelectedShortCid(thread.shortCid); 
@@ -1701,7 +1705,8 @@ const All = () => {
                                     setSelectedThreadCid(thread.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
                                     if (isReplyOpen) {
-                                      setReplyQuoteCid(reply.shortCid)
+                                      setReplyQuoteCid(reply.shortCid);
+                                      setTriggerInsertion(Date.now());
                                     } else {
                                       setIsReplyOpen(true); 
                                       setSelectedShortCid(reply.shortCid); 

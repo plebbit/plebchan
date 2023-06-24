@@ -14,11 +14,13 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     setIsCaptchaOpen,
     setPendingComment,
     setPendingCommentIndex,
+    replyQuoteCid,
     setResolveCaptchaPromise,
     selectedAddress,
     selectedParentCid,
     selectedShortCid,
     selectedStyle,
+    triggerInsertion,
   } = useGeneralStore(state => state);
 
   const account = useAccount();
@@ -51,6 +53,21 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       commentRef.current.focus();
     }
   };
+  
+
+  const insertAtCursor = (inputElement, valueToInsert) => {
+    const startPos = inputElement.selectionStart || inputElement.value.length;
+    const endPos = startPos + valueToInsert.length;
+    inputElement.setRangeText(valueToInsert, startPos, startPos, 'end');
+    inputElement.setSelectionRange(endPos, endPos);
+  }
+
+  useEffect(() => {
+    if (replyQuoteCid && commentRef.current) {
+      const prefixedReplyQuoteCid = `c/${replyQuoteCid}\n`;
+      insertAtCursor(commentRef.current, prefixedReplyQuoteCid);
+    }
+  }, [triggerInsertion, replyQuoteCid]);
   
 
   const getSelectedText = useCallback(() => {
