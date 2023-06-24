@@ -212,10 +212,13 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     onAfterOpen={onModalOpen}
     onRequestClose={closeModal}
     contentLabel="Reply Modal"
-    shouldCloseOnEsc={false}
+    shouldCloseOnEsc={true}
     shouldCloseOnOverlayClick={isMobile}
     selectedStyle={selectedStyle}
-    style={isMobile ? ({ overlay: { backgroundColor: "rgba(0,0,0,.25)" }}) : ({ overlay: { backgroundColor: "rgba(0,0,0,0)" }})}>
+    overlayClassName="overlay"
+    style={isMobile ? ({ overlay: { backgroundColor: "rgba(0,0,0,.25)" }}) : ({ overlay: { backgroundColor: "rgba(0,0,0,0)" }})
+    }
+  >
       <Draggable handle=".modal-header" nodeRef={nodeRef} disabled={isMobile}>
         <div className="modal-content" ref={nodeRef}>
           <div className="modal-header">
@@ -236,11 +239,12 @@ const ReplyModal = ({ isOpen, closeModal }) => {
             <div className="textarea-wrapper">
               <span className="fixed-text">{`c/${selectedShortCid}`}</span>
               <textarea className="textarea" 
-              rows="4" 
-              placeholder="Comment" 
-              defaultValue={selectedText}
-              wrap="soft" 
-              ref={commentRef} />
+                rows="4" 
+                placeholder="Comment" 
+                defaultValue={selectedText}
+                wrap="soft" 
+                ref={commentRef} 
+              />
             </div>
             <div>
               <button id="next" onClick={handleSubmit}>Post</button>
