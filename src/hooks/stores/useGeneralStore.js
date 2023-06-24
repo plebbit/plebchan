@@ -73,6 +73,9 @@ const useGeneralStore = create((set) => ({
     localStorage.setItem('selectedStyle', style);
     set({ selectedStyle: style });
   },
+
+  selectedText: '',
+  setSelectedText: (text) => set({ selectedText: text }),
   
   selectedThread: '',
   setSelectedThread: (thread) => set({ selectedThread: thread }),

@@ -64,6 +64,7 @@ const Board = () => {
     setSelectedShortCid,
     selectedStyle,
     setSelectedThread,
+    setSelectedText,
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
@@ -1150,6 +1151,9 @@ const Board = () => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
+                                  let text = document.getSelection().toString();
+                                  text = text ? `>${text}` : text;
+                                  setSelectedText(text);
                                   if (isReplyOpen) {
                                     setReplyQuoteCid(thread.shortCid);
                                     setTriggerInsertion(Date.now());
@@ -1433,6 +1437,9 @@ const Board = () => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
+                                      let text = document.getSelection().toString();
+                                      text = text ? `>${text}` : text;
+                                      setSelectedText(text);
                                       if (isReplyOpen) {
                                         setReplyQuoteCid(reply.shortCid);
                                         setTriggerInsertion(Date.now());
@@ -1939,6 +1946,9 @@ const Board = () => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
+                                  let text = document.getSelection().toString();
+                                  text = text ? `>${text}` : text;
+                                  setSelectedText(text);
                                   if (isReplyOpen) {
                                     setReplyQuoteCid(thread.shortCid);
                                     setTriggerInsertion(Date.now());
@@ -2095,6 +2105,9 @@ const Board = () => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
+                                      let text = document.getSelection().toString();
+                                      text = text ? `>${text}` : text;
+                                      setSelectedText(text);
                                       if (isReplyOpen) {
                                         setReplyQuoteCid(reply.shortCid);
                                         setTriggerInsertion(Date.now());

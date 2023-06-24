@@ -62,6 +62,7 @@ const All = () => {
     setSelectedShortCid,
     selectedStyle,
     setSelectedThread,
+    setSelectedText,
     setSelectedTitle,
     setTriggerInsertion,
   } = useGeneralStore(state => state);
@@ -706,6 +707,9 @@ const All = () => {
                                 e.preventDefault();
                                 setSelectedThreadCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
+                                let text = document.getSelection().toString();
+                                text = text ? `>${text}` : text;
+                                setSelectedText(text);
                                 if (isReplyOpen) {
                                   setReplyQuoteCid(thread.shortCid);
                                   setTriggerInsertion(Date.now());
@@ -991,6 +995,9 @@ const All = () => {
                                     e.preventDefault();
                                     setSelectedThreadCid(thread.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
+                                    let text = document.getSelection().toString();
+                                    text = text ? `>${text}` : text;
+                                    setSelectedText(text);
                                     if (isReplyOpen) {
                                       setReplyQuoteCid(reply.shortCid);
                                       setTriggerInsertion(Date.now());
@@ -1526,6 +1533,9 @@ const All = () => {
                                 e.preventDefault();
                                 setSelectedThreadCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
+                                let text = document.getSelection().toString();
+                                text = text ? `>${text}` : text;
+                                setSelectedText(text);
                                 if (isReplyOpen) {
                                   setReplyQuoteCid(thread.shortCid);
                                   setTriggerInsertion(Date.now());
@@ -1704,6 +1714,9 @@ const All = () => {
                                     e.preventDefault();
                                     setSelectedThreadCid(thread.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
+                                    let text = document.getSelection().toString();
+                                    text = text ? `>${text}` : text;
+                                    setSelectedText(text);
                                     if (isReplyOpen) {
                                       setReplyQuoteCid(reply.shortCid);
                                       setTriggerInsertion(Date.now());

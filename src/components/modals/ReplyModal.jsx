@@ -20,6 +20,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     selectedParentCid,
     selectedShortCid,
     selectedStyle,
+    selectedText, setSelectedText,
     triggerInsertion,
   } = useGeneralStore(state => state);
 
@@ -33,7 +34,6 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const linkRef = useRef();
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
-  const [selectedText, setSelectedText] = useState('');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   
 
@@ -50,7 +50,12 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   
   const onModalOpen = () => {
     if (commentRef.current) {
+      if (selectedText) {
+        commentRef.current.value += '\n'; 
+      }
       commentRef.current.focus();
+      const len = commentRef.current.value.length;
+      commentRef.current.setSelectionRange(len, len);
     }
   };
   
@@ -73,16 +78,16 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   const getSelectedText = useCallback(() => {
     const text = document.getSelection().toString();
     setSelectedText(text ? `>${text}\n` : '');
-  }, []);
+  }, [setSelectedText]);
 
 
   useEffect(() => {
     if (isOpen) {
-      getSelectedText();
+      setTimeout(getSelectedText, 0);
     } else {
       setSelectedText('');
     }
-  }, [isOpen, getSelectedText]);
+  }, [isOpen, getSelectedText, setSelectedText]);
   
 
   const onChallengeVerification = (challengeVerification) => {

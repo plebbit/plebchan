@@ -63,6 +63,7 @@ const Thread = () => {
     setSelectedShortCid,
     selectedStyle,
     selectedThread, setSelectedThread,
+    setSelectedText,
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
@@ -844,6 +845,9 @@ const Thread = () => {
                           <span>c/</span>
                           <Link to={() => {}} id="reply-button" style={{ cursor: 'pointer' }} 
                           onClick={() => {
+                            let text = document.getSelection().toString();
+                            text = text ? `>${text}` : text;
+                            setSelectedText(text);
                             if (isReplyOpen) {
                               setReplyQuoteCid(comment.shortCid);
                               setTriggerInsertion(Date.now());
@@ -1085,6 +1089,9 @@ const Thread = () => {
                               {reply.shortCid ? (
                                 <Link id="reply-button" key={`pl2-${index}`}
                                  onClick={() => {
+                                  let text = document.getSelection().toString();
+                                  text = text ? `>${text}` : text;
+                                  setSelectedText(text);
                                   if (isReplyOpen) {
                                     setReplyQuoteCid(reply.shortCid);
                                     setTriggerInsertion(Date.now());
@@ -1463,6 +1470,9 @@ const Thread = () => {
                           <span key={`mob-no-${comment.cid}`}>c/</span>
                           <Link to={() => {}} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
                           onClick={() => {
+                            let text = document.getSelection().toString();
+                            text = text ? `>${text}` : text;
+                            setSelectedText(text);
                             if (isReplyOpen) {
                               setReplyQuoteCid(comment.shortCid);
                               setTriggerInsertion(Date.now());
@@ -1588,6 +1598,9 @@ const Thread = () => {
                             {reply.shortCid ? (
                               <Link id="reply-button" key={`mob-pl2-${index}`} 
                               onClick={() => {
+                                let text = document.getSelection().toString();
+                                text = text ? `>${text}` : text;
+                                setSelectedText(text);
                                 if (isReplyOpen) {
                                   setReplyQuoteCid(reply.shortCid);
                                   setTriggerInsertion(Date.now());
