@@ -3,7 +3,7 @@ import { useAccount } from "@plebbit/plebbit-react-hooks";
 import useAnonModeStore from "./stores/useAnonModeStore";
 
 const useAnonMode = (threadCid, execute) => {
-  const { account } = useAccount();
+  const account = useAccount();
   const { anonymousMode } = useAnonModeStore();
 
 useEffect(() => {
@@ -13,7 +13,9 @@ useEffect(() => {
     if (!anonymousMode) {
       if (execute && storedSigners[threadCid]) {
         const signerPrivateKey = storedSigners[threadCid];
-        await account.plebbit.createSigner({privateKey: signerPrivateKey});
+        if (account) {
+          await account.plebbit.createSigner({privateKey: signerPrivateKey});
+        }
       }
     }
   }

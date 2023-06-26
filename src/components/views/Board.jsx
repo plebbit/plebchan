@@ -390,7 +390,7 @@ const Board = () => {
   
         if (!storedSigners[selectedThreadCidRef]) {
           signer = await account.plebbit.createSigner();
-          storedSigners[selectedThreadCidRef] = { privateKey: signer.privateKey, address: signer.address };
+          storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
           localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
           
         } else {
@@ -399,7 +399,7 @@ const Board = () => {
           try {
             signer = await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
           } catch (error) {
-            setNewErrorMessage(error);
+            console.log(error);
           }
         }
         
@@ -408,7 +408,7 @@ const Board = () => {
           signer,
           author: {
             ...prevPublishCommentOptions.author,
-            address: signer.address
+            address: signer?.address
           },
         }));
   

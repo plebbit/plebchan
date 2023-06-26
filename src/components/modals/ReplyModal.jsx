@@ -198,7 +198,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   
         if (!storedSigners[selectedParentCid]) {
           signer = await account.plebbit.createSigner();
-          storedSigners[selectedParentCid] = { privateKey: signer.privateKey, address: signer.address };
+          storedSigners[selectedParentCid] = { privateKey: signer?.privateKey, address: signer?.address };
           localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
           
         } else {
@@ -207,7 +207,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           try {
             signer = await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
           } catch (error) {
-            setNewErrorMessage(error);
+            console.log(error);
           }
         }
         
@@ -216,7 +216,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           signer,
           author: {
             ...prevPublishCommentOptions.author,
-            address: signer.address
+            address: signer?.address
           },
         }));
   
