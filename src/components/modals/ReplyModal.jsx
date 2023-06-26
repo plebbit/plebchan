@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAccount, usePublishComment } from '@plebbit/plebbit-react-hooks';
-import { StyledModal } from '../styled/modals/ReplyModal.styled';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import Draggable from 'react-draggable';
+import { StyledModal } from '../styled/modals/ReplyModal.styled';
+import useAnonMode from '../../hooks/useAnonMode';
 import useError from '../../hooks/useError';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useGeneralStore from '../../hooks/stores/useGeneralStore';
 
 
 const ReplyModal = ({ isOpen, closeModal }) => {
@@ -24,6 +26,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     triggerInsertion,
   } = useGeneralStore(state => state);
 
+  const { anonymousMode } = useAnonModeStore();
+
   const account = useAccount();
 
   const [, setNewErrorMessage] = useError();
@@ -35,7 +39,10 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const [triggerPublishComment, setTriggerPublishComment] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
   
+  useAnonMode(selectedParentCid, anonymousMode && executeAnonMode);
+
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);
@@ -179,6 +186,45 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   
     setTriggerPublishComment(true);
   };
+
+  
+  useEffect(() => {
+    const updateSigner = async () => {
+      if (anonymousMode) {
+        setExecuteAnonMode(true);
+  
+        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+        let signer;
+  
+        if (!storedSigners[selectedParentCid]) {
+          signer = await account.plebbit.createSigner();
+          storedSigners[selectedParentCid] = { privateKey: signer.privateKey, address: signer.address };
+          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+          
+        } else {
+          const signerPrivateKey = storedSigners[selectedParentCid].privateKey;
+          
+          try {
+            signer = await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+          } catch (error) {
+            setNewErrorMessage(error);
+          }
+        }
+        
+        setPublishCommentOptions((prevPublishCommentOptions) => ({
+          ...prevPublishCommentOptions,
+          signer,
+          author: {
+            ...prevPublishCommentOptions.author,
+            address: signer.address
+          },
+        }));
+  
+      }
+    };
+  
+    updateSigner();
+  }, [selectedParentCid, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
   
   
   useEffect(() => {
@@ -189,6 +235,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
         closeModal();
       })();
       setTriggerPublishComment(false);
+      setExecuteAnonMode(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields, closeModal]);
 

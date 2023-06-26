@@ -344,15 +344,46 @@ const Thread = () => {
     }));
 
     setTriggerPublishComment(true);
-    setExecuteAnonMode(false);
   };
 
-
+  
   useEffect(() => {
-    if (anonymousMode) {
-      setExecuteAnonMode(true);
-    }
-  }, [anonymousMode, selectedThread]);
+    const updateSigner = async () => {
+      if (anonymousMode) {
+        setExecuteAnonMode(true);
+  
+        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+        let signer;
+  
+        if (!storedSigners[selectedThread]) {
+          signer = await account.plebbit.createSigner();
+          storedSigners[selectedThread] = { privateKey: signer.privateKey, address: signer.address };
+          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+          
+        } else {
+          const signerPrivateKey = storedSigners[selectedThread].privateKey;
+          
+          try {
+            signer = await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+          } catch (error) {
+            setNewErrorMessage(error);
+          }
+        }
+        
+        setPublishCommentOptions((prevPublishCommentOptions) => ({
+          ...prevPublishCommentOptions,
+          signer,
+          author: {
+            ...prevPublishCommentOptions.author,
+            address: signer.address
+          },
+        }));
+  
+      }
+    };
+  
+    updateSigner();
+  }, [selectedThread, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
   
   
   useEffect(() => {
@@ -362,6 +393,7 @@ const Thread = () => {
         resetFields();
       })();
       setTriggerPublishComment(false);
+      setExecuteAnonMode(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
 
@@ -1039,6 +1071,11 @@ const Thread = () => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
+                    let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                    let signerAddress;
+                    if (storedSigners[selectedThread]) {
+                      signerAddress = storedSigners[selectedThread].address;
+                    }
                     return (
                       <div key={`pc-${index}`} className="reply-container">
                         <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
@@ -1072,10 +1109,16 @@ const Thread = () => {
                                         {reply.author?.shortAddress}
                                       </span>
                                     ) : (
-                                      <span key={`mob-ha-${index}`}
-                                      >
-                                        {account?.author?.shortAddress}
-                                      </span>
+                                      anonymousMode ? (
+                                        <span key={`mob-ha-${index}`}>
+                                          {signerAddress?.slice(8, 20)}
+                                        </span>
+                                      ) : (
+                                        <span key={`mob-ha-${index}`}
+                                        >
+                                          {account?.author?.shortAddress}
+                                        </span>
+                                      )
                                     )
                                   }
                                 )
@@ -1551,6 +1594,11 @@ const Thread = () => {
                   {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
+                    let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                    let signerAddress;
+                    if (storedSigners[selectedThread]) {
+                      signerAddress = storedSigners[selectedThread].address;
+                    }
                     return (
                     <div key={`mob-rc-${index}`} className="reply-container">
                       <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
@@ -1579,13 +1627,19 @@ const Thread = () => {
                               (u/
                                 {reply.author?.shortAddress ?
                                   (
-                                  <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                    {reply.author?.shortAddress}
-                                  </span>
-                                  ) : (
-                                    <span key={`mob-ha-${index}`}>
-                                      {account?.author?.shortAddress}
+                                    <span key={`mob-ha-${index}`} className="highlight-address-mobile">
+                                      {reply.author?.shortAddress}
                                     </span>
+                                  ) : (
+                                    anonymousMode ? (
+                                      <span key={`mob-ha-${index}`}>
+                                        {signerAddress?.slice(8, 20)}
+                                      </span>
+                                      ) : (
+                                      <span key={`mob-ha-${index}`}>
+                                        {account?.author?.shortAddress}
+                                      </span>
+                                    )
                                   )
                                 }
                               )

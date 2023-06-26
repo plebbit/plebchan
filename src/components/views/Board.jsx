@@ -377,15 +377,47 @@ const Board = () => {
     }));
 
     setTriggerPublishComment(true);
-    setExecuteAnonMode(false);
   };
 
 
   useEffect(() => {
-    if (anonymousMode) {
-      setExecuteAnonMode(true);
-    }
-  }, [anonymousMode, selectedThreadCidRef]);
+    const updateSigner = async () => {
+      if (anonymousMode) {
+        setExecuteAnonMode(true);
+  
+        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+        let signer;
+  
+        if (!storedSigners[selectedThreadCidRef]) {
+          signer = await account.plebbit.createSigner();
+          storedSigners[selectedThreadCidRef] = { privateKey: signer.privateKey, address: signer.address };
+          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+          
+        } else {
+          const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
+          
+          try {
+            signer = await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+          } catch (error) {
+            setNewErrorMessage(error);
+          }
+        }
+        
+        setPublishCommentOptions((prevPublishCommentOptions) => ({
+          ...prevPublishCommentOptions,
+          signer,
+          author: {
+            ...prevPublishCommentOptions.author,
+            address: signer.address
+          },
+        }));
+  
+      }
+    };
+  
+    updateSigner();
+  }, [selectedThreadCidRef, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  
 
 
   useEffect(() => {
@@ -395,6 +427,7 @@ const Board = () => {
         resetFields();
       })();
       setTriggerPublishComment(false);
+      setExecuteAnonMode(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
@@ -1386,6 +1419,11 @@ const Board = () => {
                         const replyMediaInfo = getCommentMediaInfo(reply);
                         const fallbackImgUrl = "assets/filedeleted-res.gif";
                         const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                        let signerAddress;
+                        if (storedSigners[reply.parentCid]) {
+                          signerAddress = storedSigners[reply.parentCid].address;
+                        }
                         return (
                           <div key={`rc-${index}`} className="reply-container">
                             <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
@@ -1418,9 +1456,16 @@ const Board = () => {
                                             {reply.author?.shortAddress}
                                           </span>
                                         ) : (
-                                          <span key={`mob-ha-${index}`}>
-                                            {account?.author?.shortAddress}
-                                          </span>
+                                          anonymousMode ? (
+                                            <span key={`mob-ha-${index}`}>
+                                              {signerAddress?.slice(8, 20)}
+                                            </span>
+                                          ) : (
+                                            <span key={`mob-ha-${index}`}
+                                            >
+                                              {account?.author?.shortAddress}
+                                            </span>
+                                          )
                                         )
                                       }
                                     )
@@ -2055,6 +2100,11 @@ const Board = () => {
                       {displayedReplies?.map((reply, index) => {
                         const replyMediaInfo = getCommentMediaInfo(reply);
                         const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                        let signerAddress;
+                        if (storedSigners[selectedThreadCidRef]) {
+                          signerAddress = storedSigners[selectedThreadCidRef].address;
+                        }
                         return (
                         <div key={`mob-rc-${index}`} className="reply-container">
                           <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
@@ -2083,13 +2133,19 @@ const Board = () => {
                                   (u/
                                     {reply.author?.shortAddress ?
                                       (
-                                      <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                        {reply.author?.shortAddress}
-                                      </span>
-                                      ) : (
-                                        <span key={`mob-ha-${index}`}>
-                                          {account?.author?.shortAddress}
+                                        <span key={`mob-ha-${index}`} className="highlight-address-mobile">
+                                          {reply.author?.shortAddress}
                                         </span>
+                                      ) : (
+                                        anonymousMode ? (
+                                          <span key={`mob-ha-${index}`}>
+                                            {signerAddress?.slice(8, 20)}
+                                          </span>
+                                          ) : (
+                                          <span key={`mob-ha-${index}`}>
+                                            {account?.author?.shortAddress}
+                                          </span>
+                                        )
                                       )
                                     }
                                   )&nbsp;

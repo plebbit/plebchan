@@ -1,38 +1,28 @@
 import { useEffect } from "react";
-import { createAccount, setActiveAccount, useAccounts } from "@plebbit/plebbit-react-hooks";
+import { useAccount } from "@plebbit/plebbit-react-hooks";
 import useAnonModeStore from "./stores/useAnonModeStore";
 
 const useAnonMode = (threadCid, execute) => {
-  const { accounts } = useAccounts();
+  const { account } = useAccount();
   const { anonymousMode } = useAnonModeStore();
 
-  useEffect(() => {
-    const handleAnonMode = async () => {
-      let storedAccounts = JSON.parse(localStorage.getItem('storedAccounts')) || {};
+useEffect(() => {
+  const handleAnonMode = async () => {
+    let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
 
-      if (!anonymousMode) return;
-
-      if (!storedAccounts[threadCid] && execute) {
-        await createAccount();
-
-        if(accounts.length === 0) {
-          console.log("No accounts available");
-          return;
-        }
-        
-        const lastAccount = accounts[accounts.length - 1];
-        await setActiveAccount(lastAccount.name);
-        storedAccounts[threadCid] = lastAccount.name;
-
-        localStorage.setItem('storedAccounts', JSON.stringify(storedAccounts));
-      } else {
-        await setActiveAccount(storedAccounts[threadCid]);
+    if (!anonymousMode) {
+      if (execute && storedSigners[threadCid]) {
+        const signerPrivateKey = storedSigners[threadCid];
+        await account.plebbit.createSigner({privateKey: signerPrivateKey});
       }
     }
+  }
 
-    handleAnonMode();
-  }, [threadCid, execute, accounts, anonymousMode]);
+  handleAnonMode();
+}, [threadCid, execute, account, anonymousMode]);
+
 
   return;
 }
+
 export default useAnonMode;
