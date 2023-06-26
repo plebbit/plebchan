@@ -175,36 +175,39 @@ const createMainWindow = () => {
     e.preventDefault()
   })
 
-  // tray
-  const trayIconPath = path.join(
-    __dirname,
-    '..',
-    isDev ? 'public' : 'build',
-    'electron-tray-icon.png'
-  );
-  const tray = new Tray(trayIconPath);
-  tray.setToolTip('plebchan');
-  const trayMenu = Menu.buildFromTemplate([
-    {
-      label: 'Open plebchan',
-      click: () => {
-        mainWindow.show();
+  if (process.platform !== 'darwin') {
+    // tray
+    const trayIconPath = path.join(
+      __dirname,
+      '..',
+      isDev ? 'public' : 'build',
+      'electron-tray-icon.png'
+    );
+    const tray = new Tray(trayIconPath);
+    tray.setToolTip('plebchan');
+    const trayMenu = Menu.buildFromTemplate([
+      {
+        label: 'Open plebchan',
+        click: () => {
+          mainWindow.show();
+        },
       },
-    },
-    {
-      label: 'Quit plebchan',
-      click: () => {
-        mainWindow.destroy();
-        app.quit();
+      {
+        label: 'Quit plebchan',
+        click: () => {
+          mainWindow.destroy();
+          app.quit();
+        },
       },
-    },
-  ]);
-  tray.setContextMenu(trayMenu);
-
-  // show/hide on tray right click
-  tray.on('right-click', () => {
-    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
-  });
+    ]);
+    tray.setContextMenu(trayMenu);
+  
+    // show/hide on tray right click
+    tray.on('right-click', () => {
+      mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+    });
+  }
+  
 
   // close to tray
   if (!isDev) {
@@ -226,24 +229,28 @@ const createMainWindow = () => {
   const originalAppMenuWithoutHelp = Menu.getApplicationMenu()?.items.filter(
     (item) => item.role !== 'help'
   );
-  const appMenuBack = new MenuItem({
+  const appMenu = new Menu();
+  appMenu.append(new MenuItem({role: 'appMenu'}));
+  appMenu.append(new MenuItem({
     label: '←',
     enabled: mainWindow?.webContents?.canGoBack(),
     click: () => mainWindow?.webContents?.goBack(),
-  });
-  const appMenuForward = new MenuItem({
+  }));
+  appMenu.append(new MenuItem({
     label: '→',
     enabled: mainWindow?.webContents?.canGoForward(),
     click: () => mainWindow?.webContents?.goForward(),
-  });
-  const appMenuReload = new MenuItem({
+  }));
+  appMenu.append(new MenuItem({
     label: '⟳',
     role: 'reload',
     click: () => mainWindow?.webContents?.reload(),
+  }));
+  originalAppMenuWithoutHelp.forEach(item => {
+    appMenu.append(item);
   });
-  const appMenu = [appMenuBack, appMenuForward, appMenuReload, ...originalAppMenuWithoutHelp];
-  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu));
-};
+  Menu.setApplicationMenu(appMenu);
+
 
 app.whenReady().then(() => {
   createMainWindow();
