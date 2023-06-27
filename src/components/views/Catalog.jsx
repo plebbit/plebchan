@@ -753,8 +753,7 @@ const Catalog = () => {
                           </PostMenuCatalog>, document.body
                         )}
                       </BoardForm>
-                      <Link style={{all: "unset", cursor: "pointer"}} to={() => {}} 
-                        onClick={() => setSelectedThread("rules")}>
+                      <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}>
                           <div className="teaser">
                             <b>Rules</b>
                             {": " + subplebbit.rules.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
@@ -766,7 +765,7 @@ const Catalog = () => {
                     <div className='thread'
                     onMouseOver={() => setIsHoveringOnThread('description')}
                     onMouseLeave={() => setIsHoveringOnThread('')}>
-                      <Link style={{all: 'unset', cursor: 'pointer'}} to={() => {}}>
+                      <Link style={{all: 'unset', cursor: 'pointer'}} to={`/p/${selectedAddress}/description`}>
                         {subplebbit.suggested?.avatarUrl ? (
                           <img className='card'
                           src={subplebbit.suggested.avatarUrl} alt="board avatar" />
@@ -860,7 +859,7 @@ const Catalog = () => {
                           </PostMenuCatalog>, document.body
                         )}
                       </BoardForm>
-                      <Link style={{all: "unset", cursor: "pointer"}} to={() => {}} 
+                      <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/description`} 
                         onClick={() => setSelectedThread("description")}>
                           <div className="teaser">
                             <b>Welcome to {subplebbit.title || subplebbit.address}</b>

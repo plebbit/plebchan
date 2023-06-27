@@ -830,7 +830,7 @@ const Board = () => {
                                 <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
                                 <span>&nbsp;
                                     [
-                                    <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                    <Link to={`/p/${selectedAddress}/rules`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
                                     ]
                                 </span>
                                 <PostMenu 
@@ -921,7 +921,7 @@ const Board = () => {
                             </blockquote>
                           </div>
                           <div className="post-link-mobile">
-                            <Link to={() => {}} className="button-mobile">View Thread</Link>
+                            <Link to={`/p/${selectedAddress}/rules`} className="button-mobile">View Thread</Link>
                           </div>
                         </div>
                       </div>
@@ -969,7 +969,7 @@ const Board = () => {
                                 <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
                                 <span>&nbsp;
                                     [
-                                    <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                    <Link to={`/p/${selectedAddress}/description`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
                                     ]
                                 </span>
                                 <PostMenu 
@@ -1065,7 +1065,7 @@ const Board = () => {
                             </blockquote>
                           </div>
                           <div className="post-link-mobile">
-                            <Link to={() => {}} className="button-mobile">View Thread</Link>
+                            <Link to={`/p/${selectedAddress}/description`} className="button-mobile">View Thread</Link>
                           </div>
                         </div>
                       </div>

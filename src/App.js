@@ -10,9 +10,11 @@ import All from './components/views/All';
 import AllCatalog from './components/views/AllCatalog';
 import Board from './components/views/Board';
 import Catalog from './components/views/Catalog';
+import Description from './components/views/Description';
 import Home from './components/views/Home';
 import NotFound from './components/views/NotFound';
 import Pending from './components/views/Pending';
+import Rules from './components/views/Rules';
 import Subscriptions from './components/views/Subscriptions';
 import SubscriptionsCatalog from './components/views/SubscriptionsCatalog';
 import Thread from './components/views/Thread';
@@ -168,6 +170,12 @@ export default function App() {
         <Route path={`/p/:subplebbitAddress/catalog`} element={<Catalog setBodyStyle={setBodyStyle} /> }>
           <Route path='post' element={<Catalog />} />
           <Route path='settings' element={<Catalog />} />
+        </Route>
+        <Route path={`/p/:subplebbitAddress/description`} element={<Description setBodyStyle={setBodyStyle} /> }>
+          <Route path='settings' element={<Description />} />
+        </Route>
+        <Route path={`/p/:subplebbitAddress/rules`} element={<Rules setBodyStyle={setBodyStyle} /> }>
+          <Route path='settings' element={<Rules />} />
         </Route>
         <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} /> }>
           <Route path='settings' element={<Pending />} />
