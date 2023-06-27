@@ -14,7 +14,7 @@ useEffect(() => {
       if (execute && storedSigners[threadCid]) {
         const signerPrivateKey = storedSigners[threadCid];
         if (account) {
-          await account.plebbit.createSigner({privateKey: signerPrivateKey});
+          await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
         }
       }
     }

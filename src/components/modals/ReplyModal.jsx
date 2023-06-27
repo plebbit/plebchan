@@ -197,7 +197,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
         let signer;
   
         if (!storedSigners[selectedParentCid]) {
-          signer = await account.plebbit.createSigner();
+          signer = await account?.plebbit.createSigner();
           storedSigners[selectedParentCid] = { privateKey: signer?.privateKey, address: signer?.address };
           localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
           
@@ -205,7 +205,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           const signerPrivateKey = storedSigners[selectedParentCid].privateKey;
           
           try {
-            signer = await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
           } catch (error) {
             console.log(error);
           }
@@ -296,8 +296,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           </div>
           <div id="form">
             <div>
-              {account && account.author && account.author.displayName ? (
-                <input id="name" type="text" value={account.author?.displayName} ref={nameRef} disabled />
+              {account && account?.author && account?.author.displayName ? (
+                <input id="name" type="text" value={account?.author?.displayName} ref={nameRef} disabled />
               ) : (
                 <input id="name" type="text" placeholder="Anonymous" ref={nameRef} />
               )}

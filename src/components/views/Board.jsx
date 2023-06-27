@@ -389,7 +389,7 @@ const Board = () => {
         let signer;
   
         if (!storedSigners[selectedThreadCidRef]) {
-          signer = await account.plebbit.createSigner();
+          signer = await account?.plebbit.createSigner();
           storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
           localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
           
@@ -397,7 +397,7 @@ const Board = () => {
           const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
           
           try {
-            signer = await account.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
           } catch (error) {
             console.log(error);
           }
@@ -723,8 +723,8 @@ const Board = () => {
             <tr data-type="Name">
               <td id="td-name">Name</td>
               <td>
-                {account && account.author && account.author.displayName ? (
-                  <input name="name" type="text" tabIndex={1} value={account.author?.displayName} ref={nameRef} disabled />
+                {account && account?.author && account?.author.displayName ? (
+                  <input name="name" type="text" tabIndex={1} value={account?.author?.displayName} ref={nameRef} disabled />
                 ) : (
                   <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
                 )}
