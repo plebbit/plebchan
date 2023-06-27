@@ -695,10 +695,10 @@ const Board = () => {
             <div className="banner">
               <ImageBanner />
             </div>
-            <div className="board-title">{selectedTitle}</div>
-            <div className="board-address">p/{selectedAddress}
+            <div className="board-title">{subplebbit.title ?? null}</div>
+            <div className="board-address">p/{subplebbit.address}
               <OfflineIndicator 
-              address={selectedAddress} 
+              address={subplebbit.address} 
               className="offline"
               tooltipPlace="top" />
             </div>
