@@ -74,7 +74,7 @@ const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, po
         const linkTarget = matchedText.startsWith('u/') ? "_blank" : "_self";
   
         if (matchedText.startsWith('u/')) {
-          linkTo = `https://plebbitapp.eth.limo/#/${cid}`;
+          linkTo =  () => {};
         } else if (matchedText.startsWith('p/') || matchedText.startsWith('p/')) {
           linkTo = `/${matchedText}`;
         }
