@@ -706,8 +706,12 @@ const Catalog = () => {
                           R:<b>0</b>
                           <div className='thread-icons' 
                           style={{position: 'absolute', top: '-2px', right: '15px'}}>
-                            <span className="thread-icon sticky-icon" title="Sticky" />
-                            <span className="thread-icon closed-icon" title="Closed" />
+                            <span className="thread-icon sticky-icon" title="Sticky"
+                            style={{
+                              imageRendering: "pixelated",}} />
+                            <span className="thread-icon closed-icon" title="Closed"
+                            style={{
+                              imageRendering: "pixelated",}} />
                           </div>
                           <PostMenu 
                             style={{ display: isHoveringOnThread === "rules" ? 'inline-block' : 'none',
@@ -773,8 +777,12 @@ const Catalog = () => {
                       </Link>
                       {subplebbit.suggested?.avatarUrl ? (
                       <div className='thread-icons'>
-                        <span className="thread-icon sticky-icon" title="Sticky" />
-                        <span className="thread-icon closed-icon" title="Closed" />
+                        <span className="thread-icon sticky-icon" title="Sticky"
+                            style={{
+                              imageRendering: "pixelated",}} />
+                        <span className="thread-icon closed-icon" title="Closed"
+                            style={{
+                              imageRendering: "pixelated",}} />
                       </div>
                       ) : null}
                       <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
@@ -783,8 +791,12 @@ const Catalog = () => {
                           {subplebbit.suggested?.avatarUrl ? null : (
                             <div className='thread-icons' 
                             style={{position: 'absolute', top: '-2px', right: '15px'}}>
-                              <span className="thread-icon sticky-icon" title="Sticky" />
-                              <span className="thread-icon closed-icon" title="Closed" />
+                              <span className="thread-icon sticky-icon" title="Sticky"
+                            style={{
+                              imageRendering: "pixelated",}} />
+                              <span className="thread-icon closed-icon" title="Closed"
+                            style={{
+                              imageRendering: "pixelated",}} />
                             </div>
                           )}
                           <PostMenu 
@@ -917,10 +929,14 @@ const Catalog = () => {
                           commentMediaInfo.thumbnail))) ? (
                           <div key={`ti-${index}`} className="thread-icons" >
                             {thread.pinned ? (
-                              <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky" />
+                              <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"
+                              style={{
+                                imageRendering: "pixelated",}} />
                             ) : null}
                             {thread.locked ? (
-                              <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed" />
+                              <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed"
+                              style={{
+                                imageRendering: "pixelated",}} />
                             ) : null}
                           </div>
                           ) : null}
@@ -937,10 +953,14 @@ const Catalog = () => {
                                 <div className='thread-icons' 
                                 style={{position: 'absolute', top: '-2px', right: '15px'}}>
                                   {thread.pinned ? (
-                                    <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky" />
+                                    <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"
+                                    style={{
+                                      imageRendering: "pixelated",}} />
                                   ) : null}
                                   {thread.locked ? (
-                                    <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed" />
+                                    <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed"
+                                    style={{
+                                      imageRendering: "pixelated",}} />
                                   ) : null}
                                 </div>
                               )}

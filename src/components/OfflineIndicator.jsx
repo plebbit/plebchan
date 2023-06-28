@@ -17,6 +17,7 @@ const OfflineIndicator = ({ address, className, tooltipPlace }) => {
             data-tooltip-id="tooltip"
             data-tooltip-content="Offline"
             data-tooltip-place={tooltipPlace}
+            style={{imageRendering: 'pixelated'}}
           />
         </>
       )}

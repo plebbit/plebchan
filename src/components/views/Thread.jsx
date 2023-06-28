@@ -893,14 +893,16 @@ const Thread = () => {
                           <>
                             &nbsp;
                             <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                            style={{marginBottom: "-3px"}} />
+                            style={{marginBottom: "-3px",
+                            imageRendering: "pixelated",}} />
                           </>
                         ) : null}
                         {comment.locked ? (
                           <>
                             &nbsp;
                             <img src="assets/closed.gif" alt="Closed" title="Closed"
-                            style={{marginBottom: "-3px"}} />
+                            style={{marginBottom: "-3px",
+                            imageRendering: "pixelated",}} />
                           </>
                         ) : null}
                         <PostMenu 

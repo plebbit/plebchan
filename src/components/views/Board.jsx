@@ -836,9 +836,11 @@ const Board = () => {
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                 &nbsp;
-                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                 <span>&nbsp;
                                     [
                                     <Link to={`/p/${selectedAddress}/rules`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
@@ -911,9 +913,11 @@ const Board = () => {
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
-                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                   &nbsp;
-                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                 </span>
                                 <br />
                                 <span className="subject-mobile"
@@ -981,9 +985,11 @@ const Board = () => {
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                 &nbsp;
-                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                 <span>&nbsp;
                                     [
                                     <Link to={`/p/${selectedAddress}/description`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
@@ -1054,9 +1060,11 @@ const Board = () => {
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
-                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                   &nbsp;
-                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                 </span>
                                 <br />
                                 <span className="subject-mobile"
@@ -1220,14 +1228,18 @@ const Board = () => {
                                 <>
                                   &nbsp;
                                   <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                  style={{marginBottom: "-3px"}} />
+                                  style={{marginBottom: "-3px",
+                                  imageRendering: "pixelated",}} />
                                 </>
                               ) : null}
                               {thread.locked ? (
                                 <>
                                   &nbsp;
                                   <img src="assets/closed.gif" alt="Closed" title="Closed"
-                                  style={{marginBottom: "-3px"}} />
+                                  style={{
+                                    marginBottom: "-3px",
+                                    imageRendering: "pixelated",
+                                    }} />
                                 </>
                               ) : null}
                                 <span key={`rl1-${index}`}>&nbsp;
@@ -1978,11 +1990,13 @@ const Board = () => {
                               <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
                                 {thread.pinned ? (
                                   <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                  style={{marginBottom: "-3px", marginRight: "2px"}} />
+                                  style={{marginBottom: "-3px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                 ) : null}
                                 {thread.locked ? (
                                   <img src="assets/closed.gif" alt="Closed" title="Closed"
-                                  style={{marginBottom: "-3px", marginRight: "2px"}} />
+                                  style={{marginBottom: "-3px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                 ) : null}
                               </span>
                               <br key={`mob-br1-${index}`} />
