@@ -383,7 +383,7 @@ const Thread = () => {
     };
   
     updateSigner();
-  }, [selectedThread, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  }, [selectedThread, anonymousMode, account, setNewErrorMessage]);
   
   
   useEffect(() => {

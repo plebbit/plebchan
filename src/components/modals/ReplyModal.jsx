@@ -224,7 +224,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     };
   
     updateSigner();
-  }, [selectedParentCid, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  }, [selectedParentCid, anonymousMode, account, setNewErrorMessage]);
   
   
   useEffect(() => {

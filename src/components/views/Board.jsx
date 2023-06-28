@@ -416,7 +416,7 @@ const Board = () => {
     };
   
     updateSigner();
-  }, [selectedThreadCidRef, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  }, [selectedThreadCidRef, anonymousMode, account, setNewErrorMessage]);
   
 
 
