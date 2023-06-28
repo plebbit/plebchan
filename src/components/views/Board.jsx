@@ -119,20 +119,8 @@ const Board = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
-  const [displayedReplies, setDisplayedReplies] = useState([]);
 
-  const setSelectedThreadCid = (cid) => {
-    selectedThreadCidRef.current = cid;
-  }
-
-  // let post.jsx access full cid of user-typed short cid
-  useEffect(() => {
-    const newCidTracker = {};
-    displayedReplies.forEach((reply) => {
-      newCidTracker[reply.shortCid] = reply.cid;
-    });
-    setCidTracker(newCidTracker);
-  }, [displayedReplies]);
+  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid;}
 
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
@@ -244,6 +232,19 @@ const Board = () => {
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
+
+  const allReplies = useMemo(() => {
+    return selectedFeed.flatMap(thread => filteredRepliesByThread[thread.cid]?.displayedReplies || []);
+  }, [selectedFeed, filteredRepliesByThread]);
+
+  // let post.jsx access full cid of user-typed short cid
+  useEffect(() => {
+    const newCidTracker = {};
+    allReplies.forEach((reply) => {
+      newCidTracker[reply.shortCid] = reply.cid;
+    });
+    setCidTracker(newCidTracker);
+  }, [allReplies]);
   
 
   // temporary title from JSON, gets subplebbitAddress from URL
@@ -1076,7 +1077,6 @@ const Board = () => {
                   data={selectedFeed}
                   itemContent={(index, thread) => {
                     const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
-                    setDisplayedReplies(displayedReplies);
                     const commentMediaInfo = getCommentMediaInfo(thread);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
                     return (

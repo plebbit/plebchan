@@ -102,21 +102,11 @@ const Subscriptions = () => {
   const [moderatorPermissions, setModeratorPermissions] = useState({});
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
-  const [displayedReplies, setDisplayedReplies] = useState([]);
 
   const setSelectedThreadCid = (cid) => {
     selectedThreadCidRef.current = cid;
   }
-
-  // let post.jsx access full cid of user-typed short cid
-  useEffect(() => {
-    const newCidTracker = {};
-    displayedReplies.forEach((reply) => {
-      newCidTracker[reply.shortCid] = reply.cid;
-    });
-    setCidTracker(newCidTracker);
-  }, [displayedReplies]);
-
+  
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
@@ -248,6 +238,19 @@ const Subscriptions = () => {
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
+
+  const allReplies = useMemo(() => {
+    return selectedFeed.flatMap(thread => filteredRepliesByThread[thread.cid]?.displayedReplies || []);
+  }, [selectedFeed, filteredRepliesByThread]);
+
+  // let post.jsx access full cid of user-typed short cid
+  useEffect(() => {
+    const newCidTracker = {};
+    allReplies.forEach((reply) => {
+      newCidTracker[reply.shortCid] = reply.cid;
+    });
+    setCidTracker(newCidTracker);
+  }, [allReplies]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -605,7 +608,6 @@ const Subscriptions = () => {
                 data={selectedFeed}
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
-                  setDisplayedReplies(displayedReplies);
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = "assets/filedeleted-res.gif";
                   const isModerator = moderatorPermissions[thread.subplebbitAddress];
