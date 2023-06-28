@@ -252,18 +252,19 @@ const createMainWindow = () => {
   Menu.setApplicationMenu(appMenu);
 
 
-app.whenReady().then(() => {
-  createMainWindow();
+  app.whenReady().then(() => {
+    createMainWindow();
 
-  app.on('activate', () => {
-    if (!BrowserWindow.getAllWindows().length) {
-      createMainWindow();
+    app.on('activate', () => {
+      if (!BrowserWindow.getAllWindows().length) {
+        createMainWindow();
+      }
+    });
+  });
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
     }
   });
-});
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+};
