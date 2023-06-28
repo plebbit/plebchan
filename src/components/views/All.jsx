@@ -55,13 +55,16 @@ const All = () => {
     setIsAuthorEdit,
     setIsCaptchaOpen,
     isModerationOpen, setIsModerationOpen,
+    setReplyQuoteCid,
     setResolveCaptchaPromise,
     setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
     setSelectedThread,
+    setSelectedText,
     setSelectedTitle,
+    setTriggerInsertion,
   } = useGeneralStore(state => state);
   
   const { anonymousMode } = useAnonModeStore();
@@ -702,11 +705,19 @@ const All = () => {
                               onClick={(e) => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
-                                  setSelectedThreadCid(thread.cid);
-                                setIsReplyOpen(true);  
-                                setSelectedShortCid(thread.shortCid); 
-                                setSelectedParentCid(thread.cid);
+                                setSelectedThreadCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
+                                let text = document.getSelection().toString();
+                                text = text ? `>${text}` : text;
+                                setSelectedText(text);
+                                if (isReplyOpen) {
+                                  setReplyQuoteCid(thread.shortCid);
+                                  setTriggerInsertion(Date.now());
+                                } else {
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(thread.shortCid); 
+                                  setSelectedParentCid(thread.cid);
+                                }
                                 }} title="Reply to this post">{thread.shortCid}
                               </Link>
                               &nbsp;p/
@@ -983,10 +994,18 @@ const All = () => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
                                     setSelectedThreadCid(thread.cid);
-                                    setIsReplyOpen(true);  
-                                    setSelectedShortCid(reply.shortCid); 
-                                    setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
+                                    let text = document.getSelection().toString();
+                                    text = text ? `>${text}` : text;
+                                    setSelectedText(text);
+                                    if (isReplyOpen) {
+                                      setReplyQuoteCid(reply.shortCid);
+                                      setTriggerInsertion(Date.now());
+                                    } else {
+                                      setIsReplyOpen(true); 
+                                      setSelectedShortCid(reply.shortCid); 
+                                      setSelectedParentCid(reply.cid);
+                                    }
                                   }} title="Reply to this post">{reply.shortCid}</Link>
                                 ) : (
                                   <PendingLabel key="pending" commentIndex={reply.index} />
@@ -1513,10 +1532,18 @@ const All = () => {
                                 if (e.button === 2) return;
                                 e.preventDefault();
                                 setSelectedThreadCid(thread.cid);
-                                setIsReplyOpen(true);  
-                                setSelectedShortCid(thread.shortCid); 
-                                setSelectedParentCid(thread.cid);
                                 setSelectedAddress(thread.subplebbitAddress);
+                                let text = document.getSelection().toString();
+                                text = text ? `>${text}` : text;
+                                setSelectedText(text);
+                                if (isReplyOpen) {
+                                  setReplyQuoteCid(thread.shortCid);
+                                  setTriggerInsertion(Date.now());
+                                } else {
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(thread.shortCid); 
+                                  setSelectedParentCid(thread.cid);
+                                }
                               }} title="Reply to this post">{thread.shortCid}
                             </Link>
                           </span>
@@ -1686,10 +1713,18 @@ const All = () => {
                                     if (e.button === 2) return;
                                     e.preventDefault();
                                     setSelectedThreadCid(thread.cid);
-                                    setIsReplyOpen(true);  
-                                    setSelectedShortCid(reply.shortCid); 
-                                    setSelectedParentCid(reply.cid);
                                     setSelectedAddress(thread.subplebbitAddress);
+                                    let text = document.getSelection().toString();
+                                    text = text ? `>${text}` : text;
+                                    setSelectedText(text);
+                                    if (isReplyOpen) {
+                                      setReplyQuoteCid(reply.shortCid);
+                                      setTriggerInsertion(Date.now());
+                                    } else {
+                                      setIsReplyOpen(true); 
+                                      setSelectedShortCid(reply.shortCid); 
+                                      setSelectedParentCid(reply.cid);
+                                    }
                                   }} title="Reply to this post">{reply.shortCid}
                                 </Link>
                               ) : (

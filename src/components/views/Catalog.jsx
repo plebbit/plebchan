@@ -18,10 +18,12 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
+import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useClickForm from '../../hooks/useClickForm';
 import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
+import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
@@ -49,8 +51,9 @@ const Catalog = () => {
     showPostForm,
     showPostFormLink,
   } = useGeneralStore(state => state);
-  
 
+  const { anonymousMode } = useAnonModeStore();
+  
   const nameRef = useRef();
   const subjectRef = useRef();
   const commentRef = useRef();
@@ -58,6 +61,7 @@ const Catalog = () => {
   const threadMenuRefs = useRef({});
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
+  const selectedThreadCidRef = useRef(null);
 
   const navigate = useNavigate();
   
@@ -77,6 +81,7 @@ const Catalog = () => {
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
 
   const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const { subplebbitAddress } = useParams();
@@ -84,6 +89,8 @@ const Catalog = () => {
   const account = useAccount();
 
   const stateString = useStateString(subplebbit);
+
+  useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
 
   useEffect(() => {
@@ -276,12 +283,52 @@ const Catalog = () => {
 
 
   useEffect(() => {
+    const updateSigner = async () => {
+      if (anonymousMode) {
+        setExecuteAnonMode(true);
+  
+        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+        let signer;
+  
+        if (!storedSigners[selectedThreadCidRef]) {
+          signer = await account?.plebbit.createSigner();
+          storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
+          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+          
+        } else {
+          const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
+          
+          try {
+            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        
+        setPublishCommentOptions((prevPublishCommentOptions) => ({
+          ...prevPublishCommentOptions,
+          signer,
+          author: {
+            ...prevPublishCommentOptions.author,
+            address: signer?.address
+          },
+        }));
+  
+      }
+    };
+  
+    updateSigner();
+  }, [selectedThreadCidRef, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+
+
+  useEffect(() => {
     if (publishCommentOptions && triggerPublishComment) {
       (async () => {
         await publishComment();
         resetFields();
       })();
       setTriggerPublishComment(false);
+      setExecuteAnonMode(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
@@ -529,10 +576,10 @@ const Catalog = () => {
               <ImageBanner />
             </div>
               <>
-              <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}
+              <div className="board-title">{subplebbit.title ?? null}</div>
+              <div className="board-address">p/{subplebbit.address}
                 <OfflineIndicator 
-                address={selectedAddress} 
+                address={subplebbit.address} 
                 className="offline"
                 tooltipPlace="top" />
               </div>
@@ -558,8 +605,8 @@ const Catalog = () => {
               <tr data-type="Name">
                 <td id="td-name">Name</td>
                 <td>
-                  {account && account.author && account.author.displayName ? (
-                    <input name="name" type="text" tabIndex={1} value={account.author?.displayName} ref={nameRef} disabled />
+                  {account && account?.author && account?.author.displayName ? (
+                    <input name="name" type="text" tabIndex={1} value={account?.author?.displayName} ref={nameRef} disabled />
                   ) : (
                     <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
                   )}
@@ -706,8 +753,7 @@ const Catalog = () => {
                           </PostMenuCatalog>, document.body
                         )}
                       </BoardForm>
-                      <Link style={{all: "unset", cursor: "pointer"}} to={() => {}} 
-                        onClick={() => setSelectedThread("rules")}>
+                      <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}>
                           <div className="teaser">
                             <b>Rules</b>
                             {": " + subplebbit.rules.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
@@ -719,7 +765,7 @@ const Catalog = () => {
                     <div className='thread'
                     onMouseOver={() => setIsHoveringOnThread('description')}
                     onMouseLeave={() => setIsHoveringOnThread('')}>
-                      <Link style={{all: 'unset', cursor: 'pointer'}} to={() => {}}>
+                      <Link style={{all: 'unset', cursor: 'pointer'}} to={`/p/${selectedAddress}/description`}>
                         {subplebbit.suggested?.avatarUrl ? (
                           <img className='card'
                           src={subplebbit.suggested.avatarUrl} alt="board avatar" />
@@ -813,7 +859,7 @@ const Catalog = () => {
                           </PostMenuCatalog>, document.body
                         )}
                       </BoardForm>
-                      <Link style={{all: "unset", cursor: "pointer"}} to={() => {}} 
+                      <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/description`} 
                         onClick={() => setSelectedThread("description")}>
                           <div className="teaser">
                             <b>Welcome to {subplebbit.title || subplebbit.address}</b>

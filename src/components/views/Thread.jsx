@@ -54,6 +54,7 @@ const Thread = () => {
     isModerationOpen, setIsModerationOpen,
     isSettingsOpen, setIsSettingsOpen,
     setModeratingCommentCid,
+    setReplyQuoteCid,
     setResolveCaptchaPromise,
     setPendingComment,
     setPendingCommentIndex,
@@ -62,9 +63,11 @@ const Thread = () => {
     setSelectedShortCid,
     selectedStyle,
     selectedThread, setSelectedThread,
+    setSelectedText,
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
+    setTriggerInsertion,
   } = useGeneralStore(state => state);
 
   const { anonymousMode } = useAnonModeStore();
@@ -341,15 +344,46 @@ const Thread = () => {
     }));
 
     setTriggerPublishComment(true);
-    setExecuteAnonMode(false);
   };
 
-
+  
   useEffect(() => {
-    if (anonymousMode) {
-      setExecuteAnonMode(true);
-    }
-  }, [anonymousMode, selectedThread]);
+    const updateSigner = async () => {
+      if (anonymousMode) {
+        setExecuteAnonMode(true);
+  
+        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+        let signer;
+  
+        if (!storedSigners[selectedThread]) {
+          signer = await account?.plebbit.createSigner();
+          storedSigners[selectedThread] = { privateKey: signer?.privateKey, address: signer?.address };
+          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+          
+        } else {
+          const signerPrivateKey = storedSigners[selectedThread].privateKey;
+          
+          try {
+            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        
+        setPublishCommentOptions((prevPublishCommentOptions) => ({
+          ...prevPublishCommentOptions,
+          signer,
+          author: {
+            ...prevPublishCommentOptions.author,
+            address: signer?.address
+          },
+        }));
+  
+      }
+    };
+  
+    updateSigner();
+  }, [selectedThread, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
   
   
   useEffect(() => {
@@ -359,6 +393,7 @@ const Thread = () => {
         resetFields();
       })();
       setTriggerPublishComment(false);
+      setExecuteAnonMode(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
 
@@ -611,10 +646,10 @@ const Thread = () => {
               <ImageBanner />
             </div>
               <>
-              <div className="board-title">{selectedTitle}</div>
-              <div className="board-address">p/{selectedAddress}
+              <div className="board-title">{subplebbit.title ?? null}</div>
+              <div className="board-address">p/{subplebbit.address}
                 <OfflineIndicator 
-                address={selectedAddress} 
+                address={subplebbit.address} 
                 className="offline"
                 tooltipPlace="top" />
               </div>
@@ -655,8 +690,8 @@ const Thread = () => {
               <tr data-type="Name">
                 <td id="td-name">Name</td>
                 <td>
-                  {account && account.author && account.author.displayName ? (
-                    <input name="name" type="text" tabIndex={1} value={account.author?.displayName} ref={nameRef} disabled />
+                  {account && account?.author && account?.author.displayName ? (
+                    <input name="name" type="text" tabIndex={1} value={account?.author?.displayName} ref={nameRef} disabled />
                   ) : (
                     <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
                   )}
@@ -842,10 +877,17 @@ const Thread = () => {
                           <span>c/</span>
                           <Link to={() => {}} id="reply-button" style={{ cursor: 'pointer' }} 
                           onClick={() => {
-                            setIsReplyOpen(true); 
-                            setSelectedParentCid(comment.cid); 
-                            setSelectedShortCid(comment.shortCid);
-                            }} title="Reply to this post">{comment.shortCid}</Link>
+                            let text = document.getSelection().toString();
+                            text = text ? `>${text}` : text;
+                            setSelectedText(text);
+                            if (isReplyOpen) {
+                              setReplyQuoteCid(comment.shortCid);
+                              setTriggerInsertion(Date.now());
+                            } else {
+                              setIsReplyOpen(true); 
+                              setSelectedShortCid(comment.shortCid);
+                              setSelectedParentCid(comment.cid); 
+                            }}} title="Reply to this post">{comment.shortCid}</Link>
                         </span>&nbsp;
                         {comment.pinned ? (
                           <>
@@ -1029,6 +1071,11 @@ const Thread = () => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
+                    let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                    let signerAddress;
+                    if (storedSigners[selectedThread]) {
+                      signerAddress = storedSigners[selectedThread].address;
+                    }
                     return (
                       <div key={`pc-${index}`} className="reply-container">
                         <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
@@ -1062,10 +1109,16 @@ const Thread = () => {
                                         {reply.author?.shortAddress}
                                       </span>
                                     ) : (
-                                      <span key={`mob-ha-${index}`}
-                                      >
-                                        {account?.author?.shortAddress}
-                                      </span>
+                                      anonymousMode ? (
+                                        <span key={`mob-ha-${index}`}>
+                                          {signerAddress?.slice(8, 20)}
+                                        </span>
+                                      ) : (
+                                        <span key={`mob-ha-${index}`}
+                                        >
+                                          {account?.author?.shortAddress}
+                                        </span>
+                                      )
                                     )
                                   }
                                 )
@@ -1079,9 +1132,17 @@ const Thread = () => {
                               {reply.shortCid ? (
                                 <Link id="reply-button" key={`pl2-${index}`}
                                  onClick={() => {
-                                  setIsReplyOpen(true); 
-                                  setSelectedParentCid(reply.cid); 
-                                  setSelectedShortCid(reply.shortCid);
+                                  let text = document.getSelection().toString();
+                                  text = text ? `>${text}` : text;
+                                  setSelectedText(text);
+                                  if (isReplyOpen) {
+                                    setReplyQuoteCid(reply.shortCid);
+                                    setTriggerInsertion(Date.now());
+                                  } else {
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(reply.shortCid);
+                                    setSelectedParentCid(reply.cid); 
+                                  }
                                   }} title="Reply to this post">{reply.shortCid}</Link>
                               ) : (
                                 <PendingLabel key="pending" commentIndex={reply.index} />
@@ -1452,10 +1513,17 @@ const Thread = () => {
                           <span key={`mob-no-${comment.cid}`}>c/</span>
                           <Link to={() => {}} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
                           onClick={() => {
-                            setIsReplyOpen(true); 
-                            setSelectedParentCid(comment.cid); 
-                            setSelectedShortCid(comment.shortCid);
-                            }}>{comment.shortCid}</Link>
+                            let text = document.getSelection().toString();
+                            text = text ? `>${text}` : text;
+                            setSelectedText(text);
+                            if (isReplyOpen) {
+                              setReplyQuoteCid(comment.shortCid);
+                              setTriggerInsertion(Date.now());
+                            } else {
+                              setIsReplyOpen(true); 
+                              setSelectedShortCid(comment.shortCid);
+                              setSelectedParentCid(comment.cid); 
+                            }}}>{comment.shortCid}</Link>
                         </span>
                       </div>
                       {commentMediaInfo?.url ? (
@@ -1526,6 +1594,11 @@ const Thread = () => {
                   {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
+                    let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                    let signerAddress;
+                    if (storedSigners[selectedThread]) {
+                      signerAddress = storedSigners[selectedThread].address;
+                    }
                     return (
                     <div key={`mob-rc-${index}`} className="reply-container">
                       <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
@@ -1554,13 +1627,19 @@ const Thread = () => {
                               (u/
                                 {reply.author?.shortAddress ?
                                   (
-                                  <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                    {reply.author?.shortAddress}
-                                  </span>
-                                  ) : (
-                                    <span key={`mob-ha-${index}`}>
-                                      {account?.author?.shortAddress}
+                                    <span key={`mob-ha-${index}`} className="highlight-address-mobile">
+                                      {reply.author?.shortAddress}
                                     </span>
+                                  ) : (
+                                    anonymousMode ? (
+                                      <span key={`mob-ha-${index}`}>
+                                        {signerAddress?.slice(8, 20)}
+                                      </span>
+                                      ) : (
+                                      <span key={`mob-ha-${index}`}>
+                                        {account?.author?.shortAddress}
+                                      </span>
+                                    )
                                   )
                                 }
                               )
@@ -1573,10 +1652,17 @@ const Thread = () => {
                             {reply.shortCid ? (
                               <Link id="reply-button" key={`mob-pl2-${index}`} 
                               onClick={() => {
-                                setIsReplyOpen(true); 
-                                setSelectedParentCid(reply.cid); 
-                                setSelectedShortCid(reply.shortCid);
-                                }} title="Reply to this post">{reply.shortCid}</Link>
+                                let text = document.getSelection().toString();
+                                text = text ? `>${text}` : text;
+                                setSelectedText(text);
+                                if (isReplyOpen) {
+                                  setReplyQuoteCid(reply.shortCid);
+                                  setTriggerInsertion(Date.now());
+                                } else {
+                                  setIsReplyOpen(true); 
+                                  setSelectedShortCid(reply.shortCid);
+                                  setSelectedParentCid(reply.cid); 
+                                }}} title="Reply to this post">{reply.shortCid}</Link>
                             ) : (
                               <PendingLabel key="pending-mob" commentIndex={reply.index} />
                             )}

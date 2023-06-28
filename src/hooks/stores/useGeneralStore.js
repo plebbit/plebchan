@@ -53,6 +53,9 @@ const useGeneralStore = create((set) => ({
   publishedComment: '',
   setPublishedComment: (comment) => set({ publishedComment: comment }),
 
+  replyQuoteCid: '',
+  setReplyQuoteCid: (cid) => set({ replyQuoteCid: cid }),
+
   resolveCaptchaPromise: null,
   setResolveCaptchaPromise: (resolve) => set({ resolveCaptchaPromise: resolve }),
   
@@ -70,6 +73,9 @@ const useGeneralStore = create((set) => ({
     localStorage.setItem('selectedStyle', style);
     set({ selectedStyle: style });
   },
+
+  selectedText: '',
+  setSelectedText: (text) => set({ selectedText: text }),
   
   selectedThread: '',
   setSelectedThread: (thread) => set({ selectedThread: thread }),
@@ -83,6 +89,9 @@ const useGeneralStore = create((set) => ({
   showPostFormLink: true,
   setShowPostFormLink: (show) => set({ showPostFormLink: show }),
 
+  triggerInsertion: 0,
+  setTriggerInsertion: (trigger) => set({ triggerInsertion: trigger }),
+  
 }));
 
 export default useGeneralStore;

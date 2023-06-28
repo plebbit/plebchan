@@ -57,15 +57,18 @@ const Board = () => {
     setModeratingCommentCid,
     setPendingComment,
     setPendingCommentIndex,
+    setReplyQuoteCid,
     setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     setSelectedParentCid,
     setSelectedShortCid,
     selectedStyle,
     setSelectedThread,
+    setSelectedText,
     selectedTitle, setSelectedTitle,
     showPostForm,
     showPostFormLink,
+    setTriggerInsertion,
   } = useGeneralStore(state => state);
 
   const { anonymousMode } = useAnonModeStore();
@@ -374,15 +377,47 @@ const Board = () => {
     }));
 
     setTriggerPublishComment(true);
-    setExecuteAnonMode(false);
   };
 
 
   useEffect(() => {
-    if (anonymousMode) {
-      setExecuteAnonMode(true);
-    }
-  }, [anonymousMode, selectedThreadCidRef]);
+    const updateSigner = async () => {
+      if (anonymousMode) {
+        setExecuteAnonMode(true);
+  
+        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+        let signer;
+  
+        if (!storedSigners[selectedThreadCidRef]) {
+          signer = await account?.plebbit.createSigner();
+          storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
+          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+          
+        } else {
+          const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
+          
+          try {
+            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        
+        setPublishCommentOptions((prevPublishCommentOptions) => ({
+          ...prevPublishCommentOptions,
+          signer,
+          author: {
+            ...prevPublishCommentOptions.author,
+            address: signer?.address
+          },
+        }));
+  
+      }
+    };
+  
+    updateSigner();
+  }, [selectedThreadCidRef, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  
 
 
   useEffect(() => {
@@ -392,6 +427,7 @@ const Board = () => {
         resetFields();
       })();
       setTriggerPublishComment(false);
+      setExecuteAnonMode(false);
     }
   }, [publishCommentOptions, triggerPublishComment, publishComment, resetFields]);
   
@@ -659,10 +695,10 @@ const Board = () => {
             <div className="banner">
               <ImageBanner />
             </div>
-            <div className="board-title">{selectedTitle}</div>
-            <div className="board-address">p/{selectedAddress}
+            <div className="board-title">{subplebbit.title ?? null}</div>
+            <div className="board-address">p/{subplebbit.address}
               <OfflineIndicator 
-              address={selectedAddress} 
+              address={subplebbit.address} 
               className="offline"
               tooltipPlace="top" />
             </div>
@@ -687,8 +723,8 @@ const Board = () => {
             <tr data-type="Name">
               <td id="td-name">Name</td>
               <td>
-                {account && account.author && account.author.displayName ? (
-                  <input name="name" type="text" tabIndex={1} value={account.author?.displayName} ref={nameRef} disabled />
+                {account && account?.author && account?.author.displayName ? (
+                  <input name="name" type="text" tabIndex={1} value={account?.author?.displayName} ref={nameRef} disabled />
                 ) : (
                   <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
                 )}
@@ -794,7 +830,7 @@ const Board = () => {
                                 <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
                                 <span>&nbsp;
                                     [
-                                    <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                    <Link to={`/p/${selectedAddress}/rules`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
                                     ]
                                 </span>
                                 <PostMenu 
@@ -885,7 +921,7 @@ const Board = () => {
                             </blockquote>
                           </div>
                           <div className="post-link-mobile">
-                            <Link to={() => {}} className="button-mobile">View Thread</Link>
+                            <Link to={`/p/${selectedAddress}/rules`} className="button-mobile">View Thread</Link>
                           </div>
                         </div>
                       </div>
@@ -933,7 +969,7 @@ const Board = () => {
                                 <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
                                 <span>&nbsp;
                                     [
-                                    <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                    <Link to={`/p/${selectedAddress}/description`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
                                     ]
                                 </span>
                                 <PostMenu 
@@ -1029,7 +1065,7 @@ const Board = () => {
                             </blockquote>
                           </div>
                           <div className="post-link-mobile">
-                            <Link to={() => {}} className="button-mobile">View Thread</Link>
+                            <Link to={`/p/${selectedAddress}/description`} className="button-mobile">View Thread</Link>
                           </div>
                         </div>
                       </div>
@@ -1148,9 +1184,17 @@ const Board = () => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
-                                  setIsReplyOpen(true); 
-                                  setSelectedShortCid(thread.shortCid); 
-                                  setSelectedParentCid(thread.cid);
+                                  let text = document.getSelection().toString();
+                                  text = text ? `>${text}` : text;
+                                  setSelectedText(text);
+                                  if (isReplyOpen) {
+                                    setReplyQuoteCid(thread.shortCid);
+                                    setTriggerInsertion(Date.now());
+                                  } else {
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(thread.shortCid); 
+                                    setSelectedParentCid(thread.cid);
+                                  }
                                   }} title="Reply to this post">{thread.shortCid}</Link>
                                 &nbsp;
                               {thread.pinned ? (
@@ -1375,6 +1419,11 @@ const Board = () => {
                         const replyMediaInfo = getCommentMediaInfo(reply);
                         const fallbackImgUrl = "assets/filedeleted-res.gif";
                         const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                        let signerAddress;
+                        if (storedSigners[reply.parentCid]) {
+                          signerAddress = storedSigners[reply.parentCid].address;
+                        }
                         return (
                           <div key={`rc-${index}`} className="reply-container">
                             <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
@@ -1407,9 +1456,16 @@ const Board = () => {
                                             {reply.author?.shortAddress}
                                           </span>
                                         ) : (
-                                          <span key={`mob-ha-${index}`}>
-                                            {account?.author?.shortAddress}
-                                          </span>
+                                          anonymousMode ? (
+                                            <span key={`mob-ha-${index}`}>
+                                              {signerAddress?.slice(8, 20)}
+                                            </span>
+                                          ) : (
+                                            <span key={`mob-ha-${index}`}
+                                            >
+                                              {account?.author?.shortAddress}
+                                            </span>
+                                          )
                                         )
                                       }
                                     )
@@ -1426,9 +1482,17 @@ const Board = () => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
-                                      setIsReplyOpen(true);  
-                                      setSelectedShortCid(reply.shortCid); 
-                                      setSelectedParentCid(reply.cid);
+                                      let text = document.getSelection().toString();
+                                      text = text ? `>${text}` : text;
+                                      setSelectedText(text);
+                                      if (isReplyOpen) {
+                                        setReplyQuoteCid(reply.shortCid);
+                                        setTriggerInsertion(Date.now());
+                                      } else {
+                                        setIsReplyOpen(true); 
+                                        setSelectedShortCid(reply.shortCid); 
+                                        setSelectedParentCid(reply.cid);
+                                      }
                                     }} title="Reply to this post">{reply.shortCid}</Link>
                                   ) : (
                                     <PendingLabel key="pending" commentIndex={reply.index} />
@@ -1927,9 +1991,17 @@ const Board = () => {
                                   if (e.button === 2) return;
                                   e.preventDefault();
                                   setSelectedThreadCid(thread.cid);
-                                  setIsReplyOpen(true);  
-                                  setSelectedShortCid(thread.shortCid); 
-                                  setSelectedParentCid(thread.cid);
+                                  let text = document.getSelection().toString();
+                                  text = text ? `>${text}` : text;
+                                  setSelectedText(text);
+                                  if (isReplyOpen) {
+                                    setReplyQuoteCid(thread.shortCid);
+                                    setTriggerInsertion(Date.now());
+                                  } else {
+                                    setIsReplyOpen(true); 
+                                    setSelectedShortCid(thread.shortCid); 
+                                    setSelectedParentCid(thread.cid);
+                                  }
                                 }} title="Reply to this post">{thread.shortCid}
                               </Link>
                             </span>
@@ -2028,6 +2100,11 @@ const Board = () => {
                       {displayedReplies?.map((reply, index) => {
                         const replyMediaInfo = getCommentMediaInfo(reply);
                         const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                        let signerAddress;
+                        if (storedSigners[selectedThreadCidRef]) {
+                          signerAddress = storedSigners[selectedThreadCidRef].address;
+                        }
                         return (
                         <div key={`mob-rc-${index}`} className="reply-container">
                           <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
@@ -2056,13 +2133,19 @@ const Board = () => {
                                   (u/
                                     {reply.author?.shortAddress ?
                                       (
-                                      <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                        {reply.author?.shortAddress}
-                                      </span>
-                                      ) : (
-                                        <span key={`mob-ha-${index}`}>
-                                          {account?.author?.shortAddress}
+                                        <span key={`mob-ha-${index}`} className="highlight-address-mobile">
+                                          {reply.author?.shortAddress}
                                         </span>
+                                      ) : (
+                                        anonymousMode ? (
+                                          <span key={`mob-ha-${index}`}>
+                                            {signerAddress?.slice(8, 20)}
+                                          </span>
+                                          ) : (
+                                          <span key={`mob-ha-${index}`}>
+                                            {account?.author?.shortAddress}
+                                          </span>
+                                        )
                                       )
                                     }
                                   )&nbsp;
@@ -2078,9 +2161,17 @@ const Board = () => {
                                       if (e.button === 2) return;
                                       e.preventDefault();
                                       setSelectedThreadCid(thread.cid);
-                                      setIsReplyOpen(true);  
-                                      setSelectedShortCid(reply.shortCid); 
-                                      setSelectedParentCid(reply.cid);
+                                      let text = document.getSelection().toString();
+                                      text = text ? `>${text}` : text;
+                                      setSelectedText(text);
+                                      if (isReplyOpen) {
+                                        setReplyQuoteCid(reply.shortCid);
+                                        setTriggerInsertion(Date.now());
+                                      } else {
+                                        setIsReplyOpen(true); 
+                                        setSelectedShortCid(reply.shortCid); 
+                                        setSelectedParentCid(reply.cid);
+                                      }
                                     }} title="Reply to this post">{reply.shortCid}
                                   </Link>
                                 ) : (
