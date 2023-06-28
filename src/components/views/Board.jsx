@@ -14,6 +14,7 @@ import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
 import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
+import AdminListModal from '../modals/AdminListModal';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import PendingLabel from '../PendingLabel';
@@ -100,6 +101,7 @@ const Board = () => {
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
 
+  const [isAdminListOpen, setIsAdminListOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [originalCommentContent, setOriginalCommentContent] = useState(null);
@@ -610,6 +612,21 @@ const Board = () => {
         <title>{((selectedTitle ? selectedTitle : selectedAddress) + " - plebchan")}</title>
       </Helmet>
       <Container>
+        <AdminListModal
+        selectedStyle={selectedStyle}
+        isOpen={isAdminListOpen}
+        closeModal={() => setIsAdminListOpen(false)}
+        roles={subplebbit.roles} />
+        <EditModal
+        selectedStyle={selectedStyle}
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        originalCommentContent={originalCommentContent} />
+        <ModerationModal 
+        selectedStyle={selectedStyle}
+        isOpen={isModerationOpen}
+        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
+        deletePost={deletePost} />
         <ReplyModal 
         selectedStyle={selectedStyle}
         isOpen={isReplyOpen}
@@ -618,16 +635,6 @@ const Board = () => {
         selectedStyle={selectedStyle}
         isOpen={isSettingsOpen}
         closeModal={() => setIsSettingsOpen(false)} />
-        <ModerationModal 
-        selectedStyle={selectedStyle}
-        isOpen={isModerationOpen}
-        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
-        deletePost={deletePost} />
-        <EditModal
-        selectedStyle={selectedStyle}
-        isOpen={isEditModalOpen}
-        closeModal={() => setIsEditModalOpen(false)}
-        originalCommentContent={originalCommentContent} />
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className="boardList">
@@ -822,7 +829,10 @@ const Board = () => {
                               <span className="name-block">
                                 <span className="title">Rules</span>
                                 &nbsp;
-                                <span className="name capcode">## Board Admins</span>
+                                <span className="name capcode" 
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
@@ -894,7 +904,10 @@ const Board = () => {
                               <button className="post-menu-button-mobile"
                               style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                               <span className="name-block-mobile">
-                                <span className="name-mobile capcode">## Board Admins</span>
+                                <span className="name-mobile capcode"
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
@@ -961,7 +974,10 @@ const Board = () => {
                               <span className="name-block">
                                 <span className="title">Welcome to {subplebbit.title || subplebbit.address}</span>
                                 &nbsp;
-                                <span className="name capcode">## Board Admins</span>
+                                <span className="name capcode"
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
@@ -1031,7 +1047,10 @@ const Board = () => {
                               <button className="post-menu-button-mobile"
                               style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                               <span className="name-block-mobile">
-                                <span className="name-mobile capcode">## Board Admins</span>
+                                <span className="name-mobile capcode"
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
