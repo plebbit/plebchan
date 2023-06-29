@@ -188,43 +188,49 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   };
 
   
-  useEffect(() => {
-    const updateSigner = async () => {
-      if (anonymousMode) {
-        setExecuteAnonMode(true);
+  const updateSigner = useCallback(async () => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
   
-        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
-        let signer;
+      let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+      let signer;
   
-        if (!storedSigners[selectedParentCid]) {
-          signer = await account?.plebbit.createSigner();
-          storedSigners[selectedParentCid] = { privateKey: signer?.privateKey, address: signer?.address };
-          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      if (!storedSigners[selectedParentCid]) {
+        signer = await account?.plebbit.createSigner();
+        storedSigners[selectedParentCid] = { privateKey: signer?.privateKey, address: signer?.address };
+        localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      } else {
+        const signerPrivateKey = storedSigners[selectedParentCid].privateKey;
           
-        } else {
-          const signerPrivateKey = storedSigners[selectedParentCid].privateKey;
-          
-          try {
-            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
-          } catch (error) {
-            console.log(error);
-          }
+        try {
+          signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+        } catch (error) {
+          console.log(error);
         }
+      }
         
-        setPublishCommentOptions((prevPublishCommentOptions) => ({
+      setPublishCommentOptions(prevPublishCommentOptions => {
+        const newPublishCommentOptions = {
           ...prevPublishCommentOptions,
           signer,
           author: {
             ...prevPublishCommentOptions.author,
             address: signer?.address
           },
-        }));
+        };
   
-      }
-    };
+        if (JSON.stringify(prevPublishCommentOptions) !== JSON.stringify(newPublishCommentOptions)) {
+          return newPublishCommentOptions;
+        }
   
+        return prevPublishCommentOptions;
+      });
+    }
+  }, [selectedParentCid, anonymousMode, account]);
+  
+  useEffect(() => {
     updateSigner();
-  }, [selectedParentCid, anonymousMode, account, setNewErrorMessage]);
+  }, [updateSigner]);
   
   
   useEffect(() => {
