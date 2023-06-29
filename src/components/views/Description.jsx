@@ -309,9 +309,9 @@ const Description = () => {
                       &nbsp;
                       <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                       &nbsp;
-                      <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px", imageRendering: 'pixelated'}} />
+                      <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px", imageRendering: 'pixelated'}} />
                       &nbsp;
-                      <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px", imageRendering: 'pixelated'}} />
+                      <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-1px", imageRendering: 'pixelated'}} />
                       <span>&nbsp;
                           [
                           <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
@@ -379,9 +379,9 @@ const Description = () => {
                       &nbsp;
                       <span className="thread-icons-mobile"
                       style={{float: "right", marginRight: "18px"}}>
-                        <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px", imageRendering: 'pixelated'}} />
+                        <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginTop: "-1px", marginRight: "2px", imageRendering: 'pixelated'}} />
                         &nbsp;
-                        <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px", imageRendering: 'pixelated'}} />
+                        <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginTop: "-1px", marginRight: "2px", imageRendering: 'pixelated'}} />
                       </span>
                       <br />
                       <span className="subject-mobile"

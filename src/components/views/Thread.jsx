@@ -893,7 +893,7 @@ const Thread = () => {
                           <>
                             &nbsp;
                             <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                            style={{marginBottom: "-3px",
+                            style={{marginBottom: "-1px",
                             imageRendering: "pixelated",}} />
                           </>
                         ) : null}
@@ -901,7 +901,7 @@ const Thread = () => {
                           <>
                             &nbsp;
                             <img src="assets/closed.gif" alt="Closed" title="Closed"
-                            style={{marginBottom: "-3px",
+                            style={{marginBottom: "-1px",
                             imageRendering: "pixelated",}} />
                           </>
                         ) : null}

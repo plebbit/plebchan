@@ -1678,13 +1678,13 @@ export const BoardForm = styled.div`
 
     .offline-sub {
       width: 16px;
-      margin: -5px -4px -4px 3px;
+      margin: -5px -4px -2px 3px;
       position: relative;
     }
 
     .offline-reply {
       width: 16px;
-      margin: -5px -4px -4px 3px;
+      margin: -5px -4px -2px 3px;
       position: relative;
     }
 

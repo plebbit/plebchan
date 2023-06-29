@@ -836,10 +836,10 @@ const Board = () => {
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
                                 &nbsp;
-                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
                                 <span>&nbsp;
                                     [
@@ -913,10 +913,10 @@ const Board = () => {
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
-                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginTop: "-1px", marginRight: "2px",
                                   imageRendering: "pixelated",}} />
                                   &nbsp;
-                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginTop: "-1px", marginRight: "2px",
                                   imageRendering: "pixelated",}} />
                                 </span>
                                 <br />
@@ -985,10 +985,10 @@ const Board = () => {
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
                                 &nbsp;
-                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
                                 <span>&nbsp;
                                     [
@@ -1060,10 +1060,10 @@ const Board = () => {
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
-                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px",
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginTop: "-1px", marginRight: "2px",
                                   imageRendering: "pixelated",}} />
                                   &nbsp;
-                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px",
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginTop: "-1px", marginRight: "2px",
                                   imageRendering: "pixelated",}} />
                                 </span>
                                 <br />
@@ -1228,7 +1228,7 @@ const Board = () => {
                                 <>
                                   &nbsp;
                                   <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                  style={{marginBottom: "-3px",
+                                  style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
                                 </>
                               ) : null}
@@ -1237,7 +1237,7 @@ const Board = () => {
                                   &nbsp;
                                   <img src="assets/closed.gif" alt="Closed" title="Closed"
                                   style={{
-                                    marginBottom: "-3px",
+                                    marginBottom: "-1px",
                                     imageRendering: "pixelated",
                                     }} />
                                 </>
@@ -1990,12 +1990,12 @@ const Board = () => {
                               <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
                                 {thread.pinned ? (
                                   <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                  style={{marginBottom: "-3px", marginRight: "2px",
+                                  style={{marginTop: "-1px", marginRight: "2px",
                                   imageRendering: "pixelated",}} />
                                 ) : null}
                                 {thread.locked ? (
                                   <img src="assets/closed.gif" alt="Closed" title="Closed"
-                                  style={{marginBottom: "-3px", marginRight: "2px",
+                                  style={{marginTop: "-1px", marginRight: "2px",
                                   imageRendering: "pixelated",}} />
                                 ) : null}
                               </span>
