@@ -509,13 +509,20 @@ const Thread = () => {
 
   
   useEffect(() => {
+    let isActive = true;
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
         await publishCommentEdit();
-        setTriggerPublishCommentEdit(false);
+        if (isActive) {
+          setTriggerPublishCommentEdit(false);
+        }
       })();
     }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+
+    return () => {
+      isActive = false;
+    };
+  }, [triggerPublishCommentEdit, publishCommentEdit, publishCommentEditOptions]);
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
