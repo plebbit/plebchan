@@ -1,6 +1,6 @@
 {
   "name": "plebchan",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": true,
   "dependencies": {
     "@adraffy/ens-normalize": "1.8.3",
