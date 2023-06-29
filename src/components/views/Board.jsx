@@ -14,6 +14,7 @@ import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
 import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
+import AdminListModal from '../modals/AdminListModal';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import PendingLabel from '../PendingLabel';
@@ -100,6 +101,7 @@ const Board = () => {
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
 
+  const [isAdminListOpen, setIsAdminListOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [originalCommentContent, setOriginalCommentContent] = useState(null);
@@ -119,20 +121,8 @@ const Board = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
-  const [displayedReplies, setDisplayedReplies] = useState([]);
 
-  const setSelectedThreadCid = (cid) => {
-    selectedThreadCidRef.current = cid;
-  }
-
-  // let post.jsx access full cid of user-typed short cid
-  useEffect(() => {
-    const newCidTracker = {};
-    displayedReplies.forEach((reply) => {
-      newCidTracker[reply.shortCid] = reply.cid;
-    });
-    setCidTracker(newCidTracker);
-  }, [displayedReplies]);
+  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid;}
 
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
@@ -244,6 +234,19 @@ const Board = () => {
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
+
+  const allReplies = useMemo(() => {
+    return selectedFeed.flatMap(thread => filteredRepliesByThread[thread.cid]?.displayedReplies || []);
+  }, [selectedFeed, filteredRepliesByThread]);
+
+  // let post.jsx access full cid of user-typed short cid
+  useEffect(() => {
+    const newCidTracker = {};
+    allReplies.forEach((reply) => {
+      newCidTracker[reply.shortCid] = reply.cid;
+    });
+    setCidTracker(newCidTracker);
+  }, [allReplies]);
   
 
   // temporary title from JSON, gets subplebbitAddress from URL
@@ -380,43 +383,49 @@ const Board = () => {
   };
 
 
-  useEffect(() => {
-    const updateSigner = async () => {
-      if (anonymousMode) {
-        setExecuteAnonMode(true);
+  const updateSigner = useCallback(async () => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
   
-        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
-        let signer;
+      let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+      let signer;
   
-        if (!storedSigners[selectedThreadCidRef]) {
-          signer = await account?.plebbit.createSigner();
-          storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
-          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      if (!storedSigners[selectedThreadCidRef]) {
+        signer = await account?.plebbit.createSigner();
+        storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
+        localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      } else {
+        const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
           
-        } else {
-          const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
-          
-          try {
-            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
-          } catch (error) {
-            console.log(error);
-          }
+        try {
+          signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+        } catch (error) {
+          console.log(error);
         }
+      }
         
-        setPublishCommentOptions((prevPublishCommentOptions) => ({
+      setPublishCommentOptions(prevPublishCommentOptions => {
+        const newPublishCommentOptions = {
           ...prevPublishCommentOptions,
           signer,
           author: {
             ...prevPublishCommentOptions.author,
             address: signer?.address
           },
-        }));
+        };
   
-      }
-    };
+        if (JSON.stringify(prevPublishCommentOptions) !== JSON.stringify(newPublishCommentOptions)) {
+          return newPublishCommentOptions;
+        }
   
+        return prevPublishCommentOptions;
+      });
+    }
+  }, [selectedThreadCidRef, anonymousMode, account]);
+  
+  useEffect(() => {
     updateSigner();
-  }, [selectedThreadCidRef, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  }, [updateSigner]);
   
 
 
@@ -543,13 +552,21 @@ const Board = () => {
 
   
   useEffect(() => {
+    let isActive = true;
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
         await publishCommentEdit();
-        setTriggerPublishCommentEdit(false);
+        if (isActive) {
+          setTriggerPublishCommentEdit(false);
+        }
       })();
     }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+
+    return () => {
+      isActive = false;
+    };
+  }, [triggerPublishCommentEdit, publishCommentEdit, publishCommentEditOptions]);
+
   
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {
@@ -609,6 +626,21 @@ const Board = () => {
         <title>{((selectedTitle ? selectedTitle : selectedAddress) + " - plebchan")}</title>
       </Helmet>
       <Container>
+        <AdminListModal
+        selectedStyle={selectedStyle}
+        isOpen={isAdminListOpen}
+        closeModal={() => setIsAdminListOpen(false)}
+        roles={subplebbit.roles} />
+        <EditModal
+        selectedStyle={selectedStyle}
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        originalCommentContent={originalCommentContent} />
+        <ModerationModal 
+        selectedStyle={selectedStyle}
+        isOpen={isModerationOpen}
+        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
+        deletePost={deletePost} />
         <ReplyModal 
         selectedStyle={selectedStyle}
         isOpen={isReplyOpen}
@@ -617,16 +649,6 @@ const Board = () => {
         selectedStyle={selectedStyle}
         isOpen={isSettingsOpen}
         closeModal={() => setIsSettingsOpen(false)} />
-        <ModerationModal 
-        selectedStyle={selectedStyle}
-        isOpen={isModerationOpen}
-        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
-        deletePost={deletePost} />
-        <EditModal
-        selectedStyle={selectedStyle}
-        isOpen={isEditModalOpen}
-        closeModal={() => setIsEditModalOpen(false)}
-        originalCommentContent={originalCommentContent} />
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className="boardList">
@@ -821,13 +843,18 @@ const Board = () => {
                               <span className="name-block">
                                 <span className="title">Rules</span>
                                 &nbsp;
-                                <span className="name capcode">## Board Admins</span>
+                                <span className="name capcode" 
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
+                                  imageRendering: "pixelated",}} />
                                 &nbsp;
-                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-1px",
+                                  imageRendering: "pixelated",}} />
                                 <span>&nbsp;
                                     [
                                     <Link to={`/p/${selectedAddress}/rules`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
@@ -893,13 +920,18 @@ const Board = () => {
                               <button className="post-menu-button-mobile"
                               style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                               <span className="name-block-mobile">
-                                <span className="name-mobile capcode">## Board Admins</span>
+                                <span className="name-mobile capcode"
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
-                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                   &nbsp;
-                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                 </span>
                                 <br />
                                 <span className="subject-mobile"
@@ -960,13 +992,18 @@ const Board = () => {
                               <span className="name-block">
                                 <span className="title">Welcome to {subplebbit.title || subplebbit.address}</span>
                                 &nbsp;
-                                <span className="name capcode">## Board Admins</span>
+                                <span className="name capcode"
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
-                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
+                                  imageRendering: "pixelated",}} />
                                 &nbsp;
-                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-1px",
+                                  imageRendering: "pixelated",}} />
                                 <span>&nbsp;
                                     [
                                     <Link to={`/p/${selectedAddress}/description`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
@@ -1030,13 +1067,18 @@ const Board = () => {
                               <button className="post-menu-button-mobile"
                               style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                               <span className="name-block-mobile">
-                                <span className="name-mobile capcode">## Board Admins</span>
+                                <span className="name-mobile capcode"
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
                                 &nbsp;
                                 <span className="thread-icons-mobile"
                                 style={{float: "right", marginRight: "18px"}}>
-                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                   &nbsp;
-                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                 </span>
                                 <br />
                                 <span className="subject-mobile"
@@ -1076,7 +1118,6 @@ const Board = () => {
                   data={selectedFeed}
                   itemContent={(index, thread) => {
                     const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
-                    setDisplayedReplies(displayedReplies);
                     const commentMediaInfo = getCommentMediaInfo(thread);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
                     return (
@@ -1201,14 +1242,18 @@ const Board = () => {
                                 <>
                                   &nbsp;
                                   <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                  style={{marginBottom: "-3px"}} />
+                                  style={{marginBottom: "-1px",
+                                  imageRendering: "pixelated",}} />
                                 </>
                               ) : null}
                               {thread.locked ? (
                                 <>
                                   &nbsp;
                                   <img src="assets/closed.gif" alt="Closed" title="Closed"
-                                  style={{marginBottom: "-3px"}} />
+                                  style={{
+                                    marginBottom: "-1px",
+                                    imageRendering: "pixelated",
+                                    }} />
                                 </>
                               ) : null}
                                 <span key={`rl1-${index}`}>&nbsp;
@@ -1959,11 +2004,13 @@ const Board = () => {
                               <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
                                 {thread.pinned ? (
                                   <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                                  style={{marginBottom: "-3px", marginRight: "2px"}} />
+                                  style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                 ) : null}
                                 {thread.locked ? (
                                   <img src="assets/closed.gif" alt="Closed" title="Closed"
-                                  style={{marginBottom: "-3px", marginRight: "2px"}} />
+                                  style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
                                 ) : null}
                               </span>
                               <br key={`mob-br1-${index}`} />

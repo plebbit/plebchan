@@ -347,43 +347,49 @@ const Thread = () => {
   };
 
   
-  useEffect(() => {
-    const updateSigner = async () => {
-      if (anonymousMode) {
-        setExecuteAnonMode(true);
+  const updateSigner = useCallback(async () => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
   
-        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
-        let signer;
+      let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+      let signer;
   
-        if (!storedSigners[selectedThread]) {
-          signer = await account?.plebbit.createSigner();
-          storedSigners[selectedThread] = { privateKey: signer?.privateKey, address: signer?.address };
-          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      if (!storedSigners[selectedThread]) {
+        signer = await account?.plebbit.createSigner();
+        storedSigners[selectedThread] = { privateKey: signer?.privateKey, address: signer?.address };
+        localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      } else {
+        const signerPrivateKey = storedSigners[selectedThread].privateKey;
           
-        } else {
-          const signerPrivateKey = storedSigners[selectedThread].privateKey;
-          
-          try {
-            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
-          } catch (error) {
-            console.log(error);
-          }
+        try {
+          signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+        } catch (error) {
+          console.log(error);
         }
+      }
         
-        setPublishCommentOptions((prevPublishCommentOptions) => ({
+      setPublishCommentOptions(prevPublishCommentOptions => {
+        const newPublishCommentOptions = {
           ...prevPublishCommentOptions,
           signer,
           author: {
             ...prevPublishCommentOptions.author,
             address: signer?.address
           },
-        }));
+        };
   
-      }
-    };
+        if (JSON.stringify(prevPublishCommentOptions) !== JSON.stringify(newPublishCommentOptions)) {
+          return newPublishCommentOptions;
+        }
   
+        return prevPublishCommentOptions;
+      });
+    }
+  }, [selectedThread, anonymousMode, account]);
+  
+  useEffect(() => {
     updateSigner();
-  }, [selectedThread, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  }, [updateSigner]);
   
   
   useEffect(() => {
@@ -509,13 +515,20 @@ const Thread = () => {
 
   
   useEffect(() => {
+    let isActive = true;
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
         await publishCommentEdit();
-        setTriggerPublishCommentEdit(false);
+        if (isActive) {
+          setTriggerPublishCommentEdit(false);
+        }
       })();
     }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+
+    return () => {
+      isActive = false;
+    };
+  }, [triggerPublishCommentEdit, publishCommentEdit, publishCommentEditOptions]);
 
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
@@ -893,14 +906,16 @@ const Thread = () => {
                           <>
                             &nbsp;
                             <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                            style={{marginBottom: "-3px"}} />
+                            style={{marginBottom: "-1px",
+                            imageRendering: "pixelated",}} />
                           </>
                         ) : null}
                         {comment.locked ? (
                           <>
                             &nbsp;
                             <img src="assets/closed.gif" alt="Closed" title="Closed"
-                            style={{marginBottom: "-3px"}} />
+                            style={{marginBottom: "-1px",
+                            imageRendering: "pixelated",}} />
                           </>
                         ) : null}
                         <PostMenu 
@@ -1491,6 +1506,18 @@ const Thread = () => {
                               {comment?.author?.shortAddress}
                             </span>
                             )&nbsp;
+                          </span>
+                          <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
+                            {comment.pinned ? (
+                              <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                              style={{marginTop: "-1px", marginRight: "2px",
+                              imageRendering: "pixelated",}} />
+                            ) : null}
+                            {comment.locked ? (
+                              <img src="assets/closed.gif" alt="Closed" title="Closed"
+                              style={{marginTop: "-1px", marginRight: "2px",
+                              imageRendering: "pixelated",}} />
+                            ) : null}
                           </span>
                           <br key={`mob-br1-${comment.cid}`} />
                           {comment.title ? (

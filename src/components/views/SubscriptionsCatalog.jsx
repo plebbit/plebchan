@@ -275,13 +275,20 @@ const SubscriptionsCatalog = () => {
 
   
   useEffect(() => {
+    let isActive = true;
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
       (async () => {
         await publishCommentEdit();
-        setTriggerPublishCommentEdit(false);
+        if (isActive) {
+          setTriggerPublishCommentEdit(false);
+        }
       })();
     }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+
+    return () => {
+      isActive = false;
+    };
+  }, [triggerPublishCommentEdit, publishCommentEdit, publishCommentEditOptions]);
 
   // desktop navbar board select functionality
   const handleClickTitle = (title, address) => {

@@ -85,8 +85,8 @@ const PostOnHover = ({ cid, feed }) => {
                         {reply.replies?.pages?.topAll.comments
                           .sort((a, b) => a.timestamp - b.timestamp)
                           .map((reply, index) => (
-                            <div style={{display: 'inline-block'}}>
-                            <Link to={() => {}} 
+                            <div key={`div-${index}`} style={{display: 'inline-block'}}>
+                            <Link key={`link-${index}`} to={() => {}} 
                               className="quote-link">
                               c/{reply.shortCid}</Link>
                               &nbsp;

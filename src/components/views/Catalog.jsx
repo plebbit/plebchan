@@ -282,43 +282,49 @@ const Catalog = () => {
   };
 
 
-  useEffect(() => {
-    const updateSigner = async () => {
-      if (anonymousMode) {
-        setExecuteAnonMode(true);
+  const updateSigner = useCallback(async () => {
+    if (anonymousMode) {
+      setExecuteAnonMode(true);
   
-        let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
-        let signer;
+      let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+      let signer;
   
-        if (!storedSigners[selectedThreadCidRef]) {
-          signer = await account?.plebbit.createSigner();
-          storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
-          localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      if (!storedSigners[selectedThreadCidRef]) {
+        signer = await account?.plebbit.createSigner();
+        storedSigners[selectedThreadCidRef] = { privateKey: signer?.privateKey, address: signer?.address };
+        localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
+      } else {
+        const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
           
-        } else {
-          const signerPrivateKey = storedSigners[selectedThreadCidRef].privateKey;
-          
-          try {
-            signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
-          } catch (error) {
-            console.log(error);
-          }
+        try {
+          signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+        } catch (error) {
+          console.log(error);
         }
+      }
         
-        setPublishCommentOptions((prevPublishCommentOptions) => ({
+      setPublishCommentOptions(prevPublishCommentOptions => {
+        const newPublishCommentOptions = {
           ...prevPublishCommentOptions,
           signer,
           author: {
             ...prevPublishCommentOptions.author,
             address: signer?.address
           },
-        }));
+        };
   
-      }
-    };
+        if (JSON.stringify(prevPublishCommentOptions) !== JSON.stringify(newPublishCommentOptions)) {
+          return newPublishCommentOptions;
+        }
   
+        return prevPublishCommentOptions;
+      });
+    }
+  }, [selectedThreadCidRef, anonymousMode, account]);
+  
+  useEffect(() => {
     updateSigner();
-  }, [selectedThreadCidRef, anonymousMode, account, setPublishCommentOptions, setNewErrorMessage]);
+  }, [updateSigner]);
 
 
   useEffect(() => {
@@ -706,8 +712,12 @@ const Catalog = () => {
                           R:<b>0</b>
                           <div className='thread-icons' 
                           style={{position: 'absolute', top: '-2px', right: '15px'}}>
-                            <span className="thread-icon sticky-icon" title="Sticky" />
-                            <span className="thread-icon closed-icon" title="Closed" />
+                            <span className="thread-icon sticky-icon" title="Sticky"
+                            style={{
+                              imageRendering: "pixelated",}} />
+                            <span className="thread-icon closed-icon" title="Closed"
+                            style={{
+                              imageRendering: "pixelated",}} />
                           </div>
                           <PostMenu 
                             style={{ display: isHoveringOnThread === "rules" ? 'inline-block' : 'none',
@@ -773,8 +783,12 @@ const Catalog = () => {
                       </Link>
                       {subplebbit.suggested?.avatarUrl ? (
                       <div className='thread-icons'>
-                        <span className="thread-icon sticky-icon" title="Sticky" />
-                        <span className="thread-icon closed-icon" title="Closed" />
+                        <span className="thread-icon sticky-icon" title="Sticky"
+                            style={{
+                              imageRendering: "pixelated",}} />
+                        <span className="thread-icon closed-icon" title="Closed"
+                            style={{
+                              imageRendering: "pixelated",}} />
                       </div>
                       ) : null}
                       <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
@@ -783,8 +797,12 @@ const Catalog = () => {
                           {subplebbit.suggested?.avatarUrl ? null : (
                             <div className='thread-icons' 
                             style={{position: 'absolute', top: '-2px', right: '15px'}}>
-                              <span className="thread-icon sticky-icon" title="Sticky" />
-                              <span className="thread-icon closed-icon" title="Closed" />
+                              <span className="thread-icon sticky-icon" title="Sticky"
+                            style={{
+                              imageRendering: "pixelated",}} />
+                              <span className="thread-icon closed-icon" title="Closed"
+                            style={{
+                              imageRendering: "pixelated",}} />
                             </div>
                           )}
                           <PostMenu 
@@ -917,10 +935,14 @@ const Catalog = () => {
                           commentMediaInfo.thumbnail))) ? (
                           <div key={`ti-${index}`} className="thread-icons" >
                             {thread.pinned ? (
-                              <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky" />
+                              <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"
+                              style={{
+                                imageRendering: "pixelated",}} />
                             ) : null}
                             {thread.locked ? (
-                              <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed" />
+                              <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed"
+                              style={{
+                                imageRendering: "pixelated",}} />
                             ) : null}
                           </div>
                           ) : null}
@@ -937,10 +959,14 @@ const Catalog = () => {
                                 <div className='thread-icons' 
                                 style={{position: 'absolute', top: '-2px', right: '15px'}}>
                                   {thread.pinned ? (
-                                    <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky" />
+                                    <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"
+                                    style={{
+                                      imageRendering: "pixelated",}} />
                                   ) : null}
                                   {thread.locked ? (
-                                    <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed" />
+                                    <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed"
+                                    style={{
+                                      imageRendering: "pixelated",}} />
                                   ) : null}
                                 </div>
                               )}

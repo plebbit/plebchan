@@ -250,7 +250,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               </label>
             </li>
             <li className="settings-tip anon-tip">
-              Automatically uses a different account (u/address) per thread.
+              Automatically use a different u/address per thread to post.
             </li>
             <li className="settings-option disc">
               Account Data

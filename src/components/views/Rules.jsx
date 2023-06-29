@@ -9,6 +9,7 @@ import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import ImageBanner from '../ImageBanner';
+import AdminListModal from '../modals/AdminListModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
@@ -34,6 +35,7 @@ const Rules = () => {
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
 
+  const [isAdminListOpen, setIsAdminListOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
@@ -122,6 +124,11 @@ const Rules = () => {
           </title>
         </Helmet>
       <Container>
+        <AdminListModal
+        selectedStyle={selectedStyle}
+        isOpen={isAdminListOpen}
+        closeModal={() => setIsAdminListOpen(false)}
+        roles={subplebbit.roles} />
         <SettingsModal
         selectedStyle={selectedStyle}
         isOpen={isSettingsOpen}
@@ -270,13 +277,16 @@ const Rules = () => {
                     <span className="name-block">
                       <span className="title">Rules</span>
                       &nbsp;
-                      <span className="name capcode">## Board Admins</span>
+                      <span className="name capcode"
+                      style={{cursor: 'pointer'}}
+                      onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                      >## Board Admins</span>
                       &nbsp;
                       <span className="date-time">{getDate(subplebbit.createdAt)}</span>
                       &nbsp;
-                      <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                      <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px", imageRendering: 'pixelated'}} />
                       &nbsp;
-                      <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                      <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-1px", imageRendering: 'pixelated'}} />
                       <span>&nbsp;
                           [
                           <Link to={() => {}} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
@@ -342,13 +352,16 @@ const Rules = () => {
                     <button className="post-menu-button-mobile"
                     style={{ all: 'unset', cursor: 'pointer' }}>...</button>
                     <span className="name-block-mobile">
-                      <span className="name-mobile capcode">## Board Admins</span>
+                      <span className="name-mobile capcode"
+                      style={{cursor: 'pointer'}}
+                      onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                      >## Board Admins</span>
                       &nbsp;
                       <span className="thread-icons-mobile"
                       style={{float: "right", marginRight: "18px"}}>
-                        <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-3px"}} />
+                        <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginTop: "-1px", marginRight: "2px", imageRendering: 'pixelated'}} />
                         &nbsp;
-                        <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-3px"}} />
+                        <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginTop: "-1px", marginRight: "2px", imageRendering: 'pixelated'}} />
                       </span>
                       <br />
                       <span className="subject-mobile"
