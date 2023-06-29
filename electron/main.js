@@ -201,70 +201,76 @@ const createMainWindow = () => {
       },
     ]);
     tray.setContextMenu(trayMenu);
-  
+
     // show/hide on tray right click
     tray.on('right-click', () => {
       mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
     });
-  }
-  
 
-  // close to tray
-  if (!isDev) {
-    let isQuiting = false;
-    app.on('before-quit', () => {
-      isQuiting = true;
-    });
-    mainWindow.on('close', (event) => {
-      if (!isQuiting) {
-        event.preventDefault();
-        mainWindow.hide();
-        event.returnValue = false;
-      }
-    });
+    // close to tray
+    if (!isDev) {
+      let isQuiting = false;
+      app.on('before-quit', () => {
+        isQuiting = true;
+      });
+      mainWindow.on('close', (event) => {
+        if (!isQuiting) {
+          event.preventDefault();
+          mainWindow.hide();
+          event.returnValue = false;
+        }
+      });
+    }
   }
 
   // application menu
   // hide useless electron help menu
-  const originalAppMenuWithoutHelp = Menu.getApplicationMenu()?.items.filter(
-    (item) => item.role !== 'help'
-  );
-  const appMenu = new Menu();
-  appMenu.append(new MenuItem({role: 'appMenu'}));
-  appMenu.append(new MenuItem({
+  if (process.platform === 'darwin') {
+    const appMenu = Menu.getApplicationMenu();
+    appMenu.insert(1, appMenuBack);
+    appMenu.insert(2, appMenuForward);
+    appMenu.insert(3, appMenuReload);
+    Menu.setApplicationMenu(appMenu);
+  } else {
+    // Other platforms
+    const originalAppMenuWithoutHelp = Menu.getApplicationMenu()?.items.filter(
+      (item) => item.role !== 'help'
+    );
+    const appMenu = [appMenuBack, appMenuForward, appMenuReload, ...originalAppMenuWithoutHelp];
+    Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu));
+  }
+  
+  const appMenuBack = new MenuItem({
     label: '←',
     enabled: mainWindow?.webContents?.canGoBack(),
     click: () => mainWindow?.webContents?.goBack(),
-  }));
-  appMenu.append(new MenuItem({
+  });
+  const appMenuForward = new MenuItem({
     label: '→',
     enabled: mainWindow?.webContents?.canGoForward(),
     click: () => mainWindow?.webContents?.goForward(),
-  }));
-  appMenu.append(new MenuItem({
+  });
+  const appMenuReload = new MenuItem({
     label: '⟳',
     role: 'reload',
     click: () => mainWindow?.webContents?.reload(),
-  }));
-  originalAppMenuWithoutHelp.forEach(item => {
-    appMenu.append(item);
-  });
-  Menu.setApplicationMenu(appMenu);
-
-
-  app.whenReady().then(() => {
-    createMainWindow();
-
-    app.on('activate', () => {
-      if (!BrowserWindow.getAllWindows().length) {
-        createMainWindow();
-      }
-    });
-  });
-
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
   });
 };
+
+
+
+app.whenReady().then(() => {
+  createMainWindow();
+
+  app.on('activate', () => {
+    if (!BrowserWindow.getAllWindows().length) {
+      createMainWindow();
+    }
+  });
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
