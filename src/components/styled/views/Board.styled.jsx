@@ -2153,7 +2153,7 @@ export const BoardForm = styled.div`
       }
 
       .op-container {
-        display: inline;
+        display: grid;
       }
 
       .op {
@@ -2327,7 +2327,7 @@ export const BoardForm = styled.div`
       }
 
       .op-container {
-        display: inline;
+        display: grid;
       }
 
       .op {
@@ -2500,7 +2500,7 @@ export const BoardForm = styled.div`
       }
 
       .op-container {
-        display: inline;
+        display: grid;
       }
 
       .op {
@@ -2671,7 +2671,7 @@ export const BoardForm = styled.div`
       }
 
       .op-container {
-        display: inline;
+        display: grid;
       }
 
       .op {
@@ -2839,7 +2839,7 @@ export const BoardForm = styled.div`
       }
 
       .op-container {
-        display: inline;
+        display: grid;
       }
 
       .op {
@@ -3017,7 +3017,7 @@ export const BoardForm = styled.div`
       }
 
       .op-container {
-        display: inline;
+        display: grid;
       }
 
       .op {

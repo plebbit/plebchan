@@ -66,7 +66,7 @@ const Board = () => {
     selectedStyle,
     setSelectedThread,
     setSelectedText,
-    selectedTitle, setSelectedTitle,
+    setSelectedTitle,
     showPostForm,
     showPostFormLink,
     setTriggerInsertion,
@@ -623,7 +623,7 @@ const Board = () => {
   return (
     <>
       <Helmet>
-        <title>{((selectedTitle ? selectedTitle : selectedAddress) + " - plebchan")}</title>
+        <title>{((subplebbit.title ? subplebbit.title : subplebbit.address) + " - plebchan")}</title>
       </Helmet>
       <Container>
         <AdminListModal
@@ -831,7 +831,7 @@ const Board = () => {
             {subplebbit?.state === "failed" ? (
               null
             ) : (
-              feed.length > 0 ? (
+              subplebbit?.state === "succeeded" ? (
                 <>
                   {subplebbit.rules ? 
                     <>
@@ -962,9 +962,7 @@ const Board = () => {
                   {subplebbit.description ?
                     <>
                       <div className="thread">
-                        <div className="op-container" style={{
-                        display: subplebbit.rules ? "grid" : "block"
-                        }}>
+                        <div className="op-container">
                           <div className="post op op-desktop">
                             <hr />
                             <div className="post-info">
@@ -2549,7 +2547,7 @@ const Board = () => {
                   }}
                   endReached={tryLoadMore}
                   useWindowScroll={true}
-                  components={{ Footer: hasMore ? () => <PostLoader /> : null }}
+                  components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
                   />
                 </>
               ) : (<PostLoader />)
