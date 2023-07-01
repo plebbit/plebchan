@@ -73,6 +73,13 @@ const Board = () => {
   } = useGeneralStore(state => state);
 
   const { anonymousMode } = useAnonModeStore();
+
+  // temporary hardcode
+  const plebtokenRules = [
+    "This community is strictly SFW. Any NSFW language or content will be removed.",
+    <span>Only post about the plebbit token ($PLEB). For general cryptocurrency discussion, go to <Link className='quotelink' to="/p/business-and-finance.eth">p/business-and-finance.eth</Link>.</span>,
+    "FUD is allowed unless blatantly meaningless and spammy."
+  ]
   
   const account = useAccount();
   const navigate = useNavigate();
@@ -958,7 +965,132 @@ const Board = () => {
                         </div>
                       </div>
                     </>
-                  : null}
+                  : subplebbit.address === "plebtoken.eth" ? (
+                    <>
+                      <div className="thread">
+                        <div className="op-container">
+                          <div className="post op op-desktop">
+                            <hr />
+                            <div className="post-info">
+                              <span className="name-block">
+                                <span className="title">Rules</span>
+                                &nbsp;
+                                <span className="name capcode" 
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
+                                &nbsp;
+                                <span className="date-time">{getDate(subplebbit.createdAt)}</span>
+                                &nbsp;
+                                <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
+                                  imageRendering: "pixelated",}} />
+                                &nbsp;
+                                <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginBottom: "-1px",
+                                  imageRendering: "pixelated",}} />
+                                <span>&nbsp;
+                                    [
+                                    <Link to={`/p/${selectedAddress}/rules`} style={{textDecoration: "none"}} className="reply-link">Reply</Link>
+                                    ]
+                                </span>
+                                <PostMenu 
+                                  title="Post menu"
+                                  ref={el => { 
+                                    threadMenuRefs.current["rules"] = el;
+                                  }}
+                                  className='post-menu-button' 
+                                  rotated={openMenuCid === "rules"}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    const rect = threadMenuRefs.current["rules"].getBoundingClientRect();
+                                    setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                    setOpenMenuCid(prevCid => (prevCid === "rules" ? null : "rules"));
+                                  }}
+                                >
+                                  ▶
+                                </PostMenu>
+                                {createPortal(
+                                  <PostMenuCatalog selectedStyle={selectedStyle} 
+                                  ref={el => {postMenuCatalogRef.current = el}}
+                                  onClick={(event) => event.stopPropagation()}
+                                  style={{position: "absolute", 
+                                  top: menuPosition.top + 7, 
+                                  left: menuPosition.left}}>
+                                  <div className={`post-menu-thread post-menu-thread-${"rules"}`}
+                                  style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
+                                  >
+                                    <ul className="post-menu-catalog">
+                                      <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                                      {/* {isModerator ? (
+                                        <>
+                                          change rules
+                                        </>
+                                      ) : null} */}
+                                    </ul>
+                                  </div>
+                                  </PostMenuCatalog>, document.body
+                                )}
+                              </span>
+                              <blockquote>
+                                <div className="custom-paragraph">
+                                  {plebtokenRules.map((rule, index) => (
+                                    <React.Fragment key={index}>
+                                      {index + 1}. {rule}
+                                      <br />
+                                    </React.Fragment>
+                                  ))}
+                                </div>
+                              </blockquote>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="thread-mobile">
+                        <hr style={{marginTop: "10px"}} />
+                        <div className="op-container">
+                          <div className="post op op-mobile">
+                            <div className="post-info-mobile">
+                              <button className="post-menu-button-mobile"
+                              style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                              <span className="name-block-mobile">
+                                <span className="name-mobile capcode"
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
+                                >## Board Admins</span>
+                                &nbsp;
+                                <span className="thread-icons-mobile"
+                                style={{float: "right", marginRight: "18px"}}>
+                                  <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
+                                  &nbsp;
+                                  <img src="assets/closed.gif" alt="Closed" title="Closed" style={{marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",}} />
+                                </span>
+                                <br />
+                                <span className="subject-mobile"
+                              style={{marginBottom: "-15px"}}>Rules</span>
+                                &nbsp;
+                              </span>
+                              <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                              &nbsp;
+                            </div>
+                            <blockquote className="post-message-mobile">
+                              <div className="custom-paragraph">
+                                {plebtokenRules.map((rule, index) => (
+                                  <React.Fragment key={index}>
+                                    {index + 1}. {rule}
+                                    <br />
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                            </blockquote>
+                          </div>
+                          <div className="post-link-mobile">
+                            <Link to={`/p/${selectedAddress}/rules`} className="button-mobile">View Thread</Link>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : null}
                   {subplebbit.description ?
                     <>
                       <div className="thread">
