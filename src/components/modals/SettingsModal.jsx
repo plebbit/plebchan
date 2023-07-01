@@ -68,7 +68,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     };
 
     try {
-      await setAccount({ ...account, plebbitOptions });
+      await setAccount({ ...account, ...plebbitOptions });
       localStorage.setItem("successToast", "Settings Saved");
       window.location.reload();
     } catch (error) {
@@ -96,11 +96,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     try {
       await setAccount({
         ...account,
-        plebbitOptions: {
-          ipfsGatewayUrls: defaultGatewayUrls,
-          ipfsHttpClientsOptions: undefined,
-          pubsubHttpClientsOptions: defaultPubsubHttpClientsOptions,
-        },
+        ipfsGatewayUrls: defaultGatewayUrls,
+        ipfsHttpClientsOptions: undefined,
+        pubsubHttpClientsOptions: defaultPubsubHttpClientsOptions,
       });
       localStorage.setItem("successToast", "Settings Reset");
       window.location.reload();
