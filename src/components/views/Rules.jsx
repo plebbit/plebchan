@@ -28,6 +28,13 @@ const Rules = () => {
     selectedThread, setSelectedThread,
     setSelectedTitle,
   } = useGeneralStore(state => state);
+
+  // temporary hardcode
+  const plebtokenRules = [
+    "This community is strictly SFW. Any NSFW language or content will be removed.",
+    <span>Only post about the plebbit token ($PLEB). For general cryptocurrency discussion, go to <Link className='quotelink' to="/p/business-and-finance.eth">p/business-and-finance.eth</Link>.</span>,
+    "FUD is allowed unless blatantly meaningless and spammy."
+  ]
   
   const navigate = useNavigate();
 
@@ -332,12 +339,21 @@ const Rules = () => {
                     </span>
                     <blockquote >
                       <div className="custom-paragraph"  style={{paddingBottom: '17px'}}>
-                        {subplebbit.rules?.map((rule, index) => (
-                          <React.Fragment key={index}>
-                            {index + 1}. {rule}
-                            <br />
-                          </React.Fragment>
-                        ))}
+                        {subplebbit.address === "plebtoken.eth" ? (
+                          plebtokenRules.map((rule, index) => (
+                            <React.Fragment key={index}>
+                              {index + 1}. {rule}
+                              <br />
+                            </React.Fragment>
+                          ))
+                        ) : (
+                          subplebbit.rules?.map((rule, index) => (
+                            <React.Fragment key={index}>
+                              {index + 1}. {rule}
+                              <br />
+                            </React.Fragment>
+                          ))
+                        )}
                       </div>
                     </blockquote>
                   </div>
@@ -373,12 +389,21 @@ const Rules = () => {
                   </div>
                   <blockquote className="post-message-mobile">
                     <div className="custom-paragraph">
-                      {subplebbit.rules?.map((rule, index) => (
-                        <React.Fragment key={index}>
-                          {index + 1}. {rule}
-                          <br />
-                        </React.Fragment>
-                      ))}
+                      {subplebbit.address === "plebtoken.eth" ? (
+                        plebtokenRules.map((rule, index) => (
+                          <React.Fragment key={index}>
+                            {index + 1}. {rule}
+                            <br />
+                          </React.Fragment>
+                        ))
+                      ) : (
+                        subplebbit.rules?.map((rule, index) => (
+                          <React.Fragment key={index}>
+                            {index + 1}. {rule}
+                            <br />
+                          </React.Fragment>
+                        ))
+                      )}
                     </div>
                   </blockquote>
                 </div>
