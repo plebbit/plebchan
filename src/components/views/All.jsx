@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useState, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
@@ -161,6 +161,14 @@ const All = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
+
+
+  useEffect(() => {
+    if (postOnHoverRef.current) {
+      const rect = postOnHoverRef.current.getBoundingClientRect();
+      setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
 
 
   const errorString = useMemo(() => {
@@ -455,14 +463,6 @@ const All = () => {
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
-
-
-  useLayoutEffect(() => {
-    if (postOnHoverRef.current) {
-      const rect = postOnHoverRef.current.getBoundingClientRect();
-      setPostOnHoverHeight(rect.height);
-    }
-  }, [outOfViewCid]);
 
 
   return (

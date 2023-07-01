@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -169,7 +169,14 @@ const Board = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
-  
+
+
+  useEffect(() => {
+    if (postOnHoverRef.current) {
+      const rect = postOnHoverRef.current.getBoundingClientRect();
+      setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
   
 
   const errorString = useMemo(() => {
@@ -617,13 +624,6 @@ const Board = () => {
     }
   };
 
-
-  useLayoutEffect(() => {
-    if (postOnHoverRef.current) {
-      const rect = postOnHoverRef.current.getBoundingClientRect();
-      setPostOnHoverHeight(rect.height);
-    }
-  }, [outOfViewCid]);
 
   
 

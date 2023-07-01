@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -160,6 +160,14 @@ const Thread = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
+
+
+  useEffect(() => {
+    if (postOnHoverRef.current) {
+      const rect = postOnHoverRef.current.getBoundingClientRect();
+      setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
 
   
   useEffect(() => {
@@ -547,14 +555,6 @@ const Thread = () => {
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
-
-
-  useLayoutEffect(() => {
-    if (postOnHoverRef.current) {
-      const rect = postOnHoverRef.current.getBoundingClientRect();
-      setPostOnHoverHeight(rect.height);
-    }
-  }, [outOfViewCid]);
 
 
   return (
