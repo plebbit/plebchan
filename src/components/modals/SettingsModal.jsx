@@ -47,7 +47,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
   const handleSavePlebbitOptions = async () => {
     const gatewayUrls = gatewayRef.current.value.split('\n').filter(url => url.trim());
-    const ipfsClientsOptions = ipfsRef.current.value.split('\n').filter(url => url.trim()) || undefined;
+    let ipfsClientsOptions = ipfsRef.current.value.split('\n').filter(url => url.trim());
+    ipfsClientsOptions = ipfsClientsOptions.length > 0 ? ipfsClientsOptions : undefined;
     const pubsubClientsOptions = pubsubRef.current.value.split('\n').filter(url => url.trim());
 
     const invalidUrls = [
