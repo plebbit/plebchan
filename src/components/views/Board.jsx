@@ -323,7 +323,7 @@ const Board = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -344,7 +344,7 @@ const Board = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   
@@ -497,7 +497,7 @@ const Board = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   
@@ -620,7 +620,7 @@ const Board = () => {
         await unsubscribe(selectedAddress);
       }
     } catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
   };
 

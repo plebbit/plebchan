@@ -208,7 +208,7 @@ const Catalog = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -229,7 +229,7 @@ const Catalog = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   
@@ -381,7 +381,7 @@ const Catalog = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   
@@ -485,7 +485,7 @@ const Catalog = () => {
         await unsubscribe(selectedAddress);
       }
     } catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
   };
 

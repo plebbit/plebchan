@@ -298,7 +298,7 @@ const All = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -355,7 +355,7 @@ const All = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   

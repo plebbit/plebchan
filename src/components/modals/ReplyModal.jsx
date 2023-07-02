@@ -115,7 +115,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -136,7 +136,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
 

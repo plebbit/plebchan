@@ -63,7 +63,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -113,7 +113,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   
