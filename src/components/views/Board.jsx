@@ -310,7 +310,8 @@ const Board = () => {
       }
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -505,8 +506,8 @@ const Board = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (cid) => {
-    handleOptionClick(cid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -520,9 +521,10 @@ const Board = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
                       deleted: true,
                     }));
                     setTriggerPublishCommentEdit(true);
@@ -838,7 +840,7 @@ const Board = () => {
             {subplebbit?.state === "failed" ? (
               null
             ) : (
-              subplebbit?.state === "succeeded" ? (
+              feed.length > 0 ? (
                 <>
                   {subplebbit.rules ? 
                     <>
@@ -1421,15 +1423,17 @@ const Board = () => {
                                 >
                                   <ul className="post-menu-catalog">
                                     <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                    {thread.author.shortAddress === account?.author.shortAddress ? (
+                                    {thread.author.address === account?.author.address || 
+                                    thread.author.address === account?.signer.address ? (
                                       <>
                                         <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                        <li onClick={() => handleAuthorDeleteClick(thread.cid)}>Delete post</li>
+                                        <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                       </>
                                     ) : null}
                                     {isModerator ? (
                                       <>
-                                        {thread.author.shortAddress === account?.author.shortAddress ? (
+                                        {thread.author.address === account?.author.address ||
+                                         thread.author.address === account?.signer.address ? (
                                           null
                                         ) : (
                                           <li onClick={() => {
@@ -1702,15 +1706,17 @@ const Board = () => {
                                 >
                                   <ul className="post-menu-catalog">
                                     <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                    {reply.author.shortAddress === account?.author.shortAddress ? (
+                                    {reply.author.address === account?.author.address ||
+                                    reply.author.address === account?.signer.address ? (
                                       <>
                                         <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                        <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
+                                        <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                       </>
                                     ) : null}
                                     {isModerator ? (
                                       <>
-                                        {reply.author.shortAddress === account?.author.shortAddress ? (
+                                        {reply.author.address === account?.author.address || 
+                                         reply.author.address === account?.signer.address ? (
                                           null
                                         ) : (
                                           <li onClick={() => {

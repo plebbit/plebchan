@@ -102,7 +102,8 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       console.log('challenge success');
     }
     else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 

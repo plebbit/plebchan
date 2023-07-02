@@ -146,7 +146,8 @@ const SubscriptionsCatalog = () => {
         setNewSuccessMessage('Challenge Success');
     } 
     else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -229,9 +230,10 @@ const SubscriptionsCatalog = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
                       deleted: true,
                     }));
                     setTriggerPublishCommentEdit(true);
@@ -561,7 +563,8 @@ const SubscriptionsCatalog = () => {
                           >
                             <ul className="post-menu-catalog">
                               <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                              {thread.author.shortAddress === account?.author.shortAddress ? (
+                              {thread.author.address === account?.author.address || 
+                              thread.author.address === account?.signer.address ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
                                   <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
@@ -569,7 +572,8 @@ const SubscriptionsCatalog = () => {
                               ) : null}
                               {isModerator ? (
                                 <>
-                                  {thread.author.shortAddress === account?.author.shortAddress ? (
+                                  {thread.author.address === account?.author.address || 
+                                  thread.author.address === account?.signer.address ? (
                                     null
                                   ) : (
                                     <li onClick={() => {

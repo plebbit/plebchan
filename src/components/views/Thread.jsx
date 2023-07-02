@@ -267,7 +267,8 @@ const Thread = () => {
         setNewSuccessMessage('Challenge Success');
       }
     } else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -462,8 +463,8 @@ const Thread = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (cid) => {
-    handleOptionClick(cid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -477,9 +478,10 @@ const Thread = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
                       deleted: true,
                     }));
                     setTriggerPublishCommentEdit(true);
@@ -948,15 +950,17 @@ const Thread = () => {
                           >
                             <ul className="post-menu-catalog">
                               <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
-                              {comment.author?.shortAddress === account?.author.shortAddress ? (
+                                {comment.author.address === account?.author.address || 
+                                comment.author.address === account?.signer.address ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
+                                  <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
                                 </>
                               ) : null}
                               {isModerator ? (
                                 <>
-                                  {comment.author?.shortAddress === account?.author.shortAddress ? (
+                                  {comment.author.address === account?.author.address || 
+                                    comment.author.address === account?.signer.address ? (
                                     null
                                   ) : (
                                     <li onClick={() => {
@@ -1194,15 +1198,17 @@ const Thread = () => {
                               >
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  {reply.author.shortAddress === account?.author.shortAddress ? (
+                                    {reply.author.address === account?.author.address ||
+                                    reply.author.address === account?.signer.address ? (
                                     <>
                                       <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                     </>
                                   ) : null}
                                   {isModerator ? (
                                     <>
-                                      {reply.author.shortAddress === account?.author.shortAddress ? (
+                                    {reply.author.address === account?.author.address ||
+                                    reply.author.address === account?.signer.address ? (
                                         null
                                       ) : (
                                         <li onClick={() => {

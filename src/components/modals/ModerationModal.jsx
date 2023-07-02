@@ -50,7 +50,8 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
     if (challengeVerification.challengeSuccess === true) {
         setNewSuccessMessage('Challenge Success');
     } else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -116,6 +117,16 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
       setNewErrorMessage(error.message); console.log(error);
     },
   });
+
+
+  useEffect(() => {
+    if (selectedAddress) {
+      setPublishCommentEditOptions((prevOptions) => ({
+        ...prevOptions,
+        subplebbitAddress: selectedAddress,
+      }));
+    }
+  }, [selectedAddress]);
   
   
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
