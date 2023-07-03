@@ -950,8 +950,8 @@ const Thread = () => {
                           >
                             <ul className="post-menu-catalog">
                               <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
-                                {comment.author.address === account?.author.address || 
-                                comment.author.address === account?.signer.address ? (
+                                {comment.author?.address === account?.author.address || 
+                                comment.author?.address === account?.signer.address ? (
                                 <>
                                   <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
                                   <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
@@ -959,8 +959,8 @@ const Thread = () => {
                               ) : null}
                               {isModerator ? (
                                 <>
-                                  {comment.author.address === account?.author.address || 
-                                    comment.author.address === account?.signer.address ? (
+                                  {comment.author?.address === account?.author.address || 
+                                    comment.author?.address === account?.signer.address ? (
                                     null
                                   ) : (
                                     <li onClick={() => {
