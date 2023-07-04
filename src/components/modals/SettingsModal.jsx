@@ -223,7 +223,13 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       <div className="panel">
         <div className="panel-header">
           <span id="version">
-            v{version}
+            v{version} -&nbsp;
+            {window.electron && window.electron.isElectron ? (
+              <Link className="all-button" id="node-stats" to="http://localhost:5001/webui/" target="_blank" rel="noreferrer">
+                full node
+              </Link>
+              ) : (<span>web</span>)
+            }
           </span>
           Settings
           <Link to="" onClick={handleCloseModal}>

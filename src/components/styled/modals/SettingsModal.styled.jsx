@@ -417,4 +417,8 @@ export const StyledModal = styled(Modal)`
           return '';
       }
   }}
+
+  #node-stats {
+    text-decoration: none;
+  }
 `;
