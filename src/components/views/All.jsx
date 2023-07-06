@@ -585,7 +585,7 @@ const All = () => {
             <Link to={`/p/all/catalog`}>Catalog</Link>
             ]
           </div>
-          {feed.length > 0 ? (
+          {feed ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -601,7 +601,7 @@ const All = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            {feed.length > 0 ? (
+            {feed ? (
               <Virtuoso
                 increaseViewportBy={2000}
                 data={selectedFeed}
@@ -2068,7 +2068,7 @@ const All = () => {
                 }}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
-                components={{ Footer: hasMore ? () => <PostLoader /> : null }}
+                components={{ Footer: hasMore && feed ? () => <PostLoader /> : null }}
               />
             ) : (
               <PostLoader />

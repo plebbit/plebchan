@@ -806,7 +806,7 @@ const Board = () => {
             <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
             ]
           </div>
-          {feed.length > 0 ? (
+          {subplebbit?.state === "succeeded" ? (
             <>
               <span className="subscribe-button-desktop">
                 [
@@ -840,7 +840,7 @@ const Board = () => {
             {subplebbit?.state === "failed" ? (
               null
             ) : (
-              feed.length > 0 ? (
+              feed ? (
                 <>
                   {subplebbit.rules ? 
                     <>
@@ -2685,7 +2685,7 @@ const Board = () => {
                   }}
                   endReached={tryLoadMore}
                   useWindowScroll={true}
-                  components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
+                  components={{ Footer: hasMore && feed ? () => <PostLoader /> : null }}
                   />
                 </>
               ) : (<PostLoader />)

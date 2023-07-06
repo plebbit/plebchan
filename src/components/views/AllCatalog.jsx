@@ -442,7 +442,7 @@ const AllCatalog = () => {
               <Link to={`/p/all`}>Return</Link>
             </span>
           </div>
-          {feed.length > 0 ? (
+          {feed ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -453,7 +453,7 @@ const AllCatalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {feed.length > 0 ? (
+          {feed ? (
             <InfiniteScroll
             pageStart={0}
             loadMore={tryLoadMore}

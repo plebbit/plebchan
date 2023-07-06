@@ -408,9 +408,9 @@ const Subscriptions = () => {
     setCommentCid(comment.cid);
     setOriginalCommentContent(comment.content);
     setIsEditModalOpen(true);
-  }
-  
-  
+  };
+
+
   useEffect(() => {
     setPublishCommentEditOptions((prevOptions) => ({
       ...prevOptions,
@@ -563,7 +563,7 @@ const Subscriptions = () => {
             </div>
               <>
               <div className="board-title">Subscriptions</div>
-              {feed.length < 1 ? (
+              {account.subscriptions.length < 1 ? (
                 <div className="board-address">You haven't subscribed to any board yet.</div>
               ) : (
                 <div className="board-address">
@@ -593,7 +593,7 @@ const Subscriptions = () => {
             <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
             ]
           </div>
-          {feed.length > 0 ? (
+          {feed ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -609,7 +609,7 @@ const Subscriptions = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            { feed.length < 1 ? (
+            { feed ? (
               null
             ) : (
               <Virtuoso
@@ -2078,7 +2078,7 @@ const Subscriptions = () => {
                 }}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
-                components={{ Footer: hasMore ? () => <PostLoader /> : null }}
+                components={{ Footer: hasMore && feed ? () => <PostLoader /> : null }}
               />
             )}
           </div>

@@ -411,7 +411,7 @@ const SubscriptionsCatalog = () => {
             </div>
               <>
               <div className="board-title">Subscriptions</div>
-              {feed.length < 1 ? (
+              {account.subscriptions.length < 1 ? (
                 <div className="board-address">You haven't subscribed to any board yet.</div>
               ) : (
                 <div className="board-address">
@@ -446,7 +446,7 @@ const SubscriptionsCatalog = () => {
               <Link to={`/p/subscriptions`}>Return</Link>
             </span>
           </div>
-          {feed.length > 0 ? (
+          {feed ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -457,7 +457,7 @@ const SubscriptionsCatalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {feed.length > 0 ? (
+          {feed ? (
             <InfiniteScroll
             pageStart={0}
             loadMore={tryLoadMore}
