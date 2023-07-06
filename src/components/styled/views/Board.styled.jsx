@@ -267,7 +267,7 @@ export const Header = styled.div`
         clear: both;
 
         .banner {
-          border: 1px solid #800;
+          border: 1px solid #34345c;
           margin: 5px auto;
           width: 300px;
           height: 100px;
