@@ -563,11 +563,11 @@ const Subscriptions = () => {
             </div>
               <>
               <div className="board-title">Subscriptions</div>
-              {account.subscriptions.length < 1 ? (
+              {account?.subscriptions.length < 1 ? (
                 <div className="board-address">You haven't subscribed to any board yet.</div>
               ) : (
                 <div className="board-address">
-                  You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}.
+                  You have subscribed to {account?.subscriptions.length} board{account?.subscriptions.length > 1 ? "s" : null}.
                 </div>
               )}
               </>
@@ -609,7 +609,7 @@ const Subscriptions = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            { feed ? (
+            { !feed ? (
               null
             ) : (
               <Virtuoso
