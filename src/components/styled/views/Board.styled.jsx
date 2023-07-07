@@ -2016,6 +2016,16 @@ export const BoardForm = styled.div`
       }
 
       video {
+        width: 100%;
+        height: auto;
+      }
+
+      iframe {
+        width: 100%;
+        height: auto;
+      }
+
+      #video-thumbnail-mobile {
         width: 100px;
       }
   
@@ -3804,7 +3814,7 @@ export const BoardForm = styled.div`
                 color: #707070;
                 font-weight: 700;
                 background-color: rgb(27,28,30);
-                border: 1px solid #282A2E;
+                border: 1px solid #2D2F33;
                 background-image: url(assets/buttonfade-dark.png);
                 background-repeat: repeat-x;
                 text-decoration: none;

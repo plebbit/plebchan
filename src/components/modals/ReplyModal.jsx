@@ -229,8 +229,10 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   }, [selectedParentCid, anonymousMode, account]);
   
   useEffect(() => {
-    updateSigner();
-  }, [updateSigner]);
+    if (anonymousMode) {
+      updateSigner();
+    }
+  }, [updateSigner, anonymousMode]);
   
   
   useEffect(() => {
