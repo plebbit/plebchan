@@ -95,6 +95,7 @@ const CaptchaModal = () => {
   const handleCloseModal = () => {
     setImageSources([]);
     setChallengesArray([]);
+    setCurrentChallengeIndex(0);
     setIsCaptchaOpen(false);
   };
 
