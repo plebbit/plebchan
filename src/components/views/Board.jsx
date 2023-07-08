@@ -22,6 +22,7 @@ import Post from '../Post';
 import PostLoader from '../PostLoader';
 import PostOnHover from '../PostOnHover';
 import StateLabel from '../StateLabel';
+import VerifiedAuthor from '../VerifiedAuthor';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -1417,9 +1418,9 @@ const Board = () => {
                               (u/
                               <span key={`pa-${index}`} className="poster-address address-desktop"
                               id="reply-button" style={{cursor: "pointer"}}
-                                onClick={() => handleAddressClick(thread.author.shortAddress)}
+                                onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                               >
-                                {thread.author.shortAddress}
+                                <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>
                               </span>)
                               &nbsp;
                               <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
@@ -1497,8 +1498,8 @@ const Board = () => {
                                 >
                                   <ul className="post-menu-catalog">
                                     <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                    {thread.author.address === account?.author.address || 
-                                    thread.author.address === account?.signer.address ? (
+                                    {<VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address || 
+                                    <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
                                       <>
                                         <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
                                         <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
@@ -1506,8 +1507,8 @@ const Board = () => {
                                     ) : null}
                                     {isModerator ? (
                                       <>
-                                        {thread.author.address === account?.author.address ||
-                                         thread.author.address === account?.signer.address ? (
+                                        {<VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
+                                         <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
                                           null
                                         ) : (
                                           <li onClick={() => {
@@ -1700,7 +1701,7 @@ const Board = () => {
                                   &nbsp;
                                   <span key={`pa-${index}`} className="poster-address address-desktop"
                                     id="reply-button" style={{cursor: "pointer"}}
-                                    onClick={() => handleAddressClick(reply.author.shortAddress)}
+                                    onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                                   >
                                     (u/
                                       {reply.author?.shortAddress ?
@@ -1780,8 +1781,8 @@ const Board = () => {
                                 >
                                   <ul className="post-menu-catalog">
                                     <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                    {reply.author.address === account?.author.address ||
-                                    reply.author.address === account?.signer.address ? (
+                                    {<VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
+                                    <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
                                       <>
                                         <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
                                         <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
@@ -1789,8 +1790,8 @@ const Board = () => {
                                     ) : null}
                                     {isModerator ? (
                                       <>
-                                        {reply.author.address === account?.author.address || 
-                                         reply.author.address === account?.signer.address ? (
+                                        {<VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address || 
+                                         <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
                                           null
                                         ) : (
                                           <li onClick={() => {
@@ -2203,11 +2204,11 @@ const Board = () => {
                               &nbsp;
                               <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                                 id="reply-button" style={{cursor: "pointer"}}
-                                onClick={() => handleAddressClick(thread.author.shortAddress)}
+                                onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                               >
                                 (u/
                                 <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                  {thread.author.shortAddress}
+                                  {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
                                 </span>
                                 )&nbsp;
                               </span>
@@ -2442,7 +2443,7 @@ const Board = () => {
                                 &nbsp;
                                 <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                                   id="reply-button" style={{cursor: "pointer"}}
-                                  onClick={() => handleAddressClick(reply.author.shortAddress)}
+                                  onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                                 >
                                   (u/
                                     {reply.author?.shortAddress ?

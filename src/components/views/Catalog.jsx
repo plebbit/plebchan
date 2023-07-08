@@ -13,6 +13,7 @@ import { TopBar, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled
 import CatalogLoader from '../CatalogLoader';
 import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
+import VerifiedAuthor from '../VerifiedAuthor';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
@@ -1007,8 +1008,8 @@ const Catalog = () => {
                                 >
                                   <ul className="post-menu-catalog">
                                     <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                    {thread.author.address === account?.author.address || 
-                                    thread.author.address === account?.signer.address ? (
+                                    {<VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address || 
+                                    <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
                                       <>
                                         <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
                                         <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
@@ -1016,8 +1017,8 @@ const Catalog = () => {
                                     ) : null}
                                     {isModerator ? (
                                       <>
-                                        {thread.author.address === account?.author.address || 
-                                        thread.author.address === account?.signer.address ? (
+                                        {<VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address || 
+                                        <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
                                           null
                                         ) : (
                                           <li onClick={() => {
