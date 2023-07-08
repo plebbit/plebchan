@@ -2206,7 +2206,7 @@ const Subscriptions = () => {
                 }}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
-                components={{ Footer: hasMore && feed ? () => <PostLoader /> : null }}
+                components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
               />
             )}
           </div>
