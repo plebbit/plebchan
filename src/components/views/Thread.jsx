@@ -1024,38 +1024,42 @@ const Thread = () => {
                           >
                             <ul className="post-menu-catalog">
                               <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
-                                {<VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address || 
-                                <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
+                              <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (
                                 <>
-                                  <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
-                                </>
-                              ) : null}
-                              {isModerator ? (
-                                <>
-                                  {<VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address || 
-                                    <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
-                                    null
-                                  ) : (
-                                    <li onClick={() => {
+                                  {authorAddress === account?.author.address || 
+                                  authorAddress === account?.signer.address ? (
+                                    <>
+                                      <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
+                                    </>
+                                  ) : null}
+                                  {isModerator ? (
+                                    <>
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        null
+                                      ) : (
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(comment.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(comment.cid);
+                                        setDeletePost(true);
+                                      }}>
+                                      Delete post
+                                      </li>
+                                    )}
+                                    <li
+                                    onClick={() => {
                                       setModeratingCommentCid(comment.cid)
                                       setIsModerationOpen(true); 
                                       handleOptionClick(comment.cid);
-                                      setDeletePost(true);
                                     }}>
-                                    Delete post
+                                      Mod tools
                                     </li>
-                                  )}
-                                  <li
-                                  onClick={() => {
-                                    setModeratingCommentCid(comment.cid)
-                                    setIsModerationOpen(true); 
-                                    handleOptionClick(comment.cid);
-                                  }}>
-                                    Mod tools
-                                  </li>
-                                </>
-                              ) : null}
+                                  </>
+                                ) : null}
+                              </>
+                            )}</VerifiedAuthor>
                               {(commentMediaInfo && (
                                 commentMediaInfo.type === 'image' || 
                                 (commentMediaInfo.type === 'webpage' && 
@@ -1272,38 +1276,42 @@ const Thread = () => {
                               >
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                    {<VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
-                                    <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
+                                  <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
-                                      <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        <>
+                                          <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                          <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                        </>
+                                      ) : null}
+                                      {isModerator ? (
+                                        <>
+                                          {authorAddress === account?.author.address || 
+                                          authorAddress === account?.signer.address ? (
+                                            null
+                                          ) : (
+                                            <li onClick={() => {
+                                              setModeratingCommentCid(reply.cid)
+                                              setIsModerationOpen(true); 
+                                              handleOptionClick(reply.cid);
+                                              setDeletePost(true);
+                                            }}>
+                                            Delete post
+                                            </li>
+                                          )}
+                                          <li
+                                          onClick={() => {
+                                            setModeratingCommentCid(reply.cid)
+                                            setIsModerationOpen(true); 
+                                            handleOptionClick(reply.cid);
+                                          }}>
+                                            Mod tools
+                                          </li>
+                                        </>
+                                      ) : null}
                                     </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                    {<VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
-                                    <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
-                                          setModeratingCommentCid(reply.cid)
-                                          setIsModerationOpen(true); 
-                                          handleOptionClick(reply.cid);
-                                          setDeletePost(true);
-                                        }}>
-                                        Delete post
-                                        </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setModeratingCommentCid(reply.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(reply.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
-                                    </>
-                                  ) : null}
+                                  )}</VerifiedAuthor>
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
                                     (replyMediaInfo.type === 'webpage' && 

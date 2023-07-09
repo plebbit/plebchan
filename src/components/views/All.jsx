@@ -849,40 +849,44 @@ const All = () => {
                               >
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                  {<VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
-                                  <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
+                                  <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                                     <>
-                                      <li onClick={() => {handleAuthorEditClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                      {authorAddress === account?.author.address || 
+                                      authorAddress === account?.signer.address ? (
+                                        <>
+                                          <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                                          <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                                        </>
+                                      ) : null}
+                                      {isModerator ? (
+                                        <>
+                                          {authorAddress === account?.author.address ||
+                                          authorAddress === account?.signer.address ? (
+                                            null
+                                          ) : (
+                                            <li onClick={() => {
+                                              setSelectedAddress(thread.subplebbitAddress);
+                                              setModeratingCommentCid(thread.cid)
+                                              setIsModerationOpen(true); 
+                                              handleOptionClick(thread.cid);
+                                              setDeletePost(true);
+                                            }}>
+                                              Delete post
+                                            </li>
+                                          )}
+                                          <li
+                                          onClick={() => {
+                                            setSelectedAddress(thread.subplebbitAddress);
+                                            setModeratingCommentCid(thread.cid)
+                                            setIsModerationOpen(true); 
+                                            handleOptionClick(thread.cid);
+                                          }}>
+                                            Mod tools
+                                          </li>
+                                        </>
+                                      ) : null}
                                     </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                      {<VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
-                                      <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
-                                          setSelectedAddress(thread.subplebbitAddress);
-                                          setModeratingCommentCid(thread.cid)
-                                          setIsModerationOpen(true); 
-                                          handleOptionClick(thread.cid);
-                                          setDeletePost(true);
-                                        }}>
-                                        Delete post
-                                        </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setSelectedAddress(thread.subplebbitAddress);
-                                        setModeratingCommentCid(thread.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(thread.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
-                                    </>
-                                  ) : null}
+                                  )}</VerifiedAuthor>
                                   {(commentMediaInfo && (
                                     commentMediaInfo.type === 'image' || 
                                     (commentMediaInfo.type === 'webpage' && 
@@ -1139,40 +1143,44 @@ const All = () => {
                               >
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  {<VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
-                                    <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
+                                  <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
-                                      <li onClick={() => {handleAuthorEditClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
-                                    </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                    {<VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.author.address ||
-                                    <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (authorAddress)}</VerifiedAuthor> === account?.signer.address ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        <>
+                                          <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                          <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                        </>
+                                      ) : null}
+                                      {isModerator ? (
+                                        <>
+                                          {authorAddress === account?.author.address || 
+                                          authorAddress === account?.signer.address ? (
+                                            null
+                                          ) : (
+                                          <li onClick={() => {
                                           setSelectedAddress(thread.subplebbitAddress);
                                           setModeratingCommentCid(reply.cid)
                                           setIsModerationOpen(true); 
                                           handleOptionClick(reply.cid);
                                           setDeletePost(true);
+                                          }}>
+                                          Delete post
+                                          </li>
+                                        )}
+                                        <li
+                                        onClick={() => {
+                                          setSelectedAddress(thread.subplebbitAddress);
+                                          setModeratingCommentCid(reply.cid)
+                                          setIsModerationOpen(true); 
+                                          handleOptionClick(reply.cid);
                                         }}>
-                                        Delete post
+                                          Mod tools
                                         </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setSelectedAddress(thread.subplebbitAddress);
-                                        setModeratingCommentCid(reply.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(reply.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
+                                      </>
+                                      ) : null}
                                     </>
-                                  ) : null}
+                                  )}</VerifiedAuthor>
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
                                     (replyMediaInfo.type === 'webpage' && 
