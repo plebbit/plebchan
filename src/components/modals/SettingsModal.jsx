@@ -36,6 +36,17 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const importRef = useRef();
   const nameRef = useRef();
 
+  const defaultGatewayUrls = [
+    'https://ipfs.io',
+    'https://ipfsgateway.xyz',
+    'https://cloudflare-ipfs.com',
+    'https://plebpubsub.live'
+  ];
+  const defaultPubsubHttpClientsOptions = [
+    'https://pubsubprovider.xyz/api/v0',
+    'https://plebpubsub.live/api/v0'
+  ];
+
   const isValidURL = (url) => {
     try {
       new URL(url);
@@ -46,14 +57,26 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   };
 
   const handleSavePlebbitOptions = async () => {
-    const gatewayUrls = gatewayRef.current.value.split('\n').filter(url => url.trim());
-    const ipfsClientsOptions = ipfsRef.current.value.split('\n').filter(url => url.trim()) || undefined;
-    const pubsubClientsOptions = pubsubRef.current.value.split('\n').filter(url => url.trim());
+    let gatewayUrls = gatewayRef.current.value.split('\n').filter(url => url.trim());
+    let ipfsClientsOptions = ipfsRef.current.value.split('\n').filter(url => url.trim());
+    let pubsubClientsOptions = pubsubRef.current.value.split('\n').filter(url => url.trim());
+
+    if (!gatewayUrls.length) {
+      gatewayUrls = defaultGatewayUrls;
+    }
+
+    if (!ipfsClientsOptions.length) {
+      ipfsClientsOptions = undefined;
+    }
+
+    if (!pubsubClientsOptions.length) {
+      pubsubClientsOptions = defaultPubsubHttpClientsOptions;
+    }
 
     const invalidUrls = [
-      ...gatewayUrls,
+      ...gatewayUrls || defaultGatewayUrls,
       ...(ipfsClientsOptions || []),
-      ...pubsubClientsOptions,
+      ...pubsubClientsOptions || defaultPubsubHttpClientsOptions,
     ].filter((url) => !isValidURL(url));
 
     if (invalidUrls.length > 0) {
@@ -72,7 +95,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       localStorage.setItem("successToast", "Settings Saved");
       window.location.reload();
     } catch (error) {
-      setNewErrorMessage(error.message);
+      setNewErrorMessage(error.message); console.log(error);
     }
   };
 
@@ -80,13 +103,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const handleResetPlebbitOptions = async () => {
     setNewErrorMessage(null);
     setNewSuccessMessage(null);
-
-    const defaultGatewayUrls = [
-      'https://ipfs.io',
-      'https://ipfsgateway.xyz',
-      'https://cloudflare-ipfs.com'
-    ];
-    const defaultPubsubHttpClientsOptions = ['https://pubsubprovider.xyz/api/v0'];
 
     gatewayRef.current.value = defaultGatewayUrls.join('\n');
     ipfsRef.current.value = "";
@@ -105,7 +121,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       localStorage.setItem("successToast", "Settings Reset");
       window.location.reload();
     } catch (error) {
-      setNewErrorMessage(error.message);
+      setNewErrorMessage(error.message); console.log(error);
     }
   };
 
@@ -169,7 +185,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setNewSuccessMessage("Account Imported");
       
     } catch (error) {
-      setNewErrorMessage(error.message);
+      setNewErrorMessage(error.message); console.log(error);
     }
   };
 
@@ -190,7 +206,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
      }});
       setNewSuccessMessage("Account Name Saved");
     } catch (error) {
-      setNewErrorMessage(error.message);
+      setNewErrorMessage(error.message); console.log(error);
     }
   };
 
@@ -207,7 +223,13 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       <div className="panel">
         <div className="panel-header">
           <span id="version">
-            v{version}
+            v{version} -&nbsp;
+            {window.electron && window.electron.isElectron ? (
+              <Link className="all-button" id="node-stats" to="http://localhost:5001/webui/" target="_blank" rel="noreferrer">
+                full node
+              </Link>
+              ) : (<span>web</span>)
+            }
           </span>
           Settings
           <Link to="" onClick={handleCloseModal}>

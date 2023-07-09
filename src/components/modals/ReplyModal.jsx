@@ -99,10 +99,10 @@ const ReplyModal = ({ isOpen, closeModal }) => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-      console.log('challenge success');
-    }
-    else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('challenge failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      return;
+    } else if (challengeVerification.challengeSuccess === false) {
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -115,7 +115,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -136,7 +136,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
 
@@ -229,8 +229,10 @@ const ReplyModal = ({ isOpen, closeModal }) => {
   }, [selectedParentCid, anonymousMode, account]);
   
   useEffect(() => {
-    updateSigner();
-  }, [updateSigner]);
+    if (anonymousMode) {
+      updateSigner();
+    }
+  }, [updateSigner, anonymousMode]);
   
   
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -20,6 +20,7 @@ import Post from '../Post';
 import PostLoader from '../PostLoader';
 import PostOnHover from '../PostOnHover';
 import StateLabel from '../StateLabel';
+import VerifiedAuthor from '../VerifiedAuthor';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -111,6 +112,8 @@ const Thread = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
+  const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
+  const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
 
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
@@ -124,6 +127,21 @@ const Thread = () => {
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
+
+
+  const handleThumbnailClick = (index, isMobile=false) => {
+    if (isMobile) {
+      setIsMobileThumbnailClicked(prevState => ({
+        ...prevState,
+        [index]: !prevState[index],
+      }));
+    } else {
+      setIsThumbnailClicked(prevState => ({
+        ...prevState,
+        [index]: !prevState[index],
+      }));
+    }
+  };
 
 
   useEffect(() => {
@@ -160,6 +178,14 @@ const Thread = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
+
+
+  useEffect(() => {
+    if (postOnHoverRef.current) {
+      const rect = postOnHoverRef.current.getBoundingClientRect();
+      setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
 
   
   useEffect(() => {
@@ -259,7 +285,8 @@ const Thread = () => {
         setNewSuccessMessage('Challenge Success');
       }
     } else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -272,7 +299,7 @@ const Thread = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -293,7 +320,7 @@ const Thread = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
 
@@ -388,8 +415,10 @@ const Thread = () => {
   }, [selectedThread, anonymousMode, account]);
   
   useEffect(() => {
-    updateSigner();
-  }, [updateSigner]);
+    if (anonymousMode) {
+      updateSigner();
+    }
+  }, [updateSigner, anonymousMode]);
   
   
   useEffect(() => {
@@ -446,7 +475,7 @@ const Thread = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   
@@ -454,8 +483,8 @@ const Thread = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (cid) => {
-    handleOptionClick(cid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -469,9 +498,10 @@ const Thread = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
                       deleted: true,
                     }));
                     setTriggerPublishCommentEdit(true);
@@ -547,14 +577,6 @@ const Thread = () => {
     setSelectedAddress(selected);
     navigate(`/p/${selected}`);
   };
-
-
-  useLayoutEffect(() => {
-    if (postOnHoverRef.current) {
-      const rect = postOnHoverRef.current.getBoundingClientRect();
-      setPostOnHoverHeight(rect.height);
-    }
-  }, [outOfViewCid]);
 
 
   return (
@@ -792,52 +814,106 @@ const Thread = () => {
                 <div className="op-container">
                   <div className="post op op-desktop">
                     <div className="post-info">
-                    {commentMediaInfo?.url ? (
-                        <div key={`f-${comment.cid}`} className="file" style={{marginBottom: "5px"}}>
-                          <div key={`ft-${comment.cid}`} className="file-text">
+                      {commentMediaInfo?.url ? (
+                        <div key={`f-${index}`} className="file" style={{marginBottom: "5px"}}>
+                          <div key={`ft-${index}`} className="file-text">
                             Link:&nbsp;
-                            <a key={`fa-${comment.cid}`} href={commentMediaInfo.url} 
-                            target="_blank" rel="noreferrer">{
+                            <a key={`fa-${index}`} href={commentMediaInfo.url} target="_blank"
+                            rel="noopener noreferrer">{
                             commentMediaInfo?.url.length > 30 ?
                             commentMediaInfo?.url.slice(0, 30) + "(...)" :
                             commentMediaInfo?.url
-                            }</a>&nbsp;({commentMediaInfo?.type})
+                            }</a>&nbsp;({commentMediaInfo?.type === "iframe" ? "video" : commentMediaInfo?.type})
+                            {isThumbnailClicked[index] ? (
+                              <span>
+                                -[
+                                  <span className='reply-link' 
+                                  style={{textDecoration: 'underline', cursor: 'pointer'}}
+                                  onClick={() => {handleThumbnailClick(index)}}>Close</span>
+                                ]
+                              </span>
+                            ) : null}
                           </div>
+                          {commentMediaInfo?.type === 'iframe' && (
+                            <div key={`enlarge-${index}`}
+                            className={`img-container ${isThumbnailClicked[index] ? 'expanded-container' : ''}`}>
+                              <span key={`fta-${index}`} className="file-thumb">
+                                {(isThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
+                                  <iframe 
+                                    className='enlarged'
+                                    key={`fti-${index}`} 
+                                    src={commentMediaInfo.embedUrl}
+                                    width={commentMediaInfo.thumbnail ? "560" : "250"} 
+                                    height="315"
+                                    style={{border: "none"}}
+                                    title="Embedded content"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen />
+                                ) : (
+                                  <img 
+                                    key={`fti-${index}`}
+                                    src={commentMediaInfo.thumbnail} 
+                                    alt="thumbnail"
+                                    onClick={() => {handleThumbnailClick(index)}}
+                                    style={{cursor: "pointer"}}
+                                    onError={(e) => e.target.src = fallbackImgUrl} />
+                                )}
+                              </span>
+                            </div>
+                          )}
                           {commentMediaInfo?.type === "webpage" ? (
-                            <div key="enlarge" className="img-container">
-                              <span key={`fta-${comment.cid}`} className="file-thumb">
+                            <div key={`enlarge-${index}`} className="img-container">
+                              <span key={`fta-${index}`} className="file-thumb">
                                 {comment.thumbnailUrl ? (
-                                  <img key={`fti-${comment.cid}`} 
+                                  <img key={`fti-${index}`} 
                                   src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                                   onClick={handleImageClick}
-                                  style={{cursor: "pointer"}} 
+                                  style={{cursor: "pointer"}}
                                   onError={(e) => e.target.src = fallbackImgUrl} />
                                 ) : null}
                               </span>
                             </div>
                           ) : null}
                           {commentMediaInfo?.type === "image" ? (
-                            <div key="enlarge" className="img-container">
-                              <span key={`fta-${comment.cid}`} className="file-thumb">
-                                <img key={`fti-${comment.cid}`} 
+                            <div key={`enlarge-${index}`} className="img-container">
+                              <span key={`fta-${index}`} className="file-thumb">
+                                <img key={`fti-${index}`} 
                                 src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                 onClick={handleImageClick}
-                                style={{cursor: "pointer"}} 
+                                style={{cursor: "pointer"}}
                                 onError={(e) => e.target.src = fallbackImgUrl} />
                               </span>
                             </div>
                           ) : null}
                           {commentMediaInfo?.type === "video" ? (
-                            <span key={`fta-${comment.cid}`} className="file-thumb">
-                              <video controls key={`fti-${comment.cid}`} 
-                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                              onError={(e) => e.target.src = fallbackImgUrl} />
+                          <div key={`enlarge-${index}`} className={`img-container ${isThumbnailClicked[index] ? 'expanded-container' : ''}`}>
+                            <span key={`fta-${index}`} className="file-thumb">
+                              {isThumbnailClicked[index] ? (
+                                <video 
+                                  className='enlarged'
+                                  key={`fti-${index}`} 
+                                  src={commentMediaInfo.url} 
+                                  controls
+                                  style={{cursor: "pointer"}}
+                                  onError={(e) => e.target.src = fallbackImgUrl} 
+                                />
+                              ) : (
+                                <video 
+                                  key={`fti-${index}`}
+                                  src={commentMediaInfo.url} 
+                                  alt="thumbnail"
+                                  onClick={() => {handleThumbnailClick(index)}}
+                                  style={{cursor: "pointer"}}
+                                  onError={(e) => e.target.src = fallbackImgUrl} 
+                                />
+                              )}
                             </span>
+                          </div>
                           ) : null}
                           {commentMediaInfo?.type === "audio" ? (
-                            <span key={`fta-${comment.cid}`} className="file-thumb">
-                              <audio controls key={`fti-${comment.cid}`} 
-                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                            <span key={`fta-${index}`} className="file-thumb">
+                              <audio controls key={`fti-${index}`} 
+                              src={commentMediaInfo.url} alt={commentMediaInfo.type}
                               onError={(e) => e.target.src = fallbackImgUrl} />
                             </span>
                           ) : null}
@@ -877,10 +953,10 @@ const Thread = () => {
                         &nbsp;
                         <span className="poster-address address-desktop"
                           id="reply-button" style={{cursor: "pointer"}}
-                          onClick={() => handleAddressClick(comment?.author?.shortAddress)}>
+                          onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}>
                           (u/
                             <span key={`pa-${comment.cid}`} className="poster-address">
-                            {comment?.author?.shortAddress}
+                            {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
                           </span>)
                         </span>
                         &nbsp;
@@ -948,36 +1024,42 @@ const Thread = () => {
                           >
                             <ul className="post-menu-catalog">
                               <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
-                              {comment.author?.shortAddress === account?.author.shortAddress ? (
+                              <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (
                                 <>
-                                  <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(comment.cid)}>Delete post</li>
-                                </>
-                              ) : null}
-                              {isModerator ? (
-                                <>
-                                  {comment.author?.shortAddress === account?.author.shortAddress ? (
-                                    null
-                                  ) : (
-                                    <li onClick={() => {
+                                  {authorAddress === account?.author.address || 
+                                  authorAddress === account?.signer.address ? (
+                                    <>
+                                      <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
+                                    </>
+                                  ) : null}
+                                  {isModerator ? (
+                                    <>
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        null
+                                      ) : (
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(comment.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(comment.cid);
+                                        setDeletePost(true);
+                                      }}>
+                                      Delete post
+                                      </li>
+                                    )}
+                                    <li
+                                    onClick={() => {
                                       setModeratingCommentCid(comment.cid)
                                       setIsModerationOpen(true); 
                                       handleOptionClick(comment.cid);
-                                      setDeletePost(true);
                                     }}>
-                                    Delete post
+                                      Mod tools
                                     </li>
-                                  )}
-                                  <li
-                                  onClick={() => {
-                                    setModeratingCommentCid(comment.cid)
-                                    setIsModerationOpen(true); 
-                                    handleOptionClick(comment.cid);
-                                  }}>
-                                    Mod tools
-                                  </li>
-                                </>
-                              ) : null}
+                                  </>
+                                ) : null}
+                              </>
+                            )}</VerifiedAuthor>
                               {(commentMediaInfo && (
                                 commentMediaInfo.type === 'image' || 
                                 (commentMediaInfo.type === 'webpage' && 
@@ -1194,36 +1276,42 @@ const Thread = () => {
                               >
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  {reply.author.shortAddress === account?.author.shortAddress ? (
+                                  <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
-                                      <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(reply.cid)}>Delete post</li>
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        <>
+                                          <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                          <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                        </>
+                                      ) : null}
+                                      {isModerator ? (
+                                        <>
+                                          {authorAddress === account?.author.address || 
+                                          authorAddress === account?.signer.address ? (
+                                            null
+                                          ) : (
+                                            <li onClick={() => {
+                                              setModeratingCommentCid(reply.cid)
+                                              setIsModerationOpen(true); 
+                                              handleOptionClick(reply.cid);
+                                              setDeletePost(true);
+                                            }}>
+                                            Delete post
+                                            </li>
+                                          )}
+                                          <li
+                                          onClick={() => {
+                                            setModeratingCommentCid(reply.cid)
+                                            setIsModerationOpen(true); 
+                                            handleOptionClick(reply.cid);
+                                          }}>
+                                            Mod tools
+                                          </li>
+                                        </>
+                                      ) : null}
                                     </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                      {reply.author.shortAddress === account?.author.shortAddress ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
-                                          setModeratingCommentCid(reply.cid)
-                                          setIsModerationOpen(true); 
-                                          handleOptionClick(reply.cid);
-                                          setDeletePost(true);
-                                        }}>
-                                        Delete post
-                                        </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setModeratingCommentCid(reply.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(reply.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
-                                    </>
-                                  ) : null}
+                                  )}</VerifiedAuthor>
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
                                     (replyMediaInfo.type === 'webpage' && 
@@ -1499,11 +1587,11 @@ const Thread = () => {
                           &nbsp;
                           <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile address-mobile"
                             id="reply-button" style={{cursor: "pointer"}}
-                            onClick={() => handleAddressClick(comment?.author?.shortAddress)}
+                            onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                           >
                             (u/
                             <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile">
-                              {comment?.author?.shortAddress}
+                              {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
                             </span>
                             )&nbsp;
                           </span>
@@ -1553,54 +1641,108 @@ const Thread = () => {
                             }}}>{comment.shortCid}</Link>
                         </span>
                       </div>
-                      {commentMediaInfo?.url ? (
-                        commentMediaInfo.type === "webpage" ? (
-                          <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                            <div key="enlarge-reply-mob" className="img-container">
-                              <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                                {comment.thumbnailUrl ? (
-                                  <img key={`mob-img-${comment.cid}`} 
-                                  src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type} 
+                      {comment.link ? (
+                        <div key={`mob-f-${index}`} className="file-mobile">
+                          {commentMediaInfo?.type === 'iframe' && (
+                            <div key={`enlarge-mob-${index}`} className="img-container">
+                              <span key={`mob-fta-${index}`} className="file-thumb-mobile">
+                                {(isMobileThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
+                                  <div style={{width: "92vw"}}>
+                                    <iframe 
+                                      key={`mob-fti-${index}`} 
+                                      src={commentMediaInfo.embedUrl}
+                                      style={{border: "none", height: "250px"}}
+                                      title="Embedded content"
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                      allowFullScreen />
+                                  </div>
+                                ) : (
+                                  <img 
+                                    key={`mob-fti-${index}`}
+                                    src={commentMediaInfo.thumbnail} 
+                                    alt="thumbnail"
+                                    onClick={() => {handleThumbnailClick(index, true)}}
+                                    style={{cursor: "pointer"}}
+                                    onError={(e) => e.target.src = fallbackImgUrl} />
+                                )}
+                                {commentMediaInfo?.type === "video" || "iframe" ? (
+                                  isMobileThumbnailClicked[index] ? (
+                                    <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                      <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
+                                      onClick={() => {handleThumbnailClick(index, true)}}
+                                      >Close</span>
+                                    </div>
+                                  ) : (
+                                    <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
+                                )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
+                              </span>
+                            </div>
+                          )}
+                          {commentMediaInfo?.url ? (
+                            commentMediaInfo.type === "webpage" ? (
+                              <div key={`enlarge-mob-${index}`} className="img-container">
+                                <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                                  {comment.thumbnailUrl ? (
+                                    <img key={`mob-img-${index}`} 
+                                    src={commentMediaInfo.thumbnail} alt="thumbnail" 
+                                    onClick={handleImageClick}
+                                    style={{cursor: "pointer"}}
+                                    onError={(e) => e.target.src = fallbackImgUrl} />
+                                  ) : null}
+                                  <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                </span>
+                              </div>
+                            ) : commentMediaInfo.type === "image" ? (
+                              <div key={`enlarge-mob-${index}`} className="img-container">
+                                <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                                  <img key={`mob-img-${index}`} 
+                                  src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                                   onClick={handleImageClick}
                                   style={{cursor: "pointer"}}
                                   onError={(e) => e.target.src = fallbackImgUrl} />
-                                  ) : null}
-                                <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
-                              </span>
-                            </div>
-                          </div>
-                        ) : commentMediaInfo.type === "image" ? (
-                          <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                            <div key="enlarge-reply-mob" className="img-container">
-                              <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                                <img key={`mob-img-${comment.cid}`} 
-                                src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                                onClick={handleImageClick}
-                                style={{cursor: "pointer"}}
-                                onError={(e) => e.target.src = fallbackImgUrl} />
-                                <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
-                              </span>
-                            </div>
-                          </div>
-                        ) : commentMediaInfo.type === "video" ? (
-                          <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                            <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                              <video controls key={`mob-img-${comment.cid}`} 
-                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                              onError={(e) => e.target.src = fallbackImgUrl} />
-                              <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
-                            </span>
-                          </div>
-                        ) : commentMediaInfo.type === "audio" ? (
-                          <div key={`mob-f-${comment.cid}`} className="file-mobile">
-                            <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                              <audio controls key={`mob-img-${comment.cid}`} 
-                              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                              onError={(e) => e.target.src = fallbackImgUrl} />
-                              <div key={`mob-fi-${comment.cid}`} className="file-info-mobile">{commentMediaInfo.type}</div>
-                            </span>
-                          </div>
-                        ) : null
+                                  <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                </span>
+                              </div>
+                            ) : commentMediaInfo.type === "video" ? (
+                                <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                                  {isMobileThumbnailClicked[index] ? (
+                                    <video key={`fti-${index}`} 
+                                    src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                                    controls
+                                    style={{ cursor: 'pointer' }} 
+                                    onError={(e) => e.target.src = fallbackImgUrl} />
+                                  ) : (
+                                    <video 
+                                      key={`fti-${index}`}
+                                      src={commentMediaInfo.url} 
+                                      alt="thumbnail"
+                                      onClick={() => {handleThumbnailClick(index, true)}}
+                                      style={{cursor: "pointer"}}
+                                      id="video-thumbnail-mobile"
+                                      onError={(e) => e.target.src = fallbackImgUrl} 
+                                    />
+                                  )}
+                                  {commentMediaInfo?.type === "video" || "iframe" ? (
+                                    isMobileThumbnailClicked[index] ? (
+                                      <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                        <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
+                                        onClick={() => {handleThumbnailClick(index, true)}}
+                                        >Close</span>
+                                      </div>
+                                    ) : (
+                                      <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
+                                  )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
+                                </span>
+                            ) : commentMediaInfo.type === "audio" ? (
+                                <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                                  <audio key={`mob-img-${index}`} 
+                                  src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                  <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                </span>
+                            ) : null
+                          ) : null}
+                        </div>
                       ) : null}
                       <blockquote key={`mob-bq-${comment.cid}`} className="post-message-mobile">
                         {comment.content ? (
