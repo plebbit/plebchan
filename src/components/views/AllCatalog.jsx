@@ -17,6 +17,7 @@ import VerifiedAuthor from '../VerifiedAuthor';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
+import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
@@ -464,6 +465,7 @@ const AllCatalog = () => {
               const commentMediaInfo = getCommentMediaInfo(thread);
               const fallbackImgUrl = "assets/filedeleted-res.gif";
               const isModerator = moderatorPermissions[thread.subplebbitAddress];
+              const linkCount = countLinks(thread);
               return (
                   <div key={`thread-${index}`} className="thread" 
                   onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
@@ -522,9 +524,14 @@ const AllCatalog = () => {
                     </div>
                     <BoardForm selectedStyle={selectedStyle} 
                     style={{ all: "unset"}}>
-                      <div key={`meta-${index}`} className="meta" title="(R)eplies / (I)mage Replies" >
-                        R:
-                        <b key={`b-${index}`}>{thread.replyCount}</b>
+                      <div key={`meta-${index}`} className="meta" title="(R)eplies / (L)ink Replies" >
+                        R:&nbsp;<b key={`b-${index}`}>{thread.replyCount}</b>
+                        {linkCount > 0 ? (
+                          <>
+                            &nbsp;/
+                            L:&nbsp;<b key={`i-${index}`}>{linkCount}</b>
+                          </>
+                        ) : null}
                       <PostMenu 
                         style={{ display: isHoveringOnThread === thread.cid ? 'inline-block' : 'none',
                         position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',

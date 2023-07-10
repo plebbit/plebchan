@@ -17,6 +17,7 @@ import VerifiedAuthor from '../VerifiedAuthor';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
+import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useAnonModeRef from '../../hooks/useAnonModeRef';
@@ -711,8 +712,8 @@ const Catalog = () => {
                     onMouseOver={() => setIsHoveringOnThread('rules')}
                     onMouseLeave={() => setIsHoveringOnThread('')}>
                       <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
-                        <div className='meta' title="(R)eplies / (I)mage Replies">
-                          R:<b>0</b>
+                        <div className='meta' title="(R)eplies / (L)ink Replies">
+                          R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
                           <div className='thread-icons' 
                           style={{position: 'absolute', top: '-2px', right: '15px'}}>
                             <span className="thread-icon sticky-icon" title="Sticky"
@@ -795,8 +796,8 @@ const Catalog = () => {
                       </div>
                       ) : null}
                       <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
-                        <div className='meta' title="(R)eplies / (I)mage Replies">
-                          R:<b>0</b>
+                        <div className='meta' title="(R)eplies / (L)ink Replies">
+                          R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
                           {subplebbit.suggested?.avatarUrl ? null : (
                             <div className='thread-icons' 
                             style={{position: 'absolute', top: '-2px', right: '15px'}}>
@@ -892,6 +893,7 @@ const Catalog = () => {
                   {feed.map((thread, index) => {
                     const commentMediaInfo = getCommentMediaInfo(thread);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
+                    const linkCount = countLinks(thread);
                     return (
                         <div key={`thread-${index}`} className="thread" 
                         onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
@@ -951,9 +953,14 @@ const Catalog = () => {
                           ) : null}
                           <BoardForm selectedStyle={selectedStyle} 
                           style={{ all: "unset"}}>
-                            <div key={`meta-${index}`} className="meta" title="(R)eplies / (I)mage Replies" >
-                              R:
-                              <b key={`b-${index}`}>{thread.replyCount}</b>
+                            <div key={`meta-${index}`} className="meta" title="(R)eplies / (L)ink Replies" >
+                              R:&nbsp;<b key={`b-${index}`}>{thread.replyCount}</b>
+                              {linkCount > 0 ? (
+                                <>
+                                  &nbsp;/
+                                  L:&nbsp;<b key={`i-${index}`}>{linkCount}</b>
+                                </>
+                              ) : null}
                               {(commentMediaInfo && (
                                 commentMediaInfo.type === 'image' || 
                                 commentMediaInfo.type === 'video' || 
