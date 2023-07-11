@@ -32,6 +32,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const gatewayRef = useRef();
   const ipfsRef = useRef();
   const pubsubRef = useRef();
+  const ethereumRpcRef = useRef();
+  const polygonRpcRef = useRef();
   const dataPathRef = useRef();
   const importRef = useRef();
   const nameRef = useRef();
@@ -42,9 +44,18 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     'https://cloudflare-ipfs.com',
     'https://plebpubsub.live'
   ];
+
   const defaultPubsubHttpClientsOptions = [
     'https://pubsubprovider.xyz/api/v0',
     'https://plebpubsub.live/api/v0'
+  ];
+
+  const defaultEthereumRpcUrls = [
+    'https://ethrpc.xyz',
+  ];
+
+  const defaultPolygonRpcUrls = [
+    'https://polygon-rpc.com',
   ];
 
   const isValidURL = (url) => {
@@ -55,6 +66,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       return false;
     }
   };
+
 
   const handleSavePlebbitOptions = async () => {
     let gatewayUrls = gatewayRef.current.value.split('\n').filter(url => url.trim());
@@ -100,6 +112,55 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   };
 
 
+  const handleSaveChainProviders = async () => {
+    let ethereumRpcUrls = ethereumRpcRef.current.value.split('\\n').filter(url => url.trim());
+    let polygonRpcUrls = polygonRpcRef.current.value.split('\\n').filter(url => url.trim());
+  
+    if (!ethereumRpcUrls.length) {
+      ethereumRpcUrls = defaultEthereumRpcUrls;
+    }
+  
+    if (!polygonRpcUrls.length) {
+      polygonRpcUrls = defaultPolygonRpcUrls;
+    }
+  
+    const invalidUrls = [
+      ...ethereumRpcUrls || defaultEthereumRpcUrls,
+      ...polygonRpcUrls || defaultPolygonRpcUrls,
+    ].filter((url) => !isValidURL(url));
+  
+    if (invalidUrls.length > 0) {
+      setNewErrorMessage(`Invalid URL(s): ${invalidUrls.join(', ')}`);
+      return;
+    }
+  
+    const chainProviders = {
+      'eth': {
+        urls: ethereumRpcUrls,
+        chainId: 1,
+      },
+      'matic': {
+        urls: polygonRpcUrls,
+        chainId: 137,
+      }
+    }
+  
+    try {
+      await setAccount({
+        ...account,
+        plebbitOptions: {
+          ...account.plebbitOptions,
+          chainProviders,
+        },
+      });
+      localStorage.setItem("successToast", "Chain Providers Saved");
+      window.location.reload();
+    } catch (error) {
+      setNewErrorMessage(error.message); console.log(error);
+    }
+  };
+  
+
   const handleResetPlebbitOptions = async () => {
     setNewErrorMessage(null);
     setNewSuccessMessage(null);
@@ -124,6 +185,41 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setNewErrorMessage(error.message); console.log(error);
     }
   };
+
+
+  const handleResetChainProviders = async () => {
+    setNewErrorMessage(null);
+    setNewSuccessMessage(null);
+  
+    ethereumRpcRef.current.value = defaultEthereumRpcUrls.join('\\n');
+    polygonRpcRef.current.value = defaultPolygonRpcUrls.join('\\n');
+  
+    const chainProviders = {
+      'eth': {
+        urls: defaultEthereumRpcUrls,
+        chainId: 1,
+      },
+      'matic': {
+        urls: defaultPolygonRpcUrls,
+        chainId: 137,
+      }
+    }
+  
+    try {
+      await setAccount({
+        ...account,
+        plebbitOptions: {
+          ...account.plebbitOptions,
+          chainProviders,
+        },
+      });
+      localStorage.setItem("successToast", "Chain Providers Reset");
+      window.location.reload();
+    } catch (error) {
+      setNewErrorMessage(error.message); console.log(error);
+    }
+  };
+  
 
 
   const handleCloseModal = () => {
@@ -153,10 +249,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
 
   const expandAll = () => {
-    if (expanded.length === 3) {
+    if (expanded.length === 4) {
       setExpanded([]);
     } else {
-      setExpanded([0, 1, 2]);
+      setExpanded([0, 1, 2, 3]);
     }
   };
   
@@ -240,7 +336,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           [
           <button className="all-button" 
           onClick={expandAll} style={{all: "unset", cursor: "pointer"}}>
-            {expanded.length === 3 ? "Collapse All Settings" : "Expand All Settings"}
+            {expanded.length === 4 ? "Collapse All Settings" : "Expand All Settings"}
           </button>
           ]
         </div>
@@ -395,16 +491,40 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               />
             </div>
           </ul>
-          {/* <ul className="settings-cat" style={{ display: expanded.includes(2) ? 'block' : 'none' }}>
-            <li className="settings-option disc">
-              Chain Providers</li>
-            <li className="settings-tip">Optional provider RPC URLs and chain IDs.</li>
-            <ul>
-              <li className="settings-option disc">Ethereum</li>
-              <li className="settings-option disc">Avalanche</li>
-              <li className="settings-option disc">Polygon</li>
-            </ul>
-          </ul> */}
+        </ul>
+        <ul>
+          <li className="settings-cat-lbl">
+            <span className={`${expanded.includes(3) ? 'minus' : 'plus'}`}
+              onClick={() => toggleExpanded(3)}
+            />
+            <span className="settings-pointer" style={{cursor: "pointer"}}
+              onClick={() => toggleExpanded(3)}
+            >Chain Providers</span>
+            <div className="plebbit-options-buttons"
+            style={{ display: expanded.includes(3) ? 'block' : 'none' }}
+            >
+              <button className="save-button" onClick={handleSaveChainProviders}>Save</button>
+              <button className="save-button" onClick={handleResetChainProviders}>Reset</button>
+            </div>
+          </li>
+          <ul className="settings-cat" style={{ display: expanded.includes(3) ? 'block' : 'none' }}>
+            <li className="settings-option disc">Ethereum RPC</li>
+            <li className="settings-tip">Needed for .eth addresses</li>
+            <div className="settings-input">
+              <textarea placeholder="Ethereum RPC URLs" 
+                defaultValue={account?.plebbitOptions?.chainProviders?.['eth']?.urls.join("\n")}
+                ref={ethereumRpcRef} 
+              />
+            </div>
+            <li className="settings-option disc">Polygon RPC</li>
+            <li className="settings-tip">Needed for XPLEB NFTs</li>
+            <div className="settings-input">
+              <textarea placeholder="Polygon RPC URLs" 
+                defaultValue={account?.plebbitOptions?.chainProviders?.['matic']?.urls.join("\n")}
+                ref={polygonRpcRef} 
+              />
+            </div>
+          </ul>
         </ul>
         <div>
           <button
