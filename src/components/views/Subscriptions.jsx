@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useState, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
@@ -22,6 +22,7 @@ import Post from '../Post';
 import PostLoader from '../PostLoader';
 import PostOnHover from '../PostOnHover';
 import StateLabel from '../StateLabel';
+import VerifiedAuthor from '../VerifiedAuthor';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -102,6 +103,8 @@ const Subscriptions = () => {
   const [moderatorPermissions, setModeratorPermissions] = useState({});
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
+  const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
+  const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
   const setSelectedThreadCid = (cid) => {
     selectedThreadCidRef.current = cid;
@@ -115,6 +118,21 @@ const Subscriptions = () => {
 
   const stateString = useFeedStateString(subplebbits);
   
+
+  const handleThumbnailClick = (index, isMobile=false) => {
+    if (isMobile) {
+      setIsMobileThumbnailClicked(prevState => ({
+        ...prevState,
+        [index]: !prevState[index],
+      }));
+    } else {
+      setIsThumbnailClicked(prevState => ({
+        ...prevState,
+        [index]: !prevState[index],
+      }));
+    }
+  };
+
 
   useEffect(() => {
     let permissions = {};
@@ -160,6 +178,14 @@ const Subscriptions = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
+
+
+  useEffect(() => {
+    if (postOnHoverRef.current) {
+      const rect = postOnHoverRef.current.getBoundingClientRect();
+      setPostOnHoverHeight(rect.height);
+    }
+  }, [outOfViewCid]);
 
   
   const errorString = useMemo(() => {
@@ -280,7 +306,8 @@ const Subscriptions = () => {
         setNewSuccessMessage('Challenge Success');
     } 
     else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -291,7 +318,7 @@ const Subscriptions = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -341,7 +368,7 @@ const Subscriptions = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
 
@@ -356,8 +383,8 @@ const Subscriptions = () => {
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
-  const handleAuthorDeleteClick = (cid) => {
-    handleOptionClick(cid);
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
 
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -371,9 +398,10 @@ const Subscriptions = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
                       deleted: true,
                     }));
                     setTriggerPublishCommentEdit(true);
@@ -398,9 +426,9 @@ const Subscriptions = () => {
     setCommentCid(comment.cid);
     setOriginalCommentContent(comment.content);
     setIsEditModalOpen(true);
-  }
-  
-  
+  };
+
+
   useEffect(() => {
     setPublishCommentEditOptions((prevOptions) => ({
       ...prevOptions,
@@ -458,14 +486,6 @@ const Subscriptions = () => {
     navigate(`/p/${selected}`);
   };
 
-  
-  useLayoutEffect(() => {
-    if (postOnHoverRef.current) {
-      const rect = postOnHoverRef.current.getBoundingClientRect();
-      setPostOnHoverHeight(rect.height);
-    }
-  }, [outOfViewCid]);
-  
 
   return (
     <>
@@ -561,11 +581,11 @@ const Subscriptions = () => {
             </div>
               <>
               <div className="board-title">Subscriptions</div>
-              {feed.length < 1 ? (
+              {account?.subscriptions.length < 1 ? (
                 <div className="board-address">You haven't subscribed to any board yet.</div>
               ) : (
                 <div className="board-address">
-                  You have subscribed to {account.subscriptions.length} board{account.subscriptions.length > 1 ? "s" : null}.
+                  You have subscribed to {account?.subscriptions.length} board{account?.subscriptions.length > 1 ? "s" : null}.
                 </div>
               )}
               </>
@@ -591,7 +611,7 @@ const Subscriptions = () => {
             <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
             ]
           </div>
-          {feed.length > 0 ? (
+          {feed ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -607,7 +627,7 @@ const Subscriptions = () => {
         <Tooltip id="tooltip" className="tooltip" />
         <BoardForm selectedStyle={selectedStyle}>
           <div className="board">
-            { feed.length < 1 ? (
+            { !feed ? (
               null
             ) : (
               <Virtuoso
@@ -626,56 +646,110 @@ const Subscriptions = () => {
                         <hr key={`hr-${index}`} />
                         <div key={`pi-${index}`} className="post-info">
                         {commentMediaInfo?.url ? (
-                          <div key={`f-${index}`} className="file" style={{marginBottom: "5px"}}>
-                            <div key={`ft-${index}`} className="file-text">
-                              Link:&nbsp;
-                              <a key={`fa-${index}`} href={commentMediaInfo.url} target="_blank"
-                              rel="noopener noreferrer">{
-                              commentMediaInfo?.url.length > 30 ?
-                              commentMediaInfo?.url.slice(0, 30) + "(...)" :
-                              commentMediaInfo?.url
-                              }</a>&nbsp;({commentMediaInfo?.type})
-                            </div>
-                            {commentMediaInfo?.type === "webpage" ? (
-                              <div key={`enlarge-${index}`} className="img-container">
-                                <span key={`fta-${index}`} className="file-thumb">
-                                  {thread.thumbnailUrl ? (
+                            <div key={`f-${index}`} className="file" style={{marginBottom: "5px"}}>
+                              <div key={`ft-${index}`} className="file-text">
+                                Link:&nbsp;
+                                <a key={`fa-${index}`} href={commentMediaInfo.url} target="_blank"
+                                rel="noopener noreferrer">{
+                                commentMediaInfo?.url.length > 30 ?
+                                commentMediaInfo?.url.slice(0, 30) + "(...)" :
+                                commentMediaInfo?.url
+                                }</a>&nbsp;({commentMediaInfo?.type === "iframe" ? "video" : commentMediaInfo?.type})
+                                {isThumbnailClicked[index] ? (
+                                  <span>
+                                    -[
+                                      <span className='reply-link' 
+                                      style={{textDecoration: 'underline', cursor: 'pointer'}}
+                                      onClick={() => {handleThumbnailClick(index)}}>Close</span>
+                                    ]
+                                  </span>
+                                ) : null}
+                              </div>
+                              {commentMediaInfo?.type === 'iframe' && (
+                                <div key={`enlarge-${index}`}
+                                className={`img-container ${isThumbnailClicked[index] ? 'expanded-container' : ''}`}>
+                                  <span key={`fta-${index}`} className="file-thumb">
+                                    {(isThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
+                                      <iframe 
+                                        className='enlarged'
+                                        key={`fti-${index}`} 
+                                        src={commentMediaInfo.embedUrl}
+                                        width={commentMediaInfo.thumbnail ? "560" : "250"} 
+                                        height="315"
+                                        style={{border: "none"}}
+                                        title="Embedded content"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowFullScreen />
+                                    ) : (
+                                      <img 
+                                        key={`fti-${index}`}
+                                        src={commentMediaInfo.thumbnail} 
+                                        alt="thumbnail"
+                                        onClick={() => {handleThumbnailClick(index)}}
+                                        style={{cursor: "pointer"}}
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
+                                    )}
+                                  </span>
+                                </div>
+                              )}
+                              {commentMediaInfo?.type === "webpage" ? (
+                                <div key={`enlarge-${index}`} className="img-container">
+                                  <span key={`fta-${index}`} className="file-thumb">
+                                    {thread.thumbnailUrl ? (
+                                      <img key={`fti-${index}`} 
+                                      src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+                                      onClick={handleImageClick}
+                                      style={{cursor: "pointer"}}
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
+                                    ) : null}
+                                  </span>
+                                </div>
+                              ) : null}
+                              {commentMediaInfo?.type === "image" ? (
+                                <div key={`enlarge-${index}`} className="img-container">
+                                  <span key={`fta-${index}`} className="file-thumb">
                                     <img key={`fti-${index}`} 
-                                    src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+                                    src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                     onClick={handleImageClick}
                                     style={{cursor: "pointer"}}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
-                                  ) : null}
+                                  </span>
+                                </div>
+                              ) : null}
+                              {commentMediaInfo?.type === "video" ? (
+                              <div key={`enlarge-${index}`} className={`img-container ${isThumbnailClicked[index] ? 'expanded-container' : ''}`}>
+                                <span key={`fta-${index}`} className="file-thumb">
+                                  {isThumbnailClicked[index] ? (
+                                    <video 
+                                      className='enlarged'
+                                      key={`fti-${index}`} 
+                                      src={commentMediaInfo.url} 
+                                      controls
+                                      style={{cursor: "pointer"}}
+                                      onError={(e) => e.target.src = fallbackImgUrl} 
+                                    />
+                                  ) : (
+                                    <video 
+                                      key={`fti-${index}`}
+                                      src={commentMediaInfo.url} 
+                                      alt="thumbnail"
+                                      onClick={() => {handleThumbnailClick(index)}}
+                                      style={{cursor: "pointer"}}
+                                      onError={(e) => e.target.src = fallbackImgUrl} 
+                                    />
+                                  )}
                                 </span>
                               </div>
-                            ) : null}
-                            {commentMediaInfo?.type === "image" ? (
-                              <div key={`enlarge-${index}`} className="img-container">
+                              ) : null}
+                              {commentMediaInfo?.type === "audio" ? (
                                 <span key={`fta-${index}`} className="file-thumb">
-                                  <img key={`fti-${index}`} 
+                                  <audio controls key={`fti-${index}`} 
                                   src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                  onClick={handleImageClick}
-                                  style={{cursor: "pointer"}}
                                   onError={(e) => e.target.src = fallbackImgUrl} />
                                 </span>
-                              </div>
-                            ) : null}
-                            {commentMediaInfo?.type === "video" ? (
-                              <span key={`fta-${index}`} className="file-thumb">
-                                <video controls width="" key={`fti-${index}`} 
-                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                onError={(e) => e.target.src = fallbackImgUrl} />
-                              </span>
-                            ) : null}
-                            {commentMediaInfo?.type === "audio" ? (
-                              <span key={`fta-${index}`} className="file-thumb">
-                                <audio controls key={`fti-${index}`} 
-                                src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                onError={(e) => e.target.src = fallbackImgUrl} />
-                              </span>
-                            ) : null}
-                          </div>
-                        ) : null}
+                              ) : null}
+                            </div>
+                          ) : null}
                           <span key={`nb-${index}`} className="name-block">
                             {thread.title ? (
                               thread.title.length > 75 ?
@@ -709,9 +783,9 @@ const Subscriptions = () => {
                             (u/
                             <span key={`pa-${index}`} className="poster-address address-desktop"
                             id="reply-button" style={{cursor: "pointer"}}
-                              onClick={() => handleAddressClick(thread.author.shortAddress)}
+                              onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                             >
-                              {thread.author.shortAddress}
+                              {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
                             </span>)
                             &nbsp;
                             <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
@@ -786,38 +860,44 @@ const Subscriptions = () => {
                               >
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                  {thread.author.shortAddress === account?.author.shortAddress ? (
+                                  <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                                     <>
-                                      <li onClick={() => {handleAuthorEditClick(thread); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(thread.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
+                                      {authorAddress === account?.author.address || 
+                                      authorAddress === account?.signer.address ? (
+                                        <>
+                                          <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                                          <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                                        </>
+                                      ) : null}
+                                      {isModerator ? (
+                                        <>
+                                          {authorAddress === account?.author.address ||
+                                          authorAddress === account?.signer.address ? (
+                                            null
+                                          ) : (
+                                            <li onClick={() => {
+                                              setSelectedAddress(thread.subplebbitAddress);
+                                              setModeratingCommentCid(thread.cid)
+                                              setIsModerationOpen(true); 
+                                              handleOptionClick(thread.cid);
+                                              setDeletePost(true);
+                                            }}>
+                                              Delete post
+                                            </li>
+                                          )}
+                                          <li
+                                          onClick={() => {
+                                            setSelectedAddress(thread.subplebbitAddress);
+                                            setModeratingCommentCid(thread.cid)
+                                            setIsModerationOpen(true); 
+                                            handleOptionClick(thread.cid);
+                                          }}>
+                                            Mod tools
+                                          </li>
+                                        </>
+                                      ) : null}
                                     </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                      {thread.author.shortAddress === account?.author.shortAddress ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
-                                          setSelectedAddress(thread.subplebbitAddress);
-                                          setModeratingCommentCid(thread.cid)
-                                          setIsModerationOpen(true); 
-                                          handleOptionClick(thread.cid);
-                                          setDeletePost(true);
-                                        }}>
-                                        Delete post
-                                        </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setSelectedAddress(thread.subplebbitAddress);
-                                        setModeratingCommentCid(thread.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(thread.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
-                                    </>
-                                  ) : null}
+                                  )}</VerifiedAuthor>
                                   {(commentMediaInfo && (
                                     commentMediaInfo.type === 'image' || 
                                     (commentMediaInfo.type === 'webpage' && 
@@ -979,7 +1059,7 @@ const Subscriptions = () => {
                                 &nbsp;
                                 <span key={`pa-${index}`} className="poster-address address-desktop"
                                   id="reply-button" style={{cursor: "pointer"}}
-                                  onClick={() => handleAddressClick(reply.author.shortAddress)}
+                                  onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                                 >
                                   (u/
                                     {reply.author?.shortAddress ?
@@ -1074,38 +1154,44 @@ const Subscriptions = () => {
                               >
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  {reply.author.shortAddress === account?.author.shortAddress ? (
+                                  <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
-                                      <li onClick={() => {handleAuthorEditClick(reply); setSelectedAddress(thread.subplebbitAddress);}}>Edit post</li>
-                                      <li onClick={() => {handleAuthorDeleteClick(reply.cid); setSelectedAddress(thread.subplebbitAddress);}}>Delete post</li>
-                                    </>
-                                  ) : null}
-                                  {isModerator ? (
-                                    <>
-                                      {reply.author.shortAddress === account?.author.shortAddress ? (
-                                        null
-                                      ) : (
-                                        <li onClick={() => {
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        <>
+                                          <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                          <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                        </>
+                                      ) : null}
+                                      {isModerator ? (
+                                        <>
+                                          {authorAddress === account?.author.address || 
+                                          authorAddress === account?.signer.address ? (
+                                            null
+                                          ) : (
+                                          <li onClick={() => {
                                           setSelectedAddress(thread.subplebbitAddress);
                                           setModeratingCommentCid(reply.cid)
                                           setIsModerationOpen(true); 
                                           handleOptionClick(reply.cid);
                                           setDeletePost(true);
+                                          }}>
+                                          Delete post
+                                          </li>
+                                        )}
+                                        <li
+                                        onClick={() => {
+                                          setSelectedAddress(thread.subplebbitAddress);
+                                          setModeratingCommentCid(reply.cid)
+                                          setIsModerationOpen(true); 
+                                          handleOptionClick(reply.cid);
                                         }}>
-                                        Delete post
+                                          Mod tools
                                         </li>
-                                      )}
-                                      <li
-                                      onClick={() => {
-                                        setSelectedAddress(thread.subplebbitAddress);
-                                        setModeratingCommentCid(reply.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(reply.cid);
-                                      }}>
-                                        Mod tools
-                                      </li>
+                                      </>
+                                      ) : null}
                                     </>
-                                  ) : null}
+                                  )}</VerifiedAuthor>
                                   {(replyMediaInfo && (
                                     replyMediaInfo.type === 'image' || 
                                     (replyMediaInfo.type === 'webpage' && 
@@ -1497,11 +1583,11 @@ const Subscriptions = () => {
                             &nbsp;
                             <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                               id="reply-button" style={{cursor: "pointer"}}
-                              onClick={() => handleAddressClick(thread.author.shortAddress)}
+                              onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                             >
                               (u/
                               <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                {thread.author.shortAddress}
+                                {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
                               </span>
                               )&nbsp;
                             </span>
@@ -1566,51 +1652,108 @@ const Subscriptions = () => {
                           </span>
                         </div>
                         {thread.link ? (
-                          <div key={`mob-f-${index}`} className="file-mobile">
-                              {commentMediaInfo?.url ? (
-                                commentMediaInfo.type === "webpage" ? (
-                                  <div key={`enlarge-mob-${index}`} className="img-container">
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      {thread.thumbnailUrl ? (
+                            <div key={`mob-f-${index}`} className="file-mobile">
+                              {commentMediaInfo?.type === 'iframe' && (
+                                <div key={`enlarge-mob-${index}`} className="img-container">
+                                  <span key={`mob-fta-${index}`} className="file-thumb-mobile">
+                                    {(isMobileThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
+                                      <div style={{width: "92vw"}}>
+                                        <iframe 
+                                          key={`mob-fti-${index}`} 
+                                          src={commentMediaInfo.embedUrl}
+                                          style={{border: "none", height: "250px"}}
+                                          title="Embedded content"
+                                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                          allowFullScreen />
+                                      </div>
+                                    ) : (
+                                      <img 
+                                        key={`mob-fti-${index}`}
+                                        src={commentMediaInfo.thumbnail} 
+                                        alt="thumbnail"
+                                        onClick={() => {handleThumbnailClick(index, true)}}
+                                        style={{cursor: "pointer"}}
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
+                                    )}
+                                    {commentMediaInfo?.type === "video" || "iframe" ? (
+                                      isMobileThumbnailClicked[index] ? (
+                                        <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                          <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
+                                          onClick={() => {handleThumbnailClick(index, true)}}
+                                          >Close</span>
+                                        </div>
+                                      ) : (
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
+                                    )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
+                                  </span>
+                                </div>
+                              )}
+                                {commentMediaInfo?.url ? (
+                                  commentMediaInfo.type === "webpage" ? (
+                                    <div key={`enlarge-mob-${index}`} className="img-container">
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                        {thread.thumbnailUrl ? (
+                                          <img key={`mob-img-${index}`} 
+                                          src={commentMediaInfo.thumbnail} alt="thumbnail" 
+                                          onClick={handleImageClick}
+                                          style={{cursor: "pointer"}}
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                        ) : null}
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                      </span>
+                                    </div>
+                                  ) : commentMediaInfo.type === "image" ? (
+                                    <div key={`enlarge-mob-${index}`} className="img-container">
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
                                         <img key={`mob-img-${index}`} 
-                                        src={commentMediaInfo.thumbnail} alt="thumbnail" 
+                                        src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                                         onClick={handleImageClick}
                                         style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
-                                      ) : null}
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                  </div>
-                                ) : commentMediaInfo.type === "image" ? (
-                                  <div key={`enlarge-mob-${index}`} className="img-container">
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <img key={`mob-img-${index}`} 
-                                      src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                                      onClick={handleImageClick}
-                                      style={{cursor: "pointer"}}
-                                      onError={(e) => e.target.src = fallbackImgUrl} />
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                  </div>
-                                ) : commentMediaInfo.type === "video" ? (
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <video key={`fti-${index}`} 
-                                      src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                      style={{ pointerEvents: "none" }} 
-                                      onError={(e) => e.target.src = fallbackImgUrl} />
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                ) : commentMediaInfo.type === "audio" ? (
-                                    <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                      <audio key={`mob-img-${index}`} 
-                                      src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                                      onError={(e) => e.target.src = fallbackImgUrl} />
-                                      <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                    </span>
-                                ) : null
-                              ) : null}
-                          </div>
-                        ) : null}
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                      </span>
+                                    </div>
+                                  ) : commentMediaInfo.type === "video" ? (
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                        {isMobileThumbnailClicked[index] ? (
+                                          <video key={`fti-${index}`} 
+                                          src={commentMediaInfo.url} alt={commentMediaInfo.type}
+                                          controls
+                                          style={{ cursor: 'pointer' }} 
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                        ) : (
+                                          <video 
+                                            key={`fti-${index}`}
+                                            src={commentMediaInfo.url} 
+                                            alt="thumbnail"
+                                            onClick={() => {handleThumbnailClick(index, true)}}
+                                            style={{cursor: "pointer"}}
+                                            id="video-thumbnail-mobile"
+                                            onError={(e) => e.target.src = fallbackImgUrl} 
+                                          />
+                                        )}
+                                        {commentMediaInfo?.type === "video" || "iframe" ? (
+                                          isMobileThumbnailClicked[index] ? (
+                                            <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                              <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
+                                              onClick={() => {handleThumbnailClick(index, true)}}
+                                              >Close</span>
+                                            </div>
+                                          ) : (
+                                            <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
+                                        )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
+                                      </span>
+                                  ) : commentMediaInfo.type === "audio" ? (
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                        <audio key={`mob-img-${index}`} 
+                                        src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                                      </span>
+                                  ) : null
+                                ) : null}
+                            </div>
+                          ) : null}
                         {thread.content ? (
                           thread.content?.length > 500 ?
                           <Fragment key={`fragment12-${index}`}>
@@ -1680,7 +1823,7 @@ const Subscriptions = () => {
                               &nbsp;
                               <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                                 id="reply-button" style={{cursor: "pointer"}}
-                                onClick={() => handleAddressClick(reply.author.shortAddress)}
+                                onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                               >
                                 (u/
                                   {reply.author?.shortAddress ?
@@ -2072,7 +2215,7 @@ const Subscriptions = () => {
                 }}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
-                components={{ Footer: hasMore ? () => <PostLoader /> : null }}
+                components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
               />
             )}
           </div>

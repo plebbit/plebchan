@@ -14,6 +14,7 @@ import { TopBar, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled
 import CatalogLoader from '../CatalogLoader';
 import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
+import VerifiedAuthor from '../VerifiedAuthor';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
@@ -146,7 +147,8 @@ const SubscriptionsCatalog = () => {
         setNewSuccessMessage('Challenge Success');
     } 
     else if (challengeVerification.challengeSuccess === false) {
-      setNewErrorMessage('Challenge Failed', {reason: challengeVerification.reason, errors: challengeVerification.errors});
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
     }
   };
 
@@ -157,7 +159,7 @@ const SubscriptionsCatalog = () => {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
     catch (error) {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     }
     if (challengeAnswers) {
       await comment.publishChallengeAnswers(challengeAnswers)
@@ -206,7 +208,7 @@ const SubscriptionsCatalog = () => {
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
-      setNewErrorMessage(error);
+      setNewErrorMessage(error.message); console.log(error);
     },
   });
   
@@ -229,9 +231,10 @@ const SubscriptionsCatalog = () => {
                   onClick={() => {
                     setIsAuthorDelete(true);
                     setIsAuthorEdit(false);
-                    setCommentCid(comment.cid);
                     setPublishCommentEditOptions(prevOptions => ({
                       ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
                       deleted: true,
                     }));
                     setTriggerPublishCommentEdit(true);
@@ -409,7 +412,7 @@ const SubscriptionsCatalog = () => {
             </div>
               <>
               <div className="board-title">Subscriptions</div>
-              {feed.length < 1 ? (
+              {account.subscriptions.length < 1 ? (
                 <div className="board-address">You haven't subscribed to any board yet.</div>
               ) : (
                 <div className="board-address">
@@ -444,7 +447,7 @@ const SubscriptionsCatalog = () => {
               <Link to={`/p/subscriptions`}>Return</Link>
             </span>
           </div>
-          {feed.length > 0 ? (
+          {feed ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -455,7 +458,7 @@ const SubscriptionsCatalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {feed.length > 0 ? (
+          {feed ? (
             <InfiniteScroll
             pageStart={0}
             loadMore={tryLoadMore}
@@ -561,38 +564,44 @@ const SubscriptionsCatalog = () => {
                           >
                             <ul className="post-menu-catalog">
                               <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                              {thread.author.shortAddress === account?.author.shortAddress ? (
+                              <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                                 <>
-                                  <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                  <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                                  {authorAddress === account?.author.address || 
+                                  authorAddress === account?.signer.address ? (
+                                    <>
+                                      <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                                    </>
+                                  ) : null}
+                                  {isModerator ? (
+                                    <>
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        null
+                                      ) : (
+                                        <li onClick={() => {
+                                          setSelectedAddress(thread.subplebbitAddress);
+                                          setModeratingCommentCid(thread.cid)
+                                          setIsModerationOpen(true); 
+                                          handleOptionClick(thread.cid);
+                                          setDeletePost(true);
+                                        }}>
+                                        Delete post
+                                        </li>
+                                      )}
+                                      <li
+                                      onClick={() => {
+                                        setSelectedAddress(thread.subplebbitAddress);
+                                        setModeratingCommentCid(thread.cid)
+                                        setIsModerationOpen(true); 
+                                        handleOptionClick(thread.cid);
+                                      }}>
+                                        Mod tools
+                                      </li>
+                                    </>
+                                  ) : null}
                                 </>
-                              ) : null}
-                              {isModerator ? (
-                                <>
-                                  {thread.author.shortAddress === account?.author.shortAddress ? (
-                                    null
-                                  ) : (
-                                    <li onClick={() => {
-                                      setSelectedAddress(thread.subplebbitAddress);
-                                      setModeratingCommentCid(thread.cid)
-                                      setIsModerationOpen(true); 
-                                      handleOptionClick(thread.cid);
-                                      setDeletePost(true);
-                                    }}>
-                                    Delete post
-                                    </li>
-                                  )}
-                                  <li
-                                  onClick={() => {
-                                    setSelectedAddress(thread.subplebbitAddress);
-                                    setModeratingCommentCid(thread.cid)
-                                    setIsModerationOpen(true); 
-                                    handleOptionClick(thread.cid);
-                                  }}>
-                                    Mod tools
-                                  </li>
-                                </>
-                              ) : null}
+                              )}</VerifiedAuthor>
                               {(commentMediaInfo && (
                                 commentMediaInfo.type === 'image' || 
                                 (commentMediaInfo.type === 'webpage' && 

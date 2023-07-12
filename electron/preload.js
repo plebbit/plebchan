@@ -38,6 +38,9 @@ const defaultPlebbitOptions = {
   ipfsGatewayUrls: ['http://localhost:11028'] || undefined,
 };
 
+// expose a flag to indicate that we are running in electron
+contextBridge.exposeInMainWorld('electron', { isElectron: true });
+
 // expose plebbit-js native functions into electron's renderer
 contextBridge.exposeInMainWorld('plebbitJsNativeFunctions', require('@plebbit/plebbit-js').nativeFunctions.node)
 contextBridge.exposeInMainWorld('defaultPlebbitOptions', defaultPlebbitOptions)

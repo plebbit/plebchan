@@ -117,15 +117,18 @@ const createMainWindow = () => {
         // only open valid https urls to prevent remote execution
         // will throw if url isn't valid
         const validatedUrl = new URL(originalUrl);
-        if (validatedUrl.protocol !== 'https:') {
-          throw Error(`can't open url '${originalUrl}' not https`);
+        let serializedUrl = '';
+
+        // make an exception for ipfs stats
+        if (validatedUrl.toString() === 'http://localhost:5001/webui/') {
+          serializedUrl = validatedUrl.toString();
+        } else if (validatedUrl.protocol === 'https:') {
+          // open serialized url to prevent remote execution
+          serializedUrl = validatedUrl.toString();
+        } else {
+          throw Error(`can't open url '${originalUrl}', it's not https and not the allowed http exception`);
         }
 
-        // do not open http protocol, not private
-        // do not open any other protocol, will lead to remote execution
-
-        // open serialized url to prevent remote execution
-        const serializedUrl = validatedUrl.toString();
         shell.openExternal(serializedUrl);
       } catch (e) {
         console.warn(e);
@@ -136,7 +139,7 @@ const createMainWindow = () => {
   // open links (with target="_blank") in external browser
   // do not open links in plebchan or will lead to remote execution
   mainWindow.webContents.setWindowOpenHandler(({url}) => {
-    const originalUrl = url
+    const originalUrl = url;
     try {
       // do not let the user open any url with shell.openExternal
       // or it will lead to remote execution https://benjamin-altpeter.de/shell-openexternal-dangers/
@@ -144,24 +147,25 @@ const createMainWindow = () => {
       // only open valid https urls to prevent remote execution
       // will throw if url isn't valid
       const validatedUrl = new URL(originalUrl);
-      if (validatedUrl.protocol !== 'https:') {
-        throw Error(`can't open url '${originalUrl}' not https`);
+      let serializedUrl = '';
+
+      // make an exception for ipfs stats
+      if (validatedUrl.toString() === 'http://localhost:5001/webui/') {
+        serializedUrl = validatedUrl.toString();
+      } else if (validatedUrl.protocol === 'https:') {
+        // open serialized url to prevent remote execution
+        serializedUrl = validatedUrl.toString();
+      } else {
+        throw Error(`can't open url '${originalUrl}', it's not https and not the allowed http exception`);
       }
 
-      // do not open http protocol, not private
-      // do not open any other protocol, will lead to remote execution
-
-      // open serialized url to prevent remote execution
-      const serializedUrl = validatedUrl.toString();
       shell.openExternal(serializedUrl);
-      setImmediate(() => {
-        shell.openExternal(serializedUrl)
-      })
     } catch (e) {
       console.warn(e);
     }
-    return {action: 'deny'}
+    return {action: 'deny'};
   })
+
 
   // deny permissions like location, notifications, etc https://www.electronjs.org/docs/latest/tutorial/security#5-handle-session-permission-requests-from-remote-content
   mainWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
