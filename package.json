@@ -50,6 +50,7 @@
     "start": "react-scripts start",
     "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
+    "analyze-bundle": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true react-scripts build && source-map-explorer 'build/static/js/*.js'",
     "electron": "yarn electron:before && electron .",
     "electron:no-delete-data": "yarn electron:before:download-ipfs && electron .",
     "electron:start": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && yarn electron\"",
@@ -125,6 +126,7 @@
     "decompress": "4.2.1",
     "electron": "19.1.8",
     "electron-builder": "23.0.9",
+    "source-map-explorer": "2.5.3",
     "typescript": "5.0.2",
     "wait-on": "7.0.1"
   },
