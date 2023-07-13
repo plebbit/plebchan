@@ -1202,7 +1202,7 @@ const Board = () => {
                               </span>
                               <blockquote>
                                 <div className="custom-paragraph">
-                                  {subplebbit.description}
+                                  <Post content={subplebbit.description} />
                                 </div>
                               </blockquote>
                             </div>
@@ -1255,7 +1255,7 @@ const Board = () => {
                             ) : null}
                             <blockquote className="post-message-mobile">
                               <div className="custom-paragraph">
-                                {subplebbit.description}
+                                <Post content={subplebbit.description} />
                               </div>
                             </blockquote>
                           </div>
