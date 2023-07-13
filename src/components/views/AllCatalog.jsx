@@ -444,7 +444,7 @@ const AllCatalog = () => {
               <Link to={`/p/all`}>Return</Link>
             </span>
           </div>
-          {feed ? (
+          {subplebbits.state === "succeeded" ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>

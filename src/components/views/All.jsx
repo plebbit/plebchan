@@ -602,7 +602,7 @@ const All = () => {
             <Link to={`/p/all/catalog`}>Catalog</Link>
             ]
           </div>
-          {feed ? (
+          {subplebbits.state === "succeeded" ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>

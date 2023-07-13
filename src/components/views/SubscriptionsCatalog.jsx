@@ -448,7 +448,7 @@ const SubscriptionsCatalog = () => {
               <Link to={`/p/subscriptions`}>Return</Link>
             </span>
           </div>
-          {feed ? (
+          {subplebbits.state === "succeeded" ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>

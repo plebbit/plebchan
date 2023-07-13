@@ -861,7 +861,7 @@ const Board = () => {
             {subplebbit?.state === "failed" ? (
               null
             ) : (
-              feed ? (
+              subplebbit?.state === "succeeded" ? (
                 <>
                   {subplebbit.rules ? 
                     <>

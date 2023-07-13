@@ -667,7 +667,7 @@ const Catalog = () => {
             <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
             ]
           </div>
-          {feed ? (
+          {subplebbit.state === "succeeded" ? (
             <>
               <span className="subscribe-button-desktop">
                 [
@@ -701,7 +701,7 @@ const Catalog = () => {
           {subplebbit?.state === "failed" ? (
             null
           ) : (
-            feed ? (
+            subplebbit.state === "succeeded" ? (
                 <InfiniteScroll
                   pageStart={0}
                   loadMore={tryLoadMore}
