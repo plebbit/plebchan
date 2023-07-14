@@ -41,6 +41,7 @@ import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
+let lastVirtuosoStates = {};
 
 
 const Subscriptions = () => {
@@ -85,6 +86,7 @@ const Subscriptions = () => {
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
   const selectedThreadCidRef = useRef(null);
+  const virtuosoRef = useRef();
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -487,6 +489,22 @@ const Subscriptions = () => {
   };
 
 
+  useEffect(() => {
+    const setLastVirtuosoState = () => {
+      virtuosoRef.current?.getState((snapshot) => {
+        if (snapshot?.ranges?.length) {
+          lastVirtuosoStates['subscriptions'] = snapshot;
+        }
+      });
+    };
+    window.addEventListener('scroll', setLastVirtuosoState);
+
+    return () => window.removeEventListener('scroll', setLastVirtuosoState);
+  }, []);
+
+  const lastVirtuosoState = lastVirtuosoStates['subscriptions'];
+
+
   return (
     <>
       <Helmet>
@@ -631,7 +649,7 @@ const Subscriptions = () => {
               null
             ) : (
               <Virtuoso
-                increaseViewportBy={2000}
+                increaseViewportBy={{bottom: 600, top: 600}}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
@@ -2213,6 +2231,9 @@ const Subscriptions = () => {
                 </Fragment>
                   );
                 }}
+                ref={virtuosoRef}
+                restoreStateFrom={lastVirtuosoState}
+                initialScrollTop={lastVirtuosoState?.scrollTop}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
                 components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}

@@ -41,6 +41,7 @@ import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
+let lastVirtuosoStates = {};
 
 
 const All = () => {
@@ -85,6 +86,7 @@ const All = () => {
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
   const selectedThreadCidRef = useRef(null);
+  const virtuosoRef = useRef();
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -484,6 +486,22 @@ const All = () => {
   };
 
 
+  useEffect(() => {
+    const setLastVirtuosoState = () => {
+      virtuosoRef.current?.getState((snapshot) => {
+        if (snapshot?.ranges?.length) {
+          lastVirtuosoStates['all'] = snapshot;
+        }
+      });
+    };
+    window.addEventListener('scroll', setLastVirtuosoState);
+
+    return () => window.removeEventListener('scroll', setLastVirtuosoState);
+  }, []);
+
+  const lastVirtuosoState = lastVirtuosoStates['all'];
+
+
   return (
     <>
       <Helmet>
@@ -620,7 +638,7 @@ const All = () => {
           <div className="board">
             {feed ? (
               <Virtuoso
-                increaseViewportBy={2000}
+                increaseViewportBy={{bottom: 600, top: 600}}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
@@ -2202,6 +2220,9 @@ const All = () => {
                 </Fragment>
                   );
                 }}
+                ref={virtuosoRef}
+                restoreStateFrom={lastVirtuosoState}
+                initialScrollTop={lastVirtuosoState?.scrollTop}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
                 components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
