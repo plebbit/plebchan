@@ -18,6 +18,7 @@ import VerifiedAuthor from '../VerifiedAuthor';
 import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
+import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
@@ -343,9 +344,9 @@ const SubscriptionsCatalog = () => {
           <>
           <span className="boardList">
             [
-              <Link to={`/p/all`}>All</Link>
+              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                / 
-              <Link to={`/p/subscriptions`}>Subscriptions</Link>
+              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -447,7 +448,7 @@ const SubscriptionsCatalog = () => {
               <Link to={`/p/subscriptions`}>Return</Link>
             </span>
           </div>
-          {feed ? (
+          {subplebbits.state === "succeeded" ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -468,6 +469,7 @@ const SubscriptionsCatalog = () => {
               const commentMediaInfo = getCommentMediaInfo(thread);
               const fallbackImgUrl = "assets/filedeleted-res.gif";
               const isModerator = moderatorPermissions[thread.subplebbitAddress];
+              const linkCount = countLinks(thread);
               return (
                   <div key={`thread-${index}`} className="thread" 
                   onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
@@ -526,9 +528,14 @@ const SubscriptionsCatalog = () => {
                     </div>
                     <BoardForm selectedStyle={selectedStyle} 
                     style={{ all: "unset"}}>
-                      <div key={`meta-${index}`} className="meta" title="(R)eplies / (I)mage Replies" >
-                        R:
-                        <b key={`b-${index}`}>{thread.replyCount}</b>
+                      <div key={`meta-${index}`} className="meta" title="(R)eplies / (L)ink Replies" >
+                        R:&nbsp;<b key={`b-${index}`}>{thread.replyCount}</b>
+                        {linkCount > 0 ? (
+                          <>
+                            &nbsp;/
+                            L:&nbsp;<b key={`i-${index}`}>{linkCount}</b>
+                          </>
+                        ) : null}
                       <PostMenu 
                         style={{ display: isHoveringOnThread === thread.cid ? 'inline-block' : 'none',
                         position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
@@ -682,7 +689,7 @@ const SubscriptionsCatalog = () => {
           <>
             <span className="boardList">
               [
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>

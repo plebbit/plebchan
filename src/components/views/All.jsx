@@ -41,12 +41,15 @@ import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
+let lastVirtuosoStates = {};
 
 
 const All = () => {
   const {
     defaultSubplebbits,
     editedComment,
+    feedCacheStates,
+    setFeedCacheState,
     isSettingsOpen, setIsSettingsOpen,
     setModeratingCommentCid,
     selectedAddress,
@@ -85,6 +88,7 @@ const All = () => {
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
   const selectedThreadCidRef = useRef(null);
+  const virtuosoRef = useRef();
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -106,19 +110,25 @@ const All = () => {
   const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
   const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
-  const setSelectedThreadCid = (cid) => {
-    selectedThreadCidRef.current = cid;
-  }
+  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid };
+  const isFeedCached = feedCacheStates['all'];
 
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
   const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'active'});
+  const { feed, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'active'});
   const {subplebbits} = useSubplebbits({subplebbitAddresses: addresses, sortType: 'active'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
   const stateString = useFeedStateString(subplebbits);
   
+
+  useEffect(() => {
+    if (feed.length) {
+      setFeedCacheState('all', true);
+    }
+  }, [feed.length, setFeedCacheState]);
+
 
   const handleThumbnailClick = (index, isMobile=false) => {
     if (isMobile) {
@@ -484,6 +494,22 @@ const All = () => {
   };
 
 
+  useEffect(() => {
+    const setLastVirtuosoState = () => {
+      virtuosoRef.current?.getState((snapshot) => {
+        if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
+          lastVirtuosoStates['all'] = snapshot;
+        }
+      });
+    };
+    window.addEventListener('scroll', setLastVirtuosoState);
+
+    return () => window.removeEventListener('scroll', setLastVirtuosoState);
+  }, []);
+
+  const lastVirtuosoState = lastVirtuosoStates['all'];
+
+
   return (
     <>
       <Helmet>
@@ -512,9 +538,9 @@ const All = () => {
         <>
             <span className="boardList">
               [
-                <Link to={`/p/all`}>All</Link>
+                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -602,7 +628,7 @@ const All = () => {
             <Link to={`/p/all/catalog`}>Catalog</Link>
             ]
           </div>
-          {feed ? (
+          {subplebbits.state === "succeeded" ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -620,7 +646,7 @@ const All = () => {
           <div className="board">
             {feed ? (
               <Virtuoso
-                increaseViewportBy={2000}
+                increaseViewportBy={{bottom: 600, top: 600}}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
@@ -2202,10 +2228,13 @@ const All = () => {
                 </Fragment>
                   );
                 }}
+                ref={virtuosoRef}
+                restoreStateFrom={lastVirtuosoState}
+                initialScrollTop={lastVirtuosoState?.scrollTop}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
-                components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
-              />
+                components={{Footer: () => {return isFeedCached ? null : <PostLoader />}}}
+                />
             ) : (
               <PostLoader />
             )}
@@ -2258,9 +2287,9 @@ const All = () => {
             <>
             <span className="boardList">
             [
-              <Link to={`/p/all`}>All</Link>
+              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                / 
-              <Link to={`/p/subscriptions`}>Subscriptions</Link>
+              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;[
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

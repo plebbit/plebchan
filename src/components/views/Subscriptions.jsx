@@ -41,12 +41,15 @@ import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
+let lastVirtuosoStates = {};
 
 
 const Subscriptions = () => {
   const {
     defaultSubplebbits,
     editedComment,
+    feedCacheStates,
+    setFeedCacheState,
     isSettingsOpen, setIsSettingsOpen,
     setModeratingCommentCid,
     selectedAddress,
@@ -85,6 +88,7 @@ const Subscriptions = () => {
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
   const selectedThreadCidRef = useRef(null);
+  const virtuosoRef = useRef();
 
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -106,18 +110,23 @@ const Subscriptions = () => {
   const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
   const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
-  const setSelectedThreadCid = (cid) => {
-    selectedThreadCidRef.current = cid;
-  }
+  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid };
+  const isFeedCached = feedCacheStates['subscriptions'];
   
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
+  const { feed, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
   const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
 
   const stateString = useFeedStateString(subplebbits);
   
+
+  useEffect(() => {
+    if (feed.length) {
+      setFeedCacheState('subscriptions', true);
+    }
+  }, [feed.length, setFeedCacheState]);
 
   const handleThumbnailClick = (index, isMobile=false) => {
     if (isMobile) {
@@ -487,6 +496,22 @@ const Subscriptions = () => {
   };
 
 
+  useEffect(() => {
+    const setLastVirtuosoState = () => {
+      virtuosoRef.current?.getState((snapshot) => {
+        if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
+          lastVirtuosoStates['subscriptions'] = snapshot;
+        }
+      });
+    };
+    window.addEventListener('scroll', setLastVirtuosoState);
+
+    return () => window.removeEventListener('scroll', setLastVirtuosoState);
+  }, []);
+
+  const lastVirtuosoState = lastVirtuosoStates['subscriptions'];
+
+
   return (
     <>
       <Helmet>
@@ -515,9 +540,9 @@ const Subscriptions = () => {
         <>
             <span className="boardList">
               [
-                <Link to={`/p/all`}>All</Link>
+                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -611,7 +636,7 @@ const Subscriptions = () => {
             <Link to={`/p/subscriptions/catalog`}>Catalog</Link>
             ]
           </div>
-          {feed ? (
+          {subplebbits.state === "succeeded" ? (
             null
           ) : (
             <div id="stats" style={{float: "right", marginTop: "5px"}}>
@@ -631,7 +656,7 @@ const Subscriptions = () => {
               null
             ) : (
               <Virtuoso
-                increaseViewportBy={2000}
+                increaseViewportBy={{bottom: 600, top: 600}}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
@@ -2213,9 +2238,12 @@ const Subscriptions = () => {
                 </Fragment>
                   );
                 }}
+                ref={virtuosoRef}
+                restoreStateFrom={lastVirtuosoState}
+                initialScrollTop={lastVirtuosoState?.scrollTop}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
-                components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
+                components={{Footer: () => {return isFeedCached ? null : <PostLoader />}}}
               />
             )}
           </div>

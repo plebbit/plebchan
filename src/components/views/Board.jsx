@@ -43,6 +43,7 @@ import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
 const {version} = packageJson
+let lastVirtuosoStates = {};
 
 
 const Board = () => {
@@ -51,6 +52,8 @@ const Board = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    feedCacheStates,
+    setFeedCacheState,
     setIsAuthorDelete,
     setIsAuthorEdit,
     setIsCaptchaOpen,
@@ -103,8 +106,9 @@ const Board = () => {
   const quoteRefsMobile = useRef({});
   const postOnHoverRef = useRef(null);
   const selectedThreadCidRef = useRef(null);
+  const virtuosoRef = useRef();
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
+  const { feed, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
@@ -132,9 +136,17 @@ const Board = () => {
   const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
   const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
-  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid;}
+  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid };
+  const isFeedCached = feedCacheStates[selectedAddress];
 
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
+
+
+  useEffect(() => {
+    if (feed.length) {
+      setFeedCacheState(selectedAddress, true);
+    }
+  }, [selectedAddress, setFeedCacheState, feed.length]);
 
 
   useEffect(() => {
@@ -648,7 +660,22 @@ const Board = () => {
   };
 
 
+  useEffect(() => {
+    const setLastVirtuosoState = () => {
+      virtuosoRef.current?.getState((snapshot) => {
+        if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
+          lastVirtuosoStates[selectedAddress] = snapshot;
+        }
+      });
+    };
+    window.addEventListener('scroll', setLastVirtuosoState);
+
+    return () => window.removeEventListener('scroll', setLastVirtuosoState);
+  }, [selectedAddress]);
   
+
+  const lastVirtuosoState = lastVirtuosoStates[selectedAddress];
+
 
   return (
     <>
@@ -683,9 +710,9 @@ const Board = () => {
           <>
             <span className="boardList">
               [
-                <Link to={`/p/all`}>All</Link>
+                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                    / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -861,7 +888,7 @@ const Board = () => {
             {subplebbit?.state === "failed" ? (
               null
             ) : (
-              feed ? (
+              subplebbit?.state === "succeeded" ? (
                 <>
                   {subplebbit.rules ? 
                     <>
@@ -1202,7 +1229,7 @@ const Board = () => {
                               </span>
                               <blockquote>
                                 <div className="custom-paragraph">
-                                  {subplebbit.description}
+                                  <Post content={subplebbit.description} />
                                 </div>
                               </blockquote>
                             </div>
@@ -1255,7 +1282,7 @@ const Board = () => {
                             ) : null}
                             <blockquote className="post-message-mobile">
                               <div className="custom-paragraph">
-                                {subplebbit.description}
+                                <Post content={subplebbit.description} />
                               </div>
                             </blockquote>
                           </div>
@@ -1267,7 +1294,7 @@ const Board = () => {
                     </>
                   : null}
                   <Virtuoso
-                  increaseViewportBy={2000}
+                  increaseViewportBy={{bottom: 600, top: 600}}
                   data={selectedFeed}
                   itemContent={(index, thread) => {
                     const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
@@ -2825,9 +2852,12 @@ const Board = () => {
                       </Fragment>
                     );
                   }}
+                  ref={virtuosoRef}
+                  restoreStateFrom={lastVirtuosoState}
+                  initialScrollTop={lastVirtuosoState?.scrollTop}
                   endReached={tryLoadMore}
                   useWindowScroll={true}
-                  components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
+                  components={{Footer: () => {return isFeedCached ? null : <PostLoader />}}}
                   />
                 </>
               ) : (<PostLoader />)
@@ -2881,9 +2911,9 @@ const Board = () => {
             <>
             <span className="boardList">
               [
-                <Link to={`/p/all`}>All</Link>
+                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (

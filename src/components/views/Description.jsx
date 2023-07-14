@@ -9,6 +9,7 @@ import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import ImageBanner from '../ImageBanner';
+import Post from '../Post';
 import AdminListModal from '../modals/AdminListModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
@@ -138,9 +139,9 @@ const Description = () => {
           <>
           <span className="boardList">
             [
-              <Link to={`/p/all`}>All</Link>
+              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                / 
-              <Link to={`/p/subscriptions`}>Subscriptions</Link>
+              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -357,7 +358,7 @@ const Description = () => {
                     </span>
                     <blockquote>
                       <div className="custom-paragraph">
-                        {subplebbit.description}
+                        <Post content={subplebbit.description} />
                       </div>
                     </blockquote>
                   </div>
@@ -405,7 +406,7 @@ const Description = () => {
                   ) : null}
                   <blockquote className="post-message-mobile">
                     <div className="custom-paragraph">
-                      {subplebbit.description}
+                      <Post content={subplebbit.description} />
                     </div>
                   </blockquote>
                 </div>
@@ -445,9 +446,9 @@ const Description = () => {
             <>
             <span className="boardList">
               [
-                <Link to={`/p/all`}>All</Link>
+                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;
             </span>
             {defaultSubplebbits.map((subplebbit, index) => (
