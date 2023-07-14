@@ -344,9 +344,9 @@ const SubscriptionsCatalog = () => {
           <>
           <span className="boardList">
             [
-              <Link to={`/p/all`}>All</Link>
+              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
                / 
-              <Link to={`/p/subscriptions`}>Subscriptions</Link>
+              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
             ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
@@ -689,7 +689,7 @@ const SubscriptionsCatalog = () => {
           <>
             <span className="boardList">
               [
-                <Link to={`/p/subscriptions`}>Subscriptions</Link>
+                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
               ]&nbsp;[
             {defaultSubplebbits.map((subplebbit, index) => (
               <span className="boardList" key={`span-${subplebbit.address}`}>
