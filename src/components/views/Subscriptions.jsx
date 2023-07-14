@@ -48,6 +48,8 @@ const Subscriptions = () => {
   const {
     defaultSubplebbits,
     editedComment,
+    feedCacheStates,
+    setFeedCacheState,
     isSettingsOpen, setIsSettingsOpen,
     setModeratingCommentCid,
     selectedAddress,
@@ -108,18 +110,23 @@ const Subscriptions = () => {
   const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
   const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
-  const setSelectedThreadCid = (cid) => {
-    selectedThreadCidRef.current = cid;
-  }
+  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid };
+  const isFeedCached = feedCacheStates['subscriptions'];
   
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
+  const { feed, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
   const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
 
   const stateString = useFeedStateString(subplebbits);
   
+
+  useEffect(() => {
+    if (feed.length) {
+      setFeedCacheState('subscriptions', true);
+    }
+  }, [feed.length, setFeedCacheState]);
 
   const handleThumbnailClick = (index, isMobile=false) => {
     if (isMobile) {
@@ -492,7 +499,7 @@ const Subscriptions = () => {
   useEffect(() => {
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot) => {
-        if (snapshot?.ranges?.length) {
+        if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
           lastVirtuosoStates['subscriptions'] = snapshot;
         }
       });
@@ -2236,7 +2243,7 @@ const Subscriptions = () => {
                 initialScrollTop={lastVirtuosoState?.scrollTop}
                 endReached={tryLoadMore}
                 useWindowScroll={true}
-                components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
+                components={{Footer: () => {return isFeedCached ? null : <PostLoader />}}}
               />
             )}
           </div>

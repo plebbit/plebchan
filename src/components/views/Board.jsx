@@ -52,6 +52,8 @@ const Board = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    feedCacheStates,
+    setFeedCacheState,
     setIsAuthorDelete,
     setIsAuthorEdit,
     setIsCaptchaOpen,
@@ -106,7 +108,7 @@ const Board = () => {
   const selectedThreadCidRef = useRef(null);
   const virtuosoRef = useRef();
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
+  const { feed, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
   const stateString = useStateString(subplebbit);
@@ -134,9 +136,17 @@ const Board = () => {
   const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
   const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
-  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid;}
+  const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid };
+  const isFeedCached = feedCacheStates[selectedAddress];
 
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
+
+
+  useEffect(() => {
+    if (feed.length) {
+      setFeedCacheState(selectedAddress, true);
+    }
+  }, [selectedAddress, setFeedCacheState, feed.length]);
 
 
   useEffect(() => {
@@ -653,7 +663,7 @@ const Board = () => {
   useEffect(() => {
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot) => {
-        if (snapshot?.ranges?.length) {
+        if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
           lastVirtuosoStates[selectedAddress] = snapshot;
         }
       });
@@ -662,6 +672,7 @@ const Board = () => {
 
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
   }, [selectedAddress]);
+  
 
   const lastVirtuosoState = lastVirtuosoStates[selectedAddress];
 
@@ -2846,7 +2857,7 @@ const Board = () => {
                   initialScrollTop={lastVirtuosoState?.scrollTop}
                   endReached={tryLoadMore}
                   useWindowScroll={true}
-                  components={{ Footer: hasMore && feed.length > 0 ? () => <PostLoader /> : null }}
+                  components={{Footer: () => {return isFeedCached ? null : <PostLoader />}}}
                   />
                 </>
               ) : (<PostLoader />)
