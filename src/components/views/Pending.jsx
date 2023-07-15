@@ -387,7 +387,7 @@ const Pending = () => {
                           &nbsp;
                         &nbsp;
                         <span className="poster-address">
-                          (u/{account.author?.shortAddress})
+                          (u/{account?.author?.shortAddress})
                         </span>
                         &nbsp;
                         <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
@@ -428,7 +428,7 @@ const Pending = () => {
                             Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${"pending"}`} className="poster-address-mobile">
-                            (u/{account.author?.shortAddress})&nbsp;
+                            (u/{account?.author?.shortAddress})&nbsp;
                           </span>
                           <br key={`mob-br1-${"pending"}`} />
                           {comment.title ? (
