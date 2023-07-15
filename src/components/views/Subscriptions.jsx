@@ -123,7 +123,7 @@ const Subscriptions = () => {
   
 
   useEffect(() => {
-    if (feed.length) {
+    if (feed) {
       setFeedCacheState('subscriptions', true);
     }
   }, [feed.length, setFeedCacheState]);

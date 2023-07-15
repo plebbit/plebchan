@@ -143,7 +143,7 @@ const Board = () => {
 
 
   useEffect(() => {
-    if (feed.length) {
+    if (feed) {
       setFeedCacheState(selectedAddress, true);
     }
   }, [selectedAddress, setFeedCacheState, feed.length]);

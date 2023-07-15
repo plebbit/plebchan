@@ -124,7 +124,7 @@ const All = () => {
   
 
   useEffect(() => {
-    if (feed.length) {
+    if (feed) {
       setFeedCacheState('all', true);
     }
   }, [feed.length, setFeedCacheState]);
