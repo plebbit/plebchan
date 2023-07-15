@@ -146,7 +146,7 @@ const Board = () => {
     if (feed) {
       setFeedCacheState(selectedAddress, true);
     }
-  }, [selectedAddress, setFeedCacheState, feed.length]);
+  }, [selectedAddress, setFeedCacheState, feed]);
 
 
   useEffect(() => {

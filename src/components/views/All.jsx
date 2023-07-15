@@ -127,7 +127,7 @@ const All = () => {
     if (feed) {
       setFeedCacheState('all', true);
     }
-  }, [feed.length, setFeedCacheState]);
+  }, [feed, setFeedCacheState]);
 
 
   const handleThumbnailClick = (index, isMobile=false) => {

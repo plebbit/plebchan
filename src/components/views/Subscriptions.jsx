@@ -126,7 +126,7 @@ const Subscriptions = () => {
     if (feed) {
       setFeedCacheState('subscriptions', true);
     }
-  }, [feed.length, setFeedCacheState]);
+  }, [feed, setFeedCacheState]);
 
   const handleThumbnailClick = (index, isMobile=false) => {
     if (isMobile) {
