@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { useAccount, useAccountComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from '../styled/views/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from '../styled/views/Thread.styled';
@@ -27,7 +27,7 @@ const Pending = () => {
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
-    selectedTitle, setSelectedTitle,
+    setSelectedTitle,
     showPostFormLink
   } = useGeneralStore(state => state);
 
@@ -39,6 +39,8 @@ const Pending = () => {
   const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
   const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
 
+  const subplebbit = useSubplebbit({subplebbitAddress: comment?.subplebbitAddress})
+  const selectedTitle = subplebbit?.title;
 
   const handleThumbnailClick = (index, isMobile=false) => {
     if (isMobile) {
