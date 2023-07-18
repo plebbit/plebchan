@@ -23,6 +23,9 @@ const useStateString = (commentOrSubplebbit) => {
     for (const clientUrl in clients?.ipfsClients) {
       addState(clients.ipfsClients[clientUrl]?.state, clientUrl)
     }
+    for (const clientUrl in clients?.pubsubClients) {
+      addState(clients.pubsubClients[clientUrl]?.state, clientUrl)
+    }
     for (const chainTicker in clients?.chainProviders) {
       for (const clientUrl in clients.chainProviders[chainTicker]) {
         addState(clients.chainProviders[chainTicker][clientUrl]?.state, clientUrl)
