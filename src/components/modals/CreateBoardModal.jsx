@@ -122,18 +122,25 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
               placeholder="Add a rule"
             />
           </div>
-          <fieldset>
-            <legend>
-              <button id="rule-btn" onClick={handleAddRule}>{editIndex > -1 ? "Update Rule" : "Add Rule"}</button>
-            </legend>
-            {rules.map((rule, index) => (
-              <div key={index} className="rule-item">
-                <p>{index+1}. {rule}</p>
-                <button onClick={() => handleEditRule(index)}>Edit</button>
-                <button onClick={() => handleDeleteRule(index)}>Delete</button>
-              </div>
-            ))}
-          </fieldset>
+          <button style={{display: rules.length > 0 ? 'none' : 'block'}} id="rule-btn" className={rules.length > 0 ? "relative" : ""} onClick={handleAddRule}>
+            {editIndex > -1 ? "Update Rule" : "Add Rule"}
+          </button>
+          {rules.length > 0 && (
+            <fieldset>
+              <legend>
+                <button className={rules.length > 0 ? "relative" : ""} onClick={handleAddRule}>
+                  {editIndex > -1 ? "Update Rule" : "Add Rule"}
+                </button>
+              </legend>
+              {rules.map((rule, index) => (
+                <div key={index} className="rule-item">
+                  <p>{index+1}. {rule}</p>
+                  <button onClick={() => handleEditRule(index)}>Edit</button>
+                  <button onClick={() => handleDeleteRule(index)}>Delete</button>
+                </div>
+              ))}
+            </fieldset>
+          )}
           <button id="create-board-btn">Create Board</button>
         </ul>
       </div>
