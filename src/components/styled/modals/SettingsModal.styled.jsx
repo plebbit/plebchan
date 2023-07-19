@@ -373,7 +373,7 @@ export const StyledModal = styled(Modal)`
           }
         }
         
-        button, select {
+        button, select, input, textarea {
           filter: brightness(80%);
         }
         

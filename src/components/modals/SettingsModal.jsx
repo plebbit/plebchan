@@ -51,7 +51,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   ];
 
   const defaultEthereumRpcUrls = [
+    'ethers.js',
     'https://ethrpc.xyz',
+    'viem',
   ];
 
   const defaultPolygonRpcUrls = [
@@ -153,7 +155,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           chainProviders,
         },
       });
-      localStorage.setItem("successToast", "Chain Providers Saved");
+      localStorage.setItem("successToast", "Blockchain Options Saved");
       window.location.reload();
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
@@ -191,8 +193,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     setNewErrorMessage(null);
     setNewSuccessMessage(null);
   
-    ethereumRpcRef.current.value = defaultEthereumRpcUrls.join('\\n');
-    polygonRpcRef.current.value = defaultPolygonRpcUrls.join('\\n');
+    ethereumRpcRef.current.value = defaultEthereumRpcUrls.join('\n');
+    polygonRpcRef.current.value = defaultPolygonRpcUrls.join('\n');
   
     const chainProviders = {
       'eth': {
@@ -213,7 +215,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           chainProviders,
         },
       });
-      localStorage.setItem("successToast", "Chain Providers Reset");
+      localStorage.setItem("successToast", "Blockchain Options Reset");
       window.location.reload();
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
@@ -435,7 +437,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             />
             <span className="settings-pointer" style={{cursor: "pointer"}}
               onClick={() => toggleExpanded(2)}
-            >Plebbit Options</span>
+            >IPFS Options</span>
             <div className="plebbit-options-buttons"
             style={{ display: expanded.includes(2) ? 'block' : 'none' }}
             >
@@ -499,7 +501,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             />
             <span className="settings-pointer" style={{cursor: "pointer"}}
               onClick={() => toggleExpanded(3)}
-            >Chain Providers</span>
+            >Blockchain Options</span>
             <div className="plebbit-options-buttons"
             style={{ display: expanded.includes(3) ? 'block' : 'none' }}
             >
