@@ -115,7 +115,7 @@ const Home = () => {
                     setIsCreateBoardOpen(true)
                   ) : (
                     alert(
-                      'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                      'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                     )
                   )
                 }}
