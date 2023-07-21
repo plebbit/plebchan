@@ -88,7 +88,7 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
               type="text"
               value={boardTitle}
               onChange={(e) => setBoardTitle(e.target.value)}
-              placeholder="Add a title"
+              placeholder="Board Title"
             />
           </div>
           <li className='settings-option disc'>
@@ -104,6 +104,36 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add a description"
+            />
+          </div>
+          <li className='settings-option disc'>
+            Avatar
+          </li>
+          <div className='settings-tip'>
+            Optional, set an image that represents your board.
+          </div>
+          <div className='settings-input'>
+            <input
+              id="name"
+              type="text"
+              value={boardTitle}
+              onChange={(e) => setBoardTitle(e.target.value)}
+              placeholder="https://example.com/image.png"
+            />
+          </div>
+          <li className='settings-option disc'>
+            Moderators
+          </li>
+          <div className='settings-tip'>
+            Optional, let other users help you moderate your board.
+          </div>
+          <div className='settings-input'>
+            <input
+              id="name"
+              type="text"
+              value={boardTitle}
+              onChange={(e) => setBoardTitle(e.target.value)}
+              placeholder='username.eth, 12D3KooW..., username2.eth'
             />
           </div>
           <li className='settings-option disc'>
