@@ -159,14 +159,20 @@ const Catalog = () => {
   
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
-  // temporary title from JSON, gets subplebbitAddress from URL
+
   useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (subplebbitAddress) {
+      setSelectedAddress(subplebbitAddress);
+    } else if (subplebbit?.address) {
+      setSelectedAddress(subplebbit.address)
+    }
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
+    } else if (subplebbit?.title) {
+      setSelectedTitle(subplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, subplebbit?.address, subplebbit?.title]);
 
   // mobile navbar scroll effect
   useEffect(() => {

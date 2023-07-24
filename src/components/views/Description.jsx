@@ -28,7 +28,7 @@ const Description = () => {
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
-    selectedThread, setSelectedThread,
+    selectedThread,
     setSelectedTitle,
   } = useGeneralStore(state => state);
   
@@ -45,7 +45,7 @@ const Description = () => {
   const [openMenuCid, setOpenMenuCid] = useState(null);
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
-  const { subplebbitAddress, threadCid } = useParams();
+  const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   
 
@@ -78,15 +78,19 @@ const Description = () => {
   }, []);
 
 
-  // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
-    setSelectedThread(threadCid);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (subplebbitAddress) {
+      setSelectedAddress(subplebbitAddress);
+    } else if (subplebbit?.address) {
+      setSelectedAddress(subplebbit.address)
+    }
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
+    } else if (subplebbit?.title) {
+      setSelectedTitle(subplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, setSelectedThread, threadCid]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, subplebbit?.address, subplebbit?.title]);
 
   // mobile navbar scroll effect
   useEffect(() => {
