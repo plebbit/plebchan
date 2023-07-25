@@ -96,6 +96,37 @@ const Catalog = () => {
 
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
+  const popupRef = useRef(null);
+  const threadRefs = useRef([]);
+  const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(false);
+
+  useEffect(() => {
+    const calculateSpaceOnRight = () => {
+      feed.forEach((thread, index) => {
+        if (threadRefs.current[index] && popupRef.current) {
+          if (thread.cid === isHoveringOnThread) {
+            const threadRect = threadRefs.current[index].getBoundingClientRect();
+            const popupRect = popupRef.current.getBoundingClientRect();
+  
+            // Get the width of the viewport area inside the browser window
+            const viewportWidth = document.documentElement.clientWidth;
+  
+            // Calculate the space on the right side (relative to the viewport)
+            const spaceOnRight = viewportWidth - (threadRect.left + threadRect.width);
+  
+            // Define the popup width
+            const popupWidth = popupRect.width;
+  
+            // Check if there is enough space for the popup on the right side
+            const EnoughSpaceOnRight = spaceOnRight >= popupWidth;
+            setIsEnoughSpaceOnRight(EnoughSpaceOnRight);
+          }
+        }
+      });
+    };
+
+    calculateSpaceOnRight();
+  }, [isHoveringOnThread, feed]);
 
   useEffect(() => {
     if (subplebbit.roles !== undefined) { 
@@ -494,7 +525,6 @@ const Catalog = () => {
       setNewErrorMessage(error.message); console.log(error);
     }
   };
-
 
   return (
     <>
@@ -909,7 +939,20 @@ const Catalog = () => {
                     return (
                         <div key={`thread-${index}`} className="thread" 
                         onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
-                        onMouseLeave={() => {setIsHoveringOnThread('')}}>
+                        onMouseLeave={() => {setIsHoveringOnThread('')}}
+                        ref={(el) => (threadRefs.current[index] = el)} >
+                            {/* <!-- hovering div --> */}
+                            {isHoveringOnThread == thread.cid ? 
+                            <div ref={popupRef} 
+                            className={isEnoughSpaceOnRight ? "thread_popup_right" : "thread_popup_left"}>
+                              <p style={{color:"white"}}>{thread.title ? `${thread.title} ` : "Posted "}
+                              by 
+                              <span> {thread.author.displayName ? thread.author.displayName : "Anonymous"} </span> 
+                              36 minutes ago</p>
+                              <div>
+                              <p>Last reply by <span>Anonymous</span> 560 days ago</p>
+                              </div>
+                            </div> : null }
                           {commentMediaInfo?.url ? (
                             <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
                             onClick={() => setSelectedThread(thread.cid)}>

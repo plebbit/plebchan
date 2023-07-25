@@ -4,18 +4,46 @@ export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
   margin: 0;
+  background-color:pink;
+  overflow:hidden;
 
   .thread {
     width: 180px;
+    position:relative;
     max-height: 320px;
     vertical-align: top;
     display: inline-block;
     word-wrap: break-word;
-    overflow: hidden;
     margin-top: 5px;
     margin-bottom: 20px;
     padding: 5px 0 3px;
-    position: relative;
+  }
+
+  .thread_popup_right{
+    min-width:200px;
+    height:auto;
+    background-color:black;
+    position:absolute;
+    margin-top:0px;
+    left:100%;
+    right:auto;
+    text-align:left;
+    z-index:10;
+    transform:none;
+    padding-left:5px;
+  }
+  .thread_popup_left{
+    min-width:200px;
+    height:auto;
+    background-color:black;
+    position:absolute;
+    margin-top:0px;
+    right:100%;
+    left:auto;
+    text-align:left;
+    z-index:10;
+    transform:none;
+    padding-left:5px;
   }
 
   video, audio, img {
@@ -76,6 +104,8 @@ export const Threads = styled.div`
   .teaser {
     display: block;
     padding: 0 15px;
+    height:200px;
+    overflow:hidden;
   }
 `;
 
