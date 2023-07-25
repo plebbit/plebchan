@@ -31,6 +31,7 @@ export const Threads = styled.div`
     z-index:10;
     transform:none;
     padding-left:5px;
+    border-radius:3px;
   }
   .thread_popup_left{
     min-width:200px;
@@ -44,8 +45,25 @@ export const Threads = styled.div`
     z-index:10;
     transform:none;
     padding-left:5px;
+    border-radius:3px;
   }
-
+  .thread_popup_content{
+    color: white;
+    display: block;
+    width: auto;
+    min-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .thread_popup_title{
+    color:#a89baa
+  }
+  .thread_popup_author{
+    color:#519860
+  }
+  .thread_popup_authorAdmin{
+    color:#682071;font-weight:bold
+  }
   video, audio, img {
     max-width: 150px;
     max-height: 150px;

@@ -753,6 +753,21 @@ const Catalog = () => {
                     <div className='thread'
                     onMouseOver={() => setIsHoveringOnThread('rules')}
                     onMouseLeave={() => setIsHoveringOnThread('')}>
+                      {/* <!-- hovering div --> */}
+                      {isHoveringOnThread == 'rules' ? 
+                      <div ref={popupRef} 
+                      className={"thread_popup_right"}>
+                        <p className="thread_popup_content" style={{color:"white"}}>
+                        <span className="thread_popup_title">Rules </span>
+                        by 
+                        <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
+                        36 minutes ago</p>
+                        <div>
+                        <p className="thread_popup_content">Last reply by 
+                          <span className="thread_popup_authorAdmin"> Anonymous </span>
+                        560 days ago</p>
+                        </div>
+                      </div> : null }                      
                       <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
                         <div className='meta' title="(R)eplies / (L)ink Replies">
                           R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
@@ -821,6 +836,21 @@ const Catalog = () => {
                     <div className='thread'
                     onMouseOver={() => setIsHoveringOnThread('description')}
                     onMouseLeave={() => setIsHoveringOnThread('')}>
+                      {/* <!-- hovering div --> */}
+                      {isHoveringOnThread == 'description' ? 
+                      <div ref={popupRef} 
+                      className="thread_popup_right">
+                        <p className="thread_popup_content" style={{color:"white"}}>
+                        <span className="thread_popup_title">Welcome to {subplebbit.title || subplebbit.address} </span> 
+                         by  
+                        <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
+                        36 minutes ago</p>
+                        <div> 
+                        <p>Last reply by 
+                          <span className="thread_popup_authorAdmin"> Anonymous </span>
+                        560 days ago</p>
+                        </div>
+                      </div> : null }
                       <Link style={{all: 'unset', cursor: 'pointer'}} to={`/p/${selectedAddress}/description`}>
                         {subplebbit.suggested?.avatarUrl ? (
                           <img className='card'
@@ -945,12 +975,21 @@ const Catalog = () => {
                             {isHoveringOnThread == thread.cid ? 
                             <div ref={popupRef} 
                             className={isEnoughSpaceOnRight ? "thread_popup_right" : "thread_popup_left"}>
-                              <p style={{color:"white"}}>{thread.title ? `${thread.title} ` : "Posted "}
+                              <p className="thread_popup_content">
+                              <span className="thread_popup_title" >
+                                {thread.title ? `${thread.title} ` : "Posted "}
+                              </span>
                               by 
-                              <span> {thread.author.displayName ? thread.author.displayName : "Anonymous"} </span> 
+                              <span className="thread_popup_author"> 
+                              {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
+                              </span> 
                               36 minutes ago</p>
                               <div>
-                              <p>Last reply by <span>Anonymous</span> 560 days ago</p>
+                              {thread.replyCount > 0 ?
+                              <p className="thread_popup_content">
+                              Last reply by <span className="thread_popup_author"> Anonymous </span> 
+                              560 days ago</p>
+                              : null}
                               </div>
                             </div> : null }
                           {commentMediaInfo?.url ? (
