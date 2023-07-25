@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const GridContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+`;
+
 export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
@@ -7,7 +14,7 @@ export const Threads = styled.div`
 
   .thread {
     width: 180px;
-    max-height: 320px;
+    height: 320px;
     vertical-align: top;
     display: inline-block;
     word-wrap: break-word;

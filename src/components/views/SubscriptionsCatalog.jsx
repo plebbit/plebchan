@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
-import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate} from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
+import { VirtuosoGrid } from 'react-virtuoso';
 import { useAccount, useFeed, usePublishCommentEdit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostMenu, BoardForm } from '../styled/views/Board.styled';
-import { Threads, PostMenuCatalog } from '../styled/views/Catalog.styled';
+import { Threads, PostMenuCatalog, GridContainer } from '../styled/views/Catalog.styled';
 import { TopBar, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
 import CatalogLoader from '../CatalogLoader';
 import EditModal from '../modals/EditModal';
@@ -72,7 +72,7 @@ const SubscriptionsCatalog = () => {
   const [moderatorPermissions, setModeratorPermissions] = useState({});
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
+  const { feed, loadMore } = useFeed({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
   const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
   const {subplebbits} = useSubplebbits({subplebbitAddresses: account?.subscriptions, sortType: 'active'});
 
@@ -471,18 +471,18 @@ const SubscriptionsCatalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {feed ? (
-            <InfiniteScroll
-            pageStart={0}
-            loadMore={tryLoadMore}
-            hasMore={hasMore}
-          >
-            {feed.map((thread, index) => {
-              const commentMediaInfo = getCommentMediaInfo(thread);
-              const fallbackImgUrl = "assets/filedeleted-res.gif";
-              const isModerator = moderatorPermissions[thread.subplebbitAddress];
-              const linkCount = countLinks(thread);
-              return (
+          {feed.length > 1 ? (
+            <VirtuosoGrid
+              style={{width: '100%', height: '100%'}}
+              data={feed}
+              increaseViewportBy={{bottom: 600, top: 600}}
+              itemContent={(index) => {
+                const thread = feed[index];
+                const commentMediaInfo = getCommentMediaInfo(thread);
+                const fallbackImgUrl = "assets/filedeleted-res.gif";
+                const isModerator = moderatorPermissions[thread.subplebbitAddress];
+                const linkCount = countLinks(thread);
+                return (
                   <div key={`thread-${index}`} className="thread" 
                   onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
                   onMouseLeave={() => {setIsHoveringOnThread('')}}>
@@ -665,12 +665,14 @@ const SubscriptionsCatalog = () => {
                         {thread.content ? `: ${thread.content}` : null}
                       </div>
                     </Link>
-                  </div>
-              )})}
-          </InfiniteScroll>
-          ) : (
-            <CatalogLoader />
-          )}
+                    </div>
+                )
+              }}
+              endReached={tryLoadMore}
+              useWindowScroll={true}
+              components={{List: GridContainer}}
+            />
+          ) : (<CatalogLoader />)}
         </Threads>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{
