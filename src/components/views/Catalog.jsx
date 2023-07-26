@@ -29,6 +29,7 @@ import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
+import { subscribeWithSelector } from 'zustand/middleware';
 const {version} = packageJson
 
 
@@ -101,6 +102,7 @@ const Catalog = () => {
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(false);
 
   useEffect(() => {
+    console.log(subplebbit)
     const calculateSpaceOnRight = () => {
       feed.forEach((thread, index) => {
         if (threadRefs.current[index] && popupRef.current) {
@@ -526,6 +528,28 @@ const Catalog = () => {
     }
   };
 
+  const timeElapsedCalc = (date) => {
+    const currentDateTime = new Date()
+    const targetToDate = new Date(date * 1000 );  // unix timestamp * 1000
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+    ];
+    const targetDateTime = new Date(`${monthNames[targetToDate.getMonth()]} ${targetToDate.getDate()} ${targetToDate.getFullYear()} ${targetToDate.getHours()}:${targetToDate.getMinutes()}:${targetToDate.getSeconds()}`)
+    const elapsedDateTime = currentDateTime - targetDateTime;
+    const elapsedDay = Math.floor(elapsedDateTime / (1000 * 60 * 60 * 24));
+    const elapsedHour = Math.floor((elapsedDateTime / (1000 * 60 * 60)) % 24);
+    const elapsedMinute = Math.floor((elapsedDateTime / (1000 * 60)) % 60);
+
+    if(elapsedDay > 0){
+      return `${elapsedDay} ${elapsedDay > 0 ? "days" : "day"}`;
+    }else if(elapsedHour > 0 ){
+      return `${elapsedHour} ${elapsedHour > 0 ? "hours" : "hour"}`;
+    }else if(elapsedMinute > 0){
+      return `${elapsedMinute} ${elapsedMinute > 0 ? "minutes" : "minute"}`
+    }
+
+  }
+
   return (
     <>
       <Helmet>
@@ -751,7 +775,7 @@ const Catalog = () => {
                   >
                   {subplebbit.rules ? (
                     <div className='thread'
-                    onMouseOver={() => setIsHoveringOnThread('rules')}
+                    onMouseOver={() => {setTimeout(()=>setIsHoveringOnThread('rules'),500)}} 
                     onMouseLeave={() => setIsHoveringOnThread('')}>
                       {/* <!-- hovering div --> */}
                       {isHoveringOnThread == 'rules' ? 
@@ -761,7 +785,7 @@ const Catalog = () => {
                         <span className="thread_popup_title">Rules </span>
                         by 
                         <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-                        36 minutes ago</p>
+                        {timeElapsedCalc(subplebbit.createdAt)}</p>
                         <div>
                         <p className="thread_popup_content">Last reply by 
                           <span className="thread_popup_authorAdmin"> Anonymous </span>
@@ -834,7 +858,7 @@ const Catalog = () => {
                   ) : null}
                   {subplebbit.description ? (
                     <div className='thread'
-                    onMouseOver={() => setIsHoveringOnThread('description')}
+                    onMouseOver={() => {setTimeout(()=>setIsHoveringOnThread('description'),500)}} 
                     onMouseLeave={() => setIsHoveringOnThread('')}>
                       {/* <!-- hovering div --> */}
                       {isHoveringOnThread == 'description' ? 
@@ -844,9 +868,9 @@ const Catalog = () => {
                         <span className="thread_popup_title">Welcome to {subplebbit.title || subplebbit.address} </span> 
                          by  
                         <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-                        36 minutes ago</p>
+                        {timeElapsedCalc(subplebbit.createdAt)} ago</p>
                         <div> 
-                        <p>Last reply by 
+                        <p className="thread_popup_content">Last reply by 
                           <span className="thread_popup_authorAdmin"> Anonymous </span>
                         560 days ago</p>
                         </div>
@@ -968,7 +992,7 @@ const Catalog = () => {
                     const linkCount = countLinks(thread);
                     return (
                         <div key={`thread-${index}`} className="thread" 
-                        onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
+                        onMouseOver={() => {setTimeout(()=>setIsHoveringOnThread(thread.cid),500)}} 
                         onMouseLeave={() => {setIsHoveringOnThread('')}}
                         ref={(el) => (threadRefs.current[index] = el)} >
                             {/* <!-- hovering div --> */}
@@ -983,12 +1007,12 @@ const Catalog = () => {
                               <span className="thread_popup_author"> 
                               {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
                               </span> 
-                              36 minutes ago</p>
+                              {thread.timestamp ? timeElapsedCalc(thread.timestamp) : null}</p>
                               <div>
                               {thread.replyCount > 0 ?
                               <p className="thread_popup_content">
                               Last reply by <span className="thread_popup_author"> Anonymous </span> 
-                              560 days ago</p>
+                              {timeElapsedCalc(thread.lastReplyTimestamp)} ago</p>
                               : null}
                               </div>
                             </div> : null }

@@ -4,7 +4,6 @@ export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
   margin: 0;
-  background-color:pink;
   overflow:hidden;
 
   .thread {
@@ -30,7 +29,7 @@ export const Threads = styled.div`
     text-align:left;
     z-index:10;
     transform:none;
-    padding-left:5px;
+    padding-left:5px;padding-right:5px;
     border-radius:3px;
   }
   .thread_popup_left{
