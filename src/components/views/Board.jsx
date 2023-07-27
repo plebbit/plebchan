@@ -134,8 +134,10 @@ const Board = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
-  const [isThumbnailClicked, setIsThumbnailClicked] = useState({});
-  const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
+  const [isThreadThumbnailClicked, setIsThreadThumbnailClicked] = useState({});
+  const [isReplyThumbnailClicked, setIsReplyThumbnailClicked] = useState({});
+  const [isMobileThreadThumbnailClicked, setIsMobileThreadThumbnailClicked] = useState({});
+  const [isMobileReplyThumbnailClicked, setIsMobileReplyThumbnailClicked] = useState({});
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
   const setSelectedThreadCid = (cid) => { selectedThreadCidRef.current = cid };
@@ -164,17 +166,34 @@ const Board = () => {
   }, [account?.author.address, subplebbit.roles]);
 
 
-  const handleThumbnailClick = (index, isMobile=false) => {
-    if (isMobile) {
-      setIsMobileThumbnailClicked(prevState => ({
-        ...prevState,
-        [index]: !prevState[index],
-      }));
-    } else {
-      setIsThumbnailClicked(prevState => ({
-        ...prevState,
-        [index]: !prevState[index],
-      }));
+  const handleThumbnailClick = (index, type) => {
+    switch(type) {
+      case 'thread':
+        setIsThreadThumbnailClicked(prevState => ({
+          ...prevState,
+          [index]: !prevState[index],
+        }));
+        break;
+      case 'reply':
+        setIsReplyThumbnailClicked(prevState => ({
+          ...prevState,
+          [index]: !prevState[index],
+        }));
+        break;
+      case 'mobileThread':
+        setIsMobileThreadThumbnailClicked(prevState => ({
+          ...prevState,
+          [index]: !prevState[index],
+        }));
+        break;
+      case 'mobileReply':
+        setIsMobileReplyThumbnailClicked(prevState => ({
+          ...prevState,
+          [index]: !prevState[index],
+        }));
+        break;
+      default:
+        break;
     }
   };
   
@@ -296,14 +315,19 @@ const Board = () => {
   }, [allReplies]);
   
 
-  // temporary title from JSON, gets subplebbitAddress from URL
   useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (subplebbitAddress) {
+      setSelectedAddress(subplebbitAddress);
+    } else if (subplebbit?.address) {
+      setSelectedAddress(subplebbit.address)
+    }
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
+    } else if (subplebbit?.title) {
+      setSelectedTitle(subplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, subplebbit?.address, subplebbit?.title]);
   
   // sets useFeed to address from URL
   useEffect(() => {
@@ -738,7 +762,7 @@ const Board = () => {
                   setIsCreateBoardOpen(true)
                 ) : (
                   alert(
-                    'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                   )
                 )
               }
@@ -770,7 +794,7 @@ const Board = () => {
                         setIsCreateBoardOpen(true)
                       ) : (
                         alert(
-                          'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                          'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                         )
                       )
                     }
@@ -1318,6 +1342,21 @@ const Board = () => {
                     const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                     const commentMediaInfo = getCommentMediaInfo(thread);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
+                    let displayWidth, displayHeight, displayWidthMobile, displayHeightMobile;
+                    if (thread.linkWidth && thread.linkHeight) {
+                        let scale = Math.min(1, 250 / Math.max(thread.linkWidth, thread.linkHeight));
+                        displayWidth = `${thread.linkWidth * scale}px`;
+                        displayHeight = `${thread.linkHeight * scale}px`;
+
+                        scale = Math.min(1, 100 / Math.max(thread.linkWidth, thread.linkHeight));
+                        displayWidthMobile = `${thread.linkWidth * scale}px`;
+                        displayHeightMobile = `${thread.linkHeight * scale}px`;
+                    } else {
+                        displayWidth = '250px';
+                        displayHeight = '250px';
+                        displayWidthMobile = '100px';
+                        displayHeightMobile = '100px';
+                    }
                     return (
                       <Fragment key={`fr-${index}`}>
                         <div key={`t-${index}`} className="thread">
@@ -1335,21 +1374,21 @@ const Board = () => {
                                     commentMediaInfo?.url.slice(0, 30) + "(...)" :
                                     commentMediaInfo?.url
                                     }</a>&nbsp;({commentMediaInfo?.type === "iframe" ? "video" : commentMediaInfo?.type})
-                                    {isThumbnailClicked[index] ? (
+                                    {isThreadThumbnailClicked[index] ? (
                                       <span>
                                         -[
                                           <span className='reply-link' 
                                           style={{textDecoration: 'underline', cursor: 'pointer'}}
-                                          onClick={() => {handleThumbnailClick(index)}}>Close</span>
+                                          onClick={() => {handleThumbnailClick(index, 'thread')}}>Close</span>
                                         ]
                                       </span>
                                     ) : null}
                                   </div>
                                   {commentMediaInfo?.type === 'iframe' && (
                                     <div key={`enlarge-${index}`}
-                                    className={`img-container ${isThumbnailClicked[index] ? 'expanded-container' : ''}`}>
-                                      <span key={`fta-${index}`} className="file-thumb">
-                                        {(isThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
+                                    className={`img-container ${isThreadThumbnailClicked[index] ? 'expanded-container' : ''}`}>
+                                      <span key={`fta-${index}`} className="file-thumb" style={isThreadThumbnailClicked[index] ? {} : {width: displayWidth, height: displayHeight}}>
+                                        {(isThreadThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
                                           <iframe 
                                             className='enlarged'
                                             key={`fti-${index}`} 
@@ -1365,7 +1404,7 @@ const Board = () => {
                                             key={`fti-${index}`}
                                             src={commentMediaInfo.thumbnail} 
                                             alt="thumbnail"
-                                            onClick={() => {handleThumbnailClick(index)}}
+                                            onClick={() => {handleThumbnailClick(index, 'thread')}}
                                             style={{cursor: "pointer"}}
                                             onError={(e) => e.target.src = fallbackImgUrl} />
                                         )}
@@ -1374,11 +1413,11 @@ const Board = () => {
                                   )}
                                   {commentMediaInfo?.type === "webpage" ? (
                                     <div key={`enlarge-${index}`} className="img-container">
-                                      <span key={`fta-${index}`} className="file-thumb">
+                                      <span key={`fta-${index}`} className="file-thumb" style={isThreadThumbnailClicked[index] ? {} : {width: displayWidth, height: displayHeight}}>
                                         {thread.thumbnailUrl ? (
                                           <img key={`fti-${index}`} 
                                           src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
-                                          onClick={handleImageClick}
+                                          onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'thread')}}
                                           style={{cursor: "pointer"}}
                                           onError={(e) => e.target.src = fallbackImgUrl} />
                                         ) : null}
@@ -1387,19 +1426,19 @@ const Board = () => {
                                   ) : null}
                                   {commentMediaInfo?.type === "image" ? (
                                     <div key={`enlarge-${index}`} className="img-container">
-                                      <span key={`fta-${index}`} className="file-thumb">
+                                      <span key={`fta-${index}`} className="file-thumb" style={isThreadThumbnailClicked[index] ? {} : {width: displayWidth, height: displayHeight}}>
                                         <img key={`fti-${index}`} 
                                         src={commentMediaInfo.url} alt={commentMediaInfo.type}
-                                        onClick={handleImageClick}
+                                        onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'thread')}}
                                         style={{cursor: "pointer"}}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
                                       </span>
                                     </div>
                                   ) : null}
                                   {commentMediaInfo?.type === "video" ? (
-                                  <div key={`enlarge-${index}`} className={`img-container ${isThumbnailClicked[index] ? 'expanded-container' : ''}`}>
-                                    <span key={`fta-${index}`} className="file-thumb">
-                                      {isThumbnailClicked[index] ? (
+                                  <div key={`enlarge-${index}`} className={`img-container ${isThreadThumbnailClicked[index] ? 'expanded-container' : ''}`}>
+                                    <span key={`fta-${index}`} className="file-thumb" style={isThreadThumbnailClicked[index] ? {} : {width: displayWidth, height: displayHeight}}>
+                                      {isThreadThumbnailClicked[index] ? (
                                         <video 
                                           className='enlarged'
                                           key={`fti-${index}`} 
@@ -1413,7 +1452,7 @@ const Board = () => {
                                           key={`fti-${index}`}
                                           src={commentMediaInfo.url} 
                                           alt="thumbnail"
-                                          onClick={() => {handleThumbnailClick(index)}}
+                                          onClick={() => {handleThumbnailClick(index, 'thread')}}
                                           style={{cursor: "pointer"}}
                                           onError={(e) => e.target.src = fallbackImgUrl} 
                                         />
@@ -1422,7 +1461,7 @@ const Board = () => {
                                   </div>
                                   ) : null}
                                   {commentMediaInfo?.type === "audio" ? (
-                                    <span key={`fta-${index}`} className="file-thumb">
+                                    <span key={`fta-${index}`} className="file-thumb" style={isThreadThumbnailClicked[index] ? {} : {width: displayWidth, height: displayHeight}}>
                                       <audio controls key={`fti-${index}`} 
                                       src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                       onError={(e) => e.target.src = fallbackImgUrl} />
@@ -1727,6 +1766,15 @@ const Board = () => {
                             if (storedSigners[reply.parentCid]) {
                               signerAddress = storedSigners[reply.parentCid].address;
                             }
+                            let replyDisplayWidth, replyDisplayHeight;
+                            if (reply.linkWidth && reply.linkHeight) {
+                                const scale = Math.min(1, 125 / Math.max(reply.linkWidth, reply.linkHeight));
+                                replyDisplayWidth = `${reply.linkWidth * scale}px`;
+                                replyDisplayHeight = `${reply.linkHeight * scale}px`;
+                            } else {
+                                replyDisplayWidth = '125px';
+                                replyDisplayHeight = '125px';
+                            }
                             return (
                               <Fragment key={`fr-reply-${index}`}>
                                 <div key={`rc-${index}`} className="reply-container">
@@ -1972,11 +2020,11 @@ const Board = () => {
                                         </div>
                                         {replyMediaInfo?.type === "webpage" ? (
                                           <div key={`enlarge-reply-${index}`} className="img-container">
-                                            <span key={`fta-${index}`} className="file-thumb-reply">
+                                            <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
                                               {reply.thumbnailUrl ? (
                                                 <img key={`fti-${index}`}
                                                 src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type}
-                                                onClick={handleImageClick}
+                                                onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'reply')}}
                                                 style={{cursor: "pointer"}}
                                                 onError={(e) => e.target.src = fallbackImgUrl} />
                                               ) : null}
@@ -1985,17 +2033,17 @@ const Board = () => {
                                         ) : null}
                                         {replyMediaInfo?.type === "image" ? (
                                           <div key={`enlarge-reply-${index}`} className="img-container">
-                                            <span key={`fta-${index}`} className="file-thumb-reply">
+                                            <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
                                               <img key={`fti-${index}`}
                                               src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                              onClick={handleImageClick}
+                                              onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'reply')}}
                                               style={{cursor: "pointer"}}
                                               onError={(e) => e.target.src = fallbackImgUrl} />
                                             </span>
                                           </div>
                                         ) : null}
                                         {replyMediaInfo?.type === "video" ? (
-                                          <span key={`fta-${index}`} className="file-thumb-reply">
+                                          <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
                                             <video controls
                                             key={`fti-${index}`} 
                                             src={replyMediaInfo.url} alt={replyMediaInfo.type} 
@@ -2003,7 +2051,7 @@ const Board = () => {
                                           </span>
                                         ) : null}
                                         {replyMediaInfo?.type === "audio" ? (
-                                          <span key={`fta-${index}`} className="file-thumb-reply">
+                                          <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
                                             <audio controls 
                                             key={`fti-${index}`}
                                             src={replyMediaInfo.url} alt={replyMediaInfo.type} 
@@ -2323,8 +2371,8 @@ const Board = () => {
                                 <div key={`mob-f-${index}`} className="file-mobile">
                                   {commentMediaInfo?.type === 'iframe' && (
                                     <div key={`enlarge-mob-${index}`} className="img-container">
-                                      <span key={`mob-fta-${index}`} className="file-thumb-mobile">
-                                        {(isMobileThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
+                                      <span key={`mob-fta-${index}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
+                                        {(isMobileThreadThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
                                           <div style={{width: "92vw"}}>
                                             <iframe 
                                               key={`mob-fti-${index}`} 
@@ -2339,15 +2387,15 @@ const Board = () => {
                                             key={`mob-fti-${index}`}
                                             src={commentMediaInfo.thumbnail} 
                                             alt="thumbnail"
-                                            onClick={() => {handleThumbnailClick(index, true)}}
+                                            onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
                                             style={{cursor: "pointer"}}
                                             onError={(e) => e.target.src = fallbackImgUrl} />
                                         )}
                                         {commentMediaInfo?.type === "video" || "iframe" ? (
-                                          isMobileThumbnailClicked[index] ? (
+                                          isMobileThreadThumbnailClicked[index] ? (
                                             <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                               <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
-                                              onClick={() => {handleThumbnailClick(index, true)}}
+                                              onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
                                               >Close</span>
                                             </div>
                                           ) : (
@@ -2359,11 +2407,11 @@ const Board = () => {
                                     {commentMediaInfo?.url ? (
                                       commentMediaInfo.type === "webpage" ? (
                                         <div key={`enlarge-mob-${index}`} className="img-container">
-                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px'}}>
                                             {thread.thumbnailUrl ? (
                                               <img key={`mob-img-${index}`} 
                                               src={commentMediaInfo.thumbnail} alt="thumbnail" 
-                                              onClick={handleImageClick}
+                                              onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'mobileThread')}}
                                               style={{cursor: "pointer"}}
                                               onError={(e) => e.target.src = fallbackImgUrl} />
                                             ) : null}
@@ -2372,18 +2420,18 @@ const Board = () => {
                                         </div>
                                       ) : commentMediaInfo.type === "image" ? (
                                         <div key={`enlarge-mob-${index}`} className="img-container">
-                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px'}}>
                                             <img key={`mob-img-${index}`} 
                                             src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                                            onClick={handleImageClick}
+                                            onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'mobileThread')}}
                                             style={{cursor: "pointer"}}
                                             onError={(e) => e.target.src = fallbackImgUrl} />
                                             <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
                                           </span>
                                         </div>
                                       ) : commentMediaInfo.type === "video" ? (
-                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
-                                            {isMobileThumbnailClicked[index] ? (
+                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
+                                            {isMobileThreadThumbnailClicked[index] ? (
                                               <video key={`fti-${index}`} 
                                               src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                               controls
@@ -2394,17 +2442,17 @@ const Board = () => {
                                                 key={`fti-${index}`}
                                                 src={commentMediaInfo.url} 
                                                 alt="thumbnail"
-                                                onClick={() => {handleThumbnailClick(index, true)}}
+                                                onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
                                                 style={{cursor: "pointer"}}
                                                 id="video-thumbnail-mobile"
                                                 onError={(e) => e.target.src = fallbackImgUrl} 
                                               />
                                             )}
                                             {commentMediaInfo?.type === "video" || "iframe" ? (
-                                              isMobileThumbnailClicked[index] ? (
+                                              isMobileThreadThumbnailClicked[index] ? (
                                                 <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                                   <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
-                                                  onClick={() => {handleThumbnailClick(index, true)}}
+                                                  onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
                                                   >Close</span>
                                                 </div>
                                               ) : (
@@ -2412,7 +2460,7 @@ const Board = () => {
                                             )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
                                           </span>
                                       ) : commentMediaInfo.type === "audio" ? (
-                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile">
+                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px'}}>
                                             <audio key={`mob-img-${index}`} 
                                             src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                                             onError={(e) => e.target.src = fallbackImgUrl} />
@@ -2554,11 +2602,11 @@ const Board = () => {
                                       {replyMediaInfo?.url ? (
                                         replyMediaInfo.type === "webpage" ? (
                                           <div key={`enlarge-mob-reply-${index}`} className="img-container">
-                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
                                               {reply.thumbnailUrl ? (
                                                 <img key={`mob-img-${index}`} 
                                                 src={replyMediaInfo.thumbnail} alt="thumbnail" 
-                                                onClick={handleImageClick}
+                                                onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'mobileReply')}}
                                                 style={{cursor: "pointer"}}
                                                 onError={(e) => e.target.src = fallbackImgUrl} />
                                               ) : null}
@@ -2567,17 +2615,17 @@ const Board = () => {
                                           </div>
                                         ) : replyMediaInfo.type === "image" ? (
                                           <div key={`enlarge-mob-reply-${index}`} className="img-container">
-                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
                                               <img key={`mob-img-${index}`} 
                                               src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                              onClick={handleImageClick}
+                                              onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'mobileReply')}}
                                               style={{cursor: "pointer"}}
                                               onError={(e) => e.target.src = fallbackImgUrl} />
                                               <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                             </span>
                                           </div>
                                         ) : replyMediaInfo.type === "video" ? (
-                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
                                                 <video key={`fti-${index}`} 
                                                 src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                                 style={{ pointerEvents: "none" }}
@@ -2585,7 +2633,7 @@ const Board = () => {
                                               <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                             </span>
                                         ) : replyMediaInfo.type === "audio" ? (
-                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
                                               <audio key={`mob-img-${index}`} 
                                               src={replyMediaInfo.url} alt={replyMediaInfo.type} 
                                               onError={(e) => e.target.src = fallbackImgUrl} />
@@ -2950,7 +2998,7 @@ const Board = () => {
                       setIsCreateBoardOpen(true)
                     ) : (
                       alert(
-                        'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                        'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                       )
                     )
                   }

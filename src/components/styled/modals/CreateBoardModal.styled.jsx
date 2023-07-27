@@ -71,10 +71,17 @@ export const StyledModal = styled(Modal)`
     font-size: 0.8em;
   }
 
+  #rule {
+    
+  }
+
+  #rule-btn {
+    margin-left: 281px;
+  }
 
   fieldset {
-    margin-left: 24px;
-    width: auto;
+    margin-left: 5px;
+    width: 90%;
   }
 
   legend {

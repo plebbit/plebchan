@@ -1905,6 +1905,7 @@ export const BoardForm = styled.div`
     .file-thumb {
       float: left;
       margin: 3px 20px 5px 20px;
+      background-color: rgba(0, 0, 0, 0.1);
     }
 
     .reply-file-text {
