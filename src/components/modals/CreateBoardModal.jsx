@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAccount, useCreateSubplebbit, useSubplebbits, useAccountSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useCreateSubplebbit, 
+  // useSubplebbits, useAccountSubplebbits
+ } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from '../styled/modals/CreateBoardModal.styled';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
@@ -154,10 +156,10 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
   }
 
   // remove after testing:
-  const {accountSubplebbits} = useAccountSubplebbits()
-  const ownerSubplebbitAddresses = Object.keys(accountSubplebbits).map(subplebbitAddress => accountSubplebbits[subplebbitAddress].role === 'owner')
-  const subplebbits = useSubplebbits({subplebbitAddresses: ownerSubplebbitAddresses})
-  console.log(subplebbits);
+  // const {accountSubplebbits} = useAccountSubplebbits()
+  // const ownerSubplebbitAddresses = Object.keys(accountSubplebbits).map(subplebbitAddress => accountSubplebbits[subplebbitAddress].role === 'owner')
+  // const subplebbits = useSubplebbits({subplebbitAddresses: ownerSubplebbitAddresses})
+  // console.log(subplebbits);
 
   return (
     <StyledModal
