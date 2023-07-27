@@ -55,7 +55,7 @@ const getCommentMediaInfo = (comment) => {
         };
       }
 
-      const mime = extName(url.pathname.replace('/', ''))[0]?.mime;
+      const mime = extName(url.pathname.toLowerCase().replace('/', ''))[0]?.mime;
 
       if (mime?.startsWith('image')) {
         return {
