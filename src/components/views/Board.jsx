@@ -2017,6 +2017,16 @@ const Board = () => {
                                           replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                           replyMediaInfo?.url
                                           }</a>&nbsp;({replyMediaInfo?.type})
+                                          {replyMediaInfo?.type === "video" || "iframe" ? (
+                                              isReplyThumbnailClicked[index] ? (
+                                                <span>
+                                                  -[
+                                                    <span className='reply-link' 
+                                                    style={{textDecoration: 'underline', cursor: 'pointer'}}
+                                                    onClick={() => {handleThumbnailClick(index, 'reply')}}>Close</span>
+                                                  ]
+                                                </span>) : null)
+                                            : null}
                                         </div>
                                         {replyMediaInfo?.type === "webpage" ? (
                                           <div key={`enlarge-reply-${index}`} className="img-container">
@@ -2043,12 +2053,29 @@ const Board = () => {
                                           </div>
                                         ) : null}
                                         {replyMediaInfo?.type === "video" ? (
+                                          <div key={`enlarge-reply-${index}`} className={`img-container ${isReplyThumbnailClicked[index] ? 'expanded-container' : ''}`}>
                                           <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
-                                            <video controls
-                                            key={`fti-${index}`} 
-                                            src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                            onError={(e) => e.target.src = fallbackImgUrl} />
+                                            {isReplyThumbnailClicked[index] ? (
+                                              <video controls
+                                                className='enlarged'
+                                                key={`fti-${index}`} 
+                                                src={replyMediaInfo.url} 
+                                                alt={replyMediaInfo.type} 
+                                                style={{cursor: "pointer"}}
+                                                onError={(e) => e.target.src = fallbackImgUrl} 
+                                              />
+                                            ) : (
+                                              <video
+                                                key={`fti-${index}`} 
+                                                src={replyMediaInfo.url}
+                                                alt="thumbnail"
+                                                onClick={() => {handleThumbnailClick(index, 'reply')}}
+                                                style={{cursor: "pointer"}}
+                                                onError={(e) => e.target.src = fallbackImgUrl} 
+                                              />
+                                            )}
                                           </span>
+                                        </div>
                                         ) : null}
                                         {replyMediaInfo?.type === "audio" ? (
                                           <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
