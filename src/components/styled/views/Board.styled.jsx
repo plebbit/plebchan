@@ -1905,7 +1905,7 @@ export const BoardForm = styled.div`
     .file-thumb {
       float: left;
       margin: 3px 20px 5px 20px;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.05);
     }
 
     .reply-file-text {
@@ -2850,7 +2850,7 @@ export const BoardForm = styled.div`
       }
 
       .file-thumb {
-        background-color: rgba(255, 255, 255, 0.05) !important;
+        background-color: rgba(255, 255, 255, 0.01) !important;
       }
 
       .op-container {
