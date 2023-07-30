@@ -228,7 +228,7 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
             Optional, let other users help you moderate your board.
           </div>
           <div className='settings-input'>
-            <input
+            <textarea
               id="name"
               type="text"
               value={moderators}
