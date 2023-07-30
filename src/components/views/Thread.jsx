@@ -41,7 +41,7 @@ import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
-const {version} = packageJson
+const { version } = packageJson
 
 
 const Thread = () => {
@@ -73,7 +73,7 @@ const Thread = () => {
   } = useGeneralStore(state => state);
 
   const { anonymousMode } = useAnonModeStore();
-  
+
   const account = useAccount();
   const navigate = useNavigate();
   const handleClickForm = useClickForm();
@@ -106,10 +106,10 @@ const Thread = () => {
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
-  const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [openMenuCid, setOpenMenuCid] = useState(null);
   const [outOfViewCid, setOutOfViewCid] = useState(null);
-  const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
+  const [outOfViewPosition, setOutOfViewPosition] = useState({ top: 0, left: 0 });
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
@@ -121,9 +121,9 @@ const Thread = () => {
 
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
-  const comment = useComment({commentCid: selectedThread});
+  const comment = useComment({ commentCid: selectedThread });
   const { subplebbitAddress, threadCid } = useParams();
-  const subplebbit = useSubplebbit({subplebbitAddress: comment.subplebbitAddress});
+  const subplebbit = useSubplebbit({ subplebbitAddress: comment.subplebbitAddress });
   const selectedAddress = subplebbit.address;
 
   const stateString = useStateString(comment);
@@ -159,17 +159,17 @@ const Thread = () => {
 
 
   useEffect(() => {
-    if (subplebbit.roles !== undefined) { 
+    if (subplebbit.roles !== undefined) {
       const role = subplebbit.roles[account?.author?.address]?.role;
-  
+
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
         setIsModerator(true);
       } else {
         setIsModerator(false);
       }
     }
-  }, [account?.author.address, subplebbit.roles]);  
-  
+  }, [account?.author.address, subplebbit.roles]);
+
 
   const handleOptionClick = () => {
     setOpenMenuCid(null);
@@ -187,7 +187,7 @@ const Thread = () => {
     } else {
       document.removeEventListener('click', handleOutsideClick);
     }
-    
+
     return () => {
       document.removeEventListener('click', handleOutsideClick);
     };
@@ -201,14 +201,14 @@ const Thread = () => {
     }
   }, [outOfViewCid]);
 
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
 
   useEffect(() => {
-    if ( comment.state === "failed" && selectedAddress === undefined) {
+    if (comment.state === "failed" && selectedAddress === undefined) {
       navigate('/404');
     }
   }, [selectedAddress, navigate, comment.state]);
@@ -232,7 +232,7 @@ const Thread = () => {
   }, [errorString, setNewErrorMessage]);
 
 
-  const flattenedReplies = useMemo(() => 
+  const flattenedReplies = useMemo(() =>
     flattenCommentsPages(comment.replies), [comment.replies]
   );
 
@@ -244,7 +244,7 @@ const Thread = () => {
   }), [flattenedReplies, selectedThread]);
 
 
-  const { accountComments } = useAccountComments({filter});
+  const { accountComments } = useAccountComments({ filter });
 
 
   const accountRepliesNotYetInCommentReplies = useMemo(() => {
@@ -255,7 +255,7 @@ const Thread = () => {
 
   const sortedReplies = useMemo(() => [
     ...accountRepliesNotYetInCommentReplies, ...flattenedReplies
-    ].sort((a, b) => a.timestamp - b.timestamp
+  ].sort((a, b) => a.timestamp - b.timestamp
   ), [accountRepliesNotYetInCommentReplies, flattenedReplies]);
 
   // let post.jsx access full cid of user-typed short cid
@@ -292,13 +292,13 @@ const Thread = () => {
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
     }, 50);
-  
+
     window.addEventListener('scroll', debouncedHandleScroll);
-  
+
     return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [prevScrollPos, visible]);
 
-  
+
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
       if (challengeVerification.publication?.cid !== undefined) {
@@ -316,7 +316,7 @@ const Thread = () => {
   const onChallenge = async (challenges, comment) => {
     setPendingComment(comment);
     let challengeAnswers = [];
-    
+
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
     }
@@ -328,7 +328,7 @@ const Thread = () => {
     }
   };
 
-  
+
   useEffect(() => {
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
@@ -336,7 +336,7 @@ const Thread = () => {
     }));
   }, [comment.subplebbitAddress]);
 
-  
+
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: comment.subplebbitAddress,
     onChallenge,
@@ -356,7 +356,7 @@ const Thread = () => {
     }
   }, [index, setPendingCommentIndex]);
 
-  
+
   const resetFields = useCallback(() => {
     if (nameRef.current) {
       nameRef.current.value = '';
@@ -380,8 +380,8 @@ const Thread = () => {
       setNewErrorMessage("Please enter a comment or link.");
       return;
     }
-  
-    
+
+
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
       author: {
@@ -395,28 +395,28 @@ const Thread = () => {
     setTriggerPublishComment(true);
   };
 
-  
+
   const updateSigner = useCallback(async () => {
     if (anonymousMode) {
       setExecuteAnonMode(true);
-  
+
       let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
       let signer;
-  
+
       if (!storedSigners[selectedThread]) {
         signer = await account?.plebbit.createSigner();
         storedSigners[selectedThread] = { privateKey: signer?.privateKey, address: signer?.address };
         localStorage.setItem('storedSigners', JSON.stringify(storedSigners));
       } else {
         const signerPrivateKey = storedSigners[selectedThread].privateKey;
-          
+
         try {
-          signer = await account?.plebbit.createSigner({type: 'ed25519', privateKey: signerPrivateKey});
+          signer = await account?.plebbit.createSigner({ type: 'ed25519', privateKey: signerPrivateKey });
         } catch (error) {
           console.log(error);
         }
       }
-        
+
       setPublishCommentOptions(prevPublishCommentOptions => {
         const newPublishCommentOptions = {
           ...prevPublishCommentOptions,
@@ -426,23 +426,23 @@ const Thread = () => {
             address: signer?.address
           },
         };
-  
+
         if (JSON.stringify(prevPublishCommentOptions) !== JSON.stringify(newPublishCommentOptions)) {
           return newPublishCommentOptions;
         }
-  
+
         return prevPublishCommentOptions;
       });
     }
   }, [selectedThread, anonymousMode, account]);
-  
+
   useEffect(() => {
     if (anonymousMode) {
       updateSigner();
     }
   }, [updateSigner, anonymousMode]);
-  
-  
+
+
   useEffect(() => {
     if (publishCommentOptions && triggerPublishComment) {
       (async () => {
@@ -457,16 +457,16 @@ const Thread = () => {
 
   const getChallengeAnswersFromUser = async (challenges) => {
     setChallengesArray(challenges);
-    
+
     return new Promise((resolve, reject) => {
       const imageString = challenges?.challenges[0].challenge;
       const imageSource = `data:image/png;base64,${imageString}`;
       const challengeImg = new Image();
       challengeImg.src = imageSource;
-  
+
       challengeImg.onload = () => {
         setIsCaptchaOpen(true);
-  
+
         const handleKeyDown = async (event) => {
           if (event.key === 'Enter') {
             const currentCaptchaResponse = captchaResponse;
@@ -482,7 +482,7 @@ const Thread = () => {
 
         setResolveCaptchaPromise(resolve);
       };
-  
+
       challengeImg.onerror = () => {
         reject(setNewErrorMessage('Could not load challenges'));
       };
@@ -500,8 +500,8 @@ const Thread = () => {
       setNewErrorMessage(error.message); console.log(error);
     },
   });
-  
-  
+
+
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
 
@@ -548,8 +548,8 @@ const Thread = () => {
     setOriginalCommentContent(comment.content);
     setIsEditModalOpen(true);
   }
-  
-  
+
+
   useEffect(() => {
     setPublishCommentEditOptions((prevOptions) => ({
       ...prevOptions,
@@ -565,7 +565,7 @@ const Thread = () => {
     }
   }, [editedComment]);
 
-  
+
   useEffect(() => {
     let isActive = true;
     if (publishCommentEditOptions && triggerPublishCommentEdit) {
@@ -604,70 +604,70 @@ const Thread = () => {
   return (
     <>
       <Helmet>
-          <title>
-            {(
-              (comment.content?.slice(0, 40) ?? comment.title?.slice(0, 40) ?? "Thread") + " - " 
-              + (selectedTitle ? selectedTitle : selectedAddress) 
-              + " - plebchan"
-            )}
-          </title>
-        </Helmet>
+        <title>
+          {(
+            (comment.content?.slice(0, 40) ?? comment.title?.slice(0, 40) ?? "Thread") + " - "
+            + (selectedTitle ? selectedTitle : selectedAddress)
+            + " - plebchan"
+          )}
+        </title>
+      </Helmet>
       <Container>
         <CreateBoardModal
-        selectedStyle={selectedStyle}
-        isOpen={isCreateBoardOpen}
-        closeModal={() => setIsCreateBoardOpen(false)} />
-        <ReplyModal 
-        selectedStyle={selectedStyle}
-        isOpen={isReplyOpen}
-        closeModal={() => setIsReplyOpen(false)} />
+          selectedStyle={selectedStyle}
+          isOpen={isCreateBoardOpen}
+          closeModal={() => setIsCreateBoardOpen(false)} />
+        <ReplyModal
+          selectedStyle={selectedStyle}
+          isOpen={isReplyOpen}
+          closeModal={() => setIsReplyOpen(false)} />
         <SettingsModal
-        selectedStyle={selectedStyle}
-        isOpen={isSettingsOpen}
-        closeModal={() => setIsSettingsOpen(false)} />
-        <ModerationModal 
-        selectedStyle={selectedStyle}
-        isOpen={isModerationOpen}
-        closeModal={() => {setIsModerationOpen(false); setDeletePost(false)}}
-        deletePost={deletePost} />
+          selectedStyle={selectedStyle}
+          isOpen={isSettingsOpen}
+          closeModal={() => setIsSettingsOpen(false)} />
+        <ModerationModal
+          selectedStyle={selectedStyle}
+          isOpen={isModerationOpen}
+          closeModal={() => { setIsModerationOpen(false); setDeletePost(false) }}
+          deletePost={deletePost} />
         <EditModal
-        selectedStyle={selectedStyle}
-        isOpen={isEditModalOpen}
-        closeModal={() => setIsEditModalOpen(false)}
-        originalCommentContent={originalCommentContent} />
+          selectedStyle={selectedStyle}
+          isOpen={isEditModalOpen}
+          closeModal={() => setIsEditModalOpen(false)}
+          originalCommentContent={originalCommentContent} />
         <NavBar selectedStyle={selectedStyle}>
           <>
-          <span className="boardList">
-            [
+            <span className="boardList">
+              [
               <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
-               / 
+              /
               <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
-            ]&nbsp;[
-            {defaultSubplebbits.map((subplebbit, index) => (
-              <span className="boardList" key={`span-${subplebbit.address}`}>
-                {index === 0 ? null : "\u00a0"}
-                <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => {
-                setSelectedTitle(subplebbit.title);
-                setSelectedAddress(subplebbit.address);
-                }}
-                >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                {index !== defaultSubplebbits.length - 1 ? " /" : null}
-              </span>
-            ))}
-            ]
-          </span>
+              ]&nbsp;[
+              {defaultSubplebbits.map((subplebbit, index) => (
+                <span className="boardList" key={`span-${subplebbit.address}`}>
+                  {index === 0 ? null : "\u00a0"}
+                  <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => {
+                    setSelectedTitle(subplebbit.title);
+                    setSelectedAddress(subplebbit.address);
+                  }}
+                  >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                  {index !== defaultSubplebbits.length - 1 ? " /" : null}
+                </span>
+              ))}
+              ]
+            </span>
             <span className="nav">
               [
-              <span id="button-span" style={{cursor: 'pointer'}} onClick={
-              () => {
-                window.electron && window.electron.isElectron ? (
-                  setIsCreateBoardOpen(true)
-                ) : (
-                  alert(
-                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
+              <span id="button-span" style={{ cursor: 'pointer' }} onClick={
+                () => {
+                  window.electron && window.electron.isElectron ? (
+                    setIsCreateBoardOpen(true)
+                  ) : (
+                    alert(
+                      'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    )
                   )
-                )
-              }
+                }
               }>Create Board</span>
               ]
               [
@@ -686,20 +686,20 @@ const Thread = () => {
                     <option value="all">All</option>
                     <option value="subscriptions">Subscriptions</option>
                     {defaultSubplebbits.map(subplebbit => (
-                        <option key={`option-${subplebbit.address}`} value={subplebbit.address}
-                        >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
-                      ))}
-                  </select> 
-                  <span id="button-span" style={{cursor: 'pointer'}} onClick={
-                  () => alert(
-                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
+                      <option key={`option-${subplebbit.address}`} value={subplebbit.address}
+                      >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
+                    ))}
+                  </select>
+                  <span id="button-span" style={{ cursor: 'pointer' }} onClick={
+                    () => alert(
+                      'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
                     )
                   }>Create Board</span>
                 </div>
                 <div className="page-jump">
                   <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                   &nbsp;
-                  <Link to="/" onClick={() => {handleStyleChange({target: {value: "Yotsuba"}}); window.scrollTo(0, 0);}}>Home</Link>
+                  <Link to="/" onClick={() => { handleStyleChange({ target: { value: "Yotsuba" } }); window.scrollTo(0, 0); }}>Home</Link>
                 </div>
               </div>
             </div>
@@ -712,43 +712,43 @@ const Thread = () => {
             <div className="banner">
               <ImageBanner />
             </div>
-              <>
+            <>
               <div className="board-title">{subplebbit.title ?? null}</div>
               <div className="board-address">p/{subplebbit.address}
-                <OfflineIndicator 
-                address={subplebbit.address} 
-                className="offline"
-                tooltipPlace="top" />
+                <OfflineIndicator
+                  address={subplebbit.address}
+                  className="offline"
+                  tooltipPlace="top" />
               </div>
-              </>
+            </>
           </>
         </Header>
         <Break selectedStyle={selectedStyle} />
         <PostForm selectedStyle={selectedStyle} name="post" action="" method="post" enctype="multipart/form-data">
           <ReplyFormLink id="post-form-link" showReplyFormLink={showPostFormLink} selectedStyle={selectedStyle} >
             <div id="return-button-mobile">
-              <span className="btn-wrap" onClick={()=> {window.scrollTo(0, 0)}}>
+              <span className="btn-wrap" onClick={() => { window.scrollTo(0, 0) }}>
                 <Link to={`/p/${selectedAddress}`}>Return</Link>
               </span>
             </div>
             <div id="catalog-button-mobile">
               <span className="btn-wrap">
-                <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
+                <Link to={`/p/${selectedAddress}/catalog`} onClick={() => { window.scrollTo(0, 0) }}>Catalog</Link>
               </span>
             </div>
             <div id="bottom-button-mobile">
               <span className="btn-wrap">
-                <span style={{cursor: 'pointer'}} onClick={() => window.scrollTo(0, document.body.scrollHeight)} onMouseOver={(event) => event.target.style.cursor='pointer'}>Bottom</span>
+                <span style={{ cursor: 'pointer' }} onClick={() => window.scrollTo(0, document.body.scrollHeight)} onMouseOver={(event) => event.target.style.cursor = 'pointer'}>Bottom</span>
               </span>
             </div>
             <div id="post-form-link-desktop">
               [
-                <Link to={`/p/${subplebbitAddress}/c/${selectedThread}/post`} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
+              <Link to={`/p/${subplebbitAddress}/c/${selectedThread}/post`} onClick={() => { handleClickForm(); setSelectedShortCid(comment.shortCid) }} onMouseOver={(event) => event.target.style.cursor = 'pointer'}>Post a Reply</Link>
               ]
             </div>
             <div id="post-form-link-mobile">
               <span className="btn-wrap">
-                <Link to={`/p/${subplebbitAddress}/c/${selectedThread}/post`} onClick={() => {handleClickForm(); setSelectedShortCid(comment.shortCid)}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</Link>
+                <Link to={`/p/${subplebbitAddress}/c/${selectedThread}/post`} onClick={() => { handleClickForm(); setSelectedShortCid(comment.shortCid) }} onMouseOver={(event) => event.target.style.cursor = 'pointer'}>Post a Reply</Link>
               </span>
             </div>
           </ReplyFormLink>
@@ -762,8 +762,8 @@ const Thread = () => {
                   ) : (
                     <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
                   )}
-                  <input id="post-button" type="submit" value="Post" tabIndex={6} 
-                  onClick={handleSubmit} />
+                  <input id="post-button" type="submit" value="Post" tabIndex={6}
+                    onClick={handleSubmit} />
                 </td>
               </tr>
               <tr data-type="Comment">
@@ -789,7 +789,7 @@ const Thread = () => {
           <hr />
           <span className="style-changer">
             Style:
-             
+
             <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
               <option value="Yotsuba">Yotsuba</option>
               <option value="Yotsuba-B">Yotsuba B</option>
@@ -804,16 +804,23 @@ const Thread = () => {
             <Link to={`/p/${selectedAddress}`}>Return</Link>
             ]
           </span>
+          <span className="return-button catalog-button" id="refresh-button-desktop">
+            [
+            <span id="button" style={{ cursor: 'pointer' }} onClick={() => window.location.reload()}
+              onMouseOver={(event) => event.target.style.cursor = 'pointer'}
+              onTouchStart={() => window.location.reload()}>Refresh</span>
+            ]
+          </span>
           <span className="return-button catalog-button" id="catalog-button-desktop">
             [
             <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
             ]
           </span>
-          <span className="return-button catalog-button" id="bottom-button-desktop">
+          <span className="return-button catalog-button" id="bottom-button-desktop-thread">
             [
-            <span id="button" style={{cursor: 'pointer'}} onClick={() =>  window.scrollTo(0, document.body.scrollHeight)} 
-            onMouseOver={(event) => event.target.style.cursor='pointer'} 
-            onTouchStart={() =>  window.scrollTo(0, document.body.scrollHeight)}>Bottom</span>
+            <span id="button" style={{ cursor: 'pointer' }} onClick={() => window.scrollTo(0, document.body.scrollHeight)}
+              onMouseOver={(event) => event.target.style.cursor = 'pointer'}
+              onTouchStart={() => window.scrollTo(0, document.body.scrollHeight)}>Bottom</span>
             ]
           </span>
           {comment ? (
@@ -954,249 +961,256 @@ const Thread = () => {
                       <span className="name-block">
                           {comment.title ? (
                             comment.title.length > 75 ?
-                            <>
-                              <span key={`q-${comment.cid}`} className="title"
-                              data-tooltip-id="tooltip"
-                              data-tooltip-content={comment.title}
-                              data-tooltip-place="top">
-                                {comment.title.slice(0, 75) + " (...)"}
-                              </span>
-                            </>
-                          : <span key={`q-${comment.cid}`} className="title">
-                            {comment.title}
-                            </span>) 
-                          : null}
-                        &nbsp;
-                        {comment?.author?.displayName
-                          ? comment?.author?.displayName.length > 20
-                          ? <>
-                              <span key={`n-${comment.cid}`} className="name"
-                              data-tooltip-id="tooltip"
-                              data-tooltip-content={comment?.author?.displayName}
-                              data-tooltip-place="top">
-                                {comment?.author?.displayName.slice(0, 20) + " (...)"}
-                              </span>
-                            </> 
-                            : <span key={`n-${comment.cid}`} className="name">
-                              {comment?.author?.displayName}</span>
-                          : <span key={`n-${comment.cid}`} className="name">
-                            Anonymous</span>}
+                              <>
+                                <span key={`q-${comment.cid}`} className="title"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={comment.title}
+                                  data-tooltip-place="top">
+                                  {comment.title.slice(0, 75) + " (...)"}
+                                </span>
+                              </>
+                              : <span key={`q-${comment.cid}`} className="title">
+                                {comment.title}
+                              </span>)
+                            : null}
                           &nbsp;
-                        &nbsp;
-                        <span className="poster-address address-desktop"
-                          id="reply-button" style={{cursor: "pointer"}}
-                          onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}>
-                          (u/
+                          {comment?.author?.displayName
+                            ? comment?.author?.displayName.length > 20
+                              ? <>
+                                <span key={`n-${comment.cid}`} className="name"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={comment?.author?.displayName}
+                                  data-tooltip-place="top">
+                                  {comment?.author?.displayName.slice(0, 20) + " (...)"}
+                                </span>
+                              </>
+                              : <span key={`n-${comment.cid}`} className="name">
+                                {comment?.author?.displayName}</span>
+                            : <span key={`n-${comment.cid}`} className="name">
+                              Anonymous</span>}
+                          &nbsp;
+                          &nbsp;
+                          <span className="poster-address address-desktop"
+                            id="reply-button" style={{ cursor: "pointer" }}
+                            onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}>
+                            (u/
                             <span key={`pa-${comment.cid}`} className="poster-address">
-                            {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
-                          </span>)
-                        </span>
-                        &nbsp;
-                        <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
-                        &nbsp;
-                        <span className="post-number post-number-desktop">
-                          <span>c/</span>
-                          <Link to={() => {}} id="reply-button" style={{ cursor: 'pointer' }} 
-                          onClick={() => {
-                            let text = document.getSelection().toString();
-                            text = text ? `>${text}` : text;
-                            setSelectedText(text);
-                            if (isReplyOpen) {
-                              setReplyQuoteCid(comment.shortCid);
-                              setTriggerInsertion(Date.now());
-                            } else {
-                              setIsReplyOpen(true); 
-                              setSelectedShortCid(comment.shortCid);
-                              setSelectedParentCid(comment.cid); 
-                            }}} title="Reply to this post">{comment.shortCid}</Link>
-                        </span>&nbsp;
-                        {comment.pinned ? (
-                          <>
-                            &nbsp;
-                            <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                            style={{marginBottom: "-1px",
-                            imageRendering: "pixelated",}} />
-                          </>
-                        ) : null}
-                        {comment.locked ? (
-                          <>
-                            &nbsp;
-                            <img src="assets/closed.gif" alt="Closed" title="Closed"
-                            style={{marginBottom: "-1px",
-                            imageRendering: "pixelated",}} />
-                          </>
-                        ) : null}
-                        <PostMenu 
-                          key={`pmb-${index}`} 
-                          title="Post menu"
-                          ref={el => { 
-                            threadMenuRefs.current[comment.cid] = el; 
-                            postMenuRef.current = el; 
-                          }}
-                          className='post-menu-button' 
-                          rotated={openMenuCid === comment.cid}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            const rect = threadMenuRefs.current[comment.cid].getBoundingClientRect();
-                            setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                            setOpenMenuCid(prevCid => (prevCid === comment.cid ? null : comment.cid));
-                          }}                              
-                        >
-                          ▶
-                        </PostMenu>
-                        {createPortal(
-                          <PostMenuCatalog selectedStyle={selectedStyle} 
-                          ref={el => {postMenuCatalogRef.current = el}}
-                          onClick={(event) => event.stopPropagation()}
-                          style={{position: "absolute", 
-                          top: menuPosition.top + 7, 
-                          left: menuPosition.left}}>
-                          <div className={`post-menu-thread post-menu-thread-${comment.cid}`}
-                          style={{ display: openMenuCid === comment.cid ? 'block' : 'none' }}
+                              {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
+                            </span>)
+                          </span>
+                          &nbsp;
+                          <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
+                          &nbsp;
+                          <span className="post-number post-number-desktop">
+                            <span>c/</span>
+                            <Link to={() => { }} id="reply-button" style={{ cursor: 'pointer' }}
+                              onClick={() => {
+                                let text = document.getSelection().toString();
+                                text = text ? `>${text}` : text;
+                                setSelectedText(text);
+                                if (isReplyOpen) {
+                                  setReplyQuoteCid(comment.shortCid);
+                                  setTriggerInsertion(Date.now());
+                                } else {
+                                  setIsReplyOpen(true);
+                                  setSelectedShortCid(comment.shortCid);
+                                  setSelectedParentCid(comment.cid);
+                                }
+                              }} title="Reply to this post">{comment.shortCid}</Link>
+                          </span>&nbsp;
+                          {comment.pinned ? (
+                            <>
+                              &nbsp;
+                              <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
+                                style={{
+                                  marginBottom: "-1px",
+                                  imageRendering: "pixelated",
+                                }} />
+                            </>
+                          ) : null}
+                          {comment.locked ? (
+                            <>
+                              &nbsp;
+                              <img src="assets/closed.gif" alt="Closed" title="Closed"
+                                style={{
+                                  marginBottom: "-1px",
+                                  imageRendering: "pixelated",
+                                }} />
+                            </>
+                          ) : null}
+                          <PostMenu
+                            key={`pmb-${index}`}
+                            title="Post menu"
+                            ref={el => {
+                              threadMenuRefs.current[comment.cid] = el;
+                              postMenuRef.current = el;
+                            }}
+                            className='post-menu-button'
+                            rotated={openMenuCid === comment.cid}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              const rect = threadMenuRefs.current[comment.cid].getBoundingClientRect();
+                              setMenuPosition({ top: rect.top + window.scrollY, left: rect.left });
+                              setOpenMenuCid(prevCid => (prevCid === comment.cid ? null : comment.cid));
+                            }}
                           >
-                            <ul className="post-menu-catalog">
-                              <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
-                              <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (
-                                <>
-                                  {authorAddress === account?.author.address || 
-                                  authorAddress === account?.signer.address ? (
-                                    <>
-                                      <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
-                                      <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
-                                    </>
-                                  ) : null}
-                                  {isModerator ? (
+                            ▶
+                          </PostMenu>
+                          {createPortal(
+                            <PostMenuCatalog selectedStyle={selectedStyle}
+                              ref={el => { postMenuCatalogRef.current = el }}
+                              onClick={(event) => event.stopPropagation()}
+                              style={{
+                                position: "absolute",
+                                top: menuPosition.top + 7,
+                                left: menuPosition.left
+                              }}>
+                              <div className={`post-menu-thread post-menu-thread-${comment.cid}`}
+                                style={{ display: openMenuCid === comment.cid ? 'block' : 'none' }}
+                              >
+                                <ul className="post-menu-catalog">
+                                  <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
+                                  <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (
                                     <>
                                       {authorAddress === account?.author.address ||
-                                      authorAddress === account?.signer.address ? (
-                                        null
-                                      ) : (
-                                      <li onClick={() => {
-                                        setModeratingCommentCid(comment.cid)
-                                        setIsModerationOpen(true); 
-                                        handleOptionClick(comment.cid);
-                                        setDeletePost(true);
-                                      }}>
-                                      Delete post
-                                      </li>
-                                    )}
+                                        authorAddress === account?.signer.address ? (
+                                        <>
+                                          <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
+                                          <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
+                                        </>
+                                      ) : null}
+                                      {isModerator ? (
+                                        <>
+                                          {authorAddress === account?.author.address ||
+                                            authorAddress === account?.signer.address ? (
+                                            null
+                                          ) : (
+                                            <li onClick={() => {
+                                              setModeratingCommentCid(comment.cid)
+                                              setIsModerationOpen(true);
+                                              handleOptionClick(comment.cid);
+                                              setDeletePost(true);
+                                            }}>
+                                              Delete post
+                                            </li>
+                                          )}
+                                          <li
+                                            onClick={() => {
+                                              setModeratingCommentCid(comment.cid)
+                                              setIsModerationOpen(true);
+                                              handleOptionClick(comment.cid);
+                                            }}>
+                                            Mod tools
+                                          </li>
+                                        </>
+                                      ) : null}
+                                    </>
+                                  )}</VerifiedAuthor>
+                                  {(commentMediaInfo && (
+                                    commentMediaInfo.type === 'image' ||
+                                    (commentMediaInfo.type === 'webpage' &&
+                                      commentMediaInfo.thumbnail))) ? (
                                     <li
-                                    onClick={() => {
-                                      setModeratingCommentCid(comment.cid)
-                                      setIsModerationOpen(true); 
-                                      handleOptionClick(comment.cid);
-                                    }}>
-                                      Mod tools
+                                      onMouseOver={() => { setIsImageSearchOpen(true) }}
+                                      onMouseLeave={() => { setIsImageSearchOpen(false) }}>
+                                      Image search »
+                                      <ul className="dropdown-menu post-menu-catalog"
+                                        style={{ display: isImageSearchOpen ? 'block' : 'none' }}>
+                                        <li onClick={() => handleOptionClick(comment.cid)}>
+                                          <a
+                                            href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                          >Google</a>
+                                        </li>
+                                        <li onClick={() => handleOptionClick(comment.cid)}>
+                                          <a
+                                            href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                          >Yandex</a>
+                                        </li>
+                                        <li onClick={() => handleOptionClick(comment.cid)}>
+                                          <a
+                                            href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer"
+                                          >SauceNAO</a>
+                                        </li>
+                                      </ul>
                                     </li>
-                                  </>
-                                ) : null}
-                              </>
-                            )}</VerifiedAuthor>
-                              {(commentMediaInfo && (
-                                commentMediaInfo.type === 'image' || 
-                                (commentMediaInfo.type === 'webpage' && 
-                                commentMediaInfo.thumbnail))) ? ( 
-                                  <li 
-                                  onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                  onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                                    Image search »
-                                    <ul className="dropdown-menu post-menu-catalog"
-                                      style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                      <li onClick={() => handleOptionClick(comment.cid)}>
-                                        <a 
-                                        href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Google</a>
-                                      </li>
-                                      <li onClick={() => handleOptionClick(comment.cid)}>
-                                        <a
-                                        href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Yandex</a>
-                                      </li>
-                                      <li onClick={() => handleOptionClick(comment.cid)}>
-                                        <a
-                                        href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                                        target="_blank" rel="noreferrer"
-                                        >SauceNAO</a>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                ) : null
-                              }
-                            </ul>
-                          </div>
-                          </PostMenuCatalog>, document.body
-                        )}
-                        <div key={`bi-${index}`} id="backlink-id" className="backlink">
-                          {comment.replies?.pages?.topAll.comments
-                            .sort((a, b) => a.timestamp - b.timestamp)
-                            .map((reply, index) => (
-                              <div key={`div-${index}`} style={{display: 'inline-block'}} 
-                              ref={el => {
-                                backlinkRefs.current[reply.cid] = el;
-                              }}>
-                              <Link key={`ql-${index}`}
-                              to={() => {}} className="quote-link" 
-                              onClick={(event) => handleQuoteClick(reply, null, event)}
-                              onMouseOver={(event) => {
-                                event.stopPropagation();
-                                handleQuoteHover(reply, null, () => {
-                                  setOutOfViewCid(reply.cid);
-                                  const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                  const distanceToRight = window.innerWidth - rect.right;
-                                  const distanceToTop = rect.top;
-                                  const distanceToBottom = window.innerHeight - rect.bottom;
-                                  let top;
-
-                                  if (distanceToTop < postOnHoverHeight / 2) {
-                                    top = window.scrollY - 5;
-                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                  } else {
-                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  ) : null
                                   }
-                                
-                                  if (distanceToRight < 200) {
-                                    setOutOfViewPosition({
-                                      top,
-                                      right: window.innerWidth - rect.left - 10,
-                                      maxWidth: rect.left - 5
-                                    });
-                                  } else {
-                                    setOutOfViewPosition({
-                                      top,
-                                      left: rect.left + rect.width + 5,
-                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                    });
-                                  }
-                                });
-                              }}
-                              onMouseLeave={() => {
-                                removeHighlight();
-                                setOutOfViewCid(null);
-                              }}>
-                                c/{reply.shortCid}</Link>
-                                &nbsp;
+                                </ul>
                               </div>
-                            ))
-                          }
-                        </div>
-                      </span>
-                      <blockquote key={`blockquote-${comment.cid}`}>
-                        <Post content={comment.content} comment={comment} key={`post-${comment.cid}`} />
-                        <EditLabel key={`edit-label-thread-${index}`} 
-                        commentCid={comment.cid}
-                        className="ttl"/>
-                        <StateLabel key={`state-label-thread-${index}`}
-                        commentIndex={comment.index}
-                        className="ttl ellipsis"/>
-                      </blockquote>
+                            </PostMenuCatalog>, document.body
+                          )}
+                          <div key={`bi-${index}`} id="backlink-id" className="backlink">
+                            {comment.replies?.pages?.topAll.comments
+                              .sort((a, b) => a.timestamp - b.timestamp)
+                              .map((reply, index) => (
+                                <div key={`div-${index}`} style={{ display: 'inline-block' }}
+                                  ref={el => {
+                                    backlinkRefs.current[reply.cid] = el;
+                                  }}>
+                                  <Link key={`ql-${index}`}
+                                    to={() => { }} className="quote-link"
+                                    onClick={(event) => handleQuoteClick(reply, null, event)}
+                                    onMouseOver={(event) => {
+                                      event.stopPropagation();
+                                      handleQuoteHover(reply, null, () => {
+                                        setOutOfViewCid(reply.cid);
+                                        const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                        const distanceToRight = window.innerWidth - rect.right;
+                                        const distanceToTop = rect.top;
+                                        const distanceToBottom = window.innerHeight - rect.bottom;
+                                        let top;
+
+                                        if (distanceToTop < postOnHoverHeight / 2) {
+                                          top = window.scrollY - 5;
+                                        } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                          top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                        } else {
+                                          top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                        }
+
+                                        if (distanceToRight < 200) {
+                                          setOutOfViewPosition({
+                                            top,
+                                            right: window.innerWidth - rect.left - 10,
+                                            maxWidth: rect.left - 5
+                                          });
+                                        } else {
+                                          setOutOfViewPosition({
+                                            top,
+                                            left: rect.left + rect.width + 5,
+                                            maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                          });
+                                        }
+                                      });
+                                    }}
+                                    onMouseLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}>
+                                    c/{reply.shortCid}</Link>
+                                  &nbsp;
+                                </div>
+                              ))
+                            }
+                          </div>
+                        </span>
+                        <blockquote key={`blockquote-${comment.cid}`}>
+                          <Post content={comment.content} comment={comment} key={`post-${comment.cid}`} />
+                          <EditLabel key={`edit-label-thread-${index}`}
+                            commentCid={comment.cid}
+                            className="ttl" />
+                          <StateLabel key={`state-label-thread-${index}`}
+                            commentIndex={comment.index}
+                            className="ttl ellipsis" />
+                        </blockquote>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {comment.replyCount === undefined ? <PostLoader /> : null}
-                {sortedReplies.map((reply, index) => {
+                  {comment.replyCount === undefined ? <PostLoader /> : null}
+                  {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
@@ -1219,225 +1233,227 @@ const Thread = () => {
                         <div key={`sa-${index}`} className="side-arrows">{'>>'}</div>
                         <div key={`pr-${index}`} className="post-reply post-reply-desktop">
                           <div key={`pi-${index}`} className="post-info">
-                          &nbsp;
+                            &nbsp;
                             <span key={`nb-${index}`} className="nameblock">
-                            {reply.author?.displayName
-                            ? reply.author?.displayName.length > 20
-                            ? <>
-                                <span key={`mob-n-${index}`} className="name"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={reply.author?.displayName}
-                                data-tooltip-place="top">
-                                  {reply.author?.displayName.slice(0, 20) + " (...)"}
-                                </span>
-                              </>
-                              : <span key={`mob-n-${index}`} className="name">
-                                {reply.author?.displayName ?? reply.displayName}</span>
-                            : <span key={`mob-n-${index}`} className="name">
-                              Anonymous</span>}
+                              {reply.author?.displayName
+                                ? reply.author?.displayName.length > 20
+                                  ? <>
+                                    <span key={`mob-n-${index}`} className="name"
+                                      data-tooltip-id="tooltip"
+                                      data-tooltip-content={reply.author?.displayName}
+                                      data-tooltip-place="top">
+                                      {reply.author?.displayName.slice(0, 20) + " (...)"}
+                                    </span>
+                                  </>
+                                  : <span key={`mob-n-${index}`} className="name">
+                                    {reply.author?.displayName ?? reply.displayName}</span>
+                                : <span key={`mob-n-${index}`} className="name">
+                                  Anonymous</span>}
                               &nbsp;
                               <span key={`pa-${index}`} className="poster-address address-desktop"
-                                id="reply-button" style={{cursor: "pointer"}}
+                                id="reply-button" style={{ cursor: "pointer" }}
                                 onClick={() => handleAddressClick(reply.author?.shortAddress)}
                               >
                                 (u/
-                                  {reply.author?.shortAddress ?
-                                    (
+                                {reply.author?.shortAddress ?
+                                  (
+                                    <span key={`mob-ha-${index}`}>
+                                      {reply.author?.shortAddress}
+                                    </span>
+                                  ) : (
+                                    anonymousMode ? (
                                       <span key={`mob-ha-${index}`}>
-                                        {reply.author?.shortAddress}
+                                        {signerAddress?.slice(8, 20)}
                                       </span>
                                     ) : (
-                                      anonymousMode ? (
-                                        <span key={`mob-ha-${index}`}>
-                                          {signerAddress?.slice(8, 20)}
-                                        </span>
-                                      ) : (
-                                        <span key={`mob-ha-${index}`}
-                                        >
-                                          {account?.author?.shortAddress}
-                                        </span>
-                                      )
+                                      <span key={`mob-ha-${index}`}
+                                      >
+                                        {account?.author?.shortAddress}
+                                      </span>
                                     )
-                                  }
+                                  )
+                                }
                                 )
                               </span>
                             </span>
                             &nbsp;
                             <span key={`dt-${index}`} className="date-time">
                               {getDate(reply?.timestamp)}&nbsp;
-                            <span key={`pn-${index}`} className="post-number post-number-desktop">
-                              <span key={`pl1-${index}`}>c/</span>
-                              {reply.shortCid ? (
-                                <Link id="reply-button" key={`pl2-${index}`}
-                                 onClick={() => {
-                                  let text = document.getSelection().toString();
-                                  text = text ? `>${text}` : text;
-                                  setSelectedText(text);
-                                  if (isReplyOpen) {
-                                    setReplyQuoteCid(reply.shortCid);
-                                    setTriggerInsertion(Date.now());
-                                  } else {
-                                    setIsReplyOpen(true); 
-                                    setSelectedShortCid(reply.shortCid);
-                                    setSelectedParentCid(reply.cid); 
-                                  }
-                                  }} title="Reply to this post">{reply.shortCid}</Link>
-                              ) : (
-                                <PendingLabel key="pending" commentIndex={reply.index} />
-                              )}
+                              <span key={`pn-${index}`} className="post-number post-number-desktop">
+                                <span key={`pl1-${index}`}>c/</span>
+                                {reply.shortCid ? (
+                                  <Link id="reply-button" key={`pl2-${index}`}
+                                    onClick={() => {
+                                      let text = document.getSelection().toString();
+                                      text = text ? `>${text}` : text;
+                                      setSelectedText(text);
+                                      if (isReplyOpen) {
+                                        setReplyQuoteCid(reply.shortCid);
+                                        setTriggerInsertion(Date.now());
+                                      } else {
+                                        setIsReplyOpen(true);
+                                        setSelectedShortCid(reply.shortCid);
+                                        setSelectedParentCid(reply.cid);
+                                      }
+                                    }} title="Reply to this post">{reply.shortCid}</Link>
+                                ) : (
+                                  <PendingLabel key="pending" commentIndex={reply.index} />
+                                )}
                               </span>
                             </span>&nbsp;
-                            <PostMenu 
-                              key={`pmb-${index}`} 
+                            <PostMenu
+                              key={`pmb-${index}`}
                               title="Post menu"
-                              ref={el => { 
-                                replyMenuRefs.current[reply.cid] = el; 
-                                postMenuRef.current = el; 
+                              ref={el => {
+                                replyMenuRefs.current[reply.cid] = el;
+                                postMenuRef.current = el;
                               }}
-                              className='post-menu-button' 
+                              className='post-menu-button'
                               rotated={openMenuCid === reply.cid}
                               onClick={(event) => {
                                 event.stopPropagation();
                                 const rect = replyMenuRefs.current[reply.cid].getBoundingClientRect();
-                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                setMenuPosition({ top: rect.top + window.scrollY, left: rect.left });
                                 setOpenMenuCid(prevCid => (prevCid === reply.cid ? null : reply.cid));
-                              }} 
+                              }}
                             >
                               ▶
                             </PostMenu>
                             {createPortal(
-                              <PostMenuCatalog selectedStyle={selectedStyle} 
-                              ref={el => {postMenuCatalogRef.current = el}}
-                              onClick={(event) => event.stopPropagation()}
-                              style={{position: "absolute", 
-                              top: menuPosition.top + 7, 
-                              left: menuPosition.left}}>
-                              <div className={`post-menu-reply post-menu-reply-${reply.cid}`}
-                              style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
-                              >
-                                <ul className="post-menu-catalog">
-                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
-                                  <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
-                                    <>
-                                      {authorAddress === account?.author.address ||
-                                      authorAddress === account?.signer.address ? (
-                                        <>
-                                          <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
-                                          <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
-                                        </>
-                                      ) : null}
-                                      {isModerator ? (
-                                        <>
-                                          {authorAddress === account?.author.address || 
+                              <PostMenuCatalog selectedStyle={selectedStyle}
+                                ref={el => { postMenuCatalogRef.current = el }}
+                                onClick={(event) => event.stopPropagation()}
+                                style={{
+                                  position: "absolute",
+                                  top: menuPosition.top + 7,
+                                  left: menuPosition.left
+                                }}>
+                                <div className={`post-menu-reply post-menu-reply-${reply.cid}`}
+                                  style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
+                                >
+                                  <ul className="post-menu-catalog">
+                                    <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                    <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
+                                      <>
+                                        {authorAddress === account?.author.address ||
                                           authorAddress === account?.signer.address ? (
-                                            null
-                                          ) : (
-                                            <li onClick={() => {
-                                              setModeratingCommentCid(reply.cid)
-                                              setIsModerationOpen(true); 
-                                              handleOptionClick(reply.cid);
-                                              setDeletePost(true);
-                                            }}>
-                                            Delete post
+                                          <>
+                                            <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                            <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                          </>
+                                        ) : null}
+                                        {isModerator ? (
+                                          <>
+                                            {authorAddress === account?.author.address ||
+                                              authorAddress === account?.signer.address ? (
+                                              null
+                                            ) : (
+                                              <li onClick={() => {
+                                                setModeratingCommentCid(reply.cid)
+                                                setIsModerationOpen(true);
+                                                handleOptionClick(reply.cid);
+                                                setDeletePost(true);
+                                              }}>
+                                                Delete post
+                                              </li>
+                                            )}
+                                            <li
+                                              onClick={() => {
+                                                setModeratingCommentCid(reply.cid)
+                                                setIsModerationOpen(true);
+                                                handleOptionClick(reply.cid);
+                                              }}>
+                                              Mod tools
                                             </li>
-                                          )}
-                                          <li
-                                          onClick={() => {
-                                            setModeratingCommentCid(reply.cid)
-                                            setIsModerationOpen(true); 
-                                            handleOptionClick(reply.cid);
-                                          }}>
-                                            Mod tools
-                                          </li>
-                                        </>
-                                      ) : null}
-                                    </>
-                                  )}</VerifiedAuthor>
-                                  {(replyMediaInfo && (
-                                    replyMediaInfo.type === 'image' || 
-                                    (replyMediaInfo.type === 'webpage' && 
-                                    replyMediaInfo.thumbnail))) ? ( 
-                                      <li 
-                                      onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                          </>
+                                        ) : null}
+                                      </>
+                                    )}</VerifiedAuthor>
+                                    {(replyMediaInfo && (
+                                      replyMediaInfo.type === 'image' ||
+                                      (replyMediaInfo.type === 'webpage' &&
+                                        replyMediaInfo.thumbnail))) ? (
+                                      <li
+                                        onMouseOver={() => { setIsImageSearchOpen(true) }}
+                                        onMouseLeave={() => { setIsImageSearchOpen(false) }}>
                                         Image search »
                                         <ul className="dropdown-menu post-menu-catalog"
-                                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                          style={{ display: isImageSearchOpen ? 'block' : 'none' }}>
                                           <li onClick={() => handleOptionClick(reply.cid)}>
-                                            <a 
-                                            href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
+                                            <a
+                                              href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
                                             >Google</a>
                                           </li>
                                           <li onClick={() => handleOptionClick(reply.cid)}>
                                             <a
-                                            href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
+                                              href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
                                             >Yandex</a>
                                           </li>
                                           <li onClick={() => handleOptionClick(reply.cid)}>
                                             <a
-                                            href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
-                                            target="_blank" rel="noreferrer"
+                                              href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer"
                                             >SauceNAO</a>
                                           </li>
                                         </ul>
                                       </li>
                                     ) : null
-                                  }
-                                </ul>
-                              </div>
+                                    }
+                                  </ul>
+                                </div>
                               </PostMenuCatalog>, document.body
                             )}
                             <div key={`bi-${index}`} id="backlink-id" className="backlink">
                               {reply.replies?.pages?.topAll.comments
                                 .sort((a, b) => a.timestamp - b.timestamp)
                                 .map((reply, index) => (
-                                  <div key={`div-${index}`} style={{display: 'inline-block'}} 
-                                  ref={el => {
-                                    backlinkRefs.current[reply.cid] = el;
-                                  }}>
-                                  <Link key={`ql-${index}`}
-                                  to={() => {}} className="quote-link" 
-                                  onClick={(event) => handleQuoteClick(reply, null, event)}
-                                  onMouseOver={(event) => {
-                                    event.stopPropagation();
-                                    handleQuoteHover(reply, null, () => {
-                                    setOutOfViewCid(reply.cid);
-                                    const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
-                                    const distanceToRight = window.innerWidth - rect.right;
-                                      const distanceToTop = rect.top;
-                                      const distanceToBottom = window.innerHeight - rect.bottom;
-                                      let top;
+                                  <div key={`div-${index}`} style={{ display: 'inline-block' }}
+                                    ref={el => {
+                                      backlinkRefs.current[reply.cid] = el;
+                                    }}>
+                                    <Link key={`ql-${index}`}
+                                      to={() => { }} className="quote-link"
+                                      onClick={(event) => handleQuoteClick(reply, null, event)}
+                                      onMouseOver={(event) => {
+                                        event.stopPropagation();
+                                        handleQuoteHover(reply, null, () => {
+                                          setOutOfViewCid(reply.cid);
+                                          const rect = backlinkRefs.current[reply.cid].getBoundingClientRect();
+                                          const distanceToRight = window.innerWidth - rect.right;
+                                          const distanceToTop = rect.top;
+                                          const distanceToBottom = window.innerHeight - rect.bottom;
+                                          let top;
 
-                                      if (distanceToTop < postOnHoverHeight / 2) {
-                                        top = window.scrollY - 5;
-                                      } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                        top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                      } else {
-                                        top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                      }
-                                    
-                                      if (distanceToRight < 200) {
-                                        setOutOfViewPosition({
-                                          top,
-                                          right: window.innerWidth - rect.left - 10,
-                                          maxWidth: rect.left - 5
+                                          if (distanceToTop < postOnHoverHeight / 2) {
+                                            top = window.scrollY - 5;
+                                          } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                            top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                          } else {
+                                            top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                          }
+
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5
+                                            });
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                            });
+                                          }
                                         });
-                                      } else {
-                                        setOutOfViewPosition({
-                                          top,
-                                          left: rect.left + rect.width + 5,
-                                          maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                        });
-                                      }
-                                    });
-                                  }}
-                                  onMouseLeave={() => {
-                                    removeHighlight();
-                                    setOutOfViewCid(null);
-                                  }}>
-                                    c/{reply.shortCid}</Link>
+                                      }}
+                                      onMouseLeave={() => {
+                                        removeHighlight();
+                                        setOutOfViewCid(null);
+                                      }}>
+                                      c/{reply.shortCid}</Link>
                                     &nbsp;
                                   </div>
                                 ))
@@ -1526,7 +1542,7 @@ const Thread = () => {
                             </div>
                           ) : null}
                           <blockquote key={`pm-${index}`} className="post-message">
-                            <Link to={() => {}} key={`r-pm-${index}`} className="quotelink"  
+                            <Link to={() => { }} key={`r-pm-${index}`} className="quotelink"
                               ref={el => {
                                 quoteRefs.current[reply.cid] = el;
                               }}
@@ -1548,7 +1564,7 @@ const Thread = () => {
                                   } else {
                                     top = rect.top + window.scrollY - postOnHoverHeight / 2;
                                   }
-                                
+
                                   if (distanceToRight < 200) {
                                     setOutOfViewPosition({
                                       top,
@@ -1563,7 +1579,7 @@ const Thread = () => {
                                     });
                                   }
                                 });
-                              }}                                
+                              }}
                               onMouseLeave={() => {
                                 removeHighlight();
                                 setOutOfViewCid(null);
@@ -1571,7 +1587,7 @@ const Thread = () => {
                             >
                               {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
                             </Link>
-                            <Post key={`post-${index}`} 
+                            <Post key={`post-${index}`}
                               content={reply.content}
                               postQuoteRef={(quoteShortParentCid, ref) => {
                                 postRefs.current[quoteShortParentCid] = ref;
@@ -1585,78 +1601,79 @@ const Thread = () => {
                                   handleQuoteHover(reply, quoteShortParentCid, () => {
                                     setOutOfViewCid(quoteParentCid);
 
-                                  const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
-                                  const distanceToRight = window.innerWidth - rect.right;
-                                  const distanceToTop = rect.top;
-                                  const distanceToBottom = window.innerHeight - rect.bottom;
-                                  let top;
+                                    const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
 
-                                  if (distanceToTop < postOnHoverHeight / 2) {
-                                    top = window.scrollY - 5;
-                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                  } else {
-                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                  }
-                                
-                                  if (distanceToRight < 200) {
-                                    setOutOfViewPosition({
-                                      top,
-                                      right: window.innerWidth - rect.left - 10,
-                                      maxWidth: rect.left - 5
-                                    });
-                                  } else {
-                                    setOutOfViewPosition({
-                                      top,
-                                      left: rect.left + rect.width + 5,
-                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                    });
-                                  }
-                                })
-                              }}
-                            }
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
+                                  })
+                                }
+                              }
+                              }
                               postQuoteOnLeave={() => {
                                 removeHighlight();
                                 setOutOfViewCid(null);
                               }}
                             />
-                            <EditLabel key={`edit-label-reply-${index}`} 
-                            commentCid={reply.cid}
-                            className="ttl"/>
+                            <EditLabel key={`edit-label-reply-${index}`}
+                              commentCid={reply.cid}
+                              className="ttl" />
                             <StateLabel key={`state-label-reply-${index}`}
-                            commentIndex={reply.index}
-                            className="ttl ellipsis"/>
+                              commentIndex={reply.index}
+                              className="ttl ellipsis" />
                           </blockquote>
                         </div>
                       </div>
                     )
                   })
-                }
-              </div>
-              <div className="thread-mobile" key="thread-mobile">
-                <hr />
-                <div className="op-container" key="op-container">
+                  }
+                </div>
+                <div className="thread-mobile" key="thread-mobile">
+                  <hr />
+                  <div className="op-container" key="op-container">
                     <div key={`mob-po-${comment.cid}`} className="post op op-mobile">
                       <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
                         <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile">...</button>
                         <span className="name-block-mobile">
                           {comment?.author?.displayName
-                          ? comment?.author?.displayName.length > 15
-                          ? <>
-                              <span key={`mob-n-${comment.cid}`} className="name-mobile"
-                              data-tooltip-id="tooltip"
-                              data-tooltip-content={comment?.author?.displayName}
-                              data-tooltip-place="top">
-                                {comment?.author?.displayName.slice(0, 15) + " (...)"}
-                              </span>
-                            </> 
+                            ? comment?.author?.displayName.length > 15
+                              ? <>
+                                <span key={`mob-n-${comment.cid}`} className="name-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={comment?.author?.displayName}
+                                  data-tooltip-place="top">
+                                  {comment?.author?.displayName.slice(0, 15) + " (...)"}
+                                </span>
+                              </>
+                              : <span key={`mob-n-${comment.cid}`} className="name-mobile">
+                                {comment?.author?.displayName}</span>
                             : <span key={`mob-n-${comment.cid}`} className="name-mobile">
-                              {comment?.author?.displayName}</span>
-                          : <span key={`mob-n-${comment.cid}`} className="name-mobile">
-                            Anonymous</span>}
+                              Anonymous</span>}
                           &nbsp;
                           <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile address-mobile"
-                            id="reply-button" style={{cursor: "pointer"}}
+                            id="reply-button" style={{ cursor: "pointer" }}
                             onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
                           >
                             (u/
@@ -1665,26 +1682,30 @@ const Thread = () => {
                             </span>
                             )&nbsp;
                           </span>
-                          <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{float: "right", marginRight: "18px"}}>
+                          <span key={`ti-mob-${index}`} className="thread-icons-mobile" style={{ float: "right", marginRight: "18px" }}>
                             {comment.pinned ? (
                               <img src="assets/sticky.gif" alt="Sticky" title="Sticky"
-                              style={{marginTop: "-1px", marginRight: "2px",
-                              imageRendering: "pixelated",}} />
+                                style={{
+                                  marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",
+                                }} />
                             ) : null}
                             {comment.locked ? (
                               <img src="assets/closed.gif" alt="Closed" title="Closed"
-                              style={{marginTop: "-1px", marginRight: "2px",
-                              imageRendering: "pixelated",}} />
+                                style={{
+                                  marginTop: "-1px", marginRight: "2px",
+                                  imageRendering: "pixelated",
+                                }} />
                             ) : null}
                           </span>
                           <br key={`mob-br1-${comment.cid}`} />
                           {comment.title ? (
-                              comment.title.length > 30 ?
+                            comment.title.length > 30 ?
                               <>
                                 <span key={`mob-t-${comment.cid}`} className="subject-mobile"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={comment.title}
-                                data-tooltip-place="top">
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={comment.title}
+                                  data-tooltip-place="top">
                                   {comment.title.slice(0, 30) + " (...)"}
                                 </span>
                               </>
@@ -1696,19 +1717,20 @@ const Thread = () => {
                           {getDate(comment?.timestamp)}
                           &nbsp;
                           <span key={`mob-no-${comment.cid}`}>c/</span>
-                          <Link to={() => {}} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
-                          onClick={() => {
-                            let text = document.getSelection().toString();
-                            text = text ? `>${text}` : text;
-                            setSelectedText(text);
-                            if (isReplyOpen) {
-                              setReplyQuoteCid(comment.shortCid);
-                              setTriggerInsertion(Date.now());
-                            } else {
-                              setIsReplyOpen(true); 
-                              setSelectedShortCid(comment.shortCid);
-                              setSelectedParentCid(comment.cid); 
-                            }}}>{comment.shortCid}</Link>
+                          <Link to={() => { }} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
+                            onClick={() => {
+                              let text = document.getSelection().toString();
+                              text = text ? `>${text}` : text;
+                              setSelectedText(text);
+                              if (isReplyOpen) {
+                                setReplyQuoteCid(comment.shortCid);
+                                setTriggerInsertion(Date.now());
+                              } else {
+                                setIsReplyOpen(true);
+                                setSelectedShortCid(comment.shortCid);
+                                setSelectedParentCid(comment.cid);
+                              }
+                            }}>{comment.shortCid}</Link>
                         </span>
                       </div>
                       {comment.link ? (
@@ -1721,15 +1743,15 @@ const Thread = () => {
                                     <iframe 
                                       key={`mob-fti-${index}`} 
                                       src={commentMediaInfo.embedUrl}
-                                      style={{border: "none", height: "250px"}}
+                                      style={{ border: "none", height: "250px" }}
                                       title="Embedded content"
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                       allowFullScreen />
                                   </div>
                                 ) : (
-                                  <img 
+                                  <img
                                     key={`mob-fti-${index}`}
-                                    src={commentMediaInfo.thumbnail} 
+                                    src={commentMediaInfo.thumbnail}
                                     alt="thumbnail"
                                     onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
                                     style={{cursor: "pointer"}}
@@ -1744,7 +1766,7 @@ const Thread = () => {
                                     </div>
                                   ) : (
                                     <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
-                                )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
+                                  )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
                               </span>
                             </div>
                           )}
@@ -1779,8 +1801,26 @@ const Thread = () => {
                                     <video key={`fti-${index}`} 
                                     src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                     controls
-                                    style={{ cursor: 'pointer' }} 
+                                    style={{ cursor: 'pointer' }}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
+                                ) : (
+                                  <video
+                                    key={`fti-${index}`}
+                                    src={commentMediaInfo.url}
+                                    alt="thumbnail"
+                                    onClick={() => { handleThumbnailClick(index, true) }}
+                                    style={{ cursor: "pointer" }}
+                                    id="video-thumbnail-mobile"
+                                    onError={(e) => e.target.src = fallbackImgUrl}
+                                  />
+                                )}
+                                {commentMediaInfo?.type === "video" || "iframe" ? (
+                                  isMobileThumbnailClicked[index] ? (
+                                    <div style={{ textAlign: "center", marginTop: "15px", marginBottom: "15px" }}>
+                                      <span className='button-mobile' style={{ float: "none", cursor: "pointer" }}
+                                        onClick={() => { handleThumbnailClick(index, true) }}
+                                      >Close</span>
+                                    </div>
                                   ) : (
                                     <video 
                                       key={`fti-${index}`}
@@ -1802,14 +1842,14 @@ const Thread = () => {
                                     ) : (
                                       <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
                                   )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
-                                </span>
+                              </span>
                             ) : commentMediaInfo.type === "audio" ? (
-                                <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
-                                  <audio key={`mob-img-${index}`} 
-                                  src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                              <span key={`mob-ft${comment.cid}`} className="file-thumb-mobile">
+                                <audio key={`mob-img-${index}`}
+                                  src={commentMediaInfo.url} alt={commentMediaInfo.type}
                                   onError={(e) => e.target.src = fallbackImgUrl} />
-                                  <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
-                                </span>
+                                <div key={`mob-fi-${index}`} className="file-info-mobile">{commentMediaInfo?.type}</div>
+                              </span>
                             ) : null
                           ) : null}
                         </div>
@@ -1818,12 +1858,12 @@ const Thread = () => {
                         {comment.content ? (
                           <>
                             <Post content={comment.content} comment={comment} key={`post-mobile-${comment.cid}`} />
-                            <EditLabel key={`edit-label-thread-mob-${index}`} 
-                            commentCid={comment.cid}
-                            className="ttl"/>
+                            <EditLabel key={`edit-label-thread-mob-${index}`}
+                              commentCid={comment.cid}
+                              className="ttl" />
                             <StateLabel key={`state-label-thread-mob-${index}`}
-                            commentIndex={comment.index}
-                            className="ttl ellipsis"/> 
+                              commentIndex={comment.index}
+                              className="ttl ellipsis" />
                           </>
                         ) : null}
                       </blockquote>
@@ -1839,31 +1879,31 @@ const Thread = () => {
                       signerAddress = storedSigners[selectedThread].address;
                     }
                     return (
-                    <div key={`mob-rc-${index}`} className="reply-container">
-                      <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
-                        <div key={`mob-pi-${index}`} className="post-info-mobile">
-                          <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
-                          <span key={`mob-nb-${index}`} className="name-block-mobile">
-                            {reply.author?.displayName
-                            ? reply.author?.displayName.length > 12
-                            ? <>
-                                <span key={`mob-n-${index}`} className="name-mobile"
-                                data-tooltip-id="tooltip"
-                                data-tooltip-content={reply.author?.displayName}
-                                data-tooltip-place="top">
-                                  {reply.author?.displayName.slice(0, 12) + " (...)"}
-                                </span>
-                              </>
-                              : <span key={`mob-n-${index}`} className="name-mobile">
-                                {reply.author?.displayName}</span>
-                            : <span key={`mob-n-${index}`} className="name-mobile">
-                              Anonymous</span>}
-                            &nbsp;
-                            <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
-                              id="reply-button" style={{cursor: "pointer"}}
-                              onClick={() => handleAddressClick(reply.author?.shortAddress)}
-                            >
-                              (u/
+                      <div key={`mob-rc-${index}`} className="reply-container">
+                        <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
+                          <div key={`mob-pi-${index}`} className="post-info-mobile">
+                            <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                            <span key={`mob-nb-${index}`} className="name-block-mobile">
+                              {reply.author?.displayName
+                                ? reply.author?.displayName.length > 12
+                                  ? <>
+                                    <span key={`mob-n-${index}`} className="name-mobile"
+                                      data-tooltip-id="tooltip"
+                                      data-tooltip-content={reply.author?.displayName}
+                                      data-tooltip-place="top">
+                                      {reply.author?.displayName.slice(0, 12) + " (...)"}
+                                    </span>
+                                  </>
+                                  : <span key={`mob-n-${index}`} className="name-mobile">
+                                    {reply.author?.displayName}</span>
+                                : <span key={`mob-n-${index}`} className="name-mobile">
+                                  Anonymous</span>}
+                              &nbsp;
+                              <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
+                                id="reply-button" style={{ cursor: "pointer" }}
+                                onClick={() => handleAddressClick(reply.author?.shortAddress)}
+                              >
+                                (u/
                                 {reply.author?.shortAddress ?
                                   (
                                     <span key={`mob-ha-${index}`} className="highlight-address-mobile">
@@ -1874,247 +1914,249 @@ const Thread = () => {
                                       <span key={`mob-ha-${index}`}>
                                         {signerAddress?.slice(8, 20)}
                                       </span>
-                                      ) : (
+                                    ) : (
                                       <span key={`mob-ha-${index}`}>
                                         {account?.author?.shortAddress}
                                       </span>
                                     )
                                   )
                                 }
-                              )
+                                )
+                              </span>
+                              <br key={`mob-br-${index}`} />
                             </span>
-                            <br key={`mob-br-${index}`} />
-                          </span>
-                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
-                            {getDate(reply?.timestamp)}&nbsp;
-                            <span key={`mob-pl1-${index}`}>c/</span>
-                            {reply.shortCid ? (
-                              <Link id="reply-button" key={`mob-pl2-${index}`} 
-                              onClick={() => {
-                                let text = document.getSelection().toString();
-                                text = text ? `>${text}` : text;
-                                setSelectedText(text);
-                                if (isReplyOpen) {
-                                  setReplyQuoteCid(reply.shortCid);
-                                  setTriggerInsertion(Date.now());
-                                } else {
-                                  setIsReplyOpen(true); 
-                                  setSelectedShortCid(reply.shortCid);
-                                  setSelectedParentCid(reply.cid); 
-                                }}} title="Reply to this post">{reply.shortCid}</Link>
-                            ) : (
-                              <PendingLabel key="pending-mob" commentIndex={reply.index} />
-                            )}
-                          </span>
-                        </div>
-                        {reply.link ? (
+                            <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                              {getDate(reply?.timestamp)}&nbsp;
+                              <span key={`mob-pl1-${index}`}>c/</span>
+                              {reply.shortCid ? (
+                                <Link id="reply-button" key={`mob-pl2-${index}`}
+                                  onClick={() => {
+                                    let text = document.getSelection().toString();
+                                    text = text ? `>${text}` : text;
+                                    setSelectedText(text);
+                                    if (isReplyOpen) {
+                                      setReplyQuoteCid(reply.shortCid);
+                                      setTriggerInsertion(Date.now());
+                                    } else {
+                                      setIsReplyOpen(true);
+                                      setSelectedShortCid(reply.shortCid);
+                                      setSelectedParentCid(reply.cid);
+                                    }
+                                  }} title="Reply to this post">{reply.shortCid}</Link>
+                              ) : (
+                                <PendingLabel key="pending-mob" commentIndex={reply.index} />
+                              )}
+                            </span>
+                          </div>
+                          {reply.link ? (
                             <div key={`mob-f-${reply.cid}`} className="file-mobile">
-                                {replyMediaInfo?.url ? (
-                                  replyMediaInfo.type === "webpage" ? (
-                                    <div key="enlarge-reply-mob" className="img-container">
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        {reply.thumbnailUrl ? (
-                                          <img key={`mob-img-${reply.cid}`} 
-                                          src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type} 
+                              {replyMediaInfo?.url ? (
+                                replyMediaInfo.type === "webpage" ? (
+                                  <div key="enlarge-reply-mob" className="img-container">
+                                    <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                      {reply.thumbnailUrl ? (
+                                        <img key={`mob-img-${reply.cid}`}
+                                          src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type}
                                           onClick={handleImageClick}
-                                          style={{cursor: "pointer"}}
+                                          style={{ cursor: "pointer" }}
                                           onError={(e) => e.target.src = fallbackImgUrl} />
-                                        ) : null}
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                    </div>
-                                  ) : replyMediaInfo.type === "image" ? (
-                                    <div key="enlarge-reply-mob" className="img-container">
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <img key={`mob-img-${reply.cid}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                      ) : null}
+                                      <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                    </span>
+                                  </div>
+                                ) : replyMediaInfo.type === "image" ? (
+                                  <div key="enlarge-reply-mob" className="img-container">
+                                    <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                      <img key={`mob-img-${reply.cid}`}
+                                        src={replyMediaInfo.url} alt={replyMediaInfo.type}
                                         onClick={handleImageClick}
-                                        style={{cursor: "pointer"}}
+                                        style={{ cursor: "pointer" }}
                                         onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                    </div>
-                                  ) : replyMediaInfo.type === "video" ? (
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <video key={`fti-${reply.cid}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                        style={{ pointerEvents: "none" }}
-                                        onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                  ) : replyMediaInfo.type === "audio" ? (
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <audio key={`mob-img-${reply.cid}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                        onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                  ) : null
-                                ) : null}
+                                      <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                    </span>
+                                  </div>
+                                ) : replyMediaInfo.type === "video" ? (
+                                  <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                    <video key={`fti-${reply.cid}`}
+                                      src={replyMediaInfo.url} alt={replyMediaInfo.type}
+                                      style={{ pointerEvents: "none" }}
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
+                                    <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                  </span>
+                                ) : replyMediaInfo.type === "audio" ? (
+                                  <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                    <audio key={`mob-img-${reply.cid}`}
+                                      src={replyMediaInfo.url} alt={replyMediaInfo.type}
+                                      onError={(e) => e.target.src = fallbackImgUrl} />
+                                    <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                  </span>
+                                ) : null
+                              ) : null}
                             </div>
                           ) : null}
-                        <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
-                          <span style={{cursor: 'pointer'}} key={`mob-ql-${index}`} className="quotelink-mobile" 
-                            ref={el => {
-                              quoteRefsMobile.current[reply.cid] = el;
-                            }}
-                            onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
-                            onMouseOver={(event) => {
-                              event.stopPropagation();
-                              handleQuoteHover(reply, shortParentCid, () => {
-                                setOutOfViewCid(reply.parentCid);
-                                const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
-                                const distanceToRight = window.innerWidth - rect.right;
-                                const distanceToTop = rect.top;
-                                const distanceToBottom = window.innerHeight - rect.bottom;
-                                let top;
+                          <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
+                            <span style={{ cursor: 'pointer' }} key={`mob-ql-${index}`} className="quotelink-mobile"
+                              ref={el => {
+                                quoteRefsMobile.current[reply.cid] = el;
+                              }}
+                              onClick={(event) => handleQuoteClick(reply, shortParentCid, event)}
+                              onMouseOver={(event) => {
+                                event.stopPropagation();
+                                handleQuoteHover(reply, shortParentCid, () => {
+                                  setOutOfViewCid(reply.parentCid);
+                                  const rect = quoteRefsMobile.current[reply.cid].getBoundingClientRect();
+                                  const distanceToRight = window.innerWidth - rect.right;
+                                  const distanceToTop = rect.top;
+                                  const distanceToBottom = window.innerHeight - rect.bottom;
+                                  let top;
 
-                                if (distanceToTop < postOnHoverHeight / 2) {
-                                  top = window.scrollY - 5;
-                                } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                  top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                } else {
-                                  top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                }
-                              
-                                if (distanceToRight < 200) {
-                                  setOutOfViewPosition({
-                                    top,
-                                    right: window.innerWidth - rect.left - 10,
-                                    maxWidth: rect.left - 5
-                                  });
-                                } else {
-                                  setOutOfViewPosition({
-                                    top,
-                                    left: rect.left + rect.width + 5,
-                                    maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                  });
-                                }
-                              });
-                            }}
-                            onMouseLeave={() => {
-                              removeHighlight();
-                              setOutOfViewCid(null);
-                            }}>
-                            {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
-                          </span>
-                          <Post key={`post-mobile-${index}`}
-                            content={reply.content} 
-                            postQuoteRef={(quoteShortParentCid, ref) => {
-                              postRefs.current[quoteShortParentCid] = ref;
-                            }}
-                            postQuoteOnClick={(quoteShortParentCid) => {
-                              handleQuoteClick(reply, quoteShortParentCid, null)
-                            }}
-                            postQuoteOnOver={(quoteShortParentCid) => {
-                              const quoteParentCid = cidTracker[quoteShortParentCid];
-                              if (outOfViewCid !== quoteParentCid) {
-                                handleQuoteHover(reply, quoteShortParentCid, () => {
-                                  setOutOfViewCid(quoteParentCid);
+                                  if (distanceToTop < postOnHoverHeight / 2) {
+                                    top = window.scrollY - 5;
+                                  } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                    top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                  } else {
+                                    top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                  }
 
-                                const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
-                                const distanceToRight = window.innerWidth - rect.right;
-                                const distanceToTop = rect.top;
-                                const distanceToBottom = window.innerHeight - rect.bottom;
-                                let top;
+                                  if (distanceToRight < 200) {
+                                    setOutOfViewPosition({
+                                      top,
+                                      right: window.innerWidth - rect.left - 10,
+                                      maxWidth: rect.left - 5
+                                    });
+                                  } else {
+                                    setOutOfViewPosition({
+                                      top,
+                                      left: rect.left + rect.width + 5,
+                                      maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                    });
+                                  }
+                                });
+                              }}
+                              onMouseLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}>
+                              {`c/${shortParentCid}`}{shortParentCid === comment.shortCid ? " (OP)" : null}
+                            </span>
+                            <Post key={`post-mobile-${index}`}
+                              content={reply.content}
+                              postQuoteRef={(quoteShortParentCid, ref) => {
+                                postRefs.current[quoteShortParentCid] = ref;
+                              }}
+                              postQuoteOnClick={(quoteShortParentCid) => {
+                                handleQuoteClick(reply, quoteShortParentCid, null)
+                              }}
+                              postQuoteOnOver={(quoteShortParentCid) => {
+                                const quoteParentCid = cidTracker[quoteShortParentCid];
+                                if (outOfViewCid !== quoteParentCid) {
+                                  handleQuoteHover(reply, quoteShortParentCid, () => {
+                                    setOutOfViewCid(quoteParentCid);
 
-                                if (distanceToTop < postOnHoverHeight / 2) {
-                                  top = window.scrollY - 5;
-                                } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                  top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                } else {
-                                  top = rect.top + window.scrollY - postOnHoverHeight / 2;
-                                }
-                              
-                                if (distanceToRight < 200) {
-                                  setOutOfViewPosition({
-                                    top,
-                                    right: window.innerWidth - rect.left - 10,
-                                    maxWidth: rect.left - 5
-                                  });
-                                } else {
-                                  setOutOfViewPosition({
-                                    top,
-                                    left: rect.left + rect.width + 5,
-                                    maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                  });
-                                }
-                              })
-                            }}
-                          }
-                            postQuoteOnLeave={() => {
-                              removeHighlight();
-                              setOutOfViewCid(null);
-                            }}
-                          />
-                          <EditLabel key={`edit-label-reply-mob-${index}`} 
-                          commentCid={reply.cid}
-                          className="ttl"/>
-                          <StateLabel key={`state-label-reply-mob-${index}`}
-                          commentIndex={reply.index}
-                          className="ttl ellipsis"/>
-                        </blockquote>
-                        {reply.replyCount > 0 ? (
-                          <div key={`back-mob-${index}`} className='backlink backlink-mobile'>
-                          {reply.replies?.pages?.topAll.comments
-                          .sort((a, b) => a.timestamp - b.timestamp)
-                          .map((reply, index) => (
-                            <div key={`div-back${index}`} style={{display: 'inline-block'}} 
-                            ref={el => {
-                              backlinkRefsMobile.current[reply.cid] = el;
-                            }}>
-                            <span style={{cursor: 'pointer'}} key={`ql-${index}`} className="quote-link" 
-                            onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
-                            onMouseOver={(event) => {
-                              event.stopPropagation();
-                              handleQuoteHover(reply, reply.shortCid, () => {
-                                setOutOfViewCid(reply.cid)
-                                const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
-                                const distanceToRight = window.innerWidth - rect.right;
-                                const distanceToTop = rect.top;
-                                const distanceToBottom = window.innerHeight - rect.bottom;
-                                let top;
+                                    const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                    const distanceToRight = window.innerWidth - rect.right;
+                                    const distanceToTop = rect.top;
+                                    const distanceToBottom = window.innerHeight - rect.bottom;
+                                    let top;
 
-                                if (distanceToTop < postOnHoverHeight / 2) {
-                                  top = window.scrollY - 5;
-                                } else if (distanceToBottom < postOnHoverHeight / 2) {
-                                  top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
-                                } else {
-                                  top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    if (distanceToTop < postOnHoverHeight / 2) {
+                                      top = window.scrollY - 5;
+                                    } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                      top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                    } else {
+                                      top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                    }
+
+                                    if (distanceToRight < 200) {
+                                      setOutOfViewPosition({
+                                        top,
+                                        right: window.innerWidth - rect.left - 10,
+                                        maxWidth: rect.left - 5
+                                      });
+                                    } else {
+                                      setOutOfViewPosition({
+                                        top,
+                                        left: rect.left + rect.width + 5,
+                                        maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                      });
+                                    }
+                                  })
                                 }
-                              
-                                if (distanceToRight < 200) {
-                                  setOutOfViewPosition({
-                                    top,
-                                    right: window.innerWidth - rect.left - 10,
-                                    maxWidth: rect.left - 5
-                                  });
-                                } else {
-                                  setOutOfViewPosition({
-                                    top,
-                                    left: rect.left + rect.width + 5,
-                                    maxWidth: window.innerWidth - rect.left - rect.width - 5
-                                  });
-                                }
-                              });
-                            }}
-                            onMouseLeave={() => {
-                              removeHighlight();
-                              setOutOfViewCid(null);
-                            }} >
-                              c/{reply.shortCid}</span>
-                              &nbsp;
+                              }
+                              }
+                              postQuoteOnLeave={() => {
+                                removeHighlight();
+                                setOutOfViewCid(null);
+                              }}
+                            />
+                            <EditLabel key={`edit-label-reply-mob-${index}`}
+                              commentCid={reply.cid}
+                              className="ttl" />
+                            <StateLabel key={`state-label-reply-mob-${index}`}
+                              commentIndex={reply.index}
+                              className="ttl ellipsis" />
+                          </blockquote>
+                          {reply.replyCount > 0 ? (
+                            <div key={`back-mob-${index}`} className='backlink backlink-mobile'>
+                              {reply.replies?.pages?.topAll.comments
+                                .sort((a, b) => a.timestamp - b.timestamp)
+                                .map((reply, index) => (
+                                  <div key={`div-back${index}`} style={{ display: 'inline-block' }}
+                                    ref={el => {
+                                      backlinkRefsMobile.current[reply.cid] = el;
+                                    }}>
+                                    <span style={{ cursor: 'pointer' }} key={`ql-${index}`} className="quote-link"
+                                      onClick={(event) => handleQuoteClick(reply, reply.shortCid, event)}
+                                      onMouseOver={(event) => {
+                                        event.stopPropagation();
+                                        handleQuoteHover(reply, reply.shortCid, () => {
+                                          setOutOfViewCid(reply.cid)
+                                          const rect = backlinkRefsMobile.current[reply.cid].getBoundingClientRect();
+                                          const distanceToRight = window.innerWidth - rect.right;
+                                          const distanceToTop = rect.top;
+                                          const distanceToBottom = window.innerHeight - rect.bottom;
+                                          let top;
+
+                                          if (distanceToTop < postOnHoverHeight / 2) {
+                                            top = window.scrollY - 5;
+                                          } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                            top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                          } else {
+                                            top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                          }
+
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5
+                                            });
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width - 5
+                                            });
+                                          }
+                                        });
+                                      }}
+                                      onMouseLeave={() => {
+                                        removeHighlight();
+                                        setOutOfViewCid(null);
+                                      }} >
+                                      c/{reply.shortCid}</span>
+                                    &nbsp;
+                                  </div>
+                                ))}
                             </div>
-                          ))}
-                          </div>
-                        ) : null}
+                          ) : null}
+                        </div>
                       </div>
-                    </div>
                     )
                   })
-                }
-              </div>
-              <BottomBar selectedStyle={selectedStyle}>
+                  }
+                </div>
+                <BottomBar selectedStyle={selectedStyle}>
                   <div id="bottombar-desktop">
                     <hr />
                     <span className="bottom-bar-return">
@@ -2129,15 +2171,15 @@ const Thread = () => {
                     </span>
                     <span className="bottom-bar-top">
                       [
-                      <span id="button" onClick={() => window.scrollTo(0, 0)} 
-                      onMouseOver={(event) => event.target.style.cursor='pointer'} 
-                      onTouchStart={() => window.scrollTo(0, 0)}>Top</span>
+                      <span id="button" onClick={() => window.scrollTo(0, 0)}
+                        onMouseOver={(event) => event.target.style.cursor = 'pointer'}
+                        onTouchStart={() => window.scrollTo(0, 0)}>Top</span>
                       ]
                     </span>
                     <span className="quickreply-button">
-                    [
-                      <span id="button" onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</span>
-                    ]
+                      [
+                      <span id="button" onClick={() => { setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid); }} onMouseOver={(event) => event.target.style.cursor = 'pointer'}>Post a Reply</span>
+                      ]
                     </span>
                     {comment ? (
                       comment.replyCount !== undefined ? (
@@ -2161,11 +2203,11 @@ const Thread = () => {
                 </BottomBar>
                 {comment.replyCount > 2 ? (
                   <div id="bottombar-mobile">
-                    <hr style={{marginTop: "30px"}} />
-                    <TopBar selectedStyle={selectedStyle} style={{marginTop: "-5px"}}>
+                    <hr style={{ marginTop: "30px" }} />
+                    <TopBar selectedStyle={selectedStyle} style={{ marginTop: "-5px" }}>
                       <span className="style-changer">
                         Style:
-                         
+
                         <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
                           <option value="Yotsuba">Yotsuba</option>
                           <option value="Yotsuba-B">Yotsuba B</option>
@@ -2197,7 +2239,7 @@ const Thread = () => {
                     <ReplyFormLink id="post-form-link" selectedStyle={selectedStyle} >
                       <div id="post-form-link-mobile" className="post-button-mobile">
                         <span className="btn-wrap">
-                          <span style={{cursor: 'pointer'}} onClick={() => {setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid);}} onMouseOver={(event) => event.target.style.cursor='pointer'}>Post a Reply</span>
+                          <span style={{ cursor: 'pointer' }} onClick={() => { setIsReplyOpen(true); setSelectedParentCid(comment.cid); setSelectedShortCid(comment.shortCid); }} onMouseOver={(event) => event.target.style.cursor = 'pointer'}>Post a Reply</span>
                         </span>
                       </div>
                       <div id="btns-container">
@@ -2206,17 +2248,17 @@ const Thread = () => {
                             <Link to={`/p/${selectedAddress}`}>Return</Link>
                           </span>
                         </div>
-                        <div id="catalog-button-mobile" style={{paddingRight: "2px"}}>
+                        <div id="catalog-button-mobile" style={{ paddingRight: "2px" }}>
                           <span className="btn-wrap">
                             <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
                           </span>
                         </div>
                         <span className="bottom-bar-top">
                           <span className="btn-wrap">
-                            <span onClick={() => window.scrollTo(0, 0)} 
-                            onMouseOver={(event) => event.target.style.cursor='pointer'} 
-                            onTouchStart={() => window.scrollTo(0, 0)}
-                            style={{cursor: 'pointer', marginRight: "10px", marginLeft: "10px"}}
+                            <span onClick={() => window.scrollTo(0, 0)}
+                              onMouseOver={(event) => event.target.style.cursor = 'pointer'}
+                              onTouchStart={() => window.scrollTo(0, 0)}
+                              style={{ cursor: 'pointer', marginRight: "10px", marginLeft: "10px" }}
                             >Top</span>
                           </span>
                         </span>
@@ -2224,8 +2266,8 @@ const Thread = () => {
                     </ReplyFormLink>
                   </div>
                 ) : (null)}
-            </>
-          )) : null}
+              </>
+            )) : null}
           {outOfViewCid && outOfViewPosition && createPortal(
             <div
               ref={postOnHoverRef}
@@ -2243,7 +2285,7 @@ const Thread = () => {
                 feed={comment}
               />
             </div>
-          , document.body)}
+            , document.body)}
         </BoardForm>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{
@@ -2258,7 +2300,7 @@ const Thread = () => {
             marginTop: "2px",
           }}>
             Style:
-             
+
             <select id="style-selector" onChange={handleStyleChange} value={selectedStyle}>
               <option value="Yotsuba">Yotsuba</option>
               <option value="Yotsuba-B">Yotsuba B</option>
@@ -2272,43 +2314,43 @@ const Thread = () => {
             marginTop: "42px",
           }}>
             <>
-            <span className="boardList">
-              [
+              <span className="boardList">
+                [
                 <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>All</Link>
-                 / 
+                /
                 <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>Subscriptions</Link>
-              ]&nbsp;
-            </span>
-            {defaultSubplebbits.map((subplebbit, index) => (
-              <span className="boardList" key={`span-${subplebbit.address}`}>
-                {index === 0 ? null : "\u00a0"}
-                <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => {
-                setSelectedTitle(subplebbit.title);
-                setSelectedAddress(subplebbit.address);
-                }}
-                >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
-                {index !== defaultSubplebbits.length - 1 ? " /" : null}
+                ]&nbsp;
               </span>
-            ))}
-            <span className="nav">
-              [
-              <span id="button-span" style={{cursor: 'pointer'}} onClick={
-              () => {
-                window.electron && window.electron.isElectron ? (
-                  setIsCreateBoardOpen(true)
-                ) : (
-                  alert(
-                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
-                  )
-                )
-              }
-              }>Create Board</span>
-              ]
+              {defaultSubplebbits.map((subplebbit, index) => (
+                <span className="boardList" key={`span-${subplebbit.address}`}>
+                  {index === 0 ? null : "\u00a0"}
+                  <Link to={`/p/${subplebbit.address}`} key={`a-${subplebbit.address}`} onClick={() => {
+                    setSelectedTitle(subplebbit.title);
+                    setSelectedAddress(subplebbit.address);
+                  }}
+                  >{subplebbit.title ? subplebbit.title : subplebbit.address}</Link>
+                  {index !== defaultSubplebbits.length - 1 ? " /" : null}
+                </span>
+              ))}
+              <span className="nav">
+                [
+                <span id="button-span" style={{ cursor: 'pointer' }} onClick={
+                  () => {
+                    window.electron && window.electron.isElectron ? (
+                      setIsCreateBoardOpen(true)
+                    ) : (
+                      alert(
+                        'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                      )
+                    )
+                  }
+                }>Create Board</span>
+                ]
                 [
                 <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
-                <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
+                <Link to="/" onClick={() => handleStyleChange({ target: { value: "Yotsuba" } }
                 )}>Home</Link>
                 ]
               </span>
@@ -2325,13 +2367,13 @@ const Thread = () => {
               marginTop: "5px",
               marginBottom: "15px",
             }}>
-            <a style={{textDecoration: 'underline'}} href="https://plebbit.com" target="_blank" rel="noopener noreferrer">About</a>
-            &nbsp;•&nbsp;  
-            <a style={{textDecoration: 'underline'}} href="https://github.com/plebbit/plebchan/releases/latest" target="_blank" rel="noopener noreferrer">App</a>
+            <a style={{ textDecoration: 'underline' }} href="https://plebbit.com" target="_blank" rel="noopener noreferrer">About</a>
             &nbsp;•&nbsp;
-            <a style={{textDecoration: 'underline'}} href="https://twitter.com/plebchan_eth" target="_blank" rel="noopener noreferrer">Twitter</a>
-            &nbsp;•&nbsp;  
-            <a style={{textDecoration: 'underline'}} href="https://t.me/plebbit" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a style={{ textDecoration: 'underline' }} href="https://github.com/plebbit/plebchan/releases/latest" target="_blank" rel="noopener noreferrer">App</a>
+            &nbsp;•&nbsp;
+            <a style={{ textDecoration: 'underline' }} href="https://twitter.com/plebchan_eth" target="_blank" rel="noopener noreferrer">Twitter</a>
+            &nbsp;•&nbsp;
+            <a style={{ textDecoration: 'underline' }} href="https://t.me/plebbit" target="_blank" rel="noopener noreferrer">Telegram</a>
           </div>
         </Footer>
       </Container>
