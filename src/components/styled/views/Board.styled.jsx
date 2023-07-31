@@ -1905,7 +1905,7 @@ export const BoardForm = styled.div`
     .file-thumb {
       float: left;
       margin: 3px 20px 5px 20px;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.05);
     }
 
     .reply-file-text {
@@ -2069,6 +2069,19 @@ export const BoardForm = styled.div`
     .reply-container {
       margin: 7px 2px 0;
       padding-left: 0;
+
+      .button-mobile {
+        float: right;
+        border-radius: 3px;
+        padding: 6px 10px 5px;
+        user-select: none;
+        text-decoration: none;
+      }
+
+      video {
+        width: 100%;
+        height: auto;
+      }
 
       .post-reply {
         margin-top: 0 !important;
@@ -2847,6 +2860,10 @@ export const BoardForm = styled.div`
         return `.thread {
         margin: 0;
         clear: both;
+      }
+
+      .file-thumb {
+        background-color: rgba(255, 255, 255, 0.01) !important;
       }
 
       .op-container {

@@ -1,21 +1,33 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAccount, useCreateSubplebbit, 
+  // useSubplebbits, useAccountSubplebbits
+ } from '@plebbit/plebbit-react-hooks';
 import { StyledModal } from '../styled/modals/CreateBoardModal.styled';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import Modal from 'react-modal';
 import useError from '../../hooks/useError';
+import useSuccess from '../../hooks/useSuccess';
 
 const CreateBoardModal = ({ isOpen, closeModal }) => {
   const { selectedStyle } = useGeneralStore(state => state);
 
-  const nodeRef = useRef(null);
+  const account = useAccount();
+  const navigate = useNavigate();
 
-  const [boardTitle, setBoardTitle] = useState('');
+  const nodeRef = useRef(null);
+  const ruleInputRef = useRef(null);
+
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
+
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const [moderators, setModerators] = useState('');
   const [rule, setRule] = useState('');
   const [rules, setRules] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
-
-  const [, setNewErrorMessage] = useError();
 
 
   const handleAddRule = () => {
@@ -39,6 +51,13 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
   }
 
 
+  useEffect(() => {
+    if (ruleInputRef.current) {
+      ruleInputRef.current.focus();
+    }
+  }, [rules]);
+
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleAddRule();
@@ -49,6 +68,7 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
   const handleEditRule = (index) => {
     setRule(rules[index]);
     setEditIndex(index);
+    ruleInputRef.current.focus();
   }
 
 
@@ -58,8 +78,88 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
     }
     setRules(rules.filter((_, i) => i !== index));
   }
+
+
+  const createSubplebbitOptions = {
+    title: title || undefined,
+    description: description || undefined,
+    suggested: {
+      avatarUrl : avatar || undefined,
+    },
+    roles: moderators || undefined,
+    rules: rules || undefined,
+  }
+
+  
+  const resetFields = () => {
+    setTitle('');
+    setDescription('');
+    setAvatar('');
+    setModerators('');
+    setRule('');
+    setRules([]);
+  }
+
+
+  const { createdSubplebbit, createSubplebbit } = useCreateSubplebbit(createSubplebbitOptions);
   
 
+  const handleCreateBoard = async () => {
+    let moderatorAddresses = moderators.trim() ? moderators.split(',').map(addr => addr.trim()) : [];
+    let invalidAddresses = moderatorAddresses.filter(addr => !(addr.endsWith('.eth') || (addr.startsWith('12D3KooW') && addr.length === 52)));
+
+    if (invalidAddresses.length > 0) {
+      setNewErrorMessage("Invalid moderator addresses: " + invalidAddresses.join(", "));
+      return;
+    }
+
+    const roles = {};
+    moderatorAddresses.forEach(addr => {
+      roles[addr] = { role: 'moderator' };
+    });
+    roles[account.author.address] = { role: 'admin' };
+
+    let createSubplebbitOptions = {
+      roles: roles,
+    };
+
+    if (title) {
+      createSubplebbitOptions.title = title;
+    }
+
+    if (description) {
+      createSubplebbitOptions.description = description;
+    }
+
+    if (avatar) {
+      createSubplebbitOptions.suggested = {
+        avatarUrl : avatar,
+      };
+    }
+
+    if (rules.length > 0) {
+      createSubplebbitOptions.rules = rules;
+    }
+  
+    try {
+      await createSubplebbit(createSubplebbitOptions);
+    } catch (error) {
+      setNewErrorMessage(error.message);
+    }
+  
+    if (createdSubplebbit) {
+      resetFields();
+      closeModal();
+      setNewSuccessMessage('Board created successfully, address: ' + createdSubplebbit.address);
+      navigate(`/p/${createdSubplebbit.address}`);
+    }
+  }
+
+  // remove after testing:
+  // const {accountSubplebbits} = useAccountSubplebbits()
+  // const ownerSubplebbitAddresses = Object.keys(accountSubplebbits).map(subplebbitAddress => accountSubplebbits[subplebbitAddress].role === 'owner')
+  // const subplebbits = useSubplebbits({subplebbitAddresses: ownerSubplebbitAddresses})
+  // console.log(subplebbits);
 
   return (
     <StyledModal
@@ -86,8 +186,8 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
             <input
               id="name"
               type="text"
-              value={boardTitle}
-              onChange={(e) => setBoardTitle(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Board Title"
             />
           </div>
@@ -116,8 +216,8 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
             <input
               id="name"
               type="text"
-              value={boardTitle}
-              onChange={(e) => setBoardTitle(e.target.value)}
+              value={avatar}
+              onChange={(e) => setAvatar(e.target.value)}
               placeholder="https://example.com/image.png"
             />
           </div>
@@ -128,11 +228,11 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
             Optional, let other users help you moderate your board.
           </div>
           <div className='settings-input'>
-            <input
+            <textarea
               id="name"
               type="text"
-              value={boardTitle}
-              onChange={(e) => setBoardTitle(e.target.value)}
+              value={moderators}
+              onChange={(e) => setModerators(e.target.value)}
               placeholder='username.eth, 12D3KooW..., username2.eth'
             />
           </div>
@@ -144,6 +244,7 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
           </div>
           <div className='settings-input'>
             <input
+              ref={ruleInputRef}
               id="rule"
               type="text"
               value={rule}
@@ -171,7 +272,7 @@ const CreateBoardModal = ({ isOpen, closeModal }) => {
               ))}
             </fieldset>
           )}
-          <button id="create-board-btn">Create Board</button>
+          <button onClick={handleCreateBoard} id="create-board-btn">Create Board</button>
         </ul>
       </div>
     </StyledModal>
