@@ -2652,13 +2652,35 @@ const Board = () => {
                                             </span>
                                           </div>
                                         ) : replyMediaInfo.type === "video" ? (
-                                            <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
-                                                <video key={`fti-${index}`} 
-                                                src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                                style={{ pointerEvents: "none" }}
-                                                onError={(e) => e.target.src = fallbackImgUrl} />
-                                              <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                            </span>
+                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
+                                            {isMobileReplyThumbnailClicked[index] ? (
+                                              <video key={`fti-${index}`} 
+                                              src={replyMediaInfo.url} alt={replyMediaInfo.type}
+                                              controls
+                                              style={{ all: 'unset', width: '100%', height: '100%', cursor: 'pointer'}} 
+                                              onError={(e) => e.target.src = fallbackImgUrl} />
+                                            ) : (
+                                              <video 
+                                                key={`fti-${index}`}
+                                                src={replyMediaInfo.url} 
+                                                alt="thumbnail"
+                                                onClick={() => {handleThumbnailClick(index, 'mobileReply')}}
+                                                style={{cursor: "pointer"}}
+                                                id="video-thumbnail-mobile"
+                                                onError={(e) => e.target.src = fallbackImgUrl} 
+                                              />
+                                            )}
+                                            {replyMediaInfo?.type === "video" || "iframe" ? (
+                                              isMobileReplyThumbnailClicked[index] ? (
+                                                <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                                  <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
+                                                  onClick={() => {handleThumbnailClick(index, 'mobileReply')}}
+                                                  >Close</span>
+                                                </div>
+                                              ) : (
+                                                <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
+                                            )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
+                                          </span>
                                         ) : replyMediaInfo.type === "audio" ? (
                                             <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
                                               <audio key={`mob-img-${index}`} 

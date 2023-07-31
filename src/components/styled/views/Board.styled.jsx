@@ -2070,6 +2070,19 @@ export const BoardForm = styled.div`
       margin: 7px 2px 0;
       padding-left: 0;
 
+      .button-mobile {
+        float: right;
+        border-radius: 3px;
+        padding: 6px 10px 5px;
+        user-select: none;
+        text-decoration: none;
+      }
+
+      video {
+        width: 100%;
+        height: auto;
+      }
+
       .post-reply {
         margin-top: 0 !important;
         width: 100%;
