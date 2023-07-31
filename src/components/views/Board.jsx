@@ -2018,15 +2018,16 @@ const Board = () => {
                                           replyMediaInfo?.url
                                           }</a>&nbsp;({replyMediaInfo?.type})
                                           {replyMediaInfo?.type === "video" || "iframe" ? (
-                                              isReplyThumbnailClicked[index] ? (
-                                                <span>
-                                                  -[
-                                                    <span className='reply-link' 
-                                                    style={{textDecoration: 'underline', cursor: 'pointer'}}
-                                                    onClick={() => {handleThumbnailClick(index, 'reply')}}>Close</span>
-                                                  ]
-                                                </span>) : null)
-                                            : null}
+                                            isReplyThumbnailClicked[index] ? (
+                                              <span>
+                                                -[
+                                                  <span className='reply-link' 
+                                                  style={{textDecoration: 'underline', cursor: 'pointer'}}
+                                                  onClick={() => {handleThumbnailClick(index, 'reply')}}>Close</span>
+                                                ]
+                                              </span>) 
+                                            : null)
+                                          : null}
                                         </div>
                                         {replyMediaInfo?.type === "webpage" ? (
                                           <div key={`enlarge-reply-${index}`} className="img-container">
