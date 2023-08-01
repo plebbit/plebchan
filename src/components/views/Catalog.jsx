@@ -292,6 +292,7 @@ const Catalog = () => {
       ...prevPublishCommentOptions,
       author: {
         displayName: nameRef.current.value || undefined,
+        address: account?.author.address,
       },
       title: subjectRef.current.value || undefined,
       content: commentRef.current.value || undefined,
@@ -329,7 +330,7 @@ const Catalog = () => {
           signer,
           author: {
             ...prevPublishCommentOptions.author,
-            address: signer?.address
+            address: signer?.address,
           },
         };
   

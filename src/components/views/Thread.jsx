@@ -386,6 +386,7 @@ const Thread = () => {
       ...prevPublishCommentOptions,
       author: {
         displayName: nameRef.current.value || undefined,
+        address: account?.author.address,
       },
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
@@ -423,7 +424,7 @@ const Thread = () => {
           signer,
           author: {
             ...prevPublishCommentOptions.author,
-            address: signer?.address
+            address: signer?.address,
           },
         };
   

@@ -178,6 +178,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       ...prevPublishCommentOptions,
       author: {
         displayName: nameRef.current.value || undefined,
+        address: account?.author.address,
       },
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
@@ -215,7 +216,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
           signer,
           author: {
             ...prevPublishCommentOptions.author,
-            address: signer?.address
+            address: signer?.address,
           },
         };
   
