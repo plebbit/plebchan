@@ -41,6 +41,7 @@ import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json'
+import { RefreshButtonMobile } from '../buttons/RefreshButton';
 const {version} = packageJson
 
 
@@ -732,6 +733,7 @@ const Thread = () => {
                 <Link to={`/p/${selectedAddress}`}>Return</Link>
               </span>
             </div>
+            <RefreshButtonMobile/>
             <div id="catalog-button-mobile">
               <span className="btn-wrap">
                 <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
