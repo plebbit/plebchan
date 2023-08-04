@@ -2713,9 +2713,9 @@
     uuid "9.0.0"
     viem "1.5.2"
 
-"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#7461be74b98568cf86c5b92bfe9d9e0df44f127d":
+"@plebbit/plebbit-js@https://github.com/plebbit/plebbit-js.git#e0c04caa13c165a2c6cbcbb8bd71193b4062af22":
   version "0.0.3"
-  resolved "https://github.com/plebbit/plebbit-js.git#7461be74b98568cf86c5b92bfe9d9e0df44f127d"
+  resolved "https://github.com/plebbit/plebbit-js.git#e0c04caa13c165a2c6cbcbb8bd71193b4062af22"
   dependencies:
     "@adraffy/ens-normalize" "1.8.3"
     "@keyv/sqlite" "3.6.2"
@@ -2772,11 +2772,11 @@
   dependencies:
     debug "4.3.3"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#25c304ca7f4a75b05a03c2c613c274b46462922a":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#5c5521672fac68ab00c83b96614445f7ccfd5b04":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#25c304ca7f4a75b05a03c2c613c274b46462922a"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#5c5521672fac68ab00c83b96614445f7ccfd5b04"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#7461be74b98568cf86c5b92bfe9d9e0df44f127d"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#3ef37a4fd590b2de968428cf6012d8b1590e7c03"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
@@ -2787,11 +2787,11 @@
     uuid "8.3.2"
     zustand "4.0.0"
 
-"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#5c5521672fac68ab00c83b96614445f7ccfd5b04":
+"@plebbit/plebbit-react-hooks@https://github.com/plebbit/plebbit-react-hooks.git#d41d7a4f150cecd831aeda57c3ec9edf1c22f9f5":
   version "0.0.1"
-  resolved "https://github.com/plebbit/plebbit-react-hooks.git#5c5521672fac68ab00c83b96614445f7ccfd5b04"
+  resolved "https://github.com/plebbit/plebbit-react-hooks.git#d41d7a4f150cecd831aeda57c3ec9edf1c22f9f5"
   dependencies:
-    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#3ef37a4fd590b2de968428cf6012d8b1590e7c03"
+    "@plebbit/plebbit-js" "https://github.com/plebbit/plebbit-js.git#e0c04caa13c165a2c6cbcbb8bd71193b4062af22"
     "@plebbit/plebbit-logger" "https://github.com/plebbit/plebbit-logger.git"
     assert "2.0.0"
     ethers "5.6.9"
