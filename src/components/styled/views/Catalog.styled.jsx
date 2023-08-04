@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-// TODO: remove GridContainer when updating other catalogs
-export const GridContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-`;
-
 export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
