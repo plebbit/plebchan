@@ -45,6 +45,30 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const author = {...account?.author, address: ensName};
   const { resolvedAddress, state } = useResolvedAuthorAddress({ author, cache: false });
 
+  const isElectron = window.electron && window.electron.isElectron;
+
+  const defaultGatewayUrls = isElectron ? undefined : [
+    'https://ipfs.io',
+    'https://ipfsgateway.xyz',
+    'https://cloudflare-ipfs.com',
+    'https://plebpubsub.live'
+  ];
+
+  const defaultPubsubHttpClientsOptions = isElectron ? undefined : [
+    'https://pubsubprovider.xyz/api/v0',
+    'https://plebpubsub.live/api/v0'
+  ];
+
+  const defaultEthereumRpcUrls = [
+    'ethers.js',
+    'https://ethrpc.xyz',
+    'viem',
+  ];
+
+  const defaultPolygonRpcUrls = [
+    'https://polygon-rpc.com',
+  ];
+
 
   useEffect(() => {
     if (checkedENS && resolvedAddress && state === 'succeeded') {
@@ -85,29 +109,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setNewErrorMessage(`Failed resolving address, ${ensName}`);
     }
   };
-  
-
-  const defaultGatewayUrls = [
-    'https://ipfs.io',
-    'https://ipfsgateway.xyz',
-    'https://cloudflare-ipfs.com',
-    'https://plebpubsub.live'
-  ];
-
-  const defaultPubsubHttpClientsOptions = [
-    'https://pubsubprovider.xyz/api/v0',
-    'https://plebpubsub.live/api/v0'
-  ];
-
-  const defaultEthereumRpcUrls = [
-    'ethers.js',
-    'https://ethrpc.xyz',
-    'viem',
-  ];
-
-  const defaultPolygonRpcUrls = [
-    'https://polygon-rpc.com',
-  ];
 
 
   const isValidURL = (url) => {
@@ -147,20 +148,20 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
 
   const handleSavePlebbitOptions = async () => {
-    let gatewayUrls = gatewayRef.current.value.split('\n').filter(url => url.trim());
+    let gatewayUrls = gatewayRef.current.value.split('\n').filter((url) => url.trim());
     let ipfsClientsOptions = ipfsRef.current.value.split('\n').filter(url => url.trim());
-    let pubsubClientsOptions = pubsubRef.current.value.split('\n').filter(url => url.trim());
-
-    if (!gatewayUrls.length) {
-      gatewayUrls = defaultGatewayUrls;
+    let pubsubClientsOptions = pubsubRef.current.value.split('\n').filter((url) => url.trim());
+  
+    if (!isElectron) {
+      if (!gatewayUrls.length) gatewayUrls = defaultGatewayUrls;
+      if (!pubsubClientsOptions.length) pubsubClientsOptions = defaultPubsubHttpClientsOptions;
+    } else {
+      if (!gatewayUrls.length) gatewayUrls = undefined;
+      if (!pubsubClientsOptions.length) pubsubClientsOptions = undefined;
     }
 
     if (!ipfsClientsOptions.length) {
       ipfsClientsOptions = undefined;
-    }
-
-    if (!pubsubClientsOptions.length) {
-      pubsubClientsOptions = defaultPubsubHttpClientsOptions;
     }
 
     const invalidUrls = [
@@ -445,7 +446,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
                 <input 
                   type="checkbox" 
                   checked={anonymousMode} 
-                  onChange={() => {setAnonymousMode(!anonymousMode)}}
+                  onChange={() => {setAnonymousMode(!anonymousMode); window.location.reload();}}
                 />
                 &nbsp;Anon Mode
               </label>
@@ -571,7 +572,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             </li>
             <div className="settings-input">
               <textarea placeholder="IPFS Gateway URLs"
-                defaultValue={account?.plebbitOptions?.ipfsGatewayUrls.join("\n")}
+                defaultValue={isElectron ? '' : account?.plebbitOptions?.ipfsGatewayUrls.join('\n')}
                 ref={gatewayRef}
               />
             </div>
@@ -593,7 +594,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <li className="settings-tip">Optional URLs or IpfsHttpClientOptions used for pubsub publishing when ipfsHttpClientOptions isn't available, like in the browser.</li>
             <div className="settings-input">
               <textarea placeholder="PubSub HTTP Clients Options" 
-                defaultValue={account?.plebbitOptions?.pubsubHttpClientsOptions.join("\n")} 
+                defaultValue={isElectron ? '' : account?.plebbitOptions?.pubsubHttpClientsOptions.join('\n')}
                 ref={pubsubRef} 
               />
             </div>

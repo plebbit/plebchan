@@ -445,6 +445,7 @@ const Board = () => {
       ...prevPublishCommentOptions,
       author: {
         displayName: nameRef.current.value || undefined,
+        address: account?.author.address,
       },
       title: subjectRef.current.value || undefined,
       content: commentRef.current.value || undefined,
@@ -482,7 +483,7 @@ const Board = () => {
           signer,
           author: {
             ...prevPublishCommentOptions.author,
-            address: signer?.address
+            address: signer?.address,
           },
         };
   
@@ -2018,15 +2019,16 @@ const Board = () => {
                                           replyMediaInfo?.url
                                           }</a>&nbsp;({replyMediaInfo?.type})
                                           {replyMediaInfo?.type === "video" || "iframe" ? (
-                                              isReplyThumbnailClicked[index] ? (
-                                                <span>
-                                                  -[
-                                                    <span className='reply-link' 
-                                                    style={{textDecoration: 'underline', cursor: 'pointer'}}
-                                                    onClick={() => {handleThumbnailClick(index, 'reply')}}>Close</span>
-                                                  ]
-                                                </span>) : null)
-                                            : null}
+                                            isReplyThumbnailClicked[index] ? (
+                                              <span>
+                                                -[
+                                                  <span className='reply-link' 
+                                                  style={{textDecoration: 'underline', cursor: 'pointer'}}
+                                                  onClick={() => {handleThumbnailClick(index, 'reply')}}>Close</span>
+                                                ]
+                                              </span>) 
+                                            : null)
+                                          : null}
                                         </div>
                                         {replyMediaInfo?.type === "webpage" ? (
                                           <div key={`enlarge-reply-${index}`} className="img-container">
