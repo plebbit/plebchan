@@ -145,7 +145,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       clearTimeout(checkedENSTimeoutId); 
     };
   }, [copyStatus, checkedENS]);
-
+  
+console.log(account)
 
   const handleSavePlebbitOptions = async () => {
     let gatewayUrls = gatewayRef.current.value.split('\n').filter((url) => url.trim());
@@ -165,9 +166,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     }
 
     const invalidUrls = [
-      ...gatewayUrls || defaultGatewayUrls,
-      ...(ipfsClientsOptions || []),
-      ...pubsubClientsOptions || defaultPubsubHttpClientsOptions,
+      ...(Array.isArray(gatewayUrls) ? gatewayUrls : (Array.isArray(defaultGatewayUrls) ? defaultGatewayUrls : [])),
+      ...(Array.isArray(ipfsClientsOptions) ? ipfsClientsOptions : []),
+      ...(Array.isArray(pubsubClientsOptions) ? pubsubClientsOptions : (Array.isArray(defaultPubsubHttpClientsOptions) ? defaultPubsubHttpClientsOptions : [])),
     ].filter((url) => !isValidURL(url));
 
     if (invalidUrls.length > 0) {
@@ -244,9 +245,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     setNewErrorMessage(null);
     setNewSuccessMessage(null);
 
-    gatewayRef.current.value = defaultGatewayUrls.join('\n');
+    gatewayRef.current.value = defaultGatewayUrls ? defaultGatewayUrls.join('\n') : "";
     ipfsRef.current.value = "";
-    pubsubRef.current.value = defaultPubsubHttpClientsOptions.join('\n');
+    pubsubRef.current.value = defaultPubsubHttpClientsOptions ? defaultPubsubHttpClientsOptions.join('\n') : "";
     dataPathRef.current.value = "";
 
     try {
