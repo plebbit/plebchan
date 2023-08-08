@@ -146,7 +146,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     };
   }, [copyStatus, checkedENS]);
   
-console.log(account)
 
   const handleSavePlebbitOptions = async () => {
     let gatewayUrls = gatewayRef.current.value.split('\n').filter((url) => url.trim());
