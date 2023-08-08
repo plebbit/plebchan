@@ -18,32 +18,16 @@ export const Threads = styled.div`
     padding: 5px 0 3px;
   }
 
-  .thread_popup_right{
+  .thread_popup{
     min-width:200px;
     height:auto;
     background-color:black;
     position:absolute;
     margin-top:0px;
-    left:100%;
-    right:auto;
     text-align:left;
     z-index:10;
     transform:none;
     padding-left:5px;padding-right:5px;
-    border-radius:3px;
-  }
-  .thread_popup_left{
-    min-width:200px;
-    height:auto;
-    background-color:black;
-    position:absolute;
-    margin-top:0px;
-    right:100%;
-    left:auto;
-    text-align:left;
-    z-index:10;
-    transform:none;
-    padding-left:5px;
     border-radius:3px;
   }
   .thread_popup_content{
