@@ -5,7 +5,7 @@ import { Link, useNavigate} from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
-import { useAccount, useFeed, usePublishCommentEdit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useFeed, usePublishCommentEdit, useSubplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, PostMenu, BoardForm } from '../styled/views/Board.styled';
 import { Threads, PostMenuCatalog } from '../styled/views/Catalog.styled';
@@ -32,101 +32,128 @@ const {version} = packageJson
 let lastVirtuosoStates = {}
 
 
-const AllCatalog = () => {
+const CatalogPost = ({post}) => {
   const {
-    setCaptchaResponse,
-    setChallengesArray,
-    defaultSubplebbits,
     editedComment,
+    setDeletePost,
     setIsAuthorDelete,
+    captchaResponse, setCaptchaResponse,
+    setIsModerationOpen,
+    setChallengesArray,
     setIsAuthorEdit,
     setIsCaptchaOpen,
-    isModerationOpen, setIsModerationOpen,
-    isSettingsOpen, setIsSettingsOpen,
+    setIsEditModalOpen,
     setModeratingCommentCid,
+    setOriginalCommentContent,
+    setPendingComment,
     setResolveCaptchaPromise,
     selectedAddress, setSelectedAddress,
     selectedStyle,
     setSelectedThread,
-    setSelectedTitle,
   } = useGeneralStore(state => state);
-  
 
+  const thread = post;
+  const commentMediaInfo = getCommentMediaInfo(thread);
+  const linkCount = countLinks(thread);
+  const fallbackImgUrl = "assets/filedeleted-res.gif";
+  const [isHoveringOnThread, setIsHoveringOnThread] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
+  const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
+  const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
+  const [isModerator, setIsModerator] = useState(false);
+
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
+
+  const account = useAccount();
+  const subplebbit = useSubplebbit({subplebbitAddress: thread.subplebbitAddress});
   const threadMenuRefs = useRef({});
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
-  const virtuosoRef = useRef();
-
-  const account = useAccount();
-  const navigate = useNavigate();
-  const [, setNewErrorMessage] = useError();
-  const [, setNewSuccessMessage] = useSuccess();
-  
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [originalCommentContent, setOriginalCommentContent] = useState(null);
-  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
-  const [deletePost, setDeletePost] = useState(false);
-  const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
-  const [commentCid, setCommentCid] = useState(null);
-  const [moderatorPermissions, setModeratorPermissions] = useState({});
-  const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
-
-  const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'active'});
-  const {subplebbits} = useSubplebbits({subplebbitAddresses: addresses, sortType: 'active'});
-  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
-
-  const stateString = useFeedStateString(subplebbits);
-
-  const columnWidth = 180;
-  const windowWidth = useWindowWidth();
-  const columnCount = Math.floor(windowWidth / columnWidth);
-  const rows = useFeedRows(selectedFeed, columnCount);
 
 
   useEffect(() => {
-    let permissions = {};
+    if (subplebbit.roles !== undefined) { 
+      const role = subplebbit.roles[account?.author.address]?.role;
   
-    selectedFeed.forEach(thread => {
-      const subplebbit = subplebbits.find(s => s && s.address === thread.subplebbitAddress);
-  
-      if (subplebbit && subplebbit.roles) { 
-        const role = subplebbit.roles[account?.author.address]?.role;
+      if (role === 'moderator' || role === 'admin' || role === 'owner') {
+        setIsModerator(true);
+      } else {
+        setIsModerator(false);
+      }
+    }
+  }, [account?.author.address, subplebbit.roles]);
+
+
+  const handleOutsideClick = useCallback((e) => {
+    if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
+      setOpenMenuCid(null);
+    }
+  }, [openMenuCid]);
+
+  const handleOptionClick = () => {
+    setOpenMenuCid(null);
+  };
+
+  useEffect(() => {
+    if (openMenuCid !== null) {
+      document.addEventListener('click', handleOutsideClick);
+    } else {
+      document.removeEventListener('click', handleOutsideClick);
+    }
     
-        if (role === 'moderator' || role === 'admin' || role === 'owner') {
-          permissions[thread.subplebbitAddress] = true;
-        } else {
-          permissions[thread.subplebbitAddress] = false;
-        }
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [openMenuCid, handleOutsideClick]);
+
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+            <div className='author-delete-alert'>
+              <p>Are you sure you want to delete this post?</p>
+              <div className="author-delete-buttons">
+                <button onClick={onClose}>No</button>
+                <button
+                  onClick={() => {
+                    setIsAuthorDelete(true);
+                    setIsAuthorEdit(false);
+                    setPublishCommentEditOptions(prevOptions => ({
+                      ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
+                      deleted: true,
+                    }));
+                    setTriggerPublishCommentEdit(true);
+                    onClose();
+                  }}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </AuthorDeleteAlert>
+        );
       }
     });
-  
-    setModeratorPermissions(permissions);
-  }, [account?.author.address, selectedFeed, subplebbits]);  
-
-
-  // mobile navbar scroll effect
-  useEffect(() => {
-    const debouncedHandleScroll = debounce(() => {
-      const currentScrollPos = window.pageYOffset;
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-      setPrevScrollPos(currentScrollPos);
-    }, 50);
-  
-    window.addEventListener('scroll', debouncedHandleScroll);
-  
-    return () => window.removeEventListener('scroll', debouncedHandleScroll);
-  }, [prevScrollPos, visible]);
-
-
-  const tryLoadMore = async () => {
-    try {loadMore()} 
-    catch (e)
-    {await new Promise(resolve => setTimeout(resolve, 1000))}
   };
+
+
+  const handleAuthorEditClick = (comment) => {
+    handleOptionClick(comment.cid);
+    setIsAuthorEdit(true);
+    setIsAuthorDelete(false);
+    setCommentCid(comment.cid);
+    setOriginalCommentContent(comment.content);
+    setIsEditModalOpen(true);
+  }
+
 
 
   const onChallengeVerification = (challengeVerification) => {
@@ -141,6 +168,7 @@ const AllCatalog = () => {
 
 
   const onChallenge = async (challenges, comment) => {
+    setPendingComment(comment);
     let challengeAnswers = [];
     try {
       challengeAnswers = await getChallengeAnswersFromUser(challenges)
@@ -168,7 +196,7 @@ const AllCatalog = () => {
   
         const handleKeyDown = async (event) => {
           if (event.key === 'Enter') {
-            const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
+            const currentCaptchaResponse = captchaResponse;
             resolve(currentCaptchaResponse);
             setIsCaptchaOpen(false);
             document.removeEventListener('keydown', handleKeyDown);
@@ -202,7 +230,7 @@ const AllCatalog = () => {
   
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
-  
+
   useEffect(() => {
     setPublishCommentEditOptions((prevOptions) => ({
       ...prevOptions,
@@ -236,6 +264,250 @@ const AllCatalog = () => {
   }, [triggerPublishCommentEdit, publishCommentEdit, publishCommentEditOptions]);
 
 
+  return (
+    <div key={`thread-`} className="thread" 
+    onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
+    onMouseLeave={() => {setIsHoveringOnThread('')}}>
+      {commentMediaInfo?.url ? (
+        <Link style={{all: "unset", cursor: "pointer"}} key={`link-`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
+        onClick={() => setSelectedThread(thread.cid)}>
+          {commentMediaInfo?.type === "webpage" ? (
+            thread.thumbnailUrl ? (
+            <img className="card" key={`img-`}
+            src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+            onError={(e) => {
+              e.target.src = fallbackImgUrl
+              e.target.onerror = null;
+            }}  />
+            ) : null
+          ) : null}
+          {commentMediaInfo?.type === "image" ? (
+            <img className="card" key={`img-`}
+            src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+            onError={(e) => {
+              e.target.src = fallbackImgUrl
+              e.target.onerror = null;}}  />
+          ) : null}
+          {commentMediaInfo?.type === "video" ? (
+              <video className="card" key={`fti-`} 
+              src={commentMediaInfo.url} 
+              alt={commentMediaInfo.type} 
+              onError={(e) => e.target.src = fallbackImgUrl} /> 
+          ) : null}
+          {commentMediaInfo?.type === "audio" ? (
+              <audio className="card" controls 
+              key={`fti-`} 
+              src={commentMediaInfo.url} 
+              alt={commentMediaInfo.type} 
+              onError={(e) => e.target.src = fallbackImgUrl} />
+          ) : null}
+        </Link>
+      ) : null}
+      <div key={`ti-`} className="thread-icons" >
+      {(commentMediaInfo && (
+        commentMediaInfo.type === 'image' || 
+        commentMediaInfo.type === 'video' || 
+        (commentMediaInfo.type === 'webpage' && 
+        commentMediaInfo.thumbnail))) ? (                          
+          <OfflineIndicator 
+          address={thread.subplebbitAddress} 
+          className="thread-icon offline-icon"
+          tooltipPlace="top" />
+        ) : (
+          <OfflineIndicator 
+          address={thread.subplebbitAddress} 
+          className="thread-icon offline-icon-no-link"
+          tooltipPlace="top" />
+      )}
+      </div>
+      <BoardForm selectedStyle={selectedStyle} 
+      style={{ all: "unset"}}>
+        <div key={`meta-`} className="meta" title="(R)eplies / (L)ink Replies" >
+          R:&nbsp;<b key={`b-`}>{thread.replyCount}</b>
+          {linkCount > 0 ? (
+            <>
+              &nbsp;/
+              L:&nbsp;<b key={`i-`}>{linkCount}</b>
+            </>
+          ) : null}
+        <PostMenu 
+          style={{ display: isHoveringOnThread === thread.cid ? 'inline-block' : 'none',
+          position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
+          zIndex: '999'}}
+          key={`pmb-`} 
+          title="Post menu"
+          ref={el => { 
+            threadMenuRefs.current[thread.cid] = el; 
+            postMenuRef.current = el; 
+          }}
+          className='post-menu-button' 
+          id='post-menu-button-catalog'
+          rotated={openMenuCid === thread.cid}
+          onClick={(event) => {
+            event.stopPropagation();
+            const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
+            setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+            setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
+          }}                              
+        >
+          ▶
+        </PostMenu>
+        </div>
+        {createPortal(
+          <PostMenuCatalog selectedStyle={selectedStyle} 
+            ref={el => {postMenuCatalogRef.current = el}}
+            onClick={(event) => event.stopPropagation()}
+            style={{position: "absolute", 
+            top: menuPosition.top + 7, 
+            left: menuPosition.left}}>
+            <div className={`post-menu-thread post-menu-thread-${thread.cid}`}
+            style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
+            >
+              <ul className="post-menu-catalog">
+                <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
+                  <>
+                    {authorAddress === account?.author.address || 
+                    authorAddress === account?.signer.address ? (
+                      <>
+                        <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                        <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                      </>
+                    ) : null}
+                    {isModerator ? (
+                      <>
+                        {authorAddress === account?.author.address ||
+                        authorAddress === account?.signer.address ? (
+                          null
+                        ) : (
+                          <li onClick={() => {
+                            setSelectedAddress(thread.subplebbitAddress);
+                            setModeratingCommentCid(thread.cid)
+                            setIsModerationOpen(true); 
+                            handleOptionClick(thread.cid);
+                            setDeletePost(true);
+                          }}>
+                          Delete post
+                          </li>
+                        )}
+                        <li
+                        onClick={() => {
+                          setSelectedAddress(thread.subplebbitAddress);
+                          setModeratingCommentCid(thread.cid)
+                          setIsModerationOpen(true); 
+                          handleOptionClick(thread.cid);
+                        }}>
+                          Mod tools
+                        </li>
+                      </>
+                    ) : null}
+                  </>
+                )}</VerifiedAuthor>
+                {(commentMediaInfo && (
+                  commentMediaInfo.type === 'image' || 
+                  (commentMediaInfo.type === 'webpage' && 
+                  commentMediaInfo.thumbnail))) ? ( 
+                    <li 
+                    onMouseOver={() => {setIsImageSearchOpen(true)}}
+                    onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                      Image search »
+                      <ul className="dropdown-menu post-menu-catalog"
+                        style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                        <li onClick={() => handleOptionClick(thread.cid)}>
+                          <a 
+                          href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                          target="_blank" rel="noreferrer"
+                          >Google</a>
+                        </li>
+                        <li onClick={() => handleOptionClick(thread.cid)}>
+                          <a
+                          href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                          target="_blank" rel="noreferrer"
+                          >Yandex</a>
+                        </li>
+                        <li onClick={() => handleOptionClick(thread.cid)}>
+                          <a
+                          href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                          target="_blank" rel="noreferrer"
+                          >SauceNAO</a>
+                        </li>
+                      </ul>
+                    </li>
+                  ) : null
+                }
+              </ul>
+            </div>
+          </PostMenuCatalog>, document.body
+        )}
+      </BoardForm>
+      <Link style={{all: "unset", cursor: "pointer"}} key={`link2-`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
+      onClick={() => setSelectedThread(thread.cid)}>
+        <div key={`t-`} className="teaser">
+          <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
+          {thread.content ? `: ${thread.content}` : null}
+        </div>
+      </Link>
+    </div>
+  );
+};
+
+
+const CatalogRow = ({row}) => {
+  const posts = []
+  for (const post of row) {
+    posts.push(<CatalogPost key={post?.cid} post={post} />)
+  }
+  return <div>{posts}</div>
+}
+
+
+const AllCatalog = () => {
+  const {
+    defaultSubplebbits,
+    isModerationOpen, setIsModerationOpen,
+    isSettingsOpen, setIsSettingsOpen,
+    originalCommentContent,
+    selectedAddress, setSelectedAddress,
+    selectedStyle,
+    setSelectedTitle,
+  } = useGeneralStore(state => state);
+
+  const virtuosoRef = useRef();
+
+  const navigate = useNavigate();
+
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deletePost, setDeletePost] = useState(false);
+  const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
+
+  const addresses = defaultSubplebbits.map(subplebbit => subplebbit.address);
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: addresses, sortType: 'active'});
+  const {subplebbits} = useSubplebbits({subplebbitAddresses: addresses, sortType: 'active'});
+  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
+
+  const stateString = useFeedStateString(subplebbits);
+
+  const columnWidth = 180;
+  const windowWidth = useWindowWidth();
+  const columnCount = Math.floor(windowWidth / columnWidth);
+  const rows = useFeedRows(selectedFeed, columnCount);
+
+  // mobile navbar scroll effect
+  useEffect(() => {
+    const debouncedHandleScroll = debounce(() => {
+      const currentScrollPos = window.pageYOffset;
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
+    }, 50);
+  
+    window.addEventListener('scroll', debouncedHandleScroll);
+  
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
+  }, [prevScrollPos, visible]);
+
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
@@ -261,279 +533,6 @@ const AllCatalog = () => {
     setSelectedFeed(feed.filter(feed => feed.title === title));
   };
 
-
-  const CatalogPost = ({post}) => {
-    const thread = post;
-    const commentMediaInfo = getCommentMediaInfo(thread);
-    const linkCount = countLinks(thread);
-    const fallbackImgUrl = "assets/filedeleted-res.gif";
-    const [isHoveringOnThread, setIsHoveringOnThread] = useState(false);
-    const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
-    const [openMenuCid, setOpenMenuCid] = useState(null);
-    const isModerator = moderatorPermissions[thread.subplebbitAddress];
-
-    const handleOutsideClick = useCallback((e) => {
-      if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
-        setOpenMenuCid(null);
-      }
-    }, [openMenuCid]);
-
-    const handleOptionClick = () => {
-      setOpenMenuCid(null);
-    };
-  
-    useEffect(() => {
-      if (openMenuCid !== null) {
-        document.addEventListener('click', handleOutsideClick);
-      } else {
-        document.removeEventListener('click', handleOutsideClick);
-      }
-      
-      return () => {
-        document.removeEventListener('click', handleOutsideClick);
-      };
-    }, [openMenuCid, handleOutsideClick]);
-
-    const handleAuthorDeleteClick = (comment) => {
-      handleOptionClick(comment.cid);
-  
-      confirmAlert({
-        customUI: ({ onClose }) => {
-          return (
-            <AuthorDeleteAlert selectedStyle={selectedStyle}>
-              <div className='author-delete-alert'>
-                <p>Are you sure you want to delete this post?</p>
-                <div className="author-delete-buttons">
-                  <button onClick={onClose}>No</button>
-                  <button
-                    onClick={() => {
-                      setIsAuthorDelete(true);
-                      setIsAuthorEdit(false);
-                      setPublishCommentEditOptions(prevOptions => ({
-                        ...prevOptions,
-                        commentCid: comment.cid,
-                        subplebbitAddress: comment.subplebbitAddress,
-                        deleted: true,
-                      }));
-                      setTriggerPublishCommentEdit(true);
-                      onClose();
-                    }}
-                  >
-                    Yes
-                  </button>
-                </div>
-              </div>
-            </AuthorDeleteAlert>
-          );
-        }
-      });
-    };
-  
-  
-    const handleAuthorEditClick = (comment) => {
-      handleOptionClick(comment.cid);
-      setIsAuthorEdit(true);
-      setIsAuthorDelete(false);
-      setCommentCid(comment.cid);
-      setOriginalCommentContent(comment.content);
-      setIsEditModalOpen(true);
-    }
-
-    return (
-      <div key={`thread-`} className="thread" 
-      onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
-      onMouseLeave={() => {setIsHoveringOnThread('')}}>
-        {commentMediaInfo?.url ? (
-          <Link style={{all: "unset", cursor: "pointer"}} key={`link-`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
-          onClick={() => setSelectedThread(thread.cid)}>
-            {commentMediaInfo?.type === "webpage" ? (
-              thread.thumbnailUrl ? (
-              <img className="card" key={`img-`}
-              src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
-              onError={(e) => {
-                e.target.src = fallbackImgUrl
-                e.target.onerror = null;
-              }}  />
-              ) : null
-            ) : null}
-            {commentMediaInfo?.type === "image" ? (
-              <img className="card" key={`img-`}
-              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-              onError={(e) => {
-                e.target.src = fallbackImgUrl
-                e.target.onerror = null;}}  />
-            ) : null}
-            {commentMediaInfo?.type === "video" ? (
-                <video className="card" key={`fti-`} 
-                src={commentMediaInfo.url} 
-                alt={commentMediaInfo.type} 
-                onError={(e) => e.target.src = fallbackImgUrl} /> 
-            ) : null}
-            {commentMediaInfo?.type === "audio" ? (
-                <audio className="card" controls 
-                key={`fti-`} 
-                src={commentMediaInfo.url} 
-                alt={commentMediaInfo.type} 
-                onError={(e) => e.target.src = fallbackImgUrl} />
-            ) : null}
-          </Link>
-        ) : null}
-        <div key={`ti-`} className="thread-icons" >
-        {(commentMediaInfo && (
-          commentMediaInfo.type === 'image' || 
-          commentMediaInfo.type === 'video' || 
-          (commentMediaInfo.type === 'webpage' && 
-          commentMediaInfo.thumbnail))) ? (                          
-            <OfflineIndicator 
-            address={thread.subplebbitAddress} 
-            className="thread-icon offline-icon"
-            tooltipPlace="top" />
-          ) : (
-            <OfflineIndicator 
-            address={thread.subplebbitAddress} 
-            className="thread-icon offline-icon-no-link"
-            tooltipPlace="top" />
-        )}
-        </div>
-        <BoardForm selectedStyle={selectedStyle} 
-        style={{ all: "unset"}}>
-          <div key={`meta-`} className="meta" title="(R)eplies / (L)ink Replies" >
-            R:&nbsp;<b key={`b-`}>{thread.replyCount}</b>
-            {linkCount > 0 ? (
-              <>
-                &nbsp;/
-                L:&nbsp;<b key={`i-`}>{linkCount}</b>
-              </>
-            ) : null}
-          <PostMenu 
-            style={{ display: isHoveringOnThread === thread.cid ? 'inline-block' : 'none',
-            position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
-            zIndex: '999'}}
-            key={`pmb-`} 
-            title="Post menu"
-            ref={el => { 
-              threadMenuRefs.current[thread.cid] = el; 
-              postMenuRef.current = el; 
-            }}
-            className='post-menu-button' 
-            id='post-menu-button-catalog'
-            rotated={openMenuCid === thread.cid}
-            onClick={(event) => {
-              event.stopPropagation();
-              const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
-              setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-              setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
-            }}                              
-          >
-            ▶
-          </PostMenu>
-          </div>
-          {createPortal(
-            <PostMenuCatalog selectedStyle={selectedStyle} 
-              ref={el => {postMenuCatalogRef.current = el}}
-              onClick={(event) => event.stopPropagation()}
-              style={{position: "absolute", 
-              top: menuPosition.top + 7, 
-              left: menuPosition.left}}>
-              <div className={`post-menu-thread post-menu-thread-${thread.cid}`}
-              style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
-              >
-                <ul className="post-menu-catalog">
-                  <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                  <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
-                    <>
-                      {authorAddress === account?.author.address || 
-                      authorAddress === account?.signer.address ? (
-                        <>
-                          <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                          <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
-                        </>
-                      ) : null}
-                      {isModerator ? (
-                        <>
-                          {authorAddress === account?.author.address ||
-                          authorAddress === account?.signer.address ? (
-                            null
-                          ) : (
-                            <li onClick={() => {
-                              setSelectedAddress(thread.subplebbitAddress);
-                              setModeratingCommentCid(thread.cid)
-                              setIsModerationOpen(true); 
-                              handleOptionClick(thread.cid);
-                              setDeletePost(true);
-                            }}>
-                            Delete post
-                            </li>
-                          )}
-                          <li
-                          onClick={() => {
-                            setSelectedAddress(thread.subplebbitAddress);
-                            setModeratingCommentCid(thread.cid)
-                            setIsModerationOpen(true); 
-                            handleOptionClick(thread.cid);
-                          }}>
-                            Mod tools
-                          </li>
-                        </>
-                      ) : null}
-                    </>
-                  )}</VerifiedAuthor>
-                  {(commentMediaInfo && (
-                    commentMediaInfo.type === 'image' || 
-                    (commentMediaInfo.type === 'webpage' && 
-                    commentMediaInfo.thumbnail))) ? ( 
-                      <li 
-                      onMouseOver={() => {setIsImageSearchOpen(true)}}
-                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                        Image search »
-                        <ul className="dropdown-menu post-menu-catalog"
-                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                          <li onClick={() => handleOptionClick(thread.cid)}>
-                            <a 
-                            href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                            target="_blank" rel="noreferrer"
-                            >Google</a>
-                          </li>
-                          <li onClick={() => handleOptionClick(thread.cid)}>
-                            <a
-                            href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                            target="_blank" rel="noreferrer"
-                            >Yandex</a>
-                          </li>
-                          <li onClick={() => handleOptionClick(thread.cid)}>
-                            <a
-                            href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                            target="_blank" rel="noreferrer"
-                            >SauceNAO</a>
-                          </li>
-                        </ul>
-                      </li>
-                    ) : null
-                  }
-                </ul>
-              </div>
-            </PostMenuCatalog>, document.body
-          )}
-        </BoardForm>
-        <Link style={{all: "unset", cursor: "pointer"}} key={`link2-`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
-        onClick={() => setSelectedThread(thread.cid)}>
-          <div key={`t-`} className="teaser">
-            <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
-            {thread.content ? `: ${thread.content}` : null}
-          </div>
-        </Link>
-      </div>
-    );
-  };
-
-
-  const CatalogRow = ({row}) => {
-    const posts = []
-    for (const post of row) {
-      posts.push(<CatalogPost key={post?.cid} post={post} />)
-    }
-    return <div>{posts}</div>
-  }
 
   useEffect(() => {
     const setLastVirtuosoState = () => {
@@ -702,7 +701,7 @@ const AllCatalog = () => {
               itemContent={(index, row) => <CatalogRow index={index} row={row} />}
               useWindowScroll={true}
               components={{ Footer: () => hasMore ? <CatalogLoader /> : null}}
-              endReached={tryLoadMore}
+              endReached={loadMore}
               ref={virtuosoRef}
               restoreStateFrom={lastVirtuosoState}
               initialScrollTop={lastVirtuosoState?.scrollTop}
