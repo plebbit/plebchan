@@ -32,12 +32,21 @@ export const Threads = styled.div`
 
   .thread-icons {
     display: inline;
-    height: 16px;
-    margin: 2px 0 0 -101px;
-    position: absolute;
     width: 100px;
+    height: 16px;
+    position:absolute;
+    margin: 6px 60px 0 0px;
     text-align: right;
+    top:0;
+    right:0;
+    z-index:4;
   }
+
+  .thread-icon-has-display{
+    transform: translate(68px, -4px);
+    scale: 0.8;
+  }
+
 
   .offline-icon {
     height: 16px;

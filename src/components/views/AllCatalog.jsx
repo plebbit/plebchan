@@ -378,7 +378,11 @@ const AllCatalog = () => {
             ) : null}
           </Link>
         ) : null}
-        <div key={`ti-`} className="thread-icons" >
+        <div key={`ti-`} className={`thread-icons ${(commentMediaInfo && (
+              commentMediaInfo.type === 'image' || 
+              commentMediaInfo.type === 'video' || 
+              (commentMediaInfo.type === 'webpage' && 
+              commentMediaInfo.thumbnail))) ? "thread-icon-has-display" :""}`} >
         {(commentMediaInfo && (
           commentMediaInfo.type === 'image' || 
           commentMediaInfo.type === 'video' || 
@@ -386,7 +390,7 @@ const AllCatalog = () => {
           commentMediaInfo.thumbnail))) ? (                          
             <OfflineIndicator 
             address={thread.subplebbitAddress} 
-            className="thread-icon offline-icon"
+            className={`thread-icon offline-icon `}
             tooltipPlace="top" />
           ) : (
             <OfflineIndicator 
