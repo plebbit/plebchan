@@ -65,6 +65,7 @@ const CatalogPost = ({post}) => {
   const [openMenuCid, setOpenMenuCid] = useState(null);
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
 
   const threadMenuRefs = useRef({});
@@ -631,6 +632,32 @@ const CatalogPost = ({post}) => {
                       </li>
                     ) : null
                   }
+                  <li 
+                  onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                  onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                    View on »
+                    <ul className="dropdown-menu post-menu-catalog"
+                      style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                      <li onClick={() => handleOptionClick(thread.cid)}>
+                        <a 
+                        href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`}
+                        target="_blank" rel="noreferrer"
+                        >Plebbit</a>
+                      </li>
+                      {/* <li onClick={() => handleOptionClick(thread.cid)}>
+                        <a
+                        href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`}
+                        target="_blank" rel="noreferrer"
+                        >Seedit</a>
+                      </li> */}
+                      <li onClick={() => handleOptionClick(thread.cid)}>
+                        <a
+                        href={`https://plebones.netlify.app/#/p/${selectedAddress}/c/${thread.cid}`}
+                        target="_blank" rel="noreferrer"
+                        >Plebones</a>
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </PostMenuCatalog>, document.body

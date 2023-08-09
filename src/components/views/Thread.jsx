@@ -104,6 +104,7 @@ const Thread = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
@@ -1125,6 +1126,32 @@ const Thread = () => {
                                   </li>
                                 ) : null
                               }
+                              <li 
+                              onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                              onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                                View on »
+                                <ul className="dropdown-menu post-menu-catalog"
+                                  style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                                  <li onClick={() => handleOptionClick(comment.cid)}>
+                                    <a 
+                                    href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}/c/${comment.cid}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Plebbit</a>
+                                  </li>
+                                  {/* <li onClick={() => handleOptionClick(comment.cid)}>
+                                    <a
+                                    href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${comment.cid}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Seedit</a>
+                                  </li> */}
+                                  <li onClick={() => handleOptionClick(comment.cid)}>
+                                    <a
+                                    href={`https://plebones.netlify.app/#/p/${selectedAddress}/c/${comment.cid}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Plebones</a>
+                                  </li>
+                                </ul>
+                              </li>
                             </ul>
                           </div>
                           </PostMenuCatalog>, document.body
@@ -1386,6 +1413,32 @@ const Thread = () => {
                                       </li>
                                     ) : null
                                   }
+                                  <li 
+                                  onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                                  onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                                    View on »
+                                    <ul className="dropdown-menu post-menu-catalog"
+                                      style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                                      <li onClick={() => handleOptionClick(reply.cid)}>
+                                        <a 
+                                        href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}/c/${reply.cid}`}
+                                        target="_blank" rel="noreferrer"
+                                        >Plebbit</a>
+                                      </li>
+                                      {/* <li onClick={() => handleOptionClick(reply.cid)}>
+                                        <a
+                                        href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${reply.cid}`}
+                                        target="_blank" rel="noreferrer"
+                                        >Seedit</a>
+                                      </li> */}
+                                      <li onClick={() => handleOptionClick(reply.cid)}>
+                                        <a
+                                        href={`https://plebones.netlify.app/#/p/${selectedAddress}/c/${reply.cid}`}
+                                        target="_blank" rel="noreferrer"
+                                        >Plebones</a>
+                                      </li>
+                                    </ul>
+                                  </li>
                                 </ul>
                               </div>
                               </PostMenuCatalog>, document.body
