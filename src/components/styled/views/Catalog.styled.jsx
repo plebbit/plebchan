@@ -51,6 +51,16 @@ export const Threads = styled.div`
     margin-top: -2px;
   }
 
+  .offline-icon-no-link-shifted {
+    height: 11px;
+    position: absolute;
+    margin-left: 35px;
+    margin-top: -2px;
+  }
+
+  .offline-icon-no-link-hovered {
+    transform: translate(16px,0);
+  }
   .sticky-icon {
     background-image: url(assets/sticky.gif);
     width: 16px;
