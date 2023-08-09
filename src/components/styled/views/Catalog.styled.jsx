@@ -32,21 +32,12 @@ export const Threads = styled.div`
 
   .thread-icons {
     display: inline;
-    width: 100px;
     height: 16px;
-    position:absolute;
-    margin: 6px 60px 0 0px;
+    margin: 2px 0 0 -101px;
+    position: absolute;
+    width: 100px;
     text-align: right;
-    top:0;
-    right:0;
-    z-index:4;
   }
-
-  .thread-icon-has-display{
-    transform: translate(68px, -4px);
-    scale: 0.8;
-  }
-
 
   .offline-icon {
     height: 16px;
@@ -60,6 +51,16 @@ export const Threads = styled.div`
     margin-top: -2px;
   }
 
+  .offline-icon-no-link-shifted {
+    height: 11px;
+    position: absolute;
+    margin-left: 35px;
+    margin-top: -2px;
+  }
+
+  .offline-icon-no-link-hovered {
+    transform: translate(16px,0);
+  }
   .sticky-icon {
     background-image: url(assets/sticky.gif);
     width: 16px;

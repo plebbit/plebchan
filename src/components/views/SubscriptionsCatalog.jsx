@@ -369,11 +369,7 @@ const SubscriptionsCatalog = () => {
             ) : null}
           </Link>
         ) : null}
-        <div key={`ti-`} className={`thread-icons ${(commentMediaInfo && (
-          commentMediaInfo.type === 'image' ||
-          commentMediaInfo.type === 'video' ||
-          (commentMediaInfo.type === 'webpage' &&
-            commentMediaInfo.thumbnail))) ? "thread-icon-has-display" : ""}`} >
+        <div key={`ti-`} className="thread-icons" >
           {(commentMediaInfo && (
             commentMediaInfo.type === 'image' ||
             commentMediaInfo.type === 'video' ||
@@ -381,12 +377,12 @@ const SubscriptionsCatalog = () => {
               commentMediaInfo.thumbnail))) ? (
             <OfflineIndicator
               address={thread.subplebbitAddress}
-              className="thread-icon offline-icon"
+              className={`thread-icon offline-icon`}
               tooltipPlace="top" />
           ) : (
             <OfflineIndicator
               address={thread.subplebbitAddress}
-              className="thread-icon offline-icon-no-link"
+              className={`thread-icon ${linkCount> 0?"offline-icon-no-link-shifted": "offline-icon-no-link"} ${isHoveringOnThread === thread.cid ? 'offline-icon-no-link-hovered' : ''}`}
               tooltipPlace="top" />
           )}
         </div>
