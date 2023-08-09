@@ -7,7 +7,7 @@ const OfflineIndicator = ({ address, className, tooltipPlace }) => {
 
   return (
     <>
-      {true && (
+      {!isOnline && (
         <>
           {" "}
           <img
