@@ -317,7 +317,7 @@ const CatalogPost = ({post}) => {
         ) : (
           <OfflineIndicator 
           address={thread.subplebbitAddress} 
-          className="thread-icon offline-icon-no-link"
+          className={`thread-icon ${linkCount> 0?"offline-icon-no-link-shifted": "offline-icon-no-link"} ${isHoveringOnThread === thread.cid ? 'offline-icon-no-link-hovered' : ''}`}
           tooltipPlace="top" />
       )}
       </div>
