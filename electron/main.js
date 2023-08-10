@@ -227,6 +227,22 @@ const createMainWindow = () => {
     }
   }
 
+  const appMenuBack = new MenuItem({
+    label: '←',
+    enabled: mainWindow?.webContents?.canGoBack(),
+    click: () => mainWindow?.webContents?.goBack(),
+  });
+  const appMenuForward = new MenuItem({
+    label: '→',
+    enabled: mainWindow?.webContents?.canGoForward(),
+    click: () => mainWindow?.webContents?.goForward(),
+  });
+  const appMenuReload = new MenuItem({
+    label: '⟳',
+    role: 'reload',
+    click: () => mainWindow?.webContents?.reload(),
+  });
+
   // application menu
   // hide useless electron help menu
   if (process.platform === 'darwin') {
@@ -243,22 +259,6 @@ const createMainWindow = () => {
     const appMenu = [appMenuBack, appMenuForward, appMenuReload, ...originalAppMenuWithoutHelp];
     Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu));
   }
-  
-  const appMenuBack = new MenuItem({
-    label: '←',
-    enabled: mainWindow?.webContents?.canGoBack(),
-    click: () => mainWindow?.webContents?.goBack(),
-  });
-  const appMenuForward = new MenuItem({
-    label: '→',
-    enabled: mainWindow?.webContents?.canGoForward(),
-    click: () => mainWindow?.webContents?.goForward(),
-  });
-  const appMenuReload = new MenuItem({
-    label: '⟳',
-    role: 'reload',
-    click: () => mainWindow?.webContents?.reload(),
-  });
 };
 
 
