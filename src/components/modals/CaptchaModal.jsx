@@ -156,9 +156,6 @@ const CaptchaModal = () => {
               placeholder="TYPE THE CAPTCHA HERE AND PRESS ENTER" 
               ref={responseRef}
               onKeyDown={handleKeyDown}
-              onInput={(e) => {
-                e.target.value = e.target.value.toUpperCase();
-              }}
               autoFocus />
               <img src={imageSources[currentChallengeIndex]} alt="captcha" />
             </div>
