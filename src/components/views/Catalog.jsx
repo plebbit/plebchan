@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -99,15 +99,16 @@ const Catalog = () => {
   const threadRefs = useRef([]);
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
   const [isCalculationDone,setIsCalculationDone] = useState(false);
-  useEffect(() => {
-    console.log("RUNNING")
+  useLayoutEffect(() => {
+    console.log(isHoveringOnThread)
     setIsEnoughSpaceOnRight(null);
     const calculateSpaceOnRight = () => {
       feed.forEach((thread, index) => {
-        if (thread.cid == isHoveringOnThread && threadRefs.current[index] && popupRef.current) {
+        if (thread.cid === isHoveringOnThread){
+           if(threadRefs.current[index] && popupRef.current) {
             const threadRect = threadRefs.current[index].getBoundingClientRect();
             const popupRect = popupRef.current.getBoundingClientRect();
-  
+            console.log(threadRect);console.log(popupRect);
             // Get the width of the viewport area inside the browser window
             const viewportWidth = document.documentElement.clientWidth;
   
@@ -118,9 +119,10 @@ const Catalog = () => {
             const popupWidth = popupRect.width;
             // Check if there is enough space for the popup on the right side
             const EnoughSpaceOnRight = spaceOnRight >= popupWidth;
+            console.log("SPACE ? " + EnoughSpaceOnRight);
             setIsEnoughSpaceOnRight(EnoughSpaceOnRight);
-            setIsCalculationDone(true);
-          }
+            return setIsCalculationDone(true);
+          }}
       });
     };
     if(!isCalculationDone && isHoveringOnThread !== ""){
@@ -1038,7 +1040,7 @@ const Catalog = () => {
                               {commentMediaInfo?.type === "image" ? (
                                 <img 
                                 onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                                onMouseLeave={() => {setIsHoveringOnThread('')}}
+                                onMouseLeave={() => {handleMouseOnLeaveThread()}}
                                 ref={(el) => (threadRefs.current[index] = el)} className="card" key={`img-${index}`}
                                 src={commentMediaInfo.url} alt={commentMediaInfo.type} 
                                 onError={(e) => {
@@ -1048,7 +1050,7 @@ const Catalog = () => {
                               {commentMediaInfo?.type === "video" ? (
                                   <video
                                   onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                                  onMouseLeave={() => {setIsHoveringOnThread('')}}
+                                  onMouseLeave={() => {handleMouseOnLeaveThread()}}
                                   ref={(el) => (threadRefs.current[index] = el)}  className="card" key={`fti-${index}`} 
                                   src={commentMediaInfo.url} 
                                   alt={commentMediaInfo.type} 
@@ -1056,8 +1058,8 @@ const Catalog = () => {
                               ) : null}
                               {commentMediaInfo?.type === "audio" ? (
                                   <audio
-                                                                  onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                                onMouseLeave={() => {setIsHoveringOnThread('')}}
+                                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
+                                onMouseLeave={() => {handleMouseOnLeaveThread()}}
                                 ref={(el) => (threadRefs.current[index] = el)}  className="card" controls 
                                   key={`fti-${index}`} 
                                   src={commentMediaInfo.url} 
@@ -1226,7 +1228,7 @@ const Catalog = () => {
                             <div
                             key={`t-${index}`} className="teaser">
                             <div style={{cursor:"text"}}
-                                onMouseOver={() => {
+                                onMouseOver={() => { 
                                 !commentMediaInfo?.url  && setIsHoveringOnThread(thread.cid)}}
                                 onMouseLeave={()=>{handleMouseOnLeaveThread()}}
                                 ref={(el) => (threadRefs.current[index] = el)}>
