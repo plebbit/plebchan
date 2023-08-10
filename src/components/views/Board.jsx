@@ -446,7 +446,7 @@ const Board = () => {
       ...prevPublishCommentOptions,
       author: {
         displayName: nameRef.current.value || undefined,
-        address: account?.author.address,
+        ...(anonymousMode ? {} : {address: account?.author.address}),
       },
       title: subjectRef.current.value || undefined,
       content: commentRef.current.value || undefined,
