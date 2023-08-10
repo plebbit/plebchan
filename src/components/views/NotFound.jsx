@@ -1,6 +1,5 @@
-import React, { useEffect, useRef }  from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Link } from "react-router-dom";
 import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/views/Home.styled';
 import packageJson from '../../../package.json'
@@ -8,31 +7,28 @@ const {version} = packageJson
 
 
 const NotFound = () => {
-  const { 
-    bodyStyle, setBodyStyle,
-    selectedStyle, setSelectedStyle,
-  } = useGeneralStore(state => state);
-
-  const prevStyle = useRef(selectedStyle);
-  const prevBodyStyle = useRef(bodyStyle);
-
-  // prevent dark mode
   useEffect(() => {
-    const currentPrevStyle = prevStyle.current;
-    const currentPrevBodyStyle = prevBodyStyle.current;
-
-    setBodyStyle({
+    const yotsubaBodyStyle = {
       background: "#ffe url(assets/fade.png) top repeat-x",
       color: "maroon",
-      fontFamily: "Helvetica, Arial, sans-serif"
-    });
-    setSelectedStyle("Yotsuba");
+      fontFamily: "Arial, Helvetica, sans-serif"
+    };
+    const originalBodyStyles = {
+      background: document.body.style.background,
+      color: document.body.style.color,
+      fontFamily: document.body.style.fontFamily
+    };
+
+    for (const [key, value] of Object.entries(yotsubaBodyStyle)) {
+      document.body.style[key] = value;
+    }
 
     return () => {
-      setSelectedStyle(currentPrevStyle);
-      setBodyStyle(currentPrevBodyStyle);
+      for (const [key, value] of Object.entries(originalBodyStyles)) {
+        document.body.style[key] = value;
+      }
     };
-  }, [setBodyStyle, setSelectedStyle]);
+  }, []);
 
   return (
     <>
