@@ -32,7 +32,7 @@ const defaultPlebbitOptions = {
   // find the user's OS data path
   dataPath: !isDev ? envPaths.data : path.join(__dirname, '..', '.plebbit'),
   ipfsHttpClientsOptions: ['http://localhost:5001/api/v0'] || undefined,
-  // TODO: having to define pubsubHttpClientOptions and ipfsHttpClientOptions is a bug with plebbit-js
+  // TODO: having to define pubsubHttpClientsOptions and ipfsHttpClientsOptions is a bug with plebbit-js
   pubsubHttpClientsOptions: ['http://localhost:5001/api/v0'] || undefined,
   // electron starts the local ipfs gateway on port 11028 because 8080 is too common
   ipfsGatewayUrls: ['http://localhost:11028'] || undefined,
@@ -46,8 +46,8 @@ contextBridge.exposeInMainWorld('plebbitJsNativeFunctions', require('@plebbit/pl
 contextBridge.exposeInMainWorld('defaultPlebbitOptions', defaultPlebbitOptions)
 
 // try/catch localStorage.debug because causes unknown error sometimes
-try {
-  if (isDev) localStorage.debug = 'plebbit-js:*,plebbit-react-hooks:*,plebchan:*';
-} catch (e) {
-  console.log(e);
-}
+// try {
+//   if (isDev) localStorage.debug = 'plebbit-js:*,plebbit-react-hooks:*,plebchan:*';
+// } catch (e) {
+//   console.log(e);
+// }

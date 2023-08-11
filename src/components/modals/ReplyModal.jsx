@@ -178,7 +178,7 @@ const ReplyModal = ({ isOpen, closeModal }) => {
       ...prevPublishCommentOptions,
       author: {
         displayName: nameRef.current.value || undefined,
-        address: account?.author.address,
+        ...(anonymousMode ? {} : {address: account?.author.address}),
       },
       content: commentRef.current.value || undefined,
       link: linkRef.current.value || undefined,
