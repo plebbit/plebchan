@@ -767,7 +767,7 @@ const Subscriptions = () => {
                               )}
                               {commentMediaInfo?.type === "webpage" ? (
                                 <div key={`enlarge-${index}`} className="img-container">
-                                  <span key={`fta-${index}`} className="file-thumb" style={isThreadThumbnailClicked[index] ? {} : {width: displayWidth, height: displayHeight}}>
+                                  <span key={`fta-${index}`} className="file-thumb" style={isThreadThumbnailClicked[index] || !thread.thumbnailUrl ? {} : {width: displayWidth, height: displayHeight}}>
                                     {thread.thumbnailUrl ? (
                                       <img key={`fti-${index}`} 
                                       src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
@@ -1442,7 +1442,7 @@ const Subscriptions = () => {
                                 </div>
                                 {replyMediaInfo?.type === "webpage" ? (
                                   <div key={`enlarge-reply-${index}`} className="img-container">
-                                    <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
+                                    <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] || !reply.thumbnailUrl ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
                                       {reply.thumbnailUrl ? (
                                         <img key={`fti-${index}`}
                                         src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type}
@@ -1853,7 +1853,7 @@ const Subscriptions = () => {
                                 {commentMediaInfo?.url ? (
                                   commentMediaInfo.type === "webpage" ? (
                                     <div key={`enlarge-mob-${index}`} className="img-container">
-                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px'}}>
+                                      <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] || !thread.thumbnailUrl ? {} : {width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px'}}>
                                         {thread.thumbnailUrl ? (
                                           <img key={`mob-img-${index}`} 
                                           src={commentMediaInfo.thumbnail} alt="thumbnail" 
@@ -2059,7 +2059,7 @@ const Subscriptions = () => {
                                 {replyMediaInfo?.url ? (
                                   replyMediaInfo.type === "webpage" ? (
                                     <div key={`enlarge-mob-reply-${index}`} className="img-container">
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
+                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] || !reply.thumbnailUrl ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
                                         {reply.thumbnailUrl ? (
                                           <img key={`mob-img-${index}`} 
                                           src={replyMediaInfo.thumbnail} alt="thumbnail" 
