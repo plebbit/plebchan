@@ -254,6 +254,16 @@ const CatalogPost = ({post}) => {
   };
   
 
+  let displayWidth, displayHeight;
+  if (thread.linkWidth && thread.linkHeight) {
+    let scale = Math.min(1, 150 / Math.max(thread.linkWidth, thread.linkHeight));
+    displayWidth = `${thread.linkWidth * scale}px`;
+    displayHeight = `${thread.linkHeight * scale}px`;
+  } else {
+    displayWidth = '150px';
+    displayHeight = '150px';
+  }
+
 
   if (post.type === 'rules') {
     return (
@@ -452,26 +462,32 @@ const CatalogPost = ({post}) => {
           onClick={() => setSelectedThread(thread.cid)}>
             {commentMediaInfo?.type === "webpage" ? (
               thread.thumbnailUrl ? (
-                <img className="card" key={`img-`}
-                src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
-                onError={(e) => {
-                  e.target.src = fallbackImgUrl
-                  e.target.onerror = null;
-                }}  />
+                <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+                  <img className="card" key={`img-`}
+                  src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+                  onError={(e) => {
+                    e.target.src = fallbackImgUrl
+                    e.target.onerror = null;
+                  }}  />
+                </span>
               ) : null
             ) : null}
             {commentMediaInfo?.type === "image" ? (
-              <img className="card" key={`img-`}
-              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-              onError={(e) => {
-                e.target.src = fallbackImgUrl
-                e.target.onerror = null;}}  />
+              <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+                <img className="card" key={`img-`}
+                src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                onError={(e) => {
+                  e.target.src = fallbackImgUrl
+                  e.target.onerror = null;}}  />
+              </span>
             ) : null}
             {commentMediaInfo?.type === "video" ? (
-              <video className="card" key={`fti-`} 
-              src={commentMediaInfo.url} 
-              alt={commentMediaInfo.type} 
-              onError={(e) => e.target.src = fallbackImgUrl} /> 
+              <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+                <video className="card" key={`fti-`} 
+                src={commentMediaInfo.url} 
+                alt={commentMediaInfo.type} 
+                onError={(e) => e.target.src = fallbackImgUrl} /> 
+              </span>
             ) : null}
             {commentMediaInfo?.type === "audio" ? (
               <audio className="card" controls 
