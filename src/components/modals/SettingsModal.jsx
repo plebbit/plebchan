@@ -7,8 +7,8 @@ import useError from "../../hooks/useError";
 import useSuccess from "../../hooks/useSuccess";
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
+import packageJson from '../../../package.json';
+const {version} = packageJson;
 
 
 const SettingsModal = ({ isOpen, closeModal }) => {

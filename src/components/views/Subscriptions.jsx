@@ -40,8 +40,8 @@ import useError from '../../hooks/useError';
 import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
+import packageJson from '../../../package.json';
+const {version} = packageJson;
 let lastVirtuosoStates = {};
 
 

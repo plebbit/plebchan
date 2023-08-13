@@ -16,8 +16,8 @@ import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
+import packageJson from '../../../package.json';
+const {version} = packageJson;
 
 
 const Rules = () => {

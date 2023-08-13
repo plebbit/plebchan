@@ -7,9 +7,9 @@ import BoardAvatar from '../BoardAvatar';
 import OfflineIndicator from '../OfflineIndicator';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
+import packageJson from '../../../package.json';
 import { Tooltip } from 'react-tooltip';
-const {version} = packageJson
+const {version} = packageJson;
 // show commit ref on netlify to know which commit is being served for debugging
 const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : ''
 

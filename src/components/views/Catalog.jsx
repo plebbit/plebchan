@@ -30,9 +30,9 @@ import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useFeedRows from '../../hooks/useFeedRows';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import useWindowWidth from '../../hooks/useWindowWidth';
-import packageJson from '../../../package.json'
-const {version} = packageJson
-let lastVirtuosoStates = {}
+import packageJson from '../../../package.json';
+const {version} = packageJson;
+let lastVirtuosoStates = {};
 
 
 const CatalogPost = ({post}) => {

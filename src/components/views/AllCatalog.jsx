@@ -27,9 +27,9 @@ import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
-let lastVirtuosoStates = {}
+import packageJson from '../../../package.json';
+const {version} = packageJson;
+let lastVirtuosoStates = {};
 
 
 const CatalogPost = ({post}) => {

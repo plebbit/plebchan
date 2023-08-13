@@ -28,8 +28,8 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import useSuccess from '../../hooks/useSuccess';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import packageJson from '../../../package.json';
-const {version} = packageJson
-let lastVirtuosoStates = {}
+const {version} = packageJson;
+let lastVirtuosoStates = {};
 
 
 const CatalogPost = ({post}) => {
