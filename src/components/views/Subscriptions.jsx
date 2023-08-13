@@ -10,7 +10,8 @@ import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/util
 import { debounce } from 'lodash';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
-import { AuthorDeleteAlert, Footer } from '../styled/views/Thread.styled';
+import { Footer } from '../styled/views/Thread.styled';
+import { AlertModal } from '../styled/modals/AlertModal.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
 import EditLabel from '../EditLabel';
@@ -421,7 +422,7 @@ const Subscriptions = () => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+          <AlertModal selectedStyle={selectedStyle}>
             <div className='author-delete-alert'>
               <p>Are you sure you want to delete this post?</p>
               <div className="author-delete-buttons">
@@ -444,7 +445,7 @@ const Subscriptions = () => {
                 </button>
               </div>
             </div>
-          </AuthorDeleteAlert>
+          </AlertModal>
         );
       }
     });
