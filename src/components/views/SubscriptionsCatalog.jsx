@@ -746,7 +746,7 @@ const SubscriptionsCatalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {feed.length > 1 ? (
+          {account.subscriptions.length > 0 ? (
             <Virtuoso
               increaseViewportBy={{bottom: 600, top: 600}}
               totalCount={rows?.length || 0}
@@ -760,7 +760,9 @@ const SubscriptionsCatalog = () => {
               restoreStateFrom={lastVirtuosoState}
               initialScrollTop={lastVirtuosoState?.scrollTop}
             />
-          ) : (<CatalogLoader />)}
+          ) : (
+          account.subscriptions.length !== 0 ?
+          <CatalogLoader /> : null)}
         </Threads>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{
