@@ -87,9 +87,24 @@ export const StyledModal = styled(Modal)`
   }
 
   textarea {
-    width: 80%;
-    margin-left: 7%;
+    min-width: 80%;
     min-height: 50px;
+    margin-left: 7%;
+  }
+
+  #account-data-text {
+    min-width: 70%;
+    min-height: 105px;
+  }
+
+  .account-buttons {
+    display: inline-block;
+    position: absolute;
+    margin: 5px 5px 5px 10px;
+
+    button {
+      margin-bottom: 5px;
+    }
   }
 
   .all-div {

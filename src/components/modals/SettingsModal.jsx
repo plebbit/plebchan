@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts, useResolvedAuthorAddress } from "@plebbit/plebbit-react-hooks";
+import { confirmAlert } from "react-confirm-alert";
+import { deleteAccount, deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts, useResolvedAuthorAddress } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "../styled/modals/SettingsModal.styled";
 import useError from "../../hooks/useError";
 import useSuccess from "../../hooks/useSuccess";
@@ -21,7 +22,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState([]);
-  const [accountJson, setAccountJson] = useState(null);
+  const [accountJson, setAccountJson] = useState("");
   const [copyStatus, setCopyStatus] = useState(false);
   const [ensName, setEnsName] = useState('');
   const [checkedENS, setCheckedENS] = useState(false);
@@ -42,10 +43,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const nameRef = useRef();
   const ensRef = useRef();
 
+  const isElectron = window.electron && window.electron.isElectron;
   const author = {...account?.author, address: ensName};
   const { resolvedAddress, state } = useResolvedAuthorAddress({ author, cache: false });
 
-  const isElectron = window.electron && window.electron.isElectron;
 
   const defaultGatewayUrls = isElectron ? undefined : [
     'https://ipfs.io',
@@ -69,6 +70,23 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     'https://polygon-rpc.com',
   ];
 
+
+  useEffect(() => {
+    if (account) {
+      const fetchAccountData = async () => {
+        const data = await exportAccount();
+        setAccountJson(data);
+      };
+    
+      fetchAccountData();
+    }
+  }, [account]);  
+
+
+  const handleAccountJsonChange = (e) => {
+    setAccountJson(e.target.value);
+  };
+  
 
   useEffect(() => {
     if (checkedENS && resolvedAddress && state === 'succeeded') {
@@ -302,8 +320,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
 
   const handleCloseModal = () => {
-    setAccountJson(null);
-    
     if (location.pathname.endsWith("/settings")) {
       const newPath = location.pathname.slice(0, -9);
       closeModal();
@@ -344,13 +360,31 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   }, [setNewSuccessMessage]);
 
 
-  const handleExport = async () => {
-    const activeAccountJson = await exportAccount();
-    setAccountJson(activeAccountJson);
+  const handleSaveAccount = async () => {
+    try {
+      const parsedJson = JSON.parse(accountJson);
+      await setAccount(parsedJson);
+      setNewSuccessMessage("Account Data Saved Successfully");
+    } catch (error) {
+      setNewErrorMessage("Error saving account data: " + error.message);
+      console.error(error);
+    }
   };
 
 
-  const handleImport = async () => {
+  const handleResetAccount = async () => {
+    try {
+      const data = await exportAccount();
+      setAccountJson(data);
+      setNewSuccessMessage("Account Data Reset Successfully");
+    } catch (error) {
+      setNewErrorMessage("Error resetting account data: " + error.message);
+      console.error(error);
+    }
+  };
+
+
+  const handleImportAccount = async () => {
     const accountJson = importRef.current.value;
 
     try {
@@ -363,6 +397,21 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       setNewErrorMessage(error.message); console.log(error);
     }
   };
+
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm("Are you sure you want to delete this account?")) {
+      try {
+        await deleteAccount(account?.name);
+        localStorage.setItem("successToast", "Account Deleted Successfully");
+        window.location.reload();
+      } catch (error) {
+        setNewErrorMessage("Error deleting account: " + error.message);
+        console.error(error);
+      }
+    }
+  };
+
 
   const handleAccountChange = (e) => {
     setActiveAccount(e.target.value);
@@ -427,15 +476,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           <span className="settings-pointer" style={{cursor: "pointer"}}
             onClick={() => toggleExpanded(1)}
           >Account</span>
-          <div className="plebbit-options-buttons"
-          style={{ display: expanded.includes(1) ? 'block' : 'none' }}
-          >
-          <button className="save-button"
-            onClick={handleExport}>Export</button>
-            <button className="reset-button" 
-            onClick={handleImport}
-            >Import</button> 
-          </div>
           </li>
           <ul className="settings-cat" style={{ display: expanded.includes(1) ? 'block' : 'none' }}>
             <li className="anon-off">
@@ -458,14 +498,27 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               Account Data
             </li>
             <li className="settings-tip">
-              To export, click "Export", then save your account data displayed below in a safe place. To import,  paste your account data into the box below, then click "Import".
+              To save manual changes, click "Save". To undo changes, click "Reset". To delete the account and create a new one, click "Delete". To add another account, paste its data and click "Import".
             </li>
             <div className="settings-input">
-              {accountJson ? (
-                <textarea value={accountJson} readOnly />
-                ): (
-                <textarea ref={importRef} />
-              )}
+              <textarea id="account-data-text" 
+              value={accountJson} 
+              ref={importRef} 
+              onChange={handleAccountJsonChange} />
+              <div className="account-buttons">
+                <button onClick={handleSaveAccount}>
+                  Save
+                </button>
+                <button onClick={handleResetAccount}>
+                  Reset
+                </button>
+                <button onClick={handleImportAccount}>
+                  Import
+                </button> 
+                <button onClick={handleDeleteAccount}>
+                  Delete
+                </button>
+              </div>
             </div>
             <li className="settings-option disc">
               Account Address: u/{account?.author.shortAddress}
@@ -634,14 +687,14 @@ const SettingsModal = ({ isOpen, closeModal }) => {
                 ref={ethereumRpcRef} 
               />
             </div>
-            {/* <li className="settings-option disc">Polygon RPC</li>
+            <li className="settings-option disc">Polygon RPC</li>
             <li className="settings-tip">Needed for XPLEB NFTs.</li>
             <div className="settings-input">
               <textarea placeholder="Polygon RPC URLs" 
                 defaultValue={account?.plebbitOptions?.chainProviders?.['matic']?.urls.join("\n")}
                 ref={polygonRpcRef} 
               />
-            </div> */}
+            </div>
           </ul>
         </ul>
         <div>
