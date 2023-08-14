@@ -23,6 +23,11 @@ export const Threads = styled.div`
     max-height: 150px;
   }
 
+  .file-thumb {
+    background-color: rgba(0, 0, 0, 0.05);
+    display: inline-block;
+  }
+
   .card {
     display: inline;
     margin: auto;
@@ -87,6 +92,19 @@ export const Threads = styled.div`
     display: block;
     padding: 0 15px;
   }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Tomorrow':
+        return `
+          .file-thumb {
+            background-color: rgba(255, 255, 255, 0.01) !important;
+          }
+        `;
+      default:
+        return '';
+    }
+  }}
 `;
 
 export const PostMenuCatalog = styled.div`

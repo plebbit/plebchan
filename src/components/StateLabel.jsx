@@ -11,12 +11,10 @@ const StateLabel = ({ commentIndex, className }) => {
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2000);
     return () => clearTimeout(timer);
-  }, []);
-
-  if (commentIndex === undefined) return null;
+  }, [commentIndex]);
 
   return (
-    commentIndex && stateString !== "Succeeded" ? (
+    commentIndex !== undefined && stateString !== "Succeeded" ? (
       (comment.state === "failed") ? (
         null
       ) : (

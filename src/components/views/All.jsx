@@ -9,8 +9,9 @@ import { useAccount, useAccountComments, useFeed, usePublishCommentEdit, useSubp
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, TopBar, BoardForm, PostMenu } from '../styled/views/Board.styled';
-import { AuthorDeleteAlert, Footer } from '../styled/views/Thread.styled';
+import { Footer } from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
+import { AlertModal } from '../styled/modals/AlertModal.styled';
 import EditModal from '../modals/EditModal';
 import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
@@ -40,8 +41,8 @@ import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
+import packageJson from '../../../package.json';
+const {version} = packageJson;
 let lastVirtuosoStates = {};
 
 
@@ -419,7 +420,7 @@ const All = () => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+          <AlertModal selectedStyle={selectedStyle}>
             <div className='author-delete-alert'>
               <p>Are you sure you want to delete this post?</p>
               <div className="author-delete-buttons">
@@ -442,7 +443,7 @@ const All = () => {
                 </button>
               </div>
             </div>
-          </AuthorDeleteAlert>
+          </AlertModal>
         );
       }
     });

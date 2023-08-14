@@ -9,7 +9,8 @@ import { useAccount, useFeed, usePublishCommentEdit, useSubplebbit, useSubplebbi
 import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, PostMenu, BoardForm } from '../styled/views/Board.styled';
 import { Threads, PostMenuCatalog } from '../styled/views/Catalog.styled';
-import { TopBar, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
+import { TopBar, Footer } from '../styled/views/Thread.styled';
+import { AlertModal } from '../styled/modals/AlertModal.styled';
 import CatalogLoader from '../CatalogLoader';
 import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
@@ -27,9 +28,9 @@ import useFeedStateString from '../../hooks/useFeedStateString';
 import useSuccess from '../../hooks/useSuccess';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
-let lastVirtuosoStates = {}
+import packageJson from '../../../package.json';
+const {version} = packageJson;
+let lastVirtuosoStates = {};
 
 
 const CatalogPost = ({post}) => {
@@ -116,7 +117,7 @@ const CatalogPost = ({post}) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <AuthorDeleteAlert selectedStyle={selectedStyle}>
+          <AlertModal selectedStyle={selectedStyle}>
             <div className='author-delete-alert'>
               <p>Are you sure you want to delete this post?</p>
               <div className="author-delete-buttons">
@@ -139,7 +140,7 @@ const CatalogPost = ({post}) => {
                 </button>
               </div>
             </div>
-          </AuthorDeleteAlert>
+          </AlertModal>
         );
       }
     });
@@ -265,6 +266,17 @@ const CatalogPost = ({post}) => {
   }, [triggerPublishCommentEdit, publishCommentEdit, publishCommentEditOptions]);
 
 
+  let displayWidth, displayHeight;
+  if (thread.linkWidth && thread.linkHeight) {
+    let scale = Math.min(1, 150 / Math.max(thread.linkWidth, thread.linkHeight));
+    displayWidth = `${thread.linkWidth * scale}px`;
+    displayHeight = `${thread.linkHeight * scale}px`;
+  } else {
+    displayWidth = '150px';
+    displayHeight = '150px';
+  }
+
+
   return (
     <div key={`thread-`} className="thread" 
     onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
@@ -274,26 +286,32 @@ const CatalogPost = ({post}) => {
         onClick={() => setSelectedThread(thread.cid)}>
           {commentMediaInfo?.type === "webpage" ? (
             thread.thumbnailUrl ? (
-            <img className="card" key={`img-`}
-            src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
-            onError={(e) => {
-              e.target.src = fallbackImgUrl
-              e.target.onerror = null;
-            }}  />
+              <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+                <img className="card" key={`img-`}
+                src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+                onError={(e) => {
+                  e.target.src = fallbackImgUrl
+                  e.target.onerror = null;
+                }}  />
+              </span>
             ) : null
           ) : null}
           {commentMediaInfo?.type === "image" ? (
-            <img className="card" key={`img-`}
-            src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-            onError={(e) => {
-              e.target.src = fallbackImgUrl
-              e.target.onerror = null;}}  />
+            <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+              <img className="card" key={`img-`}
+              src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+              onError={(e) => {
+                e.target.src = fallbackImgUrl
+                e.target.onerror = null;}}  />
+            </span>
           ) : null}
           {commentMediaInfo?.type === "video" ? (
+            <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
               <video className="card" key={`fti-`} 
               src={commentMediaInfo.url} 
               alt={commentMediaInfo.type} 
               onError={(e) => e.target.src = fallbackImgUrl} /> 
+            </span>
           ) : null}
           {commentMediaInfo?.type === "audio" ? (
               <audio className="card" controls 
