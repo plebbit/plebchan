@@ -85,7 +85,7 @@ const Home = () => {
               (event) => {
                 if (event.key === "Enter") {
                   event.preventDefault();
-                  const address = inputRef.current.value;
+                  const address = inputRef.current.value.toLowerCase();;
                   if (address) {
                     setSelectedAddress(address);
                     navigate(`/p/${address}`)
@@ -94,7 +94,7 @@ const Home = () => {
             }} />
             <input type="submit" value="Search" onClick={
               () => {
-                const address = inputRef.current.value;
+                const address = inputRef.current.value.toLowerCase();;
                 if (address) {
                   setSelectedAddress(address);
                   navigate(`/p/${address}`)
