@@ -20,6 +20,7 @@ const CaptchaModal = () => {
    } = useGeneralStore(state => state);
 
   const [imageSources, setImageSources] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
   const [totalChallenges, setTotalChallenges] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
@@ -49,7 +50,8 @@ const CaptchaModal = () => {
 
 
   useEffect(() => {
-    if (challengesArray) {
+    if (isCaptchaOpen && challengesArray) {
+      setIsLoading(true);
       const challenges = challengesArray.challenges;
       const decryptedChallenges = [];
 
@@ -61,8 +63,9 @@ const CaptchaModal = () => {
 
       setImageSources(decryptedChallenges);
       setTotalChallenges(decryptedChallenges.length);
+      setIsLoading(false);
     }
-  }, [challengesArray]);
+  }, [challengesArray, isCaptchaOpen]);
 
 
   const handleKeyDown = (event) => {
@@ -157,7 +160,11 @@ const CaptchaModal = () => {
               ref={responseRef}
               onKeyDown={handleKeyDown}
               autoFocus />
-              <img src={imageSources[currentChallengeIndex]} alt="captcha" />
+              {isLoading ? (
+                <img src="" alt="loading..." style={{ visibility: "hidden" }} /> 
+              ) : (
+                imageSources[currentChallengeIndex] && <img src={imageSources[currentChallengeIndex]} alt="captcha" />
+              )}
             </div>
             <div>
               <span style={{lineHeight: '1.7'}}>

@@ -58,6 +58,7 @@ export const StyledModal = styled(Modal)`
     position: relative;
     clear: both;
     width: 302px;
+    height: 100px;
     overflow: hidden;
     margin-bottom: 3px;
   }
