@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
-import { usePublishCommentEdit } from "@plebbit/plebbit-react-hooks";
+import { useComment, usePublishCommentEdit } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "../styled/modals/ModerationModal.styled";
 import useGeneralStore from "../../hooks/stores/useGeneralStore";
 import useError from "../../hooks/useError";
@@ -20,9 +20,11 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
     setResolveCaptchaPromise,
   } = useGeneralStore(state => state);
 
-  const [pin, setPin] = useState(false);
+  const comment = useComment({commentCid: moderatingCommentCid});
+
+  const [pin, setPin] = useState(comment?.pinned);
   const [deleteThread, setDeleteThread] = useState(deletePost);
-  const [close, setClose] = useState(false);
+  const [close, setClose] = useState(comment?.locked);
   const [reason, setReason] = useState('');
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
 
