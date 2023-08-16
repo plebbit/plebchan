@@ -1226,7 +1226,7 @@ const Catalog = () => {
                             key={`t-${index}`} className="teaser">
                             <div style={{cursor:"text"}}
                                 onMouseOver={() => { 
-                                !commentMediaInfo?.url  && setIsHoveringOnThread(thread.cid)}}
+                                !thread.thumbnailUrl  && setIsHoveringOnThread(thread.cid)}}
                                 onMouseLeave={()=>{handleMouseOnLeaveThread()}}
                                 ref={(el) => (threadRefs.current[index] = el)}>
                               <b
