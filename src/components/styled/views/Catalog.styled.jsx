@@ -31,21 +31,31 @@ export const Threads = styled.div`
     border-radius:3px;
   }
   .thread_popup_content{
-    color: white;
+    color: #dedede;
     display: block;
     width: auto;
     min-width: 250px;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size:13px;
+  }
+  .thread_popup_lastReply{
+    color: #bbbfbd;
+    display: block;
+    width: auto;
+    min-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size:90%;
   }
   .thread_popup_title{
     color:#a89baa
   }
   .thread_popup_author{
-    color:#519860
+    color:#519860;font-weight:bold
   }
   .thread_popup_authorAdmin{
-    color:#682071;font-weight:bold
+    color:#682071;
   }
   video, audio, img {
     max-width: 150px;
@@ -108,6 +118,77 @@ export const Threads = styled.div`
     height:200px;
     overflow:hidden;
   }
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
+        .thread_popup_title{
+          color:#cc1105;
+          font-weight:700;
+        };
+        .thread_popup_author{
+          color:#00a550;font-weight:bold
+        }`;
+        case 'Yotsuba-B':
+          return `
+          .thread_popup_title{
+            color:#dedede;
+            font-weight:700;
+          };
+          .thread_popup_author{
+            color:#00a550;font-weight:bold
+          }`;
+        case 'Futaba':
+          return `
+          .thread_popup{
+            font-family: arial,helvetica,sans-serif;
+          }
+          .thread_popup_title{
+            color:#cc1105;
+            font-weight:700;
+          };
+          .thread_popup_author{
+            color:#00a550;font-weight:700;
+          }`;
+          case 'Burichan':
+            return `
+            .thread_popup{
+              font-family: arial,helvetica,sans-serif;
+            }
+            .thread_popup_title{
+              color:#dedede;
+              font-weight:700;
+            };
+            .thread_popup_author{
+              color:#00a550;font-weight:700;
+            }`;
+            case 'Tomorrow':
+              return `
+              .thread_popup{
+                font-family: arial,helvetica,sans-serif;
+              }
+              .thread_popup_title{
+                color:#b294bb;
+                font-weight:700;
+              };
+              .thread_popup_author{
+                color:#00a550;font-weight:700;
+              }`;
+              case 'Photon':
+                return `
+                .thread_popup{
+                  font-family: arial,helvetica,sans-serif;
+                }
+                .thread_popup_title{
+                  color:#dedede;
+                  font-weight:700;
+                };
+                .thread_popup_author{
+                  color:#00a550;font-weight:700;
+                }`;
+      default:
+        return '';
+      }}}
 `;
 
 export const PostMenuCatalog = styled.div`
@@ -145,27 +226,9 @@ export const PostMenuCatalog = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `.highlighted, .highlighted-click, .highlighted-address {
-        background-color: #f0c0b0 !important;
-        border: 1px solid #d99f91 !important;
-        border-left: none !important;
-        border-top: none !important;
-      }
-      
-      .post-menu-catalog {
-        border-right: 1px solid #d9bfb7;
-        border-bottom: 2px solid #d9bfb7;
-
-        li {
-          border: 1px solid #d9bfb7;
-          border-bottom: none;
-          background-color: #f0e0d6;
-
-          :hover {
-            background-color: #ffe;
-          }
-        }
-      }`;
+        return `.thread_popup_title{
+          color:red;
+        }`;
 
       case 'Yotsuba-B':
         return `.highlighted, .highlighted-click, .highlighted-address {

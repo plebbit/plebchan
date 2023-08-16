@@ -100,7 +100,6 @@ const Catalog = () => {
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
   const [isCalculationDone,setIsCalculationDone] = useState(false);
   useLayoutEffect(() => {
-    console.log(isHoveringOnThread)
     setIsEnoughSpaceOnRight(null);
     const calculateSpaceOnRight = () => {
       feed.forEach((thread, index) => {
@@ -108,7 +107,6 @@ const Catalog = () => {
            if(threadRefs.current[index] && popupRef.current) {
             const threadRect = threadRefs.current[index].getBoundingClientRect();
             const popupRect = popupRef.current.getBoundingClientRect();
-            console.log(threadRect);console.log(popupRect);
             // Get the width of the viewport area inside the browser window
             const viewportWidth = document.documentElement.clientWidth;
   
@@ -119,7 +117,6 @@ const Catalog = () => {
             const popupWidth = popupRect.width;
             // Check if there is enough space for the popup on the right side
             const EnoughSpaceOnRight = spaceOnRight >= popupWidth;
-            console.log("SPACE ? " + EnoughSpaceOnRight);
             setIsEnoughSpaceOnRight(EnoughSpaceOnRight);
             return setIsCalculationDone(true);
           }}
@@ -1012,10 +1009,10 @@ const Catalog = () => {
                               <span className="thread_popup_author"> 
                               {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
                               </span> 
-                              {thread.timestamp ? timeElapsedCalc(thread.timestamp) : null}</p>
+                              {thread.timestamp ? timeElapsedCalc(thread.timestamp) : null} ago</p>
                               <div>
                               {thread.replyCount > 0 ?
-                              <p className="thread_popup_content">
+                              <p className="thread_popup_lastReply">
                               Last reply by <span className="thread_popup_author"> Anonymous </span> 
                               {timeElapsedCalc(thread.lastReplyTimestamp)} ago</p>
                               : null}
