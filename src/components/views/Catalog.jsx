@@ -116,7 +116,7 @@ const Catalog = () => {
             // Define the popup width
             const popupWidth = popupRect.width;
             // Check if there is enough space for the popup on the right side
-            const EnoughSpaceOnRight = spaceOnRight >= popupWidth;
+            const EnoughSpaceOnRight = spaceOnRight >= popupWidth + 10;
             setIsEnoughSpaceOnRight(EnoughSpaceOnRight);
             return setIsCalculationDone(true);
           }}
