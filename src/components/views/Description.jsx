@@ -181,7 +181,7 @@ const Description = () => {
               }>Create Board</span>
               ]
               [
-              <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/${selectedAddress}/description/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/">Home</Link>
@@ -210,7 +210,7 @@ const Description = () => {
                   }>Create Board</span>
                 </div>
                 <div className="page-jump">
-                  <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                  <Link to={`/p/${selectedAddress}/description/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                   &nbsp;
                   <Link to="/" onClick={() => {handleStyleChange({target: {value: "Yotsuba"}}); window.scrollTo(0, 0);}}>Home</Link>
                 </div>
@@ -496,7 +496,7 @@ const Description = () => {
               }>Create Board</span>
               ]
                 [
-                <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/${selectedAddress}/description/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}

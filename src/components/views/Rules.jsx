@@ -187,7 +187,7 @@ const Rules = () => {
               }>Create Board</span>
               ]
               [
-              <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/${selectedAddress}/rules/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/">Home</Link>
@@ -216,7 +216,7 @@ const Rules = () => {
                   }>Create Board</span>
                 </div>
                 <div className="page-jump">
-                  <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                  <Link to={`/p/${selectedAddress}/rules/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                   &nbsp;
                   <Link to="/" onClick={() => {handleStyleChange({target: {value: "Yotsuba"}}); window.scrollTo(0, 0);}}>Home</Link>
                 </div>
@@ -494,7 +494,7 @@ const Rules = () => {
               }>Create Board</span>
               ]
                 [
-                <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/${selectedAddress}/rules/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}
