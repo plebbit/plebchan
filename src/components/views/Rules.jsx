@@ -26,7 +26,6 @@ const Rules = () => {
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
-    selectedThread,
     setSelectedTitle,
   } = useGeneralStore(state => state);
 
