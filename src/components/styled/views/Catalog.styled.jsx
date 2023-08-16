@@ -19,7 +19,7 @@ export const Threads = styled.div`
   }
 
   .thread_popup{
-    min-width:200px;
+    display: inline-block;
     height:auto;
     background-color:black;
     position:absolute;
@@ -32,11 +32,9 @@ export const Threads = styled.div`
   }
   .thread_popup_content{
     color: #dedede;
-    display: block;
-    width: auto;
-    min-width: 250px;
+    display: inline-block;
     overflow: hidden;
-    text-overflow: ellipsis;
+    white-space:nowrap;
     font-size:13px;
   }
   .thread_popup_lastReply{
