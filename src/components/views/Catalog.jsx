@@ -98,9 +98,11 @@ const Catalog = () => {
   const popupRef = useRef(null);
   const threadRefs = useRef([]);
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
+  const [isEnoughSpaceOnLeft,setIsEnoughSpaceOnLeft] = useState(null);
   const [isCalculationDone,setIsCalculationDone] = useState(false);
   useLayoutEffect(() => {
     setIsEnoughSpaceOnRight(null);
+    setIsEnoughSpaceOnLeft(null);
     const calculateSpaceOnRight = () => {
       feed.forEach((thread, index) => {
         if (thread.cid === isHoveringOnThread){
@@ -112,11 +114,13 @@ const Catalog = () => {
   
             // Calculate the space on the right side (relative to the viewport)
             const spaceOnRight = viewportWidth - (threadRect.left + threadRect.width);
-  
+            const spaceOnLeft = threadRect.left;
             // Define the popup width
             const popupWidth = popupRect.width;
             // Check if there is enough space for the popup on the right side
             const EnoughSpaceOnRight = spaceOnRight >= popupWidth + 10;
+            const EnoughSpaceOnLeft = spaceOnLeft >= popupWidth + 10;
+            setIsEnoughSpaceOnLeft(EnoughSpaceOnLeft);
             setIsEnoughSpaceOnRight(EnoughSpaceOnRight);
             return setIsCalculationDone(true);
           }}
@@ -776,12 +780,12 @@ const Catalog = () => {
                   >
                   {subplebbit.rules ? (
                     <div className='thread'
-                    onMouseOver={() => {setTimeout(()=>setIsHoveringOnThread('rules'),500)}} 
-                    onMouseLeave={() => setIsHoveringOnThread('')}>
+                    onMouseOver={() => setIsHoveringOnThread("rules")}
+                    onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
                       {/* <!-- hovering div --> */}
                       {isHoveringOnThread == 'rules' ? 
-                      <div  
-                      className={"thread_popup_right"}>
+                      <div style={{left:"100%"}}
+                      className={"thread_popup"}>
                         <p className="thread_popup_content" style={{color:"white"}}>
                         <span className="thread_popup_title">Rules </span>
                         by 
@@ -859,12 +863,12 @@ const Catalog = () => {
                   ) : null}
                   {subplebbit.description ? (
                     <div className='thread'
-                    onMouseOver={() => {setTimeout(()=>setIsHoveringOnThread('description'),500)}} 
-                    onMouseLeave={() => setIsHoveringOnThread('')}>
+                    onMouseOver={() => setIsHoveringOnThread("description")}
+                    onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
                       {/* <!-- hovering div --> */}
                       {isHoveringOnThread == 'description' ? 
-                      <div  
-                      className="thread_popup_right">
+                      <div style={{left:"100%"}}
+                      className={"thread_popup"}>
                         <p className="thread_popup_content" style={{color:"white"}}>
                         <span className="thread_popup_title">Welcome to {subplebbit.title || subplebbit.address} </span> 
                          by  
@@ -1001,7 +1005,14 @@ const Catalog = () => {
                             left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight ? '100%' : 'auto',
                             right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight ? '100%' : 'auto',}}
                             className="thread_popup">
-                              <p className="thread_popup_content">
+                              <p
+                              style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
+                                && !isEnoughSpaceOnRight
+                                ?
+                                {overflow:"visible",whiteSpace:"normal"}
+                              : null
+                              }
+                              className="thread_popup_content">
                               <span className="thread_popup_title" >
                                 {thread.title ? `${thread.title} ` : "Posted "}
                               </span>
