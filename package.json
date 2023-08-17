@@ -21,7 +21,6 @@
     "eslint": "8.36.0",
     "eslint-config-react-app": "7.0.1",
     "ext-name": "5.0.0",
-    "javascript-time-ago": "^2.5.9",
     "lodash": "4.17.21",
     "mock-require": "3.0.3",
     "postcss": "8.4.21",
