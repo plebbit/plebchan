@@ -28,6 +28,7 @@ import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
+import getFormattedTime from '../../utils/getFormattedTime';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -998,7 +999,12 @@ const Thread = () => {
                           </span>)
                         </span>
                         &nbsp;
-                        <span className="date-time" data-utc="data">{getDate(comment?.timestamp)}</span>
+                        <span className="date-time"
+                        data-tooltip-id="tooltip"
+                        data-tooltip-content={getFormattedTime(comment?.timestamp)}
+                        data-tooltip-place="top">
+                          {getDate(comment?.timestamp)}
+                        </span>
                         &nbsp;
                         <span className="post-number post-number-desktop">
                           <span>c/</span>
@@ -1295,7 +1301,10 @@ const Thread = () => {
                               </span>
                             </span>
                             &nbsp;
-                            <span key={`dt-${index}`} className="date-time">
+                            <span key={`dt-${index}`} className="date-time"
+                            data-tooltip-id="tooltip"
+                            data-tooltip-content={getFormattedTime(reply?.timestamp)}
+                            data-tooltip-place="top">
                               {getDate(reply?.timestamp)}&nbsp;
                             <span key={`pn-${index}`} className="post-number post-number-desktop">
                               <span key={`pl1-${index}`}>c/</span>
@@ -1750,7 +1759,10 @@ const Thread = () => {
                                 {comment.title}
                               </span>) : null}
                         </span>
-                        <span key={`mob-dt-${comment.cid}`} className="date-time-mobile post-number-mobile">
+                        <span key={`mob-dt-${comment.cid}`} className="date-time-mobile post-number-mobile"
+                        data-tooltip-id="tooltip"
+                        data-tooltip-content={getFormattedTime(comment?.timestamp)}
+                        data-tooltip-place="top">
                           {getDate(comment?.timestamp)}
                           &nbsp;
                           <span key={`mob-no-${comment.cid}`}>c/</span>
@@ -1943,7 +1955,10 @@ const Thread = () => {
                             </span>
                             <br key={`mob-br-${index}`} />
                           </span>
-                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
+                          data-tooltip-id="tooltip"
+                          data-tooltip-content={getFormattedTime(reply?.timestamp)}
+                          data-tooltip-place="top">
                             {getDate(reply?.timestamp)}&nbsp;
                             <span key={`mob-pl1-${index}`}>c/</span>
                             {reply.shortCid ? (

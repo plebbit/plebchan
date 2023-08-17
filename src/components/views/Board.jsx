@@ -30,6 +30,7 @@ import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
+import getFormattedTime from '../../utils/getFormattedTime';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -953,7 +954,10 @@ const Board = () => {
                                 onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
                                 >## Board Admins</span>
                                 &nbsp;
-                                <span className="date-time">{getDate(subplebbit.createdAt)}</span>
+                                <span className="date-time"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(subplebbit.createdAt)}
+                                  data-tooltip-place="top">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
                                 <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
@@ -1043,7 +1047,10 @@ const Board = () => {
                               style={{marginBottom: "-15px"}}>Rules</span>
                                 &nbsp;
                               </span>
-                              <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                              <span className="date-time-mobile post-number-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(subplebbit.createdAt)}
+                                  data-tooltip-place="top">{getDate(subplebbit.createdAt)}</span>
                               &nbsp;
                             </div>
                             <blockquote className="post-message-mobile">
@@ -1078,7 +1085,10 @@ const Board = () => {
                                 onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
                                 >## Board Admins</span>
                                 &nbsp;
-                                <span className="date-time">{getDate(subplebbit.createdAt)}</span>
+                                <span className="date-time"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(subplebbit.createdAt)}
+                                  data-tooltip-place="top">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
                                 <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
@@ -1168,7 +1178,10 @@ const Board = () => {
                               style={{marginBottom: "-15px"}}>Rules</span>
                                 &nbsp;
                               </span>
-                              <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                              <span className="date-time-mobile post-number-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(subplebbit.createdAt)}
+                                  data-tooltip-place="top">{getDate(subplebbit.createdAt)}</span>
                               &nbsp;
                             </div>
                             <blockquote className="post-message-mobile">
@@ -1225,7 +1238,10 @@ const Board = () => {
                                 onClick={() => {setIsAdminListOpen(!isAdminListOpen)}}
                                 >## Board Admins</span>
                                 &nbsp;
-                                <span className="date-time">{getDate(subplebbit.createdAt)}</span>
+                                <span className="date-time"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(subplebbit.createdAt)}
+                                  data-tooltip-place="top">{getDate(subplebbit.createdAt)}</span>
                                 &nbsp;
                                 <img src="assets/sticky.gif" alt="Sticky" title="Sticky" style={{marginBottom: "-1px",
                                   imageRendering: "pixelated",}} />
@@ -1313,7 +1329,10 @@ const Board = () => {
                               style={{marginBottom: "-15px"}}>Welcome to {subplebbit.title || subplebbit.address}</span>
                                 &nbsp;
                               </span>
-                              <span className="date-time-mobile post-number-mobile">{getDate(subplebbit.createdAt)}</span>
+                              <span className="date-time-mobile post-number-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(subplebbit.createdAt)}
+                                  data-tooltip-place="top">{getDate(subplebbit.createdAt)}</span>
                               &nbsp;
                             </div>
                             {subplebbit.suggested?.avatarUrl ? (
@@ -1513,7 +1532,12 @@ const Board = () => {
                                     <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>
                                   </span>)
                                   &nbsp;
-                                  <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
+                                  <span key={`dt-${index}`} className="date-time"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(thread?.timestamp)}
+                                  data-tooltip-place="top">
+                                    {getDate(thread.timestamp)}
+                                  </span>
                                   &nbsp;
                                   <span key={`pn-${index}`} className="post-number post-number-desktop">
                                     <span key={`pl1-${index}`}>c/</span>
@@ -1856,7 +1880,10 @@ const Board = () => {
                                         </span>
                                       </span>
                                       &nbsp;
-                                      <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
+                                      <span key={`dt-${index}`} className="date-time"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(reply.timestamp)}
+                                  data-tooltip-place="top">{getDate(reply.timestamp)}</span>
                                       &nbsp;
                                       <span key={`pn-${index}`} className="post-number post-number-desktop">
                                         <span key={`pl1-${index}`}>c/</span>
@@ -2429,7 +2456,10 @@ const Board = () => {
                                     </span>) 
                                   : null}
                                 </span>
-                                <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                                <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(thread.timestamp)}
+                                  data-tooltip-place="top">
                                   {getDate(thread.timestamp)}
                                   &nbsp;
                                   <span key={`mob-no-${index}`}>c/</span>
@@ -2656,7 +2686,10 @@ const Board = () => {
                                     </span>
                                     <br key={`mob-br-${index}`} />
                                   </span>
-                                  <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                                  <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
+                                  data-tooltip-id="tooltip"
+                                  data-tooltip-content={getFormattedTime(reply.timestamp)}
+                                  data-tooltip-place="top">
                                   {getDate(reply.timestamp)}&nbsp;
                                     <span key={`mob-pl1-${index}`}>c/</span>
                                     {reply.shortCid ? (
