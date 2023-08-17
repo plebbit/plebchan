@@ -108,8 +108,7 @@ const Home = () => {
             </AboutTitle>
             <AboutContent>
               <div id="content">
-                <p>Plebchan is a serverless, adminless, decentralized 4chan alternative that uses the <a href="https://plebbit.com" target="_blank" rel="noreferrer">plebbit protocol</a>. Users do not need to register an account before participating in a community; anyone can post comments, share media links, and <button 
-                style={{all: 'unset', cursor: 'pointer'}}
+                <p>Plebchan is a serverless, adminless, decentralized 4chan alternative that uses the <a href="https://plebbit.com" target="_blank" rel="noreferrer">plebbit protocol</a>. Users do not need to register an account before participating in a community; anyone can post comments, share media links, and <button style={{all: 'unset', cursor: 'pointer'}}
                 onClick={() =>{
                   window.electron && window.electron.isElectron ? (
                     setIsCreateBoardOpen(true)
@@ -119,7 +118,13 @@ const Home = () => {
                     )
                   )
                 }}
-                >create a board</button>. All the content is just text, and plebchan's speed depends on how many users are <a href="https://github.com/plebbit/whitepaper/blob/master/contribute.md" target="_blank" rel="noreferrer">seeding</a>. Search for any board address above, or feel free to click on a popular board below that interests you and jump right in! </p>
+                >create a board</button>. All the content is just text, and plebchan's speed depends on how many users are <button style={{all: 'unset', cursor: 'pointer'}}
+                onClick={() => {
+                  alert(
+                    'You can seed automatically simply by using the plebchan desktop app, which is a plebbit full node. Download it here:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can use plebbit-cli with the --seed flag:\nhttps://github.com/plebbit/plebbit-cli\n\n'
+                  )
+                }}
+                >seeding</button>. Search for any board address above, or feel free to click on a popular board below that interests you and jump right in! </p>
                 <br />
                 <p>There are no global rules, each board is completely independent and its owner decides how/if it should be moderated.</p>
               </div>
