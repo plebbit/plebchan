@@ -6,7 +6,7 @@ import ForwardRefLink from './ForwardRefLink';
 
 
 const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, postQuoteRef }) => {
-  const doubleNewlineContent = content.replace(/\n/g, '&nbsp;\n\n');
+  const doubleNewlineContent = content?.replace(/\n/g, '&nbsp;\n\n');
 
   const customSchema = useMemo(() => ({
     ...defaultSchema,
