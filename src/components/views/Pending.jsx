@@ -177,6 +177,9 @@ const Pending = () => {
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
                     <option value="subscriptions">Subscriptions</option>
+                    {!defaultSubplebbits.some(subplebbit => subplebbit.address === selectedAddress) && (
+                      <option value={selectedAddress}>{selectedAddress}</option>
+                    )}
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { confirmAlert } from "react-confirm-alert";
 import { deleteAccount, deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts, useResolvedAuthorAddress } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from "../styled/modals/SettingsModal.styled";
 import useError from "../../hooks/useError";

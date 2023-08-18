@@ -29,6 +29,7 @@ import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getDate from '../../utils/getDate';
+import getFormattedTime from '../../utils/getFormattedTime';
 import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
@@ -851,7 +852,10 @@ const All = () => {
                               {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
                             </span>)
                             &nbsp;
-                            <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(thread.timestamp)}</span>
+                            <span key={`dt-${index}`}
+                            data-tooltip-id="tooltip"
+                            data-tooltip-content={getFormattedTime(thread.timestamp)}
+                            data-tooltip-place="top">{getDate(thread.timestamp)}</span>
                             &nbsp;
                             <span key={`pn-${index}`} className="post-number post-number-desktop">
                               <span key={`pl1-${index}`}>c/</span>
@@ -1179,7 +1183,10 @@ const All = () => {
                                 </span>
                               </span>
                               &nbsp;
-                              <span key={`dt-${index}`} className="date-time" data-utc="data">{getDate(reply.timestamp)}</span>
+                              <span key={`dt-${index}`} className="date-time"
+                              data-tooltip-id="tooltip"
+                              data-tooltip-content={getFormattedTime(reply.timestamp)}
+                              data-tooltip-place="top">{getDate(reply.timestamp)}</span>
                               &nbsp;
                               <span key={`pn-${index}`} className="post-number post-number-desktop">
                                 <span id="reply-button" style={{cursor: 'pointer'}} key={`pl1-${index}`} title="Link to this post">c/</span>
@@ -1778,7 +1785,10 @@ const All = () => {
                             tooltipPlace="top"
                             className="offline-mobile-sub"  />
                           </span>
-                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
+                          data-tooltip-id="tooltip"
+                          data-tooltip-content={getFormattedTime(thread.timestamp)}
+                          data-tooltip-place="top">
                             {getDate(thread.timestamp)}
                             &nbsp;
                             <span key={`mob-no-${index}`}>c/</span>
@@ -2016,7 +2026,10 @@ const All = () => {
                               tooltipPlace="top"
                               className="offline-mobile-sub-reply"  />
                             </span>
-                            <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                            <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
+                            data-tooltip-id="tooltip"
+                            data-tooltip-content={getFormattedTime(reply.timestamp)}
+                            data-tooltip-place="top">
                             {getDate(reply.timestamp)}&nbsp;
                               <span key={`mob-pl1-${index}`}>c/</span>
                               {reply.shortCid ? (
