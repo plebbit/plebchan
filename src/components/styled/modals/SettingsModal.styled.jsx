@@ -82,7 +82,7 @@ export const StyledModal = styled(Modal)`
   }
 
   .settings-cat {
-    display: ${({ expanded }) => index => (expanded.includes(index) ? "block" : "none")};
+    display: ${({ expanded }) => index => (expanded?.includes(index) ? "block" : "none")};
     margin: 5px;
   }
 
