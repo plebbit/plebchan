@@ -304,7 +304,7 @@ const BoardSettings = ({ subplebbit }) => {
           </div>
         </div>
       </StyledModal>
-      [
+       [
         <span id="subscribe" style={{ cursor: 'pointer' }}>
           <span
             onClick={() => {
@@ -315,10 +315,10 @@ const BoardSettings = ({ subplebbit }) => {
                   );
             }}
           >
-            Board Settings
+            Settings
           </span>
         </span>
-      ] 
+      ]
     </>
   );
 };
