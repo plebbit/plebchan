@@ -375,7 +375,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     try {
       const data = await exportAccount();
       setAccountJson(data);
-      setNewSuccessMessage("Account Data Reset Successfully");
     } catch (error) {
       setNewErrorMessage("Error resetting account data: " + error.message);
       console.error(error);
