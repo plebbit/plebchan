@@ -67,7 +67,6 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
 
 
   const onChallenge = async (challenges, comment) => {
-
     let challengeAnswers = [];
     
     try {

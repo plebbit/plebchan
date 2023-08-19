@@ -1,11 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { usePublishSubplebbitEdit } from "@plebbit/plebbit-react-hooks";
 import { StyledModal } from './styled/modals/ModerationModal.styled';
 import useError from "../hooks/useError";
 import useSuccess from "../hooks/useSuccess";
 import useGeneralStore from '../hooks/stores/useGeneralStore';
 
 const BoardSettings = ({ subplebbit }) => {
+  const {
+    setCaptchaResponse,
+    setChallengesArray,
+    setIsCaptchaOpen,
+    setResolveCaptchaPromise,
+    selectedAddress,
+    selectedStyle,
+  } = useGeneralStore(state => state);
+
   const generateSettingsFromSubplebbit = (subplebbitData) => ({
     address: subplebbitData.address,
     apiUrl: subplebbitData.apiUrl,
@@ -29,20 +39,52 @@ const BoardSettings = ({ subplebbit }) => {
   });
 
   const initialSettings = generateSettingsFromSubplebbit(subplebbit);
-  const { selectedStyle } = useGeneralStore(state => state);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [boardSettingsJson, setBoardSettingsJson] = useState(JSON.stringify(initialSettings, null, 2));
+  const [triggerPublilshSubplebbitEdit, setTriggerPublishCommentEdit] = useState(false);
 
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
   
 
+  const getDifferences = (oldObj, newObj) => {
+    let differences = {};
+  
+    for (let key in oldObj) {
+      if (typeof oldObj[key] === 'object' && oldObj[key] !== null) {
+        const nestedDifferences = getDifferences(oldObj[key], newObj[key] || {});
+        if (Object.keys(nestedDifferences).length > 0) {
+          differences[key] = nestedDifferences;
+        }
+      } else if (oldObj[key] !== newObj[key]) {
+        differences[key] = newObj[key];
+      }
+    }
+  
+    for (let key in newObj) {
+      if (!oldObj.hasOwnProperty(key)) {
+        differences[key] = newObj[key];
+      }
+    }
+  
+    return differences;
+  };
+
+
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
-    setBoardSettingsJson(JSON.stringify(generateSettingsFromSubplebbit(subplebbit), null, 2));
+      if (isInitialMount.current) {
+          setBoardSettingsJson(JSON.stringify(generateSettingsFromSubplebbit(subplebbit), null, 2));
+          isInitialMount.current = false;
+      }
   }, [subplebbit]);
+  
 
 
   function validateSettings(updatedSettings, allowedSettings) {
+    if (!allowedSettings) throw new Error(`Allowed settings structure does not match updated settings.`);
+
     for (let key in updatedSettings) {
       if (!allowedSettings.hasOwnProperty(key)) {
         throw new Error(`Unexpected setting: ${key}`);
@@ -54,25 +96,122 @@ const BoardSettings = ({ subplebbit }) => {
     }
   }
 
-  // TODO: add API logic
-  const handleSaveChanges = async () => {
+
+
+  const onChallenge = async (challenges, subplebbitEdit) => {
+    let challengeAnswers = [];
+    
     try {
-      const updatedSettings = JSON.parse(boardSettingsJson);
-      validateSettings(updatedSettings, initialSettings);
-  
-      
-  
-      setNewSuccessMessage("Changes saved successfully");
-    } catch (error) {
-      setNewErrorMessage(`Error saving changes: `, error)
+      challengeAnswers = await getChallengeAnswersFromUser(challenges)
+    }
+    catch (error) {
+      setNewErrorMessage(error.message); console.log(error);
+    }
+    if (challengeAnswers) {
+      await subplebbitEdit.publishChallengeAnswers(challengeAnswers)
     }
   };
+
+
+  const onChallengeVerification = (challengeVerification) => {
+    if (challengeVerification.challengeSuccess === true) {
+        setNewSuccessMessage('Challenge Success');
+    } else if (challengeVerification.challengeSuccess === false) {
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
+    }
+  };
+
+
+  const getChallengeAnswersFromUser = async (challenges) => {
+    setChallengesArray(challenges);
+    
+    return new Promise((resolve, reject) => {
+      const imageString = challenges?.challenges[0].challenge;
+      const imageSource = `data:image/png;base64,${imageString}`;
+      const challengeImg = new Image();
+      challengeImg.src = imageSource;
+  
+      challengeImg.onload = () => {
+        setIsCaptchaOpen(true);
+  
+        const handleKeyDown = async (event) => {
+          if (event.key === 'Enter') {
+            const currentCaptchaResponse = useGeneralStore.getState().captchaResponse;
+            resolve(currentCaptchaResponse);
+            setIsCaptchaOpen(false);
+            document.removeEventListener('keydown', handleKeyDown);
+            event.preventDefault();
+          }
+        };
+
+        setCaptchaResponse('');
+        document.addEventListener('keydown', handleKeyDown);
+
+        setResolveCaptchaPromise(resolve);
+      };
+  
+      challengeImg.onerror = () => {
+        reject(setNewErrorMessage('Could not load challenges'));
+      };
+    });
+  };
+
+
+  const [editSubplebbitOptions, setEditSubplebbitOptions] = useState({
+    subplebbitAddress: selectedAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setNewErrorMessage(error.message); console.log(error);
+    }
+  });
+
+
+  const { publishSubplebbitEdit } = usePublishSubplebbitEdit(editSubplebbitOptions);
+
+
+  useEffect(() => {
+    let isActive = true;
+    if (editSubplebbitOptions && triggerPublilshSubplebbitEdit) {
+      (async () => {
+        await publishSubplebbitEdit(editSubplebbitOptions);
+        if (isActive) {
+          setTriggerPublishCommentEdit(false);
+        }
+      })();
+    }
+
+    return () => {
+      isActive = false;
+    };
+  }, [editSubplebbitOptions, publishSubplebbitEdit, triggerPublilshSubplebbitEdit]);
+
+  
+  const handleSaveChanges = async () => {
+    try {
+        const updatedSettings = JSON.parse(boardSettingsJson);
+        validateSettings(updatedSettings, initialSettings);
+        const changes = getDifferences(initialSettings, updatedSettings);
+        if (Object.keys(changes).length > 0) {
+          setEditSubplebbitOptions(prevOptions => ({
+                ...prevOptions,
+                ...changes
+            }));
+            setTriggerPublishCommentEdit(true);
+        } else {
+            setNewErrorMessage("No changes detected");
+        }
+    } catch (error) {
+        setNewErrorMessage(`Error saving changes: ${error}`);
+    }
+  };
+  
 
 
   const handleResetChanges = () => {
     setBoardSettingsJson(JSON.stringify(initialSettings, null, 2));
   };
-  // TODO: add API logic
   
 
   function generateSettingsList(settingsObj, parentKey = '') {
@@ -132,6 +271,9 @@ const BoardSettings = ({ subplebbit }) => {
             value={boardSettingsJson}
             onChange={e => setBoardSettingsJson(e.target.value)}
             className="board-settings"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
           />
           <div className="button-group">
             <button id="reset-board-settings" onClick={handleResetChanges}>Reset</button>
