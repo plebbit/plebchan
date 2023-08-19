@@ -16,6 +16,28 @@ const BoardSettings = ({ subplebbit }) => {
     selectedStyle,
   } = useGeneralStore(state => state);
 
+  const allowedSettings = {
+    address: subplebbit.address,
+    apiUrl: subplebbit.apiUrl,
+    description: subplebbit.description,
+    pubsubTopic: subplebbit.pubsubTopic,
+    settings: {
+      fetchThumbnailUrls: subplebbit.settings?.fetchThumbnailUrls,
+      fetchThumbnailUrlsProxyUrl: subplebbit.settings?.fetchThumbnailUrlsProxyUrl,
+    },
+    roles: subplebbit.roles,
+    rules: subplebbit.rules,
+    suggested: { 
+      avatarUrl: subplebbit.suggested?.avatarUrl,
+      backgroundUrl: subplebbit.suggested?.backgroundUrl,
+      bannerUrl: subplebbit.suggested?.bannerUrl,
+      language: subplebbit.suggested?.language,
+      primaryColor: subplebbit.suggested?.primaryColor,
+      secondaryColor: subplebbit.suggested?.secondaryColor,
+    },
+    title: subplebbit.title,
+  };
+
   const generateSettingsFromSubplebbit = (subplebbitData) => ({
     address: subplebbitData.address,
     apiUrl: subplebbitData.apiUrl,
@@ -79,23 +101,24 @@ const BoardSettings = ({ subplebbit }) => {
           isInitialMount.current = false;
       }
   }, [subplebbit]);
-  
 
 
   function validateSettings(updatedSettings, allowedSettings) {
-    if (!allowedSettings) throw new Error(`Allowed settings structure does not match updated settings.`);
-
     for (let key in updatedSettings) {
-      if (!allowedSettings.hasOwnProperty(key)) {
-        throw new Error(`Unexpected setting: ${key}`);
+      if (!allowedSettings.hasOwnProperty(key) && !initialSettings.hasOwnProperty(key)) {
+          throw new Error(`Unexpected setting: ${key}`);
       }
-  
-      if (typeof updatedSettings[key] === 'object' && updatedSettings[key] !== null) {
-        validateSettings(updatedSettings[key], allowedSettings[key]);
+
+      if (typeof updatedSettings[key] === 'object' && updatedSettings[key] !== null 
+          && !Array.isArray(updatedSettings[key])) {
+          if (typeof allowedSettings[key] !== 'object' || allowedSettings[key] === null 
+              || Array.isArray(allowedSettings[key])) {
+              throw new Error(`Expected ${key} to be an object in allowedSettings`);
+          }
+          validateSettings(updatedSettings[key], allowedSettings[key]);
       }
     }
   }
-
 
 
   const onChallenge = async (challenges, subplebbitEdit) => {
@@ -190,23 +213,23 @@ const BoardSettings = ({ subplebbit }) => {
   
   const handleSaveChanges = async () => {
     try {
-        const updatedSettings = JSON.parse(boardSettingsJson);
-        validateSettings(updatedSettings, initialSettings);
-        const changes = getDifferences(initialSettings, updatedSettings);
-        if (Object.keys(changes).length > 0) {
-          setEditSubplebbitOptions(prevOptions => ({
-                ...prevOptions,
-                ...changes
-            }));
-            setTriggerPublishCommentEdit(true);
-        } else {
-            setNewErrorMessage("No changes detected");
-        }
+      const updatedSettings = JSON.parse(boardSettingsJson);
+      validateSettings(updatedSettings, allowedSettings);
+      const changes = getDifferences(initialSettings, updatedSettings);
+      if (Object.keys(changes).length > 0) {
+        setEditSubplebbitOptions(prevOptions => ({
+          ...prevOptions,
+          ...changes
+        }));
+        setTriggerPublishCommentEdit(true);
+      } else {
+        setNewErrorMessage("No changes detected");
+      }
     } catch (error) {
-        setNewErrorMessage(`Error saving changes: ${error}`);
+      setNewErrorMessage(`Error saving changes: ${error}`);
+      console.log(error);
     }
   };
-  
 
 
   const handleResetChanges = () => {
