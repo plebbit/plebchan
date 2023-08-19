@@ -158,8 +158,8 @@ const Board = () => {
 
 
   useEffect(() => {
-    if (subplebbit.roles !== undefined) { 
-      const role = subplebbit.roles[account?.author.address]?.role;
+    if (subplebbit?.roles !== undefined) { 
+      const role = subplebbit?.roles[account?.author.address]?.role;
   
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
         setIsModerator(true);
@@ -167,7 +167,7 @@ const Board = () => {
         setIsModerator(false);
       }
     }
-  }, [account?.author.address, subplebbit.roles]);
+  }, [account?.author.address, subplebbit?.roles]);
 
 
   const handleThumbnailClick = (index, type) => {
@@ -718,7 +718,7 @@ const Board = () => {
         selectedStyle={selectedStyle}
         isOpen={isAdminListOpen}
         closeModal={() => setIsAdminListOpen(false)}
-        roles={subplebbit.roles} />
+        roles={subplebbit?.roles} />
         <CreateBoardModal
         selectedStyle={selectedStyle}
         isOpen={isCreateBoardOpen}
@@ -903,7 +903,7 @@ const Board = () => {
             [
             <Link to={`/p/${selectedAddress}/catalog`} onClick={()=> {window.scrollTo(0, 0)}}>Catalog</Link>
             ]
-            {subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
+            {subplebbit.roles && subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
               <BoardSettings subplebbit={subplebbit} />
             ) : null}
           </div>

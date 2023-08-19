@@ -1260,7 +1260,7 @@ const Catalog = () => {
             [
             <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
             ]
-            {subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
+            {subplebbit.roles && subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
               <BoardSettings subplebbit={subplebbit} />
             ) : null}
           </div>
