@@ -17,6 +17,7 @@ import ImageBanner from '../ImageBanner';
 import VerifiedAuthor from '../VerifiedAuthor';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import ModerationModal from '../modals/ModerationModal';
+import BoardSettings from '../BoardSettings';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import countLinks from '../../utils/countLinks';
@@ -1263,6 +1264,9 @@ const Catalog = () => {
           {subplebbit.state === "succeeded" ? (
             <>
               <span className="subscribe-button-desktop">
+                {subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
+                  <BoardSettings subplebbit={subplebbit} />
+                ) : null}
                 [
                 <span id="subscribe" style={{cursor: 'pointer'}}>
                   <span onClick={() => handleSubscribe()}>

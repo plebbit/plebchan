@@ -17,6 +17,7 @@ import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
 import AdminListModal from '../modals/AdminListModal';
 import ModerationModal from '../modals/ModerationModal';
+import BoardSettings from '../BoardSettings';
 import OfflineIndicator from '../OfflineIndicator';
 import PendingLabel from '../PendingLabel';
 import Post from '../Post';
@@ -906,6 +907,9 @@ const Board = () => {
           {subplebbit?.state === "succeeded" ? (
             <>
               <span className="subscribe-button-desktop">
+                {subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
+                  <BoardSettings subplebbit={subplebbit} />
+                ) : null}
                 [
                 <span id="subscribe" style={{cursor: 'pointer'}}>
                   <span onClick={() => handleSubscribe()}>
