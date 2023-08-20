@@ -22,9 +22,9 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
 
   const comment = useComment({commentCid: moderatingCommentCid});
 
-  const [pin, setPin] = useState(comment?.pinned);
+  const [pin, setPin] = useState(comment.pinned);
   const [deleteThread, setDeleteThread] = useState(deletePost);
-  const [close, setClose] = useState(comment?.locked);
+  const [close, setClose] = useState(comment.locked);
   const [reason, setReason] = useState('');
   const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
 
@@ -33,8 +33,15 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
 
 
   useEffect(() => {
+    setPin(comment.pinned);
+    setClose(comment.locked);
+  }, [comment]);
+
+
+  useEffect(() => {
     setDeleteThread(deletePost);
   }, [deletePost]);
+
 
   useEffect(() => {
     if (!isOpen) {
@@ -42,6 +49,7 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
     }
   }, [isOpen, deletePost]);
 
+  
   const handleCloseModal = () => {
     setDeleteThread(false);
     closeModal();
@@ -59,7 +67,6 @@ const ModerationModal = ({ isOpen, closeModal, deletePost }) => {
 
 
   const onChallenge = async (challenges, comment) => {
-
     let challengeAnswers = [];
     
     try {

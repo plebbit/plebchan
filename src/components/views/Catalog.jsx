@@ -17,6 +17,7 @@ import ImageBanner from '../ImageBanner';
 import VerifiedAuthor from '../VerifiedAuthor';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import ModerationModal from '../modals/ModerationModal';
+import BoardSettings from '../BoardSettings';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import countLinks from '../../utils/countLinks';
@@ -1259,6 +1260,9 @@ const Catalog = () => {
             [
             <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
             ]
+            {subplebbit.roles && subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
+              <BoardSettings subplebbit={subplebbit} />
+            ) : null}
           </div>
           {subplebbit.state === "succeeded" ? (
             <>
