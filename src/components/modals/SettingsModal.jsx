@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { deleteAccount, deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts, useResolvedAuthorAddress } from "@plebbit/plebbit-react-hooks";
+import stringify from "json-stringify-pretty-compact"
 import { StyledModal } from "../styled/modals/SettingsModal.styled";
 import useError from "../../hooks/useError";
 import useSuccess from "../../hooks/useSuccess";
@@ -74,17 +75,30 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     if (account) {
       const fetchAccountData = async () => {
         const data = await exportAccount();
-        setAccountJson(data);
+        try {
+          const parsedData = JSON.parse(data);
+          setAccountJson(stringify(parsedData));
+        } catch (error) {
+          console.error("Failed to pretty-print the JSON:", error);
+          setAccountJson(data);
+        }
       };
-    
       fetchAccountData();
     }
-  }, [account]);  
+  }, [account]);
+  
 
 
   const handleAccountJsonChange = (e) => {
-    setAccountJson(e.target.value);
+    try {
+      const parsedData = JSON.parse(e.target.value);
+      setAccountJson(stringify(parsedData));
+    } catch (error) {
+      console.error("Failed to pretty-print the JSON:", error);
+      setAccountJson(e.target.value);
+    }
   };
+  
   
 
   useEffect(() => {
@@ -375,7 +389,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     try {
       const data = await exportAccount();
       setAccountJson(data);
-      setNewSuccessMessage("Account Data Reset Successfully");
     } catch (error) {
       setNewErrorMessage("Error resetting account data: " + error.message);
       console.error(error);
@@ -503,7 +516,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               <textarea id="account-data-text" 
               value={accountJson} 
               ref={importRef} 
-              onChange={handleAccountJsonChange} />
+              onChange={handleAccountJsonChange}
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false" />
               <div className="account-buttons">
                 <button onClick={handleSaveAccount}>
                   Save
