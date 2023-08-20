@@ -128,12 +128,12 @@ const CaptchaModal = () => {
           <div id="form">
             {pendingComment.author?.displayName ? (
               <div>
-                <input id="field" type="text" placeholder={pendingComment.author?.displayName} disabled />
+                <input id="field" type="text" placeholder={pendingComment.author?.displayName || ''} disabled />
               </div>
             ) : null}
             {pendingComment.title ? (
               <div>
-                <input id="field" type="text" placeholder={pendingComment.title} disabled />
+                <input id="field" type="text" placeholder={pendingComment.title || ''} disabled />
               </div>
             ) : null}
             {pendingComment.content ? (
@@ -148,7 +148,7 @@ const CaptchaModal = () => {
             ) : null}
             {pendingComment.link ? (
               <div>
-                <input id="field" type="text" placeholder={pendingComment.link} disabled />
+                <input id="field" type="text" placeholder={pendingComment.link || ''} disabled />
               </div>
             ) : null}
             <div id="captcha-container">
