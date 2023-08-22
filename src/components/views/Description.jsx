@@ -8,6 +8,7 @@ import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/views/Board.styled';
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
+import BoardStats from '../BoardStats';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import CreateBoardModal from '../modals/CreateBoardModal';
@@ -256,6 +257,7 @@ const Description = () => {
             </div>
           </ReplyFormLink>
         </PostForm>
+        <BoardStats subplebbitAddress={selectedAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <span className="style-changer">
             Style:

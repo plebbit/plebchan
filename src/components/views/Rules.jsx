@@ -8,6 +8,7 @@ import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/views/Board.styled';
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
+import BoardStats from '../BoardStats';
 import ImageBanner from '../ImageBanner';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import AdminListModal from '../modals/AdminListModal';
@@ -262,6 +263,7 @@ const Rules = () => {
             </div>
           </ReplyFormLink>
         </PostForm>
+        <BoardStats subplebbitAddress={selectedAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <span className="style-changer">
             Style:

@@ -11,10 +11,9 @@ import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } f
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer } from '../styled/views/Thread.styled';
 import { AlertModal } from '../styled/modals/AlertModal.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
-import EditModal from '../modals/EditModal';
+import BoardStats from '../BoardStats';
 import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
-import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import PendingLabel from '../PendingLabel';
 import Post from '../Post';
@@ -23,6 +22,8 @@ import PostOnHover from '../PostOnHover';
 import StateLabel from '../StateLabel';
 import VerifiedAuthor from '../VerifiedAuthor';
 import CreateBoardModal from '../modals/CreateBoardModal';
+import EditModal from '../modals/EditModal';
+import ModerationModal from '../modals/ModerationModal';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -793,6 +794,7 @@ const Thread = () => {
             </tbody>
           </PostFormTable>
         </PostForm>
+        <BoardStats subplebbitAddress={subplebbitAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <hr />
           <span className="style-changer">

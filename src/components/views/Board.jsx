@@ -13,11 +13,12 @@ import { Footer } from '../styled/views/Thread.styled';
 import { AlertModal } from '../styled/modals/AlertModal.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import EditModal from '../modals/EditModal';
-import EditLabel from '../EditLabel';
-import ImageBanner from '../ImageBanner';
 import AdminListModal from '../modals/AdminListModal';
 import ModerationModal from '../modals/ModerationModal';
 import BoardSettings from '../BoardSettings';
+import BoardStats from '../BoardStats';
+import EditLabel from '../EditLabel';
+import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import PendingLabel from '../PendingLabel';
 import Post from '../Post';
@@ -836,56 +837,57 @@ const Board = () => {
         </Header>
         <Break selectedStyle={selectedStyle} />
         <PostForm selectedStyle={selectedStyle}>
-        <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
-          <div id="post-form-link-desktop">
-            [
-              <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} style={{cursor: 'pointer'}}>Start a New Thread</Link>
-            ]
-          </div>
-          <div id="post-form-link-mobile">
-            <span className="btn-wrap">
-              <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} style={{cursor: 'pointer'}}>Start a New Thread</Link>
-            </span>
-          </div>
-        </PostFormLink>
-        <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
-          <tbody>
-            <tr data-type="Name">
-              <td id="td-name">Name</td>
-              <td>
-                {account && account?.author && account?.author.displayName ? (
-                  <input name="name" type="text" tabIndex={1} value={account?.author?.displayName} ref={nameRef} disabled />
-                ) : (
-                  <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
-                )}
-              </td>
-            </tr>
-            <tr data-type="Subject">
-              <td>Subject</td>
-              <td>
-                <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
-                <input id="post-button" type="submit" value="Post" tabIndex={6} 
-                onClick={handleSubmit} />
-              </td>
-            </tr>
-            <tr data-type="Comment">
-              <td>Comment</td>
-              <td>
-                <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
-              </td>
-            </tr>
-            <tr data-type="File">
-              <td>Embed File</td>
-              <td>
-                <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
-                <button id="t-help" type="button" onClick={
-                  () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
-                } data-tip="Help">?</button>
-              </td>
-            </tr>
-          </tbody>
-        </PostFormTable>
+          <PostFormLink id="post-form-link" showPostFormLink={showPostFormLink} selectedStyle={selectedStyle} >
+            <div id="post-form-link-desktop">
+              [
+                <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} style={{cursor: 'pointer'}}>Start a New Thread</Link>
+              ]
+            </div>
+            <div id="post-form-link-mobile">
+              <span className="btn-wrap">
+                <Link to={`/p/${subplebbitAddress}/post`} onClick={useClickForm()} style={{cursor: 'pointer'}}>Start a New Thread</Link>
+              </span>
+            </div>
+          </PostFormLink>
+          <PostFormTable id="post-form" showPostForm={showPostForm} selectedStyle={selectedStyle} className="post-form">
+            <tbody>
+              <tr data-type="Name">
+                <td id="td-name">Name</td>
+                <td>
+                  {account && account?.author && account?.author.displayName ? (
+                    <input name="name" type="text" tabIndex={1} value={account?.author?.displayName} ref={nameRef} disabled />
+                  ) : (
+                    <input name="name" type="text" placeholder="Anonymous" tabIndex={1} ref={nameRef} />
+                  )}
+                </td>
+              </tr>
+              <tr data-type="Subject">
+                <td>Subject</td>
+                <td>
+                  <input name="sub" type="text" tabIndex={3} ref={subjectRef}/>
+                  <input id="post-button" type="submit" value="Post" tabIndex={6} 
+                  onClick={handleSubmit} />
+                </td>
+              </tr>
+              <tr data-type="Comment">
+                <td>Comment</td>
+                <td>
+                  <textarea name="com" cols="48" rows="4" tabIndex={4} wrap="soft" ref={commentRef} />
+                </td>
+              </tr>
+              <tr data-type="File">
+                <td>Embed File</td>
+                <td>
+                  <input name="embed" type="text" tabIndex={7} placeholder="Paste link" ref={linkRef} />
+                  <button id="t-help" type="button" onClick={
+                    () => alert("- Embedding media is optional, posts can be text-only. \n- A CAPTCHA challenge will appear after posting. \n- The CAPTCHA is case-sensitive.")
+                  } data-tip="Help">?</button>
+                </td>
+              </tr>
+            </tbody>
+          </PostFormTable>
         </PostForm>
+        <BoardStats subplebbitAddress={subplebbitAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <hr />
           <span className="style-changer">
