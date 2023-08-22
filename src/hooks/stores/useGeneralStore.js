@@ -20,6 +20,9 @@ const useGeneralStore = create((set) => ({
   defaultSubplebbits: [],
   setDefaultSubplebbits: (subplebbits) => set({ defaultSubplebbits: subplebbits }),
 
+  deletePost: false,
+  setDeletePost: (deletePost) => set({ deletePost }),
+
   editedComment: '',
   setEditedComment: (comment) => set({ editedComment: comment }),
 
@@ -40,6 +43,12 @@ const useGeneralStore = create((set) => ({
   isCaptchaOpen: false,
   setIsCaptchaOpen: (isOpen) => set({ isCaptchaOpen: isOpen }),
 
+  isEditModalOpen: false,
+  setIsEditModalOpen: (isOpen) => set({ isEditModalOpen: isOpen }),
+
+  isModerator: false,
+  setIsModerator: (isModerator) => set({ isModerator }),
+
   isModerationOpen: false,
   setIsModerationOpen: (isOpen) => set({ isModerationOpen: isOpen }),
 
@@ -51,6 +60,9 @@ const useGeneralStore = create((set) => ({
 
   moderatingCommentCid: '',
   setModeratingCommentCid: (cid) => set({ moderatingCommentCid: cid }),
+
+  originalCommentContent: null,
+  setOriginalCommentContent: (content) => set({ originalCommentContent: content }),
 
   pendingComment: '',
   setPendingComment: (comment) => set({ pendingComment: comment }),

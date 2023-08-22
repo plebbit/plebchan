@@ -1,15 +1,16 @@
-import React, { useCallback, useLayoutEffect, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback,useLayoutEffect, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
-import InfiniteScroll from 'react-infinite-scroller';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
+import { Virtuoso } from 'react-virtuoso';
 import { useAccount, useFeed, usePublishComment, usePublishCommentEdit, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable, PostMenu, BoardForm } from '../styled/views/Board.styled';
 import { Threads, PostMenuCatalog } from '../styled/views/Catalog.styled';
-import { TopBar, Footer, AuthorDeleteAlert } from '../styled/views/Thread.styled';
+import { TopBar, Footer } from '../styled/views/Thread.styled';
+import { AlertModal } from '../styled/modals/AlertModal.styled';
 import CatalogLoader from '../CatalogLoader';
 import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
@@ -27,87 +28,71 @@ import useError from '../../hooks/useError';
 import useStateString from '../../hooks/useStateString';
 import useSuccess from '../../hooks/useSuccess';
 import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
+import useFeedRows from '../../hooks/useFeedRows';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
+import useWindowWidth from '../../hooks/useWindowWidth';
+import packageJson from '../../../package.json';
+const {version} = packageJson;
+let lastVirtuosoStates = {};
 
-const Catalog = () => {
+
+const CatalogPost = ({post}) => {
   const {
-    captchaResponse, setCaptchaResponse,
-    setChallengesArray,
-    defaultSubplebbits,
     editedComment,
+    setDeletePost,
     setIsAuthorDelete,
+    captchaResponse, setCaptchaResponse,
+    selectedAddress,
+    setIsModerationOpen,
+    setChallengesArray,
     setIsAuthorEdit,
     setIsCaptchaOpen,
-    isModerationOpen, setIsModerationOpen,
-    isSettingsOpen, setIsSettingsOpen,
+    setIsEditModalOpen,
+    isModerator,
     setModeratingCommentCid,
+    setOriginalCommentContent,
     setPendingComment,
-    setPendingCommentIndex,
     setResolveCaptchaPromise,
-    selectedAddress, setSelectedAddress,
     selectedStyle,
     setSelectedThread,
-    selectedTitle, setSelectedTitle,
-    showPostForm,
-    showPostFormLink,
   } = useGeneralStore(state => state);
 
-  const { anonymousMode } = useAnonModeStore();
-  
-  const nameRef = useRef();
-  const subjectRef = useRef();
-  const commentRef = useRef();
-  const linkRef = useRef();
+  const thread = post;
+  const commentMediaInfo = getCommentMediaInfo(thread);
+  const linkCount = countLinks(thread);
+  const fallbackImgUrl = "assets/filedeleted-res.gif";
+  const [isHoveringOnThread, setIsHoveringOnThread] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
+  const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
+  const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
+  const [commentCid, setCommentCid] = useState(null);
+
   const threadMenuRefs = useRef({});
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
-  const selectedThreadCidRef = useRef(null);
+  const { subplebbitAddress } = useParams();
 
-  const navigate = useNavigate();
-  
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
-  
-  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
-  const [isHoveringOnThread, setIsHoveringOnThread] = useState(false);
-  const [isModerator, setIsModerator] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [originalCommentContent, setOriginalCommentContent] = useState(null);
-  const [triggerPublishCommentEdit, setTriggerPublishCommentEdit] = useState(false);
-  const [deletePost, setDeletePost] = useState(false);
-  const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
-  const [commentCid, setCommentCid] = useState(null);
-  const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
-  const [openMenuCid, setOpenMenuCid] = useState(null);
-  const [executeAnonMode, setExecuteAnonMode] = useState(false);
-  const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
-  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
-  const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
+
   const account = useAccount();
-
-  const stateString = useStateString(subplebbit);
-
-  useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
-
   const popupRef = useRef(null);
   const threadRefs = useRef([]);
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
   const [isEnoughSpaceOnLeft,setIsEnoughSpaceOnLeft] = useState(null);
   const [isCalculationDone,setIsCalculationDone] = useState(false);
+
   useLayoutEffect(() => {
     setIsEnoughSpaceOnRight(null);
     setIsEnoughSpaceOnLeft(null);
     const calculateSpaceOnRight = () => {
-      feed.forEach((thread, index) => {
         if (thread.cid === isHoveringOnThread){
-           if(threadRefs.current[index] && popupRef.current) {
-            const threadRect = threadRefs.current[index].getBoundingClientRect();
+           if(threadRefs.current[thread.cid] && popupRef.current) {
+            const threadRect = threadRefs.current[thread.cid].getBoundingClientRect();
             const popupRect = popupRef.current.getBoundingClientRect();
             // Get the width of the viewport area inside the browser window
             const viewportWidth = document.documentElement.clientWidth;
@@ -124,35 +109,50 @@ const Catalog = () => {
             setIsEnoughSpaceOnRight(EnoughSpaceOnRight);
             return setIsCalculationDone(true);
           }}
-      });
     };
-    if(!isCalculationDone && isHoveringOnThread !== ""){
+    if(!isCalculationDone && isHoveringOnThread){
       calculateSpaceOnRight();
     }
   }, [isHoveringOnThread]);
 
-  useEffect(() => {
-    if (subplebbit.roles !== undefined) { 
-      const role = subplebbit.roles[account?.author.address]?.role;
-  
-      if (role === 'moderator' || role === 'admin' || role === 'owner') {
-        setIsModerator(true);
-      } else {
-        setIsModerator(false);
-      }
+  const timeElapsedCalc = (date) => {
+    const currentDateTime = new Date()
+    const targetToDate = new Date(date * 1000 );  // unix timestamp * 1000
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+    ];
+    const targetDateTime = new Date(`${monthNames[targetToDate.getMonth()]} ${targetToDate.getDate()} ${targetToDate.getFullYear()} ${targetToDate.getHours()}:${targetToDate.getMinutes()}:${targetToDate.getSeconds()}`)
+    const elapsedDateTime = currentDateTime - targetDateTime;
+    const elapsedDay = Math.floor(elapsedDateTime / (1000 * 60 * 60 * 24));
+    const elapsedHour = Math.floor((elapsedDateTime / (1000 * 60 * 60)) % 24);
+    const elapsedMinute = Math.floor((elapsedDateTime / (1000 * 60)) % 60);
+
+    if(elapsedDay > 0){
+      return `${elapsedDay} ${elapsedDay > 0 ? "days" : "day"}`;
+    }else if(elapsedHour > 0 ){
+      return `${elapsedHour} ${elapsedHour > 0 ? "hours" : "hour"}`;
+    }else if(elapsedMinute > 0){
+      return `${elapsedMinute} ${elapsedMinute > 0 ? "minutes" : "minute"}`
     }
-  }, [account?.author.address, subplebbit.roles]);
+  }
 
+  const handleMouseOnLeaveThread = () => {
+    setIsHoveringOnThread("");
+    setIsEnoughSpaceOnRight(null);
+    setIsCalculationDone(false);
+  }
 
-  const handleOptionClick = () => {
-    setOpenMenuCid(null);
-  };
 
   const handleOutsideClick = useCallback((e) => {
     if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
       setOpenMenuCid(null);
     }
-  }, [openMenuCid, postMenuRef, postMenuCatalogRef]);
+  }, [openMenuCid]);
+
+  const handleOptionClick = () => {
+    setOpenMenuCid(null);
+  };
+
 
   useEffect(() => {
     if (openMenuCid !== null) {
@@ -165,7 +165,752 @@ const Catalog = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
+
+
+  const handleAuthorDeleteClick = (comment) => {
+    handleOptionClick(comment.cid);
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <AlertModal selectedStyle={selectedStyle}>
+            <div className='author-delete-alert'>
+              <p>Are you sure you want to delete this post?</p>
+              <div className="author-delete-buttons">
+                <button onClick={onClose}>No</button>
+                <button
+                  onClick={() => {
+                    setIsAuthorDelete(true);
+                    setIsAuthorEdit(false);
+                    setPublishCommentEditOptions(prevOptions => ({
+                      ...prevOptions,
+                      commentCid: comment.cid,
+                      subplebbitAddress: comment.subplebbitAddress,
+                      deleted: true,
+                    }));
+                    setTriggerPublishCommentEdit(true);
+                    onClose();
+                  }}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </AlertModal>
+        );
+      }
+    });
+  };
+
+
+  const handleAuthorEditClick = (comment) => {
+    handleOptionClick(comment.cid);
+    setIsAuthorEdit(true);
+    setIsAuthorDelete(false);
+    setCommentCid(comment.cid);
+    setOriginalCommentContent(comment.content);
+    setIsEditModalOpen(true);
+  }
+
+
+  const onChallengeVerification = (challengeVerification) => {
+    if (challengeVerification.challengeSuccess === true) {
+        setNewSuccessMessage('Challenge Success');
+    }
+    else if (challengeVerification.challengeSuccess === false) {
+      setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
+      console.log('challenge failed', challengeVerification);
+    }
+  };
+
+
+  const onChallenge = async (challenges, comment) => {
+    setPendingComment(comment);
+    let challengeAnswers = [];
+    
+    try {
+      challengeAnswers = await getChallengeAnswersFromUser(challenges)
+    }
+    catch (error) {
+      setNewErrorMessage(error.message); console.log(error);
+    }
+    if (challengeAnswers) {
+      await comment.publishChallengeAnswers(challengeAnswers)
+    }
+  };
+
+
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
+    commentCid: commentCid,
+    content: editedComment || undefined,
+    subplebbitAddress: selectedAddress || subplebbitAddress,
+    onChallenge,
+    onChallengeVerification,
+    onError: (error) => {
+      setNewErrorMessage(error.message); console.log(error);
+    },
+  });
   
+  
+  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: commentCid,
+      content: editedComment || undefined,
+    }));
+  }, [commentCid, editedComment]);
+
+
+  useEffect(() => {
+    if (editedComment !== '') {
+      setTriggerPublishCommentEdit(true);
+    }
+  }, [editedComment]);
+
+  
+  useEffect(() => {
+    if (publishCommentEditOptions && triggerPublishCommentEdit) {
+      (async () => {
+        await publishCommentEdit();
+        setTriggerPublishCommentEdit(false);
+      })();
+    }
+  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
+
+  const getChallengeAnswersFromUser = async (challenges) => {
+    setChallengesArray(challenges);
+    
+    return new Promise((resolve, reject) => {
+      const imageString = challenges?.challenges[0].challenge;
+      const imageSource = `data:image/png;base64,${imageString}`;
+      const challengeImg = new Image();
+      challengeImg.src = imageSource;
+  
+      challengeImg.onload = () => {
+        setIsCaptchaOpen(true);
+  
+        const handleKeyDown = async (event) => {
+          if (event.key === 'Enter') {
+            const currentCaptchaResponse = captchaResponse;
+            resolve(currentCaptchaResponse);
+            setIsCaptchaOpen(false);
+            document.removeEventListener('keydown', handleKeyDown);
+            event.preventDefault();
+          }
+        };
+
+        setCaptchaResponse('');
+        document.addEventListener('keydown', handleKeyDown);
+        
+        setResolveCaptchaPromise(resolve);
+      };
+  
+      challengeImg.onerror = () => {
+        reject(setNewErrorMessage('Could not load challenges'));
+      };
+    });
+  };
+  
+
+  let displayWidth, displayHeight;
+  if (thread.linkWidth && thread.linkHeight) {
+    let scale = Math.min(1, 150 / Math.max(thread.linkWidth, thread.linkHeight));
+    displayWidth = `${thread.linkWidth * scale}px`;
+    displayHeight = `${thread.linkHeight * scale}px`;
+  } else {
+    displayWidth = '150px';
+    displayHeight = '150px';
+  }
+
+
+  if (post.type === 'rules') {
+    return (
+      <div className='thread'
+      onMouseOver={() => setIsHoveringOnThread("rules")}
+      onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
+        {isHoveringOnThread == 'rules' ? 
+        <div style={{left:"100%"}}
+        className={"thread_popup"}>
+          <p className="thread_popup_content" style={{color:"white"}}>
+          <span className="thread_popup_title">Rules </span>
+          by 
+          <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
+          {timeElapsedCalc(subplebbit.createdAt)}</p>
+          <div>
+          <p className="thread_popup_content">Last reply by 
+            <span className="thread_popup_authorAdmin"> Anonymous </span>
+          560 days ago</p>
+          </div>
+        </div> : null }   
+        <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
+          <div className='meta' title="(R)eplies / (L)ink Replies">
+            R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
+            <div className='thread-icons' 
+            style={{position: 'absolute', top: '-2px', right: '15px'}}>
+              <span className="thread-icon sticky-icon" title="Sticky"
+              style={{
+                imageRendering: "pixelated",}} />
+              <span className="thread-icon closed-icon" title="Closed"
+              style={{
+                imageRendering: "pixelated",}} />
+            </div>
+            <PostMenu 
+              style={{ display: isHoveringOnThread === "rules" ? 'inline-block' : 'none',
+              position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
+              zIndex: '999'}}
+              title="Post menu"
+              ref={el => { 
+                threadMenuRefs.current["rules"] = el; 
+                postMenuRef.current = el; 
+              }}
+              className='post-menu-button' 
+              id='post-menu-button-catalog'
+              rotated={openMenuCid === "rules"}
+              onClick={(event) => {
+                event.stopPropagation();
+                const rect = threadMenuRefs.current["rules"].getBoundingClientRect();
+                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                setOpenMenuCid(prevCid => (prevCid === "rules" ? null : "rules"));
+              }}                              
+            >
+              ▶
+            </PostMenu>
+          </div>
+          {createPortal(
+            <PostMenuCatalog selectedStyle={selectedStyle} 
+              ref={el => {postMenuCatalogRef.current = el}}
+              onClick={(event) => event.stopPropagation()}
+              style={{position: "absolute", 
+              top: menuPosition.top + 7, 
+              left: menuPosition.left}}>
+              <div className={`post-menu-thread post-menu-thread-${"rules"}`}
+              style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
+              >
+                <ul className="post-menu-catalog">
+                  <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                  {/* {isModerator ? (
+                    <>
+                      change rules
+                    </>
+                  ) : null} */}
+                </ul>
+              </div>
+            </PostMenuCatalog>, document.body
+          )}
+        </BoardForm>
+        <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}>
+            <div className="teaser">
+              <b>Rules</b>
+              {": " + subplebbit.rules?.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
+            </div>
+          </Link>
+      </div>
+    )
+  } else if (post.type === 'description') {
+    return (
+      <>
+        <div className='thread'
+        onMouseOver={() => setIsHoveringOnThread("description")}
+        onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
+          {/* <!-- hovering div --> */}
+          {isHoveringOnThread == 'description' ? 
+          <div style={{left:"100%"}}
+          className={"thread_popup"}>
+            <p className="thread_popup_content" style={{color:"white"}}>
+            <span className="thread_popup_title">Welcome to {subplebbit.title || subplebbit.address} </span> 
+              by  
+            <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
+              {timeElapsedCalc(subplebbit.createdAt)} ago</p>
+            <div> 
+            <p className="thread_popup_content">Last reply by 
+              <span className="thread_popup_authorAdmin"> Anonymous </span>
+            560 days ago</p>
+            </div>
+          </div> : null }
+          <Link style={{all: 'unset', cursor: 'pointer'}} to={`/p/${selectedAddress}/description`}>
+            {subplebbit.suggested?.avatarUrl ? (
+              <img className='card'
+              src={subplebbit.suggested.avatarUrl} alt="board avatar" />
+            ) : null}
+          </Link>
+          {subplebbit.suggested?.avatarUrl ? (
+          <div className='thread-icons'>
+            <span className="thread-icon sticky-icon" title="Sticky"
+                style={{
+                  imageRendering: "pixelated",}} />
+            <span className="thread-icon closed-icon" title="Closed"
+                style={{
+                  imageRendering: "pixelated",}} />
+          </div>
+          ) : null}
+          <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
+            <div className='meta' title="(R)eplies / (L)ink Replies">
+              R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
+              {subplebbit.suggested?.avatarUrl ? null : (
+                <div className='thread-icons' 
+                style={{position: 'absolute', top: '-2px', right: '15px'}}>
+                  <span className="thread-icon sticky-icon" title="Sticky"
+                style={{
+                  imageRendering: "pixelated",}} />
+                  <span className="thread-icon closed-icon" title="Closed"
+                style={{
+                  imageRendering: "pixelated",}} />
+                </div>
+              )}
+              <PostMenu 
+                style={{ display: isHoveringOnThread === "description" ? 'inline-block' : 'none',
+                position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
+                zIndex: '999'}}
+                title="Post menu"
+                ref={el => { 
+                  threadMenuRefs.current["description"] = el; 
+                  postMenuRef.current = el; 
+                }}
+                className='post-menu-button' 
+                id='post-menu-button-catalog'
+                rotated={openMenuCid === "description"}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  const rect = threadMenuRefs.current["description"].getBoundingClientRect();
+                  setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                  setOpenMenuCid(prevCid => (prevCid === "description" ? null : "description"));
+                }}                              
+              >
+                ▶
+              </PostMenu>
+            </div>
+            {createPortal(
+              <PostMenuCatalog selectedStyle={selectedStyle} 
+                ref={el => {postMenuCatalogRef.current = el}}
+                onClick={(event) => event.stopPropagation()}
+                style={{position: "absolute", 
+                top: menuPosition.top + 7, 
+                left: menuPosition.left}}>
+                <div className={`post-menu-thread post-menu-thread-${"description"}`}
+                style={{ display: openMenuCid === "description" ? 'block' : 'none' }}
+                >
+                  <ul className="post-menu-catalog">
+                    <li onClick={() => handleOptionClick("description")}>Hide thread</li>
+                    {/* {isModerator ? (
+                      <>
+                        change description
+                      </>
+                    ) : null} */}
+                    {subplebbit.suggested?.avatarUrl ? (
+                      <li 
+                      onMouseOver={() => {setIsImageSearchOpen(true)}}
+                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                        Image search »
+                        <ul className="dropdown-menu post-menu-catalog"
+                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                          <li onClick={() => handleOptionClick("description")}>
+                            <a 
+                            href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested.avatarUrl}`}
+                            target="_blank" rel="noreferrer"
+                            >Google</a>
+                          </li>
+                          <li onClick={() => handleOptionClick("description")}>
+                            <a
+                            href={`https://yandex.com/images/search?url=${subplebbit.suggested.avatarUrl}`}
+                            target="_blank" rel="noreferrer"
+                            >Yandex</a>
+                          </li>
+                          <li onClick={() => handleOptionClick("description")}>
+                            <a
+                            href={`https://saucenao.com/search.php?url=${subplebbit.suggested.avatarUrl}`}
+                            target="_blank" rel="noreferrer"
+                            >SauceNAO</a>
+                          </li>
+                        </ul>
+                      </li>
+                    ) : null}
+                  </ul>
+                </div>
+              </PostMenuCatalog>, document.body
+            )}
+          </BoardForm>
+          <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/description`} 
+            onClick={() => setSelectedThread("description")}>
+              <div className="teaser">
+                <b>Welcome to {subplebbit.title || subplebbit.address}</b>
+                {": " + subplebbit.description}
+              </div>
+            </Link>
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <div key={`thread-`} className="thread">
+                            {isHoveringOnThread === thread.cid  ? 
+                            <div ref={popupRef} 
+                            style={{
+                            opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
+                            left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight ? '100%' : 'auto',
+                            right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight ? '100%' : 'auto',}}
+                            className="thread_popup">
+                              <p
+                              style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
+                                && !isEnoughSpaceOnRight
+                                ?
+                                {overflow:"visible",whiteSpace:"normal"}
+                              : null
+                              }
+                              className="thread_popup_content">
+                              <span className="thread_popup_title" >
+                                {thread.title ? `${thread.title} ` : "Posted "}
+                              </span>
+                              by 
+                              <span className="thread_popup_author"> 
+                              {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
+                              </span> 
+                              {thread.timestamp ? timeElapsedCalc(thread.timestamp) : null} ago</p>
+                              <div>
+                              {thread.replyCount > 0 ?
+                              <p className="thread_popup_lastReply">
+                              Last reply by <span className="thread_popup_author"> Anonymous </span> 
+                              {timeElapsedCalc(thread.lastReplyTimestamp)} ago</p>
+                              : null}</div>
+                              </div> : null }
+
+        {commentMediaInfo?.url ? (
+          <Link style={{all: "unset", cursor: "pointer"}} key={`link-`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
+          onClick={() => setSelectedThread(thread.cid)}>
+            {commentMediaInfo?.type === "webpage" ? (
+              thread.thumbnailUrl ? (
+                <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+                  <img className="card" key={`img-`}
+                  src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+                  onMouseOver={() => setIsHoveringOnThread(thread.cid)}
+                  onMouseLeave={()=>{handleMouseOnLeaveThread()}}
+                  onError={(e) => {
+                    e.target.src = fallbackImgUrl
+                    e.target.onerror = null;
+                  }}  />
+                </span>
+              ) : null
+            ) : null}
+            {commentMediaInfo?.type === "image" ? (
+              <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+                <img className="card" key={`img-`}
+                src={commentMediaInfo.url} alt={commentMediaInfo.type} 
+                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
+                onMouseLeave={()=>{handleMouseOnLeaveThread()}}
+                onError={(e) => {
+                  e.target.src = fallbackImgUrl
+                  e.target.onerror = null;}}  />
+              </span>
+            ) : null}
+            {commentMediaInfo?.type === "video" ? (
+              <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+                <video className="card" key={`fti-`} 
+                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
+                onMouseLeave={()=>{handleMouseOnLeaveThread()}}
+                src={commentMediaInfo.url} 
+                alt={commentMediaInfo.type} 
+                onError={(e) => e.target.src = fallbackImgUrl} /> 
+              </span>
+            ) : null}
+            {commentMediaInfo?.type === "audio" ? (
+              <audio className="card" controls 
+              key={`fti-`} 
+              src={commentMediaInfo.url} 
+              alt={commentMediaInfo.type} 
+              onMouseOver={() => setIsHoveringOnThread(thread.cid)}
+              onMouseLeave={()=>{handleMouseOnLeaveThread()}}
+              onError={(e) => e.target.src = fallbackImgUrl} />
+            ) : null}
+          </Link>
+        ) : null}
+        {(commentMediaInfo && (
+        commentMediaInfo.type === 'image' || 
+        commentMediaInfo.type === 'video' ||
+        (commentMediaInfo.type === 'webpage' && 
+        commentMediaInfo.thumbnail))) ? (
+        <div key={`ti-`} className="thread-icons" >
+          {thread.pinned ? (
+            <span key={`si-`} className="thread-icon sticky-icon" title="Sticky"
+            style={{
+              imageRendering: "pixelated",}} />
+          ) : null}
+          {thread.locked ? (
+            <span key={`li-`} className="thread-icon closed-icon" title="Closed"
+            style={{
+              imageRendering: "pixelated",}} />
+          ) : null}
+        </div>
+        ) : null}
+        <BoardForm selectedStyle={selectedStyle} 
+        style={{ all: "unset"}}>
+          <div key={`meta-`} className="meta" title="(R)eplies / (L)ink Replies" >
+            R:&nbsp;<b key={`b-`}>{thread.replyCount}</b>
+            {linkCount > 0 ? (
+              <>
+                &nbsp;/
+                L:&nbsp;<b key={`i-`}>{linkCount}</b>
+              </>
+            ) : null}
+            {(commentMediaInfo && (
+              commentMediaInfo.type === 'image' || 
+              commentMediaInfo.type === 'video' || 
+              (commentMediaInfo.type === 'webpage' && 
+              commentMediaInfo.thumbnail))) ? null : (
+              <div className='thread-icons' 
+              style={{position: 'absolute', top: '-2px', right: '15px'}}>
+                {thread.pinned ? (
+                  <span key={`si-`} className="thread-icon sticky-icon" title="Sticky"
+                  style={{
+                    imageRendering: "pixelated",}} />
+                ) : null}
+                {thread.locked ? (
+                  <span key={`li-`} className="thread-icon closed-icon" title="Closed"
+                  style={{
+                    imageRendering: "pixelated",}} />
+                ) : null}
+              </div>
+            )}
+          <PostMenu 
+            style={{ display: isHoveringOnThread === thread.cid ? 'inline-block' : 'none',
+            position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
+            zIndex: '999'}}
+            key={`pmb-`} 
+            title="Post menu"
+            ref={el => { 
+              threadMenuRefs.current[thread.cid] = el; 
+              postMenuRef.current = el; 
+            }}
+            className='post-menu-button' 
+            id='post-menu-button-catalog'
+            rotated={openMenuCid === thread.cid}
+            onClick={(event) => {
+              event.stopPropagation();
+              const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
+              setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+              setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
+            }}                              
+          >
+            ▶
+          </PostMenu>
+          </div>
+          {createPortal(
+            <PostMenuCatalog selectedStyle={selectedStyle} 
+              ref={el => {postMenuCatalogRef.current = el}}
+              onClick={(event) => event.stopPropagation()}
+              style={{position: "absolute", 
+              top: menuPosition.top + 7, 
+              left: menuPosition.left}}>
+              <div className={`post-menu-thread post-menu-thread-${thread.cid}`}
+              style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
+              >
+                <ul className="post-menu-catalog">
+                  <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                  <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
+                    <>
+                      {authorAddress === account?.author.address || 
+                      authorAddress === account?.signer.address ? (
+                        <>
+                          <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
+                          <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
+                        </>
+                      ) : null}
+                      {isModerator ? (
+                        <>
+                          {authorAddress === account?.author.address ||
+                          authorAddress === account?.signer.address ? (
+                            null
+                          ) : (
+                            <li onClick={() => {
+                              setModeratingCommentCid(thread.cid)
+                              setIsModerationOpen(true); 
+                              handleOptionClick(thread.cid);
+                              setDeletePost(true);
+                            }}>
+                            Delete post
+                            </li>
+                          )}
+                          <li
+                          onClick={() => {
+                            setModeratingCommentCid(thread.cid)
+                            setIsModerationOpen(true); 
+                            handleOptionClick(thread.cid);
+                          }}>
+                            Mod tools
+                          </li>
+                        </>
+                      ) : null}
+                    </>
+                  )}</VerifiedAuthor>
+                  {(commentMediaInfo && (
+                    commentMediaInfo.type === 'image' || 
+                    (commentMediaInfo.type === 'webpage' && 
+                    commentMediaInfo.thumbnail))) ? ( 
+                      <li 
+                      onMouseOver={() => {setIsImageSearchOpen(true)}}
+                      onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                        Image search »
+                        <ul className="dropdown-menu post-menu-catalog"
+                          style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                          <li onClick={() => handleOptionClick(thread.cid)}>
+                            <a 
+                            href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                            target="_blank" rel="noreferrer"
+                            >Google</a>
+                          </li>
+                          <li onClick={() => handleOptionClick(thread.cid)}>
+                            <a
+                            href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                            target="_blank" rel="noreferrer"
+                            >Yandex</a>
+                          </li>
+                          <li onClick={() => handleOptionClick(thread.cid)}>
+                            <a
+                            href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                            target="_blank" rel="noreferrer"
+                            >SauceNAO</a>
+                          </li>
+                        </ul>
+                      </li>
+                    ) : null
+                  }
+                  <li 
+                  onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                  onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                    View on »
+                    <ul className="dropdown-menu post-menu-catalog"
+                      style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                      <li onClick={() => handleOptionClick(thread.cid)}>
+                        <a 
+                        href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`}
+                        target="_blank" rel="noreferrer"
+                        >Plebbit</a>
+                      </li>
+                      {/* <li onClick={() => handleOptionClick(thread.cid)}>
+                        <a
+                        href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`}
+                        target="_blank" rel="noreferrer"
+                        >Seedit</a>
+                      </li> */}
+                      <li onClick={() => handleOptionClick(thread.cid)}>
+                        <a
+                        href={`https://plebones.netlify.app/#/p/${selectedAddress}/c/${thread.cid}`}
+                        target="_blank" rel="noreferrer"
+                        >Plebones</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </PostMenuCatalog>, document.body
+          )}
+        </BoardForm>
+        <Link style={{all: "unset", cursor: "pointer"}} key={`link2-`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
+        onClick={() => setSelectedThread(thread.cid)}>
+          <div key={`t-`} className="teaser">
+          <div style={{cursor:"text"}}
+            onMouseOver={() => { 
+            !thread.thumbnailUrl  && setIsHoveringOnThread(thread.cid)}}
+            onMouseLeave={()=>{handleMouseOnLeaveThread()}}
+            ref={(el) => (threadRefs.current[thread.cid] = el)}>
+            <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
+            {thread.content ? `: ${thread.content}` : null}
+          </div>
+          </div>
+        </Link>
+      </div>
+    )
+  }
+};
+
+
+const CatalogRow = ({row}) => {
+  const posts = []
+  for (const post of row) {
+    posts.push(<CatalogPost key={post?.cid} post={post} />)
+  }
+  return <div>{posts}</div>
+}
+
+
+const Catalog = () => {
+  const {
+    captchaResponse, setCaptchaResponse,
+    setChallengesArray,
+    defaultSubplebbits,
+    setIsCaptchaOpen,
+    isModerationOpen, setIsModerationOpen,
+    setIsModerator,
+    isSettingsOpen, setIsSettingsOpen,
+    originalCommentContent,
+    setPendingComment,
+    setPendingCommentIndex,
+    setResolveCaptchaPromise,
+    selectedAddress, setSelectedAddress,
+    selectedStyle,
+    selectedTitle, setSelectedTitle,
+    showPostForm,
+    showPostFormLink,
+  } = useGeneralStore(state => state);
+
+  const { anonymousMode } = useAnonModeStore();
+  
+  const nameRef = useRef();
+  const subjectRef = useRef();
+  const commentRef = useRef();
+  const linkRef = useRef();
+  const selectedThreadCidRef = useRef(null);
+  const virtuosoRef = useRef();
+
+  const navigate = useNavigate();
+  
+  const [, setNewErrorMessage] = useError();
+  const [, setNewSuccessMessage] = useSuccess();
+  
+  const [triggerPublishComment, setTriggerPublishComment] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deletePost, setDeletePost] = useState(false);
+  const [executeAnonMode, setExecuteAnonMode] = useState(false);
+  const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
+
+  useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
+
+  const account = useAccount();
+  const { feed, hasMore, loadMore } = useFeed({subplebbitAddresses: [`${selectedAddress}`], sortType: 'active'});
+  const { subplebbitAddress } = useParams();
+  const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
+  const stateString = useStateString(subplebbit);
+  let feedWithDescriptionAndRules = [...feed];
+
+  
+  if (subplebbit.rules) {
+    feedWithDescriptionAndRules.unshift({ type: 'rules', content: subplebbit.rules });
+  }
+  
+  if (subplebbit.description) {
+    feedWithDescriptionAndRules.unshift({ type: 'description', content: subplebbit.description });
+  }
+  
+
+  const columnWidth = 180;
+  const windowWidth = useWindowWidth();
+  const columnCount = Math.floor(windowWidth / columnWidth);
+  const rows = useFeedRows(feedWithDescriptionAndRules, columnCount);
+
+  useEffect(() => {
+    if (subplebbit.roles !== undefined) { 
+      const role = subplebbit.roles[account?.author.address]?.role;
+  
+      if (role === 'moderator' || role === 'admin' || role === 'owner') {
+        setIsModerator(true);
+      } else {
+        setIsModerator(false);
+      }
+    }
+  }, [account?.author.address, subplebbit.roles, setIsModerator]);
 
 
   useEffect(() => {
@@ -193,14 +938,20 @@ const Catalog = () => {
   
   const { subscribed, subscribe, unsubscribe } = useSubscribe({subplebbitAddress: selectedAddress});
 
-  // temporary title from JSON, gets subplebbitAddress from URL
+
   useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (subplebbitAddress) {
+      setSelectedAddress(subplebbitAddress);
+    } else if (subplebbit?.address) {
+      setSelectedAddress(subplebbit.address)
+    }
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
+    } else if (subplebbit?.title) {
+      setSelectedTitle(subplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, subplebbit?.address, subplebbit?.title]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -214,13 +965,6 @@ const Catalog = () => {
   
     return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [prevScrollPos, visible]);
-
-
-  const tryLoadMore = async () => {
-    try {loadMore()} 
-    catch (e)
-    {await new Promise(resolve => setTimeout(resolve, 1000))}
-  };
 
 
   const onChallengeVerification = (challengeVerification) => {
@@ -262,6 +1006,7 @@ const Catalog = () => {
     }));
   }, [selectedAddress]);
   
+
   const [publishCommentOptions, setPublishCommentOptions] = useState({
     subplebbitAddress: selectedAddress,
     onChallenge,
@@ -310,6 +1055,7 @@ const Catalog = () => {
       ...prevPublishCommentOptions,
       author: {
         displayName: nameRef.current.value || undefined,
+        ...(anonymousMode ? {} : {address: account?.author.address}),
       },
       title: subjectRef.current.value || undefined,
       content: commentRef.current.value || undefined,
@@ -347,7 +1093,7 @@ const Catalog = () => {
           signer,
           author: {
             ...prevPublishCommentOptions.author,
-            address: signer?.address
+            address: signer?.address,
           },
         };
   
@@ -412,92 +1158,6 @@ const Catalog = () => {
   };
 
 
-  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
-    commentCid: commentCid,
-    content: editedComment || undefined,
-    subplebbitAddress: selectedAddress || subplebbitAddress,
-    onChallenge,
-    onChallengeVerification,
-    onError: (error) => {
-      setNewErrorMessage(error.message); console.log(error);
-    },
-  });
-  
-  
-  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
-
-
-  const handleAuthorDeleteClick = (comment) => {
-    handleOptionClick(comment.cid);
-
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <AuthorDeleteAlert selectedStyle={selectedStyle}>
-            <div className='author-delete-alert'>
-              <p>Are you sure you want to delete this post?</p>
-              <div className="author-delete-buttons">
-                <button onClick={onClose}>No</button>
-                <button
-                  onClick={() => {
-                    setIsAuthorDelete(true);
-                    setIsAuthorEdit(false);
-                    setPublishCommentEditOptions(prevOptions => ({
-                      ...prevOptions,
-                      commentCid: comment.cid,
-                      subplebbitAddress: comment.subplebbitAddress,
-                      deleted: true,
-                    }));
-                    setTriggerPublishCommentEdit(true);
-                    onClose();
-                  }}
-                >
-                  Yes
-                </button>
-              </div>
-            </div>
-          </AuthorDeleteAlert>
-        );
-      }
-    });
-  };
-
-
-  const handleAuthorEditClick = (comment) => {
-    handleOptionClick(comment.cid);
-    setIsAuthorEdit(true);
-    setIsAuthorDelete(false);
-    setCommentCid(comment.cid);
-    setOriginalCommentContent(comment.content);
-    setIsEditModalOpen(true);
-  }
-  
-  
-  useEffect(() => {
-    setPublishCommentEditOptions((prevOptions) => ({
-      ...prevOptions,
-      commentCid: commentCid,
-      content: editedComment || undefined,
-    }));
-  }, [commentCid, editedComment]);
-
-
-  useEffect(() => {
-    if (editedComment !== '') {
-      setTriggerPublishCommentEdit(true);
-    }
-  }, [editedComment]);
-
-  
-  useEffect(() => {
-    if (publishCommentEditOptions && triggerPublishCommentEdit) {
-      (async () => {
-        await publishCommentEdit();
-        setTriggerPublishCommentEdit(false);
-      })();
-    }
-  }, [publishCommentEditOptions, triggerPublishCommentEdit, publishCommentEdit]);
-
   // mobile navbar board select functionality
   const handleSelectChange = (event) => {
     const selected = event.target.value;
@@ -528,33 +1188,24 @@ const Catalog = () => {
     }
   };
 
-  const timeElapsedCalc = (date) => {
-    const currentDateTime = new Date()
-    const targetToDate = new Date(date * 1000 );  // unix timestamp * 1000
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-    ];
-    const targetDateTime = new Date(`${monthNames[targetToDate.getMonth()]} ${targetToDate.getDate()} ${targetToDate.getFullYear()} ${targetToDate.getHours()}:${targetToDate.getMinutes()}:${targetToDate.getSeconds()}`)
-    const elapsedDateTime = currentDateTime - targetDateTime;
-    const elapsedDay = Math.floor(elapsedDateTime / (1000 * 60 * 60 * 24));
-    const elapsedHour = Math.floor((elapsedDateTime / (1000 * 60 * 60)) % 24);
-    const elapsedMinute = Math.floor((elapsedDateTime / (1000 * 60)) % 60);
 
-    if(elapsedDay > 0){
-      return `${elapsedDay} ${elapsedDay > 0 ? "days" : "day"}`;
-    }else if(elapsedHour > 0 ){
-      return `${elapsedHour} ${elapsedHour > 0 ? "hours" : "hour"}`;
-    }else if(elapsedMinute > 0){
-      return `${elapsedMinute} ${elapsedMinute > 0 ? "minutes" : "minute"}`
-    }
+  useEffect(() => {
+    const setLastVirtuosoState = () => {
+      virtuosoRef.current?.getState((snapshot) => {
+        if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
+          lastVirtuosoStates[`${selectedAddress}-catalog`] = snapshot;
+        }
+      });
+    };
+    window.addEventListener('scroll', setLastVirtuosoState);
 
-  }
+    return () => window.removeEventListener('scroll', setLastVirtuosoState);
+  }, [selectedAddress]);
+  
 
-  const handleMouseOnLeaveThread = () => {
-    setIsHoveringOnThread("");
-    setIsEnoughSpaceOnRight(null);
-    setIsCalculationDone(false);
-  }
+  const lastVirtuosoState = lastVirtuosoStates[`${selectedAddress}-catalog`];
+
+
   return (
     <>
       <Helmet>
@@ -608,7 +1259,7 @@ const Catalog = () => {
                   setIsCreateBoardOpen(true)
                 ) : (
                   alert(
-                    'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                   )
                 )
               }
@@ -636,7 +1287,7 @@ const Catalog = () => {
                   </select> 
                   <span id="button-span" style={{cursor: 'pointer'}} onClick={
                   () => alert(
-                    'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                     )
                   }>Create Board</span>
                 </div>
@@ -769,488 +1420,21 @@ const Catalog = () => {
         </TopBar>
         <Tooltip id="tooltip" className="tooltip" />
         <Threads selectedStyle={selectedStyle}>
-          {subplebbit?.state === "failed" ? (
-            null
-          ) : (
-            subplebbit.state === "succeeded" ? (
-                <InfiniteScroll
-                  pageStart={0}
-                  loadMore={tryLoadMore}
-                  hasMore={hasMore}
-                  >
-                  {subplebbit.rules ? (
-                    <div className='thread'
-                    onMouseOver={() => setIsHoveringOnThread("rules")}
-                    onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
-                      {/* <!-- hovering div --> */}
-                      {isHoveringOnThread == 'rules' ? 
-                      <div style={{left:"100%"}}
-                      className={"thread_popup"}>
-                        <p className="thread_popup_content" style={{color:"white"}}>
-                        <span className="thread_popup_title">Rules </span>
-                        by 
-                        <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-                        {timeElapsedCalc(subplebbit.createdAt)}</p>
-                        <div>
-                        <p className="thread_popup_content">Last reply by 
-                          <span className="thread_popup_authorAdmin"> Anonymous </span>
-                        560 days ago</p>
-                        </div>
-                      </div> : null }                      
-                      <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
-                        <div className='meta' title="(R)eplies / (L)ink Replies">
-                          R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
-                          <div className='thread-icons' 
-                          style={{position: 'absolute', top: '-2px', right: '15px'}}>
-                            <span className="thread-icon sticky-icon" title="Sticky"
-                            style={{
-                              imageRendering: "pixelated",}} />
-                            <span className="thread-icon closed-icon" title="Closed"
-                            style={{
-                              imageRendering: "pixelated",}} />
-                          </div>
-                          <PostMenu 
-                            style={{ display: isHoveringOnThread === "rules" ? 'inline-block' : 'none',
-                            position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
-                            zIndex: '999'}}
-                            title="Post menu"
-                            ref={el => { 
-                              threadMenuRefs.current["rules"] = el; 
-                              postMenuRef.current = el; 
-                            }}
-                            className='post-menu-button' 
-                            id='post-menu-button-catalog'
-                            rotated={openMenuCid === "rules"}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              const rect = threadMenuRefs.current["rules"].getBoundingClientRect();
-                              setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                              setOpenMenuCid(prevCid => (prevCid === "rules" ? null : "rules"));
-                            }}                              
-                          >
-                            ▶
-                          </PostMenu>
-                        </div>
-                        {createPortal(
-                          <PostMenuCatalog selectedStyle={selectedStyle} 
-                            ref={el => {postMenuCatalogRef.current = el}}
-                            onClick={(event) => event.stopPropagation()}
-                            style={{position: "absolute", 
-                            top: menuPosition.top + 7, 
-                            left: menuPosition.left}}>
-                            <div className={`post-menu-thread post-menu-thread-${"rules"}`}
-                            style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
-                            >
-                              <ul className="post-menu-catalog">
-                                <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
-                                {/* {isModerator ? (
-                                  <>
-                                    change rules
-                                  </>
-                                ) : null} */}
-                              </ul>
-                            </div>
-                          </PostMenuCatalog>, document.body
-                        )}
-                      </BoardForm>
-                      <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}>
-                          <div className="teaser">
-                            <b>Rules</b>
-                            {": " + subplebbit.rules.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
-                          </div>
-                        </Link>
-                    </div>
-                  ) : null}
-                  {subplebbit.description ? (
-                    <div className='thread'
-                    onMouseOver={() => setIsHoveringOnThread("description")}
-                    onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
-                      {/* <!-- hovering div --> */}
-                      {isHoveringOnThread == 'description' ? 
-                      <div style={{left:"100%"}}
-                      className={"thread_popup"}>
-                        <p className="thread_popup_content" style={{color:"white"}}>
-                        <span className="thread_popup_title">Welcome to {subplebbit.title || subplebbit.address} </span> 
-                         by  
-                        <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-                        {timeElapsedCalc(subplebbit.createdAt)} ago</p>
-                        <div> 
-                        <p className="thread_popup_content">Last reply by 
-                          <span className="thread_popup_authorAdmin"> Anonymous </span>
-                        560 days ago</p>
-                        </div>
-                      </div> : null }
-                      <Link style={{all: 'unset', cursor: 'pointer'}} to={`/p/${selectedAddress}/description`}>
-                        {subplebbit.suggested?.avatarUrl ? (
-                          <img className='card'
-                          src={subplebbit.suggested.avatarUrl} alt="board avatar" />
-                        ) : null}
-                      </Link>
-                      {subplebbit.suggested?.avatarUrl ? (
-                      <div className='thread-icons'>
-                        <span className="thread-icon sticky-icon" title="Sticky"
-                            style={{
-                              imageRendering: "pixelated",}} />
-                        <span className="thread-icon closed-icon" title="Closed"
-                            style={{
-                              imageRendering: "pixelated",}} />
-                      </div>
-                      ) : null}
-                      <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
-                        <div className='meta' title="(R)eplies / (L)ink Replies">
-                          R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
-                          {subplebbit.suggested?.avatarUrl ? null : (
-                            <div className='thread-icons' 
-                            style={{position: 'absolute', top: '-2px', right: '15px'}}>
-                              <span className="thread-icon sticky-icon" title="Sticky"
-                            style={{
-                              imageRendering: "pixelated",}} />
-                              <span className="thread-icon closed-icon" title="Closed"
-                            style={{
-                              imageRendering: "pixelated",}} />
-                            </div>
-                          )}
-                          <PostMenu 
-                            style={{ display: isHoveringOnThread === "description" ? 'inline-block' : 'none',
-                            position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
-                            zIndex: '999'}}
-                            title="Post menu"
-                            ref={el => { 
-                              threadMenuRefs.current["description"] = el; 
-                              postMenuRef.current = el; 
-                            }}
-                            className='post-menu-button' 
-                            id='post-menu-button-catalog'
-                            rotated={openMenuCid === "description"}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              const rect = threadMenuRefs.current["description"].getBoundingClientRect();
-                              setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                              setOpenMenuCid(prevCid => (prevCid === "description" ? null : "description"));
-                            }}                              
-                          >
-                            ▶
-                          </PostMenu>
-                        </div>
-                        {createPortal(
-                          <PostMenuCatalog selectedStyle={selectedStyle} 
-                            ref={el => {postMenuCatalogRef.current = el}}
-                            onClick={(event) => event.stopPropagation()}
-                            style={{position: "absolute", 
-                            top: menuPosition.top + 7, 
-                            left: menuPosition.left}}>
-                            <div className={`post-menu-thread post-menu-thread-${"description"}`}
-                            style={{ display: openMenuCid === "description" ? 'block' : 'none' }}
-                            >
-                              <ul className="post-menu-catalog">
-                                <li onClick={() => handleOptionClick("description")}>Hide thread</li>
-                                {/* {isModerator ? (
-                                  <>
-                                    change description
-                                  </>
-                                ) : null} */}
-                                {subplebbit.suggested?.avatarUrl ? (
-                                  <li 
-                                  onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                  onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                                    Image search »
-                                    <ul className="dropdown-menu post-menu-catalog"
-                                      style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                      <li onClick={() => handleOptionClick("description")}>
-                                        <a 
-                                        href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested.avatarUrl}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Google</a>
-                                      </li>
-                                      <li onClick={() => handleOptionClick("description")}>
-                                        <a
-                                        href={`https://yandex.com/images/search?url=${subplebbit.suggested.avatarUrl}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Yandex</a>
-                                      </li>
-                                      <li onClick={() => handleOptionClick("description")}>
-                                        <a
-                                        href={`https://saucenao.com/search.php?url=${subplebbit.suggested.avatarUrl}`}
-                                        target="_blank" rel="noreferrer"
-                                        >SauceNAO</a>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                ) : null}
-                              </ul>
-                            </div>
-                          </PostMenuCatalog>, document.body
-                        )}
-                      </BoardForm>
-                      <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/description`} 
-                        onClick={() => setSelectedThread("description")}>
-                          <div className="teaser">
-                            <b>Welcome to {subplebbit.title || subplebbit.address}</b>
-                            {": " + subplebbit.description}
-                          </div>
-                        </Link>
-                    </div>
-                  ) : null}
-                  {feed.map((thread, index) => {
-                    const commentMediaInfo = getCommentMediaInfo(thread);
-                    const fallbackImgUrl = "assets/filedeleted-res.gif";
-                    const linkCount = countLinks(thread);
-                    return (
-                        <div key={`thread-${index}`} className="thread" >
-                            {/* <!-- hovering div --> */}
-                            {isHoveringOnThread == thread.cid  ? 
-                            <div ref={popupRef} 
-                            style={{
-                            opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
-                            left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight ? '100%' : 'auto',
-                            right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight ? '100%' : 'auto',}}
-                            className="thread_popup">
-                              <p
-                              style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
-                                && !isEnoughSpaceOnRight
-                                ?
-                                {overflow:"visible",whiteSpace:"normal"}
-                              : null
-                              }
-                              className="thread_popup_content">
-                              <span className="thread_popup_title" >
-                                {thread.title ? `${thread.title} ` : "Posted "}
-                              </span>
-                              by 
-                              <span className="thread_popup_author"> 
-                              {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
-                              </span> 
-                              {thread.timestamp ? timeElapsedCalc(thread.timestamp) : null} ago</p>
-                              <div>
-                              {thread.replyCount > 0 ?
-                              <p className="thread_popup_lastReply">
-                              Last reply by <span className="thread_popup_author"> Anonymous </span> 
-                              {timeElapsedCalc(thread.lastReplyTimestamp)} ago</p>
-                              : null}
-                              </div>
-                            </div> : null }
-                          {commentMediaInfo?.url ? (
-                            <Link style={{all: "unset", cursor: "pointer"}} key={`link-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
-                            onClick={() => setSelectedThread(thread.cid)}>
-                              {commentMediaInfo?.type === "webpage" ? (
-                                thread.thumbnailUrl ? (
-                                <img
-                                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                                onMouseLeave={()=>{handleMouseOnLeaveThread()}}
-                                ref={(el) => (threadRefs.current[index] = el)} className="card" key={`img-${index}`}
-                                src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
-                                onError={(e) => {
-                                  e.target.src = fallbackImgUrl
-                                  e.target.onerror = null;
-                                }}  />
-                                ) : null
-                              ) : null}
-                              {commentMediaInfo?.type === "image" ? (
-                                <img 
-                                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                                onMouseLeave={() => {handleMouseOnLeaveThread()}}
-                                ref={(el) => (threadRefs.current[index] = el)} className="card" key={`img-${index}`}
-                                src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                                onError={(e) => {
-                                  e.target.src = fallbackImgUrl
-                                  e.target.onerror = null;}}  />
-                              ) : null}
-                              {commentMediaInfo?.type === "video" ? (
-                                  <video
-                                  onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                                  onMouseLeave={() => {handleMouseOnLeaveThread()}}
-                                  ref={(el) => (threadRefs.current[index] = el)}  className="card" key={`fti-${index}`} 
-                                  src={commentMediaInfo.url} 
-                                  alt={commentMediaInfo.type} 
-                                  onError={(e) => e.target.src = fallbackImgUrl} /> 
-                              ) : null}
-                              {commentMediaInfo?.type === "audio" ? (
-                                  <audio
-                                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                                onMouseLeave={() => {handleMouseOnLeaveThread()}}
-                                ref={(el) => (threadRefs.current[index] = el)}  className="card" controls 
-                                  key={`fti-${index}`} 
-                                  src={commentMediaInfo.url} 
-                                  alt={commentMediaInfo.type} 
-                                  onError={(e) => e.target.src = fallbackImgUrl} />
-                              ) : null}
-                            </Link>
-                          ) : null}
-                          {(commentMediaInfo && (
-                          commentMediaInfo.type === 'image' || 
-                          commentMediaInfo.type === 'video' ||
-                          (commentMediaInfo.type === 'webpage' && 
-                          commentMediaInfo.thumbnail))) ? (
-                          <div key={`ti-${index}`} className="thread-icons" >
-                            {thread.pinned ? (
-                              <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"
-                              style={{
-                                imageRendering: "pixelated",}} />
-                            ) : null}
-                            {thread.locked ? (
-                              <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed"
-                              style={{
-                                imageRendering: "pixelated",}} />
-                            ) : null}
-                          </div>
-                          ) : null}
-                          <BoardForm selectedStyle={selectedStyle} 
-                          style={{ all: "unset"}}>
-                            <div key={`meta-${index}`} className="meta" title="(R)eplies / (L)ink Replies" >
-                              R:&nbsp;<b key={`b-${index}`}>{thread.replyCount}</b>
-                              {linkCount > 0 ? (
-                                <>
-                                  &nbsp;/
-                                  L:&nbsp;<b key={`i-${index}`}>{linkCount}</b>
-                                </>
-                              ) : null}
-                              {(commentMediaInfo && (
-                                commentMediaInfo.type === 'image' || 
-                                commentMediaInfo.type === 'video' || 
-                                (commentMediaInfo.type === 'webpage' && 
-                                commentMediaInfo.thumbnail))) ? null : (
-                                <div className='thread-icons' 
-                                style={{position: 'absolute', top: '-2px', right: '15px'}}>
-                                  {thread.pinned ? (
-                                    <span key={`si-${index}`} className="thread-icon sticky-icon" title="Sticky"
-                                    style={{
-                                      imageRendering: "pixelated",}} />
-                                  ) : null}
-                                  {thread.locked ? (
-                                    <span key={`li-${index}`} className="thread-icon closed-icon" title="Closed"
-                                    style={{
-                                      imageRendering: "pixelated",}} />
-                                  ) : null}
-                                </div>
-                              )}
-                            <PostMenu 
-                              style={{ display: isHoveringOnThread === thread.cid ? 'inline-block' : 'none',
-                              position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
-                              zIndex: '999'}}
-                              key={`pmb-${index}`} 
-                              title="Post menu"
-                              ref={el => { 
-                                threadMenuRefs.current[thread.cid] = el; 
-                                postMenuRef.current = el; 
-                              }}
-                              className='post-menu-button' 
-                              id='post-menu-button-catalog'
-                              rotated={openMenuCid === thread.cid}
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                const rect = threadMenuRefs.current[thread.cid].getBoundingClientRect();
-                                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                                setOpenMenuCid(prevCid => (prevCid === thread.cid ? null : thread.cid));
-                              }}                              
-                            >
-                              ▶
-                            </PostMenu>
-                            </div>
-                            {createPortal(
-                              <PostMenuCatalog selectedStyle={selectedStyle} 
-                                ref={el => {postMenuCatalogRef.current = el}}
-                                onClick={(event) => event.stopPropagation()}
-                                style={{position: "absolute", 
-                                top: menuPosition.top + 7, 
-                                left: menuPosition.left}}>
-                                <div className={`post-menu-thread post-menu-thread-${thread.cid}`}
-                                style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
-                                >
-                                  <ul className="post-menu-catalog">
-                                    <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
-                                    <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
-                                      <>
-                                        {authorAddress === account?.author.address || 
-                                        authorAddress === account?.signer.address ? (
-                                          <>
-                                            <li onClick={() => handleAuthorEditClick(thread)}>Edit post</li>
-                                            <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
-                                          </>
-                                        ) : null}
-                                        {isModerator ? (
-                                          <>
-                                            {authorAddress === account?.author.address ||
-                                            authorAddress === account?.signer.address ? (
-                                              null
-                                            ) : (
-                                              <li onClick={() => {
-                                                setModeratingCommentCid(thread.cid)
-                                                setIsModerationOpen(true); 
-                                                handleOptionClick(thread.cid);
-                                                setDeletePost(true);
-                                              }}>
-                                              Delete post
-                                              </li>
-                                            )}
-                                            <li
-                                            onClick={() => {
-                                              setModeratingCommentCid(thread.cid)
-                                              setIsModerationOpen(true); 
-                                              handleOptionClick(thread.cid);
-                                            }}>
-                                              Mod tools
-                                            </li>
-                                          </>
-                                        ) : null}
-                                      </>
-                                    )}</VerifiedAuthor>
-                                    {(commentMediaInfo && (
-                                      commentMediaInfo.type === 'image' || 
-                                      (commentMediaInfo.type === 'webpage' && 
-                                      commentMediaInfo.thumbnail))) ? ( 
-                                        <li 
-                                        onMouseOver={() => {setIsImageSearchOpen(true)}}
-                                        onMouseLeave={() => {setIsImageSearchOpen(false)}}>
-                                          Image search »
-                                          <ul className="dropdown-menu post-menu-catalog"
-                                            style={{display: isImageSearchOpen ? 'block': 'none'}}>
-                                            <li onClick={() => handleOptionClick(thread.cid)}>
-                                              <a 
-                                              href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                                              target="_blank" rel="noreferrer"
-                                              >Google</a>
-                                            </li>
-                                            <li onClick={() => handleOptionClick(thread.cid)}>
-                                              <a
-                                              href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                                              target="_blank" rel="noreferrer"
-                                              >Yandex</a>
-                                            </li>
-                                            <li onClick={() => handleOptionClick(thread.cid)}>
-                                              <a
-                                              href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                                              target="_blank" rel="noreferrer"
-                                              >SauceNAO</a>
-                                            </li>
-                                          </ul>
-                                        </li>
-                                      ) : null
-                                    }
-                                  </ul>
-                                </div>
-                              </PostMenuCatalog>, document.body
-                            )}
-                          </BoardForm>
-                          <Link style={{all: "unset", cursor: "pointer"}} key={`link2-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
-                          onClick={() => setSelectedThread(thread.cid)}>
-                            <div
-                            key={`t-${index}`} className="teaser">
-                            <div style={{cursor:"text"}}
-                                onMouseOver={() => { 
-                                !thread.thumbnailUrl  && setIsHoveringOnThread(thread.cid)}}
-                                onMouseLeave={()=>{handleMouseOnLeaveThread()}}
-                                ref={(el) => (threadRefs.current[index] = el)}>
-                              <b
-                              key={`b2-${index}`}>{thread.title ? `${thread.title}` : null}</b>
-                              {thread.content ? `: ${thread.content}` : null}
-                            </div>
-                            </div>
-                          </Link>
-                        </div>
-                    )})}
-                </InfiniteScroll>
-          ) : (<CatalogLoader />)
-        )}
+          {subplebbit?.state !== "failed" && subplebbit.state === "succeeded" ? (
+            <Virtuoso
+              increaseViewportBy={{bottom: 600, top: 600}}
+              totalCount={rows?.length || 0}
+              data={rows}
+              style={{maxWidth: '100%'}}
+              itemContent={(index, row) => <CatalogRow index={index} row={row} />}
+              useWindowScroll={true}
+              components={{ Footer: () => hasMore ? <CatalogLoader /> : null}}
+              endReached={loadMore}
+              ref={virtuosoRef}
+              restoreStateFrom={lastVirtuosoState}
+              initialScrollTop={lastVirtuosoState?.scrollTop}
+            />
+          ) : (<CatalogLoader />)}
         </Threads>
         <Footer selectedStyle={selectedStyle}>
           <Break id="break" selectedStyle={selectedStyle} style={{
@@ -1305,7 +1489,7 @@ const Catalog = () => {
                   setIsCreateBoardOpen(true)
                 ) : (
                   alert(
-                    'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                   )
                 )
               }

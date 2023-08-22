@@ -87,9 +87,24 @@ export const StyledModal = styled(Modal)`
   }
 
   textarea {
-    width: 80%;
-    margin-left: 7%;
+    min-width: 80%;
     min-height: 50px;
+    margin-left: 7%;
+  }
+
+  #account-data-text {
+    min-width: 70%;
+    min-height: 105px;
+  }
+
+  .account-buttons {
+    display: inline-block;
+    position: absolute;
+    margin: 5px 5px 5px 10px;
+
+    button {
+      margin-bottom: 5px;
+    }
   }
 
   .all-div {
@@ -114,6 +129,10 @@ export const StyledModal = styled(Modal)`
     position: absolute;
   }
 
+  .check-button {
+    margin-left: 58px !important;
+  }
+
   .cache-button {
     margin: auto;
     margin-bottom: 10px;
@@ -122,9 +141,10 @@ export const StyledModal = styled(Modal)`
   }
 
   .settings-option {
-    margin: 5px 0 5px 0;
+    margin: 15px 0 5px 0 !important;
     padding-left: 23px;
     display: inline-block;
+    position: relative;
   }
 
   .settings-tip {
@@ -143,13 +163,6 @@ export const StyledModal = styled(Modal)`
     position: absolute;
     margin-left: -15px;
     margin-top: 6px;
-  }
-
-  .settings-option {
-    margin: 5px 0 5px 0;
-    padding-left: 23px;
-    display: inline-block;
-    position: relative;
   }
 
   .settings-input {
@@ -195,7 +208,7 @@ export const StyledModal = styled(Modal)`
   }
 
   .anon-tip {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
 
   .anon-tip::before {

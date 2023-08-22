@@ -3,14 +3,15 @@ import Modal from "react-modal";
 
 export const StyledModal = styled(Modal)`
   .modal-content {
-    top: 25%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 450px;
-    max-height: 650px;
-    left: calc(50% - 50px);
+    height: auto;
+    max-height: calc(100vh - 2*50px);
     overflow-y: auto;
-    margin-left: -178px;
-    position: absolute;
-    padding: 5px 5px 5px;
+    padding: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, .25);
   }
 
@@ -71,10 +72,17 @@ export const StyledModal = styled(Modal)`
     font-size: 0.8em;
   }
 
+  #rule {
+    
+  }
+
+  #rule-btn {
+    margin-left: 281px;
+  }
 
   fieldset {
-    margin-left: 24px;
-    width: auto;
+    margin-left: 5px;
+    width: 90%;
   }
 
   legend {

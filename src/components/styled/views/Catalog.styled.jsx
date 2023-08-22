@@ -9,6 +9,7 @@ export const Threads = styled.div`
   .thread {
     width: 180px;
     position:relative;
+    position:relative;
     max-height: 320px;
     vertical-align: top;
     display: inline-block;
@@ -60,6 +61,11 @@ export const Threads = styled.div`
     max-height: 150px;
   }
 
+  .file-thumb {
+    background-color: rgba(0, 0, 0, 0.05);
+    display: inline-block;
+  }
+
   .card {
     display: inline;
     margin: auto;
@@ -88,6 +94,16 @@ export const Threads = styled.div`
     margin-top: -2px;
   }
 
+  .offline-icon-no-link-shifted {
+    height: 11px;
+    position: absolute;
+    margin-left: 35px;
+    margin-top: -2px;
+  }
+
+  .offline-icon-no-link-hovered {
+    transform: translate(16px,0);
+  }
   .sticky-icon {
     background-image: url(assets/sticky.gif);
     width: 16px;
@@ -164,6 +180,9 @@ export const Threads = styled.div`
               return `
               .thread_popup{
                 font-family: arial,helvetica,sans-serif;
+              }
+              .file-thumb {
+                background-color: rgba(255, 255, 255, 0.01) !important;
               }
               .thread_popup_title{
                 color:#b294bb;
@@ -295,6 +314,10 @@ export const PostMenuCatalog = styled.div`
         return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #1d1d21 !important;
         border: 1px solid #111 !important;
+      }
+
+      .catalog-media-wrapper {
+        background-color: rgba(255, 255, 255, 0.01) !important;
       }
       
       .post-menu-catalog {

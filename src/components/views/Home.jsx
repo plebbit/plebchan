@@ -7,9 +7,9 @@ import BoardAvatar from '../BoardAvatar';
 import OfflineIndicator from '../OfflineIndicator';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
+import packageJson from '../../../package.json';
 import { Tooltip } from 'react-tooltip';
-const {version} = packageJson
+const {version} = packageJson;
 // show commit ref on netlify to know which commit is being served for debugging
 const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : ''
 
@@ -85,7 +85,7 @@ const Home = () => {
               (event) => {
                 if (event.key === "Enter") {
                   event.preventDefault();
-                  const address = inputRef.current.value;
+                  const address = inputRef.current.value.toLowerCase();;
                   if (address) {
                     setSelectedAddress(address);
                     navigate(`/p/${address}`)
@@ -94,7 +94,7 @@ const Home = () => {
             }} />
             <input type="submit" value="Search" onClick={
               () => {
-                const address = inputRef.current.value;
+                const address = inputRef.current.value.toLowerCase();;
                 if (address) {
                   setSelectedAddress(address);
                   navigate(`/p/${address}`)
@@ -115,7 +115,7 @@ const Home = () => {
                     setIsCreateBoardOpen(true)
                   ) : (
                     alert(
-                      'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                      'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                     )
                   )
                 }}

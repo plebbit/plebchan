@@ -18,8 +18,8 @@ import getDate from '../../utils/getDate';
 import handleImageClick from '../../utils/handleImageClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json'
-const {version} = packageJson
+import packageJson from '../../../package.json';
+const {version} = packageJson;
 
 
 const Description = () => {
@@ -28,7 +28,7 @@ const Description = () => {
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
-    selectedThread, setSelectedThread,
+    selectedThread,
     setSelectedTitle,
   } = useGeneralStore(state => state);
   
@@ -45,7 +45,7 @@ const Description = () => {
   const [openMenuCid, setOpenMenuCid] = useState(null);
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
-  const { subplebbitAddress, threadCid } = useParams();
+  const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
   
 
@@ -78,15 +78,19 @@ const Description = () => {
   }, []);
 
 
-  // temporary title from JSON, gets subplebbitAddress and threadCid from URL
   useEffect(() => {
-    setSelectedAddress(subplebbitAddress);
-    setSelectedThread(threadCid);
     const selectedSubplebbit = defaultSubplebbits.find((subplebbit) => subplebbit.address === subplebbitAddress);
+    if (subplebbitAddress) {
+      setSelectedAddress(subplebbitAddress);
+    } else if (subplebbit?.address) {
+      setSelectedAddress(subplebbit.address)
+    }
     if (selectedSubplebbit) {
       setSelectedTitle(selectedSubplebbit.title);
+    } else if (subplebbit?.title) {
+      setSelectedTitle(subplebbit.title);
     }
-  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, setSelectedThread, threadCid]);
+  }, [subplebbitAddress, setSelectedAddress, setSelectedTitle, defaultSubplebbits, subplebbit?.address, subplebbit?.title]);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -170,7 +174,7 @@ const Description = () => {
                   setIsCreateBoardOpen(true)
                 ) : (
                   alert(
-                    'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                   )
                 )
               }
@@ -198,7 +202,7 @@ const Description = () => {
                   </select> 
                   <span id="button-span" style={{cursor: 'pointer'}} onClick={
                   () => alert(
-                    'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                     )
                   }>Create Board</span>
                 </div>
@@ -482,7 +486,7 @@ const Description = () => {
                   setIsCreateBoardOpen(true)
                 ) : (
                   alert(
-                    'You can create a board with the desktop version of plebchan, which you can download from here: https://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, you can also run a board (called "subplebbit") using plebbit-cli: https://github.com/plebbit/plebbit-cli\n\n'
+                    'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n'
                   )
                 )
               }
