@@ -2460,11 +2460,13 @@ const Board = () => {
                                     </span>) 
                                   : null}
                                 </span>
-                                <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
+                                <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                                  <span key={`tooltip-fix-mob-${index}`}
                                   data-tooltip-id="tooltip"
                                   data-tooltip-content={getFormattedTime(thread.timestamp)}
                                   data-tooltip-place="top">
-                                  {getDate(thread.timestamp)}
+                                    {getDate(thread.timestamp)}
+                                  </span>
                                   &nbsp;
                                   <span key={`mob-no-${index}`}>c/</span>
                                   <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-no2-${index}`} 
@@ -2690,11 +2692,13 @@ const Board = () => {
                                     </span>
                                     <br key={`mob-br-${index}`} />
                                   </span>
-                                  <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
-                                  data-tooltip-id="tooltip"
-                                  data-tooltip-content={getFormattedTime(reply.timestamp)}
-                                  data-tooltip-place="top">
-                                  {getDate(reply.timestamp)}&nbsp;
+                                  <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                                    <span key={`tooltip-fix-mob-reply-${index}`}
+                                    data-tooltip-id="tooltip"
+                                    data-tooltip-content={getFormattedTime(reply.timestamp)}
+                                    data-tooltip-place="top">
+                                      {getDate(reply.timestamp)}&nbsp;
+                                    </span>
                                     <span key={`mob-pl1-${index}`}>c/</span>
                                     {reply.shortCid ? (
                                       <Link to={`/p/${selectedAddress}/c/${thread.cid}`} id="reply-button" key={`mob-pl2-${index}`} 
