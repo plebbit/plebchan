@@ -4,20 +4,58 @@ export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
   margin: 0;
+  overflow:hidden;
 
   .thread {
     width: 180px;
+    position:relative;
+    position:relative;
     max-height: 320px;
     vertical-align: top;
     display: inline-block;
     word-wrap: break-word;
-    overflow: hidden;
     margin-top: 5px;
     margin-bottom: 20px;
     padding: 5px 0 3px;
-    position: relative;
   }
 
+  .thread_popup{
+    display: inline-block;
+    height:auto;
+    background-color:black;
+    position:absolute;
+    margin-top:0px;
+    text-align:left;
+    z-index:10;
+    transform:none;
+    padding-left:5px;padding-right:5px;
+    border-radius:3px;
+  }
+  .thread_popup_content{
+    color: #dedede;
+    display: inline-block;
+    overflow: hidden;
+    white-space:nowrap;
+    font-size:13px;
+  }
+  .thread_popup_lastReply{
+    color: #bbbfbd;
+    display: block;
+    width: auto;
+    min-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size:90%;
+  }
+  .thread_popup_title{
+    color:#a89baa
+  }
+  .thread_popup_author{
+    color:#519860;font-weight:bold
+  }
+  .thread_popup_authorAdmin{
+    color:#682071;
+  }
   video, audio, img {
     max-width: 150px;
     max-height: 150px;
@@ -91,20 +129,83 @@ export const Threads = styled.div`
   .teaser {
     display: block;
     padding: 0 15px;
+    height:200px;
+    overflow:hidden;
   }
-
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
-      case 'Tomorrow':
+      case 'Yotsuba':
         return `
-          .file-thumb {
-            background-color: rgba(255, 255, 255, 0.01) !important;
+        .thread_popup_title{
+          color:#cc1105;
+          font-weight:700;
+        };
+        .thread_popup_author{
+          color:#00a550;font-weight:bold
+        }`;
+        case 'Yotsuba-B':
+          return `
+          .thread_popup_title{
+            color:#dedede;
+            font-weight:700;
+          };
+          .thread_popup_author{
+            color:#00a550;font-weight:bold
+          }`;
+        case 'Futaba':
+          return `
+          .thread_popup{
+            font-family: arial,helvetica,sans-serif;
           }
-        `;
+          .thread_popup_title{
+            color:#cc1105;
+            font-weight:700;
+          };
+          .thread_popup_author{
+            color:#00a550;font-weight:700;
+          }`;
+          case 'Burichan':
+            return `
+            .thread_popup{
+              font-family: arial,helvetica,sans-serif;
+            }
+            .thread_popup_title{
+              color:#dedede;
+              font-weight:700;
+            };
+            .thread_popup_author{
+              color:#00a550;font-weight:700;
+            }`;
+            case 'Tomorrow':
+              return `
+              .thread_popup{
+                font-family: arial,helvetica,sans-serif;
+              }
+              .file-thumb {
+                background-color: rgba(255, 255, 255, 0.01) !important;
+              }
+              .thread_popup_title{
+                color:#b294bb;
+                font-weight:700;
+              };
+              .thread_popup_author{
+                color:#00a550;font-weight:700;
+              }`;
+              case 'Photon':
+                return `
+                .thread_popup{
+                  font-family: arial,helvetica,sans-serif;
+                }
+                .thread_popup_title{
+                  color:#dedede;
+                  font-weight:700;
+                };
+                .thread_popup_author{
+                  color:#00a550;font-weight:700;
+                }`;
       default:
         return '';
-    }
-  }}
+      }}}
 `;
 
 export const PostMenuCatalog = styled.div`
@@ -142,27 +243,9 @@ export const PostMenuCatalog = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `.highlighted, .highlighted-click, .highlighted-address {
-        background-color: #f0c0b0 !important;
-        border: 1px solid #d99f91 !important;
-        border-left: none !important;
-        border-top: none !important;
-      }
-      
-      .post-menu-catalog {
-        border-right: 1px solid #d9bfb7;
-        border-bottom: 2px solid #d9bfb7;
-
-        li {
-          border: 1px solid #d9bfb7;
-          border-bottom: none;
-          background-color: #f0e0d6;
-
-          :hover {
-            background-color: #ffe;
-          }
-        }
-      }`;
+        return `.thread_popup_title{
+          color:red;
+        }`;
 
       case 'Yotsuba-B':
         return `.highlighted, .highlighted-click, .highlighted-address {
