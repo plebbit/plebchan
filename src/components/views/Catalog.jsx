@@ -22,6 +22,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useClickForm from '../../hooks/useClickForm';
@@ -317,7 +318,10 @@ const CatalogPost = ({post}) => {
               style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
               >
                 <ul className="post-menu-catalog">
-                  <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                  <li onClick={() => {
+                    handleOptionClick("rules");
+                    handleShareClick(selectedAddress, "rules");
+                  }}>Share thread</li>
                   {/* {isModerator ? (
                     <>
                       change rules
@@ -405,7 +409,10 @@ const CatalogPost = ({post}) => {
                 style={{ display: openMenuCid === "description" ? 'block' : 'none' }}
                 >
                   <ul className="post-menu-catalog">
-                    <li onClick={() => handleOptionClick("description")}>Hide thread</li>
+                    <li onClick={() => {
+                      handleOptionClick("description");
+                      handleShareClick(selectedAddress, "description");
+                    }}>Share thread</li>
                     {/* {isModerator ? (
                       <>
                         change description
@@ -581,7 +588,10 @@ const CatalogPost = ({post}) => {
               style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
               >
                 <ul className="post-menu-catalog">
-                  <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                  <li onClick={() => {
+                    handleOptionClick(thread.cid);
+                    handleShareClick(selectedAddress, thread.cid);
+                  }}>Share thread</li>
                   <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                     <>
                       {authorAddress === account?.author.address || 

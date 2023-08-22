@@ -36,6 +36,7 @@ import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
 import useAnonModeRef from '../../hooks/useAnonModeRef';
@@ -1000,7 +1001,12 @@ const Board = () => {
                                   style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                                   >
                                     <ul className="post-menu-catalog">
-                                      <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                                      <li onClick={() => {
+                                        handleOptionClick("rules");
+                                        handleShareClick(selectedAddress, "rules");
+                                      }}>
+                                        Share thread
+                                      </li>
                                       {/* {isModerator ? (
                                         <>
                                           change rules
@@ -1131,7 +1137,10 @@ const Board = () => {
                                   style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                                   >
                                     <ul className="post-menu-catalog">
-                                      <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                                      <li onClick={() => {
+                                        handleOptionClick("rules");
+                                        handleShareClick(selectedAddress, "rules");
+                                      }}>Share thread</li>
                                       {/* {isModerator ? (
                                         <>
                                           change rules
@@ -1284,7 +1293,10 @@ const Board = () => {
                                   style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
                                   >
                                     <ul className="post-menu-catalog">
-                                      <li onClick={() => handleOptionClick(subplebbit.pubsubTopic)}>Hide thread</li>
+                                      <li onClick={() => {
+                                        handleOptionClick("description");
+                                        handleShareClick(selectedAddress, "description");
+                                      }}>Share thread</li>
                                       {/* {isModerator ? (
                                         <>
                                           change description
@@ -1615,7 +1627,10 @@ const Board = () => {
                                     style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
                                     >
                                       <ul className="post-menu-catalog">
-                                        <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                                        <li onClick={() => {
+                                          handleOptionClick(thread.cid);
+                                          handleShareClick(selectedAddress, thread.cid);
+                                        }}>Share thread</li>
                                         <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                                           <>
                                             {authorAddress === account?.author.address || 
@@ -1941,7 +1956,10 @@ const Board = () => {
                                       style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
                                       >
                                         <ul className="post-menu-catalog">
-                                          <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                          <li onClick={() => {
+                                            handleOptionClick(reply.cid);
+                                            handleShareClick(selectedAddress, thread.cid);
+                                          }}>Share thread</li>
                                           <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                             <>
                                               {authorAddress === account?.author.address ||

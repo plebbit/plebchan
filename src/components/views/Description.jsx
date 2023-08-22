@@ -16,6 +16,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
 import handleImageClick from '../../utils/handleImageClick';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
@@ -363,7 +364,10 @@ const Description = () => {
                         style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
                         >
                           <ul className="post-menu-catalog">
-                            <li onClick={() => handleOptionClick(subplebbit.pubsubTopic)}>Hide thread</li>
+                            <li onClick={() => {
+                              handleOptionClick("description");
+                              handleShareClick(selectedAddress, "description");
+                            }}>Share thread</li>
                             {/* {isModerator ? (
                               <>
                                 change description

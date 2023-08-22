@@ -33,6 +33,7 @@ import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
 import useAnonMode from '../../hooks/useAnonMode';
@@ -1067,7 +1068,10 @@ const Thread = () => {
                           style={{ display: openMenuCid === comment.cid ? 'block' : 'none' }}
                           >
                             <ul className="post-menu-catalog">
-                              <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
+                              <li onClick={() => {
+                                handleOptionClick(comment.cid);
+                                handleShareClick(selectedAddress, comment.cid);
+                              }}>Share thread</li>
                               <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (
                                 <>
                                   {authorAddress === account?.author.address || 
@@ -1360,7 +1364,10 @@ const Thread = () => {
                               style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
                               >
                                 <ul className="post-menu-catalog">
-                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                <li onClick={() => {
+                                  handleOptionClick(reply.cid);
+                                  handleShareClick(selectedAddress, comment.cid);
+                                }}>Share thread</li>
                                   <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
                                       {authorAddress === account?.author.address ||

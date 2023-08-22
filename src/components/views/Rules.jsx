@@ -14,6 +14,7 @@ import AdminListModal from '../modals/AdminListModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
@@ -345,7 +346,10 @@ const Rules = () => {
                         style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                         >
                           <ul className="post-menu-catalog">
-                            <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                            <li onClick={() => {
+                              handleOptionClick("rules");
+                              handleShareClick(selectedAddress, "rules");
+                            }}>Share thread</li>
                             {/* {isModerator ? (
                               <>
                                 change rules
