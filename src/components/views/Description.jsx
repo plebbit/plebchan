@@ -28,7 +28,6 @@ const Description = () => {
     isSettingsOpen, setIsSettingsOpen,
     selectedAddress, setSelectedAddress,
     selectedStyle,
-    selectedThread,
     setSelectedTitle,
   } = useGeneralStore(state => state);
   
@@ -181,7 +180,7 @@ const Description = () => {
               }>Create Board</span>
               ]
               [
-              <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+              <Link to={`/p/${selectedAddress}/description/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
               ]
               [
               <Link to="/">Home</Link>
@@ -195,6 +194,9 @@ const Description = () => {
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
                     <option value="subscriptions">Subscriptions</option>
+                    {!defaultSubplebbits.some(subplebbit => subplebbit.address === selectedAddress) && (
+                      <option value={selectedAddress}>{selectedAddress}</option>
+                    )}
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -207,7 +209,7 @@ const Description = () => {
                   }>Create Board</span>
                 </div>
                 <div className="page-jump">
-                  <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                  <Link to={`/p/${selectedAddress}/description/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                   &nbsp;
                   <Link to="/" onClick={() => {handleStyleChange({target: {value: "Yotsuba"}}); window.scrollTo(0, 0);}}>Home</Link>
                 </div>
@@ -493,7 +495,7 @@ const Description = () => {
               }>Create Board</span>
               ]
                 [
-                <Link to={`/p/${selectedAddress}/c/${selectedThread}/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
+                <Link to={`/p/${selectedAddress}/description/settings`} onClick={() => setIsSettingsOpen(true)}>Settings</Link>
                 ]
                 [
                 <Link to="/" onClick={() => handleStyleChange({target: {value: "Yotsuba"}}

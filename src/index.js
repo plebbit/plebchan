@@ -4,6 +4,7 @@ import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 import { HashRouter } from 'react-router-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { App as CapacitorApp } from '@capacitor/app';
 
 import PlebbitJs from '@plebbit/plebbit-js';
 // inject native functions into renderer
@@ -25,3 +26,12 @@ root.render(
 
 // set up PWA https://cra.link/PWA
 serviceWorkerRegistration.register();
+
+// add back button in android app
+CapacitorApp.addListener('backButton', ({canGoBack}) => {
+  if (canGoBack) {
+    window.history.back();
+  } else {
+    CapacitorApp.exitApp();
+  }
+});

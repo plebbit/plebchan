@@ -17,6 +17,7 @@ import ImageBanner from '../ImageBanner';
 import VerifiedAuthor from '../VerifiedAuthor';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import ModerationModal from '../modals/ModerationModal';
+import BoardSettings from '../BoardSettings';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import countLinks from '../../utils/countLinks';
@@ -1280,6 +1281,9 @@ const Catalog = () => {
                   <select id="board-select-mobile" value={selectedAddress} onChange={handleSelectChange}>
                     <option value="all">All</option>
                     <option value="subscriptions">Subscriptions</option>
+                    {!defaultSubplebbits.some(subplebbit => subplebbit.address === selectedAddress) && (
+                      <option value={selectedAddress}>{selectedAddress}</option>
+                    )}
                     {defaultSubplebbits.map(subplebbit => (
                         <option key={`option-${subplebbit.address}`} value={subplebbit.address}
                         >{subplebbit.title ? subplebbit.title : subplebbit.address}</option>
@@ -1388,6 +1392,9 @@ const Catalog = () => {
             [
             <Link to={`/p/${selectedAddress}`} onClick={()=> {window.scrollTo(0, 0)}}>Return</Link>
             ]
+            {subplebbit.roles && subplebbit?.roles[account?.author?.address]?.role === "admin" ? (
+              <BoardSettings subplebbit={subplebbit} />
+            ) : null}
           </div>
           {subplebbit.state === "succeeded" ? (
             <>

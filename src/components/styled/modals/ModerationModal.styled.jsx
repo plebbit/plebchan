@@ -22,6 +22,31 @@ export const StyledModal = styled(Modal)`
     }
   }
 
+  .panel-board {
+    top: 120px;
+    width: 700px;
+    height: auto;
+    max-height: 80%;
+    left: calc(50% - 350px); 
+    overflow-y: auto;
+    position: absolute;
+    padding: 2px 5px 5px;
+    font-size: 14px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+
+    @media (max-width: 800px) {
+      width: 80%;
+      max-height: 60%;
+      left: calc(50% - 40%);
+    }
+
+    @media (max-width: 480px) {
+      width: 320px;
+      max-height: 60%;
+      left: calc(50% - 160px);
+    }
+  }
+
   .panel-header {
     font-size: 16px;
     font-weight: 700;
@@ -124,6 +149,13 @@ export const StyledModal = styled(Modal)`
     min-height: 50px;
   }
 
+  .board-settings {
+    width: 83%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    height: 400px;
+  }
+
   .save-button {
     margin: auto;
     margin-bottom: 10px;
@@ -132,11 +164,34 @@ export const StyledModal = styled(Modal)`
     text-align: center;
   }
 
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  #save-board-settings, #reset-board-settings {
+    text-align: center;
+  }
+
+  .settings-info {
+    overflow-x: auto;
+    max-width: 100%;
+    margin: 10px 10px 0 10px;
+    font-size: 0.9em;
+    line-break: anywhere;
+  }
+
+  .settings-info strong {
+      margin-bottom: 10px;
+  }
+
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
         return `
-        .panel {
+        .panel, .panel-board {
           background-color: #f0e0d6;
         }
 
@@ -166,7 +221,7 @@ export const StyledModal = styled(Modal)`
 
       case 'Yotsuba-B':
         return `
-        .panel {
+        .panel, .panel-board {
           background-color: #d6daf0;
         }
         
@@ -196,7 +251,7 @@ export const StyledModal = styled(Modal)`
 
       case 'Futaba':
         return `
-        .panel {
+        .panel, .panel-board {
           background-color: #f0e0d6;
         }
 
@@ -226,7 +281,7 @@ export const StyledModal = styled(Modal)`
 
       case 'Burichan':
         return `
-        .panel {
+        .panel, .panel-board {
           background-color: #d6daf0;
         }
         
@@ -256,7 +311,7 @@ export const StyledModal = styled(Modal)`
 
       case 'Tomorrow':
         return `
-        .panel {
+        .panel, .panel-board {
           background-color: #282a2e;
         }
         
@@ -296,7 +351,7 @@ export const StyledModal = styled(Modal)`
 
       case 'Photon':
         return `
-        .panel {
+        .panel, .panel-board {
           background-color: #ddd;
         }
         
