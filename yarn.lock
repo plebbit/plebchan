@@ -2200,7 +2200,7 @@
   "resolved" "https://registry.npmjs.org/@jest/types/-/types-29.6.1.tgz"
   "version" "29.6.1"
   dependencies:
-    "@jest/schemas" "^29.6.0"
+    "@jest/schemas" "^29.6.3"
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^3.0.0"
     "@types/node" "*"
@@ -8918,7 +8918,7 @@
   "version" "29.6.2"
   dependencies:
     "@babel/code-frame" "^7.12.13"
-    "@jest/types" "^29.6.1"
+    "@jest/types" "^29.6.3"
     "@types/stack-utils" "^2.0.0"
     "chalk" "^4.0.0"
     "graceful-fs" "^4.2.9"
@@ -9095,7 +9095,7 @@
   "resolved" "https://registry.npmjs.org/jest-util/-/jest-util-29.6.2.tgz"
   "version" "29.6.2"
   dependencies:
-    "@jest/types" "^29.6.1"
+    "@jest/types" "^29.6.3"
     "@types/node" "*"
     "chalk" "^4.0.0"
     "ci-info" "^3.2.0"

@@ -21,6 +21,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
 import useFeedRows from '../../hooks/useFeedRows';
@@ -383,7 +384,10 @@ const CatalogPost = ({post}) => {
             style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
             >
               <ul className="post-menu-catalog">
-                <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                <li onClick={() => {
+                  handleOptionClick(thread.cid);
+                  handleShareClick(selectedAddress, thread.cid);
+                }}>Share thread</li>
                 <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                   <>
                     {authorAddress === account?.author.address || 

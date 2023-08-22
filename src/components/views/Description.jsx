@@ -8,6 +8,7 @@ import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/views/Board.styled';
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
+import BoardStats from '../BoardStats';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import CreateBoardModal from '../modals/CreateBoardModal';
@@ -16,6 +17,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
 import handleImageClick from '../../utils/handleImageClick';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
@@ -255,6 +257,7 @@ const Description = () => {
             </div>
           </ReplyFormLink>
         </PostForm>
+        <BoardStats subplebbitAddress={selectedAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <span className="style-changer">
             Style:
@@ -363,7 +366,10 @@ const Description = () => {
                         style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
                         >
                           <ul className="post-menu-catalog">
-                            <li onClick={() => handleOptionClick(subplebbit.pubsubTopic)}>Hide thread</li>
+                            <li onClick={() => {
+                              handleOptionClick("description");
+                              handleShareClick(selectedAddress, "description");
+                            }}>Share thread</li>
                             {/* {isModerator ? (
                               <>
                                 change description

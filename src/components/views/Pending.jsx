@@ -6,6 +6,7 @@ import { useAccount, useAccountComment, useSubplebbit } from '@plebbit/plebbit-r
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import { Container, NavBar, Header, Break, PostForm, BoardForm } from '../styled/views/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar } from '../styled/views/Thread.styled';
+import BoardStats from '../BoardStats';
 import ImageBanner from '../ImageBanner';
 import Post from '../Post';
 import PostLoader from '../PostLoader';
@@ -41,7 +42,9 @@ const Pending = () => {
   const [isMobileThumbnailClicked, setIsMobileThumbnailClicked] = useState({});
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
-  const subplebbit = useSubplebbit({subplebbitAddress: comment?.subplebbitAddress})
+  const subplebbitAddress = comment?.subplebbitAddress;
+
+  const subplebbit = useSubplebbit({subplebbitAddress})
   const selectedTitle = subplebbit?.title;
 
   const handleThumbnailClick = (index, isMobile=false) => {
@@ -229,6 +232,7 @@ const Pending = () => {
             <div>&nbsp;</div>
           </ReplyFormLink>
         </PostForm>
+        <BoardStats subplebbitAddress={subplebbitAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <hr />
           <span className="style-changer">
