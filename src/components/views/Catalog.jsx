@@ -11,17 +11,19 @@ import { Container, NavBar, Header, Break, PostForm, PostFormLink, PostFormTable
 import { Threads, PostMenuCatalog } from '../styled/views/Catalog.styled';
 import { TopBar, Footer } from '../styled/views/Thread.styled';
 import { AlertModal } from '../styled/modals/AlertModal.styled';
-import CatalogLoader from '../CatalogLoader';
 import EditModal from '../modals/EditModal';
-import ImageBanner from '../ImageBanner';
-import VerifiedAuthor from '../VerifiedAuthor';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import ModerationModal from '../modals/ModerationModal';
-import BoardSettings from '../BoardSettings';
-import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
+import BoardSettings from '../BoardSettings';
+import BoardStats from '../BoardStats';
+import CatalogLoader from '../CatalogLoader';
+import ImageBanner from '../ImageBanner';
+import OfflineIndicator from '../OfflineIndicator';
+import VerifiedAuthor from '../VerifiedAuthor';
 import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useClickForm from '../../hooks/useClickForm';
@@ -317,7 +319,10 @@ const CatalogPost = ({post}) => {
               style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
               >
                 <ul className="post-menu-catalog">
-                  <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                  <li onClick={() => {
+                    handleOptionClick("rules");
+                    handleShareClick(selectedAddress, "rules");
+                  }}>Share thread</li>
                   {/* {isModerator ? (
                     <>
                       change rules
@@ -405,7 +410,10 @@ const CatalogPost = ({post}) => {
                 style={{ display: openMenuCid === "description" ? 'block' : 'none' }}
                 >
                   <ul className="post-menu-catalog">
-                    <li onClick={() => handleOptionClick("description")}>Hide thread</li>
+                    <li onClick={() => {
+                      handleOptionClick("description");
+                      handleShareClick(selectedAddress, "description");
+                    }}>Share thread</li>
                     {/* {isModerator ? (
                       <>
                         change description
@@ -581,7 +589,10 @@ const CatalogPost = ({post}) => {
               style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
               >
                 <ul className="post-menu-catalog">
-                  <li onClick={() => handleOptionClick(thread.cid)}>Hide thread</li>
+                  <li onClick={() => {
+                    handleOptionClick(thread.cid);
+                    handleShareClick(selectedAddress, thread.cid);
+                  }}>Share thread</li>
                   <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                     <>
                       {authorAddress === account?.author.address || 
@@ -1242,6 +1253,7 @@ const Catalog = () => {
             </tbody>
           </PostFormTable>
         </PostForm>
+        <BoardStats subplebbitAddress={subplebbitAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <hr />
           <span className="style-changer">

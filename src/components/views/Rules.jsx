@@ -8,12 +8,14 @@ import { debounce } from 'lodash';
 import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/views/Board.styled';
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
+import BoardStats from '../BoardStats';
 import ImageBanner from '../ImageBanner';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import AdminListModal from '../modals/AdminListModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
@@ -261,6 +263,7 @@ const Rules = () => {
             </div>
           </ReplyFormLink>
         </PostForm>
+        <BoardStats subplebbitAddress={selectedAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <span className="style-changer">
             Style:
@@ -345,7 +348,10 @@ const Rules = () => {
                         style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                         >
                           <ul className="post-menu-catalog">
-                            <li onClick={() => handleOptionClick("rules")}>Hide thread</li>
+                            <li onClick={() => {
+                              handleOptionClick("rules");
+                              handleShareClick(selectedAddress, "rules");
+                            }}>Share thread</li>
                             {/* {isModerator ? (
                               <>
                                 change rules

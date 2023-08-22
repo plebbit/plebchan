@@ -11,10 +11,9 @@ import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } f
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer } from '../styled/views/Thread.styled';
 import { AlertModal } from '../styled/modals/AlertModal.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
-import EditModal from '../modals/EditModal';
+import BoardStats from '../BoardStats';
 import EditLabel from '../EditLabel';
 import ImageBanner from '../ImageBanner';
-import ModerationModal from '../modals/ModerationModal';
 import OfflineIndicator from '../OfflineIndicator';
 import PendingLabel from '../PendingLabel';
 import Post from '../Post';
@@ -23,6 +22,8 @@ import PostOnHover from '../PostOnHover';
 import StateLabel from '../StateLabel';
 import VerifiedAuthor from '../VerifiedAuthor';
 import CreateBoardModal from '../modals/CreateBoardModal';
+import EditModal from '../modals/EditModal';
+import ModerationModal from '../modals/ModerationModal';
 import ReplyModal from '../modals/ReplyModal';
 import SettingsModal from '../modals/SettingsModal';
 import findShortParentCid from '../../utils/findShortParentCid';
@@ -33,6 +34,7 @@ import handleAddressClick from '../../utils/handleAddressClick';
 import handleImageClick from '../../utils/handleImageClick';
 import handleQuoteClick from '../../utils/handleQuoteClick';
 import handleQuoteHover from '../../utils/handleQuoteHover';
+import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import removeHighlight from '../../utils/removeHighlight';
 import useAnonMode from '../../hooks/useAnonMode';
@@ -792,6 +794,7 @@ const Thread = () => {
             </tbody>
           </PostFormTable>
         </PostForm>
+        <BoardStats subplebbitAddress={subplebbitAddress} />
         <TopBar selectedStyle={selectedStyle}>
           <hr />
           <span className="style-changer">
@@ -1067,7 +1070,10 @@ const Thread = () => {
                           style={{ display: openMenuCid === comment.cid ? 'block' : 'none' }}
                           >
                             <ul className="post-menu-catalog">
-                              <li onClick={() => handleOptionClick(comment.cid)}>Hide thread</li>
+                              <li onClick={() => {
+                                handleOptionClick(comment.cid);
+                                handleShareClick(selectedAddress, comment.cid);
+                              }}>Share thread</li>
                               <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (
                                 <>
                                   {authorAddress === account?.author.address || 
@@ -1301,12 +1307,15 @@ const Thread = () => {
                               </span>
                             </span>
                             &nbsp;
-                            <span key={`dt-${index}`} className="date-time"
-                            data-tooltip-id="tooltip"
-                            data-tooltip-content={getFormattedTime(reply?.timestamp)}
-                            data-tooltip-place="top">
+                            <span key={`dt-${index}`} className="date-time">
+                              <span key={`tooltip-fix-${index}`} 
+                              data-tooltip-id="tooltip"
+                              data-tooltip-content={getFormattedTime(reply?.timestamp)}
+                              data-tooltip-place="top"
+                              >
                               {getDate(reply?.timestamp)}&nbsp;
-                            <span key={`pn-${index}`} className="post-number post-number-desktop">
+                              </span>
+                              <span key={`pn-${index}`} className="post-number post-number-desktop">
                               <span key={`pl1-${index}`}>c/</span>
                               {reply.shortCid ? (
                                 <Link id="reply-button" key={`pl2-${index}`}
@@ -1357,7 +1366,10 @@ const Thread = () => {
                               style={{ display: openMenuCid === reply.cid ? 'block' : 'none' }}
                               >
                                 <ul className="post-menu-catalog">
-                                  <li onClick={() => handleOptionClick(reply.cid)}>Hide post</li>
+                                <li onClick={() => {
+                                  handleOptionClick(reply.cid);
+                                  handleShareClick(selectedAddress, comment.cid);
+                                }}>Share thread</li>
                                   <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
                                       {authorAddress === account?.author.address ||
@@ -1759,11 +1771,13 @@ const Thread = () => {
                                 {comment.title}
                               </span>) : null}
                         </span>
-                        <span key={`mob-dt-${comment.cid}`} className="date-time-mobile post-number-mobile"
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content={getFormattedTime(comment?.timestamp)}
-                        data-tooltip-place="top">
-                          {getDate(comment?.timestamp)}
+                        <span key={`mob-dt-${comment.cid}`} className="date-time-mobile post-number-mobile">
+                          <span key={`tooltip-fix-${comment.cid}`}
+                          data-tooltip-id="tooltip"
+                          data-tooltip-content={getFormattedTime(comment?.timestamp)}
+                          data-tooltip-place="top">
+                            {getDate(comment?.timestamp)}
+                          </span>
                           &nbsp;
                           <span key={`mob-no-${comment.cid}`}>c/</span>
                           <Link to={() => {}} id="reply-button" key={`mob-no2-${comment.cid}`} title="Reply to this post"
@@ -1955,11 +1969,13 @@ const Thread = () => {
                             </span>
                             <br key={`mob-br-${index}`} />
                           </span>
-                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile"
-                          data-tooltip-id="tooltip"
-                          data-tooltip-content={getFormattedTime(reply?.timestamp)}
-                          data-tooltip-place="top">
-                            {getDate(reply?.timestamp)}&nbsp;
+                          <span key={`mob-dt-${index}`} className="date-time-mobile post-number-mobile">
+                            <span key={`tooltip-fix-mob-${index}`}                            
+                            data-tooltip-id="tooltip"
+                            data-tooltip-content={getFormattedTime(reply?.timestamp)}
+                            data-tooltip-place="top">
+                              {getDate(reply?.timestamp)}&nbsp;
+                            </span>
                             <span key={`mob-pl1-${index}`}>c/</span>
                             {reply.shortCid ? (
                               <Link id="reply-button" key={`mob-pl2-${index}`} 

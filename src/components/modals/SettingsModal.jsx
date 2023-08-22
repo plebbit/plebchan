@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { deleteAccount, deleteCaches, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts, useResolvedAuthorAddress } from "@plebbit/plebbit-react-hooks";
+import { deleteAccount, deleteCaches, importAccount, setAccount, setActiveAccount, useAccount, useAccounts, useResolvedAuthorAddress } from "@plebbit/plebbit-react-hooks";
 import stringify from "json-stringify-pretty-compact"
 import { StyledModal } from "../styled/modals/SettingsModal.styled";
 import useError from "../../hooks/useError";
@@ -13,16 +13,12 @@ const {version} = packageJson;
 
 
 const SettingsModal = ({ isOpen, closeModal }) => {
-  const {
-    selectedStyle,
-  } = useGeneralStore(state => state);
-  
+  const { selectedStyle } = useGeneralStore(state => state);
   const { anonymousMode, setAnonymousMode } = useAnonModeStore();
-
   const navigate = useNavigate();
   const location = useLocation();
+  
   const [expanded, setExpanded] = useState([]);
-  const [accountJson, setAccountJson] = useState("");
   const [copyStatus, setCopyStatus] = useState(false);
   const [ensName, setEnsName] = useState('');
   const [checkedENS, setCheckedENS] = useState(false);
@@ -32,6 +28,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
   const account = useAccount();
   const { accounts } = useAccounts();
+  const accountJson = useMemo(() => stringify({...account}), [account])
+  const [editedAccountJson, setEditedAccountJson] = useState(accountJson);
+  useEffect(() => { setEditedAccountJson(accountJson)}, [accountJson])
 
   const gatewayRef = useRef();
   const ipfsRef = useRef();
@@ -46,7 +45,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const isElectron = window.electron && window.electron.isElectron;
   const author = {...account?.author, address: ensName};
   const { resolvedAddress, state } = useResolvedAuthorAddress({ author, cache: false });
-
 
   const defaultGatewayUrls = isElectron ? undefined : [
     'https://ipfs.io',
@@ -70,36 +68,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     'https://polygon-rpc.com',
   ];
 
-
-  useEffect(() => {
-    if (account) {
-      const fetchAccountData = async () => {
-        const data = await exportAccount();
-        try {
-          const parsedData = JSON.parse(data);
-          setAccountJson(stringify(parsedData));
-        } catch (error) {
-          console.error("Failed to pretty-print the JSON:", error);
-          setAccountJson(data);
-        }
-      };
-      fetchAccountData();
-    }
-  }, [account]);
-  
-
-
-  const handleAccountJsonChange = (e) => {
-    try {
-      const parsedData = JSON.parse(e.target.value);
-      setAccountJson(stringify(parsedData));
-    } catch (error) {
-      console.error("Failed to pretty-print the JSON:", error);
-      setAccountJson(e.target.value);
-    }
-  };
-  
-  
 
   useEffect(() => {
     if (checkedENS && resolvedAddress && state === 'succeeded') {
@@ -130,7 +98,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             address: ensName,
           },
         });
-        setNewSuccessMessage("ENS Name Saved");
+        setNewSuccessMessage("ENS name saved successfully.");
   
       } catch (error) {
         setNewErrorMessage(error.message);
@@ -214,7 +182,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
     try {
       await setAccount({ ...account, plebbitOptions });
-      localStorage.setItem("successToast", "Settings Saved");
+      localStorage.setItem("successToast", "Settings saved successfully.");
       window.location.reload();
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
@@ -263,7 +231,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           chainProviders,
         },
       });
-      localStorage.setItem("successToast", "Blockchain Options Saved");
+      localStorage.setItem("successToast", "Blockchain options saved successfully.");
       window.location.reload();
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
@@ -289,7 +257,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           pubsubHttpClientsOptions: defaultPubsubHttpClientsOptions,
         },
       });
-      localStorage.setItem("successToast", "Settings Reset");
+      localStorage.setItem("successToast", "Settings reset successfully.");
       window.location.reload();
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
@@ -323,7 +291,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           chainProviders,
         },
       });
-      localStorage.setItem("successToast", "Blockchain Options Reset");
+      localStorage.setItem("successToast", "Blockchain options reset successfully.");
       window.location.reload();
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
@@ -367,7 +335,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   
   useEffect(() => {
     if (localStorage.getItem("cacheCleared") === "true") {
-      setNewSuccessMessage("Cache Cleared");
+      setNewSuccessMessage("Cache cleared successfully.");
       localStorage.removeItem("cacheCleared");
     }
   }, [setNewSuccessMessage]);
@@ -375,9 +343,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
   const handleSaveAccount = async () => {
     try {
-      const parsedJson = JSON.parse(accountJson);
+      const parsedJson = JSON.parse(editedAccountJson);
       await setAccount(parsedJson);
-      setNewSuccessMessage("Account Data Saved Successfully");
+      setNewSuccessMessage("Account data saved successfully.");
     } catch (error) {
       setNewErrorMessage("Error saving account data: " + error.message);
       console.error(error);
@@ -385,25 +353,14 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   };
 
 
-  const handleResetAccount = async () => {
-    try {
-      const data = await exportAccount();
-      setAccountJson(data);
-    } catch (error) {
-      setNewErrorMessage("Error resetting account data: " + error.message);
-      console.error(error);
-    }
-  };
-
-
   const handleImportAccount = async () => {
-    const accountJson = importRef.current.value;
+    const data = importRef.current.value;
 
     try {
-      const parsedJson = JSON.parse(accountJson);
-      await importAccount(accountJson);
+      const parsedJson = JSON.parse(data);
+      await importAccount(data);
       setActiveAccount(parsedJson.account?.name);
-      setNewSuccessMessage("Account Imported");
+      setNewSuccessMessage("Account imported successfully.");
       
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
@@ -415,7 +372,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     if (window.confirm("Are you sure you want to delete this account?")) {
       try {
         await deleteAccount(account?.name);
-        localStorage.setItem("successToast", "Account Deleted Successfully");
+        localStorage.setItem("successToast", "Account deleted successfully.");
         window.location.reload();
       } catch (error) {
         setNewErrorMessage("Error deleting account: " + error.message);
@@ -440,7 +397,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           ...account?.author,
           displayName: name,
      }});
-      setNewSuccessMessage("Account Name Saved");
+      setNewSuccessMessage("Account name saved successfully.");
     } catch (error) {
       setNewErrorMessage(error.message); console.log(error);
     }
@@ -514,9 +471,9 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             </li>
             <div className="settings-input">
               <textarea id="account-data-text" 
-              value={accountJson} 
+              value={editedAccountJson || accountJson} 
               ref={importRef} 
-              onChange={handleAccountJsonChange}
+              onChange={(e) => setEditedAccountJson(e.target.value)}
               autoComplete="off"
               autoCorrect="off"
               spellCheck="false" />
@@ -524,7 +481,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
                 <button onClick={handleSaveAccount}>
                   Save
                 </button>
-                <button onClick={handleResetAccount}>
+                <button onClick={() => setEditedAccountJson(accountJson)}>
                   Reset
                 </button>
                 <button onClick={handleImportAccount}>

@@ -3,7 +3,16 @@ import { Link } from "react-router-dom";
 
 const ForwardRefLink = React.forwardRef((props, ref) => {
   const { children, setRefAndCid, onMouseOver, onMouseLeave, onClick, ...otherProps } = props;
-  
+
+  const handleClick = (event) => {
+    if (otherProps.to === "#void") {
+      event.preventDefault();
+    }
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   useEffect(() => {
     if (ref.current && typeof setRefAndCid === 'function') {
       setRefAndCid(ref.current);
@@ -16,7 +25,7 @@ const ForwardRefLink = React.forwardRef((props, ref) => {
       {...otherProps}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </Link>
