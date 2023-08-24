@@ -1,4 +1,4 @@
-import React, { useCallback,useLayoutEffect, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -23,6 +23,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import VerifiedAuthor from '../VerifiedAuthor';
 import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
+import getFormattedTime from '../../utils/getFormattedTime';
 import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useAnonModeRef from '../../hooks/useAnonModeRef';
@@ -88,64 +89,54 @@ const CatalogPost = ({post}) => {
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
   const [isEnoughSpaceOnLeft,setIsEnoughSpaceOnLeft] = useState(null);
   const [isCalculationDone,setIsCalculationDone] = useState(false);
+  const [hoverTimeoutId, setHoverTimeoutId] = useState(null);
+  const [isHoveringForMenu, setIsHoveringForMenu] = useState(false);
+
 
   useLayoutEffect(() => {
-    setIsEnoughSpaceOnRight(null);
-    setIsEnoughSpaceOnLeft(null);
-    const calculateSpaceOnRight = () => {
-        if (thread.cid === isHoveringOnThread){
-           if(threadRefs.current[thread.cid] && popupRef.current) {
-            const threadRect = threadRefs.current[thread.cid].getBoundingClientRect();
-            const popupRect = popupRef.current.getBoundingClientRect();
-            // Get the width of the viewport area inside the browser window
-            const viewportWidth = document.documentElement.clientWidth;
+    const executeLayoutEffectLogic = () => {
+      let ref;
+      if (isHoveringOnThread === 'rules' || isHoveringOnThread === 'description') {
+        ref = popupRef.current; 
+      } else {
+        ref = threadRefs.current[isHoveringOnThread];
+      }
   
-            // Calculate the space on the right side (relative to the viewport)
-            const spaceOnRight = viewportWidth - (threadRect.left + threadRect.width);
-            const spaceOnLeft = threadRect.left;
-            // Define the popup width
-            const popupWidth = popupRect.width;
-            // Check if there is enough space for the popup on the right side
-            const EnoughSpaceOnRight = spaceOnRight >= popupWidth + 10;
-            const EnoughSpaceOnLeft = spaceOnLeft >= popupWidth + 10;
-            setIsEnoughSpaceOnLeft(EnoughSpaceOnLeft);
-            setIsEnoughSpaceOnRight(EnoughSpaceOnRight);
-            return setIsCalculationDone(true);
-          }}
+      if (ref && popupRef.current) {
+        const threadRect = ref.getBoundingClientRect();
+        const popupRect = popupRef.current.getBoundingClientRect();
+        const viewportWidth = document.documentElement.clientWidth;
+        const spaceOnRight = viewportWidth - (threadRect.left + threadRect.width);
+        const spaceOnLeft = threadRect.left;
+        const popupWidth = popupRect.width;
+        setIsEnoughSpaceOnLeft(spaceOnLeft >= popupWidth + 10);
+        setIsEnoughSpaceOnRight(spaceOnRight >= popupWidth + 10);
+        setIsCalculationDone(true);
+      }
     };
-    if(!isCalculationDone && isHoveringOnThread){
-      calculateSpaceOnRight();
+  
+    if (isHoveringOnThread) {
+      const timeoutId = setTimeout(executeLayoutEffectLogic, 500);
+      return () => clearTimeout(timeoutId);
     }
+  
   }, [isHoveringOnThread]);
-
-  const timeElapsedCalc = (date) => {
-    const currentDateTime = new Date()
-    const targetToDate = new Date(date * 1000 );  // unix timestamp * 1000
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-    ];
-    const targetDateTime = new Date(`${monthNames[targetToDate.getMonth()]} ${targetToDate.getDate()} ${targetToDate.getFullYear()} ${targetToDate.getHours()}:${targetToDate.getMinutes()}:${targetToDate.getSeconds()}`)
-    const elapsedDateTime = currentDateTime - targetDateTime;
-    const elapsedDay = Math.floor(elapsedDateTime / (1000 * 60 * 60 * 24));
-    const elapsedHour = Math.floor((elapsedDateTime / (1000 * 60 * 60)) % 24);
-    const elapsedMinute = Math.floor((elapsedDateTime / (1000 * 60)) % 60);
-
-    if(elapsedDay > 0){
-      return `${elapsedDay} ${elapsedDay > 0 ? "days" : "day"}`;
-    }else if(elapsedHour > 0 ){
-      return `${elapsedHour} ${elapsedHour > 0 ? "hours" : "hour"}`;
-    }else if(elapsedMinute > 0){
-      return `${elapsedMinute} ${elapsedMinute > 0 ? "minutes" : "minute"}`
-    }
-  }
-
+  
+  
   const handleMouseOnLeaveThread = () => {
-    setIsHoveringOnThread("");
-    setIsEnoughSpaceOnRight(null);
-    setIsCalculationDone(false);
-  }
+    setIsHoveringForMenu(false);
+    if (hoverTimeoutId) {
+        clearTimeout(hoverTimeoutId);
+        setHoverTimeoutId(null);
+        setIsHoveringOnThread("")
+    } else if (isHoveringOnThread !== "") {
+        setIsHoveringOnThread("");
+        setIsEnoughSpaceOnRight(null);
+        setIsCalculationDone(false);
+    }
+  };
 
-
+  
   const handleOutsideClick = useCallback((e) => {
     if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
       setOpenMenuCid(null);
@@ -323,32 +314,39 @@ const CatalogPost = ({post}) => {
     let scale = Math.min(1, 150 / Math.max(thread.linkWidth, thread.linkHeight));
     displayWidth = `${thread.linkWidth * scale}px`;
     displayHeight = `${thread.linkHeight * scale}px`;
-  } else {
+  } else if (thread.link) {
     displayWidth = '150px';
     displayHeight = '150px';
+  } else {
+    displayWidth = '0px';
+    displayHeight = '0px';
   }
 
 
   if (post.type === 'rules') {
     return (
       <div className='thread'
-      onMouseOver={() => setIsHoveringOnThread("rules")}
       onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
         {isHoveringOnThread === 'rules' ? 
         <div style={{left:"100%"}}
+        onMouseOver={() => setIsHoveringOnThread("")}
         className={"thread_popup"}>
           <p className="thread_popup_content" style={{color:"white"}}>
           <span className="thread_popup_title">Rules </span>
           by 
           <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-          {timeElapsedCalc(subplebbit.createdAt)}</p>
-          <div>
-          <p className="thread_popup_content">Last reply by 
-            <span className="thread_popup_authorAdmin"> Anonymous </span>
-          560 days ago</p>
-          </div>
+          {getFormattedTime(subplebbit.createdAt)}</p>
         </div> : null }   
-        <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
+        <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}} 
+        onMouseOver={() => {
+          setIsHoveringForMenu('rules');
+          if (!hoverTimeoutId) {
+              const timeoutId = setTimeout(() => {
+                  setIsHoveringOnThread("rules");
+              }, 500);
+              setHoverTimeoutId(timeoutId);
+          }
+        }}>
           <div className='meta' title="(R)eplies / (L)ink Replies">
             R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
             <div className='thread-icons' 
@@ -361,7 +359,7 @@ const CatalogPost = ({post}) => {
                 imageRendering: "pixelated",}} />
             </div>
             <PostMenu 
-              style={{ display: isHoveringOnThread === "rules" ? 'inline-block' : 'none',
+              style={{ display: isHoveringForMenu === "rules" ? 'inline-block' : 'none',
               position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
               zIndex: '999'}}
               title="Post menu"
@@ -407,8 +405,17 @@ const CatalogPost = ({post}) => {
             </PostMenuCatalog>, document.body
           )}
         </BoardForm>
-        <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}>
-            <div className="teaser">
+        <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}
+        onMouseOver={() => {
+          setIsHoveringForMenu('rules');
+          if (!hoverTimeoutId) {
+              const timeoutId = setTimeout(() => {
+                  setIsHoveringOnThread("rules");
+              }, 500);
+              setHoverTimeoutId(timeoutId);
+          }
+        }}>
+            <div className="teaser" style={{maxHeight: '312px'}}>
               <b>Rules</b>
               {": " + subplebbit.rules?.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
             </div>
@@ -419,26 +426,29 @@ const CatalogPost = ({post}) => {
     return (
       <>
         <div className='thread'
-        onMouseOver={() => setIsHoveringOnThread("description")}
         onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
-          {/* <!-- hovering div --> */}
           {isHoveringOnThread === 'description' ? 
           <div style={{left:"100%"}}
+          onMouseOver={() => setIsHoveringOnThread("")}
           className={"thread_popup"}>
             <p className="thread_popup_content" style={{color:"white"}}>
             <span className="thread_popup_title">Welcome to {subplebbit.title || subplebbit.address} </span> 
               by  
             <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-              {timeElapsedCalc(subplebbit.createdAt)} ago</p>
-            <div> 
-            <p className="thread_popup_content">Last reply by 
-              <span className="thread_popup_authorAdmin"> Anonymous </span>
-            560 days ago</p>
-            </div>
+              {getFormattedTime(subplebbit.createdAt)}</p>
           </div> : null }
           <Link style={{all: 'unset', cursor: 'pointer'}} to={`/p/${selectedAddress}/description`}>
             {subplebbit.suggested?.avatarUrl ? (
               <img className='card'
+              onMouseOver={() => {
+                setIsHoveringForMenu('description');
+                if (!hoverTimeoutId) {
+                    const timeoutId = setTimeout(() => {
+                        setIsHoveringOnThread("description");
+                    }, 500);
+                    setHoverTimeoutId(timeoutId);
+                }
+              }}
               src={subplebbit.suggested.avatarUrl} alt="board avatar" />
             ) : null}
           </Link>
@@ -452,8 +462,17 @@ const CatalogPost = ({post}) => {
                   imageRendering: "pixelated",}} />
           </div>
           ) : null}
-          <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
-            <div style={{marginTop: '5px'}} className='meta' title="(R)eplies / (L)ink Replies">
+          <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}
+          onMouseOver={() => {
+            setIsHoveringForMenu('description');
+            if (!hoverTimeoutId) {
+                const timeoutId = setTimeout(() => {
+                    setIsHoveringOnThread("description");
+                }, 500);
+                setHoverTimeoutId(timeoutId);
+            }
+          }}>
+            <div className='meta' title="(R)eplies / (L)ink Replies">
               R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
               {subplebbit.suggested?.avatarUrl ? null : (
                 <div className='thread-icons' 
@@ -467,7 +486,7 @@ const CatalogPost = ({post}) => {
                 </div>
               )}
               <PostMenu 
-                style={{ display: isHoveringOnThread === "description" ? 'inline-block' : 'none',
+                style={{ display: isHoveringForMenu === "description" ? 'inline-block' : 'none',
                 position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
                 zIndex: '999'}}
                 title="Post menu"
@@ -542,9 +561,17 @@ const CatalogPost = ({post}) => {
             )}
           </BoardForm>
           <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/description`} 
-            onClick={() => setSelectedThread("description")}>
-              <div className="teaser">
-                <b>Welcome to {subplebbit.title || subplebbit.address}</b>
+            onClick={() => setSelectedThread("description")} onMouseOver={() => {
+              setIsHoveringForMenu('description');
+              if (!hoverTimeoutId) {
+                  const timeoutId = setTimeout(() => {
+                      setIsHoveringOnThread("description");
+                  }, 500);
+                  setHoverTimeoutId(timeoutId);
+              }
+            }}>
+              <div className="teaser" style={{maxHeight: '170px'}}>
+                <b>Welcome to {subplebbit.title || subplebbit.address}!</b>
                 {": " + subplebbit.description}
               </div>
             </Link>
@@ -553,38 +580,40 @@ const CatalogPost = ({post}) => {
     )
   } else {
     return (
-      <div key={`thread-`} className="thread">
-                            {isHoveringOnThread === thread.cid  ? 
-                            <div ref={popupRef} 
-                            style={{
-                            opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
-                            left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight ? '100%' : 'auto',
-                            right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight ? '100%' : 'auto',}}
-                            className="thread_popup">
-                              <p
-                              style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
-                                && !isEnoughSpaceOnRight
-                                ?
-                                {overflow:"visible",whiteSpace:"normal"}
-                              : null
-                              }
-                              className="thread_popup_content">
-                              <span className="thread_popup_title" >
-                                {thread.title ? `${thread.title} ` : "Posted "}
-                              </span>
-                              by 
-                              <span className="thread_popup_author"> 
-                              {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
-                              </span> 
-                              {thread.timestamp ? timeElapsedCalc(thread.timestamp) : null} ago</p>
-                              <div>
-                              {thread.replyCount > 0 ?
-                              <p className="thread_popup_lastReply">
-                              Last reply by <span className="thread_popup_author"> Anonymous </span> 
-                              {timeElapsedCalc(thread.lastReplyTimestamp)} ago</p>
-                              : null}</div>
-                              </div> : null }
-
+      <div key={`thread-`} className="thread"
+      onMouseLeave={()=>{handleMouseOnLeaveThread()}} onMouseOver={() => setIsHoveringOnThread(thread.cid)}>
+      {isHoveringOnThread === thread.cid  ? 
+      <div ref={popupRef}
+      onMouseOver={() => handleMouseOnLeaveThread()}
+      style={{
+      opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
+      visibility: isCalculationDone && isEnoughSpaceOnRight !== null ? 'visible' : 'hidden',
+      left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight ? '100%' : 'auto',
+      right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight ? '100%' : 'auto',}}
+      className="thread_popup">
+        <p
+        style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
+          && !isEnoughSpaceOnRight
+          ?
+          {overflow:"visible",whiteSpace:"normal"}
+        : null
+        }
+        className="thread_popup_content">
+        <span className="thread_popup_title" >
+          {thread.title ? `${thread.title} ` : "Posted "}
+        </span>
+        by 
+        <span className="thread_popup_author"> 
+        {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
+        </span> 
+        {thread.timestamp ? getFormattedTime(thread.timestamp) : null}</p>
+        <div>
+        {thread.replyCount > 0 ?
+        <p className="thread_popup_lastReply">
+        Last reply by <span className="thread_popup_author"> Anonymous </span> 
+        {getFormattedTime(thread.lastReplyTimestamp)}</p>
+        : null}</div>
+        </div> : null }
         {commentMediaInfo?.url ? (
           <Link style={{all: "unset", cursor: "pointer"}} key={`link-`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
           onClick={() => setSelectedThread(thread.cid)}>
@@ -593,8 +622,6 @@ const CatalogPost = ({post}) => {
                 <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
                   <img className="card" key={`img-`}
                   src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
-                  onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                  onMouseLeave={()=>{handleMouseOnLeaveThread()}}
                   onError={(e) => {
                     e.target.src = fallbackImgUrl
                     e.target.onerror = null;
@@ -606,8 +633,6 @@ const CatalogPost = ({post}) => {
               <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
                 <img className="card" key={`img-`}
                 src={commentMediaInfo.url} alt={commentMediaInfo.type} 
-                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                onMouseLeave={()=>{handleMouseOnLeaveThread()}}
                 onError={(e) => {
                   e.target.src = fallbackImgUrl
                   e.target.onerror = null;}}  />
@@ -616,8 +641,6 @@ const CatalogPost = ({post}) => {
             {commentMediaInfo?.type === "video" ? (
               <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
                 <video className="card" key={`fti-`} 
-                onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-                onMouseLeave={()=>{handleMouseOnLeaveThread()}}
                 src={commentMediaInfo.url} 
                 alt={commentMediaInfo.type} 
                 onError={(e) => e.target.src = fallbackImgUrl} /> 
@@ -628,8 +651,6 @@ const CatalogPost = ({post}) => {
               key={`fti-`} 
               src={commentMediaInfo.url} 
               alt={commentMediaInfo.type} 
-              onMouseOver={() => setIsHoveringOnThread(thread.cid)}
-              onMouseLeave={()=>{handleMouseOnLeaveThread()}}
               onError={(e) => e.target.src = fallbackImgUrl} />
             ) : null}
           </Link>
@@ -820,11 +841,8 @@ const CatalogPost = ({post}) => {
         </BoardForm>
         <Link style={{all: "unset", cursor: "pointer"}} key={`link2-`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
         onClick={() => setSelectedThread(thread.cid)}>
-          <div key={`t-`} className="teaser">
+          <div key={`t-`} className="teaser" style={{maxHeight: `calc(320px - ${displayHeight})`}}>
           <div style={{cursor:"text"}}
-            onMouseOver={() => { 
-            !thread.thumbnailUrl  && setIsHoveringOnThread(thread.cid)}}
-            onMouseLeave={()=>{handleMouseOnLeaveThread()}}
             ref={(el) => (threadRefs.current[thread.cid] = el)}>
             <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
             {thread.content ? `: ${thread.content}` : null}
