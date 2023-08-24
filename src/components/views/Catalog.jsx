@@ -453,7 +453,7 @@ const CatalogPost = ({post}) => {
           </div>
           ) : null}
           <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}>
-            <div className='meta' title="(R)eplies / (L)ink Replies">
+            <div style={{marginTop: '5px'}} className='meta' title="(R)eplies / (L)ink Replies">
               R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
               {subplebbit.suggested?.avatarUrl ? null : (
                 <div className='thread-icons' 

@@ -64,13 +64,17 @@ export const Threads = styled.div`
   .file-thumb {
     background-color: rgba(0, 0, 0, 0.05);
     display: inline-block;
+    text-align: center;
+    line-height: 150px;
+    margin-bottom: 5px;
   }
 
   .card {
-    display: inline;
+    display: inline-block;
     margin: auto;
     box-shadow: 0 0 5px rgba(0, 0, 0, .25);
     border: 0;
+    vertical-align: middle;
   }
 
   .thread-icons {
