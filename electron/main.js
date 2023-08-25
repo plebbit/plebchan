@@ -107,6 +107,7 @@ const createMainWindow = () => {
       return callback({responseHeaders: details.responseHeaders})
     }
     // console.log(details.method, details.url, details.resourceType, 'webContents:', details.referrer, 'referrer:', details.webContents.getURL(), details.responseHeaders)
+    delete details.responseHeaders['access-control-allow-origin'] // must delete or both '*, *' get added
     details.responseHeaders['Access-Control-Allow-Origin'] = '*'
     callback({responseHeaders: details.responseHeaders})
   })
