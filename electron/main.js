@@ -1,4 +1,4 @@
-require('./log');
+require('./log')
 const {
   app,
   BrowserWindow,
@@ -8,20 +8,31 @@ const {
   screen: electronScreen,
   shell,
   dialog,
-} = require('electron');
-const isDev = require('electron-is-dev');
-const path = require('path');
-const startIpfs = require('./startIpfs');
-const { URL } = require('node:url');
+} = require('electron')
+const isDev = require('electron-is-dev')
+const path = require('path')
+const startIpfs = require('./startIpfs')
+const { URL } = require('node:url')
 
-let startIpfsError;
+let startIpfsError
 startIpfs().catch((e) => {
-  startIpfsError = e;
-  console.error(e);
-});
+  startIpfsError = e
+  console.error(e)
+})
+
+// use common user agent instead of electron so img, video, audio, iframe elements don't get blocked
+// https://www.whatismybrowser.com/guides/the-latest-version/chrome
+// https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome
+// NOTE: eventually should probably fake sec-ch-ua header as well
+let fakeUserAgent =  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+if (process.platform === 'darwin')
+  fakeUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+if (process.platform === 'linux')
+  fakeUserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+const realUserAgent = `plebchan/${require('../package.json').version}`
 
 // add right click menu
-const contextMenu = require('electron-context-menu');
+const contextMenu = require('electron-context-menu')
 contextMenu({
   // prepend custom buttons to top
   prepend: (defaultActions, parameters, browserWindow) => [
@@ -51,7 +62,7 @@ contextMenu({
   showInspectElement: true,
   showServices: false,
   showSearchWithGoogle: false,
-});
+})
 
 const createMainWindow = () => {
   let mainWindow = new BrowserWindow({
@@ -60,112 +71,137 @@ const createMainWindow = () => {
     show: false,
     backgroundColor: 'white',
     webPreferences: {
-      // fix cors error for Chain providers
-      webSecurity: false,
+      webSecurity: true, // must be true or iframe embeds like youtube can do remote code execution
       nodeIntegration: false,
       contextIsolation: true,
       devTools: true, // TODO: change to isDev when no bugs left
       preload: path.join(__dirname, 'preload.js'),
     },
-  });
+  })
+
+  // set fake user agent
+  mainWindow.webContents.userAgent = fakeUserAgent
+
+  // set custom user agent and other headers for window.fetch requests to prevent origin errors
+  mainWindow.webContents.session.webRequest.onBeforeSendHeaders({urls: ['*://*/*']}, (details, callback) => {
+    // if not a fetch request, do nothing, filtering webRequest by types doesn't seem to work
+    if (details.resourceType !== 'xhr') {
+      return callback({requestHeaders: details.requestHeaders})
+    }
+    // console.log(details.method, details.url, details.resourceType, 'webContents:', details.referrer, 'referrer:', details.webContents.getURL(), details.requestHeaders)
+    details.requestHeaders['User-Agent'] = realUserAgent
+    details.requestHeaders['sec-ch-ua'] = undefined
+    details.requestHeaders['sec-ch-ua-platform'] = undefined
+    details.requestHeaders['sec-ch-ua-mobile'] = undefined
+    details.requestHeaders['Sec-Fetch-Dest'] = undefined
+    details.requestHeaders['Sec-Fetch-Mode'] = undefined
+    details.requestHeaders['Sec-Fetch-Site'] = undefined
+    details.requestHeaders['Origin'] = undefined
+    callback({requestHeaders: details.requestHeaders})
+  })
+
+  // fix cors errors for window.fetch. must not be enabled for iframe or can cause remote code execution
+  mainWindow.webContents.session.webRequest.onHeadersReceived({urls: ['*://*/*']}, (details, callback) => {
+    // if not a fetch request, do nothing, filtering webRequest by types doesn't seem to work
+    if (details.resourceType !== 'xhr') {
+      return callback({responseHeaders: details.responseHeaders})
+    }
+    // console.log(details.method, details.url, details.resourceType, 'webContents:', details.referrer, 'referrer:', details.webContents.getURL(), details.responseHeaders)
+    details.responseHeaders['Access-Control-Allow-Origin'] = '*'
+    callback({responseHeaders: details.responseHeaders})
+  })
+
   const startURL = isDev
     ? 'http://localhost:3000'
-    : `file://${path.join(__dirname, '../build/index.html')}`;
+    : `file://${path.join(__dirname, '../build/index.html')}`
 
-  mainWindow.loadURL(startURL);
+  mainWindow.loadURL(startURL)
 
   mainWindow.once('ready-to-show', async () => {
     // make sure back button is disabled on launch
-    mainWindow.webContents.clearHistory();
+    mainWindow.webContents.clearHistory()
 
-    mainWindow.show();
+    mainWindow.show()
 
     if (isDev) {
-      mainWindow.openDevTools();
+      mainWindow.openDevTools()
     }
 
     if (startIpfsError) {
-      dialog.showErrorBox('IPFS error', startIpfsError.message);
+      dialog.showErrorBox('IPFS error', startIpfsError.message)
     }
-  });
+  })
 
   mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-
-  // use common user agent instead of electron
-  // https://www.whatismybrowser.com/guides/the-latest-version/chrome
-  // https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome
-  mainWindow.webContents.userAgent =
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36';
+    mainWindow = null
+  })
 
   // don't open new windows
   mainWindow.webContents.on('new-window', (event, url) => {
-    event.preventDefault();
-    mainWindow.loadURL(url);
-  });
+    event.preventDefault()
+    mainWindow.loadURL(url)
+  })
 
   // open links in external browser
   // do not open links in plebchan or will lead to remote execution
   mainWindow.webContents.on('will-navigate', (e, originalUrl) => {
     if (originalUrl != mainWindow.webContents.getURL()) {
-      e.preventDefault();
+      e.preventDefault()
       try {
         // do not let the user open any url with shell.openExternal
         // or it will lead to remote execution https://benjamin-altpeter.de/shell-openexternal-dangers/
 
         // only open valid https urls to prevent remote execution
         // will throw if url isn't valid
-        const validatedUrl = new URL(originalUrl);
-        let serializedUrl = '';
+        const validatedUrl = new URL(originalUrl)
+        let serializedUrl = ''
 
         // make an exception for ipfs stats
         if (validatedUrl.toString() === 'http://localhost:5001/webui/') {
-          serializedUrl = validatedUrl.toString();
+          serializedUrl = validatedUrl.toString()
         } else if (validatedUrl.protocol === 'https:') {
           // open serialized url to prevent remote execution
-          serializedUrl = validatedUrl.toString();
+          serializedUrl = validatedUrl.toString()
         } else {
-          throw Error(`can't open url '${originalUrl}', it's not https and not the allowed http exception`);
+          throw Error(`can't open url '${originalUrl}', it's not https and not the allowed http exception`)
         }
 
-        shell.openExternal(serializedUrl);
+        shell.openExternal(serializedUrl)
       } catch (e) {
-        console.warn(e);
+        console.warn(e)
       }
     }
-  });
+  })
 
   // open links (with target="_blank") in external browser
   // do not open links in plebchan or will lead to remote execution
   mainWindow.webContents.setWindowOpenHandler(({url}) => {
-    const originalUrl = url;
+    const originalUrl = url
     try {
       // do not let the user open any url with shell.openExternal
       // or it will lead to remote execution https://benjamin-altpeter.de/shell-openexternal-dangers/
 
       // only open valid https urls to prevent remote execution
       // will throw if url isn't valid
-      const validatedUrl = new URL(originalUrl);
-      let serializedUrl = '';
+      const validatedUrl = new URL(originalUrl)
+      let serializedUrl = ''
 
       // make an exception for ipfs stats
       if (validatedUrl.toString() === 'http://localhost:5001/webui/') {
-        serializedUrl = validatedUrl.toString();
+        serializedUrl = validatedUrl.toString()
       } else if (validatedUrl.protocol === 'https:') {
         // open serialized url to prevent remote execution
-        serializedUrl = validatedUrl.toString();
+        serializedUrl = validatedUrl.toString()
       } else {
-        throw Error(`can't open url '${originalUrl}', it's not https and not the allowed http exception`);
+        throw Error(`can't open url '${originalUrl}', it's not https and not the allowed http exception`)
       }
 
-      shell.openExternal(serializedUrl);
+      shell.openExternal(serializedUrl)
     } catch (e) {
-      console.warn(e);
+      console.warn(e)
     }
-    return {action: 'deny'};
+    return {action: 'deny'}
   })
-
 
   // deny permissions like location, notifications, etc https://www.electronjs.org/docs/latest/tutorial/security#5-handle-session-permission-requests-from-remote-content
   mainWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
@@ -186,44 +222,44 @@ const createMainWindow = () => {
       '..',
       isDev ? 'public' : 'build',
       'electron-tray-icon.png'
-    );
-    const tray = new Tray(trayIconPath);
-    tray.setToolTip('plebchan');
+    )
+    const tray = new Tray(trayIconPath)
+    tray.setToolTip('plebchan')
     const trayMenu = Menu.buildFromTemplate([
       {
         label: 'Open plebchan',
         click: () => {
-          mainWindow.show();
+          mainWindow.show()
         },
       },
       {
         label: 'Quit plebchan',
         click: () => {
-          mainWindow.destroy();
-          app.quit();
+          mainWindow.destroy()
+          app.quit()
         },
       },
-    ]);
-    tray.setContextMenu(trayMenu);
+    ])
+    tray.setContextMenu(trayMenu)
 
     // show/hide on tray right click
     tray.on('right-click', () => {
-      mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
-    });
+      mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
+    })
 
     // close to tray
     if (!isDev) {
-      let isQuiting = false;
+      let isQuiting = false
       app.on('before-quit', () => {
-        isQuiting = true;
-      });
+        isQuiting = true
+      })
       mainWindow.on('close', (event) => {
         if (!isQuiting) {
-          event.preventDefault();
-          mainWindow.hide();
-          event.returnValue = false;
+          event.preventDefault()
+          mainWindow.hide()
+          event.returnValue = false
         }
-      });
+      })
     }
   }
 
@@ -231,50 +267,48 @@ const createMainWindow = () => {
     label: '←',
     enabled: mainWindow?.webContents?.canGoBack(),
     click: () => mainWindow?.webContents?.goBack(),
-  });
+  })
   const appMenuForward = new MenuItem({
     label: '→',
     enabled: mainWindow?.webContents?.canGoForward(),
     click: () => mainWindow?.webContents?.goForward(),
-  });
+  })
   const appMenuReload = new MenuItem({
     label: '⟳',
     role: 'reload',
     click: () => mainWindow?.webContents?.reload(),
-  });
+  })
 
   // application menu
   // hide useless electron help menu
   if (process.platform === 'darwin') {
-    const appMenu = Menu.getApplicationMenu();
-    appMenu.insert(1, appMenuBack);
-    appMenu.insert(2, appMenuForward);
-    appMenu.insert(3, appMenuReload);
-    Menu.setApplicationMenu(appMenu);
+    const appMenu = Menu.getApplicationMenu()
+    appMenu.insert(1, appMenuBack)
+    appMenu.insert(2, appMenuForward)
+    appMenu.insert(3, appMenuReload)
+    Menu.setApplicationMenu(appMenu)
   } else {
     // Other platforms
     const originalAppMenuWithoutHelp = Menu.getApplicationMenu()?.items.filter(
       (item) => item.role !== 'help'
-    );
-    const appMenu = [appMenuBack, appMenuForward, appMenuReload, ...originalAppMenuWithoutHelp];
-    Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu));
+    )
+    const appMenu = [appMenuBack, appMenuForward, appMenuReload, ...originalAppMenuWithoutHelp]
+    Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu))
   }
-};
-
-
+}
 
 app.whenReady().then(() => {
-  createMainWindow();
+  createMainWindow()
 
   app.on('activate', () => {
     if (!BrowserWindow.getAllWindows().length) {
-      createMainWindow();
+      createMainWindow()
     }
-  });
-});
+  })
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})
