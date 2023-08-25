@@ -8,8 +8,7 @@ export const Threads = styled.div`
 
   .thread {
     width: 180px;
-    position:relative;
-    position:relative;
+    position: relative;
     max-height: 320px;
     vertical-align: top;
     display: inline-block;
@@ -31,6 +30,7 @@ export const Threads = styled.div`
     padding-left:5px;padding-right:5px;
     border-radius:3px;
   }
+
   .thread_popup_content{
     color: #dedede;
     display: inline-block;
@@ -38,6 +38,7 @@ export const Threads = styled.div`
     white-space:nowrap;
     font-size:13px;
   }
+
   .thread_popup_lastReply{
     color: #bbbfbd;
     display: block;
@@ -47,30 +48,35 @@ export const Threads = styled.div`
     text-overflow: ellipsis;
     font-size:90%;
   }
+
   .thread_popup_title{
     color:#a89baa
   }
+
   .thread_popup_author{
     color:#519860;font-weight:bold
   }
+
   .thread_popup_authorAdmin{
     color:#682071;
   }
+
   video, audio, img {
     max-width: 150px;
     max-height: 150px;
-  }
+}
 
-  .file-thumb {
+.file-thumb {
     background-color: rgba(0, 0, 0, 0.05);
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
   }
 
   .card {
-    display: inline;
-    margin: auto;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .25);
-    border: 0;
+      box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+      border: 0;
   }
 
   .thread-icons {
@@ -129,9 +135,9 @@ export const Threads = styled.div`
   .teaser {
     display: block;
     padding: 0 15px;
-    height:200px;
-    overflow:hidden;
+    overflow: hidden;
   }
+
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':

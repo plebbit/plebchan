@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate} from 'react-router-dom';
@@ -21,6 +21,7 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
+import getFormattedTime from '../../utils/getFormattedTime';
 import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useError from '../../hooks/useError';
@@ -75,7 +76,52 @@ const CatalogPost = ({post}) => {
   const threadMenuRefs = useRef({});
   const postMenuRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
+  const popupRef = useRef(null);
+  const threadRefs = useRef([]);
+  const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
+  const [isEnoughSpaceOnLeft,setIsEnoughSpaceOnLeft] = useState(null);
+  const [isCalculationDone,setIsCalculationDone] = useState(false);
+  const [hoverTimeoutId, setHoverTimeoutId] = useState(null);
 
+
+  useLayoutEffect(() => {
+    const executeLayoutEffectLogic = () => {
+      let ref;
+      ref = threadRefs.current[isHoveringOnThread];
+  
+      if (ref && popupRef.current) {
+        const threadRect = ref.getBoundingClientRect();
+        const popupRect = popupRef.current.getBoundingClientRect();
+        const viewportWidth = document.documentElement.clientWidth;
+        const spaceOnRight = viewportWidth - (threadRect.left + threadRect.width);
+        const spaceOnLeft = threadRect.left;
+        const popupWidth = popupRect.width;
+        setIsEnoughSpaceOnLeft(spaceOnLeft >= popupWidth + 10);
+        setIsEnoughSpaceOnRight(spaceOnRight >= popupWidth + 10);
+        setIsCalculationDone(true);
+      }
+    };
+  
+    if (isHoveringOnThread) {
+      const timeoutId = setTimeout(executeLayoutEffectLogic, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  
+  }, [isHoveringOnThread]);
+  
+  
+  const handleMouseOnLeaveThread = () => {
+    if (hoverTimeoutId) {
+        clearTimeout(hoverTimeoutId);
+        setHoverTimeoutId(null);
+        setIsHoveringOnThread("")
+    } else if (isHoveringOnThread !== "") {
+        setIsHoveringOnThread("");
+        setIsEnoughSpaceOnRight(null);
+        setIsCalculationDone(false);
+    }
+  };
+  
 
   useEffect(() => {
     if (subplebbit.roles !== undefined) { 
@@ -272,16 +318,51 @@ const CatalogPost = ({post}) => {
     let scale = Math.min(1, 150 / Math.max(thread.linkWidth, thread.linkHeight));
     displayWidth = `${thread.linkWidth * scale}px`;
     displayHeight = `${thread.linkHeight * scale}px`;
-  } else {
+  } else if (thread.link) {
     displayWidth = '150px';
     displayHeight = '150px';
+  } else {
+    displayWidth = '0px';
+    displayHeight = '0px';
   }
 
 
   return (
     <div key={`thread-`} className="thread" 
     onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
-    onMouseLeave={() => {setIsHoveringOnThread('')}}>
+    onMouseLeave={() => {handleMouseOnLeaveThread()}}>
+      {isHoveringOnThread === thread.cid  ? 
+      <div ref={popupRef}
+      onMouseOver={() => handleMouseOnLeaveThread()}
+      style={{
+      opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
+      visibility: isCalculationDone && isEnoughSpaceOnRight !== null ? 'visible' : 'hidden',
+      left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight ? '100%' : 'auto',
+      right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight ? '100%' : 'auto',}}
+      className="thread_popup">
+        <p
+        style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
+          && !isEnoughSpaceOnRight
+          ?
+          {overflow:"visible",whiteSpace:"normal"}
+        : null
+        }
+        className="thread_popup_content">
+        <span className="thread_popup_title" >
+          {thread.title ? `${thread.title} ` : "Posted "}
+        </span>
+        by 
+        <span className="thread_popup_author"> 
+        {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
+        </span> 
+        {thread.timestamp ? getFormattedTime(thread.timestamp) : null}</p>
+        <div>
+        {thread.replyCount > 0 ?
+        <p className="thread_popup_lastReply">
+        Last reply by <span className="thread_popup_author"> Anonymous </span> 
+        {getFormattedTime(thread.lastReplyTimestamp)}</p>
+        : null}</div>
+        </div> : null }
       {commentMediaInfo?.url ? (
         <Link style={{all: "unset", cursor: "pointer"}} key={`link-`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
         onClick={() => setSelectedThread(thread.cid)}>
@@ -491,7 +572,8 @@ const CatalogPost = ({post}) => {
       </BoardForm>
       <Link style={{all: "unset", cursor: "pointer"}} key={`link2-`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
       onClick={() => setSelectedThread(thread.cid)}>
-        <div key={`t-`} className="teaser">
+        <div key={`t-`} className="teaser" style={{maxHeight: `calc(320px - ${displayHeight})`}}
+        ref={(el) => (threadRefs.current[thread.cid] = el)}>
           <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
           {thread.content ? `: ${thread.content}` : null}
         </div>
