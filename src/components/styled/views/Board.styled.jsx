@@ -1906,6 +1906,9 @@ export const BoardForm = styled.div`
       float: left;
       margin: 3px 20px 5px 20px;
       background-color: rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .reply-file-text {
@@ -1914,17 +1917,25 @@ export const BoardForm = styled.div`
       margin-left: 5px;
     }
 
-    .file-thumb-reply {
+    .file-thumb-reply,
+    .file-thumb-mobile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       float: left;
+    }
+
+    .file-thumb-reply {
       margin: 3px 20px 5px 20px;
     }
-    
+
     .file-thumb img,
     .file-thumb video,
     .file-thumb audio {
       border: none;
       max-width: 250px;
       max-height: 250px;
+      margin: 0;
     }
 
     .file-thumb-reply img,
@@ -1933,7 +1944,6 @@ export const BoardForm = styled.div`
       max-width: 125px;
       max-height: 125px;
     }
-
   }
 
   .thread-mobile {
@@ -1996,16 +2006,16 @@ export const BoardForm = styled.div`
   
       .file-mobile {
         display: block;
-  
+
         .file-thumb-mobile {
           margin-left: 10px !important;
           margin-right: 10px !important;
           text-decoration: none;
           float: left;
-          margin-bottom: 5px;
-          margin-top: 15px;
+          margin-bottom: 5% !important;
+          margin-top: 15px !important;
         }
-  
+
         .file-info-mobile {
           padding-top: 5px;
           text-align: center;
@@ -2013,7 +2023,6 @@ export const BoardForm = styled.div`
           display: block !important;
           clear: left !important;
         }
-
       }
 
       video {
@@ -2036,6 +2045,7 @@ export const BoardForm = styled.div`
         max-width: 100px;
         max-height: 100px;
         object-fit: scale-down;
+        margin: 0;
       }
   
       blockquote {

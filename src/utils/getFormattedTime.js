@@ -17,13 +17,19 @@ const getFormattedTime = (timestamp) => {
     if (years > 0) {
       return months > 0 ? `${pluralize('year', years)} and ${pluralize('month', months)} ago` : `${pluralize('year', years)} ago`;
     } else if (months > 0) {
-      return `${pluralize('month', months)} and ${pluralize('day', days)} ago`;
+      return days > 0 ? `${pluralize('month', months)} and ${pluralize('day', days)} ago` : `${pluralize('month', months)} ago`;
     } else if (days > 0) {
-      return `${pluralize('day', days)} and ${pluralize('hour', hours)} ago`;
+      if (hours > 0) {
+        return `${pluralize('day', days)} and ${pluralize('hour', hours)} ago`;
+      } else if (minutes > 0) {
+        return `${pluralize('day', days)} and ${pluralize('minute', minutes)} ago`;
+      } else {
+        return `${pluralize('day', days)} ago`;
+      }
     } else if (hours > 0) {
-      return `${pluralize('hour', hours)} and ${pluralize('minute', minutes)} ago`;
+      return minutes > 0 ? `${pluralize('hour', hours)} and ${pluralize('minute', minutes)} ago` : `${pluralize('hour', hours)} ago`;
     } else if (minutes > 0) {
-      return `${pluralize('minute', minutes)} and ${pluralize('second', seconds)} ago`;
+      return seconds > 0 ? `${pluralize('minute', minutes)} and ${pluralize('second', seconds)} ago` : `${pluralize('minute', minutes)} ago`;
     } else if (seconds > 30) {
       return `${pluralize('second', seconds)} ago`;
     } else {

@@ -507,7 +507,6 @@ const Board = () => {
       updateSigner();
     }
   }, [updateSigner, anonymousMode]);
-  
 
 
   useEffect(() => {
@@ -1246,7 +1245,7 @@ const Board = () => {
                                 </div>
                                 ) : null}
                               <span className="name-block">
-                                <span className="title">Welcome to {subplebbit.title || subplebbit.address}</span>
+                                <span className="title">Welcome to {subplebbit.title || subplebbit.address}!</span>
                                 &nbsp;
                                 <span className="name capcode"
                                 style={{cursor: 'pointer'}}

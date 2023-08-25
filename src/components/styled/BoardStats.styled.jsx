@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const BoardStatsContainer = styled.div`
+  
   @media (max-width: 480px) {
     display: none;
   }
@@ -8,11 +9,12 @@ export const BoardStatsContainer = styled.div`
   @media (min-width: 480px) {
     width: 468px;
     margin: auto;
+    line-height: 1;
   
     table {
       border-spacing: 0px;
-      text-align: center;
       width: 100%;
+      margin-top: -1px;
     }
   
     tr {
@@ -20,4 +22,79 @@ export const BoardStatsContainer = styled.div`
       font-size: 11px;
     }
   }
+
+  tfoot {
+    text-align: right;
+  }
+
+  .hide-button:hover {
+    cursor: pointer;
+  }
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
+        #stat-number {
+          color: #00e;
+        }
+        
+        .hide-button:hover {
+          color: red !important;
+        }`;
+
+      case 'Yotsuba-B':
+        return `
+        #stat-number {
+          color: #34345c;
+        }
+        
+        .hide-button:hover {
+          color: #d00 !important;
+        }`;
+
+      case 'Futaba':
+        return `
+        #stat-number {
+          color: #00e;
+        }
+        
+        .hide-button:hover {
+          color: red !important;
+        }`;
+
+      case 'Burichan':
+        return `
+        #stat-number {
+          color: #34345c;
+        }
+        
+        .hide-button:hover {
+          color: red !important;
+        }`;
+
+      case 'Tomorrow':
+        return `
+        #stat-number {
+          color: #81a2be;
+        }
+        
+        .hide-button:hover {
+          color: #5f89ab !important;
+        }`;
+
+      case 'Photon':
+        return `
+        #stat-number {
+          color: #f60;
+        }
+        
+        .hide-button:hover {
+          color: #ff3300 !important;
+        }`;
+     	
+      default:
+	      return '';
+    }
+  }}
 `;
