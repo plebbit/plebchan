@@ -84,8 +84,9 @@ const createMainWindow = () => {
 
   // set custom user agent and other headers for window.fetch requests to prevent origin errors
   mainWindow.webContents.session.webRequest.onBeforeSendHeaders({urls: ['*://*/*']}, (details, callback) => {
-    // if not a fetch request, do nothing, filtering webRequest by types doesn't seem to work
-    if (details.resourceType !== 'xhr') {
+    const isIframe = details.frame.parent !== null
+    // if not a fetch request (or is from iframe), do nothing, filtering webRequest by types doesn't seem to work
+    if (details.resourceType !== 'xhr' || isIframe) {
       return callback({requestHeaders: details.requestHeaders})
     }
     // console.log(details.method, details.url, details.resourceType, 'webContents:', details.referrer, 'referrer:', details.webContents.getURL(), details.requestHeaders)
@@ -102,8 +103,9 @@ const createMainWindow = () => {
 
   // fix cors errors for window.fetch. must not be enabled for iframe or can cause remote code execution
   mainWindow.webContents.session.webRequest.onHeadersReceived({urls: ['*://*/*']}, (details, callback) => {
-    // if not a fetch request, do nothing, filtering webRequest by types doesn't seem to work
-    if (details.resourceType !== 'xhr') {
+    const isIframe = details.frame.parent !== null
+    // if not a fetch request (or is from iframe), do nothing, filtering webRequest by types doesn't seem to work
+    if (details.resourceType !== 'xhr' || isIframe) {
       return callback({responseHeaders: details.responseHeaders})
     }
     // console.log(details.method, details.url, details.resourceType, 'webContents:', details.referrer, 'referrer:', details.webContents.getURL(), details.responseHeaders)
