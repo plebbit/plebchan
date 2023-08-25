@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const BoardStatsContainer = styled.div`
+  
   @media (max-width: 480px) {
     display: none;
   }
@@ -13,6 +14,7 @@ export const BoardStatsContainer = styled.div`
     table {
       border-spacing: 0px;
       width: 100%;
+      margin-top: -1px;
     }
   
     tr {

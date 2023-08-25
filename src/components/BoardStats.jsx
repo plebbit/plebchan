@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-import { useSubplebbitStats } from "@plebbit/plebbit-react-hooks/dist";
+import { useSubplebbit, useSubplebbitStats } from "@plebbit/plebbit-react-hooks/dist";
 import { BoardStatsContainer } from "./styled/BoardStats.styled";
 import { Break } from "./styled/views/Board.styled";
 import useGeneralStore from '../hooks/stores/useGeneralStore';
+
 
 
 const BoardStats = ({ subplebbitAddress }) => {
   const { selectedStyle } = useGeneralStore(state => state);
   const stats = useSubplebbitStats({subplebbitAddress});
   const [showStats, setShowStats] = useState(true);
+  const subplebbit = useSubplebbit({subplebbitAddress});
 
   const handleToggleStats = () => { 
     setShowStats(!showStats);
   };
+
+  const unixToMMDDYYYY = (timestamp) => {
+    const date = new Date(timestamp * 1000); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const day = ('0' + date.getDate()).slice(-2);
+    const year = date.getFullYear();
+    return month + '/' + day + '/' + year;
+  };
+
+  const pluralize = (count, singular, plural) => count === 1 ? singular : plural;
 
   return (
     <BoardStatsContainer selectedStyle={selectedStyle}>
@@ -21,17 +33,13 @@ const BoardStats = ({ subplebbitAddress }) => {
           {showStats && (
             <tbody id="blotter-msgs">
               <tr>
-                <td>Since this board was created, <span id="stat-number">{stats.allActiveUserCount}</span> users made <span id="stat-number">{stats.allPostCount}</span> posts in it.</td>
+                <td>In the past hour, <span id="stat-number">{stats.hourActiveUserCount}</span> {pluralize(stats.hourActiveUserCount, 'user', 'users')} made <span id="stat-number">{stats.hourPostCount}</span> {pluralize(stats.hourPostCount, 'post', 'posts')} — In the past day, <span id="stat-number">{stats.dayActiveUserCount}</span> {pluralize(stats.dayActiveUserCount, 'user', 'users')} made <span id="stat-number">{stats.dayPostCount}</span> {pluralize(stats.dayPostCount, 'post', 'posts')}</td>
               </tr>
               <tr>
-                <td>In the past month, <span id="stat-number">{stats.monthActiveUserCount}</span> users made <span id="stat-number">{stats.monthPostCount}</span> posts.&nbsp;&nbsp;In the past week, <span id="stat-number">{stats.weekActiveUserCount}</span> users made <span id="stat-number">{stats.weekPostCount}</span> posts.</td>
+                <td>In the past week, <span id="stat-number">{stats.weekActiveUserCount}</span> {pluralize(stats.weekActiveUserCount, 'user', 'users')} made <span id="stat-number">{stats.weekPostCount}</span> {pluralize(stats.weekPostCount, 'post', 'posts')} — In the past month, <span id="stat-number">{stats.monthActiveUserCount}</span> {pluralize(stats.monthActiveUserCount, 'user', 'users')} made <span id="stat-number">{stats.monthPostCount}</span> {pluralize(stats.monthPostCount, 'post', 'posts')}</td>
               </tr>
               <tr>
-              </tr>
-              <tr>
-                <td>In the past day, <span id="stat-number">{stats.dayActiveUserCount}</span> users made <span id="stat-number">{stats.dayPostCount}</span> posts.&nbsp;&nbsp;In the past hour, <span id="stat-number">{stats.hourActiveUserCount}</span> users made <span id="stat-number">{stats.hourPostCount}</span> posts.</td>
-              </tr>
-              <tr>
+                <td>{unixToMMDDYYYY(subplebbit.createdAt)} board created, since then <span id="stat-number">{stats.allActiveUserCount}</span> {pluralize(stats.allActiveUserCount, 'user', 'users')} have made <span id="stat-number">{stats.allPostCount}</span> {pluralize(stats.allPostCount, 'post', 'posts')}</td>
               </tr>
             </tbody>
           )}
@@ -40,7 +48,7 @@ const BoardStats = ({ subplebbitAddress }) => {
               <td colSpan={2}>
                 [
                   <span id="stat-number" className="hide-button" onClick={handleToggleStats}>
-                    {showStats ? 'Hide Stats' : 'Show Stats'}
+                    {showStats ? 'Hide' : 'Show Stats'}
                   </span>
                 ]
               </td>
