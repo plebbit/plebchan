@@ -85,11 +85,11 @@ const createMainWindow = () => {
   // set custom user agent and other headers for window.fetch requests to prevent origin errors
   mainWindow.webContents.session.webRequest.onBeforeSendHeaders({urls: ['*://*/*']}, (details, callback) => {
     const isIframe = details.frame.parent !== null
-    // if not a fetch request (or is from iframe), do nothing, filtering webRequest by types doesn't seem to work
+    // if not a fetch request (or fetch request is from within iframe), do nothing, filtering webRequest by types doesn't seem to work
     if (details.resourceType !== 'xhr' || isIframe) {
       return callback({requestHeaders: details.requestHeaders})
     }
-    // console.log(details.method, details.url, details.resourceType, 'webContents:', details.referrer, 'referrer:', details.webContents.getURL(), details.requestHeaders)
+    // add privacy
     details.requestHeaders['User-Agent'] = realUserAgent
     details.requestHeaders['sec-ch-ua'] = undefined
     details.requestHeaders['sec-ch-ua-platform'] = undefined
@@ -97,6 +97,7 @@ const createMainWindow = () => {
     details.requestHeaders['Sec-Fetch-Dest'] = undefined
     details.requestHeaders['Sec-Fetch-Mode'] = undefined
     details.requestHeaders['Sec-Fetch-Site'] = undefined
+    // prevent origin errors
     details.requestHeaders['Origin'] = undefined
     callback({requestHeaders: details.requestHeaders})
   })
@@ -104,13 +105,19 @@ const createMainWindow = () => {
   // fix cors errors for window.fetch. must not be enabled for iframe or can cause remote code execution
   mainWindow.webContents.session.webRequest.onHeadersReceived({urls: ['*://*/*']}, (details, callback) => {
     const isIframe = details.frame.parent !== null
-    // if not a fetch request (or is from iframe), do nothing, filtering webRequest by types doesn't seem to work
+    // if not a fetch request (or fetch request is from within iframe), do nothing, filtering webRequest by types doesn't seem to work
     if (details.resourceType !== 'xhr' || isIframe) {
       return callback({responseHeaders: details.responseHeaders})
     }
-    // console.log(details.method, details.url, details.resourceType, 'webContents:', details.referrer, 'referrer:', details.webContents.getURL(), details.responseHeaders)
-    delete details.responseHeaders['access-control-allow-origin'] // must delete or both '*, *' get added
+    // must delete lower case headers or both '*, *' could get added
+    delete details.responseHeaders['access-control-allow-origin']
+    delete details.responseHeaders['access-control-allow-headers']
+    delete details.responseHeaders['access-control-allow-methods']
+    delete details.responseHeaders['access-control-expose-headers']
     details.responseHeaders['Access-Control-Allow-Origin'] = '*'
+    details.responseHeaders['Access-Control-Allow-Headers'] = '*'
+    details.responseHeaders['Access-Control-Allow-Methods'] = '*'
+    details.responseHeaders['Access-Control-Expose-Headers'] = '*'
     callback({responseHeaders: details.responseHeaders})
   })
 
