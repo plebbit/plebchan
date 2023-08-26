@@ -461,7 +461,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               </label>
             </li>
             <li className="settings-tip anon-tip">
-              Automatically use a different u/address per thread to post.
+              Use a newly generated u/address per thread to post.
             </li>
             <li className="settings-option disc">
               Account Data
