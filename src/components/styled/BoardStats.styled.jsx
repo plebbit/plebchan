@@ -10,11 +10,13 @@ export const BoardStatsContainer = styled.div`
     width: 468px;
     margin: auto;
     line-height: 1;
+    margin-top: -1px;
   
     table {
       border-spacing: 0px;
       width: 100%;
       margin-top: -1px;
+      padding-left: 3px;
     }
   
     tr {
