@@ -39,7 +39,7 @@ const useFeedStateString = (subplebbits) => {
     }
 
     if (!subplebbits) {
-      return undefined;
+      return
     }
 
     const states = {}
