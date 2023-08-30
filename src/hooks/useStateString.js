@@ -1,12 +1,12 @@
 import { useMemo } from 'react'
 
 const useStateString = (commentOrSubplebbit) => {
-  // dont show state string if the data is already fetched
-  if (commentOrSubplebbit?.updatedAt || commentOrSubplebbit?.state === 'succeeded') {
-    return
-  }
-
   return useMemo(() => {
+    // dont show state string if the data is already fetched
+    if (commentOrSubplebbit?.updatedAt || commentOrSubplebbit?.state === 'succeeded') {
+      return
+    }
+
     if (!commentOrSubplebbit?.clients) {
       return
     }
@@ -86,10 +86,10 @@ const useStateString = (commentOrSubplebbit) => {
 
     // fallback to comment or subplebbit state when possible
     if (!stateString) {
-      if (commentOrSubplebbit?.publishingState !== 'stopped') {
+      if (commentOrSubplebbit?.publishingState && commentOrSubplebbit?.publishingState !== 'stopped' && commentOrSubplebbit?.publishingState !== 'succeeded') {
         stateString = commentOrSubplebbit.publishingState
       }
-      else if (commentOrSubplebbit?.updatingState !== 'stopped') {
+      else if (commentOrSubplebbit?.updatingState !== 'stopped' && commentOrSubplebbit?.updatingState !== 'succeeded') {
         stateString = commentOrSubplebbit.updatingState
       }
       if (stateString) {
