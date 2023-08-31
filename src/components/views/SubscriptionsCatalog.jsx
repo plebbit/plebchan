@@ -78,10 +78,21 @@ const CatalogPost = ({post}) => {
   const postMenuCatalogRef = useRef(null);
   const popupRef = useRef(null);
   const threadRefs = useRef([]);
+  const textRef = useRef(null);
+  const imageRef = useRef(null);
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
   const [isEnoughSpaceOnLeft,setIsEnoughSpaceOnLeft] = useState(null);
   const [isCalculationDone,setIsCalculationDone] = useState(false);
   const [hoverTimeoutId, setHoverTimeoutId] = useState(null);
+  const textRect = textRef.current?.getBoundingClientRect();
+  const imageRect = imageRef.current?.getBoundingClientRect();
+  const isMediaShowed = (thread.link && commentMediaInfo && (
+    commentMediaInfo.type === 'image' || 
+    commentMediaInfo.type === 'video' || 
+    (commentMediaInfo.type === 'webpage' && 
+    commentMediaInfo.thumbnail) ||
+    (commentMediaInfo.type === 'iframe' &&
+    commentMediaInfo.thumbnail))) ? true : false;
 
 
   useLayoutEffect(() => {
@@ -337,8 +348,17 @@ const CatalogPost = ({post}) => {
       style={{
       opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
       visibility: isCalculationDone && isEnoughSpaceOnRight !== null ? 'visible' : 'hidden',
-      left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight ? '100%' : 'auto',
-      right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight ? '100%' : 'auto',}}
+      left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight
+        ? isMediaShowed
+          ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
+          : `calc(50% + ${textRect.width}px / 2 + 5px)`
+        : 'auto',
+      right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight
+        ? isMediaShowed
+          ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
+          : `calc(50% + ${textRect.width}px / 2 + 5px)`
+        : 'auto',
+      }}
       className="thread_popup">
         <p
         style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
@@ -369,7 +389,7 @@ const CatalogPost = ({post}) => {
           {commentMediaInfo?.type === "webpage" ? (
             thread.thumbnailUrl ? (
               <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
-                <img className="card" key={`img-`}
+                <img className="card" ref={imageRef} key={`img-`}
                 src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
                 onError={(e) => {
                   e.target.src = fallbackImgUrl
@@ -380,7 +400,7 @@ const CatalogPost = ({post}) => {
           ) : null}
           {commentMediaInfo?.type === "image" ? (
             <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
-              <img className="card" key={`img-`}
+              <img className="card" ref={imageRef} key={`img-`}
               src={commentMediaInfo.url} alt={commentMediaInfo.type} 
               onError={(e) => {
                 e.target.src = fallbackImgUrl
@@ -389,14 +409,14 @@ const CatalogPost = ({post}) => {
           ) : null}              
           {commentMediaInfo?.type === "video" ? (
             <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
-              <video className="card" key={`fti-`} 
+              <video className="card" ref={imageRef} key={`fti-`} 
               src={commentMediaInfo.url} 
               alt={commentMediaInfo.type} 
               onError={(e) => e.target.src = fallbackImgUrl} /> 
             </span>
           ) : null}
           {commentMediaInfo?.type === "audio" ? (
-              <audio className="card" controls 
+              <audio className="card" ref={imageRef} controls 
               key={`fti-`} 
               src={commentMediaInfo.url} 
               alt={commentMediaInfo.type} 
@@ -574,8 +594,10 @@ const CatalogPost = ({post}) => {
       onClick={() => setSelectedThread(thread.cid)}>
         <div key={`t-`} className="teaser" style={{maxHeight: `calc(320px - ${displayHeight})`}}
         ref={(el) => (threadRefs.current[thread.cid] = el)}>
+        <span key={`teaser-width${thread.cid}`} ref={textRef}>
           <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
           {thread.content ? `: ${thread.content}` : null}
+        </span>
         </div>
       </Link>
     </div>
