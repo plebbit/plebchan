@@ -929,7 +929,7 @@ const All = () => {
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => {
                                     handleOptionClick(thread.cid);
-                                    handleShareClick(selectedAddress, thread.cid);
+                                    handleShareClick(thread.subplebbitAddress, thread.cid);
                                   }}>Share thread</li>
                                   <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                                     <>
@@ -1009,19 +1009,19 @@ const All = () => {
                                       style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
                                       <li onClick={() => handleOptionClick(thread.cid)}>
                                         <a 
-                                        href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`}
+                                        href={`https://plebbitapp.eth.limo/#/p/${thread.subplebbitAddress}/c/${thread.cid}`}
                                         target="_blank" rel="noreferrer"
                                         >Plebbit</a>
                                       </li>
                                       {/* <li onClick={() => handleOptionClick(thread.cid)}>
                                         <a
-                                        href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`}
+                                        href={`https://seedit.eth.limo/#/p/${thread.subplebbitAddress}/c/${thread.cid}`}
                                         target="_blank" rel="noreferrer"
                                         >Seedit</a>
                                       </li> */}
                                       <li onClick={() => handleOptionClick(thread.cid)}>
                                         <a
-                                        href={`https://plebones.netlify.app/#/p/${selectedAddress}/c/${thread.cid}`}
+                                        href={`https://plebones.netlify.app/#/p/${thread.subplebbitAddress}/c/${thread.cid}`}
                                         target="_blank" rel="noreferrer"
                                         >Plebones</a>
                                       </li>
@@ -1101,7 +1101,7 @@ const All = () => {
                                   className="ttl ellipsis"/>
                                   <br key={`ttl-s-br2${index}`} />
                                   Post too long.&nbsp;
-                                  <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  <Link key={`ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. 
                                 </span>
                               </blockquote>
@@ -1264,7 +1264,7 @@ const All = () => {
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => {
                                     handleOptionClick(reply.cid);
-                                    handleShareClick(selectedAddress, thread.cid);
+                                    handleShareClick(thread.subplebbitAddress, thread.cid);
                                   }}>Share thread</li>
                                   <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
@@ -1344,19 +1344,19 @@ const All = () => {
                                       style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
                                       <li onClick={() => handleOptionClick(reply.cid)}>
                                         <a 
-                                        href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}/c/${reply.cid}`}
+                                        href={`https://plebbitapp.eth.limo/#/p/${thread.subplebbitAddress}/c/${reply.cid}`}
                                         target="_blank" rel="noreferrer"
                                         >Plebbit</a>
                                       </li>
                                       {/* <li onClick={() => handleOptionClick(reply.cid)}>
                                         <a
-                                        href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${reply.cid}`}
+                                        href={`https://seedit.eth.limo/#/p/${thread.subplebbitAddress}/c/${reply.cid}`}
                                         target="_blank" rel="noreferrer"
                                         >Seedit</a>
                                       </li> */}
                                       <li onClick={() => handleOptionClick(reply.cid)}>
                                         <a
-                                        href={`https://plebones.netlify.app/#/p/${selectedAddress}/c/${reply.cid}`}
+                                        href={`https://plebones.netlify.app/#/p/${thread.subplebbitAddress}/c/${reply.cid}`}
                                         target="_blank" rel="noreferrer"
                                         >Plebones</a>
                                       </li>
@@ -1610,7 +1610,7 @@ const All = () => {
                                   className="ttl ellipsis"/>
                                   <br key={`ttl-s-br2${index}`} />
                                   Comment too long.&nbsp;
-                                    <Link key={`ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                    <Link key={`ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                   &nbsp;to view. </span>
                                 </blockquote>
                               </Fragment>
@@ -1938,7 +1938,7 @@ const All = () => {
                               className="ttl ellipsis"/>
                               <br key={`mob-ttl-s-br2${thread.cid}`} />
                               Post too long.&nbsp;
-                                <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                <Link key={`mob-ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                             </blockquote>
                           </Fragment>
@@ -2217,7 +2217,7 @@ const All = () => {
                                 className="ttl ellipsis"/>
                                 <br key={`mob-ttl-s-br2${reply.cid}`} />
                                 Comment too long.&nbsp;
-                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${selectedAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
+                                  <Link key={`mob-ttl-l-${index}`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} onClick={() => setSelectedThread(thread.cid)} className="ttl-link">Click here</Link>
                                 &nbsp;to view. </span>
                               </blockquote>
                             </Fragment>
