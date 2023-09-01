@@ -340,52 +340,55 @@ const CatalogPost = ({post}) => {
 
   return (
     <div key={`thread-`} className="thread" 
-    onMouseOver={() => {setIsHoveringOnThread(thread.cid)}} 
     onMouseLeave={() => {handleMouseOnLeaveThread()}}>
       {isHoveringOnThread === thread.cid  ? 
-      <div ref={popupRef}
-      onMouseOver={() => handleMouseOnLeaveThread()}
-      style={{
-      opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
-      visibility: isCalculationDone && isEnoughSpaceOnRight !== null ? 'visible' : 'hidden',
-      left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight
-        ? isMediaShowed
-          ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
-          : `calc(50% + ${textRect.width}px / 2 + 5px)`
-        : 'auto',
-      right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight
-        ? isMediaShowed
-          ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
-          : `calc(50% + ${textRect.width}px / 2 + 5px)`
-        : 'auto',
-      }}
-      className="thread_popup">
-        <p
-        style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
-          && !isEnoughSpaceOnRight
-          ?
-          {overflow:"visible",whiteSpace:"normal"}
-        : null
-        }
-        className="thread_popup_content">
-        <span className="thread_popup_title" >
-          {thread.title ? `${thread.title} ` : "Posted "}
-        </span>
-        by 
-        <span className="thread_popup_author"> 
-        {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
-        </span> 
-        {thread.timestamp ? getFormattedTime(thread.timestamp) : null}</p>
-        <div>
-        {thread.replyCount > 0 ?
-        <p className="thread_popup_lastReply">
-        Last reply by <span className="thread_popup_author"> Anonymous </span> 
-        {getFormattedTime(thread.lastReplyTimestamp)}</p>
-        : null}</div>
-        </div> : null }
+        <div ref={popupRef}
+        onMouseOver={() => handleMouseOnLeaveThread()}
+        style={{
+        opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
+        visibility: isCalculationDone && isEnoughSpaceOnRight !== null ? 'visible' : 'hidden',
+        left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight
+          ? isMediaShowed
+            ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
+            : `calc(50% + ${textRect.width}px / 2 + 5px)`
+          : 'auto',
+        right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight
+          ? isMediaShowed
+            ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
+            : `calc(50% + ${textRect.width}px / 2 + 5px)`
+          : 'auto',
+        }}
+        className="thread_popup">
+          <p
+          style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
+            && !isEnoughSpaceOnRight
+            ?
+            {overflow:"visible",whiteSpace:"normal"}
+          : null
+          }
+          className="thread_popup_content">
+            <span className="thread_popup_title" >
+              {thread.title ? `${thread.title} ` : "Posted "}
+            </span>
+            by 
+            <span className="thread_popup_author"> 
+              {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
+            </span> 
+            {thread.timestamp ? getFormattedTime(thread.timestamp) : null}
+          </p>
+          <div>
+            {thread.replyCount > 0 ?
+              <p className="thread_popup_lastReply">
+                Last reply by <span className="thread_popup_author"> Anonymous </span> 
+                {getFormattedTime(thread.lastReplyTimestamp)}
+              </p>
+            : null}
+          </div>
+        </div> 
+      : null }
       {commentMediaInfo?.url ? (
         <Link style={{all: "unset", cursor: "pointer"}} key={`link-`} to={`/p/${thread.subplebbitAddress}/c/${thread.cid}`} 
-        onClick={() => setSelectedThread(thread.cid)}>
+        onClick={() => setSelectedThread(thread.cid)} onMouseOver={() => {setIsHoveringOnThread(thread.cid)}}>
           {commentMediaInfo?.type === "webpage" ? (
             thread.thumbnailUrl ? (
               <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
@@ -397,6 +400,13 @@ const CatalogPost = ({post}) => {
                 }}  />
               </span>
             ) : null
+          ) : null}
+          {commentMediaInfo?.type === "iframe" && (thread.thumbnailUrl || commentMediaInfo.thumbnail) ? (
+            <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
+              <img className="card" ref={imageRef} key={`img-`}
+              src={commentMediaInfo.thumbnail} alt={commentMediaInfo.type}
+              onError={(e) => { e.target.src = fallbackImgUrl }}  />
+            </span>
           ) : null}
           {commentMediaInfo?.type === "image" ? (
             <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
@@ -425,11 +435,7 @@ const CatalogPost = ({post}) => {
         </Link>
       ) : null}
       <div key={`ti-`} className="thread-icons" >
-      {(commentMediaInfo && (
-        commentMediaInfo.type === 'image' || 
-        commentMediaInfo.type === 'video' || 
-        (commentMediaInfo.type === 'webpage' && 
-        commentMediaInfo.thumbnail))) ? (                          
+      {isMediaShowed ? (                          
           <OfflineIndicator 
           address={thread.subplebbitAddress} 
           className="thread-icon offline-icon"
@@ -441,7 +447,7 @@ const CatalogPost = ({post}) => {
           tooltipPlace="top" />
       )}
       </div>
-      <BoardForm selectedStyle={selectedStyle} 
+      <BoardForm selectedStyle={selectedStyle} onMouseOver={() => handleMouseOnLeaveThread()}
       style={{ all: "unset"}}>
         <div key={`meta-`} className="meta" title="(R)eplies / (L)ink Replies" >
           R:&nbsp;<b key={`b-`}>{thread.replyCount}</b>
@@ -594,7 +600,7 @@ const CatalogPost = ({post}) => {
       onClick={() => setSelectedThread(thread.cid)}>
         <div key={`t-`} className="teaser" style={{maxHeight: `calc(320px - ${displayHeight})`}}
         ref={(el) => (threadRefs.current[thread.cid] = el)}>
-        <span key={`teaser-width${thread.cid}`} ref={textRef}>
+        <span key={`teaser-width${thread.cid}`} ref={textRef} onMouseOver={() => {setIsHoveringOnThread(thread.cid)}}>
           <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
           {thread.content ? `: ${thread.content}` : null}
         </span>

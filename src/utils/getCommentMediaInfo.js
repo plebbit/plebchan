@@ -14,6 +14,13 @@ const getCommentMediaInfo = (comment) => {
       if (['youtube.com', 'www.youtube.com', 'youtu.be'].includes(host)) {
         const videoId = host === 'youtu.be' ? url.pathname.slice(1) : url.searchParams.get('v');
         embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
+        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+        return {
+          url: comment.link,
+          embedUrl,
+          type: 'iframe',
+          thumbnail: comment.thumbnailUrl || thumbnailUrl,
+        };
       } else if (host.includes('odysee.com')) {
         const pathComponents = url.pathname.split('/');
         const channelAndId = pathComponents[1];

@@ -1534,7 +1534,7 @@ const Thread = () => {
                                 replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                 replyMediaInfo?.url
                                 }</a>&nbsp;({replyMediaInfo?.type})
-                                {replyMediaInfo?.type === "video" || "iframe" ? (
+                                {replyMediaInfo?.type === "video" ||  replyMediaInfo?.type === "iframe" ? (
                                     isReplyThumbnailClicked[index] ? (
                                       <span>
                                         -[
@@ -1819,7 +1819,7 @@ const Thread = () => {
                                     style={{cursor: "pointer"}}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
                                 )}
-                                {commentMediaInfo?.type === "video" || "iframe" ? (
+                                {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
                                   isMobileThreadThumbnailClicked[index] ? (
                                     <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                       <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
@@ -1876,7 +1876,7 @@ const Thread = () => {
                                       onError={(e) => e.target.src = fallbackImgUrl} 
                                     />
                                   )}
-                                  {commentMediaInfo?.type === "video" || "iframe" ? (
+                                  {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
                                     isMobileThreadThumbnailClicked[index] ? (
                                       <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                         <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
