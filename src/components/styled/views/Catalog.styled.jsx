@@ -4,7 +4,7 @@ export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
   margin: 0;
-  overflow:hidden;
+  overflow: hidden;
 
   .thread {
     width: 180px;
@@ -18,48 +18,49 @@ export const Threads = styled.div`
     padding: 5px 0 3px;
   }
 
-  .thread_popup{
+  .thread_popup {
     display: inline-block;
-    height:auto;
-    background-color:black;
-    position:absolute;
-    margin-top:0px;
-    text-align:left;
-    z-index:10;
+    height: auto;
+    background-color: black;
+    position: absolute;
+    margin-top: 0px;
+    text-align: left;
+    z-index: 10;
     transform:none;
-    padding-left:5px;padding-right:5px;
-    border-radius:3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 3px;
+    white-space: nowrap;
   }
 
   .thread_popup_content {
+    max-width: 500px;
     margin: 5px 3px 2px 3px !important;
     color: #dedede;
     display: inline-block;
     overflow: hidden;
-    white-space:nowrap;
-    font-size:13px;
+    font-size: 13px;
   }
 
-  .thread_popup_lastReply{
+  .thread_popup_lastReply {
     margin: 0px 4px 5px 4px !important;
     color: #bbbfbd;
     display: block;
-    width: auto;
     min-width: 250px;
-    overflow: hidden;
     text-overflow: ellipsis;
-    font-size:90%;
+    font-size: 90%;
   }
 
-  .thread_popup_title{
+  .thread_popup_title {
     color:#a89baa
   }
 
-  .thread_popup_author{
-    color:#519860;font-weight:bold
+  .thread_popup_author {
+    color:#519860;
+    font-weight: bold
   }
 
-  .thread_popup_authorAdmin{
+  .thread_popup_authorAdmin {
     color: purple;
     font-weight: 700;
   }
@@ -128,7 +129,6 @@ export const Threads = styled.div`
   }
 
   .meta {
-    cursor: help;
     font-size: 11px;
     line-height: 8px;
     margin-top: 2px;

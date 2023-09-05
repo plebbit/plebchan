@@ -134,7 +134,6 @@ const CatalogPost = ({post}) => {
   
   
   const handleMouseOnLeaveThread = () => {
-    setIsHoveringForMenu(false);
     if (hoverTimeoutId) {
         clearTimeout(hoverTimeoutId);
         setHoverTimeoutId(null);
@@ -350,13 +349,9 @@ const CatalogPost = ({post}) => {
         <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}} 
         onMouseOver={() => {
           setIsHoveringForMenu('rules');
-          if (!hoverTimeoutId) {
-              const timeoutId = setTimeout(() => {
-                  setIsHoveringOnThread("rules");
-              }, 250);
-              setHoverTimeoutId(timeoutId);
-          }
-        }}>
+          handleMouseOnLeaveThread();
+        }}
+        onMouseLeave={() => setIsHoveringForMenu(false)}>
           <div className='meta' title="(R)eplies / (L)ink Replies">
             R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
             <div className='thread-icons' 
@@ -424,7 +419,8 @@ const CatalogPost = ({post}) => {
               }, 250);
               setHoverTimeoutId(timeoutId);
           }
-        }}>
+        }}
+        onMouseLeave={() => setIsHoveringForMenu(false)}>
             <div className="teaser" style={{maxHeight: '312px'}}>
               <b>Rules</b>
               {": " + subplebbit.rules?.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
@@ -459,6 +455,7 @@ const CatalogPost = ({post}) => {
                     setHoverTimeoutId(timeoutId);
                 }
               }}
+              onMouseLeave={() => setIsHoveringForMenu(false)}
               src={subplebbit.suggested.avatarUrl} alt="board avatar" />
             ) : null}
           </Link>
@@ -475,13 +472,9 @@ const CatalogPost = ({post}) => {
           <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}}
           onMouseOver={() => {
             setIsHoveringForMenu('description');
-            if (!hoverTimeoutId) {
-                const timeoutId = setTimeout(() => {
-                    setIsHoveringOnThread("description");
-                }, 250);
-                setHoverTimeoutId(timeoutId);
-            }
-          }}>
+            handleMouseOnLeaveThread();
+          }}
+          onMouseLeave={() => setIsHoveringForMenu(false)}>
             <div className='meta' title="(R)eplies / (L)ink Replies">
               R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
               {subplebbit.suggested?.avatarUrl ? null : (
@@ -579,7 +572,8 @@ const CatalogPost = ({post}) => {
                   }, 250);
                   setHoverTimeoutId(timeoutId);
               }
-            }}>
+            }}
+            onMouseLeave={() => setIsHoveringForMenu(false)}>
               <div className="teaser" style={{maxHeight: '170px'}}>
                 <b>Welcome to {subplebbit.title || subplebbit.address}!</b>
                 {": " + subplebbit.description}
@@ -637,7 +631,12 @@ const CatalogPost = ({post}) => {
         : null }
         {commentMediaInfo?.url ? (
           <Link style={{all: "unset", cursor: "pointer"}} key={`link-`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
-          onClick={() => setSelectedThread(thread.cid)} onMouseOver={() => setIsHoveringOnThread(thread.cid)}>
+          onClick={() => setSelectedThread(thread.cid)} 
+          onMouseOver={() => {
+            setIsHoveringOnThread(thread.cid);
+            setIsHoveringForMenu(thread.cid);
+          }}
+          onMouseLeave={() => setIsHoveringForMenu(false)}>
             {commentMediaInfo?.type === "webpage" ? (
               thread.thumbnailUrl ? (
                 <span className="file-thumb" style={{width: displayWidth, height: displayHeight}}>
@@ -697,7 +696,12 @@ const CatalogPost = ({post}) => {
           ) : null}
         </div>
         ) : null}
-        <BoardForm selectedStyle={selectedStyle} onMouseOver={() => handleMouseOnLeaveThread()}
+        <BoardForm selectedStyle={selectedStyle} 
+        onMouseOver={() => {
+          setIsHoveringForMenu(thread.cid);
+          handleMouseOnLeaveThread();
+        }}
+        onMouseLeave={() => setIsHoveringForMenu(false)}
         style={{ all: "unset"}}>
           <div key={`meta-`} className="meta" title="(R)eplies / (L)ink Replies" >
             R:&nbsp;<b key={`b-`}>{thread.replyCount}</b>
@@ -723,7 +727,7 @@ const CatalogPost = ({post}) => {
               </div>
             )}
           <PostMenu 
-            style={{ display: isHoveringOnThread === thread.cid ? 'inline-block' : 'none',
+            style={{ display: isHoveringForMenu === thread.cid ? 'inline-block' : 'none',
             position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
             zIndex: '999'}}
             key={`pmb-`} 
@@ -861,7 +865,12 @@ const CatalogPost = ({post}) => {
           <div key={`t-`} className="teaser" style={{maxHeight: `calc(320px - ${displayHeight})`}}>
           <div style={{cursor:"text"}}
             ref={(el) => (threadRefs.current[thread.cid] = el)}>
-              <span key={`teaser-width${thread.cid}`} ref={textRef} onMouseOver={() => setIsHoveringOnThread(thread.cid)}>
+              <span key={`teaser-width${thread.cid}`} ref={textRef} 
+              onMouseOver={() => {
+                setIsHoveringOnThread(thread.cid);
+                setIsHoveringForMenu(thread.cid);
+              }}
+              onMouseLeave={() => setIsHoveringForMenu(false)}>
                 <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
                 {thread.content ? `: ${thread.content}` : null}
               </span>
