@@ -126,7 +126,7 @@ const CatalogPost = ({post}) => {
     };
   
     if (isHoveringOnThread) {
-      const timeoutId = setTimeout(executeLayoutEffectLogic, 500);
+      const timeoutId = setTimeout(executeLayoutEffectLogic, 250);
       return () => clearTimeout(timeoutId);
     }
   
@@ -353,7 +353,7 @@ const CatalogPost = ({post}) => {
           if (!hoverTimeoutId) {
               const timeoutId = setTimeout(() => {
                   setIsHoveringOnThread("rules");
-              }, 500);
+              }, 250);
               setHoverTimeoutId(timeoutId);
           }
         }}>
@@ -421,7 +421,7 @@ const CatalogPost = ({post}) => {
           if (!hoverTimeoutId) {
               const timeoutId = setTimeout(() => {
                   setIsHoveringOnThread("rules");
-              }, 500);
+              }, 250);
               setHoverTimeoutId(timeoutId);
           }
         }}>
@@ -455,7 +455,7 @@ const CatalogPost = ({post}) => {
                 if (!hoverTimeoutId) {
                     const timeoutId = setTimeout(() => {
                         setIsHoveringOnThread("description");
-                    }, 500);
+                    }, 250);
                     setHoverTimeoutId(timeoutId);
                 }
               }}
@@ -478,7 +478,7 @@ const CatalogPost = ({post}) => {
             if (!hoverTimeoutId) {
                 const timeoutId = setTimeout(() => {
                     setIsHoveringOnThread("description");
-                }, 500);
+                }, 250);
                 setHoverTimeoutId(timeoutId);
             }
           }}>
@@ -576,7 +576,7 @@ const CatalogPost = ({post}) => {
               if (!hoverTimeoutId) {
                   const timeoutId = setTimeout(() => {
                       setIsHoveringOnThread("description");
-                  }, 500);
+                  }, 250);
                   setHoverTimeoutId(timeoutId);
               }
             }}>

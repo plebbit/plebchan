@@ -114,7 +114,7 @@ const CatalogPost = ({post}) => {
     };
   
     if (isHoveringOnThread) {
-      const timeoutId = setTimeout(executeLayoutEffectLogic, 500);
+      const timeoutId = setTimeout(executeLayoutEffectLogic, 250);
       return () => clearTimeout(timeoutId);
     }
   
