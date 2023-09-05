@@ -31,7 +31,8 @@ export const Threads = styled.div`
     border-radius:3px;
   }
 
-  .thread_popup_content{
+  .thread_popup_content {
+    margin: 5px 3px 2px 3px !important;
     color: #dedede;
     display: inline-block;
     overflow: hidden;
@@ -40,6 +41,7 @@ export const Threads = styled.div`
   }
 
   .thread_popup_lastReply{
+    margin: 0px 4px 5px 4px !important;
     color: #bbbfbd;
     display: block;
     width: auto;
@@ -58,7 +60,8 @@ export const Threads = styled.div`
   }
 
   .thread_popup_authorAdmin{
-    color:#682071;
+    color: purple;
+    font-weight: 700;
   }
 
   video, audio, img {
@@ -207,7 +210,7 @@ export const Threads = styled.div`
                   font-weight:700;
                 };
                 .thread_popup_author{
-                  color:#00a550;font-weight:700;
+                  color:#dedede;font-weight:700;
                 }`;
       default:
         return '';
