@@ -20,17 +20,15 @@ export const Threads = styled.div`
 
   .thread_popup {
     display: inline-block;
-    height: auto;
     background-color: black;
     position: absolute;
     margin-top: 0px;
     text-align: left;
     z-index: 10;
-    transform:none;
     padding-left: 5px;
     padding-right: 5px;
     border-radius: 3px;
-    white-space: nowrap;
+    /* overflow-wrap: break-word; */
   }
 
   .thread_popup_content {
@@ -40,6 +38,7 @@ export const Threads = styled.div`
     display: inline-block;
     overflow: hidden;
     font-size: 13px;
+    white-space: normal;
   }
 
   .thread_popup_lastReply {
@@ -47,7 +46,6 @@ export const Threads = styled.div`
     color: #bbbfbd;
     display: block;
     min-width: 250px;
-    text-overflow: ellipsis;
     font-size: 90%;
   }
 

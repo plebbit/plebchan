@@ -90,11 +90,14 @@ const CatalogPost = ({post}) => {
   const imageRef = useRef(null);
   const [isEnoughSpaceOnRight, setIsEnoughSpaceOnRight] = useState(null);
   const [isEnoughSpaceOnLeft,setIsEnoughSpaceOnLeft] = useState(null);
+  const [spaceOnLeft,setSpaceOnLeft] = useState(null);
+  const [spaceOnRight,setSpaceOnRight] = useState(null);
   const [isCalculationDone,setIsCalculationDone] = useState(false);
   const [hoverTimeoutId, setHoverTimeoutId] = useState(null);
   const [isHoveringForMenu, setIsHoveringForMenu] = useState(false);
   const textRect = textRef.current?.getBoundingClientRect();
   const imageRect = imageRef.current?.getBoundingClientRect();
+  const popupRect = popupRef.current?.getBoundingClientRect();
   const isMediaShowed = (thread.link && commentMediaInfo && (
     commentMediaInfo.type === 'image' || 
     commentMediaInfo.type === 'video' || 
@@ -106,31 +109,34 @@ const CatalogPost = ({post}) => {
   useLayoutEffect(() => {
     const executeLayoutEffectLogic = () => {
       let ref;
-      if (isHoveringOnThread === 'rules' || isHoveringOnThread === 'description') {
-        ref = popupRef.current; 
+      if (isMediaShowed) {
+        ref = imageRef.current; 
       } else {
-        ref = threadRefs.current[isHoveringOnThread];
+        ref = textRef.current;
       }
   
       if (ref && popupRef.current) {
         const threadRect = ref.getBoundingClientRect();
-        const popupRect = popupRef.current.getBoundingClientRect();
         const viewportWidth = document.documentElement.clientWidth;
-        const spaceOnRight = viewportWidth - (threadRect.left + threadRect.width);
-        const spaceOnLeft = threadRect.left;
-        const popupWidth = popupRect.width;
-        setIsEnoughSpaceOnLeft(spaceOnLeft >= popupWidth + 10);
-        setIsEnoughSpaceOnRight(spaceOnRight >= popupWidth + 10);
+        const spaceRight = viewportWidth - (threadRect.left + threadRect.width);
+        const spaceLeft = threadRect.left;
+        setIsEnoughSpaceOnLeft(spaceLeft > 500);
+        setIsEnoughSpaceOnRight(spaceRight > 500);
+        setSpaceOnRight(spaceRight);
+        setSpaceOnLeft(spaceLeft);
         setIsCalculationDone(true);
       }
     };
   
     if (isHoveringOnThread) {
       const timeoutId = setTimeout(executeLayoutEffectLogic, 250);
-      return () => clearTimeout(timeoutId);
+      return () => {
+        clearTimeout(timeoutId);
+        setIsCalculationDone(false);
+      };
     }
   
-  }, [isHoveringOnThread]);
+  }, [isHoveringOnThread, isMediaShowed]);
   
   
   const handleMouseOnLeaveThread = () => {
@@ -588,30 +594,31 @@ const CatalogPost = ({post}) => {
       onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
         {isHoveringOnThread === thread.cid  ? 
           <div ref={popupRef}
+          className="thread_popup"
           onMouseOver={() => handleMouseOnLeaveThread()}
           style={{
           opacity: isCalculationDone && isEnoughSpaceOnRight !== null ? 1 : 0,
           visibility: isCalculationDone && isEnoughSpaceOnRight !== null ? 'visible' : 'hidden',
-          left: isCalculationDone && isEnoughSpaceOnRight !== null && isEnoughSpaceOnRight
+          left: 
+            isCalculationDone && isEnoughSpaceOnRight !== null && popupRect.width < spaceOnRight
             ? isMediaShowed
-              ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
-              : `calc(50% + ${textRect.width}px / 2 + 5px)`
+            ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
+                : `calc(50% + ${textRect.width}px / 2 + 5px)`                   
             : 'auto',
-          right: isCalculationDone && isEnoughSpaceOnRight !== null && !isEnoughSpaceOnRight
-            ? isMediaShowed
-              ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
-              : `calc(50% + ${textRect.width}px / 2 + 5px)`
+          right:
+            isCalculationDone && isEnoughSpaceOnRight !== null && 
+              (popupRect.width > spaceOnRight && spaceOnLeft > spaceOnRight)
+                ? isMediaShowed
+                ? `calc(50% + ${imageRect.width}px / 2 + 5px)`
+                : `calc(50% + ${textRect.width}px / 2 + 5px)`   
             : 'auto',
-          }}
-          className="thread_popup">
+          }}>
             <p
-            style={isEnoughSpaceOnLeft !== null && !isEnoughSpaceOnLeft
-              && !isEnoughSpaceOnRight
-              ?
-              {overflow:"visible",whiteSpace:"normal"}
-            : null
-            }
-            className="thread_popup_content">
+            className="thread_popup_content"
+            style={{ width: !isEnoughSpaceOnLeft && !isEnoughSpaceOnRight ? (
+              spaceOnLeft > spaceOnRight ? `${spaceOnLeft}px` :
+              spaceOnLeft < spaceOnRight ? `${spaceOnRight}px` : 'auto') : 'auto'
+            }}>
             <span className="thread_popup_title" >
               {thread.title ? `${thread.title} ` : "Posted "}
             </span>
@@ -619,12 +626,15 @@ const CatalogPost = ({post}) => {
             <span className="thread_popup_author"> 
             {thread.author.displayName ?` ${thread.author.displayName} ` : " Anonymous "} 
             </span> 
-            {thread.timestamp ? getFormattedTime(thread.timestamp) : null}</p>
+              {thread.timestamp ? getFormattedTime(thread.timestamp) : null}
+            </p>
             <div>
               {thread.replyCount > 0 ?
               <p className="thread_popup_lastReply">
-              Last reply by <span className="thread_popup_author"> Anonymous </span> 
-              {getFormattedTime(thread.lastReplyTimestamp)}</p>
+                  Last reply by 
+                  <span className="thread_popup_author"> Anonymous </span> 
+                  {getFormattedTime(thread.lastReplyTimestamp)}
+                </p>
               : null}
             </div>
           </div> 
