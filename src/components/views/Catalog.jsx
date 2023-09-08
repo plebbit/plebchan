@@ -110,6 +110,7 @@ const CatalogPost = ({post}) => {
   useLayoutEffect(() => {
     const executeLayoutEffectLogic = () => {
       let ref;
+      
       if (isMediaShowed) {
         ref = imageRef.current; 
       } else {
@@ -348,126 +349,164 @@ const CatalogPost = ({post}) => {
 
   if (post.type === 'rules') {
     return (
-      <div className='thread'
-      onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
+      <>
         {isHoveringOnThread === 'rules' ? 
-        <div style={{left:"100%"}}
-        onMouseOver={() => setIsHoveringOnThread("")}
-        className={"thread_popup"}>
-          <p className="thread_popup_content" style={{color:"white"}}>
-          <span className="thread_popup_title">Rules </span>
-          by 
-          <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-          {getFormattedTime(subplebbit.createdAt)}</p>
-        </div> : null }   
-        <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}} 
-        onMouseOver={() => {
-          setIsHoveringForMenu('rules');
-          handleMouseOnLeaveThread();
-        }}
-        onMouseLeave={() => setIsHoveringForMenu(false)}>
-          <div className='meta' title="(R)eplies / (L)ink Replies">
-            R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
-            <div className='thread-icons' 
-            style={{position: 'absolute', top: '-2px', right: '15px'}}>
-              <span className="thread-icon sticky-icon" title="Sticky"
+          createPortal(
+            <PostPreview selectedStyle={selectedStyle}>
+              <div ref={popupRef}
+              className="post-preview"
+              onMouseOver={() => handleMouseOnLeaveThread()}
               style={{
-                imageRendering: "pixelated",}} />
-              <span className="thread-icon closed-icon" title="Closed"
-              style={{
-                imageRendering: "pixelated",}} />
-            </div>
-            <PostMenu 
-              style={{ display: isHoveringForMenu === "rules" ? 'inline-block' : 'none',
-              position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
-              zIndex: '999'}}
-              title="Post menu"
-              ref={el => { 
-                threadMenuRefs.current["rules"] = el; 
-                postMenuRef.current = el; 
-              }}
-              className='post-menu-button' 
-              id='post-menu-button-catalog'
-              rotated={openMenuCid === "rules"}
-              onClick={(event) => {
-                event.stopPropagation();
-                const rect = threadMenuRefs.current["rules"].getBoundingClientRect();
-                setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                setOpenMenuCid(prevCid => (prevCid === "rules" ? null : "rules"));
-              }}                              
-            >
-              ▶
-            </PostMenu>
-          </div>
-          {createPortal(
-            <PostMenuCatalog selectedStyle={selectedStyle} 
-              ref={el => {postMenuCatalogRef.current = el}}
-              onClick={(event) => event.stopPropagation()}
-              style={{position: "absolute", 
-              top: menuPosition.top + 7, 
-              left: menuPosition.left}}>
-              <div className={`post-menu-thread post-menu-thread-${"rules"}`}
-              style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
-              >
-                <ul className="post-menu-catalog">
-                  <li onClick={() => {
-                    handleOptionClick("rules");
-                    handleShareClick(selectedAddress, "rules");
-                  }}>Share thread</li>
-                  {/* {isModerator ? (
-                    <>
-                      change rules
-                    </>
-                  ) : null} */}
-                </ul>
+              visibility: isCalculationDone ? 'visible' : 'hidden',
+              left: 
+                isCalculationDone && spaceOnRight > 250 ? textRect.right + 5 :
+                isCalculationDone && spaceOnRight < 250 ? textRect.left - popupRect.width - 5
+                : 'auto',
+              top: popupPosition.top + 5,
+              }}>
+                <span className="post-subject" >
+                  Rules 
+                </span> by 
+                <span className="post-author-admin"> ## Board Admins </span>
+                <span className='post-ago'>
+                  {thread.timestamp ? getFormattedTime(thread.timestamp) : null}
+                </span>
               </div>
-            </PostMenuCatalog>, document.body
-          )}
-        </BoardForm>
-        <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}
-        onMouseOver={() => {
-          setIsHoveringForMenu('rules');
-          if (!hoverTimeoutId) {
-              const timeoutId = setTimeout(() => {
-                  setIsHoveringOnThread("rules");
-              }, 250);
-              setHoverTimeoutId(timeoutId);
-          }
+            </PostPreview>, document.body
+          )
+        : null }
+        <div className='thread'
+        ref={el => { 
+          threadRefs.current['rules'] = el; 
         }}
-        onMouseLeave={() => setIsHoveringForMenu(false)}>
-            <div className="teaser" style={{maxHeight: '312px'}}>
-              <b>Rules</b>
-              {": " + subplebbit.rules?.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
+        onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
+          <BoardForm selectedStyle={selectedStyle} style={{all: 'unset'}} 
+          onMouseOver={() => {
+            setIsHoveringForMenu('rules');
+            handleMouseOnLeaveThread();
+          }}
+          onMouseLeave={() => setIsHoveringForMenu(false)}>
+            <div className='meta' title="(R)eplies / (L)ink Replies">
+              R:&nbsp;<b>0</b>&nbsp;/&nbsp;L:&nbsp;<b>0</b>
+              <div className='thread-icons' 
+              style={{position: 'absolute', top: '-2px', right: '15px'}}>
+                <span className="thread-icon sticky-icon" title="Sticky"
+                style={{
+                  imageRendering: "pixelated",}} />
+                <span className="thread-icon closed-icon" title="Closed"
+                style={{
+                  imageRendering: "pixelated",}} />
+              </div>
+              <PostMenu 
+                style={{ display: isHoveringForMenu === "rules" ? 'inline-block' : 'none',
+                position: 'absolute', lineHeight: '1em', marginTop: '-1px', outline: 'none',
+                zIndex: '999'}}
+                title="Post menu"
+                ref={el => { 
+                  threadMenuRefs.current["rules"] = el; 
+                  postMenuRef.current = el; 
+                }}
+                className='post-menu-button' 
+                id='post-menu-button-catalog'
+                rotated={openMenuCid === "rules"}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  const rect = threadMenuRefs.current["rules"].getBoundingClientRect();
+                  setMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                  setOpenMenuCid(prevCid => (prevCid === "rules" ? null : "rules"));
+                }}                              
+              >
+                ▶
+              </PostMenu>
             </div>
-          </Link>
-      </div>
+            {createPortal(
+              <PostMenuCatalog selectedStyle={selectedStyle} 
+                ref={el => {postMenuCatalogRef.current = el}}
+                onClick={(event) => event.stopPropagation()}
+                style={{position: "absolute", 
+                top: menuPosition.top + 7, 
+                left: menuPosition.left}}>
+                <div className={`post-menu-thread post-menu-thread-${"rules"}`}
+                style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
+                >
+                  <ul className="post-menu-catalog">
+                    <li onClick={() => {
+                      handleOptionClick("rules");
+                      handleShareClick(selectedAddress, "rules");
+                    }}>Share thread</li>
+                    {/* {isModerator ? (
+                      <>
+                        change rules
+                      </>
+                    ) : null} */}
+                  </ul>
+                </div>
+              </PostMenuCatalog>, document.body
+            )}
+          </BoardForm>
+          <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}>
+            <div className="teaser" style={{maxHeight: '312px'}}>
+              <div style={{cursor: 'text'}}>
+                <span ref={textRef}
+                onMouseOver={() => {
+                  setIsHoveringOnThread('rules');
+                  setIsHoveringForMenu('rules');
+                  const rect = threadRefs.current['rules'].getBoundingClientRect();
+                  setPopupPosition({top: rect.top + window.scrollY, left: rect.left});
+                }}
+                onMouseLeave={() => setIsHoveringForMenu(false)}>
+                  <b>Rules</b>
+                  {": " + subplebbit.rules?.map((rule, index) => `${index + 1}. ${rule}`).join(' ')}
+                </span>
+              </div>
+              </div>
+            </Link>
+        </div>
+      </>
     )
   } else if (post.type === 'description') {
     return (
       <>
+        {isHoveringOnThread === 'description' ? 
+          createPortal(
+            <PostPreview selectedStyle={selectedStyle}>
+              <div ref={popupRef}
+              className="post-preview"
+              onMouseOver={() => handleMouseOnLeaveThread()}
+              style={{
+              visibility: isCalculationDone ? 'visible' : 'hidden',
+              left: 
+                isCalculationDone && spaceOnRight > 250
+                ? subplebbit.suggestedAvatarUrl ? imageRect.right + 5 : textRect.right + 5 :
+                isCalculationDone && spaceOnRight < 250
+                ? subplebbit.suggestedAvatarUrl ? imageRect.left - popupRect.width - 5 : textRect.left - popupRect.width - 5
+                : 'auto',
+              top: popupPosition.top + 5,
+              }}>
+                <span className="post-subject" >
+                  Welcome to {subplebbit.title || subplebbit.address} 
+                </span> by 
+                <span className="post-author-admin"> ## Board Admins </span>
+                <span className='post-ago'>
+                  {thread.timestamp ? getFormattedTime(thread.timestamp) : null}
+                </span>
+              </div>
+            </PostPreview>, document.body
+          )
+        : null }
         <div className='thread'
+        ref={el => { 
+          threadRefs.current['description'] = el; 
+        }}
         onMouseLeave={()=>{handleMouseOnLeaveThread()}}>
-          {isHoveringOnThread === 'description' ? 
-          <div style={{left:"100%"}}
-          onMouseOver={() => setIsHoveringOnThread("")}
-          className={"thread_popup"}>
-            <p className="thread_popup_content" style={{color:"white"}}>
-            <span className="thread_popup_title">Welcome to {subplebbit.title || subplebbit.address} </span> 
-              by  
-            <span className="thread_popup_authorAdmin"> ## Board Admins </span> 
-              {getFormattedTime(subplebbit.createdAt)}</p>
-          </div> : null }
           <Link style={{all: 'unset', cursor: 'pointer'}} to={`/p/${selectedAddress}/description`}>
             {subplebbit.suggested?.avatarUrl ? (
               <img className='card'
               onMouseOver={() => {
+                setIsHoveringOnThread('description');
                 setIsHoveringForMenu('description');
-                if (!hoverTimeoutId) {
-                    const timeoutId = setTimeout(() => {
-                        setIsHoveringOnThread("description");
-                    }, 250);
-                    setHoverTimeoutId(timeoutId);
-                }
+                const rect = threadRefs.current['description'].getBoundingClientRect();
+                setPopupPosition({top: rect.top + window.scrollY, left: rect.left});
               }}
               onMouseLeave={() => setIsHoveringForMenu(false)}
               src={subplebbit.suggested.avatarUrl} alt="board avatar" />
@@ -578,21 +617,23 @@ const CatalogPost = ({post}) => {
             )}
           </BoardForm>
           <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/description`} 
-            onClick={() => setSelectedThread("description")} onMouseOver={() => {
-              setIsHoveringForMenu('description');
-              if (!hoverTimeoutId) {
-                  const timeoutId = setTimeout(() => {
-                      setIsHoveringOnThread("description");
-                  }, 250);
-                  setHoverTimeoutId(timeoutId);
-              }
-            }}
-            onMouseLeave={() => setIsHoveringForMenu(false)}>
-              <div className="teaser" style={{maxHeight: '170px'}}>
-                <b>Welcome to {subplebbit.title || subplebbit.address}!</b>
-                {": " + subplebbit.description}
+            onClick={() => setSelectedThread("description")}>
+            <div className="teaser" style={{maxHeight: '170px'}}>
+              <div style={{cursor: 'text'}}>
+                <span ref={textRef}
+                onMouseOver={() => {
+                  setIsHoveringOnThread('description');
+                  setIsHoveringForMenu('description');
+                  const rect = threadRefs.current['description'].getBoundingClientRect();
+                  setPopupPosition({top: rect.top + window.scrollY, left: rect.left});
+                }}
+                onMouseLeave={() => setIsHoveringForMenu(false)}>
+                  <b>Welcome to {subplebbit.title || subplebbit.address}!</b>
+                  {": " + subplebbit.description}
+                </span>
               </div>
-            </Link>
+            </div>
+          </Link>
         </div>
       </>
     )

@@ -150,7 +150,7 @@ export const PostPreview = styled.div`
     font-size: 90%;
   }
 
-  .post-authorAdmin {
+  .post-author-admin {
     color: purple;
     font-weight: 700;
   }
