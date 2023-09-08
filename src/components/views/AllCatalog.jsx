@@ -97,38 +97,42 @@ const CatalogPost = ({post}) => {
     commentMediaInfo.thumbnail))) ? true : false;
 
 
-    const { left: textLeft, right: textRight } = textRef.current?.getBoundingClientRect() || {};
-    const { left: imageLeft, right: imageRight } = imageRef.current?.getBoundingClientRect() || {};
-  
+    const { left: textLeft, right: textRight, width: textWidth } = textRef.current?.getBoundingClientRect() || {};
+    const { left: imageLeft, right: imageRight, width: imageWidth } = imageRef.current?.getBoundingClientRect() || {};
+    
     useLayoutEffect(() => {
       const executeLayoutEffectLogic = () => {
         let ref;
+    
         if (isMediaShowed) {
           ref = imageRef.current; 
         } else {
           ref = textRef.current;
         }
-  
+    
         if (ref && popupRef.current) {
           const rect = ref.getBoundingClientRect();
           const viewportWidth = document.documentElement.clientWidth;
           const spaceRight = viewportWidth - (rect.left + rect.width);
           const spaceLeft = rect.left;
-          const popupWidth = popupRef.current.getBoundingClientRect().width;
-  
-          if (spaceRight < 200 && spaceLeft > spaceRight) {
-            popupRef.current.style.maxWidth = `calc(100vw - ${isMediaShowed ? imageLeft : textLeft}px)`;
+    
+          if (spaceRight < 200 && spaceLeft > spaceRight && spaceLeft < 500) {
+            popupRef.current.style.maxWidth = `calc(
+              100vw - 
+              ${isMediaShowed ? imageWidth : textWidth}px
+              - ${spaceRight + 40}px
+              )`;
           } else if (spaceRight < 200 && spaceLeft < spaceRight) {
-            popupRef.current.style.maxWidth = `calc(100vw - ${isMediaShowed ? imageRight : textRight}px)`;
+            popupRef.current.style.maxWidth = `calc(100vw - ${isMediaShowed ? imageWidth : textWidth}px)`;
           } else {
-            popupRef.current.style.maxWidth = `${popupWidth}px`;
+            popupRef.current.style.maxWidth = `500px`;
           }
-  
+    
           setSpaceOnRight(spaceRight);
           setIsCalculationDone(true);
         }
       };
-  
+    
       if (isHoveringOnThread) {
         const timeoutId = setTimeout(executeLayoutEffectLogic, 250);
         return () => {
@@ -136,8 +140,8 @@ const CatalogPost = ({post}) => {
           setIsCalculationDone(false);
         };
       }
-  
-    }, [isHoveringOnThread, isMediaShowed, textLeft, textRight, imageLeft, imageRight]);
+    
+    }, [isHoveringOnThread, isMediaShowed, textLeft, textRight, imageLeft, imageRight, textWidth, imageWidth]);
     
   
   const handleMouseOnLeaveThread = () => {
