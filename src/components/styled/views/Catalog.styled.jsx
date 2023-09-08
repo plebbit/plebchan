@@ -135,7 +135,7 @@ export const PostPreview = styled.div`
     white-space: normal;
     max-width: 500px;
     width: fit-content;
-    color: #bbbfbd;
+    color: #dedede;
     font-size: 10pt;
     text-align: left;
   }
