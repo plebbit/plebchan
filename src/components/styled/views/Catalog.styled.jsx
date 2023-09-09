@@ -4,7 +4,7 @@ export const Threads = styled.div`
   padding: 20px 0;
   text-align: center;
   margin: 0;
-  overflow:hidden;
+  overflow: hidden;
 
   .thread {
     width: 180px;
@@ -12,53 +12,9 @@ export const Threads = styled.div`
     max-height: 320px;
     vertical-align: top;
     display: inline-block;
-    word-wrap: break-word;
     margin-top: 5px;
     margin-bottom: 20px;
     padding: 5px 0 3px;
-  }
-
-  .thread_popup{
-    display: inline-block;
-    height:auto;
-    background-color:black;
-    position:absolute;
-    margin-top:0px;
-    text-align:left;
-    z-index:10;
-    transform:none;
-    padding-left:5px;padding-right:5px;
-    border-radius:3px;
-  }
-
-  .thread_popup_content{
-    color: #dedede;
-    display: inline-block;
-    overflow: hidden;
-    white-space:nowrap;
-    font-size:13px;
-  }
-
-  .thread_popup_lastReply{
-    color: #bbbfbd;
-    display: block;
-    width: auto;
-    min-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size:90%;
-  }
-
-  .thread_popup_title{
-    color:#a89baa
-  }
-
-  .thread_popup_author{
-    color:#519860;font-weight:bold
-  }
-
-  .thread_popup_authorAdmin{
-    color:#682071;
   }
 
   video, audio, img {
@@ -125,7 +81,6 @@ export const Threads = styled.div`
   }
 
   .meta {
-    cursor: help;
     font-size: 11px;
     line-height: 8px;
     margin-top: 2px;
@@ -136,82 +91,162 @@ export const Threads = styled.div`
     display: block;
     padding: 0 15px;
     overflow: hidden;
+    word-wrap: break-word;
   }
+
+
+  ${({ selectedStyle }) => {
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return ``;
+
+      case 'Yotsuba-B':
+        return ``;
+
+      case 'Futaba':
+        return ``;
+
+      case 'Burichan':
+        return ``;
+
+      case 'Tomorrow':
+        return `
+        .file-thumb {
+          background-color: rgba(255, 255, 255, 0.01) !important;
+        }`;
+
+      case 'Photon':
+        return ``;
+
+      default:
+        return '';
+    }
+  }}
+`;
+
+export const PostPreview = styled.div`
+  .post-preview {
+    position: absolute;
+    background-color: #000;
+    border-radius: 3px;
+    padding: 5px 8px 4px;
+    z-index: 100000;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 500px;
+    width: fit-content;
+    color: #dedede;
+    font-size: 10pt;
+    text-align: left;
+  }
+
+  .post-author {
+    font-weight: 700;
+  }
+
+  .post-last {
+    margin-top: 3px;
+    color: #bbbfbd;
+    font-size: 90%;
+  }
+
+  .post-author-admin {
+    color: purple;
+    font-weight: 700;
+  }
+
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
         return `
-        .thread_popup_title{
+        .post-subject{
           color:#cc1105;
           font-weight:700;
         };
-        .thread_popup_author{
+
+        .post-author{
           color:#00a550;font-weight:bold
         }`;
-        case 'Yotsuba-B':
-          return `
-          .thread_popup_title{
-            color:#dedede;
-            font-weight:700;
-          };
-          .thread_popup_author{
-            color:#00a550;font-weight:bold
-          }`;
-        case 'Futaba':
-          return `
-          .thread_popup{
-            font-family: arial,helvetica,sans-serif;
-          }
-          .thread_popup_title{
-            color:#cc1105;
-            font-weight:700;
-          };
-          .thread_popup_author{
-            color:#00a550;font-weight:700;
-          }`;
-          case 'Burichan':
-            return `
-            .thread_popup{
-              font-family: arial,helvetica,sans-serif;
-            }
-            .thread_popup_title{
-              color:#dedede;
-              font-weight:700;
-            };
-            .thread_popup_author{
-              color:#00a550;font-weight:700;
-            }`;
-            case 'Tomorrow':
-              return `
-              .thread_popup{
-                font-family: arial,helvetica,sans-serif;
-              }
-              .file-thumb {
-                background-color: rgba(255, 255, 255, 0.01) !important;
-              }
-              .thread_popup_title{
-                color:#b294bb;
-                font-weight:700;
-              };
-              .thread_popup_author{
-                color:#00a550;font-weight:700;
-              }`;
-              case 'Photon':
-                return `
-                .thread_popup{
-                  font-family: arial,helvetica,sans-serif;
-                }
-                .thread_popup_title{
-                  color:#dedede;
-                  font-weight:700;
-                };
-                .thread_popup_author{
-                  color:#00a550;font-weight:700;
-                }`;
+
+      case 'Yotsuba-B':
+        return `
+        .post-subject{
+          color:#dedede;
+          font-weight:700;
+        };
+
+        .post-author{
+          color:#00a550;font-weight:bold
+        }`;
+
+      case 'Futaba':
+        return `
+        .post-preview{
+          font-family: arial,helvetica,sans-serif;
+        }
+
+        .post-subject{
+          color:#cc1105;
+          font-weight:700;
+        };
+        
+        .post-author{
+          color:#00a550;font-weight:700;
+        }`;
+
+      case 'Burichan':
+        return `
+        .post-preview{
+          font-family: arial,helvetica,sans-serif;
+        }
+
+        .post-subject{
+          color:#dedede;
+          font-weight:700;
+        };
+
+        .post-author{
+          color:#00a550;font-weight:700;
+        }`;
+
+      case 'Tomorrow':
+        return `
+        .post-preview{
+          font-family: arial,helvetica,sans-serif;
+        }
+
+        .file-thumb {
+          background-color: rgba(255, 255, 255, 0.01) !important;
+        }
+
+        .post-subject{
+          color:#b294bb;
+          font-weight:700;
+        };
+
+        .post-author{
+          color:#00a550;font-weight:700;
+        }`;
+
+      case 'Photon':
+        return `
+        .post-preview{
+          font-family: arial,helvetica,sans-serif;
+        }
+
+        .post-subject{
+          color:#dedede;
+          font-weight:700;
+        };
+
+        .post-author{
+          color:#dedede;font-weight:700;
+        }`;
       default:
         return '';
-      }}}
+    }
+  }}
 `;
 
 export const PostMenuCatalog = styled.div`
@@ -249,7 +284,7 @@ export const PostMenuCatalog = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `.thread_popup_title{
+        return `.post-subject{
           color:red;
         }`;
 

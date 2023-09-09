@@ -496,7 +496,7 @@ const Pending = () => {
                                       style={{cursor: "pointer"}}
                                       onError={(e) => e.target.src = fallbackImgUrl} />
                                   )}
-                                  {commentMediaInfo?.type === "video" || "iframe" ? (
+                                  {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
                                     isMobileThumbnailClicked[index] ? (
                                       <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                         <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
@@ -553,7 +553,7 @@ const Pending = () => {
                                         onError={(e) => e.target.src = fallbackImgUrl} 
                                       />
                                     )}
-                                    {commentMediaInfo?.type === "video" || "iframe" ? (
+                                    {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
                                       isMobileThumbnailClicked[index] ? (
                                         <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                           <span className='button-mobile' style={{float: "none", cursor: "pointer"}}

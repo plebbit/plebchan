@@ -1414,7 +1414,7 @@ const Board = () => {
                                     commentMediaInfo?.url.slice(0, 30) + "(...)" :
                                     commentMediaInfo?.url
                                     }</a>&nbsp;({commentMediaInfo?.type === "iframe" ? "video" : commentMediaInfo?.type})
-                                    {isThreadThumbnailClicked[index] ? (
+                                    {isThreadThumbnailClicked[index] && commentMediaInfo.type !== "image" ? (
                                       <span>
                                         -[
                                           <span className='reply-link' 
@@ -2123,8 +2123,8 @@ const Board = () => {
                                           replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                           replyMediaInfo?.url
                                           }</a>&nbsp;({replyMediaInfo?.type})
-                                          {replyMediaInfo?.type === "video" || "iframe" ? (
-                                            isReplyThumbnailClicked[index] ? (
+                                          {replyMediaInfo?.type === "video" ||  replyMediaInfo?.type === "iframe" ? (
+                                            isReplyThumbnailClicked[index] && commentMediaInfo.type !== "image"  ? (
                                               <span>
                                                 -[
                                                   <span className='reply-link' 
@@ -2530,7 +2530,7 @@ const Board = () => {
                                             style={{cursor: "pointer"}}
                                             onError={(e) => e.target.src = fallbackImgUrl} />
                                         )}
-                                        {commentMediaInfo?.type === "video" || "iframe" ? (
+                                        {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
                                           isMobileThreadThumbnailClicked[index] ? (
                                             <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                               <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
@@ -2587,7 +2587,7 @@ const Board = () => {
                                                 onError={(e) => e.target.src = fallbackImgUrl} 
                                               />
                                             )}
-                                            {commentMediaInfo?.type === "video" || "iframe" ? (
+                                            {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
                                               isMobileThreadThumbnailClicked[index] ? (
                                                 <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                                   <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
@@ -2787,7 +2787,7 @@ const Board = () => {
                                                 onError={(e) => e.target.src = fallbackImgUrl} 
                                               />
                                             )}
-                                            {replyMediaInfo?.type === "video" || "iframe" ? (
+                                            {replyMediaInfo?.type === "video" ||  replyMediaInfo?.type === "iframe" ? (
                                               isMobileReplyThumbnailClicked[index] ? (
                                                 <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
                                                   <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
