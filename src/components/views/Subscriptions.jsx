@@ -260,14 +260,12 @@ const Subscriptions = () => {
   const allParentCids = useMemo(() => {
     const allRepliesCids = Object.values(flattenedRepliesByThread).flatMap(replies => replies.map(reply => reply.cid));
     const allThreadCids = selectedFeed.map(thread => thread.cid);
-    return [...allThreadCids, ...allRepliesCids];
+    return new Set([...allThreadCids, ...allRepliesCids]);
   }, [flattenedRepliesByThread, selectedFeed]);  
-  
 
-  const filter = useMemo(() => ({
-    parentCids: allParentCids
-  }), [allParentCids]);
-  
+
+  const filter = useCallback((accountComment) => allParentCids.has(accountComment.parentCid), [allParentCids]);
+
 
   const { accountComments } = useAccountComments({ filter });
   
