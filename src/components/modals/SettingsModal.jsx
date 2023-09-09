@@ -30,8 +30,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const { accounts } = useAccounts();
 
   const accountJson = useMemo(() => {
-    const { plebbit, ...restOfAccount } = account;
-    return stringify({ account: restOfAccount });
+    if (account) {
+      const { plebbit, ...restOfAccount } = account;
+      return stringify({ account: restOfAccount });
+    }
   }, [account]);
 
   const [editedAccountJson, setEditedAccountJson] = useState(accountJson);
