@@ -42,10 +42,47 @@ export const GlobalStyle = createGlobalStyle`
     display: inline-block;
   }
 
-  .enlarged {
-    display: block;
-    max-width: 100% !important;
-    max-height: 100% !important;
+  @media (min-width: 480px) {
+    .enlarged {
+      display: block;
+      max-width: 100% !important;
+      max-height: 100% !important;
+    }
+    
+    .instagram-embed {
+      height: 420px;
+      width: 360px;
+    }
+
+    .streamable-embed, 
+    .bitchute-embed, 
+    .odysee-embed, 
+    .youtube-embed, 
+    .rumble-embed, 
+    .twitch-embed {
+      height: 450px;
+      width: 800px;
+    }
+
+    .spotify-embed {
+      height: 240px;
+      width: 700px;
+    }
+  
+    .tiktok-embed {
+      width: 400px;
+      height: 780px;
+    }
+
+    .twitter-embed {
+      width: 400px;
+      height: 580px;
+    }
+
+    .reddit-embed {
+      width: 500px;
+      height: 260px;
+    }
   }
 
   @media (max-width: 480px) {
