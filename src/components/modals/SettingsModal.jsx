@@ -28,7 +28,12 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
   const account = useAccount();
   const { accounts } = useAccounts();
-  const accountJson = useMemo(() => stringify({...account}), [account])
+
+  const accountJson = useMemo(() => {
+    const { plebbit, ...restOfAccount } = account;
+    return stringify({ account: restOfAccount });
+  }, [account]);
+
   const [editedAccountJson, setEditedAccountJson] = useState(accountJson);
   useEffect(() => { setEditedAccountJson(accountJson)}, [accountJson])
 
