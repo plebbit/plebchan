@@ -242,11 +242,8 @@ const Thread = () => {
   );
 
 
-  const filter = useMemo(() => ({
-    parentCids: [
-      selectedThread || 'n/a', ...flattenedReplies.map(reply => reply.cid)
-    ]
-  }), [flattenedReplies, selectedThread]);
+  const threadAndRepliesCids = useMemo(() => new Set([(selectedThread || 'n/a'), ...flattenedReplies.map(reply => reply.cid)]), [selectedThread, flattenedReplies]);
+  const filter = useCallback((accountComment) => threadAndRepliesCids.has(accountComment.parentCid), [threadAndRepliesCids]);
 
 
   const { accountComments } = useAccountComments({filter});
