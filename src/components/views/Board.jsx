@@ -2756,7 +2756,35 @@ const Board = () => {
                                 {reply.link ? (
                                   <div key={`mob-f-${index}`} className="file-mobile">
                                       {replyMediaInfo?.url ? (
-                                        replyMediaInfo.type === "webpage" ? (
+                                        replyMediaInfo.type === "iframe" ? (
+                                          <div key={`enlarge-mob-${index}`} className="img-container">
+                                            <span key={`mob-fta-${index}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
+                                              {(isMobileReplyThumbnailClicked[index] && replyMediaInfo.url ? (
+                                                <div style={{width: "92vw"}}>
+                                                  <Embed url={replyMediaInfo.url} key={`fti-mobile-reply-${index}`} />
+                                                </div>
+                                              ) : replyMediaInfo.thumbnail ? (
+                                                <img 
+                                                  key={`mob-fti-${index}`}
+                                                  src={replyMediaInfo.thumbnail} 
+                                                  alt="thumbnail"
+                                                  onClick={() => {handleThumbnailClick(index, 'mobileReply')}}
+                                                  style={{cursor: "pointer"}}
+                                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                                              ) : <span onClick={() => {handleThumbnailClick(index, 'mobileReply')}}>Embed</span>)}
+                                              {replyMediaInfo?.type === "video" || replyMediaInfo?.type ===  "iframe" ? (
+                                                isMobileReplyThumbnailClicked[index] ? (
+                                                  <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                                    <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
+                                                    onClick={() => {handleThumbnailClick(index, 'mobileReply')}}
+                                                    >Close</span>
+                                                  </div>
+                                                ) : (
+                                                  <div key={`mob-fi-${index}`} className="file-info-mobile">webpage</div>
+                                              )) : <div key={`mob-fi-${index}`} className="file-info-mobile">webpage</div>}
+                                            </span>
+                                          </div>
+                                        ) : replyMediaInfo.type === "webpage" ? (
                                           <div key={`enlarge-mob-reply-${index}`} className="img-container">
                                             <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] || !reply.thumbnailUrl ? {} : {width: displayWidthMobile, height: displayHeightMobile}}>
                                               {reply.thumbnailUrl ? (
@@ -2781,7 +2809,7 @@ const Board = () => {
                                             </span>
                                           </div>
                                         ) : replyMediaInfo.type === "video" ? (
-                                          <span key={`mob-ft${thread.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
+                                          <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
                                             {isMobileReplyThumbnailClicked[index] ? (
                                               <video key={`fti-${index}`} 
                                               src={replyMediaInfo.url} alt={replyMediaInfo.type}
