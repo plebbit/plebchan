@@ -158,6 +158,7 @@ const Thread = () => {
           ...prevState,
           [index]: !prevState[index],
         }));
+        break;
         case 'mobileReply':
           setIsMobileReplyThumbnailClicked(prevState => ({
             ...prevState,
