@@ -1,3 +1,4 @@
+import React from 'react';
 import {useComment, useAuthorAddress} from '@plebbit/plebbit-react-hooks';
 
 function VerifiedAuthor({ commentCid, children }) {
@@ -7,4 +8,4 @@ function VerifiedAuthor({ commentCid, children }) {
   return children({ authorAddress, shortAuthorAddress });
 }
 
-export default VerifiedAuthor;
+export default React.memo(VerifiedAuthor);

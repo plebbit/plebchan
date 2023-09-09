@@ -13,6 +13,7 @@ import { AlertModal } from '../styled/modals/AlertModal.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import BoardStats from '../BoardStats';
 import EditLabel from '../EditLabel';
+import Embed from '../Embed';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import PendingLabel from '../PendingLabel';
@@ -121,6 +122,7 @@ const Thread = () => {
   const [isThreadThumbnailClicked, setIsThreadThumbnailClicked] = useState({});
   const [isReplyThumbnailClicked, setIsReplyThumbnailClicked] = useState({});
   const [isMobileThreadThumbnailClicked, setIsMobileThreadThumbnailClicked] = useState({});
+  const [isMobileReplyThumbnailClicked, setIsMobileReplyThumbnailClicked] = useState({});
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
 
@@ -156,6 +158,12 @@ const Thread = () => {
           ...prevState,
           [index]: !prevState[index],
         }));
+        break;
+        case 'mobileReply':
+          setIsMobileReplyThumbnailClicked(prevState => ({
+            ...prevState,
+            [index]: !prevState[index],
+          }));
         break;
       default:
         break;
@@ -862,33 +870,26 @@ const Thread = () => {
                             commentMediaInfo?.url.length > 30 ?
                             commentMediaInfo?.url.slice(0, 30) + "(...)" :
                             commentMediaInfo?.url
-                            }</a>&nbsp;({commentMediaInfo?.type === "iframe" ? "video" : commentMediaInfo?.type})
-                            {isThreadThumbnailClicked[index] ? (
+                            }</a>&nbsp;{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
+                            { (isThreadThumbnailClicked[index] || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
                               <span>
-                                -[
+                                [
                                   <span className='reply-link' 
                                   style={{textDecoration: 'underline', cursor: 'pointer'}}
-                                  onClick={() => {handleThumbnailClick(index, 'thread')}}>Close</span>
+                                  onClick={() => {handleThumbnailClick(index, 'thread')}}>
+                                    {isThreadThumbnailClicked[index] ? 'Close' : 'Embed'}
+                                  </span>
                                 ]
                               </span>
-                            ) : null}
+                            )}
                           </div>
                           {commentMediaInfo?.type === 'iframe' && (
                             <div key={`enlarge-${index}`}
                             className={`img-container ${isThreadThumbnailClicked[index] ? 'expanded-container' : ''}`}>
                               <span key={`fta-${index}`} className="file-thumb">
-                                {(isThreadThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
-                                  <iframe 
-                                    className='enlarged'
-                                    key={`fti-${index}`} 
-                                    src={commentMediaInfo.embedUrl}
-                                    width={commentMediaInfo.thumbnail ? "560" : "250"} 
-                                    height="315"
-                                    style={{border: "none"}}
-                                    title="Embedded content"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowFullScreen />
-                                ) : (
+                                {isThreadThumbnailClicked[index] && commentMediaInfo.url ? (
+                                  <Embed url={commentMediaInfo.url} key={`fti-${index}`} />
+                                ) : commentMediaInfo.thumbnail ? (
                                   <img 
                                     key={`fti-${index}`}
                                     src={commentMediaInfo.thumbnail} 
@@ -896,7 +897,7 @@ const Thread = () => {
                                     onClick={() => {handleThumbnailClick(index, 'thread')}}
                                     style={{cursor: "pointer"}}
                                     onError={(e) => e.target.src = fallbackImgUrl} />
-                                )}
+                                ) : null}
                               </span>
                             </div>
                           )}
@@ -1521,27 +1522,48 @@ const Thread = () => {
                             </div>
                           </div>
                           {replyMediaInfo?.url ? (
-                            <div key={`f-${index}`} className="file" 
-                            style={{marginBottom: "5px"}}>
-                              <div key={`ft-${index}`} className="reply-file-text">
+                            <div key={`f-${index}`} className="file" style={{marginBottom: "5px"}}>
+                              <div key={`ft-${index}`} className="file-text">
                                 Link:&nbsp;
                                 <a key={`fa-${index}`} href={replyMediaInfo.url} target="_blank"
                                 rel="noopener noreferrer">{
                                 replyMediaInfo?.url.length > 30 ?
                                 replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                 replyMediaInfo?.url
-                                }</a>&nbsp;({replyMediaInfo?.type})
-                                {replyMediaInfo?.type === "video" ||  replyMediaInfo?.type === "iframe" ? (
-                                    isReplyThumbnailClicked[index] ? (
-                                      <span>
-                                        -[
-                                          <span className='reply-link' 
-                                          style={{textDecoration: 'underline', cursor: 'pointer'}}
-                                          onClick={() => {handleThumbnailClick(index, 'reply')}}>Close</span>
-                                        ]
-                                      </span>) : null)
-                                  : null}
+                                }</a>&nbsp;{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
+                                { (isReplyThumbnailClicked[index] || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
+                                  <span>
+                                    [
+                                      <span className='reply-link' 
+                                      style={{textDecoration: 'underline', cursor: 'pointer'}}
+                                      onClick={() => {handleThumbnailClick(index, 'reply')}}>
+                                        {isReplyThumbnailClicked[index] ? 'Close' : 'Embed'}
+                                      </span>
+                                    ]
+                                  </span>
+                                )}
                               </div>
+                              {replyMediaInfo?.type === 'iframe' && (
+                                <div key={`enlarge-${index}`}
+                                className={`img-container ${isReplyThumbnailClicked[index] ? 'expanded-container' : ''}`}>
+                                  <span key={`fta-${index}`} className="file-thumb-reply" style={
+                                    isReplyThumbnailClicked[index] || !replyMediaInfo.thumbnail ? 
+                                    {} : {width: replyDisplayWidth, height: replyDisplayHeight
+                                    }}>
+                                    {isReplyThumbnailClicked[index] && replyMediaInfo.url ? (
+                                      <Embed url={replyMediaInfo.url} key={`fti-${index}`} />
+                                    ) : replyMediaInfo.thumbnail ? (
+                                      <img 
+                                        key={`fti-${index}`}
+                                        src={replyMediaInfo.thumbnail} 
+                                        alt="thumbnail"
+                                        onClick={() => {handleThumbnailClick(index, 'reply')}}
+                                        style={{cursor: "pointer"}}
+                                        onError={(e) => e.target.src = fallbackImgUrl} />
+                                    ) : null}
+                                  </span>
+                                </div>
+                              )}
                               {replyMediaInfo?.type === "webpage" ? (
                                 <div key={`enlarge-reply-${index}`} className="img-container">
                                   <span key={`fta-${index}`} className="file-thumb-reply" style={isReplyThumbnailClicked[index] ? {} : {width: replyDisplayWidth, height: replyDisplayHeight}}>
@@ -1796,39 +1818,33 @@ const Thread = () => {
                         <div key={`mob-f-${index}`} className="file-mobile">
                           {commentMediaInfo?.type === 'iframe' && (
                             <div key={`enlarge-mob-${index}`} className="img-container">
-                              <span key={`mob-fta-${index}`} className="file-thumb-mobile">
-                                {(isMobileThreadThumbnailClicked[index] || !commentMediaInfo.thumbnail) && commentMediaInfo.embedUrl ? (
-                                  <div style={{width: "92vw"}}>
-                                    <iframe 
-                                      key={`mob-fti-${index}`} 
-                                      src={commentMediaInfo.embedUrl}
-                                      style={{border: "none", height: "250px"}}
-                                      title="Embedded content"
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                      allowFullScreen />
+                            <span key={`mob-fta-${index}`} className="file-thumb-mobile" style={isMobileThreadThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
+                              {(isMobileThreadThumbnailClicked[index] && commentMediaInfo.url ? (
+                                <div style={{width: "92vw"}}>
+                                  <Embed url={commentMediaInfo.url} key={`fti-mobile-${index}`} />
+                                </div>
+                              ) : commentMediaInfo.thumbnail ? (
+                                <img 
+                                  key={`mob-fti-${index}`}
+                                  src={commentMediaInfo.thumbnail} 
+                                  alt="thumbnail"
+                                  onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
+                                  style={{cursor: "pointer"}}
+                                  onError={(e) => e.target.src = fallbackImgUrl} />
+                              ) : <span onClick={() => {handleThumbnailClick(index, 'mobileThread')}}>Embed</span>)}
+                              {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
+                                isMobileThreadThumbnailClicked[index] ? (
+                                  <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                    <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
+                                    onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
+                                    >Close</span>
                                   </div>
                                 ) : (
-                                  <img 
-                                    key={`mob-fti-${index}`}
-                                    src={commentMediaInfo.thumbnail} 
-                                    alt="thumbnail"
-                                    onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
-                                    style={{cursor: "pointer"}}
-                                    onError={(e) => e.target.src = fallbackImgUrl} />
-                                )}
-                                {commentMediaInfo?.type === "video" || commentMediaInfo?.type ===  "iframe" ? (
-                                  isMobileThreadThumbnailClicked[index] ? (
-                                    <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
-                                      <span className='button-mobile' style={{float: "none", cursor: "pointer"}}
-                                      onClick={() => {handleThumbnailClick(index, 'mobileThread')}}
-                                      >Close</span>
-                                    </div>
-                                  ) : (
-                                    <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>
-                                )) : <div key={`mob-fi-${index}`} className="file-info-mobile">video</div>}
-                              </span>
-                            </div>
-                          )}
+                                  <div key={`mob-fi-${index}`} className="file-info-mobile">webpage</div>
+                              )) : <div key={`mob-fi-${index}`} className="file-info-mobile">webpage</div>}
+                            </span>
+                          </div>
+                        )}
                           {commentMediaInfo?.url ? (
                             commentMediaInfo.type === "webpage" ? (
                               <div key={`enlarge-mob-${index}`} className="img-container">
@@ -1996,47 +2012,89 @@ const Thread = () => {
                         {reply.link ? (
                             <div key={`mob-f-${reply.cid}`} className="file-mobile">
                                 {replyMediaInfo?.url ? (
-                                  replyMediaInfo.type === "webpage" ? (
-                                    <div key="enlarge-reply-mob" className="img-container">
+                                  replyMediaInfo.type === "iframe" ? (
+                                    <div key={`enlarge-mob-${index}`} className="img-container">
+                                    <span key={`mob-fta-${index}`} className="file-thumb-mobile" style={isMobileReplyThumbnailClicked[index] ? {} : {marginBottom: '25px'}}>
+                                      {(isMobileReplyThumbnailClicked[index] && replyMediaInfo.url ? (
+                                        <div style={{width: "92vw"}}>
+                                          <Embed url={replyMediaInfo.url} key={`fti-mobile-reply-${index}`} />
+                                        </div>
+                                      ) : replyMediaInfo.thumbnail ? (
+                                        <img 
+                                          key={`mob-fti-${index}`}
+                                          src={replyMediaInfo.thumbnail} 
+                                          alt="thumbnail"
+                                          onClick={() => {handleThumbnailClick(index, 'mobileReply')}}
+                                          style={{cursor: "pointer"}}
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                      ) : <span onClick={() => {handleThumbnailClick(index, 'mobileReply')}}>Embed</span>)}
+                                      {replyMediaInfo?.type === "video" || replyMediaInfo?.type ===  "iframe" ? (
+                                        isMobileReplyThumbnailClicked[index] ? (
+                                          <div style={{textAlign: "center", marginTop: "15px", marginBottom: "15px"}}>
+                                            <span className='button-mobile' style={{float: "none", cursor: "pointer",
+                                            borderRadius: '3px', padding: '6px 10px 5px',}}
+                                            onClick={() => {handleThumbnailClick(index, 'mobileReply')}}
+                                            >Close</span>
+                                          </div>
+                                        ) : (
+                                          <div key={`mob-fi-${index}`} className="file-info-mobile">webpage</div>
+                                      )) : <div key={`mob-fi-${index}`} className="file-info-mobile">webpage</div>}
+                                    </span>
+                                  </div>
+
+                                  ) : replyMediaInfo.type === "webpage" ? (
+                                    <div key={`enlarge-mob-reply-${index}`} className="img-container">
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
                                         {reply.thumbnailUrl ? (
-                                          <img key={`mob-img-${reply.cid}`} 
-                                          src={replyMediaInfo.thumbnail} alt={replyMediaInfo.type} 
-                                          onClick={handleImageClick}
+                                          <img key={`mob-img-${index}`} 
+                                          src={replyMediaInfo.thumbnail} alt="thumbnail" 
+                                          onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'mobileReply')}}
                                           style={{cursor: "pointer"}}
                                           onError={(e) => e.target.src = fallbackImgUrl} />
                                         ) : null}
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
                                       </span>
                                     </div>
-                                  ) : replyMediaInfo.type === "image" ? (
-                                    <div key="enlarge-reply-mob" className="img-container">
+                                    ) : replyMediaInfo.type === "image" ? (
+                                      <div key={`enlarge-mob-reply-${index}`} className="img-container">
+                                        <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                          <img key={`mob-img-${index}`} 
+                                          src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                          onClick={(e) => {handleImageClick(e); handleThumbnailClick(index, 'mobileReply')}}
+                                          style={{cursor: "pointer"}}
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                          <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        </span>
+                                      </div>
+                                    ) : replyMediaInfo.type === "video" ? (
                                       <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <img key={`mob-img-${reply.cid}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                        onClick={handleImageClick}
-                                        style={{cursor: "pointer"}}
-                                        onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        {isMobileReplyThumbnailClicked[index] ? (
+                                          <video key={`fti-${index}`} 
+                                          src={replyMediaInfo.url} alt={replyMediaInfo.type}
+                                          controls
+                                          style={{ all: 'unset', width: '100%', height: '100%', cursor: 'pointer'}} 
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                        ) : (
+                                          <video 
+                                            key={`fti-${index}`}
+                                            src={replyMediaInfo.url} 
+                                            alt="thumbnail"
+                                            onClick={() => {handleThumbnailClick(index, 'mobileReply')}}
+                                            style={{cursor: "pointer"}}
+                                            id="video-thumbnail-mobile"
+                                            onError={(e) => e.target.src = fallbackImgUrl} 
+                                          />
+                                        )}
                                       </span>
-                                    </div>
-                                  ) : replyMediaInfo.type === "video" ? (
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <video key={`fti-${reply.cid}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                        style={{ pointerEvents: "none" }}
-                                        onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                  ) : replyMediaInfo.type === "audio" ? (
-                                      <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
-                                        <audio key={`mob-img-${reply.cid}`} 
-                                        src={replyMediaInfo.url} alt={replyMediaInfo.type} 
-                                        onError={(e) => e.target.src = fallbackImgUrl} />
-                                        <div key={`mob-fi-${reply.cid}`} className="file-info-mobile">{replyMediaInfo.type}</div>
-                                      </span>
-                                  ) : null
-                                ) : null}
+                                    ) : replyMediaInfo.type === "audio" ? (
+                                        <span key={`mob-ft${reply.cid}`} className="file-thumb-mobile">
+                                          <audio key={`mob-img-${index}`} 
+                                          src={replyMediaInfo.url} alt={replyMediaInfo.type} 
+                                          onError={(e) => e.target.src = fallbackImgUrl} />
+                                          <div key={`mob-fi-${index}`} className="file-info-mobile">{replyMediaInfo.type}</div>
+                                        </span>
+                                    ) : null
+                                  ) : null}
                             </div>
                           ) : null}
                         <blockquote key={`mob-pm-${index}`} className="post-message-mobile">
