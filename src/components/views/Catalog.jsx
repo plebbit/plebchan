@@ -448,7 +448,7 @@ const CatalogPost = ({post}) => {
           </BoardForm>
           <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/rules`}>
             <div className="teaser" style={{maxHeight: '312px'}}>
-              <div style={{cursor: 'text'}}>
+              <div style={{cursor: 'pointer'}}>
                 <span ref={textRef}
                 onMouseOver={() => {
                   setIsHoveringOnThread('rules');
@@ -621,7 +621,7 @@ const CatalogPost = ({post}) => {
           <Link style={{all: "unset", cursor: "pointer"}} to={`/p/${selectedAddress}/description`} 
             onClick={() => setSelectedThread("description")}>
             <div className="teaser" style={{maxHeight: '170px'}}>
-              <div style={{cursor: 'text'}}>
+              <div style={{cursor: 'pointer'}}>
                 <span ref={textRef}
                 onMouseOver={() => {
                   setIsHoveringOnThread('description');
@@ -920,7 +920,7 @@ const CatalogPost = ({post}) => {
           <Link style={{all: "unset", cursor: "pointer"}} key={`link2-`} to={`/p/${selectedAddress}/c/${thread.cid}`} 
           onClick={() => setSelectedThread(thread.cid)}>
             <div key={`t-`} className="teaser" style={{maxHeight: `calc(320px - ${displayHeight})`}}>
-            <div style={{cursor:"text"}}>
+            <div style={{cursor:"pointer"}}>
                 <span key={`teaser-width${thread.cid}`} ref={textRef} 
                 onMouseOver={() => {
                   setIsHoveringOnThread(thread.cid);
