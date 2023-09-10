@@ -22,8 +22,9 @@ import CaptchaModal from './components/modals/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
 import useError from "./hooks/useError";
+import useInfo from "./hooks/useInfo";
 import useSuccess from "./hooks/useSuccess";
-
+import packageJson from '../package.json';
 
 export default function App() {
   const { 
@@ -41,21 +42,48 @@ export default function App() {
 
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
+  const [, setNewInfoMessage] = useInfo();
 
 
   useEffect(() => {
     const successToast = localStorage.getItem("successToast");
     const errorToast = localStorage.getItem("errorToast");
+    const infoToast = localStorage.getItem("infoToast");
     if (successToast) {
       setNewSuccessMessage(successToast);
       localStorage.removeItem("successToast");
     } else if (errorToast) {
       setNewErrorMessage(errorToast);
       localStorage.removeItem("errorToast");
+    } else if (infoToast) {
+      setNewInfoMessage(infoToast);
+      localStorage.removeItem("infoToast");
     } else {
       return;
     }
-  }, [setNewErrorMessage, setNewSuccessMessage]);
+  }, [setNewErrorMessage, setNewSuccessMessage, setNewInfoMessage]);
+  
+
+  // check for new version
+  useEffect(() => {
+    const fetchVersionInfo = async () => {
+      try {
+        const packageRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/master/package.json', { cache: 'no-cache' });
+        const packageData = await packageRes.json();
+  
+        if (packageJson.version !== packageData.version) {
+          const newVersionInfo = `New version available, plebchan v${packageData.version}. Refresh the page to update.`;
+          localStorage.setItem('infoToast', newVersionInfo);;
+        }
+      } catch (error) {
+        console.error('Failed to fetch latest version info:', error);
+      }
+    };
+  
+    fetchVersionInfo();
+  }, [setNewInfoMessage]);
+
+
   
   // preload banners
   useEffect(() => {
