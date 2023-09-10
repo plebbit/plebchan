@@ -10,8 +10,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
 import { Tooltip } from 'react-tooltip';
 const {version} = packageJson;
-// show commit ref on netlify to know which commit is being served for debugging
-const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : ''
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
 
 const Home = () => {

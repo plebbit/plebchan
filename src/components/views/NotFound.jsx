@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, Header, Logo, Page, Boards, BoardsTitle } from '../styled/views/Home.styled';
 import packageJson from '../../../package.json';
 const {version} = packageJson;
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
 
 const NotFound = () => {
@@ -61,7 +62,7 @@ const NotFound = () => {
           fontSize: "11px",
           marginTop: "2em",
         }}>
-          plebchan v{version}. GPL-2.0
+          plebchan v{version}{commitRef}. GPL-2.0
         </div>
       </Container>
     </>

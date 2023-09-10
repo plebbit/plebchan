@@ -47,6 +47,7 @@ import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
 const {version} = packageJson;
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
 
 const Thread = () => {
@@ -2459,7 +2460,7 @@ const Thread = () => {
             </>
           </NavBar>
           <div id="version">
-            plebchan v{version}. GPL-2.0
+            plebchan v{version}{commitRef}. GPL-2.0
           </div>
           <div className="footer-links"
             style={{
