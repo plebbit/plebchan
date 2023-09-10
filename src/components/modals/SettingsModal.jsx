@@ -10,6 +10,7 @@ import useAnonModeStore from '../../hooks/stores/useAnonModeStore';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
 const {version} = packageJson;
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
 
 const SettingsModal = ({ isOpen, closeModal }) => {
@@ -28,7 +29,14 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
   const account = useAccount();
   const { accounts } = useAccounts();
-  const accountJson = useMemo(() => stringify({...account}), [account])
+
+  const accountJson = useMemo(() => {
+    if (account) {
+      const { plebbit, karma, unreadNotificationCount, ...restOfAccount } = account;
+      return stringify({ account: restOfAccount });
+    }
+  }, [account]);
+
   const [editedAccountJson, setEditedAccountJson] = useState(accountJson);
   useEffect(() => { setEditedAccountJson(accountJson)}, [accountJson])
 
@@ -416,7 +424,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
       <div className="panel">
         <div className="panel-header">
           <span id="version">
-            v{version} -&nbsp;
+            v{version}{commitRef} -&nbsp;
             {window.electron && window.electron.isElectron ? (
               <Link className="all-button" id="node-stats" to="http://localhost:5001/webui/" target="_blank" rel="noreferrer">
                 full node

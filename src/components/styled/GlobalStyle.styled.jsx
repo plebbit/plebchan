@@ -81,7 +81,7 @@ export const GlobalStyle = createGlobalStyle`
 
     .reddit-embed {
       width: 500px;
-      height: 260px;
+      height: 520px;
     }
   }
 

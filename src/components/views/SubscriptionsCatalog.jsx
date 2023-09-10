@@ -33,6 +33,7 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 import packageJson from '../../../package.json';
 const {version} = packageJson;
 let lastVirtuosoStates = {};
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
 
 const CatalogPost = ({post}) => {
@@ -982,7 +983,7 @@ const SubscriptionsCatalog = () => {
             </>
           </NavBar>
           <div id="version">
-            plebchan v{version}. GPL-2.0
+            plebchan v{version}{commitRef}. GPL-2.0
           </div>
           <div className="footer-links"
             style={{

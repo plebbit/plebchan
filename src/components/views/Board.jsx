@@ -51,6 +51,7 @@ import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
 const {version} = packageJson;
 let lastVirtuosoStates = {};
+const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
 
 const Board = () => {
@@ -1415,7 +1416,7 @@ const Board = () => {
                                     commentMediaInfo?.url.slice(0, 30) + "(...)" :
                                     commentMediaInfo?.url
                                     }</a>&nbsp;{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
-                                    { (isThreadThumbnailClicked[index] || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
+                                    {((isThreadThumbnailClicked[index] && (commentMediaInfo.type === 'iframe' || commentMediaInfo.type === 'video')) || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
                                       <span>
                                         [
                                           <span className='reply-link' 
@@ -1539,9 +1540,9 @@ const Board = () => {
                                   (u/
                                   <span key={`pa-${index}`} className="poster-address address-desktop"
                                   id="reply-button" style={{cursor: "pointer"}}
-                                    onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
+                                    onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                                   >
-                                    <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>
+                                    <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>
                                   </span>)
                                   &nbsp;
                                   <span key={`dt-${index}`} className="date-time"
@@ -1870,7 +1871,7 @@ const Board = () => {
                                         &nbsp;
                                         <span key={`pa-${index}`} className="poster-address address-desktop"
                                           id="reply-button" style={{cursor: "pointer"}}
-                                          onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
+                                          onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                                         >
                                           (u/
                                             {reply.author?.shortAddress ?
@@ -2119,7 +2120,7 @@ const Board = () => {
                                           replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                           replyMediaInfo?.url
                                           }</a>&nbsp;{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
-                                          { (isReplyThumbnailClicked[index] || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
+                                          { ((isReplyThumbnailClicked[index] && (replyMediaInfo.type === 'iframe' || replyMediaInfo.type === 'video')) || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
                                             <span>
                                               [
                                                 <span className='reply-link' 
@@ -2457,11 +2458,11 @@ const Board = () => {
                                   &nbsp;
                                   <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                                     id="reply-button" style={{cursor: "pointer"}}
-                                    onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
+                                    onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                                   >
                                     (u/
                                     <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                      {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>}
+                                      {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>}
                                     </span>
                                     )&nbsp;
                                   </span>
@@ -2695,7 +2696,7 @@ const Board = () => {
                                     &nbsp;
                                     <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                                       id="reply-button" style={{cursor: "pointer"}}
-                                      onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress)}</VerifiedAuthor>)}
+                                      onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                                     >
                                       (u/
                                         {reply.author?.shortAddress ?
@@ -3219,7 +3220,7 @@ const Board = () => {
             </>
           </NavBar>
           <div id="version">
-            plebchan v{version}. GPL-2.0
+            plebchan v{version}{commitRef}. GPL-2.0
           </div>
           <div className="footer-links"
             style={{

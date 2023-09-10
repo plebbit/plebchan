@@ -37,7 +37,6 @@ const CaptchaModal = () => {
   }, [isCaptchaOpen, setIsAuthorDelete, setIsAuthorEdit, setIsModEdit]);
 
 
-
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);
     window.addEventListener('resize', handleResize);
@@ -71,7 +70,10 @@ const CaptchaModal = () => {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      submitCaptcha();
+      submitCaptcha((response) => {
+        setCaptchaResponse(response);
+        resolveCaptchaPromise(response);
+      });
     }
   };
 
