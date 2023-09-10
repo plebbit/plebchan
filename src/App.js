@@ -79,7 +79,7 @@ export default function App() {
 
         // Check for commit hash if commitRef is defined
         if (commitRef.length > 0) {
-          const commitRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/development/public/latest_commit.txt', { cache: 'no-cache' });
+          const commitRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/development/public/latest_dev_commit.txt', { cache: 'no-cache' });
           const latestCommit = await commitRes.text();
           
           if (latestCommit.trim() !== commitRef.trim()) {
