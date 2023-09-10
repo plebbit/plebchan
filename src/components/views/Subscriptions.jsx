@@ -857,9 +857,9 @@ const Subscriptions = () => {
                             (u/
                             <span key={`pa-${index}`} className="poster-address address-desktop"
                             id="reply-button" style={{cursor: "pointer"}}
-                              onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>)}
+                              onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                             >
-                              {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>}
+                              {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>}
                             </span>)
                             &nbsp;
                             <span key={`dt-${index}`} className="date-time"
@@ -1174,7 +1174,7 @@ const Subscriptions = () => {
                                 &nbsp;
                                 <span key={`pa-${index}`} className="poster-address address-desktop"
                                   id="reply-button" style={{cursor: "pointer"}}
-                                  onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>)}
+                                  onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                                 >
                                   (u/
                                     {reply.author?.shortAddress ?
@@ -1758,11 +1758,11 @@ const Subscriptions = () => {
                             &nbsp;
                             <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                               id="reply-button" style={{cursor: "pointer"}}
-                              onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>)}
+                              onClick={() => handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                             >
                               (u/
                               <span key={`mob-ha-${index}`} className="highlight-address-mobile">
-                                {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>}
+                                {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>}
                               </span>
                               )&nbsp;
                             </span>
@@ -2001,7 +2001,7 @@ const Subscriptions = () => {
                               &nbsp;
                               <span key={`mob-pa-${index}`} className="poster-address-mobile address-mobile"
                                 id="reply-button" style={{cursor: "pointer"}}
-                                onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>)}
+                                onClick={() => handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                               >
                                 (u/
                                   {reply.author?.shortAddress ?

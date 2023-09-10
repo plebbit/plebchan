@@ -993,10 +993,10 @@ const Thread = () => {
                         &nbsp;
                         <span className="poster-address address-desktop"
                           id="reply-button" style={{cursor: "pointer"}}
-                          onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>)}>
+                          onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}>
                           (u/
                             <span key={`pa-${comment.cid}`} className="poster-address">
-                            {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>}
+                            {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>}
                           </span>)
                         </span>
                         &nbsp;
@@ -1755,11 +1755,11 @@ const Thread = () => {
                           &nbsp;
                           <span key={`mob-pa-${comment.cid}`} className="poster-address-mobile address-mobile"
                             id="reply-button" style={{cursor: "pointer"}}
-                            onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>)}
+                            onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>)}
                           >
                             (u/
                             <span key={`mob-ha-${comment.cid}`} className="highlight-address-mobile">
-                              {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aBcDeFgHiLmN")}</VerifiedAuthor>}
+                              {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => (shortAuthorAddress || "aPL4c3H0Ld3r")}</VerifiedAuthor>}
                             </span>
                             )&nbsp;
                           </span>
