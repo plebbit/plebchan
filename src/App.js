@@ -40,6 +40,7 @@ export default function App() {
 
   const location = useLocation();
   const isHomeRoute = location.pathname === "/";
+  const isElectron = window.electron && window.electron.isElectron;
 
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
@@ -73,7 +74,9 @@ export default function App() {
         const packageData = await packageRes.json();
 
         if (packageJson.version !== packageData.version) {
-          const newVersionInfo = `New version available, plebchan v${packageData.version}. Refresh the page to update.`;
+          const newVersionInfo = isElectron 
+            ? `New version available, plebchan v${packageData.version}. Go to github.com/plebbit/plebchan/releases/latest to download the latest version.`
+            : `New version available, plebchan v${packageData.version}. Refresh the page to update.`;
           localStorage.setItem('infoToast', newVersionInfo);
         }
 
@@ -93,7 +96,7 @@ export default function App() {
     };
 
     fetchVersionInfo();
-  }, [setNewInfoMessage]);
+  }, [setNewInfoMessage, isElectron]);
 
   
   // preload banners
