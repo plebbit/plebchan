@@ -31,7 +31,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
   const accountJson = useMemo(() => {
     if (account) {
-      const { plebbit, ...restOfAccount } = account;
+      const { plebbit, karma, unreadNotificationCount, ...restOfAccount } = account;
       return stringify({ account: restOfAccount });
     }
   }, [account]);
