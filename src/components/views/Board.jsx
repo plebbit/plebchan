@@ -1415,7 +1415,7 @@ const Board = () => {
                                     commentMediaInfo?.url.slice(0, 30) + "(...)" :
                                     commentMediaInfo?.url
                                     }</a>&nbsp;{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
-                                    { (isThreadThumbnailClicked[index] || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
+                                    {((isThreadThumbnailClicked[index] && (commentMediaInfo.type === 'iframe' || commentMediaInfo.type === 'video')) || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
                                       <span>
                                         [
                                           <span className='reply-link' 
@@ -2119,7 +2119,7 @@ const Board = () => {
                                           replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                           replyMediaInfo?.url
                                           }</a>&nbsp;{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
-                                          { (isReplyThumbnailClicked[index] || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
+                                          { ((isReplyThumbnailClicked[index] && (replyMediaInfo.type === 'iframe' || replyMediaInfo.type === 'video')) || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
                                             <span>
                                               [
                                                 <span className='reply-link' 
