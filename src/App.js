@@ -25,6 +25,7 @@ import useError from "./hooks/useError";
 import useInfo from "./hooks/useInfo";
 import useSuccess from "./hooks/useSuccess";
 import packageJson from '../package.json';
+const commitRef = process?.env?.REACT_APP_COMMIT_REF || '';
 
 export default function App() {
   const { 
@@ -70,19 +71,29 @@ export default function App() {
       try {
         const packageRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/master/package.json', { cache: 'no-cache' });
         const packageData = await packageRes.json();
-  
+
         if (packageJson.version !== packageData.version) {
           const newVersionInfo = `New version available, plebchan v${packageData.version}. Refresh the page to update.`;
-          localStorage.setItem('infoToast', newVersionInfo);;
+          localStorage.setItem('infoToast', newVersionInfo);
+        }
+
+        // Check for commit hash if commitRef is defined
+        if (commitRef.length > 0) {
+          const commitRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/development/public/latest_dev_commit.txt', { cache: 'no-cache' });
+          const latestCommit = await commitRes.text();
+          
+          if (latestCommit.trim() !== commitRef.trim()) {
+            const newVersionInfo = `New dev version available, commit ${latestCommit}. Refresh the page to update.`;
+            localStorage.setItem('infoToast', newVersionInfo);
+          }
         }
       } catch (error) {
         console.error('Failed to fetch latest version info:', error);
       }
     };
-  
+
     fetchVersionInfo();
   }, [setNewInfoMessage]);
-
 
   
   // preload banners

@@ -1,0 +1,29 @@
+name: Latest Dev Commit
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  update-hash:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get latest commit hash
+      id: vars
+      run: echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
+
+    - name: Update latest_dev_commit.txt
+      run: echo "${{ steps.vars.outputs.commit_hash }}" > ./public/latest_dev_commit.txt
+
+    - name: Commit and push
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add ./public/latest_dev_commit.txt
+        git commit -m "Update latest_dev_commit.txt with latest commit hash"
+        git push
