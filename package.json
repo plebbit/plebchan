@@ -50,7 +50,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts build",
-    "build-netlify": "echo $COMMIT_REF > ./public/latest_commit.txt && cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true REACT_APP_COMMIT_REF=$COMMIT_REF react-scripts build",
+    "build-netlify": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true REACT_APP_COMMIT_REF=$COMMIT_REF react-scripts build",
     "test": "react-scripts test",
     "analyze-bundle": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true react-scripts build && source-map-explorer 'build/static/js/*.js'",
     "electron": "yarn electron:before && electron .",
