@@ -1428,6 +1428,36 @@ export const TopBar = styled.div`
   }
 
   @media (min-width: 480px) {
+    .stats-all-container {
+      float: right;
+      margin-top: 3px;
+      margin-right: 30px;
+      overflow: hidden;
+      max-width: calc(100vw - 50vw);
+    }
+
+    #stats-all {
+      display: inline-block;
+      max-width: calc(100vw - 50vw);
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: "";
+      overflow: hidden;
+    }
+
+    .ellipsis-all {
+      white-space: nowrap;
+    }
+
+    .ellipsis-all:after {
+      content: "\\2026";
+      position: absolute;
+      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+      animation: ellipsis steps(4,end) 1500ms infinite;
+      width: 0px;
+      overflow: hidden;
+    }
+
     #catalog-button-mobile {
       display: none;
     }
@@ -1449,6 +1479,37 @@ export const TopBar = styled.div`
 
   @media (max-width: 480px) {
     line-height: 25px;
+
+    .stats-all-container {
+      height: 20px;
+      position: absolute;
+      margin-top: 13px;
+      text-align: left;
+      overflow: hidden;
+      width: 100vw;
+    }
+
+    #stats-all {
+      display: inline-block;
+      max-width: 90vw;
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: "";
+      overflow: hidden;
+    }
+
+    .ellipsis-all {
+      white-space: nowrap;
+    }
+
+    .ellipsis-all:after {
+      content: "\\2026";
+      position: absolute;
+      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+      animation: ellipsis steps(4,end) 1500ms infinite;
+      width: 0px;
+      overflow: hidden;
+    }
 
     hr {
       display: none;

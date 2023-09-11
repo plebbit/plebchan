@@ -67,6 +67,7 @@ export default function App() {
   
 
   // check for new version
+  // TODO: delete this code and toast when v1.0.0 is released
   useEffect(() => {
     const fetchVersionInfo = async () => {
       try {
@@ -80,7 +81,6 @@ export default function App() {
           localStorage.setItem('infoToast', newVersionInfo);
         }
 
-        // Check for commit hash if commitRef is defined
         if (commitRef.length > 0) {
           const commitRes = await fetch('https://api.github.com/repos/plebbit/plebchan/commits?per_page=1&sha=development', { cache: 'no-cache' });
           const commitData = await commitRes.json();

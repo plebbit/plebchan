@@ -666,9 +666,12 @@ const All = () => {
           {subplebbits.state === "succeeded" ? (
             null
           ) : (
-            <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span className={stateString ? "ellipsis" : ""}>{stateString}</span>
-            </div>
+          <div className="stats-all-container">
+            <span id="stats-all">
+              {stateString}
+            </span>
+            <span className={stateString ? "ellipsis-all" : ""} />
+          </div>
           )}
           <div id="catalog-button-mobile">
             <span className="btn-wrap">
