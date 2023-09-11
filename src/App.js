@@ -50,20 +50,16 @@ export default function App() {
   useEffect(() => {
     const successToast = localStorage.getItem("successToast");
     const errorToast = localStorage.getItem("errorToast");
-    const infoToast = localStorage.getItem("infoToast");
     if (successToast) {
       setNewSuccessMessage(successToast);
       localStorage.removeItem("successToast");
     } else if (errorToast) {
       setNewErrorMessage(errorToast);
       localStorage.removeItem("errorToast");
-    } else if (infoToast) {
-      setNewInfoMessage(infoToast);
-      localStorage.removeItem("infoToast");
     } else {
       return;
     }
-  }, [setNewErrorMessage, setNewSuccessMessage, setNewInfoMessage]);
+  }, [setNewErrorMessage, setNewSuccessMessage]);
   
 
   // check for new version
@@ -76,9 +72,9 @@ export default function App() {
 
         if (packageJson.version !== packageData.version) {
           const newVersionInfo = isElectron 
-            ? `New version available, plebchan v${packageData.version}. Go to github.com/plebbit/plebchan/releases/latest to download the latest version.`
-            : `New version available, plebchan v${packageData.version}. Refresh the page to update.`;
-          localStorage.setItem('infoToast', newVersionInfo);
+            ? `New version available, plebchan v${packageData.version}. You are using v${packageJson.version} Go to github.com/plebbit/plebchan/releases/latest to download the latest version.`
+            : `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Refresh the page to update.`;
+            setNewInfoMessage(newVersionInfo);
         }
 
         if (commitRef.length > 0) {
@@ -88,8 +84,8 @@ export default function App() {
           const latestCommitHash = commitData[0].sha;
           
           if (latestCommitHash.trim() !== commitRef.trim()) {
-            const newVersionInfo = `New dev version available, commit ${latestCommitHash}. Refresh the page to update.`;
-            localStorage.setItem('infoToast', newVersionInfo);
+            const newVersionInfo = `New dev version available, commit ${latestCommitHash.slice(0, 7)}. You are using commit ${commitRef.slice(0, 7)}. Refresh the page to update.`;
+            setNewInfoMessage(newVersionInfo);
           }
         }
       } catch (error) {
