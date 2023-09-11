@@ -72,8 +72,8 @@ export default function App() {
 
         if (packageJson.version !== packageData.version) {
           const newVersionInfo = isElectron 
-            ? `New version available, plebchan v${packageData.version}. You are using v${packageJson.version} Go to github.com/plebbit/plebchan/releases/latest to download the latest version.`
-            : `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Refresh the page to update.`;
+            ? `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Download the latest version here: https://github.com/plebbit/plebchan/releases/latest`
+            : `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Refresh to update.`;
             setNewInfoMessage(newVersionInfo);
         }
 
@@ -84,7 +84,7 @@ export default function App() {
           const latestCommitHash = commitData[0].sha;
           
           if (latestCommitHash.trim() !== commitRef.trim()) {
-            const newVersionInfo = `New dev version available, commit ${latestCommitHash.slice(0, 7)}. You are using commit ${commitRef.slice(0, 7)}. Refresh the page to update.`;
+            const newVersionInfo = `New dev version available, commit ${latestCommitHash.slice(0, 7)}. You are using commit ${commitRef.slice(0, 7)}. Refresh to update.`;
             setNewInfoMessage(newVersionInfo);
           }
         }
