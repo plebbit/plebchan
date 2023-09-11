@@ -82,11 +82,13 @@ export default function App() {
 
         // Check for commit hash if commitRef is defined
         if (commitRef.length > 0) {
-          const commitRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/development/public/latest_dev_commit.txt', { cache: 'no-cache' });
-          const latestCommit = await commitRes.text();
+          const commitRes = await fetch('https://api.github.com/repos/plebbit/plebchan/commits?per_page=1&sha=development', { cache: 'no-cache' });
+          const commitData = await commitRes.json();
           
-          if (latestCommit.trim() !== commitRef.trim()) {
-            const newVersionInfo = `New dev version available, commit ${latestCommit}. Refresh the page to update.`;
+          const latestCommitHash = commitData[0].sha;
+          
+          if (latestCommitHash.trim() !== commitRef.trim()) {
+            const newVersionInfo = `New dev version available, commit ${latestCommitHash}. Refresh the page to update.`;
             localStorage.setItem('infoToast', newVersionInfo);
           }
         }
