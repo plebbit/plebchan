@@ -370,7 +370,7 @@ const Description = () => {
                             <li onClick={() => {
                               handleOptionClick("description");
                               handleShareClick(selectedAddress, "description");
-                            }}>Share thread</li>
+                            }}>Share board</li>
                             {/* {isModerator ? (
                               <>
                                 change description

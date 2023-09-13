@@ -1006,7 +1006,7 @@ const Board = () => {
                                         handleOptionClick("rules");
                                         handleShareClick(selectedAddress, "rules");
                                       }}>
-                                        Share thread
+                                        Share board
                                       </li>
                                       {/* {isModerator ? (
                                         <>
@@ -1141,7 +1141,7 @@ const Board = () => {
                                       <li onClick={() => {
                                         handleOptionClick("rules");
                                         handleShareClick(selectedAddress, "rules");
-                                      }}>Share thread</li>
+                                      }}>Share board</li>
                                       {/* {isModerator ? (
                                         <>
                                           change rules
@@ -1297,7 +1297,7 @@ const Board = () => {
                                       <li onClick={() => {
                                         handleOptionClick("description");
                                         handleShareClick(selectedAddress, "description");
-                                      }}>Share thread</li>
+                                      }}>Share board</li>
                                       {/* {isModerator ? (
                                         <>
                                           change description

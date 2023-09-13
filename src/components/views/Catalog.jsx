@@ -436,7 +436,7 @@ const CatalogPost = ({post}) => {
                     <li onClick={() => {
                       handleOptionClick("rules");
                       handleShareClick(selectedAddress, "rules");
-                    }}>Share thread</li>
+                    }}>Share board</li>
                     {/* {isModerator ? (
                       <>
                         change rules
@@ -580,7 +580,7 @@ const CatalogPost = ({post}) => {
                     <li onClick={() => {
                       handleOptionClick("description");
                       handleShareClick(selectedAddress, "description");
-                    }}>Share thread</li>
+                    }}>Share board</li>
                     {/* {isModerator ? (
                       <>
                         change description
