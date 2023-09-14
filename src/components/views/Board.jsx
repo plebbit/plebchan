@@ -1041,6 +1041,32 @@ const Board = () => {
                                           change rules
                                         </>
                                       ) : null} */}
+                                      <li 
+                                      onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                                      onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                                        View on »
+                                        <ul className="dropdown-menu post-menu-catalog"
+                                          style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                                          <li onClick={() => handleOptionClick("rules")}>
+                                            <a 
+                                            href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Plebbit</a>
+                                          </li>
+                                          {/* <li onClick={() => handleOptionClick("rules")}>
+                                            <a
+                                            href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Seedit</a>
+                                          </li> */}
+                                          <li onClick={() => handleOptionClick("rules")}>
+                                            <a
+                                            href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Plebones</a>
+                                          </li>
+                                        </ul>
+                                      </li>
                                     </ul>
                                   </div>
                                   </PostMenuCatalog>, document.body
@@ -1089,6 +1115,20 @@ const Board = () => {
                                       handleMobileOptionClick("rules");
                                       handleShareClick(selectedAddress, "rules")
                                     }}>Share board</li>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                    target="_blank" rel="noreferrer">
+                                      <li onClick={() => handleOptionClick("rules")}>
+                                        View on plebbit
+                                      </li>
+                                    </a>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                    target="_blank" rel="noreferrer">
+                                      <li onClick={() => handleOptionClick("rules")}>
+                                        View on plebones
+                                      </li>
+                                    </a>
                                   </ul>
                                 </PostMenuMobile>, document.body
                               )}
@@ -1200,6 +1240,32 @@ const Board = () => {
                                           change rules
                                         </>
                                       ) : null} */}
+                                      <li 
+                                      onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                                      onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                                        View on »
+                                        <ul className="dropdown-menu post-menu-catalog"
+                                          style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                                          <li onClick={() => handleOptionClick("rules")}>
+                                            <a 
+                                            href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Plebbit</a>
+                                          </li>
+                                          {/* <li onClick={() => handleOptionClick("rules")}>
+                                            <a
+                                            href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Seedit</a>
+                                          </li> */}
+                                          <li onClick={() => handleOptionClick("rules")}>
+                                            <a
+                                            href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Plebones</a>
+                                          </li>
+                                        </ul>
+                                      </li>
                                     </ul>
                                   </div>
                                   </PostMenuCatalog>, document.body
@@ -1248,6 +1314,20 @@ const Board = () => {
                                       handleMobileOptionClick("rules");
                                       handleShareClick(selectedAddress, "rules")
                                     }}>Share board</li>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                    target="_blank" rel="noreferrer">
+                                      <li onClick={() => handleOptionClick("rules")}>
+                                        View on plebbit
+                                      </li>
+                                    </a>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                    target="_blank" rel="noreferrer">
+                                      <li onClick={() => handleOptionClick("rules")}>
+                                        View on plebones
+                                      </li>
+                                    </a>
                                   </ul>
                                 </PostMenuMobile>, document.body
                               )}
@@ -1381,6 +1461,60 @@ const Board = () => {
                                           change description
                                         </>
                                       ) : null} */}
+                                      {subplebbit.suggested?.avatarUrl ? (
+                                        <li 
+                                        onMouseOver={() => {setIsImageSearchOpen(true)}}
+                                        onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                          Image search »
+                                          <ul className="dropdown-menu post-menu-catalog"
+                                            style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                            <li onClick={() => handleOptionClick("description")}>
+                                              <a 
+                                              href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested?.avatarUrl}`}
+                                              target="_blank" rel="noreferrer"
+                                              >Google</a>
+                                            </li>
+                                            <li onClick={() => handleOptionClick("description")}>
+                                              <a
+                                              href={`https://yandex.com/images/search?url=${subplebbit.suggested?.avatarUrl}`}
+                                              target="_blank" rel="noreferrer"
+                                              >Yandex</a>
+                                            </li>
+                                            <li onClick={() => handleOptionClick("description")}>
+                                              <a
+                                              href={`https://saucenao.com/search.php?url=${subplebbit.suggested?.avatarUrl}`}
+                                              target="_blank" rel="noreferrer"
+                                              >SauceNAO</a>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                      ) : null}
+                                      <li 
+                                      onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                                      onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                                        View on »
+                                        <ul className="dropdown-menu post-menu-catalog"
+                                          style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                                          <li onClick={() => handleOptionClick("description")}>
+                                            <a 
+                                            href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Plebbit</a>
+                                          </li>
+                                          {/* <li onClick={() => handleOptionClick("description")}>
+                                            <a
+                                            href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Seedit</a>
+                                          </li> */}
+                                          <li onClick={() => handleOptionClick("description")}>
+                                            <a
+                                            href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                            target="_blank" rel="noreferrer"
+                                            >Plebones</a>
+                                          </li>
+                                        </ul>
+                                      </li>
                                     </ul>
                                   </div>
                                   </PostMenuCatalog>, document.body
@@ -1403,17 +1537,18 @@ const Board = () => {
                         <div className="op-container">
                           <div className="post op op-mobile">
                             <div className="post-info-mobile">
-                            <button className="post-menu-button-mobile"
-                              ref={el => {
-                                threadMenuRefsMobile.current["description"] = el;
-                              }}
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                const rect = threadMenuRefsMobile.current["description"].getBoundingClientRect();
-                                setMobileMenuPosition({top: rect.top + window.scrollY, left: rect.left});
-                                setOpenMobileMenuCid(prevCid => (prevCid === "description" ? null : "description"));
-                              }}
-                              style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                              <button key={`mob-pb-`} className="post-menu-button-mobile"
+                                ref={el => {
+                                  threadMenuRefsMobile.current["description"] = el;
+                                }}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  const rect = threadMenuRefsMobile.current["description"].getBoundingClientRect();
+                                  setMobileMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                                  setOpenMobileMenuCid(prevCid => (prevCid === "description" ? null : "description"));
+                                }}
+                                style={{ all: 'unset', cursor: 'pointer' }}
+                              >...</button>
                               {createPortal(
                                 <PostMenuMobile selectedStyle={selectedStyle}
                                 ref={el => {postMenuMobileRef.current = el}}
@@ -1422,11 +1557,48 @@ const Board = () => {
                                 display: openMobileMenuCid === "description" ? "block" : "none",
                                 top: mobileMenuPosition.top + 20,
                                 left: mobileMenuPosition.left}}>
-                                  <ul className={`post-menu-mobile-thread-${"description"}`}>
+                                  <ul className={`post-menu-mobile-thread-description`}>
                                     <li onClick={() => {
                                       handleMobileOptionClick("description");
                                       handleShareClick(selectedAddress, "description")
                                     }}>Share board</li>
+                                    {subplebbit.suggested?.avatarUrl ? ( 
+                                      <>
+                                        <a style={{ color: 'inherit', textDecoration: 'none' }}
+                                          href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested?.avatarUrl}`}
+                                          target="_blank" rel="noreferrer"
+                                          onClick={() => handleMobileOptionClick("description")}>
+                                          <li>Search image on Google</li>
+                                        </a>
+                                        <a style={{ color: 'inherit', textDecoration: 'none' }}
+                                          href={`https://yandex.com/images/search?url=${subplebbit.suggested?.avatarUrl}`}
+                                          target="_blank" rel="noreferrer"
+                                          onClick={() => handleMobileOptionClick("description")}>
+                                          <li>Search image on Yandex</li>
+                                        </a>
+                                        <a style={{ color: 'inherit', textDecoration: 'none' }}
+                                          href={`https://saucenao.com/search.php?url=${subplebbit.suggested?.avatarUrl}`}
+                                          target="_blank" rel="noreferrer"
+                                          onClick={() => handleMobileOptionClick("description")}>
+                                          <li>Search image on SauceNAO</li>
+                                        </a>
+                                      </>
+                                      ) : null
+                                    }
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                    target="_blank" rel="noreferrer">
+                                      <li onClick={() => handleOptionClick("description")}>
+                                      View on plebbit
+                                      </li>
+                                    </a>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                    target="_blank" rel="noreferrer">
+                                      <li onClick={() => handleOptionClick("description")}>
+                                        View on plebones
+                                      </li>
+                                    </a>
                                   </ul>
                                 </PostMenuMobile>, document.body
                               )}
@@ -1459,7 +1631,7 @@ const Board = () => {
                               <div className="file-mobile">
                                 <div className="img-container">
                                   <span className="file-thumb-mobile">
-                                    <img src={subplebbit.suggested.avatarUrl} alt="board avatar"
+                                    <img src={subplebbit.suggested?.avatarUrl} alt="board avatar"
                                     onClick={handleImageClick}
                                     style={{cursor: "pointer"}} />
                                     <div className="file-info-mobile">image</div>
@@ -2608,24 +2780,27 @@ const Board = () => {
                                         (commentMediaInfo.type === 'webpage' && 
                                         commentMediaInfo.thumbnail))) ? ( 
                                           <>
-                                            <li onClick={() => handleMobileOptionClick(thread.cid)}>
-                                              <a style={{color: 'inherit', textDecoration: 'none'}}
-                                              href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                                              target="_blank" rel="noreferrer"
-                                              >Search image on Google</a>
-                                            </li>
-                                            <li onClick={() => handleMobileOptionClick(thread.cid)}>
-                                              <a style={{color: 'inherit', textDecoration: 'none'}}
-                                              href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                                              target="_blank" rel="noreferrer"
-                                              >Search image on Yandex</a>
-                                            </li>
-                                            <li onClick={() => handleMobileOptionClick(thread.cid)}>
-                                              <a style={{color: 'inherit', textDecoration: 'none'}}
-                                              href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                                              target="_blank" rel="noreferrer"
-                                              >Search image on SauceNAO</a>
-                                            </li>
+                                            <a style={{color: 'inherit', textDecoration: 'none'}}
+                                            href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer">
+                                              <li onClick={() => handleMobileOptionClick(thread.cid)}>
+                                                Search image on Google
+                                              </li>
+                                            </a>
+                                            <a style={{color: 'inherit', textDecoration: 'none'}}
+                                            href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer">
+                                              <li onClick={() => handleMobileOptionClick(thread.cid)}>
+                                                Search image on Yandex
+                                              </li>
+                                            </a>
+                                            <a style={{color: 'inherit', textDecoration: 'none'}}
+                                            href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                            target="_blank" rel="noreferrer">
+                                              <li onClick={() => handleMobileOptionClick(thread.cid)}>
+                                                Search image on SauceNAO
+                                              </li>
+                                            </a>
                                           </>
                                         ) : null
                                       }
@@ -2935,24 +3110,27 @@ const Board = () => {
                                           (replyMediaInfo.type === 'webpage' && 
                                           replyMediaInfo.thumbnail))) ? ( 
                                             <>
-                                              <li onClick={() => handleMobileOptionClick(reply.cid)}>
-                                                <a style={{color: 'inherit', textDecoration: 'none'}}
-                                                href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
-                                                target="_blank" rel="noreferrer"
-                                                >Search image on Google</a>
-                                              </li>
-                                              <li onClick={() => handleMobileOptionClick(reply.cid)}>
-                                                <a style={{color: 'inherit', textDecoration: 'none'}}
-                                                href={`https://yandex.com/images/search?img_url=${replyMediaInfo.url}&rpt=imageview`}
-                                                target="_blank" rel="noreferrer"
-                                                >Search image on Yandex</a>
-                                              </li>
-                                              <li onClick={() => handleMobileOptionClick(reply.cid)}>
-                                                <a style={{color: 'inherit', textDecoration: 'none'}}
-                                                href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
-                                                target="_blank" rel="noreferrer"
-                                                >Search image on SauceNAO</a>
-                                              </li>
+                                              <a style={{color: 'inherit', textDecoration: 'none'}}
+                                              href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer">
+                                                <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                                  Search image on Google
+                                                </li>
+                                              </a>
+                                              <a style={{color: 'inherit', textDecoration: 'none'}}
+                                              href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer">
+                                                <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                                  Search image on Yandex
+                                                </li>
+                                              </a>
+                                              <a style={{color: 'inherit', textDecoration: 'none'}}
+                                              href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
+                                              target="_blank" rel="noreferrer">
+                                                <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                                  Search image on SauceNAO
+                                                </li>
+                                              </a>
                                             </>
                                           ) : null
                                         }

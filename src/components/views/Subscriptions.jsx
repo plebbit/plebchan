@@ -1850,24 +1850,27 @@ const Subscriptions = () => {
                                   (commentMediaInfo.type === 'webpage' && 
                                   commentMediaInfo.thumbnail))) ? ( 
                                     <>
-                                      <li onClick={() => handleMobileOptionClick(thread.cid)}>
-                                        <a style={{color: 'inherit', textDecoration: 'none'}}
-                                        href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Search image on Google</a>
-                                      </li>
-                                      <li onClick={() => handleMobileOptionClick(thread.cid)}>
-                                        <a style={{color: 'inherit', textDecoration: 'none'}}
-                                        href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Search image on Yandex</a>
-                                      </li>
-                                      <li onClick={() => handleMobileOptionClick(thread.cid)}>
-                                        <a style={{color: 'inherit', textDecoration: 'none'}}
-                                        href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Search image on SauceNAO</a>
-                                      </li>
+                                      <a style={{color: 'inherit', textDecoration: 'none'}}
+                                      href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                      target="_blank" rel="noreferrer">
+                                        <li onClick={() => handleMobileOptionClick(thread.cid)}>
+                                          Search image on Google
+                                        </li>
+                                      </a>
+                                      <a style={{color: 'inherit', textDecoration: 'none'}}
+                                      href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                      target="_blank" rel="noreferrer">
+                                        <li onClick={() => handleMobileOptionClick(thread.cid)}>
+                                          Search image on Yandex
+                                        </li>
+                                      </a>
+                                      <a style={{color: 'inherit', textDecoration: 'none'}}
+                                      href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                      target="_blank" rel="noreferrer">
+                                        <li onClick={() => handleMobileOptionClick(thread.cid)}>
+                                          Search image on SauceNAO
+                                        </li>
+                                      </a>
                                     </>
                                   ) : null
                                 }
@@ -2176,24 +2179,27 @@ const Subscriptions = () => {
                                     (replyMediaInfo.type === 'webpage' && 
                                     replyMediaInfo.thumbnail))) ? ( 
                                       <>
-                                        <li onClick={() => handleMobileOptionClick(reply.cid)}>
-                                          <a style={{color: 'inherit', textDecoration: 'none'}}
-                                          href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >Search image on Google</a>
-                                        </li>
-                                        <li onClick={() => handleMobileOptionClick(reply.cid)}>
-                                          <a style={{color: 'inherit', textDecoration: 'none'}}
-                                          href={`https://yandex.com/images/search?img_url=${replyMediaInfo.url}&rpt=imageview`}
-                                          target="_blank" rel="noreferrer"
-                                          >Search image on Yandex</a>
-                                        </li>
-                                        <li onClick={() => handleMobileOptionClick(reply.cid)}>
-                                          <a style={{color: 'inherit', textDecoration: 'none'}}
-                                          href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
-                                          target="_blank" rel="noreferrer"
-                                          >Search image on SauceNAO</a>
-                                        </li>
+                                        <a style={{color: 'inherit', textDecoration: 'none'}}
+                                        href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
+                                        target="_blank" rel="noreferrer">
+                                          <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                            Search image on Google
+                                          </li>
+                                        </a>
+                                        <a style={{color: 'inherit', textDecoration: 'none'}}
+                                        href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
+                                        target="_blank" rel="noreferrer">
+                                          <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                            Search image on Yandex
+                                          </li>
+                                        </a>
+                                        <a style={{color: 'inherit', textDecoration: 'none'}}
+                                        href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
+                                        target="_blank" rel="noreferrer">
+                                          <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                            Search image on SauceNAO
+                                          </li>
+                                        </a>
                                       </>
                                     ) : null
                                   }

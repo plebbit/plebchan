@@ -8,7 +8,7 @@ const BoardAvatar = ({ address }) => {
 
   useEffect(() => {
     if (subplebbit.suggested?.avatarUrl) {
-      setAvatarUrl(subplebbit.suggested.avatarUrl);
+      setAvatarUrl(subplebbit.suggested?.avatarUrl);
     }
   }, [subplebbit.suggested?.avatarUrl, subplebbit]);
 

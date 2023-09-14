@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
-import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/views/Board.styled';
+import { Container, NavBar, Header, Break, PostMenu, PostForm, PostMenuMobile } from '../styled/views/Board.styled';
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import BoardStats from '../BoardStats';
@@ -42,15 +42,19 @@ const Rules = () => {
   const navigate = useNavigate();
 
   const threadMenuRefs = useRef({});
-  const postMenuRef = useRef(null);
+  const threadMenuRefsMobile = useRef({});
+  const postMenuMobileRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
 
   const [isAdminListOpen, setIsAdminListOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
+  const [mobileMenuPosition, setMobileMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [openMobileMenuCid, setOpenMobileMenuCid] = useState(null);
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
+  const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
 
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
@@ -60,12 +64,23 @@ const Rules = () => {
     setOpenMenuCid(null);
   };
 
+  const handleMobileOptionClick = () => {
+    setOpenMobileMenuCid(null);
+  };
+
+
   const handleOutsideClick = useCallback((e) => {
-    if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
+    if (openMenuCid !== null && !postMenuCatalogRef.current.contains(e.target)) {
       setOpenMenuCid(null);
     }
-  }, [openMenuCid, postMenuRef, postMenuCatalogRef]);
+  }, [openMenuCid, postMenuCatalogRef]);
 
+  const handleMobileOutsideClick = useCallback((e) => {
+    if (openMobileMenuCid !== null && !postMenuMobileRef.current.contains(e.target)) {
+      setOpenMobileMenuCid(null);
+    }
+  }, [openMobileMenuCid, postMenuMobileRef]);
+  
 
   useEffect(() => {
     if (openMenuCid !== null) {
@@ -79,11 +94,23 @@ const Rules = () => {
     };
   }, [openMenuCid, handleOutsideClick]);
 
+
+  useEffect(() => {
+    if (openMobileMenuCid !== null) {
+      document.addEventListener('click', handleMobileOutsideClick);
+    } else {
+      document.removeEventListener('click', handleMobileOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleMobileOutsideClick);
+    };
+  }, [openMobileMenuCid, handleMobileOutsideClick]);
+
   
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
 
 
   useEffect(() => {
@@ -358,6 +385,32 @@ const Rules = () => {
                                 change rules
                               </>
                             ) : null} */}
+                            <li 
+                            onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                            onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                              View on »
+                              <ul className="dropdown-menu post-menu-catalog"
+                                style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                                <li onClick={() => handleOptionClick("rules")}>
+                                  <a 
+                                  href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Plebbit</a>
+                                </li>
+                                {/* <li onClick={() => handleOptionClick("rules")}>
+                                  <a
+                                  href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Seedit</a>
+                                </li> */}
+                                <li onClick={() => handleOptionClick("rules")}>
+                                  <a
+                                  href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Plebones</a>
+                                </li>
+                              </ul>
+                            </li>
                           </ul>
                         </div>
                         </PostMenuCatalog>, document.body
@@ -391,8 +444,48 @@ const Rules = () => {
               <div className="op-container">
                 <div className="post op op-mobile">
                   <div className="post-info-mobile">
-                    <button className="post-menu-button-mobile"
-                    style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                    <button key={`mob-pb-`} className="post-menu-button-mobile"
+                      ref={el => {
+                        threadMenuRefsMobile.current["rules"] = el;
+                      }}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        const rect = threadMenuRefsMobile.current["rules"].getBoundingClientRect();
+                        setMobileMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                        setOpenMobileMenuCid(prevCid => (prevCid === "rules" ? null : "rules"));
+                      }}
+                      style={{ all: 'unset', cursor: 'pointer' }}
+                    >...</button>
+                    {createPortal(
+                      <PostMenuMobile selectedStyle={selectedStyle}
+                      ref={el => {postMenuMobileRef.current = el}}
+                      onClick={(event) => event.stopPropagation()}
+                      style={{position: "absolute", 
+                      display: openMobileMenuCid === "rules" ? "block" : "none",
+                      top: mobileMenuPosition.top + 20,
+                      left: mobileMenuPosition.left}}>
+                        <ul className={`post-menu-mobile-thread-description`}>
+                          <li onClick={() => {
+                            handleMobileOptionClick("rules");
+                            handleShareClick(selectedAddress, "rules")
+                          }}>Share board</li>
+                          <a style={{color: 'inherit', textDecoration: 'none'}}
+                          href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                          target="_blank" rel="noreferrer">
+                            <li onClick={() => handleOptionClick("rules")}>
+                              View on plebbit
+                            </li>
+                          </a>
+                          <a style={{color: 'inherit', textDecoration: 'none'}}
+                          href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                          target="_blank" rel="noreferrer">
+                            <li onClick={() => handleOptionClick("rules")}>
+                              View on plebones
+                            </li>
+                          </a>
+                        </ul>
+                      </PostMenuMobile>, document.body
+                    )}
                     <span className="name-block-mobile">
                       <span className="name-mobile capcode"
                       style={{cursor: 'pointer'}}

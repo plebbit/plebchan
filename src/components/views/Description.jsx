@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { debounce } from 'lodash';
-import { Container, NavBar, Header, Break, PostMenu, PostForm } from '../styled/views/Board.styled';
+import { Container, NavBar, Header, Break, PostMenu, PostForm, PostMenuMobile } from '../styled/views/Board.styled';
 import { TopBar, BoardForm, Footer, ReplyFormLink} from '../styled/views/Thread.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
 import BoardStats from '../BoardStats';
@@ -37,15 +37,20 @@ const Description = () => {
   const navigate = useNavigate();
 
   const threadMenuRefs = useRef({});
-  const postMenuRef = useRef(null);
+  const threadMenuRefsMobile = useRef({});
+  const postMenuMobileRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
 
   const [isAdminListOpen, setIsAdminListOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
+  const [mobileMenuPosition, setMobileMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [openMobileMenuCid, setOpenMobileMenuCid] = useState(null);
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
+  const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
+  const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
 
   const { subplebbitAddress } = useParams();
   const subplebbit = useSubplebbit({subplebbitAddress: selectedAddress});
@@ -55,12 +60,23 @@ const Description = () => {
     setOpenMenuCid(null);
   };
 
+  const handleMobileOptionClick = () => {
+    setOpenMobileMenuCid(null);
+  };
+
+
   const handleOutsideClick = useCallback((e) => {
-    if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
+    if (openMenuCid !== null && !postMenuCatalogRef.current.contains(e.target)) {
       setOpenMenuCid(null);
     }
-  }, [openMenuCid, postMenuRef, postMenuCatalogRef]);
+  }, [openMenuCid, postMenuCatalogRef]);
 
+  const handleMobileOutsideClick = useCallback((e) => {
+    if (openMobileMenuCid !== null && !postMenuMobileRef.current.contains(e.target)) {
+      setOpenMobileMenuCid(null);
+    }
+  }, [openMobileMenuCid, postMenuMobileRef]);
+  
 
   useEffect(() => {
     if (openMenuCid !== null) {
@@ -73,6 +89,19 @@ const Description = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
+
+
+  useEffect(() => {
+    if (openMobileMenuCid !== null) {
+      document.addEventListener('click', handleMobileOutsideClick);
+    } else {
+      document.removeEventListener('click', handleMobileOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleMobileOutsideClick);
+    };
+  }, [openMobileMenuCid, handleMobileOutsideClick]);
 
   
   useEffect(() => {
@@ -376,6 +405,60 @@ const Description = () => {
                                 change description
                               </>
                             ) : null} */}
+                            {subplebbit.suggested?.avatarUrl ? (
+                              <li 
+                              onMouseOver={() => {setIsImageSearchOpen(true)}}
+                              onMouseLeave={() => {setIsImageSearchOpen(false)}}>
+                                Image search »
+                                <ul className="dropdown-menu post-menu-catalog"
+                                  style={{display: isImageSearchOpen ? 'block': 'none'}}>
+                                  <li onClick={() => handleOptionClick("description")}>
+                                    <a 
+                                    href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested?.avatarUrl}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Google</a>
+                                  </li>
+                                  <li onClick={() => handleOptionClick("description")}>
+                                    <a
+                                    href={`https://yandex.com/images/search?url=${subplebbit.suggested?.avatarUrl}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Yandex</a>
+                                  </li>
+                                  <li onClick={() => handleOptionClick("description")}>
+                                    <a
+                                    href={`https://saucenao.com/search.php?url=${subplebbit.suggested?.avatarUrl}`}
+                                    target="_blank" rel="noreferrer"
+                                    >SauceNAO</a>
+                                  </li>
+                                </ul>
+                              </li>
+                            ) : null}
+                            <li 
+                            onMouseOver={() => {setIsClientRedirectMenuOpen(true)}}
+                            onMouseLeave={() => {setIsClientRedirectMenuOpen(false)}}>
+                              View on »
+                              <ul className="dropdown-menu post-menu-catalog"
+                                style={{display: isClientRedirectMenuOpen ? 'block': 'none'}}>
+                                <li onClick={() => handleOptionClick("description")}>
+                                  <a 
+                                  href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Plebbit</a>
+                                </li>
+                                {/* <li onClick={() => handleOptionClick("description")}>
+                                  <a
+                                  href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Seedit</a>
+                                </li> */}
+                                <li onClick={() => handleOptionClick("description")}>
+                                  <a
+                                  href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Plebones</a>
+                                </li>
+                              </ul>
+                            </li>
                           </ul>
                         </div>
                         </PostMenuCatalog>, document.body
@@ -395,8 +478,57 @@ const Description = () => {
               <div className="op-container">
                 <div className="post op op-mobile">
                   <div className="post-info-mobile">
-                    <button className="post-menu-button-mobile"
-                    style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                    <button key={`mob-pb-`} className="post-menu-button-mobile"
+                      ref={el => {
+                        threadMenuRefsMobile.current["description"] = el;
+                      }}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        const rect = threadMenuRefsMobile.current["description"].getBoundingClientRect();
+                        setMobileMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                        setOpenMobileMenuCid(prevCid => (prevCid === "description" ? null : "description"));
+                      }}
+                      style={{ all: 'unset', cursor: 'pointer' }}
+                    >...</button>
+                    {createPortal(
+                      <PostMenuMobile selectedStyle={selectedStyle}
+                      ref={el => {postMenuMobileRef.current = el}}
+                      onClick={(event) => event.stopPropagation()}
+                      style={{position: "absolute", 
+                      display: openMobileMenuCid === "description" ? "block" : "none",
+                      top: mobileMenuPosition.top + 20,
+                      left: mobileMenuPosition.left}}>
+                        <ul className={`post-menu-mobile-thread-description`}>
+                          <li onClick={() => {
+                            handleMobileOptionClick("description");
+                            handleShareClick(selectedAddress, "description")
+                          }}>Share board</li>
+                          {subplebbit.suggested?.avatarUrl ? ( 
+                              <>
+                                <li onClick={() => handleMobileOptionClick("description")}>
+                                  <a style={{color: 'inherit', textDecoration: 'none'}}
+                                  href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested?.avatarUrl}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Search image on Google</a>
+                                </li>
+                                <li onClick={() => handleMobileOptionClick("description")}>
+                                  <a style={{color: 'inherit', textDecoration: 'none'}}
+                                  href={`https://yandex.com/images/search?url=${subplebbit.suggested?.avatarUrl}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Search image on Yandex</a>
+                                </li>
+                                <li onClick={() => handleMobileOptionClick("description")}>
+                                  <a style={{color: 'inherit', textDecoration: 'none'}}
+                                  href={`https://saucenao.com/search.php?url=${subplebbit.suggested?.avatarUrl}`}
+                                  target="_blank" rel="noreferrer"
+                                  >Search image on SauceNAO</a>
+                                </li>
+                              </>
+                            ) : null
+                          }
+                        </ul>
+                      </PostMenuMobile>, document.body
+                    )}
                     <span className="name-block-mobile">
                       <span className="name-mobile capcode"
                       style={{cursor: 'pointer'}}
@@ -421,7 +553,7 @@ const Description = () => {
                     <div className="file-mobile">
                       <div className="img-container">
                         <span className="file-thumb-mobile">
-                          <img src={subplebbit.suggested.avatarUrl} alt="board avatar"
+                          <img src={subplebbit.suggested?.avatarUrl} alt="board avatar"
                           onClick={handleImageClick}
                           style={{cursor: "pointer"}} />
                           <div className="file-info-mobile">image</div>
