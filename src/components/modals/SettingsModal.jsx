@@ -463,7 +463,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
                 <input 
                   type="checkbox" 
                   checked={anonymousMode} 
-                  onChange={() => {setAnonymousMode(!anonymousMode); window.location.reload();}}
+                  onChange={() => {setAnonymousMode(!anonymousMode)}}
                 />
                 &nbsp;Anon Mode
               </label>
