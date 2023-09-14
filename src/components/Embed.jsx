@@ -71,7 +71,7 @@ const TwitterEmbed = ({parsedUrl}) => {
     title={parsedUrl.href}
     srcdoc={`
       <blockquote class="twitter-tweet" data-theme="dark">
-        <a href="${parsedUrl.href}"></a>
+        <a href="${parsedUrl.href.replace('x.com', 'twitter.com')}"></a>
       </blockquote>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     `}
