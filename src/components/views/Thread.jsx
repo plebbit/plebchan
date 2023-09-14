@@ -7,7 +7,7 @@ import { Tooltip } from 'react-tooltip';
 import { useAccount, useAccountComments, useComment, usePublishComment, usePublishCommentEdit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils'
 import { debounce } from 'lodash';
-import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu } from '../styled/views/Board.styled';
+import { Container, NavBar, Header, Break, PostForm, PostFormTable, PostMenu, PostMenuMobile } from '../styled/views/Board.styled';
 import { ReplyFormLink, TopBar, BottomBar, BoardForm, Footer } from '../styled/views/Thread.styled';
 import { AlertModal } from '../styled/modals/AlertModal.styled';
 import { PostMenuCatalog } from '../styled/views/Catalog.styled';
@@ -91,8 +91,11 @@ const Thread = () => {
   const commentRef = useRef();
   const linkRef = useRef();
   const threadMenuRefs = useRef({});
+  const threadMenuRefsMobile = useRef({});
   const replyMenuRefs = useRef({});
+  const replyMenuRefsMobile = useRef({});
   const postMenuRef = useRef(null);
+  const postMenuMobileRef = useRef(null);
   const postMenuCatalogRef = useRef(null);
   const backlinkRefs = useRef({});
   const quoteRefs = useRef({});
@@ -114,7 +117,9 @@ const Thread = () => {
   const [isModerator, setIsModerator] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({top: 0, left: 0});
+  const [mobileMenuPosition, setMobileMenuPosition] = useState({top: 0, left: 0});
   const [openMenuCid, setOpenMenuCid] = useState(null);
+  const [openMobileMenuCid, setOpenMobileMenuCid] = useState(null);
   const [outOfViewCid, setOutOfViewCid] = useState(null);
   const [outOfViewPosition, setOutOfViewPosition] = useState({top: 0, left: 0});
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
@@ -189,11 +194,21 @@ const Thread = () => {
     setOpenMenuCid(null);
   };
 
+  const handleMobileOptionClick = () => {
+    setOpenMobileMenuCid(null);
+  };
+
   const handleOutsideClick = useCallback((e) => {
     if (openMenuCid !== null && !postMenuRef.current.contains(e.target) && !postMenuCatalogRef.current.contains(e.target)) {
       setOpenMenuCid(null);
     }
   }, [openMenuCid, postMenuRef, postMenuCatalogRef]);
+
+  const handleMobileOutsideClick = useCallback((e) => {
+    if (openMobileMenuCid !== null && !postMenuMobileRef.current.contains(e.target)) {
+      setOpenMobileMenuCid(null);
+    }
+  }, [openMobileMenuCid, postMenuMobileRef]);
 
   useEffect(() => {
     if (openMenuCid !== null) {
@@ -206,6 +221,20 @@ const Thread = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [openMenuCid, handleOutsideClick]);
+
+
+  useEffect(() => {
+    if (openMobileMenuCid !== null) {
+      document.addEventListener('click', handleMobileOutsideClick);
+    } else {
+      document.removeEventListener('click', handleMobileOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleMobileOutsideClick);
+    };
+  }, [openMobileMenuCid, handleMobileOutsideClick]);
+
 
 
   useEffect(() => {
@@ -1423,7 +1452,7 @@ const Thread = () => {
                                           </li>
                                           <li onClick={() => handleOptionClick(reply.cid)}>
                                             <a
-                                            href={`https://yandex.com/images/search?url=${replyMediaInfo.url}`}
+                                            href={`https://yandex.com/images/search?img_url=${replyMediaInfo.url}&rpt=imageview`}
                                             target="_blank" rel="noreferrer"
                                             >Yandex</a>
                                           </li>
@@ -1737,7 +1766,96 @@ const Thread = () => {
                 <div className="op-container" key="op-container">
                     <div key={`mob-po-${comment.cid}`} className="post op op-mobile">
                       <div key={`mob-pi-${comment.cid}`} className="post-info-mobile">
-                        <button style={{ all: 'unset', cursor: 'pointer' }} key={`mob-pb-${comment.cid}`} className="post-menu-button-mobile">...</button>
+                      <button key={`mob-pb-${index}`} className="post-menu-button-mobile"
+                        ref={el => {
+                          threadMenuRefsMobile.current[comment.cid] = el;
+                        }}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          const rect = threadMenuRefsMobile.current[comment.cid].getBoundingClientRect();
+                          setMobileMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                          setOpenMobileMenuCid(prevCid => (prevCid === comment.cid ? null : comment.cid));
+                        }}
+                        style={{ all: 'unset', cursor: 'pointer' }}
+                      >...</button>
+                      {createPortal(
+                        <PostMenuMobile selectedStyle={selectedStyle}
+                        ref={el => {postMenuMobileRef.current = el}}
+                        onClick={(event) => event.stopPropagation()}
+                        style={{position: "absolute", 
+                        display: openMobileMenuCid === comment.cid ? "block" : "none",
+                        top: mobileMenuPosition.top + 20,
+                        left: mobileMenuPosition.left}}>
+                          <ul className={`post-menu-mobile-thread-${comment.cid}`}>
+                            <li onClick={() => {
+                              handleMobileOptionClick(comment.cid);
+                              handleShareClick(selectedAddress, comment.cid)
+                            }}>Share thread</li>
+                            <VerifiedAuthor commentCid={comment.cid}>{({ authorAddress }) => (
+                              <>
+                                {authorAddress === account?.author.address || 
+                                authorAddress === account?.signer.address ? (
+                                  <>
+                                    <li onClick={() => handleAuthorEditClick(comment)}>Edit post</li>
+                                    <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
+                                  </>
+                                ) : null}
+                                {isModerator ? (
+                                  <>
+                                    {authorAddress === account?.author.address ||
+                                    authorAddress === account?.signer.address ? (
+                                      null
+                                    ) : (
+                                      <li onClick={() => {
+                                        setModeratingCommentCid(comment.cid)
+                                        setIsModerationOpen(true); 
+                                        handleMobileOptionClick(comment.cid);
+                                        setDeletePost(true);
+                                      }}>
+                                      Delete post
+                                      </li>
+                                    )}
+                                    <li
+                                    onClick={() => {
+                                      setModeratingCommentCid(comment.cid)
+                                      setIsModerationOpen(true); 
+                                      handleMobileOptionClick(comment.cid);
+                                    }}>
+                                      Mod tools
+                                    </li>
+                                  </>
+                                ) : null}
+                              </>
+                            )}</VerifiedAuthor>
+                            {(commentMediaInfo && (
+                              commentMediaInfo.type === 'image' || 
+                              (commentMediaInfo.type === 'webpage' && 
+                              commentMediaInfo.thumbnail))) ? ( 
+                                <>
+                                  <li onClick={() => handleMobileOptionClick(comment.cid)}>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://lens.google.com/uploadbyurl?url=${commentMediaInfo.url}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Search image on Google</a>
+                                  </li>
+                                  <li onClick={() => handleMobileOptionClick(comment.cid)}>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://yandex.com/images/search?url=${commentMediaInfo.url}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Search image on Yandex</a>
+                                  </li>
+                                  <li onClick={() => handleMobileOptionClick(comment.cid)}>
+                                    <a style={{color: 'inherit', textDecoration: 'none'}}
+                                    href={`https://saucenao.com/search.php?url=${commentMediaInfo.url}`}
+                                    target="_blank" rel="noreferrer"
+                                    >Search image on SauceNAO</a>
+                                  </li>
+                                </>
+                              ) : null
+                            }
+                          </ul>
+                        </PostMenuMobile>, document.body
+                      )}
                         <span className="name-block-mobile">
                           {comment?.author?.displayName
                           ? comment?.author?.displayName.length > 15
@@ -1940,7 +2058,96 @@ const Thread = () => {
                     <div key={`mob-rc-${index}`} className="reply-container">
                       <div key={`mob-pr-${index}`} className="post-reply post-reply-mobile">
                         <div key={`mob-pi-${index}`} className="post-info-mobile">
-                          <button className="post-menu-button-mobile" title="Post menu" style={{ all: 'unset', cursor: 'pointer' }}>...</button>
+                        <button key={`mob-pb-${index}`} className="post-menu-button-mobile"
+                          ref={el => {
+                            replyMenuRefsMobile.current[reply.cid] = el;
+                          }}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            const rect = replyMenuRefsMobile.current[reply.cid].getBoundingClientRect();
+                            setMobileMenuPosition({top: rect.top + window.scrollY, left: rect.left});
+                            setOpenMobileMenuCid(prevCid => (prevCid === reply.cid ? null : reply.cid));
+                          }}
+                          style={{ all: 'unset', cursor: 'pointer' }}
+                        >...</button>
+                        {createPortal(
+                          <PostMenuMobile selectedStyle={selectedStyle}
+                          ref={el => {postMenuMobileRef.current = el}}
+                          onClick={(event) => event.stopPropagation()}
+                          style={{position: "absolute", 
+                          display: openMobileMenuCid === reply.cid ? "block" : "none",
+                          top: mobileMenuPosition.top + 20,
+                          left: mobileMenuPosition.left}}>
+                            <ul className={`post-menu-mobile-thread-${reply.cid}`}>
+                              <li onClick={() => {
+                                handleMobileOptionClick(reply.cid);
+                                handleShareClick(selectedAddress, reply.cid)
+                              }}>Share thread</li>
+                              <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
+                                <>
+                                  {authorAddress === account?.author.address || 
+                                  authorAddress === account?.signer.address ? (
+                                    <>
+                                      <li onClick={() => handleAuthorEditClick(reply)}>Edit post</li>
+                                      <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
+                                    </>
+                                  ) : null}
+                                  {isModerator ? (
+                                    <>
+                                      {authorAddress === account?.author.address ||
+                                      authorAddress === account?.signer.address ? (
+                                        null
+                                      ) : (
+                                        <li onClick={() => {
+                                          setModeratingCommentCid(reply.cid)
+                                          setIsModerationOpen(true); 
+                                          handleMobileOptionClick(reply.cid);
+                                          setDeletePost(true);
+                                        }}>
+                                        Delete post
+                                        </li>
+                                      )}
+                                      <li
+                                      onClick={() => {
+                                        setModeratingCommentCid(reply.cid)
+                                        setIsModerationOpen(true); 
+                                        handleMobileOptionClick(reply.cid);
+                                      }}>
+                                        Mod tools
+                                      </li>
+                                    </>
+                                  ) : null}
+                                </>
+                              )}</VerifiedAuthor>
+                              {(replyMediaInfo && (
+                                replyMediaInfo.type === 'image' || 
+                                (replyMediaInfo.type === 'webpage' && 
+                                replyMediaInfo.thumbnail))) ? ( 
+                                  <>
+                                    <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                      <a style={{color: 'inherit', textDecoration: 'none'}}
+                                      href={`https://lens.google.com/uploadbyurl?url=${replyMediaInfo.url}`}
+                                      target="_blank" rel="noreferrer"
+                                      >Search image on Google</a>
+                                    </li>
+                                    <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                      <a style={{color: 'inherit', textDecoration: 'none'}}
+                                      href={`https://yandex.com/images/search?img_url=${replyMediaInfo.url}&rpt=imageview`}
+                                      target="_blank" rel="noreferrer"
+                                      >Search image on Yandex</a>
+                                    </li>
+                                    <li onClick={() => handleMobileOptionClick(reply.cid)}>
+                                      <a style={{color: 'inherit', textDecoration: 'none'}}
+                                      href={`https://saucenao.com/search.php?url=${replyMediaInfo.url}`}
+                                      target="_blank" rel="noreferrer"
+                                      >Search image on SauceNAO</a>
+                                    </li>
+                                  </>
+                                ) : null
+                              }
+                            </ul>
+                          </PostMenuMobile>, document.body
+                        )}
                           <span key={`mob-nb-${index}`} className="name-block-mobile">
                             {reply.author?.displayName
                             ? reply.author?.displayName.length > 12
