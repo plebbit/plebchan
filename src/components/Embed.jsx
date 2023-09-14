@@ -53,7 +53,7 @@ const YoutubeEmbed = ({parsedUrl}) => {
     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" 
     allowfullscreen
     title={parsedUrl.href}
-    src={`https://www.youtube.com/embed/${youtubeId}`}
+    src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
   />;
 };
 

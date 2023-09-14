@@ -864,7 +864,7 @@ const AllCatalog = () => {
               <option value="Yotsuba-B">Yotsuba B</option>
               <option value="Futaba">Futaba</option>
               <option value="Burichan">Burichan</option>
-              <option value="Tomorrow">Tomorrow</option>
+              <option value="Tomùorrow">Tomorrow</option>
               <option value="Photon">Photon</option>
             </select>
           </span>
@@ -881,9 +881,12 @@ const AllCatalog = () => {
           {subplebbits.state === "succeeded" ? (
             null
           ) : (
-            <div id="stats" style={{float: "right", marginTop: "5px"}}>
-              <span className={stateString ? "ellipsis" : ""}>{stateString}</span>
-            </div>
+            <div className="stats-all-catalog-container">
+            <span id="stats-all">
+              {stateString}
+            </span>
+            <span className={stateString ? "ellipsis-all" : ""} />
+          </div>
           )}
           <hr />
         </TopBar>

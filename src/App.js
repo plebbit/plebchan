@@ -40,6 +40,7 @@ export default function App() {
 
   const location = useLocation();
   const isHomeRoute = location.pathname === "/";
+  const isElectron = window.electron && window.electron.isElectron;
 
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
@@ -49,23 +50,20 @@ export default function App() {
   useEffect(() => {
     const successToast = localStorage.getItem("successToast");
     const errorToast = localStorage.getItem("errorToast");
-    const infoToast = localStorage.getItem("infoToast");
     if (successToast) {
       setNewSuccessMessage(successToast);
       localStorage.removeItem("successToast");
     } else if (errorToast) {
       setNewErrorMessage(errorToast);
       localStorage.removeItem("errorToast");
-    } else if (infoToast) {
-      setNewInfoMessage(infoToast);
-      localStorage.removeItem("infoToast");
     } else {
       return;
     }
-  }, [setNewErrorMessage, setNewSuccessMessage, setNewInfoMessage]);
+  }, [setNewErrorMessage, setNewSuccessMessage]);
   
 
   // check for new version
+  // TODO: delete this code and toast when v1.0.0 is released
   useEffect(() => {
     const fetchVersionInfo = async () => {
       try {
@@ -73,18 +71,21 @@ export default function App() {
         const packageData = await packageRes.json();
 
         if (packageJson.version !== packageData.version) {
-          const newVersionInfo = `New version available, plebchan v${packageData.version}. Refresh the page to update.`;
-          localStorage.setItem('infoToast', newVersionInfo);
+          const newVersionInfo = isElectron 
+            ? `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Download the latest version here: https://github.com/plebbit/plebchan/releases/latest`
+            : `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Refresh to update.`;
+            setNewInfoMessage(newVersionInfo);
         }
 
-        // Check for commit hash if commitRef is defined
         if (commitRef.length > 0) {
-          const commitRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/development/public/latest_dev_commit.txt', { cache: 'no-cache' });
-          const latestCommit = await commitRes.text();
+          const commitRes = await fetch('https://api.github.com/repos/plebbit/plebchan/commits?per_page=1&sha=development', { cache: 'no-cache' });
+          const commitData = await commitRes.json();
           
-          if (latestCommit.trim() !== commitRef.trim()) {
-            const newVersionInfo = `New dev version available, commit ${latestCommit}. Refresh the page to update.`;
-            localStorage.setItem('infoToast', newVersionInfo);
+          const latestCommitHash = commitData[0].sha;
+          
+          if (latestCommitHash.trim() !== commitRef.trim()) {
+            const newVersionInfo = `New dev version available, commit ${latestCommitHash.slice(0, 7)}. You are using commit ${commitRef.slice(0, 7)}. Refresh to update.`;
+            setNewInfoMessage(newVersionInfo);
           }
         }
       } catch (error) {
@@ -93,7 +94,7 @@ export default function App() {
     };
 
     fetchVersionInfo();
-  }, [setNewInfoMessage]);
+  }, [setNewInfoMessage, isElectron]);
 
   
   // preload banners

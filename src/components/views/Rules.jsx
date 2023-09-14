@@ -352,7 +352,7 @@ const Rules = () => {
                             <li onClick={() => {
                               handleOptionClick("rules");
                               handleShareClick(selectedAddress, "rules");
-                            }}>Share thread</li>
+                            }}>Share board</li>
                             {/* {isModerator ? (
                               <>
                                 change rules

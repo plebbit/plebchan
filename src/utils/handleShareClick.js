@@ -3,9 +3,7 @@ function handleShareClick(selectedAddress, cid) {
 
   let shareLink = `${plebBzBaseURL}${selectedAddress}/`;
 
-  if (cid === "rules" || cid === "description") {
-    shareLink += cid;
-  } else {
+  if (cid !== "rules" && cid !== "description") {
     shareLink += `c/${cid}`;
   }
 

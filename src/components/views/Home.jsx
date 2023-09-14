@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAccount, useBufferedFeeds } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBufferedFeeds, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, Boards, BoardsTitle, BoardsContent, Footer } from '../styled/views/Home.styled';
 import BoardAvatar from '../BoardAvatar';
@@ -11,6 +11,23 @@ import packageJson from '../../../package.json';
 import { Tooltip } from 'react-tooltip';
 const {version} = packageJson;
 const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
+
+
+const SubplebbitTitle = ({address}) => {
+  const subplebbitAddress = address;
+  const subplebbit = useSubplebbit({subplebbitAddress});
+  const title = subplebbit.title ?? null;
+
+  return (
+    <>
+      {title ? (
+        <span>{title}</span>
+      ) : (
+        <span style={{userSelect: "none"}}>&nbsp;</span>
+      )}
+    </>
+  )
+}
 
 
 const Home = () => {
@@ -168,7 +185,7 @@ const Home = () => {
                 {defaultSubplebbits.map((subplebbit, index) => (
                   <div className="board" key={`board-${index}`}>
                     <div className="board-title" key="board-title">
-                      {subplebbit.title ? subplebbit.title : <span style={{userSelect: "none"}}>&nbsp;</span>}
+                      {subplebbit.title ?? <SubplebbitTitle address={subplebbit.address} />}
                     </div>
                     <div className="board-avatar-container" key="board-avatar-container">
                       <Link to={`/p/${subplebbit.address}`} key="link" onClick={() => {

@@ -173,6 +173,36 @@ export const ReplyFormLink = styled.div`
 
 export const TopBar = styled.div`
   @media (min-width: 480px) {
+    .stats-all-catalog-container {
+      float: right;
+      margin-top: 3px;
+      margin-right: 30px;
+      overflow: hidden;
+      max-width: calc(100vw - 50vw);
+    }
+
+    #stats-all {
+      display: inline-block;
+      max-width: calc(100vw - 50vw);
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: "";
+      overflow: hidden;
+    }
+
+    .ellipsis-all {
+      white-space: nowrap;
+    }
+
+    .ellipsis-all:after {
+      content: "\\2026";
+      position: absolute;
+      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+      animation: ellipsis steps(4,end) 1500ms infinite;
+      width: 0px;
+      overflow: hidden;
+    }
+
     #return-button-mobile {
       display: none;
     }
@@ -193,6 +223,37 @@ export const TopBar = styled.div`
   }
 
   @media (max-width: 480px) {
+    .stats-all-catalog-container  {
+      height: 25px;
+      position: absolute;
+      text-align: left;
+      overflow: hidden;
+      width: 100vw;
+      margin-top: -2px;
+    }
+
+    #stats-all {
+      display: inline-block;
+      max-width: 90vw;
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: "";
+      overflow: hidden;
+    }
+
+    .ellipsis-all {
+      white-space: nowrap;
+    }
+
+    .ellipsis-all:after {
+      content: "\\2026";
+      position: absolute;
+      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
+      animation: ellipsis steps(4,end) 1500ms infinite;
+      width: 0px;
+      overflow: hidden;
+    }
+    
     line-height: 30px;
     
     #return-button-desktop, #catalog-button-desktop, #bottom-button-desktop {
