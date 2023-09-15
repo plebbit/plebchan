@@ -17,7 +17,6 @@ import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
 import handleImageClick from '../../utils/handleImageClick';
-import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
@@ -396,10 +395,6 @@ const Description = () => {
                         style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
                         >
                           <ul className="post-menu-catalog">
-                            <li onClick={() => {
-                              handleOptionClick("description");
-                              handleShareClick(selectedAddress, "description");
-                            }}>Share board</li>
                             {/* {isModerator ? (
                               <>
                                 change description
@@ -499,10 +494,6 @@ const Description = () => {
                       top: mobileMenuPosition.top + 20,
                       left: mobileMenuPosition.left}}>
                         <ul className={`post-menu-mobile-thread-description`}>
-                          <li onClick={() => {
-                            handleMobileOptionClick("description");
-                            handleShareClick(selectedAddress, "description")
-                          }}>Share board</li>
                           {subplebbit.suggested?.avatarUrl ? ( 
                               <>
                                 <li onClick={() => handleMobileOptionClick("description")}>
@@ -526,6 +517,20 @@ const Description = () => {
                               </>
                             ) : null
                           }
+                          <a style={{color: 'inherit', textDecoration: 'none'}}
+                          href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                          target="_blank" rel="noreferrer">
+                            <li onClick={() => handleMobileOptionClick("description")}>
+                              View on plebbit
+                            </li>
+                          </a>
+                          <a style={{color: 'inherit', textDecoration: 'none'}}
+                          href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                          target="_blank" rel="noreferrer">
+                            <li onClick={() => handleMobileOptionClick("description")}>
+                              View on plebones
+                            </li>
+                          </a>
                         </ul>
                       </PostMenuMobile>, document.body
                     )}

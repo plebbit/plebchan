@@ -435,9 +435,6 @@ const CatalogPost = ({post}) => {
                     <a target="_blank" rel="noreferrer"
                     style={{color: 'inherit', textDecoration: 'none'}}
                     href={`https://pleb.bz/p/${selectedAddress}/?redirect=plebchan.eth.limo`}>
-                      <li onClick={() => {
-                        handleOptionClick("rules");
-                      }}>Share board</li>
                     </a>
                     {/* {isModerator ? (
                       <>
@@ -582,9 +579,6 @@ const CatalogPost = ({post}) => {
                     <a target="_blank" rel="noreferrer"
                     style={{color: 'inherit', textDecoration: 'none'}}
                     href={`https://pleb.bz/p/${selectedAddress}/?redirect=plebchan.eth.limo`}>
-                      <li onClick={() => {
-                        handleOptionClick("description");
-                      }}>Share board</li>
                     </a>
                     {/* {isModerator ? (
                       <>

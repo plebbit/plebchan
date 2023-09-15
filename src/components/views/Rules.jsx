@@ -15,7 +15,6 @@ import AdminListModal from '../modals/AdminListModal';
 import OfflineIndicator from '../OfflineIndicator';
 import SettingsModal from '../modals/SettingsModal';
 import getDate from '../../utils/getDate';
-import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
 import packageJson from '../../../package.json';
@@ -376,10 +375,6 @@ const Rules = () => {
                         style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                         >
                           <ul className="post-menu-catalog">
-                            <li onClick={() => {
-                              handleOptionClick("rules");
-                              handleShareClick(selectedAddress, "rules");
-                            }}>Share board</li>
                             {/* {isModerator ? (
                               <>
                                 change rules
@@ -465,21 +460,17 @@ const Rules = () => {
                       top: mobileMenuPosition.top + 20,
                       left: mobileMenuPosition.left}}>
                         <ul className={`post-menu-mobile-thread-description`}>
-                          <li onClick={() => {
-                            handleMobileOptionClick("rules");
-                            handleShareClick(selectedAddress, "rules")
-                          }}>Share board</li>
                           <a style={{color: 'inherit', textDecoration: 'none'}}
                           href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
                           target="_blank" rel="noreferrer">
-                            <li onClick={() => handleOptionClick("rules")}>
+                            <li onClick={() => handleMobileOptionClick("rules")}>
                               View on plebbit
                             </li>
                           </a>
                           <a style={{color: 'inherit', textDecoration: 'none'}}
                           href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
                           target="_blank" rel="noreferrer">
-                            <li onClick={() => handleOptionClick("rules")}>
+                            <li onClick={() => handleMobileOptionClick("rules")}>
                               View on plebones
                             </li>
                           </a>

@@ -1030,12 +1030,6 @@ const Board = () => {
                                   style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                                   >
                                     <ul className="post-menu-catalog">
-                                      <li onClick={() => {
-                                        handleOptionClick("rules");
-                                        handleShareClick(selectedAddress, "rules");
-                                      }}>
-                                        Share board
-                                      </li>
                                       {/* {isModerator ? (
                                         <>
                                           change rules
@@ -1111,10 +1105,6 @@ const Board = () => {
                                 top: mobileMenuPosition.top + 20,
                                 left: mobileMenuPosition.left}}>
                                   <ul className={`post-menu-mobile-thread-${"rules"}`}>
-                                    <li onClick={() => {
-                                      handleMobileOptionClick("rules");
-                                      handleShareClick(selectedAddress, "rules")
-                                    }}>Share board</li>
                                     <a style={{color: 'inherit', textDecoration: 'none'}}
                                     href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
                                     target="_blank" rel="noreferrer">
@@ -1231,10 +1221,6 @@ const Board = () => {
                                   style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                                   >
                                     <ul className="post-menu-catalog">
-                                      <li onClick={() => {
-                                        handleOptionClick("rules");
-                                        handleShareClick(selectedAddress, "rules");
-                                      }}>Share board</li>
                                       {/* {isModerator ? (
                                         <>
                                           change rules
@@ -1310,10 +1296,6 @@ const Board = () => {
                                 top: mobileMenuPosition.top + 20,
                                 left: mobileMenuPosition.left}}>
                                   <ul className={`post-menu-mobile-thread-${"rules"}`}>
-                                    <li onClick={() => {
-                                      handleMobileOptionClick("rules");
-                                      handleShareClick(selectedAddress, "rules")
-                                    }}>Share board</li>
                                     <a style={{color: 'inherit', textDecoration: 'none'}}
                                     href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
                                     target="_blank" rel="noreferrer">
@@ -1452,10 +1434,6 @@ const Board = () => {
                                   style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
                                   >
                                     <ul className="post-menu-catalog">
-                                      <li onClick={() => {
-                                        handleOptionClick("description");
-                                        handleShareClick(selectedAddress, "description");
-                                      }}>Share board</li>
                                       {/* {isModerator ? (
                                         <>
                                           change description
@@ -1558,10 +1536,6 @@ const Board = () => {
                                 top: mobileMenuPosition.top + 20,
                                 left: mobileMenuPosition.left}}>
                                   <ul className={`post-menu-mobile-thread-description`}>
-                                    <li onClick={() => {
-                                      handleMobileOptionClick("description");
-                                      handleShareClick(selectedAddress, "description")
-                                    }}>Share board</li>
                                     {subplebbit.suggested?.avatarUrl ? ( 
                                       <>
                                         <a style={{ color: 'inherit', textDecoration: 'none' }}
