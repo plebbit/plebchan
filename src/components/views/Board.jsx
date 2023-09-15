@@ -1690,7 +1690,7 @@ const Board = () => {
                                     commentMediaInfo?.url.length > 30 ?
                                     commentMediaInfo?.url.slice(0, 30) + "(...)" :
                                     commentMediaInfo?.url
-                                    }</a>&nbsp;{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
+                                    }</a>{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
                                     {((isThreadThumbnailClicked[index] && (commentMediaInfo.type === 'iframe' || commentMediaInfo.type === 'video')) || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
                                       <span>
                                          [
@@ -2394,7 +2394,7 @@ const Board = () => {
                                           replyMediaInfo?.url.length > 30 ?
                                           replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                           replyMediaInfo?.url
-                                          }</a>&nbsp;{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
+                                          }</a>{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
                                           { ((isReplyThumbnailClicked[index] && (replyMediaInfo.type === 'iframe' || replyMediaInfo.type === 'video')) || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
                                             <span>
                                                [
