@@ -23,31 +23,6 @@ const getCommentMediaInfo = (comment) => {
       } else if (host.includes('streamable.com')) {
         const videoId = url.pathname.split('/')[1];
         scrapedThumbnailUrl = `https://cdn-cf-east.streamable.com/image/${videoId}.jpg`;
-      
-      } else if (host.includes('imgur.com') && !host.startsWith('i.imgur')) {
-        const imgId = url.pathname.split('/')[1];
-        const formats = ['jpeg', 'jpg', 'png', 'mp4'];
-
-        for (const format of formats) {
-          const directUrl = `https://i.imgur.com/${imgId}.${format}`;
-          const imgurUrl = new URL(directUrl);
-          const mime = extName(imgurUrl.pathname.toLowerCase().replace('/', ''))[0]?.mime;
-
-          if (mime?.startsWith('image')) {
-            return {
-              url: directUrl,
-              type: 'image',
-            };
-          }
-
-          if (mime?.startsWith('video')) {
-            return {
-              url: directUrl,
-              type: 'video',
-              thumbnail: comment.thumbnailUrl,
-            };
-          }
-        }
       }
 
       if (canEmbed(url)) {
