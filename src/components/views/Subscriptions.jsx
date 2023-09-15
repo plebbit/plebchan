@@ -761,7 +761,7 @@ const Subscriptions = () => {
                               }</a>&nbsp;{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
                               {((isThreadThumbnailClicked[index] && (commentMediaInfo.type === 'iframe' || commentMediaInfo.type === 'video')) || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
                                 <span>
-                                  [
+                                   [
                                     <span className='reply-link' 
                                     style={{textDecoration: 'underline', cursor: 'pointer'}}
                                     onClick={() => {handleThumbnailClick(index, 'thread')}}>
@@ -1468,7 +1468,7 @@ const Subscriptions = () => {
                                   }</a>&nbsp;{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
                                   { ((isReplyThumbnailClicked[index] && (replyMediaInfo.type === 'iframe' || replyMediaInfo.type === 'video')) || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
                                     <span>
-                                      [
+                                       [
                                         <span className='reply-link' 
                                         style={{textDecoration: 'underline', cursor: 'pointer'}}
                                         onClick={() => {handleThumbnailClick(index, 'reply')}}>
