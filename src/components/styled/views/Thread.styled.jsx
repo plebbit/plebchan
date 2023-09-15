@@ -2495,6 +2495,10 @@ export const BoardForm = styled.div`
                 color: #117743;
                 font-weight: 700;
               }
+
+              .capcode {
+                color: purple !important;
+              }
     
               .subject-mobile {
                 color: #cc1105;
@@ -2612,6 +2616,10 @@ export const BoardForm = styled.div`
                 color: #117743;
                 font-weight: 700;
               }
+
+              .capcode {
+                color: purple !important;
+              }
     
               .subject-mobile {
                 color: #0f0c5d;
@@ -2724,6 +2732,10 @@ export const BoardForm = styled.div`
               .name-mobile {
                 color: #117743;
                 font-weight: 700;
+              }
+
+              .capcode {
+                color: purple !important;
               }
     
               .subject-mobile {
@@ -2841,6 +2853,10 @@ export const BoardForm = styled.div`
                 color: #117743;
                 font-weight: 700;
               }
+
+              .capcode {
+                color: purple !important;
+              }
     
               .subject-mobile {
                 color: #0f0c5d;
@@ -2952,6 +2968,10 @@ export const BoardForm = styled.div`
               .name-mobile {
                 color: #117743;
                 font-weight: 700;
+              }
+
+              .capcode {
+                color: #81a2be !important;
               }
 
               .poster-address-mobile {
@@ -3074,6 +3094,10 @@ export const BoardForm = styled.div`
             .name-mobile {
               color: #004a99;
               font-weight: 700;
+            }
+
+            .capcode {
+              color: #f60 !important;
             }
   
             .subject-mobile {

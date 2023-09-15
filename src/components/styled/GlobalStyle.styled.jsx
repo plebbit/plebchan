@@ -90,6 +90,41 @@ export const GlobalStyle = createGlobalStyle`
       max-width: 100% !important;
       max-height: 100% !important;
     }
+
+    .instagram-embed {
+      width: 100vw !important;
+      height: 45vh !important;
+    }
+
+    .streamable-embed, 
+    .bitchute-embed, 
+    .odysee-embed, 
+    .youtube-embed, 
+    .rumble-embed, 
+    .twitch-embed {
+      width: 100vw !important;
+      height: 30vh !important;
+    }
+
+    .spotify-embed {
+      width: 100vw !important;
+      height: 40vh !important;
+    }
+  
+    .tiktok-embed {
+      width: 100vw !important;
+      height: 70vh !important;
+    }
+
+    .twitter-embed {
+      width: 100vw !important;
+      height: 65vh !important;
+    }
+
+    .reddit-embed {
+      width: 100vw !important;
+      height: 55vh !important;
+    }
   }
 
   .post-menu-catalog {

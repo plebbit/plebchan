@@ -4092,3 +4092,132 @@ export const PostMenu = styled.div`
   transition: transform 0.1s;
   transform: ${props => props.rotated ? 'rotate(90deg)' : 'none'};
 `;
+
+export const PostMenuMobile = styled.div`
+    font-size: 16px;
+    line-height: 2.5em;
+    width: 216px;
+
+    
+  ul {
+    border-right-width: 2px !important;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  li {
+    cursor: pointer;
+    position: relative;
+    padding: 2px 4px;
+    vertical-align: middle;
+  }
+
+  ${({ selectedStyle }) => {
+      switch (selectedStyle) {
+        case 'Yotsuba':
+          return `
+          ul {
+            border: 1px solid #d9bfb7;
+          }
+
+          li {
+            background-color: #f0e0d6;
+            border-bottom: 1px solid #d9bfb7;
+
+            :hover {
+              background-color: #ffe;
+              color: #d00;
+            }
+          }
+          `;
+
+        case 'Yotsuba-B':
+          return `
+          ul {
+            border: 1px solid #b7c5d9;
+          }
+
+          li {
+            background-color: #d6daf0;
+            border-bottom: 1px solid #b7c5d9;
+
+            :hover {
+              background-color: #eef2ff;
+              color: #d00;
+            }
+          }
+          `;
+
+        case 'Futaba':
+          return `
+          ul {
+            border: 1px solid #d9bfb7;
+          }
+
+          li {
+            background-color: #f0e0d6;
+            border-bottom: 1px solid #d9bfb7;
+
+            :hover {
+              background-color: #ffe;
+              color: #d00;
+            }
+          }
+          `;
+
+        case 'Burichan':
+          return `
+          ul {
+            border: 1px solid #b7c5d9;
+          }
+
+          li {
+            background-color: #d6daf0;
+            border-bottom: 1px solid #b7c5d9;
+
+            :hover {
+              background-color: #eef2ff;
+              color: #d00;
+            }
+          }
+          `;
+
+        case 'Tomorrow':
+          return `
+          ul {
+            border: 1px solid #282a2e;
+          }
+
+          li {
+            background-color: #1d1f21;
+            border-bottom: 1px solid #282a2e;
+
+            :hover {
+              background-color: #1b1c1e;
+            }
+          }
+          `;
+
+        case 'Photon':
+          return `
+          ul {
+            border: 1px solid #ccc;
+          }
+
+          li {
+            background-color: #ddd;
+            border-bottom: 1px solid #ccc;
+
+            :hover {
+              background-color: #eee;
+            }
+          }
+          `;
+        
+        default:
+          return '';
+      }}
+    }
+`;

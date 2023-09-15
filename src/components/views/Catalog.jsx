@@ -24,7 +24,6 @@ import VerifiedAuthor from '../VerifiedAuthor';
 import countLinks from '../../utils/countLinks';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import getFormattedTime from '../../utils/getFormattedTime';
-import handleShareClick from '../../utils/handleShareClick';
 import handleStyleChange from '../../utils/handleStyleChange';
 import useAnonModeRef from '../../hooks/useAnonModeRef';
 import useClickForm from '../../hooks/useClickForm';
@@ -433,10 +432,10 @@ const CatalogPost = ({post}) => {
                 style={{ display: openMenuCid === "rules" ? 'block' : 'none' }}
                 >
                   <ul className="post-menu-catalog">
-                    <li onClick={() => {
-                      handleOptionClick("rules");
-                      handleShareClick(selectedAddress, "rules");
-                    }}>Share board</li>
+                    <a target="_blank" rel="noreferrer"
+                    style={{color: 'inherit', textDecoration: 'none'}}
+                    href={`https://pleb.bz/p/${selectedAddress}/?redirect=plebchan.eth.limo`}>
+                    </a>
                     {/* {isModerator ? (
                       <>
                         change rules
@@ -512,7 +511,7 @@ const CatalogPost = ({post}) => {
                 setPopupPosition({top: rect.top + window.scrollY, left: rect.left});
               }}
               onMouseLeave={() => setIsHoveringForMenu(false)}
-              src={subplebbit.suggested.avatarUrl} alt="board avatar" />
+              src={subplebbit.suggested?.avatarUrl} alt="board avatar" />
             ) : null}
           </Link>
           {subplebbit.suggested?.avatarUrl ? (
@@ -577,10 +576,10 @@ const CatalogPost = ({post}) => {
                 style={{ display: openMenuCid === "description" ? 'block' : 'none' }}
                 >
                   <ul className="post-menu-catalog">
-                    <li onClick={() => {
-                      handleOptionClick("description");
-                      handleShareClick(selectedAddress, "description");
-                    }}>Share board</li>
+                    <a target="_blank" rel="noreferrer"
+                    style={{color: 'inherit', textDecoration: 'none'}}
+                    href={`https://pleb.bz/p/${selectedAddress}/?redirect=plebchan.eth.limo`}>
+                    </a>
                     {/* {isModerator ? (
                       <>
                         change description
@@ -595,19 +594,19 @@ const CatalogPost = ({post}) => {
                           style={{display: isImageSearchOpen ? 'block': 'none'}}>
                           <li onClick={() => handleOptionClick("description")}>
                             <a 
-                            href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested.avatarUrl}`}
+                            href={`https://lens.google.com/uploadbyurl?url=${subplebbit.suggested?.avatarUrl}`}
                             target="_blank" rel="noreferrer"
                             >Google</a>
                           </li>
                           <li onClick={() => handleOptionClick("description")}>
                             <a
-                            href={`https://yandex.com/images/search?url=${subplebbit.suggested.avatarUrl}`}
+                            href={`https://yandex.com/images/search?url=${subplebbit.suggested?.avatarUrl}`}
                             target="_blank" rel="noreferrer"
                             >Yandex</a>
                           </li>
                           <li onClick={() => handleOptionClick("description")}>
                             <a
-                            href={`https://saucenao.com/search.php?url=${subplebbit.suggested.avatarUrl}`}
+                            href={`https://saucenao.com/search.php?url=${subplebbit.suggested?.avatarUrl}`}
                             target="_blank" rel="noreferrer"
                             >SauceNAO</a>
                           </li>
@@ -818,10 +817,13 @@ const CatalogPost = ({post}) => {
                 style={{ display: openMenuCid === thread.cid ? 'block' : 'none' }}
                 >
                   <ul className="post-menu-catalog">
-                    <li onClick={() => {
-                      handleOptionClick(thread.cid);
-                      handleShareClick(selectedAddress, thread.cid);
-                    }}>Share thread</li>
+                    <a target="_blank" rel="noreferrer"
+                    style={{color: 'inherit', textDecoration: 'none'}}
+                    href={`https://pleb.bz/p/${selectedAddress}/c/${thread.cid}?redirect=plebchan.eth.limo`}>
+                      <li onClick={() => {
+                        handleOptionClick(thread.cid);
+                      }}>Share thread</li>
+                    </a>
                     <VerifiedAuthor commentCid={thread.cid}>{({ authorAddress }) => (
                       <>
                         {authorAddress === account?.author.address || 
