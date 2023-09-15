@@ -1299,8 +1299,8 @@ const Subscriptions = () => {
                                 <ul className="post-menu-catalog">
                                   <li onClick={() => {
                                     handleOptionClick(reply.cid);
-                                    handleShareClick(thread.subplebbitAddress, thread.cid);
-                                  }}>Share thread</li>
+                                    handleShareClick(thread.subplebbitAddress, reply.cid);
+                                  }}>Share post</li>
                                   <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
                                       {authorAddress === account?.author.address ||
@@ -2137,7 +2137,7 @@ const Subscriptions = () => {
                                   <li onClick={() => {
                                     handleMobileOptionClick(reply.cid);
                                     handleShareClick(selectedAddress, reply.cid)
-                                  }}>Share thread</li>
+                                  }}>Share post</li>
                                   <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                     <>
                                       {authorAddress === account?.author.address || 

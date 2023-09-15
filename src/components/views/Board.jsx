@@ -2230,8 +2230,8 @@ const Board = () => {
                                         <ul className="post-menu-catalog">
                                           <li onClick={() => {
                                             handleOptionClick(reply.cid);
-                                            handleShareClick(selectedAddress, thread.cid);
-                                          }}>Share thread</li>
+                                            handleShareClick(selectedAddress, reply.cid);
+                                          }}>Share post</li>
                                           <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                             <>
                                               {authorAddress === account?.author.address ||
@@ -3082,7 +3082,7 @@ const Board = () => {
                                         <li onClick={() => {
                                           handleMobileOptionClick(reply.cid);
                                           handleShareClick(selectedAddress, reply.cid)
-                                        }}>Share thread</li>
+                                        }}>Share post</li>
                                         <VerifiedAuthor commentCid={reply.cid}>{({ authorAddress }) => (
                                           <>
                                             {authorAddress === account?.author.address || 
