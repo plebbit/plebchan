@@ -281,6 +281,7 @@ const Thread = () => {
 
 
   const threadAndRepliesCids = useMemo(() => new Set([(selectedThread || 'n/a'), ...flattenedReplies.map(reply => reply.cid)]), [selectedThread, flattenedReplies]);
+
   const filter = useCallback((accountComment) => threadAndRepliesCids.has(accountComment.parentCid), [threadAndRepliesCids]);
 
 
@@ -289,8 +290,10 @@ const Thread = () => {
 
   const accountRepliesNotYetInCommentReplies = useMemo(() => {
     const commentReplyCids = new Set(flattenedReplies.map(reply => reply.cid))
-    return accountComments.filter(accountReply => !commentReplyCids.has(accountReply.cid))
-  }, [flattenedReplies, accountComments]);
+    return accountComments.filter(accountReply => {
+      return !commentReplyCids.has(accountReply.cid) && accountReply.parentCid === selectedThread;
+    });
+  }, [flattenedReplies, accountComments, selectedThread]);  
 
 
   const sortedReplies = useMemo(() => [
