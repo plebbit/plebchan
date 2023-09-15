@@ -1856,6 +1856,20 @@ const Thread = () => {
                                 </>
                               ) : null
                             }
+                            <a style={{color: 'inherit', textDecoration: 'none'}}
+                            href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                            target="_blank" rel="noreferrer">
+                              <li onClick={() => handleOptionClick(comment.cid)}>
+                                View on plebbit
+                              </li>
+                            </a>
+                            <a style={{color: 'inherit', textDecoration: 'none'}}
+                            href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                            target="_blank" rel="noreferrer">
+                              <li onClick={() => handleOptionClick(comment.cid)}>
+                                View on plebones
+                              </li>
+                            </a>
                           </ul>
                         </PostMenuMobile>, document.body
                       )}
@@ -2151,6 +2165,20 @@ const Thread = () => {
                                   </>
                                 ) : null
                               }
+                              <a style={{color: 'inherit', textDecoration: 'none'}}
+                              href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`}
+                              target="_blank" rel="noreferrer">
+                                <li onClick={() => handleOptionClick(reply.cid)}>
+                                  View on plebbit
+                                </li>
+                              </a>
+                              <a style={{color: 'inherit', textDecoration: 'none'}}
+                              href={`https://plebones.netlify.app/#/p/${selectedAddress}`}
+                              target="_blank" rel="noreferrer">
+                                <li onClick={() => handleOptionClick(reply.cid)}>
+                                  View on plebones
+                                </li>
+                              </a>
                             </ul>
                           </PostMenuMobile>, document.body
                         )}
