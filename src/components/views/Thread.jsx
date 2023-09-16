@@ -56,6 +56,7 @@ const Thread = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    editedComments,
     setIsAuthorDelete,
     setIsAuthorEdit,
     setIsCaptchaOpen,
@@ -134,15 +135,32 @@ const Thread = () => {
 
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
-  const comment = useComment({commentCid: selectedThread});
+  const originalComment = useComment({commentCid: selectedThread});
+  const [comment, setComment] = useState(originalComment);
   const { subplebbitAddress, threadCid } = useParams();
-  const subplebbit = useSubplebbit({subplebbitAddress: comment.subplebbitAddress});
+  const subplebbit = useSubplebbit({subplebbitAddress: originalComment.subplebbitAddress});
   const selectedAddress = subplebbit.address;
 
   const stateString = useStateString(comment);
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
+
+  
+  useEffect(() => {
+    let updatedComment = { ...originalComment };
+    
+    if (editedComments[originalComment.cid]) {
+      updatedComment = { ...originalComment, ...editedComments[originalComment.cid] };
+    
+      if (updatedComment.removed) {
+        updatedComment.content = "[removed]";
+        updatedComment.link = undefined;
+      }
+    }
+    
+    setComment(updatedComment);
+  }, [originalComment, editedComments]);
 
 
   const handleThumbnailClick = (index, type) => {
@@ -281,6 +299,7 @@ const Thread = () => {
 
 
   const threadAndRepliesCids = useMemo(() => new Set([(selectedThread || 'n/a'), ...flattenedReplies.map(reply => reply.cid)]), [selectedThread, flattenedReplies]);
+
   const filter = useCallback((accountComment) => threadAndRepliesCids.has(accountComment.parentCid), [threadAndRepliesCids]);
 
 
@@ -289,8 +308,10 @@ const Thread = () => {
 
   const accountRepliesNotYetInCommentReplies = useMemo(() => {
     const commentReplyCids = new Set(flattenedReplies.map(reply => reply.cid))
-    return accountComments.filter(accountReply => !commentReplyCids.has(accountReply.cid))
-  }, [flattenedReplies, accountComments]);
+    return accountComments.filter(accountReply => {
+      return !commentReplyCids.has(accountReply.cid) && accountReply.parentCid === selectedThread;
+    });
+  }, [flattenedReplies, accountComments, selectedThread]);  
 
 
   const sortedReplies = useMemo(() => [
@@ -344,7 +365,7 @@ const Thread = () => {
       if (challengeVerification.publication?.cid !== undefined) {
         return;
       } else {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
       }
     } else if (challengeVerification.challengeSuccess === false) {
       setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
@@ -900,7 +921,7 @@ const Thread = () => {
                             commentMediaInfo?.url.length > 30 ?
                             commentMediaInfo?.url.slice(0, 30) + "(...)" :
                             commentMediaInfo?.url
-                            }</a>{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
+                            }</a>{commentMediaInfo?.type === "iframe" ? null : ` (${commentMediaInfo?.type})`}
                             {((isThreadThumbnailClicked[index] && (commentMediaInfo.type === 'iframe' || commentMediaInfo.type === 'video')) || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
                               <span>
                                  [
@@ -1269,6 +1290,13 @@ const Thread = () => {
                 </div>
                 {comment.replyCount === undefined ? <PostLoader /> : null}
                 {sortedReplies.map((reply, index) => {
+                    if (editedComments[reply.cid]) {
+                      reply = editedComments[reply.cid];
+                      if (reply.removed) {
+                        reply.content = "[removed]";
+                        reply.link = undefined;
+                      }
+                    }
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
@@ -1560,7 +1588,7 @@ const Thread = () => {
                                 replyMediaInfo?.url.length > 30 ?
                                 replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                 replyMediaInfo?.url
-                                }</a>{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
+                                }</a>{replyMediaInfo?.type === "iframe" ? null : ` (${replyMediaInfo?.type})`}
                                 { ((isReplyThumbnailClicked[index] && (replyMediaInfo.type === 'iframe' || replyMediaInfo.type === 'video')) || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
                                   <span>
                                      [

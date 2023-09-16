@@ -26,6 +26,9 @@ const useGeneralStore = create((set) => ({
   editedComment: '',
   setEditedComment: (comment) => set({ editedComment: comment }),
 
+  editedComments: {},
+  setEditedComments: (comments) => set({ editedComments: comments }),
+
   feedCacheStates: {},
   setFeedCacheState: (address, isCached) => set((prev) => ({
     feedCacheStates: {

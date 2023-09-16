@@ -54,6 +54,7 @@ const All = () => {
   const {
     defaultSubplebbits,
     editedComment,
+    editedComments,
     feedCacheStates,
     setFeedCacheState,
     isSettingsOpen, setIsSettingsOpen,
@@ -364,7 +365,7 @@ const All = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
     } 
     else if (challengeVerification.challengeSuccess === false) {
       setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
@@ -715,6 +716,13 @@ const All = () => {
                 increaseViewportBy={{bottom: 600, top: 600}}
                 data={selectedFeed}
                 itemContent={(index, thread) => {
+                  if (editedComments[thread.cid]) {
+                    thread = editedComments[thread.cid];
+                    if (thread.removed) {
+                      thread.content = "[removed]";
+                      thread.link = undefined;
+                    }
+                  };
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = "assets/filedeleted-res.gif";
@@ -750,7 +758,7 @@ const All = () => {
                               commentMediaInfo?.url.length > 30 ?
                               commentMediaInfo?.url.slice(0, 30) + "(...)" :
                               commentMediaInfo?.url
-                              }</a>{commentMediaInfo?.type === "iframe" ? null : `(${commentMediaInfo?.type})`}
+                              }</a>{commentMediaInfo?.type === "iframe" ? null : ` (${commentMediaInfo?.type})`}
                               {((isThreadThumbnailClicked[index] && (commentMediaInfo.type === 'iframe' || commentMediaInfo.type === 'video')) || (commentMediaInfo.type === 'iframe' && !commentMediaInfo.thumbnail)) && (
                                 <span>
                                    [
@@ -1157,6 +1165,13 @@ const All = () => {
                       </span>) : null}
                     </span>
                     {displayedReplies?.map((reply, index) => {
+                      if (editedComments[reply.cid]) {
+                        reply = editedComments[reply.cid];
+                        if (reply.removed) {
+                          reply.content = "[removed]";
+                          reply.link = undefined;
+                        }
+                      }
                       const replyMediaInfo = getCommentMediaInfo(reply);
                       const fallbackImgUrl = "assets/filedeleted-res.gif";
                       const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
@@ -1457,7 +1472,7 @@ const All = () => {
                                   replyMediaInfo?.url.length > 30 ?
                                   replyMediaInfo?.url.slice(0, 30) + "(...)" :
                                   replyMediaInfo?.url
-                                  }</a>{replyMediaInfo?.type === "iframe" ? null : `(${replyMediaInfo?.type})`}
+                                  }</a>{replyMediaInfo?.type === "iframe" ? null : ` (${replyMediaInfo?.type})`}
                                   { ((isReplyThumbnailClicked[index] && (replyMediaInfo.type === 'iframe' || replyMediaInfo.type === 'video')) || (replyMediaInfo.type === 'iframe' && !replyMediaInfo.thumbnail)) && (
                                     <span>
                                        [
@@ -2099,6 +2114,13 @@ const All = () => {
                       </div>
                     </div>
                     {displayedReplies?.map((reply, index) => {
+                      if (editedComments[reply.cid]) {
+                        reply = editedComments[reply.cid];
+                        if (reply.removed) {
+                          reply.content = "[removed]";
+                          reply.link = undefined;
+                        }
+                      }
                       const replyMediaInfo = getCommentMediaInfo(reply);
                       const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                       return (

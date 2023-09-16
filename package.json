@@ -63,7 +63,8 @@
     "electron:before": "yarn electron:before:download-ipfs && yarn electron:before:delete-data",
     "electron:before:download-ipfs": "node electron/downloadIpfs",
     "electron:before:delete-data": "rimraf .plebbit",
-    "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#ffffee'"
+    "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#ffffee'",
+    "prettier": "prettier src/**/*.{js,jsx} --write"
   },
   "eslintConfig": {
     "extends": [
@@ -131,6 +132,7 @@
     "decompress": "4.2.1",
     "electron": "19.1.8",
     "electron-builder": "23.0.9",
+    "prettier": "2.3.2",
     "source-map-explorer": "2.5.3",
     "typescript": "5.0.2",
     "wait-on": "7.0.1"

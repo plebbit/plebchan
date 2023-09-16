@@ -235,7 +235,7 @@ const CatalogPost = ({post}) => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
     }
     else if (challengeVerification.challengeSuccess === false) {
       setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
@@ -1093,7 +1093,7 @@ const Catalog = () => {
         navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
       }
     }
     else if (challengeVerification.challengeSuccess === false) {
