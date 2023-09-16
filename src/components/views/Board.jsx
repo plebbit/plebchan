@@ -340,13 +340,6 @@ const Board = () => {
     return selectedFeed.flatMap(thread => filteredRepliesByThread[thread.cid]?.displayedReplies || []);
   }, [selectedFeed, filteredRepliesByThread]);
 
-  const filteredFeed = useMemo(() => {
-    return selectedFeed.filter(thread => {
-      const editedThread = editedComments[thread.cid];
-      return !(editedThread && editedThread.removed);
-    });
-  }, [selectedFeed, editedComments]);
-
   // let post.jsx access full cid of user-typed short cid
   useEffect(() => {
     const newCidTracker = {};
@@ -1636,10 +1629,15 @@ const Board = () => {
                   : null}
                   <Virtuoso
                   increaseViewportBy={{bottom: 600, top: 600}}
-                  data={filteredFeed}
+                  data={selectedFeed}
                   itemContent={(index, thread) => {
                     if (editedComments[thread.cid]) {
                       thread = editedComments[thread.cid];
+                      if (thread.removed) {
+                        thread.content = "[removed]";
+                        thread.link = undefined;
+                        thread.title = "[removed]";
+                      }
                     };
                     const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                     const commentMediaInfo = getCommentMediaInfo(thread);
