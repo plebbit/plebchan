@@ -26,6 +26,7 @@ const CaptchaModal = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   const responseRef = useRef();
   const nodeRef = useRef(null);
+  const [isPromiseResolved, setIsPromiseResolved] = useState(false);
 
   
   useEffect(() => {
@@ -86,24 +87,27 @@ const CaptchaModal = () => {
   };
 
   
-  let isPromiseResolved = false;
-
   const submitCaptcha = (callback) => {
     if (!isPromiseResolved) {
       setCaptchaResponse(responseRef.current.value);
       resolveCaptchaPromise(responseRef.current.value);
-      isPromiseResolved = true;
+      setIsPromiseResolved(true);
     }
 
     setImageSources([]);
     setChallengesArray([]);
     setIsCaptchaOpen(false);
-  
+
     if (callback) {
       callback(responseRef.current.value);
     }
   };
   
+  useEffect(() => {
+    if (!isCaptchaOpen) {
+      setIsPromiseResolved(false);
+    }
+  }, [isCaptchaOpen]);
 
   const handleCloseModal = () => {
     setImageSources([]);
