@@ -1,43 +1,43 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const useSuccess = () => {
-  const [successMessage, setSuccessMessage] = useState('');
-  const [renderCount, setRenderCount] = useState(0);
-  
-  useEffect(() => {
-    if (successMessage && successMessage.length > 0) {
-      const showSuccessToast = () => {
-        const toastId = toast.success(successMessage.toString(), {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "dark",
-        });
+	const [successMessage, setSuccessMessage] = useState('');
+	const [renderCount, setRenderCount] = useState(0);
 
-        return () => {
-          toast.dismiss(toastId);
-        };
-      };
+	useEffect(() => {
+		if (successMessage && successMessage.length > 0) {
+			const showSuccessToast = () => {
+				const toastId = toast.success(successMessage.toString(), {
+					position: 'top-right',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: false,
+					pauseOnHover: false,
+					draggable: false,
+					progress: undefined,
+					theme: 'dark',
+				});
 
-      const timeoutId = setTimeout(showSuccessToast, 500);
+				return () => {
+					toast.dismiss(toastId);
+				};
+			};
 
-      return () => {
-        clearTimeout(timeoutId);
-      };
-    }
-  }, [successMessage, renderCount]);
+			const timeoutId = setTimeout(showSuccessToast, 500);
 
-  const setNewSuccessMessage = (message) => {
-    setSuccessMessage(message);
-    setRenderCount(prevCount => prevCount + 1);
-  };
+			return () => {
+				clearTimeout(timeoutId);
+			};
+		}
+	}, [successMessage, renderCount]);
 
-  return [successMessage, setNewSuccessMessage];
+	const setNewSuccessMessage = (message) => {
+		setSuccessMessage(message);
+		setRenderCount((prevCount) => prevCount + 1);
+	};
+
+	return [successMessage, setNewSuccessMessage];
 };
 
 export default useSuccess;
