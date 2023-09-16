@@ -86,16 +86,24 @@ const CaptchaModal = () => {
   };
 
   
+  let isPromiseResolved = false;
+
   const submitCaptcha = (callback) => {
-    setCaptchaResponse(responseRef.current.value);
+    if (!isPromiseResolved) {
+      setCaptchaResponse(responseRef.current.value);
+      resolveCaptchaPromise(responseRef.current.value);
+      isPromiseResolved = true;
+    }
+
     setImageSources([]);
     setChallengesArray([]);
     setIsCaptchaOpen(false);
-
+  
     if (callback) {
       callback(responseRef.current.value);
     }
   };
+  
 
   const handleCloseModal = () => {
     setImageSources([]);
