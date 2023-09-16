@@ -3,14 +3,19 @@ import { useComment, useEditedComment } from "@plebbit/plebbit-react-hooks";
 import { Link } from "react-router-dom";
 import OriginalCommentModal from "./modals/OriginalCommentModal";
 import getDate from "../utils/getDate";
+import useGeneralStore from "../hooks/stores/useGeneralStore";
 
 
 const EditLabel = ({ commentCid, className }) => {
+  const { editedComments, setEditedComments } = useGeneralStore(state => state);
   const [isOriginalCommentModalOpen, setIsOriginalCommentModalOpen] = useState(false);
   const comment = useComment({commentCid});
   const timestamp = getDate(comment.edit?.timestamp);
   const {state: editedCommentState, editedComment} = useEditedComment({comment});
 
+  if (editedCommentState === 'pending' && !(commentCid in editedComments)) {
+    setEditedComments({...editedComments, [commentCid]: editedComment})
+  }
 
   const conditionsCheck = () => {
     let conditions = [];

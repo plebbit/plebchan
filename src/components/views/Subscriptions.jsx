@@ -54,6 +54,7 @@ const Subscriptions = () => {
   const {
     defaultSubplebbits,
     editedComment,
+    editedComments,
     feedCacheStates,
     setFeedCacheState,
     isSettingsOpen, setIsSettingsOpen,
@@ -332,6 +333,13 @@ const Subscriptions = () => {
     return selectedFeed.flatMap(thread => filteredRepliesByThread[thread.cid]?.displayedReplies || []);
   }, [selectedFeed, filteredRepliesByThread]);
 
+  const filteredFeed = useMemo(() => {
+    return selectedFeed.filter(thread => {
+      const editedThread = editedComments[thread.cid];
+      return !(editedThread && editedThread.removed);
+    });
+  }, [selectedFeed, editedComments]);
+
   // let post.jsx access full cid of user-typed short cid
   useEffect(() => {
     const newCidTracker = {};
@@ -366,7 +374,7 @@ const Subscriptions = () => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
     } 
     else if (challengeVerification.challengeSuccess === false) {
       setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
@@ -721,8 +729,11 @@ const Subscriptions = () => {
             ) : (
               <Virtuoso
                 increaseViewportBy={{bottom: 600, top: 600}}
-                data={selectedFeed}
+                data={filteredFeed}
                 itemContent={(index, thread) => {
+                  if (editedComments[thread.cid]) {
+                    thread = editedComments[thread.cid];
+                  };
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = "assets/filedeleted-res.gif";
@@ -1165,6 +1176,13 @@ const Subscriptions = () => {
                       </span>) : null}
                     </span>
                     {displayedReplies?.map((reply, index) => {
+                      if (editedComments[reply.cid]) {
+                        reply = editedComments[reply.cid];
+                        if (reply.removed) {
+                          reply.content = "[removed]";
+                          reply.link = undefined;
+                        }
+                      }
                       const replyMediaInfo = getCommentMediaInfo(reply);
                       const fallbackImgUrl = "assets/filedeleted-res.gif";
                       const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
@@ -2107,6 +2125,13 @@ const Subscriptions = () => {
                       </div>
                     </div>
                     {displayedReplies?.map((reply, index) => {
+                      if (editedComments[reply.cid]) {
+                        reply = editedComments[reply.cid];
+                        if (reply.removed) {
+                          reply.content = "[removed]";
+                          reply.link = undefined;
+                        }
+                      }
                       const replyMediaInfo = getCommentMediaInfo(reply);
                       const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                       return (

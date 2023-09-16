@@ -60,6 +60,7 @@ const Board = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    editedComments,
     feedCacheStates,
     setFeedCacheState,
     setIsAuthorDelete,
@@ -339,6 +340,13 @@ const Board = () => {
     return selectedFeed.flatMap(thread => filteredRepliesByThread[thread.cid]?.displayedReplies || []);
   }, [selectedFeed, filteredRepliesByThread]);
 
+  const filteredFeed = useMemo(() => {
+    return selectedFeed.filter(thread => {
+      const editedThread = editedComments[thread.cid];
+      return !(editedThread && editedThread.removed);
+    });
+  }, [selectedFeed, editedComments]);
+
   // let post.jsx access full cid of user-typed short cid
   useEffect(() => {
     const newCidTracker = {};
@@ -397,7 +405,7 @@ const Board = () => {
         navigate(`/p/${subplebbitAddress}/c/${challengeVerification.publication?.cid}`);
         console.log('challenge success');
       } else {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
       }
     }
     else if (challengeVerification.challengeSuccess === false) {
@@ -587,7 +595,7 @@ const Board = () => {
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState({
     commentCid: commentCid,
     content: editedComment || undefined,
-    subplebbitAddress: selectedAddress,
+    subplebbitAddress,
     onChallenge,
     onChallengeVerification,
     onError: (error) => {
@@ -1628,8 +1636,11 @@ const Board = () => {
                   : null}
                   <Virtuoso
                   increaseViewportBy={{bottom: 600, top: 600}}
-                  data={selectedFeed}
+                  data={filteredFeed}
                   itemContent={(index, thread) => {
+                    if (editedComments[thread.cid]) {
+                      thread = editedComments[thread.cid];
+                    };
                     const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                     const commentMediaInfo = getCommentMediaInfo(thread);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
@@ -2079,6 +2090,13 @@ const Board = () => {
                             ) : null}
                           </span>
                           {displayedReplies?.map((reply, index) => {
+                            if (editedComments[reply.cid]) {
+                              reply = editedComments[reply.cid];
+                              if (reply.removed) {
+                                reply.content = "[removed]";
+                                reply.link = undefined;
+                              }
+                            }
                             const replyMediaInfo = getCommentMediaInfo(reply);
                             const fallbackImgUrl = "assets/filedeleted-res.gif";
                             const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);

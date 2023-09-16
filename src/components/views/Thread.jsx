@@ -347,7 +347,7 @@ const Thread = () => {
       if (challengeVerification.publication?.cid !== undefined) {
         return;
       } else {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
       }
     } else if (challengeVerification.challengeSuccess === false) {
       setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);

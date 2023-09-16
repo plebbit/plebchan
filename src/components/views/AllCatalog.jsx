@@ -241,7 +241,7 @@ const CatalogPost = ({post}) => {
 
   const onChallengeVerification = (challengeVerification) => {
     if (challengeVerification.challengeSuccess === true) {
-        setNewSuccessMessage('Challenge Success');
+        setNewSuccessMessage('Challenge Success'); console.log('challenge success', challengeVerification);
     } 
     else if (challengeVerification.challengeSuccess === false) {
       setNewErrorMessage(`Challenge Failed, reason: ${challengeVerification.reason}. Errors: ${challengeVerification.errors}`);
