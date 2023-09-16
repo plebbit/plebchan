@@ -729,7 +729,6 @@ const Subscriptions = () => {
                     if (thread.removed) {
                       thread.content = "[removed]";
                       thread.link = undefined;
-                      thread.title = "[removed]";
                     }
                   };
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};

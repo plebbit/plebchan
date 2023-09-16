@@ -56,6 +56,7 @@ const Thread = () => {
     setChallengesArray,
     defaultSubplebbits,
     editedComment,
+    editedComments,
     setIsAuthorDelete,
     setIsAuthorEdit,
     setIsCaptchaOpen,
@@ -134,15 +135,32 @@ const Thread = () => {
 
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
-  const comment = useComment({commentCid: selectedThread});
+  const originalComment = useComment({commentCid: selectedThread});
+  const [comment, setComment] = useState(originalComment);
   const { subplebbitAddress, threadCid } = useParams();
-  const subplebbit = useSubplebbit({subplebbitAddress: comment.subplebbitAddress});
+  const subplebbit = useSubplebbit({subplebbitAddress: originalComment.subplebbitAddress});
   const selectedAddress = subplebbit.address;
 
   const stateString = useStateString(comment);
 
   const commentMediaInfo = getCommentMediaInfo(comment);
   const fallbackImgUrl = "assets/filedeleted-res.gif";
+
+  
+  useEffect(() => {
+    let updatedComment = { ...originalComment };
+    
+    if (editedComments[originalComment.cid]) {
+      updatedComment = { ...originalComment, ...editedComments[originalComment.cid] };
+    
+      if (updatedComment.removed) {
+        updatedComment.content = "[removed]";
+        updatedComment.link = undefined;
+      }
+    }
+    
+    setComment(updatedComment);
+  }, [originalComment, editedComments]);
 
 
   const handleThumbnailClick = (index, type) => {
@@ -1272,6 +1290,13 @@ const Thread = () => {
                 </div>
                 {comment.replyCount === undefined ? <PostLoader /> : null}
                 {sortedReplies.map((reply, index) => {
+                    if (editedComments[reply.cid]) {
+                      reply = editedComments[reply.cid];
+                      if (reply.removed) {
+                        reply.content = "[removed]";
+                        reply.link = undefined;
+                      }
+                    }
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = "assets/filedeleted-res.gif";
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
