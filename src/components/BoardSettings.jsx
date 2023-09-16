@@ -262,6 +262,12 @@ const BoardSettings = ({ subplebbit }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setBoardSettingsJson(JSON.stringify(initialSettings, null, 2));
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    setBoardSettingsJson(JSON.stringify(generateSettingsFromSubplebbit(subplebbit), null, 2));
   };
 
 
@@ -309,7 +315,7 @@ const BoardSettings = ({ subplebbit }) => {
           <span
             onClick={() => {
               window.electron && window.electron.isElectron
-                ? setIsModalOpen(true)
+                ? openModal()
                 : alert(
                     'To edit this board you must be using the plebchan desktop app, which is a plebbit full node that seeds the board automatically.\n\nDownload plebchan here:\n\nhttps://github.com/plebbit/plebchan/releases/latest'
                   );
