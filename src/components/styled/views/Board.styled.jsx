@@ -1430,7 +1430,7 @@ export const TopBar = styled.div`
   @media (min-width: 480px) {
     .stats-all-container {
       float: right;
-      margin-top: 3px;
+      margin-top: 5px;
       margin-right: 30px;
       overflow: hidden;
       max-width: calc(100vw - 50vw);
