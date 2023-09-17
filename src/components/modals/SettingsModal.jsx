@@ -350,9 +350,10 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
 
   const handleSaveAccount = async () => {
+    const data = importRef.current.value;
     try {
-      const parsedJson = JSON.parse(editedAccountJson);
-      await setAccount(parsedJson);
+      const parsedJson = JSON.parse(data);
+      await setAccount(parsedJson.account);
       setNewSuccessMessage("Account data saved successfully.");
     } catch (error) {
       setNewErrorMessage("Error saving account data: " + error.message);
