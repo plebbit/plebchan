@@ -128,26 +128,26 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@capacitor/cli": "3.6.0",
     "concurrently": "8.0.1",
+    "conventional-changelog-cli": "4.1.0",
     "cordova-res": "0.15.4",
     "cross-env": "7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
     "decompress": "4.2.1",
     "electron": "19.1.8",
     "electron-builder": "23.0.9",
+    "husky": "4.3.8",
+    "lint-staged": "12.3.8",
     "prettier": "2.3.2",
     "source-map-explorer": "2.5.3",
     "typescript": "5.0.2",
-    "wait-on": "7.0.1",
-    "conventional-changelog-cli": "4.1.0",
-    "cz-conventional-changelog": "3.3.0",
-    "husky": "4.3.8",
-    "lint-staged": "12.3.8"
+    "wait-on": "7.0.1"
   },
   "resolutions": {
     "styled-components": "^5"
   },
   "lint-staged": {
     "{src,test,config}/**/*.{cjs,js,jsx,ts,tsx}": [
-      "prettier --config config/prettier.config.js --write"
+      "prettier --config prettier.config.js --write"
     ]
   },
   "husky": {
