@@ -109,26 +109,13 @@ const Home = () => {
 						<AboutContent>
 							<div id='content'>
 								<p>
-									Plebchan is the only serverless, adminless, fully decentralized 4chan alternative where you can create unlimited boards and nobody can take them down.
-									Plebchan is a client for{' '}
+									Plebchan is the only serverless, adminless, fully decentralized 4chan alternative where any pleb can create and own unlimited boards, and nobody can
+									take them down. Boards can always find competition, and board owners can monetize freely, so janitors aren't needed. Plebchan is a client for{' '}
 									<a href='https://plebbit.com' target='_blank' rel='noreferrer'>
 										plebbit
 									</a>
-									, a pure P2P protocol and tooling for creating decentralized forum applications. Users don't need to register an account before participating in a
-									community; anyone can post comments, share media links, and{' '}
-									<button
-										style={{ all: 'unset', cursor: 'pointer' }}
-										onClick={() => {
-											window.electron && window.electron.isElectron
-												? setIsCreateBoardOpen(true)
-												: alert(
-														'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n',
-												  );
-										}}
-									>
-										create a board
-									</button>
-									. All the content is just text, and plebchan's speed depends on how many users are{' '}
+									, a pure P2P protocol and tooling for creating decentralized forum applications. All data is just text, and plebchan's speed depends on how many users
+									are{' '}
 									<button
 										style={{ all: 'unset', cursor: 'pointer' }}
 										onClick={() => {
@@ -143,6 +130,21 @@ const Home = () => {
 								</p>
 								<br />
 								<p>There are no global rules, each board is completely independent and its owner decides how/if it should be moderated.</p>
+								<br />
+								<p>
+									{' '}
+									HOW TO RUN A BOARD (currently via CLI only): <strong>(1)</strong> have a computer you can use as server, because users will connect to your board
+									peer-to-peer; <strong>(2)</strong> go to{' '}
+									<a href='https://github.com/plebbit/plebbit-cli#install' target='_blank' rel='noreferrer'>
+										https://github.com/plebbit/plebbit-cli#install
+									</a>{' '}
+									and follow the instructions to run your daemon, create a subplebbit (board) and edit its settings; <strong>(3)</strong> users can always connect to your
+									board via its address, but it can be whitelisted by submitting a pull request here:{' '}
+									<a href='https://github.com/plebbit/temporary-default-subplebbits' target='_blank' rel='noreferrer'>
+										https://github.com/plebbit/temporary-default-subplebbits
+									</a>{' '}
+									this will be automated with a plebbit DAO using the plebbit token.
+								</p>
 							</div>
 						</AboutContent>
 					</About>
@@ -189,7 +191,7 @@ const Home = () => {
 					) : null}
 					<Boards>
 						<BoardsTitle>
-							<h2>Popular Boards</h2>
+							<h2>Whitelisted Boards</h2>
 						</BoardsTitle>
 						<BoardsContent>
 							{defaultSubplebbits.map((subplebbit, index) => (
