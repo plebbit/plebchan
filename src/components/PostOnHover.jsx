@@ -94,8 +94,15 @@ const PostOnHover = ({ cid, feed }) => {
 												<a href={replyMediaInfo.url} target='_blank' rel='noopener noreferrer'>
 													{replyMediaInfo?.url.length > 30 ? replyMediaInfo?.url.slice(0, 30) + '(...)' : replyMediaInfo?.url}
 												</a>
-												&nbsp;({replyMediaInfo?.type})
+												&nbsp;{replyMediaInfo?.type === 'iframe' ? null : ` (${replyMediaInfo?.type})`}
 											</div>
+											{replyMediaInfo?.type === 'iframe' && (
+												<div className='img-container'>
+													<span className='file-thumb-reply'>
+														{replyMediaInfo.thumbnail && <img src={replyMediaInfo.thumbnail} alt='thumbnail' onError={(e) => (e.target.src = fallbackImgUrl)} />}
+													</span>
+												</div>
+											)}
 											{replyMediaInfo?.type === 'webpage' ? (
 												<div className='img-container'>
 													<span className='file-thumb-reply'>

@@ -40,7 +40,7 @@ const EditLabel = ({ commentCid, className }) => {
 	return (
 		<>
 			<OriginalCommentModal isOpen={isOriginalCommentModalOpen} closeModal={() => setIsOriginalCommentModalOpen(false)} comment={comment} />
-			{comment.edit && (
+			{comment.edit && comment.original?.content !== comment?.content ? (
 				<>
 					<br />
 					<span className={className}>
@@ -51,7 +51,7 @@ const EditLabel = ({ commentCid, className }) => {
 						)
 					</span>
 				</>
-			)}
+			) : null}
 			{(editedCommentState === 'pending' || editedCommentState === 'failed') && conditionsString ? (
 				<>
 					<br />
