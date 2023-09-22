@@ -443,17 +443,39 @@ const CatalogPost = ({ post }) => {
 							>
 								<div className={`post-menu-thread post-menu-thread-${'rules'}`} style={{ display: openMenuCid === 'rules' ? 'block' : 'none' }}>
 									<ul className='post-menu-catalog'>
-										<a
-											target='_blank'
-											rel='noreferrer'
-											style={{ color: 'inherit', textDecoration: 'none' }}
-											href={`https://pleb.bz/p/${selectedAddress}/?redirect=plebchan.eth.limo`}
-										></a>
 										{/* {isModerator ? (
-                      <>
-                        change rules
-                      </>
-                    ) : null} */}
+											<>
+												change rules
+											</>
+										) : null} */}
+										<li
+											onMouseOver={() => {
+												setIsClientRedirectMenuOpen(true);
+											}}
+											onMouseLeave={() => {
+												setIsClientRedirectMenuOpen(false);
+											}}
+										>
+											View on »
+											<ul className='dropdown-menu post-menu-catalog' style={{ display: isClientRedirectMenuOpen ? 'block' : 'none' }}>
+												<li onClick={() => handleOptionClick('rules')}>
+													<a href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`} target='_blank' rel='noreferrer'>
+														Plebbit
+													</a>
+												</li>
+												{/* <li onClick={() => handleOptionClick("rules")}>
+													<a
+													href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+													target="_blank" rel="noreferrer"
+													>Seedit</a>
+												</li> */}
+												<li onClick={() => handleOptionClick('rules')}>
+													<a href={`https://plebones.eth.limo/#/p/${selectedAddress}`} target='_blank' rel='noreferrer'>
+														Plebones
+													</a>
+												</li>
+											</ul>
+										</li>
 									</ul>
 								</div>
 							</PostMenuCatalog>,
@@ -625,12 +647,6 @@ const CatalogPost = ({ post }) => {
 							>
 								<div className={`post-menu-thread post-menu-thread-${'description'}`} style={{ display: openMenuCid === 'description' ? 'block' : 'none' }}>
 									<ul className='post-menu-catalog'>
-										<a
-											target='_blank'
-											rel='noreferrer'
-											style={{ color: 'inherit', textDecoration: 'none' }}
-											href={`https://pleb.bz/p/${selectedAddress}/?redirect=plebchan.eth.limo`}
-										></a>
 										{/* {isModerator ? (
                       <>
                         change description
@@ -665,6 +681,34 @@ const CatalogPost = ({ post }) => {
 												</ul>
 											</li>
 										) : null}
+										<li
+											onMouseOver={() => {
+												setIsClientRedirectMenuOpen(true);
+											}}
+											onMouseLeave={() => {
+												setIsClientRedirectMenuOpen(false);
+											}}
+										>
+											View on »
+											<ul className='dropdown-menu post-menu-catalog' style={{ display: isClientRedirectMenuOpen ? 'block' : 'none' }}>
+												<li onClick={() => handleOptionClick('description')}>
+													<a href={`https://plebbitapp.eth.limo/#/p/${selectedAddress}`} target='_blank' rel='noreferrer'>
+														Plebbit
+													</a>
+												</li>
+												{/* <li onClick={() => handleOptionClick("description")}>
+													<a
+													href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+													target="_blank" rel="noreferrer"
+													>Seedit</a>
+												</li> */}
+												<li onClick={() => handleOptionClick('description')}>
+													<a href={`https://plebones.eth.limo/#/p/${selectedAddress}`} target='_blank' rel='noreferrer'>
+														Plebones
+													</a>
+												</li>
+											</ul>
+										</li>
 									</ul>
 								</div>
 							</PostMenuCatalog>,
