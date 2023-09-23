@@ -12,6 +12,7 @@ const useGoogleAnalytics = () => {
       window.gtag('config', GA_MEASUREMENT_ID, {
         'page_path': fullPath,
       });
+      window.gtag('event', 'page_view', {'page_path': fullPath});
     }
   }, [location]);
 };
