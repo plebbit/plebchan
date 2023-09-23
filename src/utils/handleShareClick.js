@@ -15,14 +15,9 @@ function handleShareClick(selectedAddress, cid) {
   }
 
   if (navigator.clipboard) {
-    navigator.clipboard
-      .writeText(shareLink)
-      .then(() => {
-        console.log('Link copied to clipboard!');
-      })
-      .catch((err) => {
-        console.error('Could not copy text: ', err);
-      });
+    navigator.clipboard.writeText(shareLink).catch((err) => {
+      console.error('Could not copy text: ', err);
+    });
   } else {
     return;
   }
