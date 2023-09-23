@@ -3803,11 +3803,7 @@ const Board = () => {
                                           </div>
                                         ) : replyMediaInfo.type === 'image' ? (
                                           <div key={`enlarge-mob-reply-${index}`} className='img-container'>
-                                            <span
-                                              key={`mob-ft${reply.cid}`}
-                                              className='file-thumb-mobile'
-                                              style={isMobileReplyThumbnailClicked[index] ? {} : { width: displayWidthMobile, height: displayHeightMobile }}
-                                            >
+                                            <span key={`mob-ft${reply.cid}`} className='file-thumb-mobile'>
                                               <img
                                                 key={`mob-img-${index}`}
                                                 src={replyMediaInfo.url}
