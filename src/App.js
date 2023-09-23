@@ -22,6 +22,7 @@ import CaptchaModal from './components/modals/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
 import useError from './hooks/useError';
+import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 import useInfo from './hooks/useInfo';
 import useSuccess from './hooks/useSuccess';
 import packageJson from '../package.json';
@@ -44,6 +45,7 @@ export default function App() {
 	const location = useLocation();
 	const isHomeRoute = location.pathname === '/';
 	const isElectron = window.electron && window.electron.isElectron;
+	useGoogleAnalytics();
 
 	const [, setNewErrorMessage] = useError();
 	const [, setNewSuccessMessage] = useSuccess();
