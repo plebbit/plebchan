@@ -1,14 +1,14 @@
 import useGeneralStore from './stores/useGeneralStore';
 
 const useClickForm = () => {
-	const { setShowPostForm, setShowPostFormLink } = useGeneralStore.getState();
+  const { setShowPostForm, setShowPostFormLink } = useGeneralStore.getState();
 
-	const handleClickForm = () => {
-		setShowPostForm(true);
-		setShowPostFormLink(false);
-	};
+  const handleClickForm = () => {
+    setShowPostForm(true);
+    setShowPostFormLink(false);
+  };
 
-	return handleClickForm;
+  return handleClickForm;
 };
 
 export default useClickForm;
