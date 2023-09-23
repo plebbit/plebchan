@@ -37,7 +37,7 @@ const useStateString = (commentOrSubplebbit) => {
 		}
 
 		// fallback to comment or subplebbit state when possible
-		if (!stateString) {
+		if (!stateString && commentOrSubplebbit?.state !== 'succeeded') {
 			if (commentOrSubplebbit?.publishingState && commentOrSubplebbit?.publishingState !== 'stopped' && commentOrSubplebbit?.publishingState !== 'succeeded') {
 				stateString = commentOrSubplebbit.publishingState;
 			} else if (commentOrSubplebbit?.updatingState !== 'stopped' && commentOrSubplebbit?.updatingState !== 'succeeded') {
