@@ -14,7 +14,7 @@ useEffect(() => {
     });
     window.gtag('event', 'page_view', {
     'page_path': fullPath,
-    'page_location': window.location.href
+    'page_location': window.location.href.replace('/#', '')
   });
 
   }
@@ -22,4 +22,4 @@ useEffect(() => {
 
 };
 
-export default useGoogleAnalytics;pat
+export default useGoogleAnalytics;
