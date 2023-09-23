@@ -1729,7 +1729,7 @@ const Thread = () => {
                                   <span
                                     key={`fta-${index}`}
                                     className='file-thumb-reply'
-                                    style={isReplyThumbnailClicked[index] ? {} : { width: replyDisplayWidth, height: replyDisplayHeight }}
+                                    style={isReplyThumbnailClicked[index] || !reply.thumbnailUrl ? {} : { width: replyDisplayWidth, height: replyDisplayHeight }}
                                   >
                                     {reply.thumbnailUrl ? (
                                       <img
