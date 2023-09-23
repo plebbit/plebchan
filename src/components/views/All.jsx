@@ -139,7 +139,7 @@ const All = () => {
 	const { subplebbits } = useSubplebbits({ subplebbitAddresses: addresses, sortType: 'active' });
 	const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
-	const stateString = useFeedStateString(subplebbits);
+	const stateString = useFeedStateString(addresses);
 
 	useEffect(() => {
 		if (feed) {

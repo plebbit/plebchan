@@ -731,7 +731,7 @@ const AllCatalog = () => {
 	const { subplebbits } = useSubplebbits({ subplebbitAddresses: addresses, sortType: 'active' });
 	const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
 
-	const stateString = useFeedStateString(subplebbits);
+	const stateString = useFeedStateString(addresses);
 
 	const columnWidth = 180;
 	const windowWidth = useWindowWidth();
