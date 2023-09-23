@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import Modal from 'react-modal';
 
 export const StyledModal = styled(Modal)`
@@ -13,7 +13,7 @@ export const StyledModal = styled(Modal)`
     position: absolute;
     padding: 2px 5px 5px;
     font-size: 14px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   }
 
   #version {
@@ -25,9 +25,9 @@ export const StyledModal = styled(Modal)`
 
   @media (max-width: 768px) {
     .panel {
-      width: 320px !important;
+      width: 350px !important;
       max-height: 60% !important;
-      left: calc(50% + 15px) !important;
+      left: calc(50% - 2px) !important;
     }
   }
 
@@ -70,7 +70,8 @@ export const StyledModal = styled(Modal)`
     padding-left: 5px;
   }
 
-  .plus, .minus {
+  .plus,
+  .minus {
     vertical-align: text-bottom;
     margin-right: 5px;
     cursor: pointer;
@@ -82,7 +83,9 @@ export const StyledModal = styled(Modal)`
   }
 
   .settings-cat {
-    display: ${({ expanded }) => index => (expanded?.includes(index) ? "block" : "none")};
+    display: ${({ expanded }) =>
+      (index) =>
+        expanded?.includes(index) ? 'block' : 'none'};
     margin: 5px;
   }
 
@@ -94,7 +97,7 @@ export const StyledModal = styled(Modal)`
 
   #account-data-text {
     min-width: 70%;
-    min-height: 105px;
+    min-height: 131px;
   }
 
   .account-buttons {
@@ -204,7 +207,7 @@ export const StyledModal = styled(Modal)`
   }
 
   .anon-off {
-    margin: 10px 0 5px -2px
+    margin: 10px 0 5px -2px;
   }
 
   .anon-tip {
@@ -232,7 +235,6 @@ export const StyledModal = styled(Modal)`
     left: 18px;
     top: 108px;
   }
-
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
@@ -425,10 +427,10 @@ export const StyledModal = styled(Modal)`
             color: #f30 !important;
           }
         }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 
   #node-stats {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import {
+  createAccount,
   deleteAccount,
   deleteCaches,
   importAccount,
@@ -31,6 +32,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
   const [copyStatus, setCopyStatus] = useState(false);
   const [ensName, setEnsName] = useState('');
   const [checkedENS, setCheckedENS] = useState(false);
+  const [triggerSwitchAccount, setTriggerSwitchAccount] = useState(false);
 
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
@@ -382,6 +384,27 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     }
   };
 
+  const handleCreateAccount = async () => {
+    try {
+      await createAccount();
+      setNewSuccessMessage('Account created successfully.');
+      setTriggerSwitchAccount(true);
+    } catch (error) {
+      setNewErrorMessage('Error creating account: ' + error.message);
+      console.error(error);
+    }
+    const lastAccount = accounts[accounts.length - 1];
+    setActiveAccount(lastAccount.name);
+  };
+
+  useEffect(() => {
+    if (triggerSwitchAccount) {
+      const lastAccount = accounts[accounts.length - 1];
+      setActiveAccount(lastAccount.name);
+      setTriggerSwitchAccount(false);
+    }
+  }, [accounts, triggerSwitchAccount]);
+
   const handleAccountChange = (e) => {
     setActiveAccount(e.target.value);
   };
@@ -463,8 +486,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             <li className='settings-tip anon-tip'>Use a newly generated u/address per thread to post.</li>
             <li className='settings-option disc'>Account Data</li>
             <li className='settings-tip'>
-              To save manual changes, click "Save". To undo changes, click "Reset". To delete the account and create a new one, click "Delete". To add another account,
-              paste its data and click "Import".
+              Save manual changes, reset changes, import another account after pasting its whole data, delete the account, create a new account.
             </li>
             <div className='settings-input'>
               <textarea
@@ -481,6 +503,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
                 <button onClick={() => setEditedAccountJson(accountJson)}>Reset</button>
                 <button onClick={handleImportAccount}>Import</button>
                 <button onClick={handleDeleteAccount}>Delete</button>
+                <button onClick={handleCreateAccount}>Create</button>
               </div>
             </div>
             <li className='settings-option disc'>Account Address: u/{account?.author.shortAddress}</li>
