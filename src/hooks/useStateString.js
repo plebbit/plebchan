@@ -1,68 +1,21 @@
 import { useMemo } from 'react';
+import { useClientsStates } from '@plebbit/plebbit-react-hooks';
+
+const clientHosts = {};
+const getClientHost = (clientUrl) => {
+	if (!clientHosts[clientUrl]) {
+		try {
+			clientHosts[clientUrl] = new URL(clientUrl).hostname || clientUrl;
+		} catch (e) {
+			clientHosts[clientUrl] = clientUrl;
+		}
+	}
+	return clientHosts[clientUrl];
+};
 
 const useStateString = (commentOrSubplebbit) => {
+	const { states } = useClientsStates({ comment: commentOrSubplebbit });
 	return useMemo(() => {
-		// dont show state string if the data is already fetched
-		if (commentOrSubplebbit?.updatedAt || commentOrSubplebbit?.state === 'succeeded') {
-			return;
-		}
-
-		if (!commentOrSubplebbit?.clients) {
-			return;
-		}
-		const clients = commentOrSubplebbit?.clients;
-
-		const states = {};
-		const addState = (state, clientUrl) => {
-			if (!state || state === 'stopped') {
-				return;
-			}
-			if (!states[state]) {
-				states[state] = [];
-			}
-			states[state].push(clientUrl);
-		};
-		for (const clientUrl in clients?.ipfsGateways) {
-			addState(clients.ipfsGateways[clientUrl]?.state, clientUrl);
-		}
-		for (const clientUrl in clients?.ipfsClients) {
-			addState(clients.ipfsClients[clientUrl]?.state, clientUrl);
-		}
-		for (const clientUrl in clients?.pubsubClients) {
-			addState(clients.pubsubClients[clientUrl]?.state, clientUrl);
-		}
-		for (const chainTicker in clients?.chainProviders) {
-			for (const clientUrl in clients.chainProviders[chainTicker]) {
-				addState(clients.chainProviders[chainTicker][clientUrl]?.state, clientUrl);
-			}
-		}
-
-		// find subplebbit pages states
-		if (commentOrSubplebbit?.posts?.clients) {
-			for (const clientType in commentOrSubplebbit.posts.clients) {
-				for (const sortType in commentOrSubplebbit.posts.clients[clientType]) {
-					for (const clientUrl in commentOrSubplebbit.posts.clients[clientType][sortType]) {
-						let state = commentOrSubplebbit.posts.clients[clientType][sortType][clientUrl].state;
-						if (state === 'stopped') {
-							continue;
-						}
-						state += `-page-${sortType}`;
-						if (!states[state]) {
-							states[state] = [];
-						}
-						states[state].push(clientUrl);
-					}
-				}
-			}
-		}
-
-		const getClientHost = (clientUrl) => {
-			try {
-				clientUrl = new URL(clientUrl).hostname || clientUrl;
-			} catch (e) {}
-			return clientUrl;
-		};
-
 		let stateString = '';
 		for (const state in states) {
 			const clientUrls = states[state];
@@ -73,7 +26,7 @@ const useStateString = (commentOrSubplebbit) => {
 				continue;
 			}
 
-			// separate 2 different states using ', '
+			// separate 2 different states using ' '
 			if (stateString) {
 				stateString += ', ';
 			}
@@ -102,7 +55,7 @@ const useStateString = (commentOrSubplebbit) => {
 
 		// if string is empty, return undefined instead
 		return stateString === '' ? undefined : stateString;
-	}, [commentOrSubplebbit]);
+	}, [states, commentOrSubplebbit]);
 };
 
 export default useStateString;
