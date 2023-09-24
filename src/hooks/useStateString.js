@@ -3,14 +3,14 @@ import { useClientsStates } from '@plebbit/plebbit-react-hooks';
 
 const clientHosts = {};
 const getClientHost = (clientUrl) => {
-	if (!clientHosts[clientUrl]) {
-		try {
-			clientHosts[clientUrl] = new URL(clientUrl).hostname || clientUrl;
-		} catch (e) {
-			clientHosts[clientUrl] = clientUrl;
-		}
-	}
-	return clientHosts[clientUrl];
+  if (!clientHosts[clientUrl]) {
+    try {
+      clientHosts[clientUrl] = new URL(clientUrl).hostname || clientUrl;
+    } catch (e) {
+      clientHosts[clientUrl] = clientUrl;
+    }
+  }
+  return clientHosts[clientUrl];
 };
 
 const useStateString = (commentOrSubplebbit) => {

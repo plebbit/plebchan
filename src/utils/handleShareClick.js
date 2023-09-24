@@ -1,31 +1,26 @@
 function handleShareClick(selectedAddress, cid) {
-	let shareLink;
+  let shareLink;
 
-	if (cid === 'rules' || cid === 'description') {
-		shareLink = `https://plebchan.eth.limo/#/p/${selectedAddress}`;
-	} else {
-		const plebBzBaseURL = 'https://pleb.bz/p/';
-		shareLink = `${plebBzBaseURL}${selectedAddress}/`;
+  if (cid === 'rules' || cid === 'description') {
+    shareLink = `https://plebchan.eth.limo/#/p/${selectedAddress}`;
+  } else {
+    const plebBzBaseURL = 'https://pleb.bz/p/';
+    shareLink = `${plebBzBaseURL}${selectedAddress}/`;
 
-		if (cid !== 'rules' && cid !== 'description') {
-			shareLink += `c/${cid}`;
-		}
+    if (cid !== 'rules' && cid !== 'description') {
+      shareLink += `c/${cid}`;
+    }
 
-		shareLink += `?redirect=plebchan.eth.limo`;
-	}
+    shareLink += `?redirect=plebchan.eth.limo`;
+  }
 
-	if (navigator.clipboard) {
-		navigator.clipboard
-			.writeText(shareLink)
-			.then(() => {
-				console.log('Link copied to clipboard!');
-			})
-			.catch((err) => {
-				console.error('Could not copy text: ', err);
-			});
-	} else {
-		return;
-	}
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(shareLink).catch((err) => {
+      console.error('Could not copy text: ', err);
+    });
+  } else {
+    return;
+  }
 }
 
 export default handleShareClick;
