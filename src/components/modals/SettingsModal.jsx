@@ -338,7 +338,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     const oldData = accountJson;
     try {
       const parsedJson = JSON.parse(data);
-      await setAccount(parsedJson.account);
+      const newAccount = parsedJson.account;
+      await setAccount({ ...newAccount, id: account?.id });
 
       if (!oldData.account?.author?.address.endsWith('.eth') && parsedJson.account?.author?.address.endsWith('.eth') && anonymousMode === true) {
         setAnonymousMode(false);
