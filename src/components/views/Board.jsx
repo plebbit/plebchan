@@ -1149,7 +1149,7 @@ const Board = () => {
                             )}
                             <span className='name-block-mobile'>
                               <span
-                                className='name-mobile capcode-admin'
+                                className='name-mobile capcode'
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                   setIsAdminListOpen(!isAdminListOpen);
@@ -1374,7 +1374,7 @@ const Board = () => {
                             )}
                             <span className='name-block-mobile'>
                               <span
-                                className='name-mobile capcode-admin'
+                                className='name-mobile capcode'
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                   setIsAdminListOpen(!isAdminListOpen);
@@ -1675,7 +1675,7 @@ const Board = () => {
                             )}
                             <span className='name-block-mobile'>
                               <span
-                                className='name-mobile capcode-admin'
+                                className='name-mobile capcode'
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                   setIsAdminListOpen(!isAdminListOpen);
