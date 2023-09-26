@@ -990,7 +990,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span
@@ -1149,13 +1149,13 @@ const Board = () => {
                             )}
                             <span className='name-block-mobile'>
                               <span
-                                className='name-mobile capcode'
+                                className='name-mobile capcode-admin'
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
@@ -1215,7 +1215,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span
@@ -1374,13 +1374,13 @@ const Board = () => {
                             )}
                             <span className='name-block-mobile'>
                               <span
-                                className='name-mobile capcode'
+                                className='name-mobile capcode-admin'
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
@@ -1457,7 +1457,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span
@@ -1675,13 +1675,13 @@ const Board = () => {
                             )}
                             <span className='name-block-mobile'>
                               <span
-                                className='name-mobile capcode'
+                                className='name-mobile capcode-admin'
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
@@ -1941,7 +1941,7 @@ const Board = () => {
                                       Anonymous
                                     </span>
                                   )}
-                                  &nbsp; (u/
+                                  &nbsp;(u/
                                   <span
                                     key={`pa-${index}`}
                                     className='poster-address address-desktop'
@@ -1960,7 +1960,7 @@ const Board = () => {
                                       )}
                                     </VerifiedAuthor>
                                   </span>
-                                  ) &nbsp;
+                                  )&nbsp;
                                   <span
                                     key={`dt-${index}`}
                                     className='date-time'

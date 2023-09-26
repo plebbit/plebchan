@@ -1096,7 +1096,7 @@ const Thread = () => {
                               Anonymous
                             </span>
                           )}
-                          &nbsp; &nbsp;
+                          &nbsp;
                           <span
                             className='poster-address address-desktop'
                             id='reply-button'

@@ -919,7 +919,7 @@ const Subscriptions = () => {
                                     Anonymous
                                   </span>
                                 )}
-                                &nbsp; (u/
+                                &nbsp;(u/
                                 <span
                                   key={`pa-${index}`}
                                   className='poster-address address-desktop'

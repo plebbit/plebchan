@@ -15,7 +15,8 @@ export const Container = styled.div`
 
 export const NavBar = styled.div`
   @media (min-width: 480px) {
-    .board-select, .page-jump {
+    .board-select,
+    .page-jump {
       display: none;
     }
 
@@ -33,7 +34,8 @@ export const NavBar = styled.div`
   }
 
   @media (max-width: 480px) {
-    .boardList, .nav {
+    .boardList,
+    .nav {
       display: none;
     }
 
@@ -81,9 +83,9 @@ export const NavBar = styled.div`
   }
 
   ${({ selectedStyle }) => {
-  switch (selectedStyle) {
-    case 'Yotsuba':
-      return `font-size: 9pt;
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `font-size: 9pt;
       color: #b86;
       
       a, #button-span {
@@ -110,8 +112,8 @@ export const NavBar = styled.div`
         color: navy;
       }`;
 
-    case 'Yotsuba-B':
-      return `font-size: 9pt;
+      case 'Yotsuba-B':
+        return `font-size: 9pt;
       color: #89a;
       
       a, #button-span {
@@ -220,11 +222,12 @@ export const NavBar = styled.div`
           background-color: #ddd;
           border-bottom: 2px solid #ccc;
         }`;
-        
-        default:
-          return '';
-      }
-  }}`;
+
+      default:
+        return '';
+    }
+  }}
+`;
 
 export const Header = styled.div`
   ${({ selectedStyle }) => {
@@ -418,10 +421,10 @@ export const Header = styled.div`
           margin-top: 5px;
           font-size: 9pt;
         }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 
   .offline {
@@ -463,16 +466,16 @@ export const Break = styled.hr`
         border: none;
         border-top: 1px solid #ddd;
         height: 0;`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 `;
 
 export const PostFormLink = styled.div`
   @media (min-width: 480px) {
-    display: ${props => (props.showPostFormLink ? 'block' : 'none')};
+    display: ${(props) => (props.showPostFormLink ? 'block' : 'none')};
 
     #post-form-link-mobile {
       display: none;
@@ -480,7 +483,7 @@ export const PostFormLink = styled.div`
   }
 
   @media (max-width: 480px) {
-    display: ${props => (props.showPostFormLink ? 'block' : 'none')};
+    display: ${(props) => (props.showPostFormLink ? 'block' : 'none')};
     line-height: 30px;
 
     #post-form-link-desktop {
@@ -488,11 +491,11 @@ export const PostFormLink = styled.div`
     }
 
     #post-form-link-mobile {
-        margin: 11px 0;
-        font-size: 10pt;
-        text-align: center;
-        font-weight: 700;
-        display: block !important;
+      margin: 11px 0;
+      font-size: 10pt;
+      text-align: center;
+      font-weight: 700;
+      display: block !important;
     }
   }
 
@@ -620,15 +623,15 @@ export const PostFormLink = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
-        
-        default:
-          return '';
-      }
-    }}
+
+      default:
+        return '';
+    }
+  }}
 `;
 
 export const PostFormTable = styled.table`
-  display: ${props => (props.showPostForm ? 'table' : 'none')};
+  display: ${(props) => (props.showPostForm ? 'table' : 'none')};
   width: 418px;
   border-spacing: 1px;
   margin-left: auto;
@@ -1145,15 +1148,15 @@ export const PostFormTable = styled.table`
           width: 100%
         }
       }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 
   #t-help {
     margin: 0;
-    margin-top: -5px
+    margin-top: -5px;
   }
 `;
 
@@ -1249,10 +1252,10 @@ export const PostForm = styled.div`
       a:hover {
         color: #ff3300;
       }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 `;
 
@@ -1396,10 +1399,10 @@ export const TopBar = styled.div`
         a:hover, #subscribe:hover {
           color: #ff3300 !important;
         }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 
   .ellipsis {
@@ -1407,10 +1410,10 @@ export const TopBar = styled.div`
   }
 
   .ellipsis:after {
-    content: "\\2026";
+    content: '\\2026';
     position: absolute;
-    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-    animation: ellipsis steps(4,end) 1500ms infinite;
+    -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+    animation: ellipsis steps(4, end) 1500ms infinite;
     width: 0px;
     overflow: hidden;
   }
@@ -1441,7 +1444,7 @@ export const TopBar = styled.div`
       max-width: calc(100vw - 50vw);
       word-wrap: break-word;
       white-space: nowrap;
-      text-overflow: "";
+      text-overflow: '';
       overflow: hidden;
     }
 
@@ -1450,10 +1453,10 @@ export const TopBar = styled.div`
     }
 
     .ellipsis-all:after {
-      content: "\\2026";
+      content: '\\2026';
       position: absolute;
-      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-      animation: ellipsis steps(4,end) 1500ms infinite;
+      -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+      animation: ellipsis steps(4, end) 1500ms infinite;
       width: 0px;
       overflow: hidden;
     }
@@ -1494,7 +1497,7 @@ export const TopBar = styled.div`
       max-width: 90vw;
       word-wrap: break-word;
       white-space: nowrap;
-      text-overflow: "";
+      text-overflow: '';
       overflow: hidden;
     }
 
@@ -1503,10 +1506,10 @@ export const TopBar = styled.div`
     }
 
     .ellipsis-all:after {
-      content: "\\2026";
+      content: '\\2026';
       position: absolute;
-      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-      animation: ellipsis steps(4,end) 1500ms infinite;
+      -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+      animation: ellipsis steps(4, end) 1500ms infinite;
       width: 0px;
       overflow: hidden;
     }
@@ -1683,11 +1686,11 @@ export const TopBar = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
-        
-        default:
-          return '';
-      }
-    }}
+
+      default:
+        return '';
+    }
+  }}
 `;
 
 export const BoardForm = styled.div`
@@ -1695,11 +1698,15 @@ export const BoardForm = styled.div`
     margin-right: 14px;
   }
 
+  .capcode-admin {
+    color: red !important;
+  }
+
   .ellipsis:after {
-    content: "\\2026";
+    content: '\\2026';
     position: absolute;
-    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-    animation: ellipsis steps(4,end) 1500ms infinite;
+    -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+    animation: ellipsis steps(4, end) 1500ms infinite;
     width: 0px;
     overflow: hidden;
   }
@@ -1793,9 +1800,9 @@ export const BoardForm = styled.div`
     }
 
     ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+      switch (selectedStyle) {
+        case 'Yotsuba':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
         border: 1px solid #d99f91 !important;
         border-left: none !important;
@@ -1821,8 +1828,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Yotsuba-B':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Yotsuba-B':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
         border: 1px solid #ba9dbf !important;
         border-left: none !important;
@@ -1848,8 +1855,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Futaba':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Futaba':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
       }
 
@@ -1872,8 +1879,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Burichan':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Burichan':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
       }
 
@@ -1896,8 +1903,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Tomorrow':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Tomorrow':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #1d1d21 !important;
         outline: 1px solid #111 !important;
       }
@@ -1920,8 +1927,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Photon':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Photon':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #ccc !important;
         outline: 1px solid #ccc !important;
       }
@@ -1944,25 +1951,24 @@ export const BoardForm = styled.div`
         }
       }`;
 
-        
         default:
           return '';
       }
     }}
   }
-  
+
   .file {
     display: block;
-    
+
     .file-text {
       max-width: 600px;
       white-space: nowrap;
     }
-  
+
     .fileText a {
       text-decoration: underline;
     }
-  
+
     .file-thumb {
       float: left;
       margin: 3px 20px 5px 20px;
@@ -2028,7 +2034,7 @@ export const BoardForm = styled.div`
         margin: 4px 0;
         overflow: hidden;
       }
-  
+
       .post-info-mobile {
         overflow: hidden;
         padding: 5px;
@@ -2036,7 +2042,7 @@ export const BoardForm = styled.div`
         display: block;
         clear: left;
       }
-  
+
       .post-menu-button-mobile {
         line-height: 1em !important;
         width: 1em !important;
@@ -2047,14 +2053,14 @@ export const BoardForm = styled.div`
         float: left !important;
         font-weight: 700 !important;
         opacity: 1 !important;
-        height: .5em !important;
+        height: 0.5em !important;
         font-size: 16px !important;
       }
-  
+
       .name-block-mobile {
         clear: none;
         float: left;
-  
+
         .subject-mobile {
           display: block;
         }
@@ -2064,7 +2070,7 @@ export const BoardForm = styled.div`
         float: right;
         text-align: right;
       }
-  
+
       .file-mobile {
         display: block;
 
@@ -2099,7 +2105,7 @@ export const BoardForm = styled.div`
       #video-thumbnail-mobile {
         width: 100px;
       }
-  
+
       img {
         border: none;
         float: left;
@@ -2108,13 +2114,13 @@ export const BoardForm = styled.div`
         object-fit: scale-down;
         margin: 0;
       }
-  
+
       blockquote {
         padding-top: 5px;
         display: block;
         margin: 10px !important;
       }
-  
+
       .post-link-mobile {
         clear: both !important;
         padding: 5px;
@@ -2122,12 +2128,12 @@ export const BoardForm = styled.div`
         margin: -5px;
         display: block !important;
       }
-  
+
       .info-mobile {
         margin-top: 8px;
         float: left;
       }
-  
+
       .button-mobile {
         float: right;
         border-radius: 3px;
@@ -2164,7 +2170,7 @@ export const BoardForm = styled.div`
 
       .file-mobile {
         display: block;
-  
+
         .file-thumb-mobile {
           margin-left: 10px !important;
           margin-right: 10px !important;
@@ -2173,7 +2179,7 @@ export const BoardForm = styled.div`
           margin-bottom: 5px;
           margin-top: 15px;
         }
-  
+
         .file-info-mobile {
           padding-top: 5px;
           text-align: center;
@@ -2186,7 +2192,7 @@ export const BoardForm = styled.div`
       video {
         max-width: 100px;
       }
-  
+
       img {
         border: none;
         float: left;
@@ -2207,12 +2213,12 @@ export const BoardForm = styled.div`
           width: 1em !important;
           text-align: center !important;
           outline: none !important;
-          transform: rotate(90deg)!important;
+          transform: rotate(90deg) !important;
           margin: 4px -5px 0 4px !important;
           float: left !important;
           font-weight: 700 !important;
           opacity: 1 !important;
-          height: .5em !important;
+          height: 0.5em !important;
           font-size: 16px !important;
         }
 
@@ -2225,7 +2231,8 @@ export const BoardForm = styled.div`
           float: right;
           text-align: right;
 
-          a, #reply-button {
+          a,
+          #reply-button {
             text-decoration: none;
           }
         }
@@ -2236,7 +2243,6 @@ export const BoardForm = styled.div`
         margin: 10px !important;
       }
     }
-
   }
 
   ${({ selectedStyle }) => {
@@ -3283,10 +3289,10 @@ export const BoardForm = styled.div`
         border-top: 1px solid #ddd;
         height: 0;
       }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 
   @media (max-width: 480px) {
@@ -3309,7 +3315,7 @@ export const BoardForm = styled.div`
       margin-left: calc((100% - 100vw) / 2);
       margin-right: calc((100% - 100vw) / 2);
     }
-    
+
     .name-block {
       display: block;
     }
@@ -3355,7 +3361,7 @@ export const BoardForm = styled.div`
           return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #ccc !important;
         }`;
-        
+
         default:
           return '';
       }
@@ -4078,7 +4084,7 @@ export const BoardForm = styled.div`
               }
             }
           }`;
-        
+
         default:
           return '';
       }
@@ -4090,15 +4096,14 @@ export const PostMenu = styled.div`
   display: inline-block;
   cursor: pointer;
   transition: transform 0.1s;
-  transform: ${props => props.rotated ? 'rotate(90deg)' : 'none'};
+  transform: ${(props) => (props.rotated ? 'rotate(90deg)' : 'none')};
 `;
 
 export const PostMenuMobile = styled.div`
-    font-size: 16px;
-    line-height: 2.5em;
-    width: 216px;
+  font-size: 16px;
+  line-height: 2.5em;
+  width: 216px;
 
-    
   ul {
     border-right-width: 2px !important;
     list-style: none;
@@ -4115,9 +4120,9 @@ export const PostMenuMobile = styled.div`
   }
 
   ${({ selectedStyle }) => {
-      switch (selectedStyle) {
-        case 'Yotsuba':
-          return `
+    switch (selectedStyle) {
+      case 'Yotsuba':
+        return `
           ul {
             border: 1px solid #d9bfb7;
           }
@@ -4133,8 +4138,8 @@ export const PostMenuMobile = styled.div`
           }
           `;
 
-        case 'Yotsuba-B':
-          return `
+      case 'Yotsuba-B':
+        return `
           ul {
             border: 1px solid #b7c5d9;
           }
@@ -4150,8 +4155,8 @@ export const PostMenuMobile = styled.div`
           }
           `;
 
-        case 'Futaba':
-          return `
+      case 'Futaba':
+        return `
           ul {
             border: 1px solid #d9bfb7;
           }
@@ -4167,8 +4172,8 @@ export const PostMenuMobile = styled.div`
           }
           `;
 
-        case 'Burichan':
-          return `
+      case 'Burichan':
+        return `
           ul {
             border: 1px solid #b7c5d9;
           }
@@ -4184,8 +4189,8 @@ export const PostMenuMobile = styled.div`
           }
           `;
 
-        case 'Tomorrow':
-          return `
+      case 'Tomorrow':
+        return `
           ul {
             border: 1px solid #282a2e;
           }
@@ -4200,8 +4205,8 @@ export const PostMenuMobile = styled.div`
           }
           `;
 
-        case 'Photon':
-          return `
+      case 'Photon':
+        return `
           ul {
             border: 1px solid #ccc;
           }
@@ -4215,9 +4220,9 @@ export const PostMenuMobile = styled.div`
             }
           }
           `;
-        
-        default:
-          return '';
-      }}
+
+      default:
+        return '';
     }
+  }}
 `;
