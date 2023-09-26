@@ -1101,15 +1101,18 @@ const Thread = () => {
                             className='poster-address address-desktop'
                             id='reply-button'
                             style={{ cursor: 'pointer' }}
-                            onClick={() =>
-                              handleAddressClick(
-                                <VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                              )
-                            }
+                            onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)}
                           >
                             (u/
                             <span key={`pa-${comment.cid}`} className='poster-address'>
-                              {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>}
+                              <VerifiedAuthor commentCid={comment.cid}>
+                                {({ shortAuthorAddress, authorAddressChanged }) => (
+                                  <>
+                                    <span className='author-address-hidden'>{comment.author.shortAddress}</span>
+                                    <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                  </>
+                                )}
+                              </VerifiedAuthor>
                             </span>
                             )
                           </span>
@@ -1419,7 +1422,7 @@ const Thread = () => {
                                   Anonymous
                                 </span>
                               )}
-                              &nbsp;
+                              &nbsp;(u/
                               <span
                                 key={`pa-${index}`}
                                 className='poster-address address-desktop'
@@ -1427,16 +1430,20 @@ const Thread = () => {
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleAddressClick(reply.author?.shortAddress)}
                               >
-                                (u/
                                 {reply.author?.shortAddress ? (
-                                  <span key={`mob-ha-${index}`}>{reply.author?.shortAddress}</span>
-                                ) : anonymousMode ? (
-                                  <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
+                                  <VerifiedAuthor commentCid={reply.cid}>
+                                    {({ shortAuthorAddress, authorAddressChanged }) => (
+                                      <>
+                                        <span className='author-address-hidden'>{reply.author.shortAddress}</span>
+                                        <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                      </>
+                                    )}
+                                  </VerifiedAuthor>
                                 ) : (
-                                  <span key={`mob-ha-${index}`}>{account?.author?.shortAddress}</span>
+                                  <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
                                 )}
-                                )
                               </span>
+                              )
                             </span>
                             &nbsp;
                             <span key={`dt-${index}`} className='date-time'>
@@ -2085,15 +2092,18 @@ const Thread = () => {
                             className='poster-address-mobile address-mobile'
                             id='reply-button'
                             style={{ cursor: 'pointer' }}
-                            onClick={() =>
-                              handleAddressClick(
-                                <VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                              )
-                            }
+                            onClick={() => handleAddressClick(<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)}
                           >
                             (u/
-                            <span key={`mob-ha-${comment.cid}`} className='highlight-address-mobile'>
-                              {<VerifiedAuthor commentCid={comment.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>}
+                            <span key={`mob-ha-${comment.cid}`} className='highlight-address-mobile poster-address'>
+                              <VerifiedAuthor commentCid={comment.cid}>
+                                {({ shortAuthorAddress, authorAddressChanged }) => (
+                                  <>
+                                    <span className='author-address-hidden'>{comment.author.shortAddress}</span>
+                                    <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                  </>
+                                )}
+                              </VerifiedAuthor>
                             </span>
                             )&nbsp;
                           </span>
@@ -2488,24 +2498,30 @@ const Thread = () => {
                                   Anonymous
                                 </span>
                               )}
-                              &nbsp;
+                              <span key={`fix1-ha-${index}`} className='poster-address-mobile'>
+                                &nbsp;(u/
+                              </span>
                               <span
                                 key={`mob-pa-${index}`}
-                                className='poster-address-mobile address-mobile'
+                                className='poster-address-mobile poster-address'
                                 id='reply-button'
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleAddressClick(reply.author?.shortAddress)}
                               >
-                                (u/
                                 {reply.author?.shortAddress ? (
-                                  <span key={`mob-ha-${index}`} className='highlight-address-mobile'>
-                                    {reply.author?.shortAddress}
-                                  </span>
-                                ) : anonymousMode ? (
-                                  <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
+                                  <VerifiedAuthor commentCid={reply.cid}>
+                                    {({ shortAuthorAddress, authorAddressChanged }) => (
+                                      <>
+                                        <span className='author-address-hidden'>{reply.author.shortAddress}</span>
+                                        <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                      </>
+                                    )}
+                                  </VerifiedAuthor>
                                 ) : (
-                                  <span key={`mob-ha-${index}`}>{account?.author?.shortAddress}</span>
+                                  <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
                                 )}
+                              </span>
+                              <span key={`fix2-ha-${index}`} className='poster-address-mobile'>
                                 )
                               </span>
                               <br key={`mob-br-${index}`} />
