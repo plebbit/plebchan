@@ -122,6 +122,7 @@ const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, po
       remarkPlugins={[blockquoteToGreentext, breaks]}
       rehypePlugins={[[rehypeSanitize, customSchema]]}
       components={{
+        a: ({ children, href }) => <span>{`[${children}](${href})`}</span>,
         img: ({ src }) => <span>{src}</span>,
         video: ({ src }) => <span>{src}</span>,
         source: ({ src }) => <span>{src}</span>,
