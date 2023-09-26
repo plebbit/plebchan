@@ -1108,7 +1108,7 @@ const Thread = () => {
                               <VerifiedAuthor commentCid={comment.cid}>
                                 {({ shortAuthorAddress, authorAddressChanged }) => (
                                   <>
-                                    <span className='author-address-hidden'>{comment.author.shortAddress}</span>
+                                    <span className='author-address-hidden'>{comment.author?.shortAddress}</span>
                                     <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
                                   </>
                                 )}
@@ -2099,7 +2099,7 @@ const Thread = () => {
                               <VerifiedAuthor commentCid={comment.cid}>
                                 {({ shortAuthorAddress, authorAddressChanged }) => (
                                   <>
-                                    <span className='author-address-hidden'>{comment.author.shortAddress}</span>
+                                    <span className='author-address-hidden'>{comment.author?.shortAddress}</span>
                                     <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
                                   </>
                                 )}
