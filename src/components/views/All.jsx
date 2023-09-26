@@ -1960,6 +1960,7 @@ const All = () => {
                                   )
                                 ) : null}
                               </div>
+                              <div key={`spacer-fix-${index}`} style={{ height: '2px' }} />
                             </div>
                           );
                         })}

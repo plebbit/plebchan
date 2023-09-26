@@ -2412,7 +2412,6 @@ export const BoardForm = styled.div`
         word-wrap: break-word;
         word-break: break-word;
         max-width: 100%;
-        margin: 4px 0;
       }
 
       hr {
@@ -2582,7 +2581,6 @@ export const BoardForm = styled.div`
         word-wrap: break-word;
         word-break: break-word;
         max-width: 100%;
-        margin: 4px 0;
       }
 
       hr {
@@ -2755,7 +2753,6 @@ export const BoardForm = styled.div`
         word-wrap: break-word;
         word-break: break-word;
         max-width: 100%;
-        margin: 4px 0
       }
 
       hr {
@@ -2926,7 +2923,6 @@ export const BoardForm = styled.div`
         word-wrap: break-word;
         word-break: break-word;
         max-width: 100%;
-        margin: 4px 0
       }
 
       hr {
@@ -3106,7 +3102,6 @@ export const BoardForm = styled.div`
         word-wrap: break-word;
         word-break: break-word;
         max-width: 100%;
-        margin: 4px 0
       }
 
       hr {
@@ -3281,7 +3276,6 @@ export const BoardForm = styled.div`
         word-wrap: break-word;
         word-break: break-word;
         max-width: 100%;
-        margin: 4px 0
       }
 
       hr {
