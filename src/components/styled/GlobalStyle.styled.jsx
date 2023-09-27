@@ -8,9 +8,9 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    background: ${props => props.background};
-    color: ${props => props.color};
-    font-family: ${props => props.fontFamily};
+    background: ${(props) => props.background};
+    color: ${(props) => props.color};
+    font-family: ${(props) => props.fontFamily};
   }
 
   .tooltip {
@@ -40,6 +40,39 @@ export const GlobalStyle = createGlobalStyle`
 
   .expanded-container {
     display: inline-block;
+  }
+
+  .poster-address {
+    display: inline-block;
+    overflow: clip;
+  }
+
+  .author-address-hidden {
+    visibility: hidden;
+    user-select: none;
+  }
+
+  .author-address-visible {
+    float: left;
+    width: 0;
+    white-space: nowrap;
+  }
+
+  @keyframes authorAddressChangedAnimation {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .author-address-changed {
+    animation-name: authorAddressChangedAnimation;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
   }
 
   @media (min-width: 480px) {

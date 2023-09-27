@@ -102,7 +102,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
           },
         });
         setAnonymousMode(false);
-        setNewSuccessMessage('ENS name saved successfully. Anon mode has been disabled.');
+        localStorage.setitem('successToast', 'ENS name saved successfully. Anon mode has been disabled.');
+        window.location.reload();
       } catch (error) {
         setNewErrorMessage(error.message);
         console.log(error);
@@ -337,11 +338,13 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     const oldData = accountJson;
     try {
       const parsedJson = JSON.parse(data);
-      await setAccount(parsedJson.account);
+      const newAccount = parsedJson.account;
+      await setAccount({ ...newAccount, id: account?.id });
 
       if (!oldData.account?.author?.address.endsWith('.eth') && parsedJson.account?.author?.address.endsWith('.eth') && anonymousMode === true) {
         setAnonymousMode(false);
-        setNewSuccessMessage('Account data saved successfully. ENS address detected, Anon mode disabled.');
+        localStorage.setitem('successToast', 'Account data saved successfully. ENS address detected, Anon mode disabled.');
+        window.location.reload();
       } else {
         setNewSuccessMessage('Account data saved successfully.');
       }
@@ -361,7 +364,8 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
       if (parsedJson.account?.author?.address.endsWith('.eth') && anonymousMode === true) {
         setAnonymousMode(false);
-        setNewSuccessMessage('Account imported successfully. ENS address detected, Anon mode disabled.');
+        localStorage.setItem('successToast', 'Account imported successfully. ENS address detected, Anon mode disabled.');
+        window.location.reload();
       } else {
         setNewSuccessMessage('Account imported successfully.');
       }

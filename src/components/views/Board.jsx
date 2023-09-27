@@ -990,7 +990,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span
@@ -1155,7 +1155,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
@@ -1215,7 +1215,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span
@@ -1380,7 +1380,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
@@ -1457,7 +1457,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span
@@ -1681,7 +1681,7 @@ const Board = () => {
                                   setIsAdminListOpen(!isAdminListOpen);
                                 }}
                               >
-                                ## Board Admins
+                                ## Board Mods
                               </span>
                               &nbsp;
                               <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
@@ -1941,21 +1941,26 @@ const Board = () => {
                                       Anonymous
                                     </span>
                                   )}
-                                  &nbsp; (u/
+                                  &nbsp;(u/
                                   <span
                                     key={`pa-${index}`}
                                     className='poster-address address-desktop'
                                     id='reply-button'
                                     style={{ cursor: 'pointer' }}
                                     onClick={() =>
-                                      handleAddressClick(
-                                        <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                      )
+                                      handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                     }
                                   >
-                                    <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>
+                                    <VerifiedAuthor commentCid={thread.cid}>
+                                      {({ shortAuthorAddress, authorAddressChanged }) => (
+                                        <>
+                                          <span className='author-address-hidden'>{thread.author.shortAddress}</span>
+                                          <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                        </>
+                                      )}
+                                    </VerifiedAuthor>
                                   </span>
-                                  ) &nbsp;
+                                  )&nbsp;
                                   <span
                                     key={`dt-${index}`}
                                     className='date-time'
@@ -2341,28 +2346,32 @@ const Board = () => {
                                             Anonymous
                                           </span>
                                         )}
-                                        &nbsp;
+                                        &nbsp;(u/
                                         <span
                                           key={`pa-${index}`}
                                           className='poster-address address-desktop'
                                           id='reply-button'
                                           style={{ cursor: 'pointer' }}
                                           onClick={() =>
-                                            handleAddressClick(
-                                              <VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                            )
+                                            handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                           }
                                         >
-                                          (u/
                                           {reply.author?.shortAddress ? (
-                                            <span key={`mob-ha-${index}`}>{reply.author?.shortAddress}</span>
-                                          ) : anonymousMode ? (
-                                            <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
+                                            <VerifiedAuthor commentCid={reply.cid}>
+                                              {({ shortAuthorAddress, authorAddressChanged }) => (
+                                                <>
+                                                  <span className='author-address-hidden'>{reply.author.shortAddress}</span>
+                                                  <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>
+                                                    {shortAuthorAddress}
+                                                  </span>
+                                                </>
+                                              )}
+                                            </VerifiedAuthor>
                                           ) : (
-                                            <span key={`mob-ha-${index}`}>{account?.author?.shortAddress}</span>
+                                            <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
                                           )}
-                                          )
                                         </span>
+                                        )
                                       </span>
                                       &nbsp;
                                       <span
@@ -2984,6 +2993,7 @@ const Board = () => {
                                       )
                                     ) : null}
                                   </div>
+                                  <div key={`spacer-fix-${index}`} style={{ height: '2px' }} />
                                 </div>
                               </Fragment>
                             );
@@ -3154,14 +3164,19 @@ const Board = () => {
                                     id='reply-button'
                                     style={{ cursor: 'pointer' }}
                                     onClick={() =>
-                                      handleAddressClick(
-                                        <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                      )
+                                      handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                     }
                                   >
                                     (u/
-                                    <span key={`mob-ha-${index}`} className='highlight-address-mobile'>
-                                      {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>}
+                                    <span key={`mob-ha-${index}`} className='highlight-address-mobile poster-address'>
+                                      <VerifiedAuthor commentCid={thread.cid}>
+                                        {({ shortAuthorAddress, authorAddressChanged }) => (
+                                          <>
+                                            <span className='author-address-hidden'>{thread.author.shortAddress}</span>
+                                            <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                          </>
+                                        )}
+                                      </VerifiedAuthor>
                                     </span>
                                     )&nbsp;
                                   </span>
@@ -3654,21 +3669,26 @@ const Board = () => {
                                         id='reply-button'
                                         style={{ cursor: 'pointer' }}
                                         onClick={() =>
-                                          handleAddressClick(
-                                            <VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                          )
+                                          handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                         }
                                       >
                                         (u/
-                                        {reply.author?.shortAddress ? (
-                                          <span key={`mob-ha-${index}`} className='highlight-address-mobile'>
-                                            {reply.author?.shortAddress}
-                                          </span>
-                                        ) : anonymousMode ? (
-                                          <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
-                                        ) : (
-                                          <span key={`mob-ha-${index}`}>{account?.author?.shortAddress}</span>
-                                        )}
+                                        <span key={`mob-ha-${index}`} className='highlight-address-mobile poster-address'>
+                                          {reply.author?.shortAddress ? (
+                                            <VerifiedAuthor commentCid={reply.cid}>
+                                              {({ shortAuthorAddress, authorAddressChanged }) => (
+                                                <>
+                                                  <span className='author-address-hidden'>{reply.author.shortAddress}</span>
+                                                  <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>
+                                                    {shortAuthorAddress}
+                                                  </span>
+                                                </>
+                                              )}
+                                            </VerifiedAuthor>
+                                          ) : (
+                                            <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
+                                          )}
+                                        </span>
                                         )&nbsp;
                                       </span>
                                       <br key={`mob-br-${index}`} />

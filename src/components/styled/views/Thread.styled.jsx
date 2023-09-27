@@ -2,15 +2,17 @@ import styled from 'styled-components';
 
 export const ReplyFormLink = styled.div`
   @media (min-width: 480px) {
-    display: ${props => (props.showReplyFormLink ? 'block' : 'none')};
+    display: ${(props) => (props.showReplyFormLink ? 'block' : 'none')};
 
-    #post-form-link-mobile, #return-button-mobile, #catalog-button-mobile, #bottom-button-mobile {
+    #post-form-link-mobile,
+    #return-button-mobile,
+    #catalog-button-mobile,
+    #bottom-button-mobile {
       display: none;
     }
   }
 
   @media (max-width: 480px) {
-
     #post-form-link-desktop {
       display: none;
     }
@@ -24,7 +26,10 @@ export const ReplyFormLink = styled.div`
       padding-top: 10px;
     }
 
-    #return-button-mobile, #catalog-button-mobile, #bottom-button-mobile, #bottom-bar-top {
+    #return-button-mobile,
+    #catalog-button-mobile,
+    #bottom-button-mobile,
+    #bottom-bar-top {
       font-size: 10pt;
       display: inline-block;
       margin: 0 2px;
@@ -164,11 +169,11 @@ export const ReplyFormLink = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
-      
+
       default:
         return '';
-      }
-    }}
+    }
+  }}
 `;
 
 export const TopBar = styled.div`
@@ -186,7 +191,7 @@ export const TopBar = styled.div`
       max-width: calc(100vw - 50vw);
       word-wrap: break-word;
       white-space: nowrap;
-      text-overflow: "";
+      text-overflow: '';
       overflow: hidden;
     }
 
@@ -195,10 +200,10 @@ export const TopBar = styled.div`
     }
 
     .ellipsis-all:after {
-      content: "\\2026";
+      content: '\\2026';
       position: absolute;
-      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-      animation: ellipsis steps(4,end) 1500ms infinite;
+      -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+      animation: ellipsis steps(4, end) 1500ms infinite;
       width: 0px;
       overflow: hidden;
     }
@@ -223,7 +228,7 @@ export const TopBar = styled.div`
   }
 
   @media (max-width: 480px) {
-    .stats-all-catalog-container  {
+    .stats-all-catalog-container {
       height: 25px;
       position: absolute;
       text-align: left;
@@ -237,7 +242,7 @@ export const TopBar = styled.div`
       max-width: 90vw;
       word-wrap: break-word;
       white-space: nowrap;
-      text-overflow: "";
+      text-overflow: '';
       overflow: hidden;
     }
 
@@ -246,17 +251,19 @@ export const TopBar = styled.div`
     }
 
     .ellipsis-all:after {
-      content: "\\2026";
+      content: '\\2026';
       position: absolute;
-      -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-      animation: ellipsis steps(4,end) 1500ms infinite;
+      -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+      animation: ellipsis steps(4, end) 1500ms infinite;
       width: 0px;
       overflow: hidden;
     }
-    
+
     line-height: 30px;
-    
-    #return-button-desktop, #catalog-button-desktop, #bottom-button-desktop {
+
+    #return-button-desktop,
+    #catalog-button-desktop,
+    #bottom-button-desktop {
       display: none;
     }
 
@@ -293,10 +300,10 @@ export const TopBar = styled.div`
   }
 
   .ellipsis:after {
-    content: "\\2026";
+    content: '\\2026';
     position: absolute;
-    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-    animation: ellipsis steps(4,end) 1500ms infinite;
+    -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+    animation: ellipsis steps(4, end) 1500ms infinite;
     width: 0px;
     overflow: hidden;
   }
@@ -317,7 +324,7 @@ export const TopBar = styled.div`
     display: inline-block;
   }
 
-  .reply-stat { 
+  .reply-stat {
     position: relative;
     float: right;
     margin-right: 5px;
@@ -696,11 +703,11 @@ export const TopBar = styled.div`
           color: #333 !important;
           white-space: nowrap;
         }`;
-        
-        default:
-          return '';
-      }
-    }}
+
+      default:
+        return '';
+    }
+  }}
 `;
 
 export const BottomBar = styled.div`
@@ -709,10 +716,10 @@ export const BottomBar = styled.div`
   }
 
   .ellipsis:after {
-    content: "\\2026";
+    content: '\\2026';
     position: absolute;
-    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-    animation: ellipsis steps(4,end) 1500ms infinite;
+    -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+    animation: ellipsis steps(4, end) 1500ms infinite;
     width: 0px;
     overflow: hidden;
   }
@@ -729,7 +736,7 @@ export const BottomBar = styled.div`
     }
   }
 
-  .reply-stat { 
+  .reply-stat {
     position: relative;
     float: right;
     margin-right: 5px;
@@ -899,11 +906,15 @@ export const BoardForm = styled.div`
     margin-right: 14px;
   }
 
+  .capcode-admin {
+    color: red !important;
+  }
+
   .ellipsis:after {
-    content: "\\2026";
+    content: '\\2026';
     position: absolute;
-    -webkit-animation: ellipsis steps(4,end) 1200ms infinite;
-    animation: ellipsis steps(4,end) 1500ms infinite;
+    -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+    animation: ellipsis steps(4, end) 1500ms infinite;
     width: 0px;
     overflow: hidden;
   }
@@ -982,9 +993,9 @@ export const BoardForm = styled.div`
     }
 
     ${({ selectedStyle }) => {
-    switch (selectedStyle) {
-      case 'Yotsuba':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+      switch (selectedStyle) {
+        case 'Yotsuba':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
         border: 1px solid #d99f91 !important;
         border-left: none !important;
@@ -1008,8 +1019,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Yotsuba-B':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Yotsuba-B':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
         border: 1px solid #ba9dbf !important;
         border-left: none !important;
@@ -1032,8 +1043,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Futaba':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Futaba':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
       }
       
@@ -1055,8 +1066,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Burichan':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Burichan':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
       }
       
@@ -1078,8 +1089,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Tomorrow':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Tomorrow':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #1d1d21 !important;
         outline: 1px solid #111 !important;
       }
@@ -1100,8 +1111,8 @@ export const BoardForm = styled.div`
         }
       }`;
 
-      case 'Photon':
-        return `.highlighted, .highlighted-click, .highlighted-address {
+        case 'Photon':
+          return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #ccc !important;
         outline: 1px solid #ccc !important;
       }
@@ -1127,19 +1138,19 @@ export const BoardForm = styled.div`
       }
     }}
   }
-  
+
   .file {
     display: block;
-    
+
     .file-text {
       max-width: 600px;
       white-space: nowrap;
     }
-  
+
     .fileText a {
       text-decoration: underline;
     }
-  
+
     .file-thumb {
       float: left;
       margin: 3px 20px 5px 20px;
@@ -1155,7 +1166,7 @@ export const BoardForm = styled.div`
       float: left;
       margin: 3px 20px 5px 20px;
     }
-    
+
     .file-thumb img,
     .file-thumb video,
     .file-thumb audio {
@@ -1170,7 +1181,6 @@ export const BoardForm = styled.div`
       max-width: 125px;
       max-height: 125px;
     }
-
   }
 
   .thread-mobile {
@@ -1194,7 +1204,7 @@ export const BoardForm = styled.div`
         margin: 4px 0;
         overflow: hidden;
       }
-  
+
       .post-info-mobile {
         overflow: hidden;
         padding: 5px;
@@ -1202,7 +1212,7 @@ export const BoardForm = styled.div`
         display: block;
         clear: left;
       }
-  
+
       .post-menu-button-mobile {
         line-height: 1em !important;
         width: 1em !important;
@@ -1213,14 +1223,14 @@ export const BoardForm = styled.div`
         float: left !important;
         font-weight: 700 !important;
         opacity: 1 !important;
-        height: .5em !important;
+        height: 0.5em !important;
         font-size: 16px !important;
       }
-  
+
       .name-block-mobile {
         clear: none;
         float: left;
-  
+
         .subject-mobile {
           display: block;
         }
@@ -1230,10 +1240,10 @@ export const BoardForm = styled.div`
         float: right;
         text-align: right;
       }
-  
+
       .file-mobile {
         display: block;
-  
+
         .file-thumb-mobile {
           margin-left: 10px !important;
           margin-right: 10px !important;
@@ -1242,7 +1252,7 @@ export const BoardForm = styled.div`
           margin-bottom: 5px;
           margin-top: 15px;
         }
-  
+
         .file-info-mobile {
           padding-top: 5px;
           text-align: center;
@@ -1250,7 +1260,6 @@ export const BoardForm = styled.div`
           display: block !important;
           clear: left !important;
         }
-
       }
 
       video {
@@ -1262,7 +1271,7 @@ export const BoardForm = styled.div`
         width: 100%;
         height: auto;
       }
-  
+
       img {
         border: none;
         float: left;
@@ -1270,13 +1279,13 @@ export const BoardForm = styled.div`
         max-height: 100px;
         object-fit: scale-down;
       }
-  
+
       blockquote {
         padding-top: 5px;
         display: block;
         margin: 10px !important;
       }
-  
+
       .post-link-mobile {
         clear: both !important;
         padding: 5px;
@@ -1284,12 +1293,12 @@ export const BoardForm = styled.div`
         margin: -5px;
         display: block !important;
       }
-  
+
       .info-mobile {
         margin-top: 8px;
         float: left;
       }
-  
+
       .button-mobile {
         float: right;
         border-radius: 3px;
@@ -1313,7 +1322,7 @@ export const BoardForm = styled.div`
 
       .file-mobile {
         display: block;
-  
+
         .file-thumb-mobile {
           margin-left: 10px !important;
           margin-right: 10px !important;
@@ -1322,7 +1331,7 @@ export const BoardForm = styled.div`
           margin-bottom: 5px;
           margin-top: 15px;
         }
-  
+
         .file-info-mobile {
           padding-top: 5px;
           text-align: center;
@@ -1335,7 +1344,7 @@ export const BoardForm = styled.div`
       video {
         max-width: 100px;
       }
-  
+
       img {
         border: none;
         float: left;
@@ -1356,12 +1365,12 @@ export const BoardForm = styled.div`
           width: 1em !important;
           text-align: center !important;
           outline: none !important;
-          transform: rotate(90deg)!important;
+          transform: rotate(90deg) !important;
           margin: 4px -5px 0 4px !important;
           float: left !important;
           font-weight: 700 !important;
           opacity: 1 !important;
-          height: .5em !important;
+          height: 0.5em !important;
           font-size: 16px !important;
         }
 
@@ -1385,7 +1394,6 @@ export const BoardForm = styled.div`
         margin: 10px !important;
       }
     }
-
   }
 
   ${({ selectedStyle }) => {
@@ -2421,7 +2429,7 @@ export const BoardForm = styled.div`
       margin-left: calc((100% - 100vw) / 2);
       margin-right: calc((100% - 100vw) / 2);
     }
-    
+
     .name-block {
       display: block;
     }
@@ -2467,10 +2475,10 @@ export const BoardForm = styled.div`
           return `.highlighted, .highlighted-click, .highlighted-address {
           background-color: #ccc !important;
         }`;
-        
-      default:
-        return '';
-    }
+
+        default:
+          return '';
+      }
     }}
 
     ${({ selectedStyle }) => {
@@ -3195,7 +3203,7 @@ export const BoardForm = styled.div`
               }
             }
           }`;
-        
+
         default:
           return '';
       }
@@ -3207,7 +3215,7 @@ export const Footer = styled.div`
   #version {
     text-align: center;
     font-size: 11px;
-    font-family: "arial";
+    font-family: 'arial';
   }
   @media (min-width: 480px) {
     #break {
@@ -3319,9 +3327,9 @@ export const Footer = styled.div`
             color: #f30;
           }
         }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 `;

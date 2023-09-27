@@ -919,19 +919,24 @@ const Subscriptions = () => {
                                     Anonymous
                                   </span>
                                 )}
-                                &nbsp; (u/
+                                &nbsp;(u/
                                 <span
                                   key={`pa-${index}`}
                                   className='poster-address address-desktop'
                                   id='reply-button'
                                   style={{ cursor: 'pointer' }}
                                   onClick={() =>
-                                    handleAddressClick(
-                                      <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                    )
+                                    handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                   }
                                 >
-                                  {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>}
+                                  <VerifiedAuthor commentCid={thread.cid}>
+                                    {({ shortAuthorAddress, authorAddressChanged }) => (
+                                      <>
+                                        <span className='author-address-hidden'>{thread.author.shortAddress}</span>
+                                        <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                      </>
+                                    )}
+                                  </VerifiedAuthor>
                                 </span>
                                 ) &nbsp;
                                 <span
@@ -1261,6 +1266,11 @@ const Subscriptions = () => {
                           const replyMediaInfo = getCommentMediaInfo(reply);
                           const fallbackImgUrl = 'assets/filedeleted-res.gif';
                           const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                          let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                          let signerAddress;
+                          if (storedSigners[reply.parentCid]) {
+                            signerAddress = storedSigners[reply.parentCid].address;
+                          }
                           let replyDisplayWidth, replyDisplayHeight;
                           if (reply.linkWidth && reply.linkHeight) {
                             const scale = Math.min(1, 125 / Math.max(reply.linkWidth, reply.linkHeight));
@@ -1301,28 +1311,30 @@ const Subscriptions = () => {
                                         Anonymous
                                       </span>
                                     )}
-                                    &nbsp;
+                                    &nbsp;(u/
                                     <span
                                       key={`pa-${index}`}
                                       className='poster-address address-desktop'
                                       id='reply-button'
                                       style={{ cursor: 'pointer' }}
                                       onClick={() =>
-                                        handleAddressClick(
-                                          <VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                        )
+                                        handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                       }
                                     >
-                                      (u/
                                       {reply.author?.shortAddress ? (
-                                        <span key={`mob-ha-${index}`}>{reply.author?.shortAddress}</span>
+                                        <VerifiedAuthor commentCid={reply.cid}>
+                                          {({ shortAuthorAddress, authorAddressChanged }) => (
+                                            <>
+                                              <span className='author-address-hidden'>{reply.author.shortAddress}</span>
+                                              <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                            </>
+                                          )}
+                                        </VerifiedAuthor>
                                       ) : (
-                                        <span key={`mob-ha-${index}`} data-tooltip-id='tooltip' data-tooltip-content={account?.author?.address} data-tooltip-place='top'>
-                                          {account?.author?.address.slice(0, 10) + '(...)'}
-                                        </span>
+                                        <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
                                       )}
-                                      )
                                     </span>
+                                    )
                                   </span>
                                   &nbsp;
                                   <span
@@ -1958,6 +1970,7 @@ const Subscriptions = () => {
                                   )
                                 ) : null}
                               </div>
+                              <div key={`spacer-fix-${index}`} style={{ height: '2px' }} />
                             </div>
                           );
                         })}
@@ -2107,14 +2120,19 @@ const Subscriptions = () => {
                                   id='reply-button'
                                   style={{ cursor: 'pointer' }}
                                   onClick={() =>
-                                    handleAddressClick(
-                                      <VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                    )
+                                    handleAddressClick(<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                   }
                                 >
                                   (u/
-                                  <span key={`mob-ha-${index}`} className='highlight-address-mobile'>
-                                    {<VerifiedAuthor commentCid={thread.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>}
+                                  <span key={`mob-ha-${index}`} className='highlight-address-mobile poster-address'>
+                                    <VerifiedAuthor commentCid={thread.cid}>
+                                      {({ shortAuthorAddress, authorAddressChanged }) => (
+                                        <>
+                                          <span className='author-address-hidden'>{thread.author.shortAddress}</span>
+                                          <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>{shortAuthorAddress}</span>
+                                        </>
+                                      )}
+                                    </VerifiedAuthor>
                                   </span>
                                   )&nbsp;
                                 </span>
@@ -2446,6 +2464,11 @@ const Subscriptions = () => {
                           }
                           const replyMediaInfo = getCommentMediaInfo(reply);
                           const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                          let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
+                          let signerAddress;
+                          if (storedSigners[selectedThreadCidRef]) {
+                            signerAddress = storedSigners[selectedThreadCidRef].address;
+                          }
                           return (
                             <div key={`mob-rc-${index}`} className='reply-container'>
                               <div key={`mob-pr-${index}`} className='post-reply post-reply-mobile'>
@@ -2590,21 +2613,26 @@ const Subscriptions = () => {
                                       id='reply-button'
                                       style={{ cursor: 'pointer' }}
                                       onClick={() =>
-                                        handleAddressClick(
-                                          <VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress || 'aPL4c3H0Ld3r'}</VerifiedAuthor>,
-                                        )
+                                        handleAddressClick(<VerifiedAuthor commentCid={reply.cid}>{({ shortAuthorAddress }) => shortAuthorAddress}</VerifiedAuthor>)
                                       }
                                     >
                                       (u/
-                                      {reply.author?.shortAddress ? (
-                                        <span key={`mob-ha-${index}`} className='highlight-address-mobile'>
-                                          {reply.author?.shortAddress}
-                                        </span>
-                                      ) : (
-                                        <span key={`mob-ha-${index}`} data-tooltip-id='tooltip' data-tooltip-content={account?.author?.address} data-tooltip-place='top'>
-                                          {account?.author?.address.slice(0, 8) + '(...)'}
-                                        </span>
-                                      )}
+                                      <span key={`mob-ha-${index}`} className='highlight-address-mobile poster-address'>
+                                        {reply.author?.shortAddress ? (
+                                          <VerifiedAuthor commentCid={reply.cid}>
+                                            {({ shortAuthorAddress, authorAddressChanged }) => (
+                                              <>
+                                                <span className='author-address-hidden'>{reply.author.shortAddress}</span>
+                                                <span className={`author-address-visible ${authorAddressChanged ? 'authorAddressChanged' : ''}`}>
+                                                  {shortAuthorAddress}
+                                                </span>
+                                              </>
+                                            )}
+                                          </VerifiedAuthor>
+                                        ) : (
+                                          <span key={`mob-ha-${index}`}>{signerAddress?.slice(8, 20)}</span>
+                                        )}
+                                      </span>
                                       )&nbsp;
                                     </span>
                                     <br key={`mob-br-${index}`} />

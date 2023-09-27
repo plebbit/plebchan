@@ -9,7 +9,7 @@
     "@capacitor/android": "3.6.0",
     "@capacitor/app": "1.1.1",
     "@capacitor/core": "3.6.0",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#0024401c390929e47b44331a8dadd61ba212b871",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#b6477148191a501aa0b0c11acfc4761aca0dcc1e",
     "@testing-library/dom": "9.0.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "14.0.0",
