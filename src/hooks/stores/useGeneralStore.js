@@ -30,12 +30,13 @@ const useGeneralStore = create((set) => ({
   setEditedComments: (comments) => set({ editedComments: comments }),
 
   feedCacheStates: {},
-  setFeedCacheState: (address, isCached) => set((prev) => ({
-    feedCacheStates: {
-      ...prev.feedCacheStates,
-      [address]: isCached,
-    }
-  })),
+  setFeedCacheState: (address, isCached) =>
+    set((prev) => ({
+      feedCacheStates: {
+        ...prev.feedCacheStates,
+        [address]: isCached,
+      },
+    })),
 
   isAuthorDelete: false,
   setIsAuthorDelete: (isAuthorDelete) => set({ isAuthorDelete }),
@@ -49,8 +50,8 @@ const useGeneralStore = create((set) => ({
   isEditModalOpen: false,
   setIsEditModalOpen: (isOpen) => set({ isEditModalOpen: isOpen }),
 
-  isModerator: false,
-  setIsModerator: (isModerator) => set({ isModerator }),
+  canModerate: false,
+  setCanModerate: (canModerate) => set({ canModerate }),
 
   isModerationOpen: false,
   setIsModerationOpen: (isOpen) => set({ isModerationOpen: isOpen }),
@@ -81,7 +82,7 @@ const useGeneralStore = create((set) => ({
 
   resolveCaptchaPromise: null,
   setResolveCaptchaPromise: (resolve) => set({ resolveCaptchaPromise: resolve }),
-  
+
   selectedAddress: '',
   setSelectedAddress: (address) => set({ selectedAddress: address }),
 
@@ -90,7 +91,7 @@ const useGeneralStore = create((set) => ({
 
   selectedShortCid: '',
   setSelectedShortCid: (shortCid) => set({ selectedShortCid: shortCid }),
-  
+
   selectedStyle: localStorage.getItem('selectedStyle') || 'Yotsuba',
   setSelectedStyle: (style) => {
     localStorage.setItem('selectedStyle', style);
@@ -99,7 +100,7 @@ const useGeneralStore = create((set) => ({
 
   selectedText: '',
   setSelectedText: (text) => set({ selectedText: text }),
-  
+
   selectedThread: '',
   setSelectedThread: (thread) => set({ selectedThread: thread }),
 
@@ -114,7 +115,6 @@ const useGeneralStore = create((set) => ({
 
   triggerInsertion: 0,
   setTriggerInsertion: (trigger) => set({ triggerInsertion: trigger }),
-  
 }));
 
 export default useGeneralStore;

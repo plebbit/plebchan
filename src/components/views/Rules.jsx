@@ -412,7 +412,7 @@ const Rules = () => {
                         >
                           <div className={`post-menu-thread post-menu-thread-${'rules'}`} style={{ display: openMenuCid === 'rules' ? 'block' : 'none' }}>
                             <ul className='post-menu-catalog'>
-                              {/* {isModerator ? (
+                              {/* {canModerate ? (
                               <>
                                 change rules
                               </>

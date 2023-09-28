@@ -717,7 +717,7 @@ const All = () => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = 'assets/filedeleted-res.gif';
-                  const isModerator = moderatorPermissions[thread.subplebbitAddress];
+                  const canModerate = moderatorPermissions[thread.subplebbitAddress];
                   let displayWidth, displayHeight, displayWidthMobile, displayHeightMobile;
                   if (thread.linkWidth && thread.linkHeight) {
                     let scale = Math.min(1, 250 / Math.max(thread.linkWidth, thread.linkHeight));
@@ -1037,7 +1037,7 @@ const All = () => {
                                                   <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                                 </>
                                               ) : null}
-                                              {isModerator ? (
+                                              {canModerate ? (
                                                 <>
                                                   {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                     <li
@@ -1434,7 +1434,7 @@ const All = () => {
                                                     <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                                   </>
                                                 ) : null}
-                                                {isModerator ? (
+                                                {canModerate ? (
                                                   <>
                                                     {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                       <li
@@ -2019,7 +2019,7 @@ const All = () => {
                                               <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                             </>
                                           ) : null}
-                                          {isModerator ? (
+                                          {canModerate ? (
                                             <>
                                               {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                 <li
@@ -2512,7 +2512,7 @@ const All = () => {
                                                   <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                                 </>
                                               ) : null}
-                                              {isModerator ? (
+                                              {canModerate ? (
                                                 <>
                                                   {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                     <li

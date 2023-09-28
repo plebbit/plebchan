@@ -145,7 +145,7 @@ const Board = () => {
   const [deletePost, setDeletePost] = useState(false);
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
-  const [isModerator, setIsModerator] = useState(false);
+  const [canModerate, setCanModerate] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [mobileMenuPosition, setMobileMenuPosition] = useState({ top: 0, left: 0 });
@@ -180,9 +180,9 @@ const Board = () => {
       const role = subplebbit?.roles[account?.author.address]?.role;
 
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
-        setIsModerator(true);
+        setCanModerate(true);
       } else {
-        setIsModerator(false);
+        setCanModerate(false);
       }
     }
   }, [account?.author.address, subplebbit?.roles]);
@@ -1039,7 +1039,7 @@ const Board = () => {
                                 >
                                   <div className={`post-menu-thread post-menu-thread-${'rules'}`} style={{ display: openMenuCid === 'rules' ? 'block' : 'none' }}>
                                     <ul className='post-menu-catalog'>
-                                      {/* {isModerator ? (
+                                      {/* {canModerate ? (
                                         <>
                                           change rules
                                         </>
@@ -1264,7 +1264,7 @@ const Board = () => {
                                 >
                                   <div className={`post-menu-thread post-menu-thread-${'rules'}`} style={{ display: openMenuCid === 'rules' ? 'block' : 'none' }}>
                                     <ul className='post-menu-catalog'>
-                                      {/* {isModerator ? (
+                                      {/* {canModerate ? (
                                         <>
                                           change rules
                                         </>
@@ -1509,7 +1509,7 @@ const Board = () => {
                                     style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
                                   >
                                     <ul className='post-menu-catalog'>
-                                      {/* {isModerator ? (
+                                      {/* {canModerate ? (
                                         <>
                                           change description
                                         </>
@@ -2080,7 +2080,7 @@ const Board = () => {
                                                     <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                                   </>
                                                 ) : null}
-                                                {isModerator ? (
+                                                {canModerate ? (
                                                   <>
                                                     {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                       <li
@@ -2465,7 +2465,7 @@ const Board = () => {
                                                         <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                                       </>
                                                     ) : null}
-                                                    {isModerator ? (
+                                                    {canModerate ? (
                                                       <>
                                                         {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                           <li
@@ -3057,7 +3057,7 @@ const Board = () => {
                                                 <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                               </>
                                             ) : null}
-                                            {isModerator ? (
+                                            {canModerate ? (
                                               <>
                                                 {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                   <li
@@ -3562,7 +3562,7 @@ const Board = () => {
                                                     <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                                   </>
                                                 ) : null}
-                                                {isModerator ? (
+                                                {canModerate ? (
                                                   <>
                                                     {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                       <li

@@ -119,7 +119,7 @@ const Thread = () => {
   const [visible, setVisible] = useState(true);
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
-  const [isModerator, setIsModerator] = useState(false);
+  const [canModerate, setCanModerate] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [mobileMenuPosition, setMobileMenuPosition] = useState({ top: 0, left: 0 });
@@ -200,9 +200,9 @@ const Thread = () => {
       const role = subplebbit.roles[account?.author?.address]?.role;
 
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
-        setIsModerator(true);
+        setCanModerate(true);
       } else {
-        setIsModerator(false);
+        setCanModerate(false);
       }
     }
   }, [account?.author.address, subplebbit.roles]);
@@ -1205,7 +1205,7 @@ const Thread = () => {
                                             <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
                                           </>
                                         ) : null}
-                                        {isModerator ? (
+                                        {canModerate ? (
                                           <>
                                             {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                               <li
@@ -1531,7 +1531,7 @@ const Thread = () => {
                                               <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                             </>
                                           ) : null}
-                                          {isModerator ? (
+                                          {canModerate ? (
                                             <>
                                               {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                 <li
@@ -1986,7 +1986,7 @@ const Thread = () => {
                                         <li onClick={() => handleAuthorDeleteClick(comment)}>Delete post</li>
                                       </>
                                     ) : null}
-                                    {isModerator ? (
+                                    {canModerate ? (
                                       <>
                                         {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                           <li
@@ -2398,7 +2398,7 @@ const Thread = () => {
                                             <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                           </>
                                         ) : null}
-                                        {isModerator ? (
+                                        {canModerate ? (
                                           <>
                                             {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                               <li
