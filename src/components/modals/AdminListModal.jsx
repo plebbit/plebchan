@@ -43,7 +43,7 @@ const AdminListModal = ({ isOpen, closeModal, roles }) => {
             maxHeight: '250px',
           }}
         >
-          <button className='icon' onClick={() => closeModal()} title='close' />
+          <button className='icon' style={{ imageRendering: 'pixelated', margin: '1px 1px 0 0' }} onClick={() => closeModal()} title='close' />
           <div className='modal-header'>   Moderators</div>
           <div
             className='list'

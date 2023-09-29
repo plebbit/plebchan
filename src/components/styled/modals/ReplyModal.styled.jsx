@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Modal from "react-modal";
+import styled from 'styled-components';
+import Modal from 'react-modal';
 
 export const StyledModal = styled(Modal)`
   .modal-content {
@@ -32,6 +32,7 @@ export const StyledModal = styled(Modal)`
     width: 18px;
     height: 18px;
     border: none;
+    image-rendering: pixelated;
   }
 
   #name {
@@ -249,10 +250,10 @@ export const StyledModal = styled(Modal)`
 
         span {
           color: #000;
-        }`; 
-        
-        default:
-          return '';
-      }
+        }`;
+
+      default:
+        return '';
+    }
   }}
 `;

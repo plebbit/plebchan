@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import Modal from 'react-modal';
 
 export const StyledModal = styled(Modal)`
@@ -13,7 +13,7 @@ export const StyledModal = styled(Modal)`
     position: absolute;
     padding: 2px 5px 5px;
     font-size: 14px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 
     @media (max-width: 480px) {
       width: 320px !important;
@@ -27,12 +27,12 @@ export const StyledModal = styled(Modal)`
     width: 700px;
     height: auto;
     max-height: 80%;
-    left: calc(50% - 350px); 
+    left: calc(50% - 350px);
     overflow-y: auto;
     position: absolute;
     padding: 2px 5px 5px;
     font-size: 14px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 
     @media (max-width: 800px) {
       width: 80%;
@@ -66,6 +66,7 @@ export const StyledModal = styled(Modal)`
     cursor: pointer;
     position: absolute;
     top: 5px;
+    image-rendering: pixelated;
   }
 
   h4 {
@@ -171,7 +172,8 @@ export const StyledModal = styled(Modal)`
     margin-bottom: 10px;
   }
 
-  #save-board-settings, #reset-board-settings {
+  #save-board-settings,
+  #reset-board-settings {
     text-align: center;
   }
 
@@ -184,7 +186,7 @@ export const StyledModal = styled(Modal)`
   }
 
   .settings-info strong {
-      margin-bottom: 10px;
+    margin-bottom: 10px;
   }
 
   ${({ selectedStyle }) => {
@@ -378,9 +380,9 @@ export const StyledModal = styled(Modal)`
             color: #f30 !important;
           }
         }`;
-        
-        default:
-          return '';
-      }
+
+      default:
+        return '';
+    }
   }}
 `;

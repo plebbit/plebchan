@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Modal from "react-modal";
+import styled from 'styled-components';
+import Modal from 'react-modal';
 
 export const StyledModal = styled(Modal)`
   .modal-content {
@@ -9,10 +9,10 @@ export const StyledModal = styled(Modal)`
     transform: translate(-50%, -50%);
     width: 450px;
     height: auto;
-    max-height: calc(100vh - 2*50px);
+    max-height: calc(100vh - 2 * 50px);
     overflow-y: auto;
     padding: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   }
 
   .modal-header {
@@ -33,9 +33,12 @@ export const StyledModal = styled(Modal)`
     width: 18px;
     height: 18px;
     border: none;
+    image-rendering: pixelated;
   }
 
-  #name, #description, #rule {
+  #name,
+  #description,
+  #rule {
     border: 1px solid #aaa;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
@@ -73,7 +76,6 @@ export const StyledModal = styled(Modal)`
   }
 
   #rule {
-    
   }
 
   #rule-btn {
@@ -324,10 +326,10 @@ export const StyledModal = styled(Modal)`
 
         span {
           color: #000;
-        }`; 
-        
-        default:
-          return '';
-      }
+        }`;
+
+      default:
+        return '';
+    }
   }}
 `;
