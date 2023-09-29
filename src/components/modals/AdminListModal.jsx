@@ -44,9 +44,7 @@ const AdminListModal = ({ isOpen, closeModal, roles }) => {
           }}
         >
           <button className='icon' onClick={() => closeModal()} title='close' />
-          <div className='modal-header' style={{ margin: '10px 10px 0px 10px' }}>
-            Moderators
-          </div>
+          <div className='modal-header'>   Moderators</div>
           <div
             className='list'
             style={{
