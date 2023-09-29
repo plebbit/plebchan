@@ -906,10 +906,6 @@ export const BoardForm = styled.div`
     margin-right: 14px;
   }
 
-  .capcode-admin {
-    color: red !important;
-  }
-
   .ellipsis:after {
     content: '\\2026';
     position: absolute;
@@ -1001,6 +997,16 @@ export const BoardForm = styled.div`
         border-left: none !important;
         border-top: none !important;
       }
+
+      .capcode {
+        color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
+      }
       
       #post-menu {
         ul {
@@ -1026,6 +1032,16 @@ export const BoardForm = styled.div`
         border-left: none !important;
         border-top: none !important;
       }
+
+      .capcode {
+        color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
+      }
       
       #post-menu {
         ul {
@@ -1046,6 +1062,16 @@ export const BoardForm = styled.div`
         case 'Futaba':
           return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #f0c0b0 !important;
+      }
+
+      .capcode {
+        color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -1069,6 +1095,16 @@ export const BoardForm = styled.div`
         case 'Burichan':
           return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #d6bad0 !important;
+      }
+
+      .capcode {
+        color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -1094,6 +1130,16 @@ export const BoardForm = styled.div`
         background-color: #1d1d21 !important;
         outline: 1px solid #111 !important;
       }
+
+      .capcode {
+        color: #81a2be !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: #81a2be !important;
+        cursor: pointer;
+      }
       
       #post-menu {
         ul {
@@ -1115,6 +1161,16 @@ export const BoardForm = styled.div`
           return `.highlighted, .highlighted-click, .highlighted-address {
         background-color: #ccc !important;
         outline: 1px solid #ccc !important;
+      }
+
+      .capcode {
+        color: #f60 !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: #f60 !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -2506,6 +2562,12 @@ export const BoardForm = styled.div`
 
               .capcode {
                 color: purple !important;
+                cursor: pointer;
+              }
+
+              .capcode-admin {
+                color: red !important;
+                cursor: pointer;
               }
     
               .subject-mobile {
@@ -2627,6 +2689,12 @@ export const BoardForm = styled.div`
 
               .capcode {
                 color: purple !important;
+                cursor: pointer;
+              }
+
+              .capcode-admin {
+                color: red !important;
+                cursor: pointer;
               }
     
               .subject-mobile {
@@ -2744,11 +2812,12 @@ export const BoardForm = styled.div`
 
               .capcode {
                 color: purple !important;
+                cursor: pointer;
               }
-    
-              .subject-mobile {
-                color: #cc1105;
-                font-weight: 700;
+
+              .capcode-admin {
+                color: red !important;
+                cursor: pointer;
               }
     
               .date-time-mobile {
@@ -2864,6 +2933,12 @@ export const BoardForm = styled.div`
 
               .capcode {
                 color: purple !important;
+                cursor: pointer;
+              }
+
+              .capcode-admin {
+                color: red !important;
+                cursor: pointer;
               }
     
               .subject-mobile {
@@ -2980,6 +3055,12 @@ export const BoardForm = styled.div`
 
               .capcode {
                 color: #81a2be !important;
+                cursor: pointer;
+              }
+
+              .capcode-admin {
+                color: #81a2be !important;
+                cursor: pointer;
               }
 
               .poster-address-mobile {
@@ -3106,7 +3187,13 @@ export const BoardForm = styled.div`
 
             .capcode {
               color: #f60 !important;
-            }
+                cursor: pointer;
+              }
+
+              .capcode-admin {
+                color: #f60 !important;
+                cursor: pointer;
+              }
   
             .subject-mobile {
               color: #111;

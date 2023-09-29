@@ -177,7 +177,7 @@ const Board = () => {
 
   useEffect(() => {
     if (subplebbit?.roles !== undefined) {
-      const role = subplebbit?.roles[account?.author.address]?.role;
+      const role = subplebbit?.roles?.[account?.author.address]?.role;
 
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
         setCanModerate(true);
@@ -933,7 +933,7 @@ const Board = () => {
             >
               Catalog
             </Link>
-            ]{subplebbit.roles && subplebbit?.roles[account?.author?.address]?.role === 'admin' ? <BoardSettings subplebbit={subplebbit} /> : null}
+            ]{subplebbit.roles && subplebbit?.roles?.[account?.author?.address]?.role === 'admin' ? <BoardSettings subplebbit={subplebbit} /> : null}
           </div>
           {subplebbit?.state === 'succeeded' ? (
             <>
@@ -1744,6 +1744,9 @@ const Board = () => {
                     const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                     const commentMediaInfo = getCommentMediaInfo(thread);
                     const fallbackImgUrl = 'assets/filedeleted-res.gif';
+                    const isOwner = subplebbit?.roles?.[thread.author.address]?.role === 'owner';
+                    const isAdmin = subplebbit?.roles?.[thread.author.address]?.role === 'admin';
+                    const isModerator = subplebbit?.roles?.[thread.author.address]?.role === 'moderator';
                     let displayWidth, displayHeight, displayWidthMobile, displayHeightMobile;
                     if (thread.linkWidth && thread.linkHeight) {
                       let scale = Math.min(1, 250 / Math.max(thread.linkWidth, thread.linkHeight));
@@ -1923,7 +1926,7 @@ const Board = () => {
                                       <Fragment key={`fragment3-${index}`}>
                                         <span
                                           key={`n-${index}`}
-                                          className='name'
+                                          className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                           data-tooltip-id='tooltip'
                                           data-tooltip-content={thread.author.displayName}
                                           data-tooltip-place='top'
@@ -1932,15 +1935,28 @@ const Board = () => {
                                         </span>
                                       </Fragment>
                                     ) : (
-                                      <span key={`n-${index}`} className='name'>
+                                      <span key={`n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                         {thread.author.displayName}
                                       </span>
                                     )
                                   ) : (
-                                    <span key={`n-${index}`} className='name'>
+                                    <span key={`n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                       Anonymous
                                     </span>
                                   )}
+                                  {isOwner ? (
+                                    <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                      &nbsp;## Board Owner
+                                    </span>
+                                  ) : isAdmin ? (
+                                    <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                      &nbsp;## Board Admin
+                                    </span>
+                                  ) : isModerator ? (
+                                    <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                                      &nbsp;## Board Mod
+                                    </span>
+                                  ) : null}
                                   &nbsp;(u/
                                   <span
                                     key={`pa-${index}`}
@@ -2299,6 +2315,9 @@ const Board = () => {
                             }
                             const replyMediaInfo = getCommentMediaInfo(reply);
                             const fallbackImgUrl = 'assets/filedeleted-res.gif';
+                            const isOwner = subplebbit?.roles?.[reply.author.address]?.role === 'owner';
+                            const isAdmin = subplebbit?.roles?.[reply.author.address]?.role === 'admin';
+                            const isModerator = subplebbit?.roles?.[reply.author.address]?.role === 'moderator';
                             const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                             let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
                             let signerAddress;
@@ -2328,7 +2347,7 @@ const Board = () => {
                                             <Fragment key={`fragment6-${index}`}>
                                               <span
                                                 key={`mob-n-${index}`}
-                                                className='name'
+                                                className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                                 data-tooltip-id='tooltip'
                                                 data-tooltip-content={reply.author.displayName}
                                                 data-tooltip-place='top'
@@ -2337,15 +2356,28 @@ const Board = () => {
                                               </span>
                                             </Fragment>
                                           ) : (
-                                            <span key={`mob-n-${index}`} className='name'>
+                                            <span key={`mob-n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                               {reply.author.displayName}
                                             </span>
                                           )
                                         ) : (
-                                          <span key={`mob-n-${index}`} className='name'>
+                                          <span key={`mob-n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                             Anonymous
                                           </span>
                                         )}
+                                        {isOwner ? (
+                                          <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                            &nbsp;## Board Owner
+                                          </span>
+                                        ) : isAdmin ? (
+                                          <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                            &nbsp;## Board Admin
+                                          </span>
+                                        ) : isModerator ? (
+                                          <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                                            &nbsp;## Board Mod
+                                          </span>
+                                        ) : null}
                                         &nbsp;(u/
                                         <span
                                           key={`pa-${index}`}
@@ -3139,7 +3171,7 @@ const Board = () => {
                                       <Fragment key={`fragment9-${index}`}>
                                         <span
                                           key={`mob-n-${index}`}
-                                          className='name-mobile'
+                                          className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                           data-tooltip-id='tooltip'
                                           data-tooltip-content={thread.author.displayName}
                                           data-tooltip-place='top'
@@ -3148,15 +3180,28 @@ const Board = () => {
                                         </span>
                                       </Fragment>
                                     ) : (
-                                      <span key={`mob-n-${index}`} className='name-mobile'>
+                                      <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                         {thread.author.displayName}
                                       </span>
                                     )
                                   ) : (
-                                    <span key={`mob-n-${index}`} className='name-mobile'>
+                                    <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                       Anonymous
                                     </span>
                                   )}
+                                  {isOwner ? (
+                                    <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                      &nbsp;## Board Owner
+                                    </span>
+                                  ) : isAdmin ? (
+                                    <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                      &nbsp;## Board Admin
+                                    </span>
+                                  ) : isModerator ? (
+                                    <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                                      &nbsp;## Board Mod
+                                    </span>
+                                  ) : null}
                                   &nbsp;
                                   <span
                                     key={`mob-pa-${index}`}
@@ -3504,6 +3549,9 @@ const Board = () => {
                           {displayedReplies?.map((reply, index) => {
                             const replyMediaInfo = getCommentMediaInfo(reply);
                             const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                            const isOwner = subplebbit?.roles?.[reply.author.address]?.role === 'owner';
+                            const isAdmin = subplebbit?.roles?.[reply.author.address]?.role === 'admin';
+                            const isModerator = subplebbit?.roles?.[reply.author.address]?.role === 'moderator';
                             let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
                             let signerAddress;
                             if (storedSigners[selectedThreadCidRef]) {
@@ -3644,7 +3692,7 @@ const Board = () => {
                                           <Fragment key={`fragment13-${index}`}>
                                             <span
                                               key={`mob-n-${index}`}
-                                              className='name-mobile'
+                                              className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                               data-tooltip-id='tooltip'
                                               data-tooltip-content={reply.author.displayName}
                                               data-tooltip-place='top'
@@ -3653,15 +3701,28 @@ const Board = () => {
                                             </span>
                                           </Fragment>
                                         ) : (
-                                          <span key={`mob-n-${index}`} className='name-mobile'>
+                                          <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                             {reply.author.displayName}
                                           </span>
                                         )
                                       ) : (
-                                        <span key={`mob-n-${index}`} className='name-mobile'>
+                                        <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                           Anonymous
                                         </span>
                                       )}
+                                      {isOwner ? (
+                                        <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                          &nbsp;## Board Owner
+                                        </span>
+                                      ) : isAdmin ? (
+                                        <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                          &nbsp;## Board Admin
+                                        </span>
+                                      ) : isModerator ? (
+                                        <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                                          &nbsp;## Board Mod
+                                        </span>
+                                      ) : null}
                                       &nbsp;
                                       <span
                                         key={`mob-pa-${index}`}

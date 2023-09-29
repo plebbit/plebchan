@@ -23,6 +23,7 @@ import PostOnHover from '../PostOnHover';
 import StateLabel from '../StateLabel';
 import VerifiedAuthor from '../VerifiedAuthor';
 import CreateBoardModal from '../modals/CreateBoardModal';
+import AdminListModal from '../modals/AdminListModal';
 import EditModal from '../modals/EditModal';
 import ModerationModal from '../modals/ModerationModal';
 import ReplyModal from '../modals/ReplyModal';
@@ -138,11 +139,15 @@ const Thread = () => {
 
   useAnonMode(selectedThread, anonymousMode && executeAnonMode);
 
+  const [isAdminListOpen, setIsAdminListOpen] = useState(false);
   const originalComment = useComment({ commentCid: selectedThread });
   const [comment, setComment] = useState(originalComment);
   const { subplebbitAddress, threadCid } = useParams();
   const subplebbit = useSubplebbit({ subplebbitAddress: originalComment.subplebbitAddress });
   const selectedAddress = subplebbit.address;
+  const isOwner = subplebbit?.roles?.[comment.author?.address]?.role === 'owner';
+  const isAdmin = subplebbit?.roles?.[comment.author?.address]?.role === 'admin';
+  const isModerator = subplebbit?.roles?.[comment.author?.address]?.role === 'moderator';
 
   const stateString = useStateString(comment);
 
@@ -642,6 +647,7 @@ const Thread = () => {
         </title>
       </Helmet>
       <Container>
+        <AdminListModal selectedStyle={selectedStyle} isOpen={isAdminListOpen} closeModal={() => setIsAdminListOpen(false)} roles={subplebbit?.roles} />
         <CreateBoardModal selectedStyle={selectedStyle} isOpen={isCreateBoardOpen} closeModal={() => setIsCreateBoardOpen(false)} />
         <ReplyModal selectedStyle={selectedStyle} isOpen={isReplyOpen} closeModal={() => setIsReplyOpen(false)} />
         <SettingsModal selectedStyle={selectedStyle} isOpen={isSettingsOpen} closeModal={() => setIsSettingsOpen(false)} />
@@ -1078,7 +1084,7 @@ const Thread = () => {
                               <>
                                 <span
                                   key={`n-${comment.cid}`}
-                                  className='name'
+                                  className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                   data-tooltip-id='tooltip'
                                   data-tooltip-content={comment?.author?.displayName}
                                   data-tooltip-place='top'
@@ -1087,15 +1093,28 @@ const Thread = () => {
                                 </span>
                               </>
                             ) : (
-                              <span key={`n-${comment.cid}`} className='name'>
+                              <span key={`n-${comment.cid}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                 {comment?.author?.displayName}
                               </span>
                             )
                           ) : (
-                            <span key={`n-${comment.cid}`} className='name'>
+                            <span key={`n-${comment.cid}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                               Anonymous
                             </span>
                           )}
+                          {isOwner ? (
+                            <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                              &nbsp;## Board Owner
+                            </span>
+                          ) : isAdmin ? (
+                            <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                              &nbsp;## Board Admin
+                            </span>
+                          ) : isModerator ? (
+                            <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                              &nbsp;## Board Mod
+                            </span>
+                          ) : null}
                           &nbsp;
                           <span
                             className='poster-address address-desktop'
@@ -1375,6 +1394,9 @@ const Thread = () => {
                     }
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const fallbackImgUrl = 'assets/filedeleted-res.gif';
+                    const isReplyOwner = subplebbit?.roles?.[reply.author.address]?.role === 'owner';
+                    const isReplyAdmin = subplebbit?.roles?.[reply.author.address]?.role === 'admin';
+                    const isReplyModerator = subplebbit?.roles?.[reply.author.address]?.role === 'moderator';
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
                     let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
                     let signerAddress;
@@ -1404,7 +1426,7 @@ const Thread = () => {
                                   <>
                                     <span
                                       key={`mob-n-${index}`}
-                                      className='name'
+                                      className={`name ${isReplyAdmin || isReplyOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                       data-tooltip-id='tooltip'
                                       data-tooltip-content={reply.author?.displayName}
                                       data-tooltip-place='top'
@@ -1413,15 +1435,28 @@ const Thread = () => {
                                     </span>
                                   </>
                                 ) : (
-                                  <span key={`mob-n-${index}`} className='name'>
+                                  <span key={`mob-n-${index}`} className={`name ${isReplyAdmin || isReplyOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                     {reply.author?.displayName ?? reply.displayName}
                                   </span>
                                 )
                               ) : (
-                                <span key={`mob-n-${index}`} className='name'>
+                                <span key={`mob-n-${index}`} className={`name ${isReplyAdmin || isReplyOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                   Anonymous
                                 </span>
                               )}
+                              {isReplyOwner ? (
+                                <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                  &nbsp;## Board Owner
+                                </span>
+                              ) : isReplyAdmin ? (
+                                <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                  &nbsp;## Board Admin
+                                </span>
+                              ) : isReplyModerator ? (
+                                <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                                  &nbsp;## Board Mod
+                                </span>
+                              ) : null}
                               &nbsp;(u/
                               <span
                                 key={`pa-${index}`}
@@ -2086,6 +2121,19 @@ const Thread = () => {
                               Anonymous
                             </span>
                           )}
+                          {isOwner ? (
+                            <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                              &nbsp;## Board Owner
+                            </span>
+                          ) : isAdmin ? (
+                            <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                              &nbsp;## Board Admin
+                            </span>
+                          ) : isModerator ? (
+                            <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                              &nbsp;## Board Mod
+                            </span>
+                          ) : null}
                           &nbsp;
                           <span
                             key={`mob-pa-${comment.cid}`}
@@ -2340,6 +2388,9 @@ const Thread = () => {
                   {sortedReplies.map((reply, index) => {
                     const replyMediaInfo = getCommentMediaInfo(reply);
                     const shortParentCid = findShortParentCid(reply.parentCid, comment);
+                    const isReplyOwner = subplebbit?.roles?.[reply.author.address]?.role === 'owner';
+                    const isReplyAdmin = subplebbit?.roles?.[reply.author.address]?.role === 'admin';
+                    const isReplyModerator = subplebbit?.roles?.[reply.author.address]?.role === 'moderator';
                     let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
                     let signerAddress;
                     if (storedSigners[selectedThread]) {
@@ -2498,6 +2549,19 @@ const Thread = () => {
                                   Anonymous
                                 </span>
                               )}
+                              {isReplyOwner ? (
+                                <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                  &nbsp;## Board Owner
+                                </span>
+                              ) : isReplyAdmin ? (
+                                <span onClick={() => setIsAdminListOpen(true)} className='name capcode-admin'>
+                                  &nbsp;## Board Admin
+                                </span>
+                              ) : isReplyModerator ? (
+                                <span onClick={() => setIsAdminListOpen(true)} className='name capcode'>
+                                  &nbsp;## Board Mod
+                                </span>
+                              ) : null}
                               <span key={`fix1-ha-${index}`} className='poster-address-mobile'>
                                 &nbsp;(u/
                               </span>
