@@ -58,15 +58,19 @@ const AdminListModal = ({ isOpen, closeModal, roles }) => {
             }}
           >
             <BoardForm selectedStyle={selectedStyle} style={{ all: 'unset' }}>
-              {rolesList.map(({ address, role }, index) => (
-                <p key={index}>
-                  •{' '}
-                  <Link to={() => {}} className='quote-link'>
-                    u/{address}
-                  </Link>
-                  : {role}
-                </p>
-              ))}
+              {roles ? (
+                rolesList.map(({ address, role }, index) => (
+                  <p key={index}>
+                    •{' '}
+                    <Link to={() => {}} className='quote-link'>
+                      u/{address}
+                    </Link>
+                    : {role}
+                  </p>
+                ))
+              ) : (
+                <p>This board doesn't have moderators yet.</p>
+              )}
             </BoardForm>
           </div>
         </div>
