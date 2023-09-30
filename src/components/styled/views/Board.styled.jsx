@@ -1698,10 +1698,6 @@ export const BoardForm = styled.div`
     margin-right: 14px;
   }
 
-  .capcode-admin {
-    color: red !important;
-  }
-
   .ellipsis:after {
     content: '\\2026';
     position: absolute;
@@ -1811,6 +1807,12 @@ export const BoardForm = styled.div`
 
       .capcode {
         color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -1838,6 +1840,12 @@ export const BoardForm = styled.div`
 
       .capcode {
         color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -1862,6 +1870,12 @@ export const BoardForm = styled.div`
 
       .capcode {
         color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -1886,6 +1900,12 @@ export const BoardForm = styled.div`
 
       .capcode {
         color: purple !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: red !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -1911,6 +1931,12 @@ export const BoardForm = styled.div`
 
       .capcode {
         color: #81a2be !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: #81a2be !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -1935,6 +1961,12 @@ export const BoardForm = styled.div`
 
       .capcode {
         color: #f60 !important;
+        cursor: pointer;
+      }
+
+      .capcode-admin {
+        color: #f60 !important;
+        cursor: pointer;
       }
       
       #post-menu {
@@ -3367,6 +3399,12 @@ export const BoardForm = styled.div`
           return `
             .capcode {
               color: purple !important;
+              cursor: pointer;
+            }
+
+            .capcode-admin {
+              color: red !important;
+              cursor: pointer;
             }
             .op-container {
               background-color: #f5e9e1;
@@ -3487,6 +3525,12 @@ export const BoardForm = styled.div`
           return `
           .capcode {
             color: purple !important;
+            cursor: pointer;
+          }
+
+          .capcode-admin {
+            color: red !important;
+            cursor: pointer;
           }
             .op-container {
               background-color: #d6daf0;
@@ -3603,6 +3647,12 @@ export const BoardForm = styled.div`
           return `
           .capcode {
             color: purple !important;
+            cursor: pointer;
+          }
+
+          .capcode-admin {
+            color: red !important;
+            cursor: pointer;
           }
             .op-container {
               background-color: #f5e9e1;
@@ -3722,6 +3772,12 @@ export const BoardForm = styled.div`
           return `
           .capcode {
             color: purple !important;
+            cursor: pointer;
+          }
+
+          .capcode-admin {
+            color: red !important;
+            cursor: pointer;
           }
             .op-container {
               background-color: #d6daf0;
@@ -3837,6 +3893,12 @@ export const BoardForm = styled.div`
           return `
           .capcode {
             color: #81a2be !important;
+            cursor: pointer;
+          }
+
+          .capcode-admin {
+            color: #81a2be !important;
+            cursor: pointer;
           }
 
             .op-container {
@@ -3963,6 +4025,12 @@ export const BoardForm = styled.div`
           return `
           .capcode {
             color: #f60 !important;
+            cursor: pointer;
+          }
+
+          .capcode-admin {
+            color: #f60 !important;
+            cursor: pointer;
           }
             .op-container {
               background-color: #eee;

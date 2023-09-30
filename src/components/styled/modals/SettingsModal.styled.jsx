@@ -50,6 +50,7 @@ export const StyledModal = styled(Modal)`
     cursor: pointer;
     position: absolute;
     top: 5px;
+    image-rendering: pixelated;
   }
 
   h4 {
@@ -80,6 +81,7 @@ export const StyledModal = styled(Modal)`
     background-repeat: no-repeat;
     background-position: center;
     display: inline-block;
+    image-rendering: pixelated;
   }
 
   .settings-cat {

@@ -17,12 +17,14 @@ export const Threads = styled.div`
     padding: 5px 0 3px;
   }
 
-  video, audio, img {
+  video,
+  audio,
+  img {
     max-width: 150px;
     max-height: 150px;
-}
+  }
 
-.file-thumb {
+  .file-thumb {
     background-color: rgba(0, 0, 0, 0.05);
     display: inline-flex;
     justify-content: center;
@@ -31,8 +33,8 @@ export const Threads = styled.div`
   }
 
   .card {
-      box-shadow: 0 0 5px rgba(0, 0, 0, .25);
-      border: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    border: 0;
   }
 
   .thread-icons {
@@ -64,7 +66,7 @@ export const Threads = styled.div`
   }
 
   .offline-icon-no-link-hovered {
-    transform: translate(16px,0);
+    transform: translate(16px, 0);
   }
   .sticky-icon {
     background-image: url(assets/sticky.gif);
@@ -93,7 +95,6 @@ export const Threads = styled.div`
     overflow: hidden;
     word-wrap: break-word;
   }
-
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
@@ -154,7 +155,6 @@ export const PostPreview = styled.div`
     color: purple;
     font-weight: 700;
   }
-
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
@@ -284,9 +284,27 @@ export const PostMenuCatalog = styled.div`
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
       case 'Yotsuba':
-        return `.post-subject{
-          color:red;
-        }`;
+        return `.highlighted, .highlighted-click, .highlighted-address {
+        background-color: #f0c0b0 !important;
+        border: 1px solid #d9bfb7 !important;
+        border-left: none !important;
+        border-top: none !important;
+      }
+      
+      .post-menu-catalog {
+        border-right: 1px solid #d9bfb7;
+        border-bottom: 2px solid #d9bfb7;
+        
+        li {
+          border: 1px solid #d9bfb7;
+          background-color: #f0e0d6;
+          border-bottom: none;
+
+          :hover {
+            background-color: #ffe;
+          }
+        }
+      }`;
 
       case 'Yotsuba-B':
         return `.highlighted, .highlighted-click, .highlighted-address {
@@ -395,9 +413,8 @@ export const PostMenuCatalog = styled.div`
         }
       }`;
 
-        
-        default:
-          return '';
-      }
-    }}
+      default:
+        return '';
+    }
+  }}
 `;

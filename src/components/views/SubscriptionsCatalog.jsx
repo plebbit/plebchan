@@ -69,7 +69,7 @@ const CatalogPost = ({ post }) => {
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
   const [commentCid, setCommentCid] = useState(null);
-  const [isModerator, setIsModerator] = useState(false);
+  const [canModerate, setCanModerate] = useState(false);
 
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
@@ -161,9 +161,9 @@ const CatalogPost = ({ post }) => {
       const role = subplebbit.roles[account?.author.address]?.role;
 
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
-        setIsModerator(true);
+        setCanModerate(true);
       } else {
-        setIsModerator(false);
+        setCanModerate(false);
       }
     }
   }, [account?.author.address, subplebbit.roles]);
@@ -573,7 +573,7 @@ const CatalogPost = ({ post }) => {
                             <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                           </>
                         ) : null}
-                        {isModerator ? (
+                        {canModerate ? (
                           <>
                             {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                               <li

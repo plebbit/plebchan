@@ -81,7 +81,6 @@ const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, po
 
         parts.push(
           <ForwardRefLink
-            key={`link-${i}-${matchedText}`}
             className='quotelink'
             to={linkTo}
             target={linkTarget}

@@ -43,10 +43,8 @@ const AdminListModal = ({ isOpen, closeModal, roles }) => {
             maxHeight: '250px',
           }}
         >
-          <button className='icon' onClick={() => closeModal()} title='close' />
-          <div className='modal-header' style={{ margin: '10px 10px 0px 10px' }}>
-            Moderators
-          </div>
+          <button className='icon' style={{ imageRendering: 'pixelated', margin: '1px 1px 0 0' }} onClick={() => closeModal()} title='close' />
+          <div className='modal-header'>   Moderators</div>
           <div
             className='list'
             style={{
@@ -60,15 +58,19 @@ const AdminListModal = ({ isOpen, closeModal, roles }) => {
             }}
           >
             <BoardForm selectedStyle={selectedStyle} style={{ all: 'unset' }}>
-              {rolesList.map(({ address, role }, index) => (
-                <p key={index}>
-                  •{' '}
-                  <Link to={() => {}} className='quote-link'>
-                    u/{address}
-                  </Link>
-                  : {role}
-                </p>
-              ))}
+              {roles ? (
+                rolesList.map(({ address, role }, index) => (
+                  <p key={index}>
+                    •{' '}
+                    <Link to={() => {}} className='quote-link'>
+                      u/{address}
+                    </Link>
+                    : {role}
+                  </p>
+                ))
+              ) : (
+                <p>This board doesn't have moderators yet.</p>
+              )}
             </BoardForm>
           </div>
         </div>

@@ -119,6 +119,7 @@ const Subscriptions = () => {
   const [postOnHoverHeight, setPostOnHoverHeight] = useState(0);
   const [deletePost, setDeletePost] = useState(false);
   const [moderatorPermissions, setModeratorPermissions] = useState({});
+  const [moderatorRole, setModeratorRole] = useState({});
   const [executeAnonMode, setExecuteAnonMode] = useState(false);
   const [cidTracker, setCidTracker] = useState({});
   const [isThreadThumbnailClicked, setIsThreadThumbnailClicked] = useState({});
@@ -179,6 +180,7 @@ const Subscriptions = () => {
 
   useEffect(() => {
     let permissions = {};
+    let roles = {};
 
     selectedFeed.forEach((thread) => {
       const subplebbit = subplebbits.find((s) => s && s.address === thread.subplebbitAddress);
@@ -191,10 +193,16 @@ const Subscriptions = () => {
         } else {
           permissions[thread.subplebbitAddress] = false;
         }
+
+        if (!roles[thread.subplebbitAddress]) {
+          roles[thread.subplebbitAddress] = {};
+        }
+        roles[thread.subplebbitAddress][account?.author.address] = role;
       }
     });
 
     setModeratorPermissions(permissions);
+    setModeratorRole(roles);
   }, [account?.author.address, selectedFeed, subplebbits]);
 
   const handleOptionClick = () => {
@@ -721,7 +729,11 @@ const Subscriptions = () => {
                   const { displayedReplies, omittedCount } = filteredRepliesByThread[thread.cid] || {};
                   const commentMediaInfo = getCommentMediaInfo(thread);
                   const fallbackImgUrl = 'assets/filedeleted-res.gif';
-                  const isModerator = moderatorPermissions[thread.subplebbitAddress];
+                  const canModerate = moderatorPermissions[thread.subplebbitAddress];
+                  const userRole = moderatorRole[thread.subplebbitAddress]?.[thread?.author.address] || 'user';
+                  const isOwner = userRole === 'owner';
+                  const isAdmin = userRole === 'admin';
+                  const isModerator = userRole === 'moderator';
                   let displayWidth, displayHeight, displayWidthMobile, displayHeightMobile;
                   if (thread.linkWidth && thread.linkHeight) {
                     let scale = Math.min(1, 250 / Math.max(thread.linkWidth, thread.linkHeight));
@@ -901,7 +913,7 @@ const Subscriptions = () => {
                                     <Fragment key={`fragment3-${index}`}>
                                       <span
                                         key={`n-${index}`}
-                                        className='name'
+                                        className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                         data-tooltip-id='tooltip'
                                         data-tooltip-content={thread.author.displayName}
                                         data-tooltip-place='top'
@@ -910,15 +922,22 @@ const Subscriptions = () => {
                                       </span>
                                     </Fragment>
                                   ) : (
-                                    <span key={`n-${index}`} className='name'>
+                                    <span key={`n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                       {thread.author.displayName}
                                     </span>
                                   )
                                 ) : (
-                                  <span key={`n-${index}`} className='name'>
+                                  <span key={`n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                     Anonymous
                                   </span>
                                 )}
+                                {isOwner ? (
+                                  <span className='name capcode-admin'>&nbsp;## Board Owner</span>
+                                ) : isAdmin ? (
+                                  <span className='name capcode-admin'>&nbsp;## Board Admin</span>
+                                ) : isModerator ? (
+                                  <span className='name capcode'>&nbsp;## Board Mod</span>
+                                ) : null}
                                 &nbsp;(u/
                                 <span
                                   key={`pa-${index}`}
@@ -1047,7 +1066,7 @@ const Subscriptions = () => {
                                                   <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                                 </>
                                               ) : null}
-                                              {isModerator ? (
+                                              {canModerate ? (
                                                 <>
                                                   {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                     <li
@@ -1265,6 +1284,10 @@ const Subscriptions = () => {
                           }
                           const replyMediaInfo = getCommentMediaInfo(reply);
                           const fallbackImgUrl = 'assets/filedeleted-res.gif';
+                          const userRole = moderatorRole[reply.subplebbitAddress]?.[reply?.author.address] || 'user';
+                          const isOwner = userRole === 'owner';
+                          const isAdmin = userRole === 'admin';
+                          const isModerator = userRole === 'moderator';
                           const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
                           let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
                           let signerAddress;
@@ -1293,7 +1316,7 @@ const Subscriptions = () => {
                                         <Fragment key={`fragment6-${index}`}>
                                           <span
                                             key={`mob-n-${index}`}
-                                            className='name'
+                                            className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                             data-tooltip-id='tooltip'
                                             data-tooltip-content={reply.author.displayName}
                                             data-tooltip-place='top'
@@ -1302,15 +1325,22 @@ const Subscriptions = () => {
                                           </span>
                                         </Fragment>
                                       ) : (
-                                        <span key={`mob-n-${index}`} className='name'>
+                                        <span key={`mob-n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                           {reply.author.displayName}
                                         </span>
                                       )
                                     ) : (
-                                      <span key={`mob-n-${index}`} className='name'>
+                                      <span key={`mob-n-${index}`} className={`name ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                         Anonymous
                                       </span>
                                     )}
+                                    {isOwner ? (
+                                      <span className='name capcode-admin'>&nbsp;## Board Owner</span>
+                                    ) : isAdmin ? (
+                                      <span className='name capcode-admin'>&nbsp;## Board Admin</span>
+                                    ) : isModerator ? (
+                                      <span className='name capcode'>&nbsp;## Board Mod</span>
+                                    ) : null}
                                     &nbsp;(u/
                                     <span
                                       key={`pa-${index}`}
@@ -1444,7 +1474,7 @@ const Subscriptions = () => {
                                                     <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                                   </>
                                                 ) : null}
-                                                {isModerator ? (
+                                                {canModerate ? (
                                                   <>
                                                     {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                       <li
@@ -2029,7 +2059,7 @@ const Subscriptions = () => {
                                               <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                                             </>
                                           ) : null}
-                                          {isModerator ? (
+                                          {canModerate ? (
                                             <>
                                               {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                 <li
@@ -2095,7 +2125,7 @@ const Subscriptions = () => {
                                     <Fragment key={`fragment9-${index}`}>
                                       <span
                                         key={`mob-n-${index}`}
-                                        className='name-mobile'
+                                        className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                         data-tooltip-id='tooltip'
                                         data-tooltip-content={thread.author.displayName}
                                         data-tooltip-place='top'
@@ -2104,15 +2134,22 @@ const Subscriptions = () => {
                                       </span>
                                     </Fragment>
                                   ) : (
-                                    <span key={`mob-n-${index}`} className='name-mobile'>
+                                    <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                       {thread.author.displayName}
                                     </span>
                                   )
                                 ) : (
-                                  <span key={`mob-n-${index}`} className='name-mobile'>
+                                  <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                     Anonymous
                                   </span>
                                 )}
+                                {isOwner ? (
+                                  <span className='name capcode-admin'>&nbsp;## Board Owner</span>
+                                ) : isAdmin ? (
+                                  <span className='name capcode-admin'>&nbsp;## Board Admin</span>
+                                ) : isModerator ? (
+                                  <span className='name capcode'>&nbsp;## Board Mod</span>
+                                ) : null}
                                 &nbsp;
                                 <span
                                   key={`mob-pa-${index}`}
@@ -2464,6 +2501,10 @@ const Subscriptions = () => {
                           }
                           const replyMediaInfo = getCommentMediaInfo(reply);
                           const shortParentCid = findShortParentCid(reply.parentCid, selectedFeed);
+                          const userRole = moderatorRole[reply.subplebbitAddress]?.[reply?.author.address] || 'user';
+                          const isOwner = userRole === 'owner';
+                          const isAdmin = userRole === 'admin';
+                          const isModerator = userRole === 'moderator';
                           let storedSigners = JSON.parse(localStorage.getItem('storedSigners')) || {};
                           let signerAddress;
                           if (storedSigners[selectedThreadCidRef]) {
@@ -2522,7 +2563,7 @@ const Subscriptions = () => {
                                                   <li onClick={() => handleAuthorDeleteClick(reply)}>Delete post</li>
                                                 </>
                                               ) : null}
-                                              {isModerator ? (
+                                              {canModerate ? (
                                                 <>
                                                   {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                                     <li
@@ -2588,7 +2629,7 @@ const Subscriptions = () => {
                                         <Fragment key={`fragment13-${index}`}>
                                           <span
                                             key={`mob-n-${index}`}
-                                            className='name-mobile'
+                                            className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}
                                             data-tooltip-id='tooltip'
                                             data-tooltip-content={reply.author.displayName}
                                             data-tooltip-place='top'
@@ -2597,15 +2638,22 @@ const Subscriptions = () => {
                                           </span>
                                         </Fragment>
                                       ) : (
-                                        <span key={`mob-n-${index}`} className='name-mobile'>
+                                        <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                           {reply.author.displayName}
                                         </span>
                                       )
                                     ) : (
-                                      <span key={`mob-n-${index}`} className='name-mobile'>
+                                      <span key={`mob-n-${index}`} className={`name-mobile ${isAdmin || isOwner ? 'capcode-admin' : isModerator ? 'capcode' : ''}`}>
                                         Anonymous
                                       </span>
                                     )}
+                                    {isOwner ? (
+                                      <span className='name capcode-admin'>&nbsp;## Board Owner</span>
+                                    ) : isAdmin ? (
+                                      <span className='name capcode-admin'>&nbsp;## Board Admin</span>
+                                    ) : isModerator ? (
+                                      <span className='name capcode'>&nbsp;## Board Mod</span>
+                                    ) : null}
                                     &nbsp;
                                     <span
                                       key={`mob-pa-${index}`}

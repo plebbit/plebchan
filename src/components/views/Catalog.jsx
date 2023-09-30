@@ -52,7 +52,7 @@ const CatalogPost = ({ post }) => {
     setIsAuthorEdit,
     setIsCaptchaOpen,
     setIsEditModalOpen,
-    isModerator,
+    canModerate,
     setModeratingCommentCid,
     setOriginalCommentContent,
     setPendingComment,
@@ -443,7 +443,7 @@ const CatalogPost = ({ post }) => {
               >
                 <div className={`post-menu-thread post-menu-thread-${'rules'}`} style={{ display: openMenuCid === 'rules' ? 'block' : 'none' }}>
                   <ul className='post-menu-catalog'>
-                    {/* {isModerator ? (
+                    {/* {canModerate ? (
 											<>
 												change rules
 											</>
@@ -647,7 +647,7 @@ const CatalogPost = ({ post }) => {
               >
                 <div className={`post-menu-thread post-menu-thread-${'description'}`} style={{ display: openMenuCid === 'description' ? 'block' : 'none' }}>
                   <ul className='post-menu-catalog'>
-                    {/* {isModerator ? (
+                    {/* {canModerate ? (
                       <>
                         change description
                       </>
@@ -999,7 +999,7 @@ const CatalogPost = ({ post }) => {
                               <li onClick={() => handleAuthorDeleteClick(thread)}>Delete post</li>
                             </>
                           ) : null}
-                          {isModerator ? (
+                          {canModerate ? (
                             <>
                               {authorAddress === account?.author.address || authorAddress === account?.signer.address ? null : (
                                 <li
@@ -1133,7 +1133,7 @@ const Catalog = () => {
     setIsCaptchaOpen,
     isModerationOpen,
     setIsModerationOpen,
-    setIsModerator,
+    setCanModerate,
     isSettingsOpen,
     setIsSettingsOpen,
     originalCommentContent,
@@ -1198,12 +1198,12 @@ const Catalog = () => {
       const role = subplebbit.roles[account?.author.address]?.role;
 
       if (role === 'moderator' || role === 'admin' || role === 'owner') {
-        setIsModerator(true);
+        setCanModerate(true);
       } else {
-        setIsModerator(false);
+        setCanModerate(false);
       }
     }
-  }, [account?.author.address, subplebbit.roles, setIsModerator]);
+  }, [account?.author.address, subplebbit.roles, setCanModerate]);
 
   useEffect(() => {
     setSelectedAddress(subplebbitAddress);
@@ -1327,11 +1327,6 @@ const Catalog = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (subjectRef.current.value === '') {
-      setNewErrorMessage('Subject field is mandatory');
-      return;
-    }
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,

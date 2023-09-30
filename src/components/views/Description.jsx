@@ -427,7 +427,7 @@ const Description = () => {
                             style={{ display: openMenuCid === subplebbit.pubsubTopic ? 'block' : 'none' }}
                           >
                             <ul className='post-menu-catalog'>
-                              {/* {isModerator ? (
+                              {/* {canModerate ? (
                               <>
                                 change description
                               </>
