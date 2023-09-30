@@ -463,11 +463,6 @@ const Board = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (subjectRef.current.value === '') {
-      setNewErrorMessage('Subject field is mandatory');
-      return;
-    }
-
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
       author: {
