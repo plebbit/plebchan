@@ -765,7 +765,7 @@ const Board = () => {
                   window.electron && window.electron.isElectron
                     ? setIsCreateBoardOpen(true)
                     : alert(
-                        'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n',
+                        'HOW TO CREATE A BOARD (currently via CLI only):\n\n(1) have a computer you can use as server, because users will connect to your board peer-to-peer;\n\n(2) go to https://github.com/plebbit/plebbit-cli#install and follow the instructions to run your daemon, create a subplebbit (board) and edit its settings;\n\n(3) users can always connect to your board via its address, but it can be added below by submitting a pull request here: https://github.com/plebbit/temporary-default-subplebbits. This will be automated with a plebbit DAO using the plebbit token.',
                       );
                 }}
               >
@@ -800,7 +800,7 @@ const Board = () => {
                       window.electron && window.electron.isElectron
                         ? setIsCreateBoardOpen(true)
                         : alert(
-                            'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n',
+                            'HOW TO CREATE A BOARD (currently via CLI only):\n\n(1) have a computer you can use as server, because users will connect to your board peer-to-peer;\n\n(2) go to https://github.com/plebbit/plebbit-cli#install and follow the instructions to run your daemon, create a subplebbit (board) and edit its settings;\n\n(3) users can always connect to your board via its address, but it can be added below by submitting a pull request here: https://github.com/plebbit/temporary-default-subplebbits. This will be automated with a plebbit DAO using the plebbit token.',
                           );
                     }}
                   >
@@ -884,7 +884,7 @@ const Board = () => {
                 </td>
               </tr>
               <tr data-type='File'>
-                <td>Embed File</td>
+                <td>Link</td>
                 <td>
                   <input name='embed' type='text' tabIndex={7} placeholder='Paste link' ref={linkRef} />
                   <button
@@ -4370,7 +4370,7 @@ const Board = () => {
                     window.electron && window.electron.isElectron
                       ? setIsCreateBoardOpen(true)
                       : alert(
-                          'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n',
+                          'HOW TO CREATE A BOARD (currently via CLI only):\n\n(1) have a computer you can use as server, because users will connect to your board peer-to-peer;\n\n(2) go to https://github.com/plebbit/plebbit-cli#install and follow the instructions to run your daemon, create a subplebbit (board) and edit its settings;\n\n(3) users can always connect to your board via its address, but it can be added below by submitting a pull request here: https://github.com/plebbit/temporary-default-subplebbits. This will be automated with a plebbit DAO using the plebbit token.',
                         );
                   }}
                 >
