@@ -13,50 +13,59 @@ import { Tooltip } from 'react-tooltip';
 const { version } = packageJson;
 const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
-const SubplebbitTitle = ({ address }) => {
-  const subplebbitAddress = address;
-  const subplebbit = useSubplebbit({ subplebbitAddress });
-  const title = subplebbit.title ?? null;
-
-  return <>{title ? <span>{title}</span> : <span style={{ userSelect: 'none' }}>&nbsp;</span>}</>;
-};
-
 const RecentThread = ({ commentCid }) => {
   const comment = useComment({ commentCid });
   const subplebbit = useSubplebbit({ subplebbitAddress: comment?.subplebbitAddress });
   const { setSelectedAddress, setSelectedTitle } = useGeneralStore((state) => state);
   const commentMediaInfo = getCommentMediaInfo(comment);
+  const isMediaShowed =
+    comment.link &&
+    commentMediaInfo &&
+    (commentMediaInfo.type === 'image' ||
+      commentMediaInfo.type === 'video' ||
+      (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
+      (commentMediaInfo.type === 'iframe' && commentMediaInfo.thumbnail))
+      ? true
+      : false;
 
   return (
-    <div className='board'>
-      <div className='board-title' key='board-title'>
-        <SubplebbitTitle address={comment?.subplebbitAddress} />
-      </div>
-      <div className='board-avatar-container' key='board-avatar-container'>
-        <Link
-          to={`/p/${comment?.subplebbitAddress}/c/${comment?.cid}`}
-          key='link'
-          onClick={() => {
-            setSelectedTitle(subplebbit?.title);
-            setSelectedAddress(comment?.subplebbitAddress);
-            window.scrollTo(0, 0);
-          }}
-        >
-          {commentMediaInfo?.type === 'webpage' && comment.thumbnailUrl ? (
-            <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
-          ) : commentMediaInfo?.type === 'image' ? (
-            <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-          ) : (
-            <BoardAvatar address={comment.subplebbitAddress} />
-          )}
-        </Link>
-        <OfflineIndicator address={comment?.subplebbitAddress} className='offline-indicator' tooltipPlace='top' key='oi2' />
-      </div>
-      <div className='board-text' key='bt'>
-        {comment?.title ? <b>{comment?.title}</b> : null}
-        {comment?.content ? `: ${comment.content}` : null}
-      </div>
-    </div>
+    <>
+      {isMediaShowed ? (
+        <div className='board'>
+          <div className='board-title' key='board-title'>
+            <span>{subplebbit.title || subplebbit.address}</span>
+          </div>
+          <div className='board-avatar-container' key='board-avatar-container'>
+            <Link
+              to={`/p/${comment?.subplebbitAddress}/c/${comment?.cid}`}
+              key='link'
+              onClick={() => {
+                setSelectedTitle(subplebbit?.title);
+                setSelectedAddress(comment?.subplebbitAddress);
+                window.scrollTo(0, 0);
+              }}
+            >
+              {commentMediaInfo?.type === 'webpage' && comment.thumbnailUrl ? (
+                <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
+              ) : commentMediaInfo?.type === 'image' ? (
+                <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
+              ) : commentMediaInfo?.type === 'video' ? (
+                <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
+              ) : commentMediaInfo?.type === 'iframe' ? (
+                <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
+              ) : (
+                <BoardAvatar address={comment.subplebbitAddress} />
+              )}
+            </Link>
+            <OfflineIndicator address={comment?.subplebbitAddress} className='offline-indicator' tooltipPlace='top' key='oi2' />
+          </div>
+          <div className='board-text' key='bt'>
+            {comment?.title ? <b>{comment?.title}</b> : null}
+            {comment?.content ? `: ${comment.content}` : null}
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 
@@ -316,7 +325,7 @@ const Home = () => {
               <h2>Recent Threads</h2>
             </div>
             <BoardsContent>
-              {sfwListCids.slice(0, 8).map((cid) => (
+              {sfwListCids.map((cid) => (
                 <RecentThread commentCid={cid} />
               ))}
             </BoardsContent>
