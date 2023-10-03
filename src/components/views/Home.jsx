@@ -18,6 +18,7 @@ const RecentThread = ({ commentCid }) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: comment?.subplebbitAddress });
   const { setSelectedAddress, setSelectedTitle } = useGeneralStore((state) => state);
   const commentMediaInfo = getCommentMediaInfo(comment);
+  const fallbackImgUrl = 'assets/filedeleted-res.gif';
   const isMediaShowed =
     comment.link &&
     commentMediaInfo &&
@@ -30,7 +31,7 @@ const RecentThread = ({ commentCid }) => {
 
   return (
     <>
-      {isMediaShowed ? (
+      {isMediaShowed && comment.replyCount > 0 ? (
         <div className='board'>
           <div className='board-title' key='board-title'>
             <span>{subplebbit.title || subplebbit.address}</span>
@@ -50,7 +51,14 @@ const RecentThread = ({ commentCid }) => {
               ) : commentMediaInfo?.type === 'image' ? (
                 <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
               ) : commentMediaInfo?.type === 'video' ? (
-                <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
+                <video
+                  className='board-avatar'
+                  src={commentMediaInfo?.url}
+                  onError={(e) => {
+                    e.target.src = fallbackImgUrl;
+                  }}
+                  alt='post'
+                />
               ) : commentMediaInfo?.type === 'iframe' ? (
                 <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
               ) : (
@@ -61,7 +69,7 @@ const RecentThread = ({ commentCid }) => {
           </div>
           <div className='board-text' key='bt'>
             {comment?.title ? <b>{comment?.title}</b> : null}
-            {comment?.content ? `: ${comment.content}` : null}
+            {comment?.content ? (comment.content.length > 99 ? `: ${comment.content.substring(0, 99)}...` : `: ${comment.content}`) : null}
           </div>
         </div>
       ) : null}
@@ -322,7 +330,7 @@ const Home = () => {
           </BoardsBox>
           <BoardsBox>
             <div className='boxbar'>
-              <h2>Recent Threads</h2>
+              <h2>Popular Threads</h2>
             </div>
             <BoardsContent>
               {sfwListCids.map((cid) => (

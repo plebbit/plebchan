@@ -277,18 +277,19 @@ export const BoardsContent = styled.div`
   }
 
   .board-avatar-container {
-    width: 150px;
-    height: 150px;
+    width: auto;
+    height: auto;
     border: 1px solid #800;
     display: inline-block;
     overflow: hidden;
     position: relative;
+    line-height: 0;
   }
 
-  .board-avatar-container img.board-avatar {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  img,
+  video {
+    max-width: 150px;
+    max-height: 150px;
   }
 
   .offline-indicator {
