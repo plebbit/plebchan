@@ -18,7 +18,6 @@ const RecentThread = ({ commentCid }) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: comment?.subplebbitAddress });
   const { setSelectedAddress, setSelectedTitle } = useGeneralStore((state) => state);
   const commentMediaInfo = getCommentMediaInfo(comment);
-  const fallbackImgUrl = 'assets/filedeleted-res.gif';
   const isMediaShowed =
     comment.link &&
     commentMediaInfo &&
@@ -51,14 +50,7 @@ const RecentThread = ({ commentCid }) => {
               ) : commentMediaInfo?.type === 'image' ? (
                 <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
               ) : commentMediaInfo?.type === 'video' ? (
-                <video
-                  className='board-avatar'
-                  src={commentMediaInfo?.url}
-                  onError={(e) => {
-                    e.target.src = fallbackImgUrl;
-                  }}
-                  alt='post'
-                />
+                <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
               ) : commentMediaInfo?.type === 'iframe' ? (
                 <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
               ) : (
