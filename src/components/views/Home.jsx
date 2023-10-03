@@ -31,7 +31,7 @@ const RecentThread = ({ commentCid }) => {
 
   return (
     <>
-      {isMediaShowed && comment.replyCount > 0 ? (
+      {isMediaShowed && comment.replyCount > 0 && !comment.removed ? (
         <div className='board'>
           <div className='board-title' key='board-title'>
             <span>{subplebbit.title || subplebbit.address}</span>
