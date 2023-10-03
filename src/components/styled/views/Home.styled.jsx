@@ -103,7 +103,7 @@ export const Search = styled.div`
       padding: 5px;
       box-sizing: border-box;
       vertical-align: top;
-      width: 60px;
+      width: 70px;
       -webkit-appearance: none;
     }
   }
@@ -241,6 +241,24 @@ export const BoardsBox = styled.div`
 
       :hover {
         color: #e00;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .boxbar {
+      padding-left: 0.25em;
+    }
+
+    .boxcontent {
+      font-size: 1.05em;
+      padding: 0.25em;
+      line-height: 2em;
+
+      .column {
+        width: 44%;
+        margin-bottom: 10px;
+        margin-right: 20px;
       }
     }
   }
