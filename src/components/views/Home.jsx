@@ -18,54 +18,41 @@ const RecentThread = ({ commentCid }) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: comment?.subplebbitAddress });
   const { setSelectedAddress, setSelectedTitle } = useGeneralStore((state) => state);
   const commentMediaInfo = getCommentMediaInfo(comment);
-  const isMediaShowed =
-    comment.link &&
-    commentMediaInfo &&
-    (commentMediaInfo.type === 'image' ||
-      commentMediaInfo.type === 'video' ||
-      (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
-      (commentMediaInfo.type === 'iframe' && commentMediaInfo.thumbnail))
-      ? true
-      : false;
 
   return (
-    <>
-      {isMediaShowed && comment.replyCount > 0 && !comment.removed ? (
-        <div className='board'>
-          <div className='board-title' key='board-title'>
-            <span>{subplebbit.title || subplebbit.address}</span>
-          </div>
-          <div className='board-avatar-container' key='board-avatar-container'>
-            <Link
-              to={`/p/${comment?.subplebbitAddress}/c/${comment?.cid}`}
-              key='link'
-              onClick={() => {
-                setSelectedTitle(subplebbit?.title);
-                setSelectedAddress(comment?.subplebbitAddress);
-                window.scrollTo(0, 0);
-              }}
-            >
-              {commentMediaInfo?.type === 'webpage' && comment.thumbnailUrl ? (
-                <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
-              ) : commentMediaInfo?.type === 'image' ? (
-                <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-              ) : commentMediaInfo?.type === 'video' ? (
-                <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-              ) : commentMediaInfo?.type === 'iframe' ? (
-                <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
-              ) : (
-                <BoardAvatar address={comment.subplebbitAddress} />
-              )}
-            </Link>
-            <OfflineIndicator address={comment?.subplebbitAddress} className='offline-indicator' tooltipPlace='top' key='oi2' />
-          </div>
-          <div className='board-text' key='bt'>
-            {comment?.title ? <b>{comment?.title}</b> : null}
-            {comment?.content ? (comment.content.length > 99 ? `: ${comment.content.substring(0, 99)}...` : `: ${comment.content}`) : null}
-          </div>
-        </div>
-      ) : null}
-    </>
+    <div className='board'>
+      <div className='board-title' key='board-title'>
+        <span>{subplebbit.title || subplebbit.address}</span>
+      </div>
+      <div className='board-avatar-container' key='board-avatar-container'>
+        <Link
+          to={`/p/${comment?.subplebbitAddress}/c/${comment?.cid}`}
+          key='link'
+          onClick={() => {
+            setSelectedTitle(subplebbit?.title);
+            setSelectedAddress(comment?.subplebbitAddress);
+            window.scrollTo(0, 0);
+          }}
+        >
+          {commentMediaInfo?.type === 'webpage' && comment.thumbnailUrl ? (
+            <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
+          ) : commentMediaInfo?.type === 'image' ? (
+            <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
+          ) : commentMediaInfo?.type === 'video' ? (
+            <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
+          ) : commentMediaInfo?.type === 'iframe' ? (
+            <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
+          ) : (
+            <BoardAvatar address={comment.subplebbitAddress} />
+          )}
+        </Link>
+        <OfflineIndicator address={comment?.subplebbitAddress} className='offline-indicator' tooltipPlace='top' key='oi2' />
+      </div>
+      <div className='board-text' key='bt'>
+        {comment?.title ? <b>{comment?.title}</b> : null}
+        {comment?.content ? (comment.content.length > 99 ? `: ${comment.content.substring(0, 99)}...` : `: ${comment.content}`) : null}
+      </div>
+    </div>
   );
 };
 
@@ -75,7 +62,47 @@ const Home = () => {
   const sfwAddresses = defaultSubplebbits.map((subplebbit) => subplebbit.address);
   const sfwSubs = useSubplebbits({ subplebbitAddresses: sfwAddresses });
   const sfwList = sfwSubs.subplebbits.map((subplebbit) => subplebbit?.address);
-  const sfwListCids = sfwSubs.subplebbits.map((s) => s?.lastPostCid);
+  const subplebbitToCid = {};
+
+  sfwSubs.subplebbits.forEach((s) => {
+    let maxTimestamp = -Infinity;
+    let mostRecentCid = null;
+
+    if (s && s.posts && s.posts.pages && s.posts.pages.hot && s.posts.pages.hot.comments) {
+      for (const comment of Object.values(s.posts.pages.hot.comments)) {
+        const commentMediaInfo = getCommentMediaInfo(comment);
+        const isMediaShowed =
+          comment.link &&
+          commentMediaInfo &&
+          (commentMediaInfo.type === 'image' ||
+            commentMediaInfo.type === 'video' ||
+            (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
+            (commentMediaInfo.type === 'iframe' && commentMediaInfo.thumbnail));
+
+        if (
+          isMediaShowed &&
+          comment.replyCount > 2 &&
+          !comment.removed &&
+          !comment.locked &&
+          !comment.pinned &&
+          comment.timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 &&
+          comment.timestamp > maxTimestamp
+        ) {
+          maxTimestamp = comment.timestamp;
+          mostRecentCid = comment.cid;
+        }
+      }
+
+      if (mostRecentCid) {
+        subplebbitToCid[s.address] = { cid: mostRecentCid, timestamp: maxTimestamp };
+      }
+    }
+  });
+
+  const sfwListCids = Object.values(subplebbitToCid)
+    .sort((a, b) => b.timestamp - a.timestamp) // Sort by timestamp
+    .map((item) => item.cid) // Extract cids
+    .slice(0, 8); // Limit to 8 cids
 
   const account = useAccount();
   const navigate = useNavigate();
