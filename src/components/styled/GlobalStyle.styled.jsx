@@ -44,7 +44,6 @@ export const GlobalStyle = createGlobalStyle`
 
   .poster-address {
     display: inline-block;
-    overflow: clip;
   }
 
   .author-address-hidden {

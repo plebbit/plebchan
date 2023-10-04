@@ -607,7 +607,7 @@ const All = () => {
                   window.electron && window.electron.isElectron
                     ? setIsCreateBoardOpen(true)
                     : alert(
-                        'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n',
+                        'HOW TO CREATE A BOARD (currently via CLI only):\n\n(1) have a computer you can use as server, because users will connect to your board peer-to-peer;\n\n(2) go to https://github.com/plebbit/plebbit-cli#install and follow the instructions to run your daemon, create a subplebbit (board) and edit its settings;\n\n(3) users can always connect to your board via its address, but it can be added below by submitting a pull request here: https://github.com/plebbit/temporary-default-subplebbits. This will be automated with a plebbit DAO using the plebbit token.',
                       );
                 }}
               >
@@ -639,7 +639,7 @@ const All = () => {
                     style={{ cursor: 'pointer' }}
                     onClick={() =>
                       alert(
-                        'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n',
+                        'HOW TO CREATE A BOARD (currently via CLI only):\n\n(1) have a computer you can use as server, because users will connect to your board peer-to-peer;\n\n(2) go to https://github.com/plebbit/plebbit-cli#install and follow the instructions to run your daemon, create a subplebbit (board) and edit its settings;\n\n(3) users can always connect to your board via its address, but it can be added below by submitting a pull request here: https://github.com/plebbit/temporary-default-subplebbits. This will be automated with a plebbit DAO using the plebbit token.',
                       )
                     }
                   >
@@ -1214,7 +1214,56 @@ const All = () => {
                                 thread.content?.length > 1000 ? (
                                   <Fragment key={`fragment5-${index}`}>
                                     <blockquote key={`bq-${index}`}>
-                                      <Post content={thread.content?.slice(0, 1000)} key={`post-${index}`} />
+                                      <Post
+                                        key={`post-${thread.cid}`}
+                                        content={thread.content?.slice(0, 1000)}
+                                        postQuoteRef={(quoteShortParentCid, ref) => {
+                                          postRefs.current[quoteShortParentCid] = ref;
+                                        }}
+                                        postQuoteOnClick={(quoteShortParentCid) => {
+                                          handleQuoteClick(thread, quoteShortParentCid, null);
+                                        }}
+                                        postQuoteOnOver={(quoteShortParentCid) => {
+                                          const quoteParentCid = cidTracker[quoteShortParentCid];
+                                          if (outOfViewCid !== quoteParentCid) {
+                                            handleQuoteHover(thread, quoteShortParentCid, () => {
+                                              setOutOfViewCid(quoteParentCid);
+
+                                              const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                              const distanceToRight = window.innerWidth - rect.right;
+                                              const distanceToTop = rect.top;
+                                              const distanceToBottom = window.innerHeight - rect.bottom;
+                                              let top;
+
+                                              if (distanceToTop < postOnHoverHeight / 2) {
+                                                top = window.scrollY - 5;
+                                              } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                                top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                              } else {
+                                                top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                              }
+
+                                              if (distanceToRight < 200) {
+                                                setOutOfViewPosition({
+                                                  top,
+                                                  right: window.innerWidth - rect.left - 10,
+                                                  maxWidth: rect.left - 5,
+                                                });
+                                              } else {
+                                                setOutOfViewPosition({
+                                                  top,
+                                                  left: rect.left + rect.width + 5,
+                                                  maxWidth: window.innerWidth - rect.left - rect.width - 5,
+                                                });
+                                              }
+                                            });
+                                          }
+                                        }}
+                                        postQuoteOnLeave={() => {
+                                          removeHighlight();
+                                          setOutOfViewCid(null);
+                                        }}
+                                      />
                                       <span key={`ttl-s-${index}`} className='ttl'>
                                         {' '}
                                         (...)
@@ -1237,7 +1286,56 @@ const All = () => {
                                   </Fragment>
                                 ) : (
                                   <blockquote key={`bq-${index}`}>
-                                    <Post content={thread.content} key={`post-${index}`} />
+                                    <Post
+                                      key={`post-${thread.cid}`}
+                                      content={thread.content}
+                                      postQuoteRef={(quoteShortParentCid, ref) => {
+                                        postRefs.current[quoteShortParentCid] = ref;
+                                      }}
+                                      postQuoteOnClick={(quoteShortParentCid) => {
+                                        handleQuoteClick(thread, quoteShortParentCid, null);
+                                      }}
+                                      postQuoteOnOver={(quoteShortParentCid) => {
+                                        const quoteParentCid = cidTracker[quoteShortParentCid];
+                                        if (outOfViewCid !== quoteParentCid) {
+                                          handleQuoteHover(thread, quoteShortParentCid, () => {
+                                            setOutOfViewCid(quoteParentCid);
+
+                                            const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                            const distanceToRight = window.innerWidth - rect.right;
+                                            const distanceToTop = rect.top;
+                                            const distanceToBottom = window.innerHeight - rect.bottom;
+                                            let top;
+
+                                            if (distanceToTop < postOnHoverHeight / 2) {
+                                              top = window.scrollY - 5;
+                                            } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                              top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                            } else {
+                                              top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                            }
+
+                                            if (distanceToRight < 200) {
+                                              setOutOfViewPosition({
+                                                top,
+                                                right: window.innerWidth - rect.left - 10,
+                                                maxWidth: rect.left - 5,
+                                              });
+                                            } else {
+                                              setOutOfViewPosition({
+                                                top,
+                                                left: rect.left + rect.width + 5,
+                                                maxWidth: window.innerWidth - rect.left - rect.width - 5,
+                                              });
+                                            }
+                                          });
+                                        }
+                                      }}
+                                      postQuoteOnLeave={() => {
+                                        removeHighlight();
+                                        setOutOfViewCid(null);
+                                      }}
+                                    />
                                     <EditLabel key={`edit-label-thread-${index}`} commentCid={thread.cid} className='ttl' />
                                     <StateLabel key={`state-label-thread-${index}`} commentIndex={thread.index} className='ttl ellipsis' />
                                   </blockquote>
@@ -2431,7 +2529,56 @@ const All = () => {
                               thread.content?.length > 500 ? (
                                 <Fragment key={`fragment12-${index}`}>
                                   <blockquote key={`mob-bq-${index}`} className='post-message-mobile'>
-                                    <Post content={thread.content?.slice(0, 500)} key={`post-mobile-${index}`} />
+                                    <Post
+                                      key={`post-mobile-${thread.cid}`}
+                                      content={thread.content?.slice(0, 500)}
+                                      postQuoteRef={(quoteShortParentCid, ref) => {
+                                        postRefs.current[quoteShortParentCid] = ref;
+                                      }}
+                                      postQuoteOnClick={(quoteShortParentCid) => {
+                                        handleQuoteClick(thread, quoteShortParentCid, null);
+                                      }}
+                                      postQuoteOnOver={(quoteShortParentCid) => {
+                                        const quoteParentCid = cidTracker[quoteShortParentCid];
+                                        if (outOfViewCid !== quoteParentCid) {
+                                          handleQuoteHover(thread, quoteShortParentCid, () => {
+                                            setOutOfViewCid(quoteParentCid);
+
+                                            const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                            const distanceToRight = window.innerWidth - rect.right;
+                                            const distanceToTop = rect.top;
+                                            const distanceToBottom = window.innerHeight - rect.bottom;
+                                            let top;
+
+                                            if (distanceToTop < postOnHoverHeight / 2) {
+                                              top = window.scrollY - 5;
+                                            } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                              top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                            } else {
+                                              top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                            }
+
+                                            if (distanceToRight < 200) {
+                                              setOutOfViewPosition({
+                                                top,
+                                                right: window.innerWidth - rect.left - 10,
+                                                maxWidth: rect.left - 5,
+                                              });
+                                            } else {
+                                              setOutOfViewPosition({
+                                                top,
+                                                left: rect.left + rect.width + 5,
+                                                maxWidth: window.innerWidth - rect.left - rect.width - 5,
+                                              });
+                                            }
+                                          });
+                                        }
+                                      }}
+                                      postQuoteOnLeave={() => {
+                                        removeHighlight();
+                                        setOutOfViewCid(null);
+                                      }}
+                                    />
                                     <span key={`mob-ttl-s-${index}`} className='ttl'>
                                       {' '}
                                       (...)
@@ -2454,7 +2601,56 @@ const All = () => {
                                 </Fragment>
                               ) : (
                                 <blockquote key={`mob-bq-${index}`} className='post-message-mobile'>
-                                  <Post content={thread.content} key={`post-mobile-${index}`} />
+                                  <Post
+                                    key={`post-mobile-${thread.cid}`}
+                                    content={thread.content}
+                                    postQuoteRef={(quoteShortParentCid, ref) => {
+                                      postRefs.current[quoteShortParentCid] = ref;
+                                    }}
+                                    postQuoteOnClick={(quoteShortParentCid) => {
+                                      handleQuoteClick(thread, quoteShortParentCid, null);
+                                    }}
+                                    postQuoteOnOver={(quoteShortParentCid) => {
+                                      const quoteParentCid = cidTracker[quoteShortParentCid];
+                                      if (outOfViewCid !== quoteParentCid) {
+                                        handleQuoteHover(thread, quoteShortParentCid, () => {
+                                          setOutOfViewCid(quoteParentCid);
+
+                                          const rect = postRefs.current[quoteShortParentCid].getBoundingClientRect();
+                                          const distanceToRight = window.innerWidth - rect.right;
+                                          const distanceToTop = rect.top;
+                                          const distanceToBottom = window.innerHeight - rect.bottom;
+                                          let top;
+
+                                          if (distanceToTop < postOnHoverHeight / 2) {
+                                            top = window.scrollY - 5;
+                                          } else if (distanceToBottom < postOnHoverHeight / 2) {
+                                            top = window.scrollY - postOnHoverHeight + window.innerHeight - 10;
+                                          } else {
+                                            top = rect.top + window.scrollY - postOnHoverHeight / 2;
+                                          }
+
+                                          if (distanceToRight < 200) {
+                                            setOutOfViewPosition({
+                                              top,
+                                              right: window.innerWidth - rect.left - 10,
+                                              maxWidth: rect.left - 5,
+                                            });
+                                          } else {
+                                            setOutOfViewPosition({
+                                              top,
+                                              left: rect.left + rect.width + 5,
+                                              maxWidth: window.innerWidth - rect.left - rect.width - 5,
+                                            });
+                                          }
+                                        });
+                                      }
+                                    }}
+                                    postQuoteOnLeave={() => {
+                                      removeHighlight();
+                                      setOutOfViewCid(null);
+                                    }}
+                                  />
                                   <EditLabel key={`edit-label-thread-mob-${index}`} commentCid={thread.cid} className='ttl' />
                                   <StateLabel key={`state-label-thread-mob-${index}`} commentIndex={thread.index} className='ttl ellipsis' />
                                 </blockquote>
@@ -3318,7 +3514,7 @@ const All = () => {
                     window.electron && window.electron.isElectron
                       ? setIsCreateBoardOpen(true)
                       : alert(
-                          'You can create a board with the desktop version of plebchan:\nhttps://github.com/plebbit/plebchan/releases/latest\n\nIf you are comfortable with the command line, use plebbit-cli:\nhttps://github.com/plebbit/plebbit-cli\n\n',
+                          'HOW TO CREATE A BOARD (currently via CLI only):\n\n(1) have a computer you can use as server, because users will connect to your board peer-to-peer;\n\n(2) go to https://github.com/plebbit/plebbit-cli#install and follow the instructions to run your daemon, create a subplebbit (board) and edit its settings;\n\n(3) users can always connect to your board via its address, but it can be added below by submitting a pull request here: https://github.com/plebbit/temporary-default-subplebbits. This will be automated with a plebbit DAO using the plebbit token.',
                         );
                   }}
                 >

@@ -28,8 +28,18 @@ import packageJson from '../package.json';
 const commitRef = process?.env?.REACT_APP_COMMIT_REF || '';
 
 export default function App() {
-  const { bodyStyle, setBodyStyle, setDefaultSubplebbits, isCaptchaOpen, setIsCaptchaOpen, setIsSettingsOpen, selectedStyle, setShowPostForm, setShowPostFormLink } =
-    useGeneralStore((state) => state);
+  const {
+    bodyStyle,
+    setBodyStyle,
+    setDefaultSubplebbits,
+    setDefaultNsfwSubplebbits,
+    isCaptchaOpen,
+    setIsCaptchaOpen,
+    setIsSettingsOpen,
+    selectedStyle,
+    setShowPostForm,
+    setShowPostFormLink,
+  } = useGeneralStore((state) => state);
 
   const location = useLocation();
   const isElectron = window.electron && window.electron.isElectron;
@@ -115,6 +125,21 @@ export default function App() {
       didCancel = true;
     };
   }, [setDefaultSubplebbits]);
+
+  // fetch default NSFW subplebbits
+  useEffect(() => {
+    let didCancel = false;
+    fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits-nsfw.json', { cache: 'no-cache' })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!didCancel) {
+          setDefaultNsfwSubplebbits(res);
+        }
+      });
+    return () => {
+      didCancel = true;
+    };
+  }, [setDefaultNsfwSubplebbits]);
 
   // handle nested routes
   useEffect(() => {

@@ -20,6 +20,9 @@ const useGeneralStore = create((set) => ({
   defaultSubplebbits: [],
   setDefaultSubplebbits: (subplebbits) => set({ defaultSubplebbits: subplebbits }),
 
+  defaultNsfwSubplebbits: [],
+  setDefaultNsfwSubplebbits: (subplebbits) => set({ defaultNsfwSubplebbits: subplebbits }),
+
   deletePost: false,
   setDeletePost: (deletePost) => set({ deletePost }),
 
