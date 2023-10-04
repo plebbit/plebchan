@@ -100,9 +100,9 @@ const Home = () => {
   });
 
   const sfwListCids = Object.values(subplebbitToCid)
-    .sort((a, b) => b.timestamp - a.timestamp) // Sort by timestamp
-    .map((item) => item.cid) // Extract cids
-    .slice(0, 8); // Limit to 8 cids
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .map((item) => item.cid)
+    .slice(0, 8);
 
   const account = useAccount();
   const navigate = useNavigate();
@@ -201,8 +201,8 @@ const Home = () => {
             <div className='boxbar'>
               <h2>Boards</h2>
             </div>
-            <div class='boxcontent'>
-              <div class='column'>
+            <div className='boxcontent'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>
                   <a
                     href='https://github.com/plebbit/temporary-default-subplebbits'
@@ -248,7 +248,7 @@ const Home = () => {
                   )}
                 </ul>
               </div>
-              <div class='column'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>
                   <a
                     href='https://github.com/plebbit/temporary-default-subplebbits'
@@ -285,7 +285,7 @@ const Home = () => {
                   )}
                 </ul>
               </div>
-              <div class='column'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>Subscriptions</h3>
                 &nbsp;
                 <Link
@@ -324,7 +324,7 @@ const Home = () => {
                   )}
                 </ul>
               </div>
-              <div class='column'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>Moderating</h3>
                 <ul>
                   {!isElectron ? (
