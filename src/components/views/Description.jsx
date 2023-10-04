@@ -605,10 +605,20 @@ const Description = () => {
                         ## Board Mods
                       </span>
                       &nbsp;
-                      <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                        <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                      <span className='thread-icons-mobile'>
+                        <img
+                          src='assets/sticky.gif'
+                          alt='Sticky'
+                          title='Sticky'
+                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                        />
                         &nbsp;
-                        <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                        <img
+                          src='assets/closed.gif'
+                          alt='Closed'
+                          title='Closed'
+                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                        />
                       </span>
                       <br />
                       <span className='subject-mobile' style={{ marginBottom: '-15px' }}>

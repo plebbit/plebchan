@@ -1153,10 +1153,20 @@ const Board = () => {
                                 ## Board Mods
                               </span>
                               &nbsp;
-                              <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <span className='thread-icons-mobile'>
+                                <img
+                                  src='assets/sticky.gif'
+                                  alt='Sticky'
+                                  title='Sticky'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                                 &nbsp;
-                                <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                                <img
+                                  src='assets/closed.gif'
+                                  alt='Closed'
+                                  title='Closed'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                               </span>
                               <br />
                               <span className='subject-mobile' style={{ marginBottom: '-15px' }}>
@@ -1378,10 +1388,20 @@ const Board = () => {
                                 ## Board Mods
                               </span>
                               &nbsp;
-                              <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <span className='thread-icons-mobile'>
+                                <img
+                                  src='assets/sticky.gif'
+                                  alt='Sticky'
+                                  title='Sticky'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                                 &nbsp;
-                                <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                                <img
+                                  src='assets/closed.gif'
+                                  alt='Closed'
+                                  title='Closed'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                               </span>
                               <br />
                               <span className='subject-mobile' style={{ marginBottom: '-15px' }}>
@@ -1679,10 +1699,20 @@ const Board = () => {
                                 ## Board Mods
                               </span>
                               &nbsp;
-                              <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <span className='thread-icons-mobile'>
+                                <img
+                                  src='assets/sticky.gif'
+                                  alt='Sticky'
+                                  title='Sticky'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                                 &nbsp;
-                                <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                                <img
+                                  src='assets/closed.gif'
+                                  alt='Closed'
+                                  title='Closed'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                               </span>
                               <br />
                               <span className='subject-mobile' style={{ marginBottom: '-15px' }}>
@@ -3317,24 +3347,24 @@ const Board = () => {
                                       </VerifiedAuthor>
                                     </span>
                                     )&nbsp;
-                                  </span>
-                                  <span key={`ti-mob-${index}`} className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                    {thread.pinned ? (
-                                      <img
-                                        src='assets/sticky.gif'
-                                        alt='Sticky'
-                                        title='Sticky'
-                                        style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }}
-                                      />
-                                    ) : null}
-                                    {thread.locked ? (
-                                      <img
-                                        src='assets/closed.gif'
-                                        alt='Closed'
-                                        title='Closed'
-                                        style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }}
-                                      />
-                                    ) : null}
+                                    <span key={`ti-mob-${index}`} className='thread-icons-mobile'>
+                                      {thread.pinned ? (
+                                        <img
+                                          src='assets/sticky.gif'
+                                          alt='Sticky'
+                                          title='Sticky'
+                                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                        />
+                                      ) : null}
+                                      {thread.locked ? (
+                                        <img
+                                          src='assets/closed.gif'
+                                          alt='Closed'
+                                          title='Closed'
+                                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                        />
+                                      ) : null}
+                                    </span>
                                   </span>
                                   <br key={`mob-br1-${index}`} />
                                   {thread.title ? (

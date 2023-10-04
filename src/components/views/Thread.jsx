@@ -2204,12 +2204,22 @@ const Thread = () => {
                             </span>
                             )&nbsp;
                           </span>
-                          <span key={`ti-mob-${index}`} className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
+                          <span key={`ti-mob-${index}`} className='thread-icons-mobile'>
                             {comment.pinned ? (
-                              <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <img
+                                src='assets/sticky.gif'
+                                alt='Sticky'
+                                title='Sticky'
+                                style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                              />
                             ) : null}
                             {comment.locked ? (
-                              <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <img
+                                src='assets/closed.gif'
+                                alt='Closed'
+                                title='Closed'
+                                style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                              />
                             ) : null}
                           </span>
                           <br key={`mob-br1-${comment.cid}`} />
