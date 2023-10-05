@@ -31,7 +31,6 @@ const PopularThreads = ({ commentCid }) => {
           onClick={() => {
             setSelectedTitle(subplebbit?.title);
             setSelectedAddress(comment?.subplebbitAddress);
-            window.scrollTo(0, 0);
           }}
         >
           {commentMediaInfo?.type === 'webpage' && commentMediaInfo?.thumbnail ? (
@@ -223,13 +222,7 @@ const Home = () => {
                   </a>
                 </h3>
                 &nbsp;
-                <Link
-                  to='/p/all'
-                  id='button'
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                  }}
-                >
+                <Link to={{ pathname: '/p/all', state: { scrollToTop: true } }} id='button'>
                   [view all]
                 </Link>
                 <ul>
@@ -239,10 +232,10 @@ const Home = () => {
                       <Link
                         key={`default-link-${index}`}
                         className='boardlink'
-                        onClick={() => {
-                          window.scrollTo(0, 0);
+                        to={{
+                          pathname: `/p/${address}`,
+                          state: { scrollToTop: true },
                         }}
-                        to={`/p/${address}`}
                       >
                         {address}
                       </Link>
@@ -273,14 +266,7 @@ const Home = () => {
                   {defaultNsfwSubplebbits.slice(0, showAllSFWBoards ? undefined : 18).map((subplebbit, index) => (
                     <li key={`default-${index}`}>
                       <OfflineIndicator address={subplebbit.address} className='disconnected' isText={true} />
-                      <Link
-                        key={`default-link-${index}`}
-                        className='boardlink'
-                        onClick={() => {
-                          window.scrollTo(0, 0);
-                        }}
-                        to={`/p/${subplebbit.address}`}
-                      >
+                      <Link key={`default-link-${index}`} className='boardlink' to={{ pathname: `/p/${subplebbit.address}`, state: { scrollToTop: true } }}>
                         {subplebbit.address}
                       </Link>
                       &nbsp;
@@ -297,13 +283,7 @@ const Home = () => {
               <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>Subscriptions</h3>
                 &nbsp;
-                <Link
-                  to='/p/subscriptions'
-                  id='button'
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                  }}
-                >
+                <Link to={{ pathname: '/p/subscriptions', state: { scrollToTop: true } }} id='button'>
                   [view all]
                 </Link>
                 <br />
@@ -312,14 +292,7 @@ const Home = () => {
                   {account?.subscriptions?.slice(0, showAllSubscriptions ? undefined : 18).map((subscription, index) => (
                     <li key={`sub-${index}`}>
                       <OfflineIndicator address={subscription} className='disconnected' isText={true} />
-                      <Link
-                        key={`sub-link-${index}`}
-                        className='boardlink'
-                        onClick={() => {
-                          window.scrollTo(0, 0);
-                        }}
-                        to={`/p/${subscription}`}
-                      >
+                      <Link key={`sub-link-${index}`} className='boardlink' to={{ pathname: `/p/${subscription}`, state: { scrollToTop: true } }}>
                         {subscription}
                       </Link>
                       &nbsp;
@@ -340,14 +313,7 @@ const Home = () => {
                   {accountSubplebbitsAddresses?.slice(0, showAllSubscriptions ? undefined : 18).map((subplebbit, index) => (
                     <li key={`sub-${index}`}>
                       <OfflineIndicator address={subplebbit} className='disconnected' isText={true} />
-                      <Link
-                        key={`sub-link-${index}`}
-                        className='boardlink'
-                        onClick={() => {
-                          window.scrollTo(0, 0);
-                        }}
-                        to={`/p/${subplebbit}`}
-                      >
+                      <Link key={`sub-link-${index}`} className='boardlink' to={{ pathname: `/p/${subplebbit}`, state: { scrollToTop: true } }}>
                         {subplebbit}
                       </Link>
                       &nbsp;

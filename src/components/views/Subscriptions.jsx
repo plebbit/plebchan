@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useMemo, useState, useRef } fr
 import { confirmAlert } from 'react-confirm-alert';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
 import { useAccount, useAccountComments, useFeed, usePublishCommentEdit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
@@ -540,7 +540,12 @@ const Subscriptions = () => {
     navigate(`/p/${selected}`);
   };
 
+  const location = useLocation();
+
   useEffect(() => {
+    if (location.state?.scrollToTop) {
+      lastVirtuosoStates[`subscriptions`] = null;
+    }
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot) => {
         if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
@@ -551,7 +556,7 @@ const Subscriptions = () => {
     window.addEventListener('scroll', setLastVirtuosoState);
 
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, []);
+  }, [location.state?.scrollToTop]);
 
   const lastVirtuosoState = lastVirtuosoStates['subscriptions'];
 
@@ -577,14 +582,9 @@ const Subscriptions = () => {
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className='boardList'>
-              [
-              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                All
-              </Link>
+              [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                / 
-              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                Subscriptions
-              </Link>
+              <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className='boardList' key={`span-${subplebbit.address}`}>
@@ -651,10 +651,9 @@ const Subscriptions = () => {
                   </Link>
                   &nbsp;
                   <Link
-                    to='/'
+                    to={{ pathname: '/', state: { scrollToTop: true } }}
                     onClick={() => {
                       handleStyleChange({ target: { value: 'Yotsuba' } });
-                      window.scrollTo(0, 0);
                     }}
                   >
                     Home

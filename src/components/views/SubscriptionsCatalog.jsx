@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
@@ -710,7 +710,6 @@ const SubscriptionsCatalog = () => {
     isSettingsOpen,
     setIsSettingsOpen,
     originalCommentContent,
-    selectedAddress,
     setSelectedAddress,
     selectedStyle,
     setSelectedTitle,
@@ -777,18 +776,23 @@ const SubscriptionsCatalog = () => {
     navigate(`/p/${selected}`);
   };
 
+  const location = useLocation();
+
   useEffect(() => {
+    if (location.state?.scrollToTop) {
+      lastVirtuosoStates[`subscriptionsCatalog`] = null;
+    }
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot) => {
         if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
-          lastVirtuosoStates[`${selectedAddress}-catalog`] = snapshot;
+          lastVirtuosoStates[`subscriptionsCatalog`] = snapshot;
         }
       });
     };
     window.addEventListener('scroll', setLastVirtuosoState);
 
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [selectedAddress]);
+  }, [location.state?.scrollToTop]);
 
   const lastVirtuosoState = lastVirtuosoStates['subscriptionsCatalog'];
 
@@ -813,14 +817,9 @@ const SubscriptionsCatalog = () => {
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className='boardList'>
-              [
-              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                All
-              </Link>
+              [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                / 
-              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                Subscriptions
-              </Link>
+              <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className='boardList' key={`span-${subplebbit.address}`}>
@@ -894,10 +893,9 @@ const SubscriptionsCatalog = () => {
                   </Link>
                   &nbsp;
                   <Link
-                    to='/'
+                    to={{ pathname: '/', state: { scrollToTop: true } }}
                     onClick={() => {
                       handleStyleChange({ target: { value: 'Yotsuba' } });
-                      window.scrollTo(0, 0);
                     }}
                   >
                     Home
@@ -941,11 +939,11 @@ const SubscriptionsCatalog = () => {
             </select>
           </span>
           <div className='return-button' id='return-button-desktop'>
-            [<Link to={`/p/subscriptions`}>Return</Link>]
+            [<Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Return</Link>]
           </div>
           <div id='return-button-mobile'>
             <span className='btn-wrap-catalog btn-wrap'>
-              <Link to={`/p/subscriptions`}>Return</Link>
+              <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Return</Link>
             </span>
           </div>
           {subplebbits.state === 'succeeded' ? null : (
@@ -1015,10 +1013,7 @@ const SubscriptionsCatalog = () => {
           >
             <>
               <span className='boardList'>
-                [
-                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                  Subscriptions
-                </Link>
+                [<Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
                 ]&nbsp;[
                 {defaultSubplebbits.map((subplebbit, index) => (
                   <span className='boardList' key={`span-${subplebbit.address}`}>

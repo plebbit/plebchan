@@ -1,7 +1,7 @@
 import React, { useCallback, useLayoutEffect, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
@@ -1462,7 +1462,12 @@ const Catalog = () => {
     }
   };
 
+  const location = useLocation();
+
   useEffect(() => {
+    if (location.state?.scrollToTop) {
+      lastVirtuosoStates[`${selectedAddress}-catalog`] = null;
+    }
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot) => {
         if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
@@ -1473,7 +1478,7 @@ const Catalog = () => {
     window.addEventListener('scroll', setLastVirtuosoState);
 
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [selectedAddress]);
+  }, [selectedAddress, location.state?.scrollToTop]);
 
   const lastVirtuosoState = lastVirtuosoStates[`${selectedAddress}-catalog`];
 
@@ -1498,14 +1503,9 @@ const Catalog = () => {
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className='boardList'>
-              [
-              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                All
-              </Link>
+              [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                / 
-              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                Subscriptions
-              </Link>
+              <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className='boardList' key={`span-${subplebbit.address}`}>
@@ -1580,10 +1580,9 @@ const Catalog = () => {
                   </Link>
                   &nbsp;
                   <Link
-                    to='/'
+                    to={{ pathname: '/', state: { scrollToTop: true } }}
                     onClick={() => {
                       handleStyleChange({ target: { value: 'Yotsuba' } });
-                      window.scrollTo(0, 0);
                     }}
                   >
                     Home
@@ -1688,16 +1687,8 @@ const Catalog = () => {
             </select>
           </span>
           <div className='return-button' id='return-button-desktop'>
-            [
-            <Link
-              to={`/p/${selectedAddress}`}
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              Return
-            </Link>
-            ]{subplebbit.roles && subplebbit?.roles[account?.author?.address]?.role === 'admin' ? <BoardSettings subplebbit={subplebbit} /> : null}
+            [<Link to={{ pathname: `/p/${selectedAddress}`, state: { scrollToTop: true } }}>Return</Link>]
+            {subplebbit.roles && subplebbit?.roles[account?.author?.address]?.role === 'admin' ? <BoardSettings subplebbit={subplebbit} /> : null}
           </div>
           {subplebbit.state === 'succeeded' ? (
             <>
@@ -1721,14 +1712,7 @@ const Catalog = () => {
           )}
           <div id='return-button-mobile'>
             <span className='btn-wrap-catalog btn-wrap'>
-              <Link
-                to={`/p/${selectedAddress}`}
-                onClick={() => {
-                  window.scrollTo(0, 0);
-                }}
-              >
-                Return
-              </Link>
+              <Link to={{ pathname: `/p/${selectedAddress}`, state: { scrollToTop: true } }}>Return</Link>
             </span>
           </div>
           <hr />
@@ -1793,14 +1777,9 @@ const Catalog = () => {
           >
             <>
               <span className='boardList'>
-                [
-                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                  All
-                </Link>
+                [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                  Subscriptions
-                </Link>
+                <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
                 ]&nbsp;
               </span>
               {defaultSubplebbits.map((subplebbit, index) => (

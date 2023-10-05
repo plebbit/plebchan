@@ -45,6 +45,12 @@ export default function App() {
   const location = useLocation();
   const isElectron = window.electron && window.electron.isElectron;
 
+  useEffect(() => {
+    if (location.state?.scrollToTop) {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+
   const [, setNewErrorMessage] = useError();
   const [, setNewSuccessMessage] = useSuccess();
   const [, setNewInfoMessage] = useInfo();
