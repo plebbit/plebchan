@@ -664,14 +664,9 @@ const Thread = () => {
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className='boardList'>
-              [
-              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                All
-              </Link>
+              [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                / 
-              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                Subscriptions
-              </Link>
+              <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className='boardList' key={`span-${subplebbit.address}`}>
@@ -749,7 +744,6 @@ const Thread = () => {
                     to='/'
                     onClick={() => {
                       handleStyleChange({ target: { value: 'Yotsuba' } });
-                      window.scrollTo(0, 0);
                     }}
                   >
                     Home
@@ -779,25 +773,13 @@ const Thread = () => {
         <PostForm selectedStyle={selectedStyle} name='post' action='' method='post' enctype='multipart/form-data'>
           <ReplyFormLink id='post-form-link' showReplyFormLink={showPostFormLink} selectedStyle={selectedStyle}>
             <div id='return-button-mobile'>
-              <span
-                className='btn-wrap'
-                onClick={() => {
-                  window.scrollTo(0, 0);
-                }}
-              >
+              <span className='btn-wrap'>
                 <Link to={`/p/${selectedAddress}`}>Return</Link>
               </span>
             </div>
             <div id='catalog-button-mobile'>
               <span className='btn-wrap'>
-                <Link
-                  to={`/p/${selectedAddress}/catalog`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  Catalog
-                </Link>
+                <Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>
               </span>
             </div>
             <div id='bottom-button-mobile'>
@@ -898,7 +880,7 @@ const Thread = () => {
             [<Link to={`/p/${selectedAddress}`}>Return</Link>]
           </span>
           <span className='return-button catalog-button' id='catalog-button-desktop'>
-            [<Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>]
+            [<Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>]
           </span>
           <span className='return-button catalog-button' id='bottom-button-desktop'>
             [
@@ -2204,12 +2186,22 @@ const Thread = () => {
                             </span>
                             )&nbsp;
                           </span>
-                          <span key={`ti-mob-${index}`} className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
+                          <span key={`ti-mob-${index}`} className='thread-icons-mobile'>
                             {comment.pinned ? (
-                              <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <img
+                                src='assets/sticky.gif'
+                                alt='Sticky'
+                                title='Sticky'
+                                style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                              />
                             ) : null}
                             {comment.locked ? (
-                              <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <img
+                                src='assets/closed.gif'
+                                alt='Closed'
+                                title='Closed'
+                                style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                              />
                             ) : null}
                           </span>
                           <br key={`mob-br1-${comment.cid}`} />
@@ -3033,10 +3025,10 @@ const Thread = () => {
                   <div id='bottombar-desktop'>
                     <hr />
                     <span className='bottom-bar-return'>
-                      [<Link to={`/p/${selectedAddress}`}>Return</Link>]
+                      [<Link to={{ pathname: `/p/${selectedAddress}`, state: { scrollToTop: true } }}>Return</Link>]
                     </span>
                     <span className='bottom-bar-catalog'>
-                      [<Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>]
+                      [<Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>]
                     </span>
                     <span className='bottom-bar-top'>
                       [
@@ -3141,7 +3133,7 @@ const Thread = () => {
                         </div>
                         <div id='catalog-button-mobile' style={{ paddingRight: '2px' }}>
                           <span className='btn-wrap'>
-                            <Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>
+                            <Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>
                           </span>
                         </div>
                         <span className='bottom-bar-top'>
@@ -3222,14 +3214,9 @@ const Thread = () => {
           >
             <>
               <span className='boardList'>
-                [
-                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                  All
-                </Link>
+                [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                  Subscriptions
-                </Link>
+                <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
                 ]&nbsp;
               </span>
               {defaultSubplebbits.map((subplebbit, index) => (

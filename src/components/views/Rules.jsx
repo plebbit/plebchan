@@ -170,14 +170,9 @@ const Rules = () => {
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className='boardList'>
-              [
-              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                All
-              </Link>
+              [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                / 
-              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                Subscriptions
-              </Link>
+              <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className='boardList' key={`span-${subplebbit.address}`}>
@@ -255,7 +250,6 @@ const Rules = () => {
                     to='/'
                     onClick={() => {
                       handleStyleChange({ target: { value: 'Yotsuba' } });
-                      window.scrollTo(0, 0);
                     }}
                   >
                     Home
@@ -285,25 +279,13 @@ const Rules = () => {
         <PostForm selectedStyle={selectedStyle}>
           <ReplyFormLink id='post-form-link' selectedStyle={selectedStyle} style={{ marginBottom: '10px' }}>
             <div id='return-button-mobile'>
-              <span
-                className='btn-wrap'
-                onClick={() => {
-                  window.scrollTo(0, 0);
-                }}
-              >
-                <Link to={`/p/${selectedAddress}`}>Return</Link>
+              <span className='btn-wrap'>
+                <Link to={{ pathname: `/p/${selectedAddress}`, state: { scrollToTop: true } }}>Return</Link>
               </span>
             </div>
             <div id='catalog-button-mobile'>
               <span className='btn-wrap'>
-                <Link
-                  to={`/p/${selectedAddress}/catalog`}
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  Catalog
-                </Link>
+                <Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>
               </span>
             </div>
             <div id='bottom-button-mobile'>
@@ -333,10 +315,10 @@ const Rules = () => {
             </select>
           </span>
           <span className='return-button' id='return-button-desktop'>
-            [<Link to={`/p/${selectedAddress}`}>Return</Link>]
+            [<Link to={{ pathname: `/p/${selectedAddress}`, state: { scrollToTop: true } }}>Return</Link>]
           </span>
           <span className='return-button catalog-button' id='catalog-button-desktop'>
-            [<Link to={`/p/${selectedAddress}/catalog`}>Catalog</Link>]
+            [<Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>]
           </span>
           <span className='return-button catalog-button' id='bottom-button-desktop'>
             [
@@ -539,10 +521,20 @@ const Rules = () => {
                         ## Board Mods
                       </span>
                       &nbsp;
-                      <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                        <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                      <span className='thread-icons-mobile'>
+                        <img
+                          src='assets/sticky.gif'
+                          alt='Sticky'
+                          title='Sticky'
+                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                        />
                         &nbsp;
-                        <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                        <img
+                          src='assets/closed.gif'
+                          alt='Closed'
+                          title='Closed'
+                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                        />
                       </span>
                       <br />
                       <span className='subject-mobile' style={{ marginBottom: '-15px' }}>
@@ -620,14 +612,9 @@ const Rules = () => {
           >
             <>
               <span className='boardList'>
-                [
-                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                  All
-                </Link>
+                [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                  Subscriptions
-                </Link>
+                <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
                 ]&nbsp;
               </span>
               {defaultSubplebbits.map((subplebbit, index) => (

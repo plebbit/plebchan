@@ -1336,6 +1336,12 @@ export const BoardForm = styled.div`
         object-fit: scale-down;
       }
 
+      .thread-icons-mobile {
+        margin-top: -1px;
+        margin-right: 2px;
+        image-rendering: pixelated;
+      }
+
       blockquote {
         padding-top: 5px;
         display: block;

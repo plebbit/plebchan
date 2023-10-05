@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAccount, useComment, useSubplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountSubplebbits, useComment, useSubplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, BoardsBox, BoardsContent, Footer } from '../styled/views/Home.styled';
 import BoardAvatar from '../BoardAvatar';
@@ -13,73 +13,108 @@ import { Tooltip } from 'react-tooltip';
 const { version } = packageJson;
 const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
-const RecentThread = ({ commentCid }) => {
+const PopularThreads = ({ commentCid }) => {
   const comment = useComment({ commentCid });
   const subplebbit = useSubplebbit({ subplebbitAddress: comment?.subplebbitAddress });
   const { setSelectedAddress, setSelectedTitle } = useGeneralStore((state) => state);
   const commentMediaInfo = getCommentMediaInfo(comment);
-  const isMediaShowed =
-    comment.link &&
-    commentMediaInfo &&
-    (commentMediaInfo.type === 'image' ||
-      commentMediaInfo.type === 'video' ||
-      (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
-      (commentMediaInfo.type === 'iframe' && commentMediaInfo.thumbnail))
-      ? true
-      : false;
 
   return (
-    <>
-      {isMediaShowed && comment.replyCount > 0 && !comment.removed ? (
-        <div className='board'>
-          <div className='board-title' key='board-title'>
-            <span>{subplebbit.title || subplebbit.address}</span>
-          </div>
-          <div className='board-avatar-container' key='board-avatar-container'>
-            <Link
-              to={`/p/${comment?.subplebbitAddress}/c/${comment?.cid}`}
-              key='link'
-              onClick={() => {
-                setSelectedTitle(subplebbit?.title);
-                setSelectedAddress(comment?.subplebbitAddress);
-                window.scrollTo(0, 0);
-              }}
-            >
-              {commentMediaInfo?.type === 'webpage' && comment.thumbnailUrl ? (
-                <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
-              ) : commentMediaInfo?.type === 'image' ? (
-                <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-              ) : commentMediaInfo?.type === 'video' ? (
-                <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-              ) : commentMediaInfo?.type === 'iframe' ? (
-                <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
-              ) : (
-                <BoardAvatar address={comment.subplebbitAddress} />
-              )}
-            </Link>
-            <OfflineIndicator address={comment?.subplebbitAddress} className='offline-indicator' tooltipPlace='top' key='oi2' />
-          </div>
-          <div className='board-text' key='bt'>
-            {comment?.title ? <b>{comment?.title}</b> : null}
-            {comment?.content ? (comment.content.length > 99 ? `: ${comment.content.substring(0, 99)}...` : `: ${comment.content}`) : null}
-          </div>
-        </div>
-      ) : null}
-    </>
+    <div className='board'>
+      <div className='board-title' key='board-title'>
+        <span>{subplebbit.title || subplebbit.address}</span>
+      </div>
+      <div className='board-avatar-container' key='board-avatar-container'>
+        <Link
+          to={`/p/${comment?.subplebbitAddress}/c/${comment?.cid}`}
+          key='link'
+          onClick={() => {
+            setSelectedTitle(subplebbit?.title);
+            setSelectedAddress(comment?.subplebbitAddress);
+          }}
+        >
+          {commentMediaInfo?.type === 'webpage' && commentMediaInfo?.thumbnail ? (
+            <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
+          ) : commentMediaInfo?.type === 'image' ? (
+            <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
+          ) : commentMediaInfo?.type === 'video' ? (
+            <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
+          ) : commentMediaInfo?.type === 'iframe' && commentMediaInfo?.thumbnail ? (
+            <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
+          ) : (
+            <BoardAvatar address={comment.subplebbitAddress} />
+          )}
+        </Link>
+        <OfflineIndicator address={comment?.subplebbitAddress} className='offline-indicator' tooltipPlace='top' key='oi2' />
+      </div>
+      <div className='board-text' key='bt'>
+        {comment?.title ? <b>{comment?.title}</b> : null}
+        {comment?.content ? (comment.content.length > 99 ? `: ${comment.content.substring(0, 99)}...` : `: ${comment.content}`) : null}
+      </div>
+    </div>
   );
 };
 
 const Home = () => {
   const { bodyStyle, setBodyStyle, defaultSubplebbits, defaultNsfwSubplebbits, setSelectedAddress, selectedStyle, setSelectedStyle } = useGeneralStore((state) => state);
 
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitsAddresses = Object.values(accountSubplebbits).map((subplebbit) => subplebbit.address);
   const sfwAddresses = defaultSubplebbits.map((subplebbit) => subplebbit.address);
   const sfwSubs = useSubplebbits({ subplebbitAddresses: sfwAddresses });
   const sfwList = sfwSubs.subplebbits.map((subplebbit) => subplebbit?.address);
-  const sfwListCids = sfwSubs.subplebbits.map((s) => s?.lastPostCid);
+  const [sfwListCids, setSfwListCids] = useState([]);
+
+  useEffect(() => {
+    let subplebbitToCid = {};
+
+    sfwSubs.subplebbits.forEach((s) => {
+      let maxTimestamp = -Infinity;
+      let mostRecentCid = null;
+
+      if (s && s.posts && s.posts.pages && s.posts.pages.hot && s.posts.pages.hot.comments) {
+        for (const comment of Object.values(s.posts.pages.hot.comments)) {
+          const commentMediaInfo = getCommentMediaInfo(comment);
+          const isMediaShowed =
+            comment.link &&
+            commentMediaInfo &&
+            (commentMediaInfo.type === 'image' ||
+              commentMediaInfo.type === 'video' ||
+              (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
+              (commentMediaInfo.type === 'iframe' && commentMediaInfo.thumbnail));
+
+          if (
+            isMediaShowed &&
+            comment.replyCount > 2 &&
+            !comment.removed &&
+            !comment.locked &&
+            !comment.pinned &&
+            comment.timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 &&
+            comment.timestamp > maxTimestamp
+          ) {
+            maxTimestamp = comment.timestamp;
+            mostRecentCid = comment.cid;
+          }
+        }
+
+        if (mostRecentCid) {
+          subplebbitToCid[s.address] = { cid: mostRecentCid, timestamp: maxTimestamp };
+        }
+      }
+    });
+
+    const newSfwListCids = Object.values(subplebbitToCid)
+      .map((item) => item.cid)
+      .slice(0, 8);
+
+    setSfwListCids((prevOrderedCids) => {
+      const uniqueCids = Array.from(new Set([...prevOrderedCids, ...newSfwListCids]));
+      return uniqueCids.slice(0, 8);
+    });
+  }, [sfwSubs.subplebbits, sfwListCids]);
 
   const account = useAccount();
   const navigate = useNavigate();
-  const isElectron = window.electron && window.electron.isElectron;
 
   const inputRef = useRef(null);
   const prevStyle = useRef(selectedStyle);
@@ -174,8 +209,8 @@ const Home = () => {
             <div className='boxbar'>
               <h2>Boards</h2>
             </div>
-            <div class='boxcontent'>
-              <div class='column'>
+            <div className='boxcontent'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>
                   <a
                     href='https://github.com/plebbit/temporary-default-subplebbits'
@@ -187,13 +222,7 @@ const Home = () => {
                   </a>
                 </h3>
                 &nbsp;
-                <Link
-                  to='/p/all'
-                  id='button'
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                  }}
-                >
+                <Link to={{ pathname: '/p/all', state: { scrollToTop: true } }} id='button'>
                   [view all]
                 </Link>
                 <ul>
@@ -203,10 +232,10 @@ const Home = () => {
                       <Link
                         key={`default-link-${index}`}
                         className='boardlink'
-                        onClick={() => {
-                          window.scrollTo(0, 0);
+                        to={{
+                          pathname: `/p/${address}`,
+                          state: { scrollToTop: true },
                         }}
-                        to={`/p/${address}`}
                       >
                         {address}
                       </Link>
@@ -221,7 +250,7 @@ const Home = () => {
                   )}
                 </ul>
               </div>
-              <div class='column'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>
                   <a
                     href='https://github.com/plebbit/temporary-default-subplebbits'
@@ -237,14 +266,7 @@ const Home = () => {
                   {defaultNsfwSubplebbits.slice(0, showAllSFWBoards ? undefined : 18).map((subplebbit, index) => (
                     <li key={`default-${index}`}>
                       <OfflineIndicator address={subplebbit.address} className='disconnected' isText={true} />
-                      <Link
-                        key={`default-link-${index}`}
-                        className='boardlink'
-                        onClick={() => {
-                          window.scrollTo(0, 0);
-                        }}
-                        to={`/p/${subplebbit.address}`}
-                      >
+                      <Link key={`default-link-${index}`} className='boardlink' to={{ pathname: `/p/${subplebbit.address}`, state: { scrollToTop: true } }}>
                         {subplebbit.address}
                       </Link>
                       &nbsp;
@@ -258,16 +280,10 @@ const Home = () => {
                   )}
                 </ul>
               </div>
-              <div class='column'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>Subscriptions</h3>
                 &nbsp;
-                <Link
-                  to='/p/subscriptions'
-                  id='button'
-                  onClick={() => {
-                    window.scrollTo(0, 0);
-                  }}
-                >
+                <Link to={{ pathname: '/p/subscriptions', state: { scrollToTop: true } }} id='button'>
                   [view all]
                 </Link>
                 <br />
@@ -276,14 +292,7 @@ const Home = () => {
                   {account?.subscriptions?.slice(0, showAllSubscriptions ? undefined : 18).map((subscription, index) => (
                     <li key={`sub-${index}`}>
                       <OfflineIndicator address={subscription} className='disconnected' isText={true} />
-                      <Link
-                        key={`sub-link-${index}`}
-                        className='boardlink'
-                        onClick={() => {
-                          window.scrollTo(0, 0);
-                        }}
-                        to={`/p/${subscription}`}
-                      >
+                      <Link key={`sub-link-${index}`} className='boardlink' to={{ pathname: `/p/${subscription}`, state: { scrollToTop: true } }}>
                         {subscription}
                       </Link>
                       &nbsp;
@@ -297,25 +306,19 @@ const Home = () => {
                   )}
                 </ul>
               </div>
-              <div class='column'>
+              <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>Moderating</h3>
                 <ul>
-                  {!isElectron ? (
-                    <li style={{ color: 'black' }}>
-                      Visible on{' '}
-                      <a
-                        style={{ color: 'blue', textDecoration: 'underline' }}
-                        href='https://github.com/plebbit/plebchan/releases/latest'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        full node (desktop)
-                      </a>
-                      .
+                  {accountSubplebbitsAddresses?.length === 0 && <li style={{ color: 'black' }}>Not moderating any board.</li>}
+                  {accountSubplebbitsAddresses?.slice(0, showAllSubscriptions ? undefined : 18).map((subplebbit, index) => (
+                    <li key={`sub-${index}`}>
+                      <OfflineIndicator address={subplebbit} className='disconnected' isText={true} />
+                      <Link key={`sub-link-${index}`} className='boardlink' to={{ pathname: `/p/${subplebbit}`, state: { scrollToTop: true } }}>
+                        {subplebbit}
+                      </Link>
+                      &nbsp;
                     </li>
-                  ) : (
-                    <div>WIP</div>
-                  )}
+                  ))}
                 </ul>
               </div>
             </div>
@@ -326,7 +329,7 @@ const Home = () => {
             </div>
             <BoardsContent>
               {sfwListCids.map((cid) => (
-                <RecentThread commentCid={cid} />
+                <PopularThreads commentCid={cid} />
               ))}
             </BoardsContent>
           </BoardsBox>

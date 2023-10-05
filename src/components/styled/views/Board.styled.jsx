@@ -2147,6 +2147,12 @@ export const BoardForm = styled.div`
         margin: 0;
       }
 
+      .thread-icons-mobile {
+        margin-top: -1px;
+        margin-right: 2px;
+        image-rendering: pixelated;
+      }
+
       blockquote {
         padding-top: 5px;
         display: block;

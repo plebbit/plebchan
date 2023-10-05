@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { Tooltip } from 'react-tooltip';
 import { Virtuoso } from 'react-virtuoso';
@@ -698,7 +698,12 @@ const Board = () => {
     }
   };
 
+  const location = useLocation();
+
   useEffect(() => {
+    if (location.state?.scrollToTop) {
+      lastVirtuosoStates[selectedAddress] = null;
+    }
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot) => {
         if (snapshot?.scrollTop === 0 || snapshot?.ranges?.length) {
@@ -709,7 +714,7 @@ const Board = () => {
     window.addEventListener('scroll', setLastVirtuosoState);
 
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [selectedAddress]);
+  }, [selectedAddress, location.state?.scrollToTop]);
 
   const lastVirtuosoState = lastVirtuosoStates[selectedAddress];
 
@@ -736,14 +741,9 @@ const Board = () => {
         <NavBar selectedStyle={selectedStyle}>
           <>
             <span className='boardList'>
-              [
-              <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                All
-              </Link>
+              [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                / 
-              <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                Subscriptions
-              </Link>
+              <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
               ]&nbsp;[
               {defaultSubplebbits.map((subplebbit, index) => (
                 <span className='boardList' key={`span-${subplebbit.address}`}>
@@ -813,10 +813,9 @@ const Board = () => {
                   </Link>
                   &nbsp;
                   <Link
-                    to='/'
+                    to={{ pathname: '/', state: { scrollToTop: true } }}
                     onClick={() => {
                       handleStyleChange({ target: { value: 'Yotsuba' } });
-                      window.scrollTo(0, 0);
                     }}
                   >
                     Home
@@ -919,16 +918,8 @@ const Board = () => {
             </select>
           </span>
           <div id='catalog-button-desktop'>
-            [
-            <Link
-              to={`/p/${selectedAddress}/catalog`}
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              Catalog
-            </Link>
-            ]{subplebbit.roles && subplebbit?.roles?.[account?.author?.address]?.role === 'admin' ? <BoardSettings subplebbit={subplebbit} /> : null}
+            [<Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>]
+            {subplebbit.roles && subplebbit?.roles?.[account?.author?.address]?.role === 'admin' ? <BoardSettings subplebbit={subplebbit} /> : null}
           </div>
           {subplebbit?.state === 'succeeded' ? (
             <>
@@ -952,14 +943,7 @@ const Board = () => {
           )}
           <div id='catalog-button-mobile'>
             <span className='btn-wrap'>
-              <Link
-                to={`/p/${selectedAddress}/catalog`}
-                onClick={() => {
-                  window.scrollTo(0, 0);
-                }}
-              >
-                Catalog
-              </Link>
+              <Link to={{ pathname: `/p/${selectedAddress}/catalog`, state: { scrollToTop: true } }}>Catalog</Link>
             </span>
           </div>
         </TopBar>
@@ -1153,10 +1137,20 @@ const Board = () => {
                                 ## Board Mods
                               </span>
                               &nbsp;
-                              <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <span className='thread-icons-mobile'>
+                                <img
+                                  src='assets/sticky.gif'
+                                  alt='Sticky'
+                                  title='Sticky'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                                 &nbsp;
-                                <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                                <img
+                                  src='assets/closed.gif'
+                                  alt='Closed'
+                                  title='Closed'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                               </span>
                               <br />
                               <span className='subject-mobile' style={{ marginBottom: '-15px' }}>
@@ -1378,10 +1372,20 @@ const Board = () => {
                                 ## Board Mods
                               </span>
                               &nbsp;
-                              <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <span className='thread-icons-mobile'>
+                                <img
+                                  src='assets/sticky.gif'
+                                  alt='Sticky'
+                                  title='Sticky'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                                 &nbsp;
-                                <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                                <img
+                                  src='assets/closed.gif'
+                                  alt='Closed'
+                                  title='Closed'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                               </span>
                               <br />
                               <span className='subject-mobile' style={{ marginBottom: '-15px' }}>
@@ -1679,10 +1683,20 @@ const Board = () => {
                                 ## Board Mods
                               </span>
                               &nbsp;
-                              <span className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                              <span className='thread-icons-mobile'>
+                                <img
+                                  src='assets/sticky.gif'
+                                  alt='Sticky'
+                                  title='Sticky'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                                 &nbsp;
-                                <img src='assets/closed.gif' alt='Closed' title='Closed' style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }} />
+                                <img
+                                  src='assets/closed.gif'
+                                  alt='Closed'
+                                  title='Closed'
+                                  style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                />
                               </span>
                               <br />
                               <span className='subject-mobile' style={{ marginBottom: '-15px' }}>
@@ -3317,24 +3331,24 @@ const Board = () => {
                                       </VerifiedAuthor>
                                     </span>
                                     )&nbsp;
-                                  </span>
-                                  <span key={`ti-mob-${index}`} className='thread-icons-mobile' style={{ float: 'right', marginRight: '18px' }}>
-                                    {thread.pinned ? (
-                                      <img
-                                        src='assets/sticky.gif'
-                                        alt='Sticky'
-                                        title='Sticky'
-                                        style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }}
-                                      />
-                                    ) : null}
-                                    {thread.locked ? (
-                                      <img
-                                        src='assets/closed.gif'
-                                        alt='Closed'
-                                        title='Closed'
-                                        style={{ marginTop: '-1px', marginRight: '2px', imageRendering: 'pixelated' }}
-                                      />
-                                    ) : null}
+                                    <span key={`ti-mob-${index}`} className='thread-icons-mobile'>
+                                      {thread.pinned ? (
+                                        <img
+                                          src='assets/sticky.gif'
+                                          alt='Sticky'
+                                          title='Sticky'
+                                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                        />
+                                      ) : null}
+                                      {thread.locked ? (
+                                        <img
+                                          src='assets/closed.gif'
+                                          alt='Closed'
+                                          title='Closed'
+                                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                        />
+                                      ) : null}
+                                    </span>
                                   </span>
                                   <br key={`mob-br1-${index}`} />
                                   {thread.title ? (
@@ -3729,7 +3743,6 @@ const Board = () => {
                                 to={`/p/${selectedAddress}/c/${thread.cid}`}
                                 onClick={() => {
                                   setSelectedThread(thread.cid);
-                                  window.scrollTo(0, 0);
                                 }}
                                 className='button-mobile'
                               >
@@ -4538,14 +4551,9 @@ const Board = () => {
           >
             <>
               <span className='boardList'>
-                [
-                <Link to={`/p/all`} onClick={() => window.scrollTo(0, 0)}>
-                  All
-                </Link>
+                [<Link to={{ pathname: `/p/all`, state: { scrollToTop: true } }}>All</Link>
                  / 
-                <Link to={`/p/subscriptions`} onClick={() => window.scrollTo(0, 0)}>
-                  Subscriptions
-                </Link>
+                <Link to={{ pathname: `/p/subscriptions`, state: { scrollToTop: true } }}>Subscriptions</Link>
                 ]&nbsp;
               </span>
               {defaultSubplebbits.map((subplebbit, index) => (
