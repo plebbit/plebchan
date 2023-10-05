@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -21,6 +21,7 @@ import Thread from './components/views/Thread';
 import CaptchaModal from './components/modals/CaptchaModal';
 import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
+import showNewVersionToast from './utils/showNewVersionToast';
 import useError from './hooks/useError';
 import useInfo from './hooks/useInfo';
 import useSuccess from './hooks/useSuccess';
@@ -48,8 +49,6 @@ export default function App() {
   const [, setNewSuccessMessage] = useSuccess();
   const [, setNewInfoMessage] = useInfo();
 
-  const [infoMessageShown, setInfoMessageShown] = useState(false);
-
   useEffect(() => {
     const successToast = localStorage.getItem('successToast');
     const errorToast = localStorage.getItem('errorToast');
@@ -64,41 +63,15 @@ export default function App() {
     }
   }, [setNewErrorMessage, setNewSuccessMessage]);
 
-  // check for new version
-  // TODO: delete this code and toast when v1.0.0 is released
+  // TODO: delete this code and toast when v1.0.0 is released (minor updates expected)
+  let hasRun = useRef(false);
+
   useEffect(() => {
-    const fetchVersionInfo = async () => {
-      try {
-        const packageRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/master/package.json', { cache: 'no-cache' });
-        const packageData = await packageRes.json();
-
-        if (packageJson.version !== packageData.version && !infoMessageShown) {
-          const newVersionInfo = isElectron
-            ? `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Download the latest version here: https://github.com/plebbit/plebchan/releases/latest`
-            : `New version available, plebchan v${packageData.version}. You are using v${packageJson.version}. Refresh to update.`;
-          setNewInfoMessage(newVersionInfo);
-          setInfoMessageShown(true);
-        }
-
-        if (commitRef.length > 0) {
-          const commitRes = await fetch('https://api.github.com/repos/plebbit/plebchan/commits?per_page=1&sha=development', { cache: 'no-cache' });
-          const commitData = await commitRes.json();
-
-          const latestCommitHash = commitData[0].sha;
-
-          if (latestCommitHash.trim() !== commitRef.trim() && !infoMessageShown) {
-            const newVersionInfo = `New dev version available, commit ${latestCommitHash.slice(0, 7)}. You are using commit ${commitRef.slice(0, 7)}. Refresh to update.`;
-            setNewInfoMessage(newVersionInfo);
-            setInfoMessageShown(true);
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch latest version info:', error);
-      }
-    };
-
-    fetchVersionInfo();
-  }, [setNewInfoMessage, isElectron, infoMessageShown]);
+    if (!hasRun.current) {
+      showNewVersionToast(setNewInfoMessage, isElectron, packageJson, commitRef);
+      hasRun.current = true;
+    }
+  }, [setNewInfoMessage, isElectron]);
 
   // preload banners
   useEffect(() => {
