@@ -64,51 +64,56 @@ const Home = () => {
   const sfwAddresses = defaultSubplebbits.map((subplebbit) => subplebbit.address);
   const sfwSubs = useSubplebbits({ subplebbitAddresses: sfwAddresses });
   const sfwList = sfwSubs.subplebbits.map((subplebbit) => subplebbit?.address);
-  const subplebbitToCid = {};
+  const [sfwListCids, setSfwListCids] = useState([]);
 
-  sfwSubs.subplebbits.forEach((s) => {
-    let maxTimestamp = -Infinity;
-    let mostRecentCid = null;
+  useEffect(() => {
+    let subplebbitToCid = {};
 
-    if (s && s.posts && s.posts.pages && s.posts.pages.hot && s.posts.pages.hot.comments) {
-      for (const comment of Object.values(s.posts.pages.hot.comments)) {
-        const commentMediaInfo = getCommentMediaInfo(comment);
-        const isMediaShowed =
-          comment.link &&
-          commentMediaInfo &&
-          (commentMediaInfo.type === 'image' ||
-            commentMediaInfo.type === 'video' ||
-            (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
-            (commentMediaInfo.type === 'iframe' && commentMediaInfo.thumbnail));
+    sfwSubs.subplebbits.forEach((s) => {
+      let maxTimestamp = -Infinity;
+      let mostRecentCid = null;
 
-        if (
-          isMediaShowed &&
-          comment.replyCount > 2 &&
-          !comment.removed &&
-          !comment.locked &&
-          !comment.pinned &&
-          comment.timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 &&
-          comment.timestamp > maxTimestamp
-        ) {
-          maxTimestamp = comment.timestamp;
-          mostRecentCid = comment.cid;
+      if (s && s.posts && s.posts.pages && s.posts.pages.hot && s.posts.pages.hot.comments) {
+        for (const comment of Object.values(s.posts.pages.hot.comments)) {
+          const commentMediaInfo = getCommentMediaInfo(comment);
+          const isMediaShowed =
+            comment.link &&
+            commentMediaInfo &&
+            (commentMediaInfo.type === 'image' ||
+              commentMediaInfo.type === 'video' ||
+              (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
+              (commentMediaInfo.type === 'iframe' && commentMediaInfo.thumbnail));
+
+          if (
+            isMediaShowed &&
+            comment.replyCount > 2 &&
+            !comment.removed &&
+            !comment.locked &&
+            !comment.pinned &&
+            comment.timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 &&
+            comment.timestamp > maxTimestamp
+          ) {
+            maxTimestamp = comment.timestamp;
+            mostRecentCid = comment.cid;
+          }
+        }
+
+        if (mostRecentCid) {
+          subplebbitToCid[s.address] = { cid: mostRecentCid, timestamp: maxTimestamp };
         }
       }
+    });
 
-      if (mostRecentCid) {
-        subplebbitToCid[s.address] = { cid: mostRecentCid, timestamp: maxTimestamp };
-      }
-    }
-  });
+    const newSfwListCids = Object.values(subplebbitToCid)
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .map((item) => item.cid)
+      .slice(0, 8);
 
-  const sfwListCids = Object.values(subplebbitToCid)
-    .sort((a, b) => b.timestamp - a.timestamp)
-    .map((item) => item.cid)
-    .slice(0, 8);
+    setSfwListCids(newSfwListCids);
+  }, [sfwSubs.subplebbits]);
 
   const account = useAccount();
   const navigate = useNavigate();
-  const isElectron = window.electron && window.electron.isElectron;
 
   const inputRef = useRef(null);
   const prevStyle = useRef(selectedStyle);
