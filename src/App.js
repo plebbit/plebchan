@@ -23,12 +23,14 @@ import { importAll } from './components/ImageBanner';
 import preloadImages from './utils/preloadImages';
 import showNewVersionToast from './utils/showNewVersionToast';
 import useError from './hooks/useError';
+import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 import useInfo from './hooks/useInfo';
 import useSuccess from './hooks/useSuccess';
 import packageJson from '../package.json';
 const commitRef = process?.env?.REACT_APP_COMMIT_REF || '';
 
 export default function App() {
+
   const {
     bodyStyle,
     setBodyStyle,
@@ -44,6 +46,7 @@ export default function App() {
 
   const location = useLocation();
   const isElectron = window.electron && window.electron.isElectron;
+  useGoogleAnalytics();
 
   useEffect(() => {
     if (location.state?.scrollToTop) {
