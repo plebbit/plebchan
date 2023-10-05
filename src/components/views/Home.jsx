@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAccount, useComment, useSubplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountSubplebbits, useComment, useSubplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, BoardsBox, BoardsContent, Footer } from '../styled/views/Home.styled';
 import BoardAvatar from '../BoardAvatar';
@@ -13,7 +13,7 @@ import { Tooltip } from 'react-tooltip';
 const { version } = packageJson;
 const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
 
-const RecentThread = ({ commentCid }) => {
+const PopularThreads = ({ commentCid }) => {
   const comment = useComment({ commentCid });
   const subplebbit = useSubplebbit({ subplebbitAddress: comment?.subplebbitAddress });
   const { setSelectedAddress, setSelectedTitle } = useGeneralStore((state) => state);
@@ -34,13 +34,13 @@ const RecentThread = ({ commentCid }) => {
             window.scrollTo(0, 0);
           }}
         >
-          {commentMediaInfo?.type === 'webpage' && comment.thumbnailUrl ? (
+          {commentMediaInfo?.type === 'webpage' && commentMediaInfo?.thumbnail ? (
             <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
           ) : commentMediaInfo?.type === 'image' ? (
             <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
           ) : commentMediaInfo?.type === 'video' ? (
             <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-          ) : commentMediaInfo?.type === 'iframe' ? (
+          ) : commentMediaInfo?.type === 'iframe' && commentMediaInfo?.thumbnail ? (
             <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
           ) : (
             <BoardAvatar address={comment.subplebbitAddress} />
@@ -59,6 +59,8 @@ const RecentThread = ({ commentCid }) => {
 const Home = () => {
   const { bodyStyle, setBodyStyle, defaultSubplebbits, defaultNsfwSubplebbits, setSelectedAddress, selectedStyle, setSelectedStyle } = useGeneralStore((state) => state);
 
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitsAddresses = Object.values(accountSubplebbits).map((subplebbit) => subplebbit.address);
   const sfwAddresses = defaultSubplebbits.map((subplebbit) => subplebbit.address);
   const sfwSubs = useSubplebbits({ subplebbitAddresses: sfwAddresses });
   const sfwList = sfwSubs.subplebbits.map((subplebbit) => subplebbit?.address);
@@ -327,22 +329,23 @@ const Home = () => {
               <div className='column'>
                 <h3 style={{ textDecoration: 'underline', display: 'inline' }}>Moderating</h3>
                 <ul>
-                  {!isElectron ? (
-                    <li style={{ color: 'black' }}>
-                      Visible on{' '}
-                      <a
-                        style={{ color: 'blue', textDecoration: 'underline' }}
-                        href='https://github.com/plebbit/plebchan/releases/latest'
-                        target='_blank'
-                        rel='noopener noreferrer'
+                  {accountSubplebbitsAddresses?.length === 0 && <li style={{ color: 'black' }}>Not moderating any board.</li>}
+                  {accountSubplebbitsAddresses?.slice(0, showAllSubscriptions ? undefined : 18).map((subplebbit, index) => (
+                    <li key={`sub-${index}`}>
+                      <OfflineIndicator address={subplebbit} className='disconnected' isText={true} />
+                      <Link
+                        key={`sub-link-${index}`}
+                        className='boardlink'
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                        }}
+                        to={`/p/${subplebbit}`}
                       >
-                        full node (desktop)
-                      </a>
-                      .
+                        {subplebbit}
+                      </Link>
+                      &nbsp;
                     </li>
-                  ) : (
-                    <div>WIP</div>
-                  )}
+                  ))}
                 </ul>
               </div>
             </div>
@@ -353,7 +356,7 @@ const Home = () => {
             </div>
             <BoardsContent>
               {sfwListCids.map((cid) => (
-                <RecentThread commentCid={cid} />
+                <PopularThreads commentCid={cid} />
               ))}
             </BoardsContent>
           </BoardsBox>
