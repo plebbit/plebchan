@@ -105,12 +105,14 @@ const Home = () => {
     });
 
     const newSfwListCids = Object.values(subplebbitToCid)
-      .sort((a, b) => b.timestamp - a.timestamp)
       .map((item) => item.cid)
       .slice(0, 8);
 
-    setSfwListCids(newSfwListCids);
-  }, [sfwSubs.subplebbits]);
+    setSfwListCids((prevOrderedCids) => {
+      const uniqueCids = Array.from(new Set([...prevOrderedCids, ...newSfwListCids]));
+      return uniqueCids.slice(0, 8);
+    });
+  }, [sfwSubs.subplebbits, sfwListCids]);
 
   const account = useAccount();
   const navigate = useNavigate();
