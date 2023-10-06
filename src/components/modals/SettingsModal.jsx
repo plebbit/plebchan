@@ -343,7 +343,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
 
       if (!oldData.account?.author?.address.endsWith('.eth') && parsedJson.account?.author?.address.endsWith('.eth') && anonymousMode === true) {
         setAnonymousMode(false);
-        localStorage.setitem('successToast', 'Account data saved successfully. ENS address detected, Anon mode disabled.');
+        localStorage.setItem('successToast', 'Account data saved successfully. ENS address detected, Anon mode disabled.');
         window.location.reload();
       } else {
         setNewSuccessMessage('Account data saved successfully.');
