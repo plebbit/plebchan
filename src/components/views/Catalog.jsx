@@ -18,6 +18,7 @@ import SettingsModal from '../modals/SettingsModal';
 import BoardSettings from '../BoardSettings';
 import BoardStats from '../BoardStats';
 import CatalogLoader from '../CatalogLoader';
+import DisplayName from '../DisplayName';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import VerifiedAuthor from '../VerifiedAuthor';
@@ -769,7 +770,10 @@ const CatalogPost = ({ post }) => {
                   {thread.replyCount > 0 ? (
                     <div className='post-last'>
                       Last reply by
-                      <span className='post-author'> Anonymous </span>
+                      <span className='post-author'>
+                        {' '}
+                        <DisplayName commentCid={thread.lastChildCid} />{' '}
+                      </span>
                       <span className='post-ago'>{getFormattedTime(thread.lastReplyTimestamp)}</span>
                     </div>
                   ) : null}

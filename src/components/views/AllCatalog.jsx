@@ -12,6 +12,7 @@ import { Threads, PostPreview, PostMenuCatalog } from '../styled/views/Catalog.s
 import { TopBar, Footer } from '../styled/views/Thread.styled';
 import { AlertModal } from '../styled/modals/AlertModal.styled';
 import CatalogLoader from '../CatalogLoader';
+import DisplayName from '../DisplayName';
 import EditModal from '../modals/EditModal';
 import ImageBanner from '../ImageBanner';
 import VerifiedAuthor from '../VerifiedAuthor';
@@ -383,7 +384,10 @@ const CatalogPost = ({ post }) => {
                 {thread.replyCount > 0 ? (
                   <div className='post-last'>
                     Last reply by
-                    <span className='post-author'> Anonymous </span>
+                    <span className='post-author'>
+                      {' '}
+                      <DisplayName commentCid={thread.lastChildCid} />{' '}
+                    </span>
                     <span className='post-ago'>{getFormattedTime(thread.lastReplyTimestamp)}</span>
                   </div>
                 ) : null}
