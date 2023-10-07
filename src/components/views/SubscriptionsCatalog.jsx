@@ -377,7 +377,7 @@ const CatalogPost = ({ post }) => {
                   top: popupPosition.top + 5,
                 }}
               >
-                <span className='post-subject'>{thread.title ? `${thread.title} ` : 'Posted '}</span>
+                {thread.title ? <span className='post-subject'>{thread.title} </span> : 'Posted '}
                 by
                 <span className='post-author'>{thread.author.displayName ? ` ${thread.author.displayName} ` : ' Anonymous '}</span>
                 <span className='post-ago'>{thread.timestamp ? getFormattedTime(thread.timestamp) : null}</span>
@@ -688,8 +688,8 @@ const CatalogPost = ({ post }) => {
               }}
               onMouseLeave={() => setIsHoveringForMenu(false)}
             >
-              <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
-              {thread.content ? `: ${thread.content}` : null}
+              <b key={`b2-`}>{thread.title ? `${thread.title}${thread.content ? ': ' : ''}` : null}</b>
+              {thread.content ? `${thread.content}` : null}
             </span>
           </div>
         </Link>
