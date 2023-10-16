@@ -36,8 +36,8 @@ const PostOnHover = ({ cid, feed }) => {
       }}
     >
       <BoardForm selectedStyle={selectedStyle} style={{ margin: '0', padding: '0' }}>
-        <div className='board' style={{ margin: '0', padding: '0' }}>
-          <div className='thread' style={{ margin: '0', padding: '0' }}>
+        <div className='board'>
+          <div className='thread'>
             {reply.state === 'succeeded' ? (
               <div className='reply-container'>
                 <div className='post-reply post-reply-desktop'>

@@ -18,6 +18,7 @@ import SettingsModal from '../modals/SettingsModal';
 import BoardSettings from '../BoardSettings';
 import BoardStats from '../BoardStats';
 import CatalogLoader from '../CatalogLoader';
+import DisplayName from '../DisplayName';
 import ImageBanner from '../ImageBanner';
 import OfflineIndicator from '../OfflineIndicator';
 import VerifiedAuthor from '../VerifiedAuthor';
@@ -762,14 +763,17 @@ const CatalogPost = ({ post }) => {
                     top: popupPosition.top + 5,
                   }}
                 >
-                  <span className='post-subject'>{thread.title ? `${thread.title} ` : 'Posted '}</span>
+                  {thread.title ? <span className='post-subject'>{thread.title} </span> : 'Posted '}
                   by
                   <span className='post-author'>{thread.author.displayName ? ` ${thread.author.displayName} ` : ' Anonymous '}</span>
                   <span className='post-ago'>{thread.timestamp ? getFormattedTime(thread.timestamp) : null}</span>
                   {thread.replyCount > 0 ? (
                     <div className='post-last'>
                       Last reply by
-                      <span className='post-author'> Anonymous </span>
+                      <span className='post-author'>
+                        {' '}
+                        <DisplayName commentCid={thread.lastChildCid} />{' '}
+                      </span>
                       <span className='post-ago'>{getFormattedTime(thread.lastReplyTimestamp)}</span>
                     </div>
                   ) : null}
@@ -1104,8 +1108,8 @@ const CatalogPost = ({ post }) => {
                   }}
                   onMouseLeave={() => setIsHoveringForMenu(false)}
                 >
-                  <b key={`b2-`}>{thread.title ? `${thread.title}` : null}</b>
-                  {thread.content ? `: ${thread.content}` : null}
+                  <b key={`b2-`}>{thread.title ? `${thread.title}${thread.content ? ': ' : ''}` : null}</b>
+                  {thread.content ? `${thread.content}` : null}
                 </span>
               </div>
             </div>
