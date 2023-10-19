@@ -2049,10 +2049,10 @@ export const BoardForm = styled.div`
     border-top: none;
     margin: 0;
     clear: both;
+    padding-bottom: 25px;
 
     hr {
-      margin-top: 30px;
-      margin-bottom: 30px;
+      padding-top: 25px;
     }
 
     .op-container {
