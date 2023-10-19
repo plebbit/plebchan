@@ -20,7 +20,7 @@ const PopularThreads = ({ commentCid }) => {
   const commentMediaInfo = getCommentMediaInfo(comment);
 
   return (
-    <div className='board'>
+    <div className='board' key={`${commentCid}`}>
       <div className='board-title' key='board-title'>
         <span>{subplebbit.title || subplebbit.address}</span>
       </div>
@@ -111,7 +111,7 @@ const Home = () => {
       const uniqueCids = Array.from(new Set([...prevOrderedCids, ...newSfwListCids]));
       return uniqueCids.slice(0, 8);
     });
-  }, [sfwSubs.subplebbits, sfwListCids]);
+  }, [sfwSubs.subplebbits]);
 
   const account = useAccount();
   const navigate = useNavigate();
