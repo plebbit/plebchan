@@ -1780,7 +1780,7 @@ const Board = () => {
                               <hr key={`hr-${index}`} />
                               <div key={`pi-${index}`} className='post-info'>
                                 {commentMediaInfo?.url ? (
-                                  <div key={`f-${index}`} className='file' style={{ marginBottom: '5px' }}>
+                                  <div key={`f-${index}`} className='file'>
                                     <div key={`ft-${index}`} className='file-text'>
                                       Link:&nbsp;
                                       <a key={`fa-${index}`} href={commentMediaInfo.url} target='_blank' rel='noopener noreferrer'>
@@ -2027,7 +2027,7 @@ const Board = () => {
                                     {thread.pinned ? (
                                       <>
                                         &nbsp;
-                                        <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginBottom: '-1px', imageRendering: 'pixelated' }} />
+                                        <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ imageRendering: 'pixelated' }} />
                                       </>
                                     ) : null}
                                     {thread.locked ? (
@@ -2761,7 +2761,7 @@ const Board = () => {
                                       </div>
                                     </div>
                                     {replyMediaInfo?.url ? (
-                                      <div key={`f-${index}`} className='file' style={{ marginBottom: '5px' }}>
+                                      <div key={`f-${index}`} className='file'>
                                         <div key={`ft-${index}`} className='file-text'>
                                           Link:&nbsp;
                                           <a key={`fa-${index}`} href={replyMediaInfo.url} target='_blank' rel='noopener noreferrer'>
