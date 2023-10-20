@@ -2062,14 +2062,14 @@ export const BoardForm = styled.div`
 
       .op {
         display: inline;
-        margin: 4px 0;
+        /* margin: 4px 0; */
         overflow: hidden;
       }
 
       .post-info-mobile {
         overflow: hidden;
         padding: 5px;
-        margin: -5px -6px -5px -5px;
+        /* margin: -5px -6px -5px -5px; */
         display: block;
         clear: left;
       }
@@ -2080,7 +2080,7 @@ export const BoardForm = styled.div`
         text-align: center !important;
         outline: none !important;
         transform: rotate(90deg) !important;
-        margin: 4px -5px 0 4px !important;
+        /* margin: 4px -5px 0 4px !important; */
         float: left !important;
         font-weight: 700 !important;
         opacity: 1 !important;
@@ -2106,12 +2106,12 @@ export const BoardForm = styled.div`
         display: block;
 
         .file-thumb-mobile {
-          margin-left: 10px !important;
-          margin-right: 10px !important;
+          padding-left: 10px !important;
+          padding-right: 10px !important;
           text-decoration: none;
           float: left;
-          margin-bottom: 5% !important;
-          margin-top: 15px !important;
+          padding-bottom: 5% !important;
+          padding-top: 15px !important;
         }
 
         .file-info-mobile {
@@ -2147,27 +2147,25 @@ export const BoardForm = styled.div`
       }
 
       .thread-icons-mobile {
-        margin-top: -1px;
-        margin-right: 2px;
         image-rendering: pixelated;
       }
 
       blockquote {
         padding-top: 5px;
         display: block;
-        margin: 10px !important;
+        /* margin: 10px !important; */
       }
 
       .post-link-mobile {
         clear: both !important;
         padding: 5px;
         overflow: hidden;
-        margin: -5px;
+        /* margin: -5px; */
         display: block !important;
       }
 
       .info-mobile {
-        margin-top: 8px;
+        /* margin-top: 8px; */
         float: left;
       }
 
@@ -2250,7 +2248,7 @@ export const BoardForm = styled.div`
           text-align: center !important;
           outline: none !important;
           transform: rotate(90deg) !important;
-          margin: 4px -5px 0 4px !important;
+          /* margin: 4px -5px 0 4px !important; */
           float: left !important;
           font-weight: 700 !important;
           opacity: 1 !important;
@@ -2276,7 +2274,7 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
-        margin: 10px !important;
+        /* margin: 10px !important; */
       }
     }
   }
@@ -3326,13 +3324,13 @@ export const BoardForm = styled.div`
   }}
 
   @media (max-width: 480px) {
-    margin-bottom: 335px;
+    /* margin-bottom: 335px;
     margin-left: -5px;
-    margin-right: -5px;
+    margin-right: -5px; */
 
     .offline-mobile-sub {
       width: 16px;
-      margin-right: 5px;
+      /* margin-right: 5px; */
     }
 
     .offline-mobile-sub-reply {
