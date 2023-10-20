@@ -2049,30 +2049,26 @@ export const BoardForm = styled.div`
     border-top: none;
     margin: 0;
     clear: both;
+    padding-bottom: 25px;
 
     hr {
-      margin-top: 30px;
-      margin-bottom: 30px;
+      padding-top: 25px;
     }
 
     .op-container {
-      margin: 0 -5px;
-      padding: 5px;
       display: block;
       overflow: hidden;
 
       .op {
         display: inline;
-        margin: 4px 0;
         overflow: hidden;
       }
 
       .post-info-mobile {
         overflow: hidden;
-        padding: 5px;
-        margin: -5px -6px -5px -5px;
         display: block;
         clear: left;
+        padding: 5px;
       }
 
       .post-menu-button-mobile {
@@ -2107,12 +2103,12 @@ export const BoardForm = styled.div`
         display: block;
 
         .file-thumb-mobile {
-          margin-left: 10px !important;
-          margin-right: 10px !important;
+          padding-left: 10px !important;
+          padding-right: 10px !important;
           text-decoration: none;
           float: left;
-          margin-bottom: 5% !important;
-          margin-top: 15px !important;
+          padding-bottom: 5% !important;
+          padding-top: 15px !important;
         }
 
         .file-info-mobile {
@@ -2148,27 +2144,25 @@ export const BoardForm = styled.div`
       }
 
       .thread-icons-mobile {
-        margin-top: -1px;
-        margin-right: 2px;
         image-rendering: pixelated;
       }
 
       blockquote {
-        padding-top: 5px;
         display: block;
-        margin: 10px !important;
+        margin: 0;
+        padding: 10px;
       }
 
       .post-link-mobile {
         clear: both !important;
         padding: 5px;
         overflow: hidden;
-        margin: -5px;
+        /* margin: -5px; */
         display: block !important;
       }
 
       .info-mobile {
-        margin-top: 8px;
+        padding-top: 8px;
         float: left;
       }
 
@@ -2182,8 +2176,8 @@ export const BoardForm = styled.div`
     }
 
     .reply-container {
-      margin: 7px 2px 0;
-      padding-left: 0;
+      padding: 7px 7px 0 7px;
+      background-color: inherit;
 
       .button-mobile {
         float: right;
@@ -2210,12 +2204,11 @@ export const BoardForm = styled.div`
         display: block;
 
         .file-thumb-mobile {
-          margin-left: 10px !important;
-          margin-right: 10px !important;
+          padding-left: 10px !important;
+          padding-right: 10px !important;
           text-decoration: none;
           float: left;
-          margin-bottom: 5px;
-          margin-top: 15px;
+          padding-top: 15px;
         }
 
         .file-info-mobile {
@@ -2278,7 +2271,8 @@ export const BoardForm = styled.div`
 
       blockquote {
         display: block;
-        margin: 10px !important;
+        margin: 0;
+        padding: 10px;
       }
     }
   }
@@ -3329,6 +3323,8 @@ export const BoardForm = styled.div`
 
   @media (max-width: 480px) {
     margin-bottom: 335px;
+    margin-left: -5px;
+    margin-right: -5px;
 
     .offline-mobile-sub {
       width: 16px;
@@ -3343,19 +3339,8 @@ export const BoardForm = styled.div`
       display: none;
     }
 
-    hr {
-      margin-left: calc((100% - 100vw) / 2);
-      margin-right: calc((100% - 100vw) / 2);
-    }
-
     .name-block {
       display: block;
-    }
-
-    .post-info {
-      display: flex;
-      flex-wrap: wrap;
-      margin: 4px;
     }
 
     #bottombar-desktop {

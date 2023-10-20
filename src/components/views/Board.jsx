@@ -1740,7 +1740,8 @@ const Board = () => {
                   </>
                 ) : null}
                 <Virtuoso
-                  increaseViewportBy={{ bottom: 600, top: 600 }}
+                  increaseViewportBy={{ bottom: 1200, top: 1200 }}
+                  overscan={600}
                   data={selectedFeed}
                   itemContent={(index, thread) => {
                     if (editedComments[thread.cid]) {
@@ -3139,11 +3140,7 @@ const Board = () => {
                           })}
                         </div>
                         <div key={`mob-t-${index}`} className='thread-mobile'>
-                          {index === 0 && !subplebbit.rules && !subplebbit.description ? (
-                            <hr key={`mob-hr-${index}`} style={{ marginTop: '10px' }} />
-                          ) : (
-                            <hr key={`mob-hr-${index}`} />
-                          )}
+                          <hr key={`mob-hr-${index}`} />
                           <div key={`mob-c-${index}`} className='op-container'>
                             <div key={`mob-po-${index}`} className='post op op-mobile'>
                               <div key={`mob-pi-${index}`} className='post-info-mobile'>
@@ -3337,7 +3334,7 @@ const Board = () => {
                                           src='assets/sticky.gif'
                                           alt='Sticky'
                                           title='Sticky'
-                                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                          style={{ all: 'unset', paddingBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
                                         />
                                       ) : null}
                                       {thread.locked ? (
@@ -3345,7 +3342,7 @@ const Board = () => {
                                           src='assets/closed.gif'
                                           alt='Closed'
                                           title='Closed'
-                                          style={{ all: 'unset', marginBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
+                                          style={{ all: 'unset', paddingBottom: '-2px', paddingLeft: '2px', imageRendering: 'pixelated' }}
                                         />
                                       ) : null}
                                     </span>
@@ -3415,7 +3412,7 @@ const Board = () => {
                                       <span
                                         key={`mob-fta-${index}`}
                                         className='file-thumb-mobile'
-                                        style={isMobileThreadThumbnailClicked[index] ? {} : { marginBottom: '25px' }}
+                                        style={isMobileThreadThumbnailClicked[index] ? {} : { paddingBottom: '25px' }}
                                       >
                                         {isMobileThreadThumbnailClicked[index] && commentMediaInfo.url ? (
                                           <div style={{ width: '92vw' }}>
@@ -3443,7 +3440,7 @@ const Board = () => {
                                         )}
                                         {commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'iframe' ? (
                                           isMobileThreadThumbnailClicked[index] ? (
-                                            <div style={{ textAlign: 'center', marginTop: '15px', marginBottom: '15px' }}>
+                                            <div style={{ textAlign: 'center', paddingTop: '15px', paddingBottom: '15px' }}>
                                               <span
                                                 className='button-mobile'
                                                 style={{ float: 'none', cursor: 'pointer' }}
@@ -3476,7 +3473,7 @@ const Board = () => {
                                           style={
                                             isMobileThreadThumbnailClicked[index] || !thread.thumbnailUrl
                                               ? {}
-                                              : { width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px' }
+                                              : { width: displayWidthMobile, height: displayHeightMobile, paddingBottom: '25px' }
                                           }
                                         >
                                           {thread.thumbnailUrl ? (
@@ -3503,7 +3500,7 @@ const Board = () => {
                                           key={`mob-ft${thread.cid}`}
                                           className='file-thumb-mobile'
                                           style={
-                                            isMobileThreadThumbnailClicked[index] ? {} : { width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px' }
+                                            isMobileThreadThumbnailClicked[index] ? {} : { width: displayWidthMobile, height: displayHeightMobile, paddingBottom: '25px' }
                                           }
                                         >
                                           <img
@@ -3526,7 +3523,7 @@ const Board = () => {
                                       <span
                                         key={`mob-ft${thread.cid}`}
                                         className='file-thumb-mobile'
-                                        style={isMobileThreadThumbnailClicked[index] ? {} : { marginBottom: '25px' }}
+                                        style={isMobileThreadThumbnailClicked[index] ? {} : { paddingBottom: '25px' }}
                                       >
                                         {isMobileThreadThumbnailClicked[index] ? (
                                           <video
@@ -3552,7 +3549,7 @@ const Board = () => {
                                         )}
                                         {commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'iframe' ? (
                                           isMobileThreadThumbnailClicked[index] ? (
-                                            <div style={{ textAlign: 'center', marginTop: '15px', marginBottom: '15px' }}>
+                                            <div style={{ textAlign: 'center', paddingTop: '15px', paddingBottom: '15px' }}>
                                               <span
                                                 className='button-mobile'
                                                 style={{ float: 'none', cursor: 'pointer' }}
@@ -3579,7 +3576,7 @@ const Board = () => {
                                         key={`mob-ft${thread.cid}`}
                                         className='file-thumb-mobile'
                                         style={
-                                          isMobileThreadThumbnailClicked[index] ? {} : { width: displayWidthMobile, height: displayHeightMobile, marginBottom: '25px' }
+                                          isMobileThreadThumbnailClicked[index] ? {} : { width: displayWidthMobile, height: displayHeightMobile, paddingBottom: '25px' }
                                         }
                                       >
                                         <audio
@@ -4006,7 +4003,7 @@ const Board = () => {
                                             <span
                                               key={`mob-fta-${index}`}
                                               className='file-thumb-mobile'
-                                              style={isMobileReplyThumbnailClicked[index] ? {} : { marginBottom: '25px' }}
+                                              style={isMobileReplyThumbnailClicked[index] ? {} : { paddingBottom: '25px' }}
                                             >
                                               {isMobileReplyThumbnailClicked[index] && replyMediaInfo.url ? (
                                                 <div style={{ width: '92vw' }}>
@@ -4034,7 +4031,7 @@ const Board = () => {
                                               )}
                                               {replyMediaInfo?.type === 'video' || replyMediaInfo?.type === 'iframe' ? (
                                                 isMobileReplyThumbnailClicked[index] ? (
-                                                  <div style={{ textAlign: 'center', marginTop: '15px', marginBottom: '15px' }}>
+                                                  <div style={{ textAlign: 'center', paddingTop: '15px', paddingBottom: '15px' }}>
                                                     <span
                                                       className='button-mobile'
                                                       style={{ float: 'none', cursor: 'pointer' }}
@@ -4109,7 +4106,7 @@ const Board = () => {
                                           <span
                                             key={`mob-ft${reply.cid}`}
                                             className='file-thumb-mobile'
-                                            style={isMobileReplyThumbnailClicked[index] ? {} : { marginBottom: '25px' }}
+                                            style={isMobileReplyThumbnailClicked[index] ? {} : { paddingBottom: '25px' }}
                                           >
                                             {isMobileReplyThumbnailClicked[index] ? (
                                               <video
@@ -4135,7 +4132,7 @@ const Board = () => {
                                             )}
                                             {replyMediaInfo?.type === 'video' || replyMediaInfo?.type === 'iframe' ? (
                                               isMobileReplyThumbnailClicked[index] ? (
-                                                <div style={{ textAlign: 'center', marginTop: '15px', marginBottom: '15px' }}>
+                                                <div style={{ textAlign: 'center', paddingTop: '15px', paddingBottom: '15px' }}>
                                                   <span
                                                     className='button-mobile'
                                                     style={{ float: 'none', cursor: 'pointer' }}
