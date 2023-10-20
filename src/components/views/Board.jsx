@@ -3139,11 +3139,7 @@ const Board = () => {
                           })}
                         </div>
                         <div key={`mob-t-${index}`} className='thread-mobile'>
-                          {index === 0 && !subplebbit.rules && !subplebbit.description ? (
-                            <hr key={`mob-hr-${index}`} style={{ marginTop: '10px' }} />
-                          ) : (
-                            <hr key={`mob-hr-${index}`} />
-                          )}
+                          <hr key={`mob-hr-${index}`} />
                           <div key={`mob-c-${index}`} className='op-container'>
                             <div key={`mob-po-${index}`} className='post op op-mobile'>
                               <div key={`mob-pi-${index}`} className='post-info-mobile'>
