@@ -1741,6 +1741,7 @@ const Board = () => {
                 ) : null}
                 <Virtuoso
                   increaseViewportBy={{ bottom: 1200, top: 1200 }}
+                  overscan={600}
                   data={selectedFeed}
                   itemContent={(index, thread) => {
                     if (editedComments[thread.cid]) {
