@@ -1122,8 +1122,9 @@ const CatalogPost = ({ post }) => {
 
 const CatalogRow = ({ row }) => {
   const posts = [];
-  for (const post of row) {
-    posts.push(<CatalogPost key={post?.cid} post={post} />);
+  for (const [index, post] of row.entries()) {
+    const key = `${post?.cid}-${index}`;
+    posts.push(<CatalogPost key={key} post={post} />);
   }
   return <div>{posts}</div>;
 };
