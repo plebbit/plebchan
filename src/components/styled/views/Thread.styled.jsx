@@ -195,6 +195,23 @@ export const TopBar = styled.div`
       overflow: hidden;
     }
 
+    .stats-pending-container {
+      float: right;
+      margin-top: 3px;
+      margin-right: 30px;
+      overflow: hidden;
+      max-width: calc(100vw - 50vw);
+    }
+
+    #stats-pending {
+      display: inline-block;
+      max-width: calc(100vw - 50vw);
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: '';
+      overflow: hidden;
+    }
+
     .ellipsis-all {
       white-space: nowrap;
     }
@@ -238,6 +255,24 @@ export const TopBar = styled.div`
     }
 
     #stats-all {
+      display: inline-block;
+      max-width: 90vw;
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: '';
+      overflow: hidden;
+    }
+
+    .stats-pending-container {
+      height: 25px;
+      position: absolute;
+      text-align: left;
+      overflow: hidden;
+      width: 100vw;
+      margin-top: 8px;
+    }
+
+    #stats-pending {
       display: inline-block;
       max-width: 90vw;
       word-wrap: break-word;

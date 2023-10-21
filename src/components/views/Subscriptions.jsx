@@ -136,8 +136,9 @@ const Subscriptions = () => {
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
   const { feed, loadMore } = useFeed({ subplebbitAddresses: account?.subscriptions, sortType: 'active' });
-  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
   const { subplebbits } = useSubplebbits({ subplebbitAddresses: account?.subscriptions, sortType: 'active' });
+  const [selectedFeed, setSelectedFeed] = useState(feed);
+  let feedData = [...feed];
 
   const stateString = useFeedStateString(account?.subscriptions);
 
@@ -302,22 +303,20 @@ const Subscriptions = () => {
   const filter = useCallback((accountComment) => allParentCids.has(accountComment.parentCid), [allParentCids]);
 
   const { accountComments } = useAccountComments({ filter });
-
   const filteredRepliesByThread = useMemo(() => {
     const maxRepliesPerThread = 5;
 
-    const accountRepliesNotYetInCommentReplies = selectedFeed.reduce((acc, thread) => {
-      const replyCids = new Set(flattenedRepliesByThread[thread.cid].map((reply) => reply.cid));
-      acc[thread.cid] = accountComments.filter((accountReply) => !replyCids.has(accountReply.cid) && accountReply.parentCid === thread.cid);
-      return acc;
-    }, {});
-
     return selectedFeed.reduce((acc, thread) => {
-      const combinedReplies = [...flattenedRepliesByThread[thread.cid], ...accountRepliesNotYetInCommentReplies[thread.cid]].sort((a, b) => a.timestamp - b.timestamp);
+      const existingReplies = flattenedRepliesByThread[thread.cid] || [];
+      const newReplies = accountComments.filter(
+        (accountReply) => accountReply.parentCid === thread.cid || existingReplies.some((reply) => reply.cid === accountReply.parentCid),
+      );
+      const combinedReplies = [...existingReplies, ...newReplies].sort((a, b) => a.timestamp - b.timestamp);
       acc[thread.cid] = {
         displayedReplies: combinedReplies.slice(0, maxRepliesPerThread),
         omittedCount: Math.max(combinedReplies.length - maxRepliesPerThread, 0),
       };
+
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
@@ -716,7 +715,7 @@ const Subscriptions = () => {
             {!feed ? null : (
               <Virtuoso
                 increaseViewportBy={{ bottom: 600, top: 600 }}
-                data={selectedFeed}
+                data={feedData}
                 itemContent={(index, thread) => {
                   if (editedComments[thread.cid]) {
                     thread = editedComments[thread.cid];

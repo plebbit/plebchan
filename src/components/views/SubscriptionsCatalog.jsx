@@ -700,8 +700,9 @@ const CatalogPost = ({ post }) => {
 
 const CatalogRow = ({ row }) => {
   const posts = [];
-  for (const post of row) {
-    posts.push(<CatalogPost key={post?.cid} post={post} />);
+  for (const [index, post] of row.entries()) {
+    const key = `${post?.cid}-${index}`;
+    posts.push(<CatalogPost key={key} post={post} />);
   }
   return <div>{posts}</div>;
 };
@@ -732,15 +733,15 @@ const SubscriptionsCatalog = () => {
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
 
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses: account?.subscriptions, sortType: 'active' });
-  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
   const { subplebbits } = useSubplebbits({ subplebbitAddresses: account?.subscriptions, sortType: 'active' });
+  let feedData = [...feed];
 
   const stateString = useFeedStateString(account?.subscriptions);
 
   const columnWidth = 180;
   const windowWidth = useWindowWidth();
   const columnCount = Math.floor(windowWidth / columnWidth);
-  const rows = useFeedRows(selectedFeed, columnCount);
+  const rows = useFeedRows(feedData, columnCount);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -759,7 +760,6 @@ const SubscriptionsCatalog = () => {
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
-    setSelectedFeed(feed.filter((feed) => feed.title === title));
   };
 
   // mobile navbar board select functionality

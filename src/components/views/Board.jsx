@@ -308,22 +308,20 @@ const Board = () => {
   const filter = useCallback((accountComment) => allParentCids.has(accountComment.parentCid), [allParentCids]);
 
   const { accountComments } = useAccountComments({ filter });
-
   const filteredRepliesByThread = useMemo(() => {
     const maxRepliesPerThread = 5;
 
-    const accountRepliesNotYetInCommentReplies = selectedFeed.reduce((acc, thread) => {
-      const replyCids = new Set(flattenedRepliesByThread[thread.cid].map((reply) => reply.cid));
-      acc[thread.cid] = accountComments.filter((accountReply) => !replyCids.has(accountReply.cid) && accountReply.parentCid === thread.cid);
-      return acc;
-    }, {});
-
     return selectedFeed.reduce((acc, thread) => {
-      const combinedReplies = [...flattenedRepliesByThread[thread.cid], ...accountRepliesNotYetInCommentReplies[thread.cid]].sort((a, b) => a.timestamp - b.timestamp);
+      const existingReplies = flattenedRepliesByThread[thread.cid] || [];
+      const newReplies = accountComments.filter(
+        (accountReply) => accountReply.parentCid === thread.cid || existingReplies.some((reply) => reply.cid === accountReply.parentCid),
+      );
+      const combinedReplies = [...existingReplies, ...newReplies].sort((a, b) => a.timestamp - b.timestamp);
       acc[thread.cid] = {
         displayedReplies: combinedReplies.slice(0, maxRepliesPerThread),
         omittedCount: Math.max(combinedReplies.length - maxRepliesPerThread, 0),
       };
+
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
@@ -1780,7 +1778,7 @@ const Board = () => {
                               <hr key={`hr-${index}`} />
                               <div key={`pi-${index}`} className='post-info'>
                                 {commentMediaInfo?.url ? (
-                                  <div key={`f-${index}`} className='file' style={{ marginBottom: '5px' }}>
+                                  <div key={`f-${index}`} className='file'>
                                     <div key={`ft-${index}`} className='file-text'>
                                       Link:&nbsp;
                                       <a key={`fa-${index}`} href={commentMediaInfo.url} target='_blank' rel='noopener noreferrer'>
@@ -2027,7 +2025,7 @@ const Board = () => {
                                     {thread.pinned ? (
                                       <>
                                         &nbsp;
-                                        <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ marginBottom: '-1px', imageRendering: 'pixelated' }} />
+                                        <img src='assets/sticky.gif' alt='Sticky' title='Sticky' style={{ imageRendering: 'pixelated' }} />
                                       </>
                                     ) : null}
                                     {thread.locked ? (
@@ -2761,7 +2759,7 @@ const Board = () => {
                                       </div>
                                     </div>
                                     {replyMediaInfo?.url ? (
-                                      <div key={`f-${index}`} className='file' style={{ marginBottom: '5px' }}>
+                                      <div key={`f-${index}`} className='file'>
                                         <div key={`ft-${index}`} className='file-text'>
                                           Link:&nbsp;
                                           <a key={`fa-${index}`} href={replyMediaInfo.url} target='_blank' rel='noopener noreferrer'>

@@ -81,6 +81,7 @@ const Post = ({ content, postQuoteOnClick, postQuoteOnOver, postQuoteOnLeave, po
 
         parts.push(
           <ForwardRefLink
+            key={`quotelink-${i}-${lastIndex}`}
             className='quotelink'
             to={linkTo}
             target={linkTarget}

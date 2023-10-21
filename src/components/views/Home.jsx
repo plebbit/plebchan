@@ -328,8 +328,8 @@ const Home = () => {
               <h2>Popular Threads</h2>
             </div>
             <BoardsContent>
-              {sfwListCids.map((cid) => (
-                <PopularThreads commentCid={cid} />
+              {sfwListCids.map((cid, index) => (
+                <PopularThreads key={index} commentCid={cid} />
               ))}
             </BoardsContent>
           </BoardsBox>
