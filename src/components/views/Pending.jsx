@@ -291,7 +291,10 @@ const Pending = () => {
             </Link>
             ]
           </span>
-          <span className={stateString ? 'reply-stat ellipsis' : ''}>{stateString}</span>
+          <div className='stats-pending-container'>
+            <span id='stats-pending'>{stateString}</span>
+            <span className={stateString ? 'ellipsis-all' : ''} />
+          </div>
           <hr />
         </TopBar>
         <Tooltip id='tooltip' className='tooltip' />
