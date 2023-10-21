@@ -302,22 +302,20 @@ const Subscriptions = () => {
   const filter = useCallback((accountComment) => allParentCids.has(accountComment.parentCid), [allParentCids]);
 
   const { accountComments } = useAccountComments({ filter });
-
   const filteredRepliesByThread = useMemo(() => {
     const maxRepliesPerThread = 5;
 
-    const accountRepliesNotYetInCommentReplies = selectedFeed.reduce((acc, thread) => {
-      const replyCids = new Set(flattenedRepliesByThread[thread.cid].map((reply) => reply.cid));
-      acc[thread.cid] = accountComments.filter((accountReply) => !replyCids.has(accountReply.cid) && accountReply.parentCid === thread.cid);
-      return acc;
-    }, {});
-
     return selectedFeed.reduce((acc, thread) => {
-      const combinedReplies = [...flattenedRepliesByThread[thread.cid], ...accountRepliesNotYetInCommentReplies[thread.cid]].sort((a, b) => a.timestamp - b.timestamp);
+      const existingReplies = flattenedRepliesByThread[thread.cid] || [];
+      const newReplies = accountComments.filter(
+        (accountReply) => accountReply.parentCid === thread.cid || existingReplies.some((reply) => reply.cid === accountReply.parentCid),
+      );
+      const combinedReplies = [...existingReplies, ...newReplies].sort((a, b) => a.timestamp - b.timestamp);
       acc[thread.cid] = {
         displayedReplies: combinedReplies.slice(0, maxRepliesPerThread),
         omittedCount: Math.max(combinedReplies.length - maxRepliesPerThread, 0),
       };
+
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
