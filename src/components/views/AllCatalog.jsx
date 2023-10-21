@@ -735,14 +735,14 @@ const AllCatalog = () => {
   const addresses = defaultSubplebbits.map((subplebbit) => subplebbit.address);
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses: addresses, sortType: 'active' });
   const { subplebbits } = useSubplebbits({ subplebbitAddresses: addresses, sortType: 'active' });
-  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
+  let feedData = [...feed];
 
   const stateString = useFeedStateString(addresses);
 
   const columnWidth = 180;
   const windowWidth = useWindowWidth();
   const columnCount = Math.floor(windowWidth / columnWidth);
-  const rows = useFeedRows(selectedFeed, columnCount);
+  const rows = useFeedRows(feedData, columnCount);
 
   // mobile navbar scroll effect
   useEffect(() => {
@@ -779,7 +779,6 @@ const AllCatalog = () => {
   const handleClickTitle = (title, address) => {
     setSelectedTitle(title);
     setSelectedAddress(address);
-    setSelectedFeed(feed.filter((feed) => feed.title === title));
   };
 
   const location = useLocation();

@@ -138,7 +138,8 @@ const All = () => {
   const addresses = defaultSubplebbits.map((subplebbit) => subplebbit.address);
   const { feed, loadMore } = useFeed({ subplebbitAddresses: addresses, sortType: 'active' });
   const { subplebbits } = useSubplebbits({ subplebbitAddresses: addresses, sortType: 'active' });
-  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
+  const [selectedFeed, setSelectedFeed] = useState(feed);
+  let feedData = [...feed];
 
   const stateString = useFeedStateString(addresses);
 
@@ -281,10 +282,6 @@ const All = () => {
       setNewErrorMessage(errorString);
     }
   }, [errorString, setNewErrorMessage]);
-
-  useEffect(() => {
-    setSelectedFeed(feed.sort((a, b) => b.timestamp - a.timestamp));
-  }, [feed]);
 
   const flattenedRepliesByThread = useMemo(() => {
     return selectedFeed.reduce((acc, thread) => {
@@ -710,7 +707,7 @@ const All = () => {
             {feed ? (
               <Virtuoso
                 increaseViewportBy={{ bottom: 600, top: 600 }}
-                data={selectedFeed}
+                data={feedData}
                 itemContent={(index, thread) => {
                   if (editedComments[thread.cid]) {
                     thread = editedComments[thread.cid];

@@ -136,8 +136,9 @@ const Subscriptions = () => {
   useAnonModeRef(selectedThreadCidRef, anonymousMode && executeAnonMode);
 
   const { feed, loadMore } = useFeed({ subplebbitAddresses: account?.subscriptions, sortType: 'active' });
-  const [selectedFeed, setSelectedFeed] = useState(feed.sort((a, b) => b.timestamp - a.timestamp));
   const { subplebbits } = useSubplebbits({ subplebbitAddresses: account?.subscriptions, sortType: 'active' });
+  const [selectedFeed, setSelectedFeed] = useState(feed);
+  let feedData = [...feed];
 
   const stateString = useFeedStateString(account?.subscriptions);
 
@@ -714,7 +715,7 @@ const Subscriptions = () => {
             {!feed ? null : (
               <Virtuoso
                 increaseViewportBy={{ bottom: 600, top: 600 }}
-                data={selectedFeed}
+                data={feedData}
                 itemContent={(index, thread) => {
                   if (editedComments[thread.cid]) {
                     thread = editedComments[thread.cid];
