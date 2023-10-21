@@ -306,7 +306,9 @@ const Thread = () => {
   const accountRepliesNotYetInCommentReplies = useMemo(() => {
     const commentReplyCids = new Set(flattenedReplies.map((reply) => reply.cid));
     return accountComments.filter((accountReply) => {
-      return !commentReplyCids.has(accountReply.cid) && accountReply.parentCid === selectedThread;
+      return (
+        !commentReplyCids.has(accountReply.cid) && (accountReply.parentCid === selectedThread || flattenedReplies.some((reply) => reply.cid === accountReply.parentCid))
+      );
     });
   }, [flattenedReplies, accountComments, selectedThread]);
 

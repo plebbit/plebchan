@@ -308,22 +308,27 @@ const Board = () => {
   const filter = useCallback((accountComment) => allParentCids.has(accountComment.parentCid), [allParentCids]);
 
   const { accountComments } = useAccountComments({ filter });
-
   const filteredRepliesByThread = useMemo(() => {
     const maxRepliesPerThread = 5;
 
-    const accountRepliesNotYetInCommentReplies = selectedFeed.reduce((acc, thread) => {
-      const replyCids = new Set(flattenedRepliesByThread[thread.cid].map((reply) => reply.cid));
-      acc[thread.cid] = accountComments.filter((accountReply) => !replyCids.has(accountReply.cid) && accountReply.parentCid === thread.cid);
-      return acc;
-    }, {});
-
     return selectedFeed.reduce((acc, thread) => {
-      const combinedReplies = [...flattenedRepliesByThread[thread.cid], ...accountRepliesNotYetInCommentReplies[thread.cid]].sort((a, b) => a.timestamp - b.timestamp);
+      // Get replies that are already in the thread
+      const existingReplies = flattenedRepliesByThread[thread.cid] || [];
+
+      // Get replies that belong to this thread but are not yet in the thread
+      const newReplies = accountComments.filter(
+        (accountReply) => accountReply.parentCid === thread.cid || existingReplies.some((reply) => reply.cid === accountReply.parentCid),
+      );
+
+      // Combine and sort all the replies
+      const combinedReplies = [...existingReplies, ...newReplies].sort((a, b) => a.timestamp - b.timestamp);
+
+      // Limit the number of displayed replies and count the omitted ones
       acc[thread.cid] = {
         displayedReplies: combinedReplies.slice(0, maxRepliesPerThread),
         omittedCount: Math.max(combinedReplies.length - maxRepliesPerThread, 0),
       };
+
       return acc;
     }, {});
   }, [flattenedRepliesByThread, accountComments, selectedFeed]);
