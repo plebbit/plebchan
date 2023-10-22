@@ -1163,6 +1163,10 @@ const Catalog = () => {
   const selectedThreadCidRef = useRef(null);
   const virtuosoRef = useRef();
 
+  const setSelectedThreadCid = (cid) => {
+    selectedThreadCidRef.current = cid;
+  };
+
   const navigate = useNavigate();
 
   const [, setNewErrorMessage] = useError();
@@ -1332,6 +1336,10 @@ const Catalog = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (anonymousMode) {
+      setSelectedThreadCid(index);
+    }
 
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
