@@ -461,6 +461,10 @@ const Board = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (anonymousMode) {
+      setSelectedThreadCid(index);
+    }
+
     setPublishCommentOptions((prevPublishCommentOptions) => ({
       ...prevPublishCommentOptions,
       author: {
