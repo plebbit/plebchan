@@ -1556,7 +1556,7 @@ const Subscriptions = () => {
                                             onClick={() => {
                                               handleOptionClick(reply.cid);
                                               setNewSuccessMessage('Link copied to clipboard');
-                                              handleShareClick(thread.subplebbitAddress, reply.cid);
+                                              handleShareClick(thread.subplebbitAddress, thread.cid);
                                             }}
                                           >
                                             Share post
@@ -2743,7 +2743,7 @@ const Subscriptions = () => {
                                           onClick={() => {
                                             handleMobileOptionClick(reply.cid);
                                             setNewSuccessMessage('Link copied to clipboard');
-                                            handleShareClick(selectedAddress, reply.cid);
+                                            handleShareClick(thread.subplebbitAddress, thread.cid);
                                           }}
                                         >
                                           Share post
