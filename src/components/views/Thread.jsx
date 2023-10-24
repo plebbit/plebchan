@@ -1585,7 +1585,7 @@ const Thread = () => {
                                       onClick={() => {
                                         handleOptionClick(reply.cid);
                                         setNewSuccessMessage('Link copied to clipboard');
-                                        handleShareClick(thread.subplebbitAddress, thread.cid);
+                                        handleShareClick(comment.subplebbitAddress, comment.cid);
                                       }}
                                     >
                                       Share post
@@ -2527,7 +2527,7 @@ const Thread = () => {
                                     onClick={() => {
                                       handleMobileOptionClick(reply.cid);
                                       setNewSuccessMessage('Link copied to clipboard');
-                                      handleShareClick(thread.subplebbitAddress, thread.cid);
+                                      handleShareClick(comment.subplebbitAddress, comment.cid);
                                     }}
                                   >
                                     Share post
