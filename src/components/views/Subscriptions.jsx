@@ -1139,12 +1139,11 @@ const Subscriptions = () => {
                                                 Plebbit
                                               </a>
                                             </li>
-                                            {/* <li onClick={() => handleOptionClick(thread.cid)}>
-                                        <a
-                                        href={`https://seedit.eth.limo/#/p/${thread.subplebbitAddress}/c/${thread.cid}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Seedit</a>
-                                      </li> */}
+                                            <li onClick={() => handleOptionClick(thread.cid)}>
+                                              <a href={`https://seedit.netlify.app/#/p/${thread.subplebbitAddress}/c/${thread.cid}`} target='_blank' rel='noreferrer'>
+                                                Seedit
+                                              </a>
+                                            </li>
                                             <li onClick={() => handleOptionClick(thread.cid)}>
                                               <a href={`https://plebones.eth.limo/#/p/${thread.subplebbitAddress}/c/${thread.cid}`} target='_blank' rel='noreferrer'>
                                                 Plebones
