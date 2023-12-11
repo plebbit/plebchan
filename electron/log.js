@@ -1,6 +1,6 @@
 // require this file to log to file in case there's a crash
 
-const envPaths = require('env-paths').default('plebchan', { suffix: false });
+const envPaths = require('env-paths').default('plebbit', { suffix: false });
 const util = require('util');
 const fs = require('fs-extra');
 const path = require('path');

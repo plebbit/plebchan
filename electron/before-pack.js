@@ -83,6 +83,8 @@ const downloadIpfsClients = async () => {
   await download(ipfsClientLinuxPUrl, ipfsClientLinuxPath);
 };
 
+exports.downloadIpfsClients = downloadIpfsClients
+
 exports.default = async (context) => {
   await downloadIpfsClients();
 };
