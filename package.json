@@ -9,7 +9,7 @@
     "@capacitor/android": "3.6.0",
     "@capacitor/app": "1.1.1",
     "@capacitor/core": "3.6.0",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#c0ecfc0432d64993dee738b40e59c26898a98108",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#7aca3428098041eaea2a82ee4b041bb552a4ba99",
     "@testing-library/dom": "9.0.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "14.0.0",
@@ -45,6 +45,7 @@
     "remark-breaks": "3.0.2",
     "styled-components": "5.3.9",
     "web-vitals": "3.3.0",
+    "tcp-port-used": "1.0.2",
     "zustand": "4.3.6"
   },
   "scripts": {
@@ -61,7 +62,7 @@
     "electron:build:windows": "electron-builder build --publish never -w",
     "electron:build:mac": "electron-builder build --publish never -m",
     "electron:before": "yarn electron:before:download-ipfs && yarn electron:before:delete-data",
-    "electron:before:download-ipfs": "node electron/downloadIpfs",
+    "electron:before:download-ipfs": "node electron/download-ipfs",
     "electron:before:delete-data": "rimraf .plebbit",
     "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#ffffee'",
     "prettier": "prettier src/**/*.{js,jsx} --write",

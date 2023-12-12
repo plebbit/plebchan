@@ -2,9 +2,9 @@ const isDev = require('electron-is-dev');
 const path = require('path');
 const { spawn } = require('child_process');
 const fs = require('fs-extra');
-const envPaths = require('env-paths').default('plebchan', { suffix: false });
+const envPaths = require('env-paths').default('plebbit', { suffix: false });
 const ps = require('node:process');
-const proxyServer = require('./proxyServer');
+const proxyServer = require('./proxy-server');
 
 // use this custom function instead of spawnSync for better logging
 // also spawnSync might have been causing crash on start on windows
@@ -59,7 +59,7 @@ const startIpfs = async () => {
   } catch (e) {}
 
   // dont use 8080 port because it's too common
-  await spawnAsync(ipfsPath, ['config', 'Addresses.Gateway', '/ip4/127.0.0.1/tcp/11028'], {
+  await spawnAsync(ipfsPath, ['config', '--json', 'Addresses.Gateway', "null"], {
     env,
     hideWindows: true,
   });

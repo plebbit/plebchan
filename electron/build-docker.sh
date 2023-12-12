@@ -8,7 +8,7 @@ then
 fi
 
 # download ipfs clients
-node electron/downloadIpfs || { echo "Error: failed script 'node electron/downloadIpfs'" ; exit 1; }
+node electron/download-ipfs || { echo "Error: failed script 'node electron/download-ipfs'" ; exit 1; }
 
 dockerfile='
 FROM electronuserland/builder:16
