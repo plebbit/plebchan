@@ -93,11 +93,11 @@ export default function App() {
   // fetch default subplebbits
   useEffect(() => {
     let didCancel = false;
-    fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/subplebbits.json', { cache: 'no-cache' })
+    fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/multisub.json', { cache: 'no-cache' })
       .then((res) => res.json())
       .then((res) => {
         if (!didCancel) {
-          setDefaultSubplebbits(res);
+          setDefaultSubplebbits(res.subplebbits);
         }
       });
     return () => {

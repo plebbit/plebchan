@@ -2181,12 +2181,11 @@ const Board = () => {
                                                   Plebbit
                                                 </a>
                                               </li>
-                                              {/* <li onClick={() => handleOptionClick(thread.cid)}>
-                                              <a
-                                              href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`}
-                                              target="_blank" rel="noreferrer"
-                                              >Seedit</a>
-                                            </li> */}
+                                              <li onClick={() => handleOptionClick(thread.cid)}>
+                                                <a href={`https://seedit.netlify.app/#/p/${selectedAddress}/c/${thread.cid}`} target='_blank' rel='noreferrer'>
+                                                  Seedit
+                                                </a>
+                                              </li>
                                               <li onClick={() => handleOptionClick(thread.cid)}>
                                                 <a href={`https://plebones.eth.limo/#/p/${selectedAddress}/c/${thread.cid}`} target='_blank' rel='noreferrer'>
                                                   Plebones

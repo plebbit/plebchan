@@ -5,6 +5,7 @@ import {
   createAccount,
   deleteAccount,
   deleteCaches,
+  exportAccount,
   importAccount,
   setAccount,
   setActiveAccount,
@@ -354,27 +355,6 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     }
   };
 
-  const handleImportAccount = async () => {
-    const data = importRef.current.value;
-
-    try {
-      const parsedJson = JSON.parse(data);
-      await importAccount(data);
-      setActiveAccount(parsedJson.account?.name);
-
-      if (parsedJson.account?.author?.address.endsWith('.eth') && anonymousMode === true) {
-        setAnonymousMode(false);
-        localStorage.setItem('successToast', 'Account imported successfully. ENS address detected, Anon mode disabled.');
-        window.location.reload();
-      } else {
-        setNewSuccessMessage('Account imported successfully.');
-      }
-    } catch (error) {
-      setNewErrorMessage(error.message);
-      console.log(error);
-    }
-  };
-
   const handleDeleteAccount = async () => {
     if (window.confirm('Are you sure you want to delete this account?')) {
       try {
@@ -429,6 +409,92 @@ const SettingsModal = ({ isOpen, closeModal }) => {
     } catch (error) {
       setNewErrorMessage(error.message);
       console.log(error);
+    }
+  };
+
+  const [switchToLastAccount, setSwitchToLastAccount] = useState(false);
+
+  useEffect(() => {
+    if (switchToLastAccount && accounts.length > 0) {
+      const lastAccount = accounts[accounts.length - 1];
+      setActiveAccount(lastAccount.name);
+      setSwitchToLastAccount(false);
+    }
+  }, [accounts, switchToLastAccount]);
+
+  const _importAccount = async () => {
+    // Create a file input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+
+    // Handle file selection
+    fileInput.onchange = async (event) => {
+      try {
+        const files = event.target.files;
+        if (!files || files.length === 0) {
+          throw new Error('No file selected.');
+        }
+        const file = files[0];
+
+        // Read the file content
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const fileContent = e.target.result;
+          if (typeof fileContent !== 'string') {
+            throw new Error('File content is not a string.');
+          }
+          const newAccount = JSON.parse(fileContent);
+          await importAccount(fileContent);
+          setSwitchToLastAccount(true);
+          alert(`Imported ${newAccount.account?.name}`);
+        };
+        reader.readAsText(file);
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message);
+          console.log(error);
+        } else {
+          console.error('An unknown error occurred:', error);
+        }
+      }
+    };
+
+    // Trigger file selection dialog
+    fileInput.click();
+  };
+
+  const _exportAccount = async () => {
+    try {
+      const accountString = await exportAccount();
+      const accountObject = JSON.parse(accountString);
+      const formattedAccountJson = JSON.stringify(accountObject, null, 2);
+
+      // Create a Blob from the JSON string
+      const blob = new Blob([formattedAccountJson], { type: 'application/json' });
+
+      // Create a URL for the Blob
+      const fileUrl = URL.createObjectURL(blob);
+
+      // Create a temporary download link
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.download = `${account.name}.json`;
+
+      // Append the link, trigger the download, then remove the link
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Release the Blob URL
+      URL.revokeObjectURL(fileUrl);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+        console.log(error);
+      } else {
+        console.error('An unknown error occurred:', error);
+      }
     }
   };
 
@@ -489,9 +555,7 @@ const SettingsModal = ({ isOpen, closeModal }) => {
             </li>
             <li className='settings-tip anon-tip'>Use a newly generated u/address per thread to post.</li>
             <li className='settings-option disc'>Account Data</li>
-            <li className='settings-tip'>
-              Save manual changes, reset changes, import another account after pasting its whole data, delete the account, create a new account.
-            </li>
+            <li className='settings-tip'>Manually edit your account data using the preview below.</li>
             <div className='settings-input'>
               <textarea
                 id='account-data-text'
@@ -505,10 +569,21 @@ const SettingsModal = ({ isOpen, closeModal }) => {
               <div className='account-buttons'>
                 <button onClick={handleSaveAccount}>Save</button>
                 <button onClick={() => setEditedAccountJson(accountJson)}>Reset</button>
-                <button onClick={handleImportAccount}>Import</button>
-                <button onClick={handleDeleteAccount}>Delete</button>
-                <button onClick={handleCreateAccount}>Create</button>
               </div>
+            </div>
+            <div className='account-options'>
+              <li className='settings-tip'>
+                <button onClick={_exportAccount}>Export</button> your full account data
+              </li>
+              <li className='settings-tip'>
+                <button onClick={_importAccount}>Import</button> full account data
+              </li>
+              <li className='settings-tip'>
+                <button onClick={handleCreateAccount}>Create</button> a new account
+              </li>
+              <li className='settings-tip'>
+                <button onClick={handleDeleteAccount}>Delete</button> this account
+              </li>
             </div>
             <li className='settings-option disc'>Account Address: u/{account?.author.shortAddress}</li>
             <li className='settings-tip'>Select a different account to use in the dropdown below.</li>

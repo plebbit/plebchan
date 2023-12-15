@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 
 export const StyledModal = styled(Modal)`
+  .account-options {
+    padding-top: 5px;
+    padding-left: 25px;
+    margin-bottom: -10px;
+  }
+
   .panel {
     top: 60px;
     width: 400px;
