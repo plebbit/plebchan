@@ -1280,12 +1280,11 @@ const Thread = () => {
                                           Plebbit
                                         </a>
                                       </li>
-                                      {/* <li onClick={() => handleOptionClick(comment.cid)}>
-                                    <a
-                                    href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${comment.cid}`}
-                                    target="_blank" rel="noreferrer"
-                                    >Seedit</a>
-                                  </li> */}
+                                      <li onClick={() => handleOptionClick(comment.cid)}>
+                                        <a href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${comment.cid}`} target='_blank' rel='noreferrer'>
+                                          Seedit
+                                        </a>
+                                      </li>
                                       <li onClick={() => handleOptionClick(comment.cid)}>
                                         <a href={`https://plebones.eth.limo/#/p/${selectedAddress}/c/${comment.cid}`} target='_blank' rel='noreferrer'>
                                           Plebones
@@ -1671,12 +1670,11 @@ const Thread = () => {
                                             Plebbit
                                           </a>
                                         </li>
-                                        {/* <li onClick={() => handleOptionClick(reply.cid)}>
-                                        <a
-                                        href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${reply.cid}`}
-                                        target="_blank" rel="noreferrer"
-                                        >Seedit</a>
-                                      </li> */}
+                                        <li onClick={() => handleOptionClick(reply.cid)}>
+                                          <a href={`https://seedit.eth.limo/#/p/${selectedAddress}/c/${reply.cid}`} target='_blank' rel='noreferrer'>
+                                            Seedit
+                                          </a>
+                                        </li>
                                         <li onClick={() => handleOptionClick(reply.cid)}>
                                           <a href={`https://plebones.eth.limo/#/p/${selectedAddress}/c/${reply.cid}`} target='_blank' rel='noreferrer'>
                                             Plebones
@@ -2604,6 +2602,14 @@ const Thread = () => {
                                     rel='noreferrer'
                                   >
                                     <li onClick={() => handleOptionClick(reply.cid)}>View on plebbit</li>
+                                  </a>
+                                  <a
+                                    style={{ color: 'inherit', textDecoration: 'none' }}
+                                    href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+                                    target='_blank'
+                                    rel='noreferrer'
+                                  >
+                                    <li onClick={() => handleOptionClick(reply.cid)}>View on seedit</li>
                                   </a>
                                   <a
                                     style={{ color: 'inherit', textDecoration: 'none' }}

@@ -414,12 +414,11 @@ const Rules = () => {
                                       Plebbit
                                     </a>
                                   </li>
-                                  {/* <li onClick={() => handleOptionClick("rules")}>
-                                  <a
-                                  href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
-                                  target="_blank" rel="noreferrer"
-                                  >Seedit</a>
-                                </li> */}
+                                  <li onClick={() => handleOptionClick('rules')}>
+                                    <a href={`https://seedit.eth.limo/#/p/${selectedAddress}`} target='_blank' rel='noreferrer'>
+                                      Seedit
+                                    </a>
+                                  </li>
                                   <li onClick={() => handleOptionClick('rules')}>
                                     <a href={`https://plebones.eth.limo/#/p/${selectedAddress}`} target='_blank' rel='noreferrer'>
                                       Plebones
@@ -497,6 +496,14 @@ const Rules = () => {
                             rel='noreferrer'
                           >
                             <li onClick={() => handleMobileOptionClick('rules')}>View on plebbit</li>
+                          </a>
+                          <a
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+                            href={`https://seedit.eth.limo/#/p/${selectedAddress}`}
+                            target='_blank'
+                            rel='noreferrer'
+                          >
+                            <li onClick={() => handleMobileOptionClick('rules')}>View on seedit</li>
                           </a>
                           <a
                             style={{ color: 'inherit', textDecoration: 'none' }}
