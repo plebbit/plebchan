@@ -1,3 +1,21 @@
+## [0.1.15](https://github.com/plebbit/plebchan/compare/v0.1.14...v0.1.15) (2023-12-15)
+
+
+### Bug Fixes
+
+* add multisub.json ([b50dcef](https://github.com/plebbit/plebchan/commit/b50dcef2ab207aa0ded92b6950251c52a461a4eb))
+* **share:** copy thread link to clipboard instead of post link when sharing a reply, because reply links aren't implemented yet on plebbit ([e2da7e7](https://github.com/plebbit/plebchan/commit/e2da7e7e9647a8f5feb346066e8212ed1cd76787))
+
+
+### Features
+
+* add 'view on seedit' links ([83c93c5](https://github.com/plebbit/plebchan/commit/83c93c5861cf96edfa9f0912eafa82f7c4d5ee80))
+* **electron:** add plebbit rpc ([03b9b82](https://github.com/plebbit/plebchan/commit/03b9b82a6fbecba4658cc68d43523b9e862da298))
+* **SettingsModal:** add export/import full account data ([07daa4e](https://github.com/plebbit/plebchan/commit/07daa4eeb315d13f756e4196253fe02d8a989284))
+* **share:** add seedit to share button ([a13fe45](https://github.com/plebbit/plebchan/commit/a13fe45c6446527f52dac9dd25e32c4e23c364e3))
+
+
+
 ## [0.1.14](https://github.com/plebbit/plebchan/compare/v0.1.13...v0.1.14) (2023-10-22)
 
 
