@@ -21,14 +21,14 @@ root.render(
         <App />
       </HashRouter>
     </HelmetProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // set up PWA https://cra.link/PWA
 serviceWorkerRegistration.register();
 
 // add back button in android app
-CapacitorApp.addListener('backButton', ({canGoBack}) => {
+CapacitorApp.addListener('backButton', ({ canGoBack }) => {
   if (canGoBack) {
     window.history.back();
   } else {

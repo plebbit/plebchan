@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const BoardStatsContainer = styled.div`
-  
   @media (max-width: 480px) {
     display: none;
   }
@@ -11,14 +10,14 @@ export const BoardStatsContainer = styled.div`
     margin: auto;
     line-height: 1;
     margin-top: -1px;
-  
+
     table {
       border-spacing: 0px;
       width: 100%;
       margin-top: -1px;
       padding-left: 3px;
     }
-  
+
     tr {
       vertical-align: top;
       font-size: 11px;
@@ -94,9 +93,9 @@ export const BoardStatsContainer = styled.div`
         .hide-button:hover {
           color: #ff3300 !important;
         }`;
-     	
+
       default:
-	      return '';
+        return '';
     }
   }}
 `;

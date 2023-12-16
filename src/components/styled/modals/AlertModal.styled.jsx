@@ -16,15 +16,12 @@ export const AlertModal = styled.div`
       & > button {
         margin-top: 10px;
       }
-    
+
       & > button:first-child {
         margin-right: 20px;
       }
     }
   }
-
-
-  
 
   ${({ selectedStyle }) => {
     switch (selectedStyle) {
@@ -68,10 +65,10 @@ export const AlertModal = styled.div`
         .author-delete-alert {
           background-color: #ddd;
           border: 1px solid #ccc;
-        }`; 
-        
-        default:
-          return '';
-      }
+        }`;
+
+      default:
+        return '';
+    }
   }}
 `;
