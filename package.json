@@ -1,6 +1,8 @@
 {
   "name": "plebchan",
   "version": "0.1.15",
+  "description": "A GUI for plebbit similar to 4chan",
+  "author": "plebeius.eth",
   "private": true,
   "dependencies": {
     "@babel/core": "7.21.3",
