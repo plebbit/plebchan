@@ -67,7 +67,7 @@
     "electron:before:download-ipfs": "node electron/download-ipfs",
     "electron:before:delete-data": "rimraf .plebbit",
     "android:build:icons": "cordova-res android --skip-config --copy --resources /tmp/plebbit-react-android-icons --icon-source ./android/icons/icon.png --splash-source ./android/icons/splash.png --icon-foreground-source ./android/icons/icon-foreground.png --icon-background-source '#ffffee'",
-    "prettier": "prettier src/**/*.{js,jsx} --write",
+    "prettier": "prettier {src,electron}/**/*.{js,jsx} --write",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "eslintConfig": {
@@ -149,8 +149,8 @@
     "styled-components": "^5"
   },
   "lint-staged": {
-    "{src,test,config}/**/*.{cjs,js,jsx,ts,tsx}": [
-      "prettier --config prettier.config.js --write"
+    "{src,electron}/**/*.{js,jsx}": [
+      "prettier --write"
     ]
   },
   "husky": {
