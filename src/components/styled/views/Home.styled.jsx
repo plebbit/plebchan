@@ -61,7 +61,7 @@ export const Search = styled.div`
   }
 
   input[type='submit'] {
-    width: 70px;
+    width: 35px;
     height: 30px;
     font-size: 14px;
     margin-left: 5px;
