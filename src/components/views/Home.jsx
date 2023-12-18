@@ -176,7 +176,7 @@ const Home = () => {
             />
             <input
               type='submit'
-              value='Connect'
+              value='Go'
               onClick={() => {
                 const address = inputRef.current.value;
                 if (address) {
