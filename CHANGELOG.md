@@ -1,3 +1,12 @@
+## [0.1.16](https://github.com/plebbit/plebchan/compare/v0.1.15...v0.1.16) (2023-12-18)
+
+
+### Bug Fixes
+
+* **SettingsModal:** don't show signer in account data preview ([f1f1eaa](https://github.com/plebbit/plebchan/commit/f1f1eaa2fe0a9cc7f7bb333fd8333b00ce6bf4e5))
+
+
+
 ## [0.1.15](https://github.com/plebbit/plebchan/compare/v0.1.14...v0.1.15) (2023-12-15)
 
 
