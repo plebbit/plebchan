@@ -1,3 +1,13 @@
+## [0.1.17](https://github.com/plebbit/plebchan/compare/v0.1.16...v0.1.17) (2023-12-20)
+
+
+### Bug Fixes
+
+* **electron:** don't spam user with ipfs errors ([bc83a75](https://github.com/plebbit/plebchan/commit/bc83a75b04b363270d0d6bdc423bc41e49bbe3a1))
+* **SettingsModal:** don't remove signer ([cd03fef](https://github.com/plebbit/plebchan/commit/cd03fefb25a2460724d30d2ff60c22610a1e68c4))
+
+
+
 ## [0.1.16](https://github.com/plebbit/plebchan/compare/v0.1.15...v0.1.16) (2023-12-18)
 
 
