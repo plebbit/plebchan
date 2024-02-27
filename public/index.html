@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="referrer" content="no-referrer" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content="serverless, adminless, decentralized 4chan alternative" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <!--
@@ -22,6 +22,17 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>plebchan</title>
+    <script>
+      (function() {
+        // This checks if the URL does not contain a hash
+        if (!window.location.hash) {
+          // Calculate the base URL (protocol + host)
+          const baseURL = window.location.protocol + '//' + window.location.host + '/';
+          // Redirect to the base URL with `#/`
+          window.location.replace(baseURL + '#/');
+        }
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
