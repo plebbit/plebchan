@@ -1,4 +1,6 @@
 .app {
+  background: var(--background-color) var(--background-fade) top center repeat-x;
+  font: 13px arial, helvetica, sans-serif;
   z-index: 1;
   min-height: 100%;
   overflow-y: hidden;

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './app';
 import { HashRouter as Router } from 'react-router-dom';
 import './index.css';
+import './themes.css';
 import { App as CapacitorApp } from '@capacitor/app';
 import * as serviceWorkerRegistration from './service-worker-registration';
 

@@ -1,0 +1,11 @@
+:root .yotsuba {
+  --background-color: #ffe;
+  --background-fade: url("/public/assets/background-fade.png");
+  --color: #800;
+}
+
+:root .yotsuba-b {
+  --background-color: #eef2ff;
+  --background-fade: url("/public/assets/background-fade-blue.png");
+  --color: #000;
+}

@@ -1,3 +1,24 @@
-.test {
+.content {
+  color: var(--color);
   font-size: 20px;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  width: 57.69em;
+  min-width: 750px;
+}
+
+.logo img {
+  width: 300px;
+  height: 120px;
+}
+
+.logo {
+  margin: 0px auto;
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: auto;
+  }
 }
