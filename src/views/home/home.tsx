@@ -19,7 +19,7 @@ const ThemeSettings = () => {
 const availableLanguages = ['ar', 'bn', 'cs', 'da', 'de', 'el', 'en', 'es', 'fa', 'fi', 'fil', 'fr', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'mr', 'nl', 'no', 'pl', 'pt', 'ro', 'ru', 'sq', 'sv', 'te', 'th', 'tr', 'uk', 'ur', 'vi', 'zh'];
 
 const LanguageSettings = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { changeLanguage, language } = i18n;
 
   const onSelectLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -63,11 +63,17 @@ const Home = () => {
           <h2>{t('what_is_plebchan')}</h2>
         </div>
         <div className={styles.boxContent}>
-          <Trans i18nKey='plebchan_description' shouldUnescape={true} components={{ 1: <a href='https://plebbit.com' target='_blank' rel='noopener noreferrer' /> }} />
+          <Trans i18nKey='plebchan_description' shouldUnescape={true} components={{ 1: <Link to='https://plebbit.com' target='_blank' rel='noopener noreferrer' /> }} />
           <br />
           <br />
           {t('no_global_rules_info')}
         </div>
+      </div>
+      <div className={styles.box}>
+        <div className={styles.boxBar}>
+          <h2>{t('boards')}</h2>
+        </div>
+        <div className={styles.boxContent}></div>
       </div>
     </div>
   );

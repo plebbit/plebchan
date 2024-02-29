@@ -2,6 +2,7 @@
   "what_is_plebchan": "Ce este Plebchan?",
   "go": "du-te",
   "or": "sau",
-  "plebchan_description": "Plebchan este o alternativă decentralizată, fără servere și fără administratori la 4chan, unde orice pleb poate crea și deține panouri nelimitate. Toate datele provin de la protocolul <1>plebbit</1>, este tot text, inclusiv linkuri din care sunt încorporate media, partajate peer-to-peer. Utilizatorii nu trebuie să-și înregistreze un cont înainte de a participa la comunitate. Simțiți-vă liber să faceți clic pe un panou de mai jos care vă interesează și să intrați imediat!",
-  "no_global_rules_info": "Nu există reguli globale, fiecare tablou este complet independent și proprietarul său decide cum/să îl modereze."
+  "plebchan_description": "Plebchan este o alternativă descentralizată, fără server, fără administratori la 4chan, unde orice pleb poate crea și deține forumuri nelimitate. Toate datele vin de la protocolul <1>plebbit</1>, sunt toate text inclusiv linkuri din care sunt încorporate media, distribuite peer-to-peer. Utilizatorii nu trebuie să-și înregistreze un cont înainte de a participa la comunitate. Nu ezitați să faceți clic pe un forum de mai jos care vă interesează și să vă alăturați imediat!",
+  "no_global_rules_info": "Nu există reguli globale, fiecare forum este complet independent și proprietarul său decide cum/sau dacă să îl modereze.",
+  "boards": "forumuri"
 }

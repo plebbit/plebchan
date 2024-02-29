@@ -2,6 +2,7 @@
   "what_is_plebchan": "Apa itu plebchan?",
   "go": "pergi",
   "or": "atau",
-  "plebchan_description": "Plebchan adalah alternatif 4chan yang tanpa server, tanpa admin, dan terdesentralisasi di mana setiap pleb dapat membuat dan memiliki papan tanpa batas. Semua data berasal dari protokol <1>plebbit</1>, semuanya berupa teks termasuk tautan dari mana media disematkan, dibagikan secara peer-to-peer. Pengguna tidak perlu mendaftar akun sebelum berpartisipasi dalam komunitas. Jangan ragu untuk mengklik papan di bawah ini yang menarik bagi Anda dan langsung bergabung!",
-  "no_global_rules_info": "Tidak ada aturan global, setiap papan sepenuhnya independen dan pemiliknya memutuskan bagaimana/jika harus memoderasi itu."
+  "plebchan_description": "Plebchan adalah alternatif 4chan tanpa server, tanpa admin, terdesentralisasi di mana siapa pun pleb bisa membuat dan memiliki papan tak terbatas. Semua data berasal dari protokol <1>plebbit</1>, semuanya teks termasuk tautan dari mana media disematkan, dibagikan peer-to-peer. Pengguna tidak perlu mendaftar akun sebelum berpartisipasi dalam komunitas. Jangan ragu untuk mengklik papan di bawah yang menarik bagi Anda dan bergabung segera!",
+  "no_global_rules_info": "Tidak ada aturan global, setiap papan adalah sepenuhnya independen dan pemiliknya yang menentukan bagaimana/apa yang dimoderasi.",
+  "boards": "papan pesan"
 }

@@ -2,6 +2,7 @@
   "what_is_plebchan": "Co je Plebchan?",
   "go": "jít",
   "or": "nebo",
-  "plebchan_description": "Plebchan je decentralizovaná alternativa 4chanu bez serverů a správců, kde každý pleb může vytvářet a vlastnit neomezené desky. Všechna data pocházejí z protokolu <1>plebbit</1>, všechno jsou to texty včetně odkazů, ze kterých jsou vloženy média, sdílená peer-to-peer. Uživatelé se nemusí registrovat, než se zapojí do komunity. Neváhejte kliknout na desku níže, která vás zajímá, a okamžitě se připojit!",
-  "no_global_rules_info": "Neexistují žádná globální pravidla, každá deska je zcela nezávislá a její vlastník rozhoduje, jak/či ji moderovat."
+  "plebchan_description": "Plebchan je decentralizovaná alternativa 4chan bez serveru, bez administrátorů, kde si každý pleb může vytvořit a vlastnit neomezené nástěnky. Všechna data pocházejí z protokolu <1>plebbit</1>, jsou všechno texty včetně odkazů, ze kterých jsou média vložena, sdílená peer-to-peer. Uživatelé se nemusí registrovat před účastí v komunitě. Neváhejte kliknout na nástěnku níže, která vás zajímá, a okamžitě se připojit!",
+  "no_global_rules_info": "Žádná globální pravidla neexistují, každá nástěnka je zcela nezávislá a její vlastník rozhoduje o tom, jak/či ji moderovat.",
+  "boards": "nástěnky"
 }
