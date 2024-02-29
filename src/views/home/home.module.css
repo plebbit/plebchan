@@ -91,6 +91,10 @@
   font-size: 14px;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 
 @media (max-width: 768px) {
   .content {

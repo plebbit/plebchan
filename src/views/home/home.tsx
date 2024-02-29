@@ -71,7 +71,7 @@ const Home = () => {
       </div>
       <div className={styles.box}>
         <div className={styles.boxBar}>
-          <h2>{t('boards')}</h2>
+          <h2 className={styles.capitalize}>{t('boards')}</h2>
         </div>
         <div className={styles.boxContent}></div>
       </div>
