@@ -1,3 +1,5 @@
+<img src="https://github.com/plebeius-eth/assets/blob/main/plebchan-logo.jpg" width="378" height="123">
+
 _Telegram group for this repo https://t.me/plebchanreact_
 
 _Demo https://plebchan.netlify.app and https://plebchan.eth.limo_
