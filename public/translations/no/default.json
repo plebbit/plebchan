@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "Hva er plebchan?",
   "go": "gå",
-  "or": "eller"
+  "or": "eller",
+  "plebchan_description": "Plebchan er et serverløst, adminløst, desentralisert alternativ til 4chan, der enhver pleb kan opprette og eie ubegrensede tavler. Alle data kommer fra <1>plebbit</1>-protokollen, det er alt tekst inkludert lenker fra hvilke medier er innebygd, delt peer-to-peer. Brukere trenger ikke å registrere en konto før de deltar i fellesskapet. Ikke nøl med å klikke på et bord nedenfor som interesserer deg, og hopp rett inn!",
+  "no_global_rules_info": "Det er ingen globale regler, hvert styre er helt uavhengig, og dets eier bestemmer hvordan/om å moderere det."
 }

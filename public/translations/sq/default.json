@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "Çfarë është Plebchan?",
   "go": "shko",
-  "or": "ose"
+  "or": "ose",
+  "plebchan_description": "Plebchan është një alternativë e 4chan-it pa server, pa administratorë dhe e decentralizuar, ku çdo pleb mund të krijojë dhe të posedojë mbrete të pakufizuara. Të gjitha të dhënat vijnë nga protokoli <1>plebbit</1>, është gjithçka tekst, duke përfshirë lidhjet nga të cilat media është e futur, e ndarë peer-to-peer. Përdoruesit nuk duhet të regjistrojnë një llogari përpara se të marrin pjesë në komunitet. Mos hezitoni të klikoni në një mbretëri më poshtë që ju intereson dhe të filloni menjëherë!",
+  "no_global_rules_info": "Nuk ka rregulla globale, çdo tavolinë është krejtësisht e pavarur dhe pronari i saj vendos si/nëse ta moderonte atë."
 }

@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "Plebchan là gì?",
   "go": "đi",
-  "or": "hoặc"
+  "or": "hoặc",
+  "plebchan_description": "Plebchan là một lựa chọn không cần máy chủ, không cần quản trị viên, phi tập trung cho 4chan, nơi mà bất kỳ pleb nào cũng có thể tạo ra và sở hữu bảng không giới hạn. Tất cả dữ liệu đều đến từ giao thức <1>plebbit</1>, đều là văn bản bao gồm cả liên kết từ đó phương tiện được nhúng, chia sẻ theo kiểu peer-to-peer. Người dùng không cần đăng ký tài khoản trước khi tham gia cộng đồng. Hãy thoải mái nhấp vào một bảng dưới đây mà bạn quan tâm và tham gia ngay!",
+  "no_global_rules_info": "Không có quy tắc toàn cầu, mỗi bảng hoàn toàn độc lập và chủ sở hữu quyết định cách/nếu phải kiểm duyệt nó."
 }

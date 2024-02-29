@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "Mi az a Plebchan?",
   "go": "menni",
-  "or": "vagy"
+  "or": "vagy",
+  "plebchan_description": "A Plebchan egy szerver nélküli, admin nélküli, decentralizált 4chan alternatíva, ahol bárki pleb korlátlan táblákat hozhat létre és birtokolhat. Az adatok a <1>plebbit</1> protokollból származnak, minden szöveges, beleértve a linkeket is, amelyekből a média be van ágyazva, peer-to-peer megosztásra kerül. A felhasználóknak nem kell fiókot regisztrálniuk a közösségbe való részvétel előtt. Kattintson az Önt érdeklő tábla alá, és ugorjon be közvetlenül!",
+  "no_global_rules_info": "Nincsenek globális szabályok, minden tábla teljesen független, és tulajdonosa dönti el, hogyan/ha moderálja azt."
 }

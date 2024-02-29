@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "O que é Plebchan?",
   "go": "vai",
-  "or": "ou"
+  "or": "ou",
+  "plebchan_description": "Plebchan é uma alternativa descentralizada, sem servidores e sem administradores ao 4chan, onde qualquer pleb pode criar e possuir placas ilimitadas. Todos os dados vêm do protocolo <1>plebbit</1>, é todo texto incluindo links dos quais mídia é incorporada, compartilhado ponto a ponto. Os usuários não precisam se registrar antes de participar da comunidade. Sinta-se à vontade para clicar em uma placa abaixo que lhe interesse e entrar imediatamente!",
+  "no_global_rules_info": "Não há regras globais, cada quadro é completamente independente e seu proprietário decide como/se moderá-lo."
 }

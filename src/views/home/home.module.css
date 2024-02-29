@@ -62,11 +62,13 @@
 }
 
 .searchBar {
+  display: flex;
   text-align: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
-.searchBar input, .searchBar button {
+.searchBar input {
   font-size: 18px;
   height: 30px;
   box-sizing: border-box;
@@ -82,12 +84,13 @@
 }
 
 .searchBar button {
-  font-size: 15px;
   margin-left: 4px;
   padding: 3px 10px;
-  background-color: rgb(239, 239, 239);
-  position: absolute;
+  display: inline-block;
+  text-transform: capitalize;
+  font-size: 14px;
 }
+
 
 @media (max-width: 768px) {
   .content {

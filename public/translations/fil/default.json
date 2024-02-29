@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "Ano ang plebchan?",
   "go": "pumunta",
-  "or": "o"
+  "or": "o",
+  "plebchan_description": "Ang Plebchan ay isang serverless, adminless, decentralized 4chan alternative kung saan maaaring lumikha at magmamay-ari ng walang limitasyong mga board ang sinumang pleb. Lahat ng data ay nagmumula sa <1>plebbit</1> protocol, ito ay lahat ng teksto kabilang ang mga link mula sa kung saan ang midya ay na-embed, shared peer-to-peer. Hindi kailangan ng mga gumagamit na magrehistro ng account bago makilahok sa komunidad. Maaari kang mag-click sa isang board sa ibaba na nagpapa-interes sa iyo at sumali kaagad!",
+  "no_global_rules_info": "Walang mga global na patakaran, ang bawat board ay lubusang independiyente at ang may-ari nito ang nagpapasya kung paano/kung dapat itong bantayan."
 }

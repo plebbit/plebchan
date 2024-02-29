@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "Plebchan nedir?",
   "go": "git",
-  "or": "veya"
+  "or": "veya",
+  "plebchan_description": "Plebchan, herhangi bir plebin sınırsız panolar oluşturabileceği ve sahip olabileceği sunucusuz, yöneticisiz, merkezi olmayan bir 4chan alternatifidir. Tüm veriler, tüm metinlerin dahil olduğu medyanın gömülü olduğu linkler dahil olmak üzere <1>plebbit</1> protokolünden gelir ve eşler arası paylaşılır. Kullanıcıların topluluğa katılmadan önce bir hesap kaydetmelerine gerek yoktur. Sizi ilgilendiren aşağıdaki panoya tıklayıp hemen katılabilirsiniz!",
+  "no_global_rules_info": "Hiçbir küresel kural yok, her panolu tamamen bağımsızdır ve sahibi nasıl/yöneteceğine karar verir."
 }

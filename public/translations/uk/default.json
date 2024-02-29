@@ -1,5 +1,7 @@
 {
   "what_is_plebchan": "Що таке Плебчан?",
   "go": "йди",
-  "or": "або"
+  "or": "або",
+  "plebchan_description": "plebchan_description",
+  "no_global_rules_info": "Немає глобальних правил, кожна дошка повністю незалежна, і її власник вирішує, як/чи її модерувати."
 }

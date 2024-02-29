@@ -63,15 +63,10 @@ const Home = () => {
           <h2>{t('what_is_plebchan')}</h2>
         </div>
         <div className={styles.boxContent}>
-          Plebchan is a serverless, adminless, decentralized 4chan alternative where any pleb can create and own unlimited boards. All data comes from the{' '}
-          <a href='https://plebbit.com' target='_blank' rel='noopener noreferrer'>
-            plebbit
-          </a>{' '}
-          protocol, it's all text including links from which media is embedded, shared peer-to-peer. Users do not need to register an account before participating in the
-          community. Feel free to click on a board below that interests you and jump right in!
+          <Trans i18nKey='plebchan_description' shouldUnescape={true} components={{ 1: <a href='https://plebbit.com' target='_blank' rel='noopener noreferrer' /> }} />
           <br />
           <br />
-          There are no global rules, each board is completely independent and its owner decides how/if to moderate it.
+          {t('no_global_rules_info')}
         </div>
       </div>
     </div>
