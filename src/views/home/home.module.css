@@ -29,6 +29,7 @@
 }
 
 .box {
+  position: relative;
   background: var(--background-text-color);
   color: var(--text-color-standard);
   border: 1px solid;
@@ -56,6 +57,19 @@
   font-weight: 700;
 }
 
+.boxBar span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 0.25em;
+  text-transform: lowercase;
+}
+
+.boxBar span:hover {
+  cursor: pointer;
+  color: var(--text-color-on-secondary-hover);
+}
+
 .boxContent {
   line-height: 1.5em;
   font-size: 93%;
@@ -65,7 +79,7 @@
 }
 
 .boxContent a, .boxContent a:visited{
-  color: var(--link-text-color);
+  color: var(--external-link-text-color);
 }
 
 .searchBar {
@@ -102,6 +116,39 @@
   text-transform: capitalize;
 }
 
+.list a {
+  display: inline-block;
+  color: var(--internal-link-text-color);
+  text-decoration: var(--internal-link-text-decoration);
+}
+
+.list a:hover {
+  color: var(--internal-link-text-color-hover);
+  text-decoration: var(--internal-link-text-decoration-hover);
+}
+
+.boardsBoxContent {
+  font-size: 93%;
+  padding: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0;
+  line-height: 130%;
+  display: table;
+}
+
+.boardsBoxContent .column {
+  float: left;
+  width: 163px;
+  margin-right: 20px;
+  overflow: hidden;
+}
+
+.boardsBoxContent h3 {
+  font-size: 100%;
+  font-weight: 700;
+  text-decoration: underline;
+  color: var(--text-color-on-secondary);
+}
 
 @media (max-width: 768px) {
   .content {

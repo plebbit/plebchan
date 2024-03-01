@@ -5,10 +5,16 @@
   --secondary-color: #fca;
   --text-color-on-primary: #fff;
   --text-color-on-secondary: #800;
+  --text-color-on-secondary-hover: #c63;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
   --background-text-color: #fff;
-  --link-text-color: #00f;
+  --external-link-text-color: #00f;
+  --external-link-text-decoration: underline;
+  --internal-link-text-color: #800;
+  --internal-link-text-color-hover: #e00;
+  --internal-link-text-decoration: none;
+  --internal-link-text-decoration-hover: underline;
 }
 
 :root .yotsuba-b {
@@ -18,8 +24,14 @@
   --secondary-color: #98e;
   --text-color-on-primary: #000;
   --text-color-on-secondary: #000;
+  --text-color-on-secondary-hover: #fff;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
   --background-text-color: #fff;
-  --link-text-color: #00f;
+  --external-link-text-color: #00f;
+  --external-link-text-decoration: underline;
+  --internal-link-text-color: #34345c;
+  --internal-link-text-color-hover: #d00;
+  --internal-link-text-decoration: none;
+  --internal-link-text-decoration-hover: underline;
 }
