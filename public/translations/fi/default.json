@@ -1,0 +1,8 @@
+{
+  "what_is_plebchan": "Mikä on Plebchan?",
+  "go": "mennä",
+  "or": "tai",
+  "plebchan_description": "Plebchan on palvelin- ja ylläpitovapaa hajautettu vaihtoehto 4chanille, jossa kuka tahansa pleb voi luoda ja omistaa rajoittamattomasti foorumeita. Kaikki tiedot tulevat <1>plebbit</1>-protokollasta, ne ovat kaikki tekstiä mukaan lukien linkit, joista media upotetaan, jaettuna vertaisverkkona. Käyttäjien ei tarvitse rekisteröityä ennen osallistumista yhteisöön. Voit vapaasti klikata alla olevaa foorumia, joka kiinnostaa sinua, ja liittyä heti mukaan!",
+  "no_global_rules_info": "Maailmanlaajuisia sääntöjä ei ole, jokainen foorumi on täysin itsenäinen ja sen omistaja päättää kuinka / onko se säännelty.",
+  "boards": "foorumit"
+}

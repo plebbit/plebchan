@@ -1,0 +1,8 @@
+{
+  "what_is_plebchan": "Çfarë është Plebchan?",
+  "go": "shko",
+  "or": "ose",
+  "plebchan_description": "Plebchan është një alternativë e 4chan decentralizuar, pa server, pa administratorë, ku çdo pleb mund të krijojë dhe të posedojë forume të pakufizuara. Të gjitha të dhënat vijnë nga protokoli <1>plebbit</1>, janë të gjitha tekste duke përfshirë lidhjet nga të cilat mediat janë të mbështjellë, ndarë peer-to-peer. Përdoruesit nuk duhet të regjistrojnë një llogari para se të marrin pjesë në komunitet. Mos ngurroni të klikoni në një forum më poshtë që ju intereson dhe të bashkoheni menjëherë!",
+  "no_global_rules_info": "Nuk ka rregulla globale, çdo forum është plotësisht i pavarur dhe pronari i tij vendos se si/nëse ta moderohet.",
+  "boards": "forume"
+}
