@@ -59,7 +59,7 @@ const Home = () => {
         <button>{t('go')}</button>
       </div>
       <div className={styles.box}>
-        <div className={styles.boxBar}>
+        <div className={`${styles.boxBar} ${styles.primaryColorBar}`}>
           <h2>{t('what_is_plebchan')}</h2>
         </div>
         <div className={styles.boxContent}>
@@ -70,8 +70,14 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.box}>
-        <div className={styles.boxBar}>
+        <div className={`${styles.boxBar} ${styles.secondaryColorBar}`}>
           <h2 className={styles.capitalize}>{t('boards')}</h2>
+        </div>
+        <div className={styles.boxContent}></div>
+      </div>
+      <div className={styles.box}>
+        <div className={`${styles.boxBar} ${styles.secondaryColorBar}`}>
+          <h2 className={styles.capitalize}>{t('popular_threads')}</h2>
         </div>
         <div className={styles.boxContent}></div>
       </div>

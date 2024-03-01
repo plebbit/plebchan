@@ -1,5 +1,4 @@
 .content {
-  color: var(--color-primary);
   width: 100%;
   height: 100%;
   margin: auto;
@@ -30,18 +29,26 @@
 }
 
 .box {
-  background: var(--text-background);
-  color: var(--text-black);
+  background: var(--background-text-color);
+  color: var(--text-color-standard);
   border: 1px solid;
   margin-bottom: 0.5em;
   padding-bottom: 0.5em;
 }
 
 .boxBar {
-  background: var(--color-primary);
-  color: var(--text-primary);
   padding-left: 0.5em;
   line-height: 2em;
+}
+
+.primaryColorBar {
+  background: var(--primary-color);
+  color: var(--text-color-on-primary);
+}
+
+.secondaryColorBar {
+  background: var(--secondary-color);
+  color: var(--text-color-on-secondary);
 }
 
 .boxBar h2 {
@@ -58,7 +65,7 @@
 }
 
 .boxContent a, .boxContent a:visited{
-  color: var(--text-link);
+  color: var(--link-text-color);
 }
 
 .searchBar {
@@ -85,7 +92,7 @@
 
 .searchBar button {
   margin-left: 4px;
-  padding: 3px 10px;
+  padding: 3px 5px;
   display: inline-block;
   text-transform: capitalize;
   font-size: 14px;
@@ -98,6 +105,8 @@
 
 @media (max-width: 768px) {
   .content {
+    min-width: 0;
     width: auto;
+    padding: 10px;
   }
 }

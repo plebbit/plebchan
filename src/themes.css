@@ -1,21 +1,25 @@
 :root .yotsuba {
-  --background-color: #ffe;
-  --background-fade: url("/public/assets/background-fade.png");
-  --color-primary: #800;
-  --text-primary: #fff;
-  --text-black: #000;
-  --text-white: #fff;
-  --text-background: #fff;
-  --text-link: #00f;
+  --background-base-color: #ffe;
+  --background-pattern-image: url("/public/assets/background-fade.png");
+  --primary-color: #800;
+  --secondary-color: #fca;
+  --text-color-on-primary: #fff;
+  --text-color-on-secondary: #800;
+  --text-color-standard: #000;
+  --text-color-inverse: #fff;
+  --background-text-color: #fff;
+  --link-text-color: #00f;
 }
 
 :root .yotsuba-b {
-  --background-color: #eef2ff;
-  --background-fade: url("/public/assets/background-fade-blue.png");
-  --color-primary: #98e;
-  --text-primary: #000;
-  --text-black: #000;
-  --text-white: #fff;
-  --text-background: #fff;
-  --text-link: #00f;
+  --background-base-color: #eef2ff;
+  --background-pattern-image: url("/public/assets/background-fade-blue.png");
+  --primary-color: #98e;
+  --secondary-color: #98e;
+  --text-color-on-primary: #000;
+  --text-color-on-secondary: #000;
+  --text-color-standard: #000;
+  --text-color-inverse: #fff;
+  --background-text-color: #fff;
+  --link-text-color: #00f;
 }
