@@ -4,5 +4,6 @@
   "or": "eller",
   "plebchan_description": "Plebchan er et serverløst, adminløst, decentraliseret 4chan-alternativ, hvor enhver pleb kan oprette og eje ubegrænsede opslagstavler. Alle data kommer fra protokollen <1>plebbit</1>, det hele er tekst inklusive links, hvorfra medier er indlejret, delt peer-to-peer. Brugere behøver ikke at registrere en konto før deltagelse i fællesskabet. Du er velkommen til at klikke på en opslagstavle nedenfor, der interesserer dig, og springe direkte ind!",
   "no_global_rules_info": "Der er ingen globale regler, hver opslagstavle er helt uafhængig, og dens ejer beslutter hvordan/om at moderere den.",
-  "boards": "opslagstavler"
+  "boards": "opslagstavler",
+  "popular_threads": "Populære tråde"
 }

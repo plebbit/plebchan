@@ -4,5 +4,6 @@
   "or": "ou",
   "plebchan_description": "Plebchan é uma alternativa descentralizada, sem servidor, sem administradores ao 4chan onde qualquer plebeu pode criar e possuir fóruns ilimitados. Todos os dados vêm do protocolo <1>plebbit</1>, são todos textos incluindo links dos quais a mídia é incorporada, compartilhada peer-to-peer. Os usuários não precisam se registrar antes de participar da comunidade. Sinta-se à vontade para clicar em um fórum abaixo que lhe interesse e participar imediatamente!",
   "no_global_rules_info": "Não existem regras globais, cada fórum é completamente independente e o seu proprietário decide como/se o moderar.",
-  "boards": "fóruns"
+  "boards": "fóruns",
+  "popular_threads": "Tópicos populares"
 }

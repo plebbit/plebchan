@@ -4,5 +4,6 @@
   "or": "atau",
   "plebchan_description": "Plebchan adalah alternatif 4chan tanpa server, tanpa admin, terdesentralisasi di mana siapa pun pleb bisa membuat dan memiliki papan tak terbatas. Semua data berasal dari protokol <1>plebbit</1>, semuanya teks termasuk tautan dari mana media disematkan, dibagikan peer-to-peer. Pengguna tidak perlu mendaftar akun sebelum berpartisipasi dalam komunitas. Jangan ragu untuk mengklik papan di bawah yang menarik bagi Anda dan bergabung segera!",
   "no_global_rules_info": "Tidak ada aturan global, setiap papan adalah sepenuhnya independen dan pemiliknya yang menentukan bagaimana/apa yang dimoderasi.",
-  "boards": "papan pesan"
+  "boards": "papan pesan",
+  "popular_threads": "Benang populer"
 }

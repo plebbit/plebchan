@@ -4,5 +4,6 @@
   "or": "hoặc",
   "plebchan_description": "Plebchan là một lựa chọn phi tập trung, không có máy chủ, không có quản trị viên cho 4chan nơi bất kỳ pleb nào cũng có thể tạo và sở hữu các bảng không giới hạn. Tất cả dữ liệu đều đến từ giao thức <1>plebbit</1>, đó là toàn bộ văn bản bao gồm cả liên kết từ đó các phương tiện được nhúng, được chia sẻ ngang hàng. Người dùng không cần đăng ký tài khoản trước khi tham gia cộng đồng. Hãy thoải mái nhấp vào một bảng dưới đây mà bạn quan tâm và tham gia ngay!",
   "no_global_rules_info": "Không có quy tắc toàn cầu, mỗi diễn đàn là hoàn toàn độc lập và chủ sở hữu quyết định cách/nếu muốn kiểm duyệt nó.",
-  "boards": "diễn đàn"
+  "boards": "diễn đàn",
+  "popular_threads": "Chủ đề phổ biến"
 }

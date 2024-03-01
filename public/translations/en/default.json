@@ -4,5 +4,6 @@
   "or": "or",
   "plebchan_description": "Plebchan is a serverless, adminless, decentralized 4chan alternative where any pleb can create and own unlimited boards. All data comes from the <1>plebbit</1> protocol, it's all text including links from which media is embedded, shared peer-to-peer. Users do not need to register an account before participating in the community. Feel free to click on a board below that interests you and jump right in!",
   "no_global_rules_info": "There are no global rules, each board is completely independent and its owner decides how/if to moderate it.",
-  "boards": "boards"
+  "boards": "boards",
+  "popular_threads": "Popular threads"
 }

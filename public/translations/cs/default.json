@@ -4,5 +4,6 @@
   "or": "nebo",
   "plebchan_description": "Plebchan je decentralizovaná alternativa 4chan bez serveru, bez administrátorů, kde si každý pleb může vytvořit a vlastnit neomezené nástěnky. Všechna data pocházejí z protokolu <1>plebbit</1>, jsou všechno texty včetně odkazů, ze kterých jsou média vložena, sdílená peer-to-peer. Uživatelé se nemusí registrovat před účastí v komunitě. Neváhejte kliknout na nástěnku níže, která vás zajímá, a okamžitě se připojit!",
   "no_global_rules_info": "Žádná globální pravidla neexistují, každá nástěnka je zcela nezávislá a její vlastník rozhoduje o tom, jak/či ji moderovat.",
-  "boards": "nástěnky"
+  "boards": "nástěnky",
+  "popular_threads": "Oblíbená vlákna"
 }
