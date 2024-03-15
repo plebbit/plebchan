@@ -32,7 +32,7 @@
   position: relative;
   background: var(--background-text-color);
   color: var(--text-color-standard);
-  border: 1px solid;
+  border: 1px solid var(--box-border-color);
   margin-bottom: 0.5em;
   padding-bottom: 0.5em;
 }
@@ -42,14 +42,14 @@
   line-height: 2em;
 }
 
-.primaryColorBar {
-  background: var(--primary-color);
-  color: var(--text-color-on-primary);
+.color1ColorBar {
+  background: var(--color1);
+  color: var(--text-color-on-color1);
 }
 
-.secondaryColorBar {
-  background: var(--secondary-color);
-  color: var(--text-color-on-secondary);
+.color2ColorBar {
+  background: var(--color2);
+  color: var(--text-color-on-color2);
 }
 
 .boxBar h2 {
@@ -67,7 +67,7 @@
 
 .boxBar span:hover {
   cursor: pointer;
-  color: var(--text-color-on-secondary-hover);
+  color: var(--text-color-on-color2-hover);
 }
 
 .boxContent {
@@ -76,6 +76,10 @@
   padding: 0.5em;
   padding-top: 0.25em;
   padding-bottom: 0;
+}
+
+.boxContent a {
+  text-decoration: underline;
 }
 
 .boxContent a, .boxContent a:visited{
@@ -147,7 +151,34 @@
   font-size: 100%;
   font-weight: 700;
   text-decoration: underline;
-  color: var(--text-color-on-secondary);
+  color: var(--text-color-on-color2);
+}
+
+.footer {
+  border-top: 1px solid;
+  width: 750px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  justify-content: center;
+}
+
+.footer li {
+  background: var(--color3);
+  border: 1px solid;
+  padding: 2px 1em 2px 1em;
+  border-left: none;
+  margin-top: -1px;
+  list-style: none;
+}
+
+.footer li:first-child {
+  border-left: 1px solid !important;
+}
+
+a {
+  color: var(--text-color-on-color2);
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {

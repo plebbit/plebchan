@@ -1,11 +1,13 @@
 :root .yotsuba {
   --background-base-color: #ffe;
   --background-pattern-image: url("/public/assets/background-fade.png");
-  --primary-color: #800;
-  --secondary-color: #fca;
-  --text-color-on-primary: #fff;
-  --text-color-on-secondary: #800;
-  --text-color-on-secondary-hover: #c63;
+  --color1: #800;
+  --color2: #fca;
+  --color3: #fed;
+  --text-color: maroon;
+  --text-color-on-color1: #fff;
+  --text-color-on-color2: #800;
+  --text-color-on-color2-hover: #c63;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
   --background-text-color: #fff;
@@ -15,16 +17,19 @@
   --internal-link-text-color-hover: #e00;
   --internal-link-text-decoration: none;
   --internal-link-text-decoration-hover: underline;
+  --box-border-color: #800;
 }
 
 :root .yotsuba-b {
   --background-base-color: #eef2ff;
   --background-pattern-image: url("/public/assets/background-fade-blue.png");
-  --primary-color: #98e;
-  --secondary-color: #98e;
-  --text-color-on-primary: #000;
-  --text-color-on-secondary: #000;
-  --text-color-on-secondary-hover: #fff;
+  --color1: #98e;
+  --color2: #98e;
+  --color3: #eef2ff;
+  --text-color: #000;
+  --text-color-on-color1: #000;
+  --text-color-on-color2: #000;
+  --text-color-on-color2-hover: #fff;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
   --background-text-color: #fff;
@@ -34,4 +39,19 @@
   --internal-link-text-color-hover: #d00;
   --internal-link-text-decoration: none;
   --internal-link-text-decoration-hover: underline;
+  --box-border-color: #000;
+}
+
+:root .tomorrow {
+  --background-base-color: #1d1f21;
+  --background-pattern-image: none;
+  --color1: rgb(33, 35, 38);
+  --color2: rgb(33, 35, 38);
+  --text-color: #c5c8c6;
+  --text-color-standard: #c5c8c6;
+  --text-color-on-color1: #c5c8c6;
+  --text-color-on-color2: #c5c8c6;
+  --text-color-on-color3: #c5c8c6;
+  --background-text-color: #282a2e;
+  --box-border-color: rgb(45, 47, 51);
 }

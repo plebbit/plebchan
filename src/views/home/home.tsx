@@ -3,6 +3,7 @@ import useTheme from '../../hooks/use-theme';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import { useEffect } from 'react';
 
 // TODO: remove theme and languages selectors for debugging
 const ThemeSettings = () => {
@@ -12,6 +13,7 @@ const ThemeSettings = () => {
     <select value={theme} onChange={(e) => setTheme(e.target.value)}>
       <option value='yotsuba'>yotsuba</option>
       <option value='yotsuba-b'>yotsuba-b</option>
+      <option value='tomorrow'>tomorrow</option>
     </select>
   );
 };
@@ -55,7 +57,7 @@ const InfoBox = () => {
   const { t } = useTranslation();
   return (
     <div className={styles.box}>
-      <div className={`${styles.boxBar} ${styles.primaryColorBar}`}>
+      <div className={`${styles.boxBar} ${styles.color1ColorBar}`}>
         <h2>{t('what_is_plebchan')}</h2>
       </div>
       <div className={styles.boxContent}>
@@ -74,7 +76,7 @@ const Boards = () => {
 
   return (
     <div className={styles.box}>
-      <div className={`${styles.boxBar} ${styles.secondaryColorBar}`}>
+      <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className={styles.capitalize}>{t('boards')}</h2>
         <span>{t('options')} ▼</span>
       </div>
@@ -107,7 +109,7 @@ const PopularThreads = () => {
   const { t } = useTranslation();
   return (
     <div className={styles.box}>
-      <div className={`${styles.boxBar} ${styles.secondaryColorBar}`}>
+      <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className={styles.capitalize}>{t('popular_threads')}</h2>
         <span>{t('options')} ▼</span>
       </div>
@@ -116,7 +118,67 @@ const PopularThreads = () => {
   );
 };
 
+const Stats = () => {
+  const { t } = useTranslation();
+  return (
+    <div className={styles.box}>
+      <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
+        <h2 className={styles.capitalize}>{t('stats')}</h2>
+      </div>
+      <div className={styles.boxContent}></div>
+    </div>
+  );
+};
+
+const Footer = () => {
+  return (
+    <ul className={styles.footer}>
+      <li>
+        <a href='https://plebbit.com' target='_blank' rel='noopener noreferrer'>
+          About
+        </a>
+      </li>
+      <li>
+        <a href='https://twitter.com/plebchan_eth' target='_blank' rel='noopener noreferrer'>
+          Twitter
+        </a>
+      </li>
+      <li>
+        <a href='https://t.me/plebbit' target='_blank' rel='noopener noreferrer'>
+          Telegram
+        </a>
+      </li>
+      <li>
+        <a href='https://discord.gg/E7ejphwzGW' target='_blank' rel='noopener noreferrer'>
+          Discord
+        </a>
+      </li>
+      <li>
+        <a href='https://github.com/plebbit/plebchan' target='_blank' rel='noopener noreferrer'>
+          GitHub
+        </a>
+      </li>
+      <li>
+        <a href='https://etherscan.io/token/0xEA81DaB2e0EcBc6B5c4172DE4c22B6Ef6E55Bd8f' target='_blank' rel='noopener noreferrer'>
+          Token
+        </a>
+      </li>
+      <li>
+        <a href='https://github.com/plebbit/whitepaper/discussions/2' target='_blank' rel='noopener noreferrer'>
+          Whitepaper
+        </a>
+      </li>
+    </ul>
+  );
+};
+
 const Home = () => {
+  const [, setTheme] = useTheme();
+
+  useEffect(() => {
+    setTheme('yotsuba');
+  }, [setTheme]);
+
   return (
     <div className={styles.content}>
       <div className={styles.debug}>
@@ -132,6 +194,8 @@ const Home = () => {
       <InfoBox />
       <Boards />
       <PopularThreads />
+      <Stats />
+      <Footer />
     </div>
   );
 };
