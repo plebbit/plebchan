@@ -6,5 +6,6 @@
   "no_global_rules_info": "Nie ma globalnych zasad, każda tablica jest całkowicie niezależna, a jej właściciel decyduje, w jaki sposób/czy ją moderować.",
   "boards": "fora",
   "popular_threads": "Popularne wątki",
-  "options": "Opcje"
+  "options": "Opcje",
+  "stats": "Statystyki"
 }

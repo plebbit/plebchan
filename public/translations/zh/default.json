@@ -6,5 +6,6 @@
   "no_global_rules_info": "没有全球规则，每个板块都是完全独立的，其所有者决定如何/是否对其进行审查。",
   "boards": "论坛",
   "popular_threads": "热门主题",
-  "options": "选项"
+  "options": "选项",
+  "stats": "统计"
 }

@@ -6,5 +6,6 @@
   "no_global_rules_info": "There are no global rules, each board is completely independent and its owner decides how/if to moderate it.",
   "boards": "boards",
   "popular_threads": "Popular threads",
-  "options": "Options"
+  "options": "Options",
+  "stats": "Stats"
 }

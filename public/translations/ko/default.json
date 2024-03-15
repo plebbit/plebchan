@@ -6,5 +6,6 @@
   "no_global_rules_info": "전역 규칙이 없습니다. 각 게시판은 완전히 독립적이며 소유자가 어떻게/모디레이션할지를 결정합니다.",
   "boards": "게시판",
   "popular_threads": "인기 있는 스레드",
-  "options": "옵션"
+  "options": "옵션",
+  "stats": "통계"
 }
