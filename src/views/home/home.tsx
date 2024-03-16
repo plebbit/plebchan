@@ -1,6 +1,7 @@
+import { useRef } from 'react';
 import styles from './home.module.css';
 import useTheme from '../../hooks/use-theme';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { useEffect } from 'react';
@@ -44,12 +45,45 @@ const LanguageSettings = () => {
   );
 };
 
+const isValidAddress = (address: string): boolean => {
+  if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
+    return false;
+  }
+  return true;
+};
+
 const SearchBar = () => {
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = () => {
+    const inputValue = searchInputRef.current?.value;
+    if (inputValue && isValidAddress(inputValue)) {
+      navigate(`/p/${inputValue}`);
+    } else {
+      alert('invalid address');
+    }
+  };
+
   return (
     <div className={styles.searchBar}>
-      <input type='text' placeholder={`"board.eth" ${t('or')} "12D3KooW..."`} />
-      <button>{t('go')}</button>
+      <input
+        autoCorrect='off'
+        autoComplete='off'
+        spellCheck='false'
+        autoCapitalize='off'
+        type='text'
+        placeholder={`"board.eth/.sol" ${t('or')} "12D3KooW..."`}
+        ref={searchInputRef}
+        onSubmit={handleSearchSubmit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSearchSubmit();
+          }
+        }}
+      />
+      <button onClick={handleSearchSubmit}>{t('go')}</button>
     </div>
   );
 };
