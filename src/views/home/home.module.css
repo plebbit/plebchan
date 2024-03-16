@@ -154,6 +154,10 @@
   color: var(--text-color-on-color2);
 }
 
+.footer a {
+  text-transform: capitalize;
+}
+
 @media (max-width: 768px) {
   .content {
     min-width: 0;

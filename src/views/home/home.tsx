@@ -131,11 +131,13 @@ const Stats = () => {
 };
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <ul className={styles.footer}>
       <li>
         <a href='https://plebbit.com' target='_blank' rel='noopener noreferrer'>
-          About
+          {t('about')}
         </a>
       </li>
       <li>
@@ -159,13 +161,18 @@ const Footer = () => {
         </a>
       </li>
       <li>
+        <a href='https://github.com/plebbit/plebchan' target='_blank' rel='noopener noreferrer'>
+          {t('download_app')}
+        </a>
+      </li>
+      <li>
         <a href='https://etherscan.io/token/0xEA81DaB2e0EcBc6B5c4172DE4c22B6Ef6E55Bd8f' target='_blank' rel='noopener noreferrer'>
-          Token
+          {t('token')}
         </a>
       </li>
       <li>
         <a href='https://github.com/plebbit/whitepaper/discussions/2' target='_blank' rel='noopener noreferrer'>
-          Whitepaper
+          {t('whitepaper')}
         </a>
       </li>
     </ul>

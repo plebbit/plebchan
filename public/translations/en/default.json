@@ -7,5 +7,9 @@
   "boards": "boards",
   "popular_threads": "Popular threads",
   "options": "Options",
-  "stats": "Stats"
+  "stats": "Stats",
+  "about": "About",
+  "whitepaper": "Whitepaper",
+  "token": "Token",
+  "download_app": "Download app"
 }

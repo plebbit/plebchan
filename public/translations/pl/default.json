@@ -7,5 +7,9 @@
   "boards": "fora",
   "popular_threads": "Popularne wątki",
   "options": "Opcje",
-  "stats": "Statystyki"
+  "stats": "Statystyki",
+  "about": "O",
+  "whitepaper": "Whitepaper",
+  "token": "Token",
+  "download_app": "Pobierz aplikację"
 }

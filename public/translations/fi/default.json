@@ -7,5 +7,9 @@
   "boards": "foorumit",
   "popular_threads": "Suositut langat",
   "options": "Vaihtoehdot",
-  "stats": "Tilastot"
+  "stats": "Tilastot",
+  "about": "Tietoa",
+  "whitepaper": "Whitepaper",
+  "token": "Token",
+  "download_app": "Lataa sovellus"
 }

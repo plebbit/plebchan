@@ -7,5 +7,9 @@
   "boards": "게시판",
   "popular_threads": "인기 있는 스레드",
   "options": "옵션",
-  "stats": "통계"
+  "stats": "통계",
+  "about": "약",
+  "whitepaper": "화이트페이퍼",
+  "token": "토큰",
+  "download_app": "앱 다운로드"
 }

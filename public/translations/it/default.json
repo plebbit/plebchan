@@ -7,5 +7,9 @@
   "boards": "forum",
   "popular_threads": "Thread popolari",
   "options": "Opzioni",
-  "stats": "Statistiche"
+  "stats": "Statistiche",
+  "about": "Info",
+  "whitepaper": "Libro bianco",
+  "token": "Token",
+  "download_app": "Scarica app"
 }

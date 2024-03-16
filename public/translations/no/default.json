@@ -7,5 +7,9 @@
   "boards": "fora",
   "popular_threads": "Populære tråder",
   "options": "Alternativer",
-  "stats": "Statistikk"
+  "stats": "Statistikk",
+  "about": "Om",
+  "whitepaper": "Whitepaper",
+  "token": "Token",
+  "download_app": "Last ned appen"
 }

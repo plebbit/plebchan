@@ -7,5 +7,9 @@
   "boards": "掲示板",
   "popular_threads": "人気のあるスレッド",
   "options": "オプション",
-  "stats": "統計"
+  "stats": "統計",
+  "about": "約",
+  "whitepaper": "ホワイトペーパー",
+  "token": "トークン",
+  "download_app": "アプリをダウンロード"
 }
