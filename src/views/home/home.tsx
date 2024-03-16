@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { useEffect } from 'react';
+import packageJson from '../../../package.json';
 
 // TODO: remove theme and languages selectors for debugging
 const ThemeSettings = () => {
@@ -130,9 +131,26 @@ const Stats = () => {
   );
 };
 
+const { version } = packageJson;
+const downloadAppLink = (() => {
+  const platform = navigator.platform;
+  if (platform === 'Linux' || platform === 'Linux x86_64' || platform === 'Linux i686' || platform === 'Linux aarch64') {
+    return `https://github.com/plebbit/plebchan/releases/download/v${version}/plebchan-${version}.AppImage`;
+  } else if (platform === 'Win32' || platform === 'Win64' || platform === 'Windows') {
+    return `https://github.com/plebbit/plebchan/releases/download/v${version}/plebchan.Portable.${version}.exe`;
+  } else if (platform === 'MacIntel' || platform === 'Macintosh') {
+    return `https://github.com/plebbit/plebchan/releases/download/v${version}/plebchan-${version}.dmg`;
+  } else if (platform === 'Android') {
+    return undefined;
+  } else if (platform === 'iPhone' || platform === 'iPad') {
+    return undefined;
+  } else {
+    return undefined;
+  }
+})();
+
 const Footer = () => {
   const { t } = useTranslation();
-
   return (
     <ul className={styles.footer}>
       <li>
@@ -160,11 +178,13 @@ const Footer = () => {
           GitHub
         </a>
       </li>
-      <li>
-        <a href='https://github.com/plebbit/plebchan' target='_blank' rel='noopener noreferrer'>
-          {t('download_app')}
-        </a>
-      </li>
+      {downloadAppLink && (
+        <li>
+          <a href={downloadAppLink} target='_blank' rel='noopener noreferrer'>
+            {t('download_app')}
+          </a>
+        </li>
+      )}
       <li>
         <a href='https://etherscan.io/token/0xEA81DaB2e0EcBc6B5c4172DE4c22B6Ef6E55Bd8f' target='_blank' rel='noopener noreferrer'>
           {t('token')}
