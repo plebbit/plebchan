@@ -4,5 +4,12 @@
   "or": "vagy",
   "plebchan_description": "A Plebchan egy szerver nélküli, admin nélküli, decentralizált 4chan alternatíva, ahol bármelyik pleb létrehozhat és birtokolhat korlátlan fórumokat. Az adatok mindegyike a <1>plebbit</1> protokollból származik, minden szöveg, beleértve a hivatkozásokat is, amelyekből a média be van ágyazva, peer-to-peer megosztással. A felhasználóknak nem kell fiókot regisztrálniuk a közösség részvételéhez. Kattints bármelyik lent lévő fórumra, amely érdekel, és csatlakozz azonnal!",
   "no_global_rules_info": "Nincsenek globális szabályok, minden fórum teljesen független, és tulajdonosa dönti el, hogyan/ha moderálja azt.",
-  "boards": "fórumok"
+  "boards": "fórumok",
+  "popular_threads": "Népszerű szálak",
+  "options": "Lehetőségek",
+  "stats": "Statisztikák",
+  "about": "Rólunk",
+  "whitepaper": "Whitepaper",
+  "token": "Token",
+  "download_app": "App letöltése"
 }

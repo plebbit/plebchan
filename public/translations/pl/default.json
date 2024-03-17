@@ -4,5 +4,12 @@
   "or": "lub",
   "plebchan_description": "Plebchan to serwer, admin, zdecentralizowana alternatywa dla 4chan, gdzie każdy pleb może tworzyć i posiadać nieograniczone fora. Wszystkie dane pochodzą z protokołu <1>plebbit</1>, są to same teksty, w tym linki, z których osadzone są media, udostępniane w trybie peer-to-peer. Użytkownicy nie muszą rejestrować konta przed uczestnictwem w społeczności. Śmiało kliknij na forum poniżej, które Cię interesuje, i dołącz!",
   "no_global_rules_info": "Nie ma globalnych zasad, każda tablica jest całkowicie niezależna, a jej właściciel decyduje, w jaki sposób/czy ją moderować.",
-  "boards": "fora"
+  "boards": "fora",
+  "popular_threads": "Popularne wątki",
+  "options": "Opcje",
+  "stats": "Statystyki",
+  "about": "O",
+  "whitepaper": "Whitepaper",
+  "token": "Token",
+  "download_app": "Pobierz aplikację"
 }

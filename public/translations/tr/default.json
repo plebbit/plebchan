@@ -4,5 +4,12 @@
   "or": "veya",
   "plebchan_description": "Plebchan, herhangi bir plebin sınırsız tahtalar oluşturabileceği ve sahip olabileceği sunucusuz, yöneticisiz, merkezi olmayan 4chan alternatifidir. Tüm veriler, tüm metinler ve yerleştirilen medyaların içinde bulunduğu bağlantılar da dahil olmak üzere <1>plebbit</1> protokolünden gelir ve eşler arası olarak paylaşılır. Kullanıcıların topluluğa katılmadan önce bir hesap kaydetmelerine gerek yoktur. Sizi ilgilendiren aşağıdaki tahtaya tıklayın ve hemen katılın!",
   "no_global_rules_info": "Küresel kurallar yoktur, her forum tamamen bağımsızdır ve sahibi nasıl/modere edileceğine karar verir.",
-  "boards": "forumlar"
+  "boards": "forumlar",
+  "popular_threads": "Popüler konular",
+  "options": "Seçenekler",
+  "stats": "İstatistikler",
+  "about": "Hakkında",
+  "whitepaper": "Beyaz kağıt",
+  "token": "Jeton",
+  "download_app": "Uygulamayı indir"
 }
