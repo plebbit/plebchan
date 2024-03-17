@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './views/home';
 import styles from './app.module.css';
 import useTheme from './hooks/use-theme';
+import Subplebbit from './views/subplebbit';
+import { isHomeView } from './lib/utils/view-utils';
 
 const App = () => {
   const [theme] = useTheme();
+  const location = useLocation();
+  const isInHomeView = isHomeView(location.pathname);
 
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
@@ -13,9 +17,10 @@ const App = () => {
   }, [theme]);
 
   return (
-    <div className={`${styles.app} ${theme}`}>
+    <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
       </Routes>
     </div>
   );
