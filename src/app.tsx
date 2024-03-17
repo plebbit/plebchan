@@ -16,6 +16,23 @@ const App = () => {
     document.body.classList.add(theme);
   }, [theme]);
 
+  // const globalLayout = (
+  //   <>
+  //     <ChallengeModal />
+  //     <Outlet />
+  //   </>
+  // );
+
+  // const boardLayout = (
+  //   <>
+  //     <TopNav />
+  //     <ImageBanner />
+  //     <PostForm />
+  //     <Stats />
+  //     <Outlet />
+  //   </>
+  // );
+
   return (
     <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
       <Routes>

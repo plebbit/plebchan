@@ -7,17 +7,6 @@
   min-width: 750px;
 }
 
-.debug {
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 0.5em;
-}
-
-.debug select {
-  margin: 2px;
-}
-
 .logo img {
   width: 300px;
   height: 120px;

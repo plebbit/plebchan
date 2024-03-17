@@ -1,49 +1,9 @@
 import { useRef } from 'react';
 import styles from './home.module.css';
-import useTheme from '../../hooks/use-theme';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import { useEffect } from 'react';
 import packageJson from '../../../package.json';
-
-// TODO: remove theme and languages selectors for debugging
-const ThemeSettings = () => {
-  const [theme, setTheme] = useTheme();
-
-  return (
-    <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-      <option value='yotsuba'>yotsuba</option>
-      <option value='yotsuba-b'>yotsuba-b</option>
-      <option value='tomorrow'>tomorrow</option>
-    </select>
-  );
-};
-
-// prettier-ignore
-const availableLanguages = ['ar', 'bn', 'cs', 'da', 'de', 'el', 'en', 'es', 'fa', 'fi', 'fil', 'fr', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'mr', 'nl', 'no', 'pl', 'pt', 'ro', 'ru', 'sq', 'sv', 'te', 'th', 'tr', 'uk', 'ur', 'vi', 'zh'];
-
-const LanguageSettings = () => {
-  const { i18n } = useTranslation();
-  const { changeLanguage, language } = i18n;
-
-  const onSelectLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    changeLanguage(e.target.value);
-    window.location.reload();
-  };
-
-  return (
-    <div className={styles.languageSettings}>
-      <select value={language} onChange={onSelectLanguage}>
-        {availableLanguages.map((lang) => (
-          <option key={lang} value={lang}>
-            {lang}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
 
 const isValidAddress = (address: string): boolean => {
   if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
@@ -121,7 +81,7 @@ const Boards = () => {
           <div className={styles.list}>
             {defaultSubplebbitAddresses.map((address) => (
               <div className={styles.subplebbit} key={address}>
-                <Link to={`/b/${address}`}>{address}</Link>
+                <Link to={`/p/${address}`}>{address}</Link>
               </div>
             ))}
           </div>
@@ -234,18 +194,8 @@ const Footer = () => {
 };
 
 const Home = () => {
-  const [, setTheme] = useTheme();
-
-  useEffect(() => {
-    setTheme('yotsuba');
-  }, [setTheme]);
-
   return (
     <div className={styles.content}>
-      <div className={styles.debug}>
-        <LanguageSettings />
-        <ThemeSettings />
-      </div>
       <Link to='/'>
         <div className={styles.logo}>
           <img alt='plebchan' src='/assets/logo/logo-transparent.png' />
