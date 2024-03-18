@@ -1,6 +1,8 @@
 .app {
   background: var(--background-base-color) var(--background-pattern-image) top center repeat-x;
-  font: 13px/1.231 arial, helvetica, sans-serif;
+  font-size: var(--body-font-size);
+  font-family: var(--body-font-family);
+  color: var(--body-font-color);
   z-index: 1;
   min-height: 100%;
   overflow-y: hidden;

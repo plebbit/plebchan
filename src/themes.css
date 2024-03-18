@@ -1,57 +1,142 @@
 :root .yotsuba {
   --background-base-color: #ffe;
   --background-pattern-image: url("/public/assets/background-fade.png");
+  --background-text-color: #fff;
+  --body-font-color: maroon;
+  --body-font-family: arial, helvetica, sans-serif;
+  --body-font-size: 10pt;
+  --box-border-color: #800;
   --color1: #800;
   --color2: #fca;
   --color3: #fed;
-  --text-color: maroon;
-  --text-color-on-color1: #fff;
-  --text-color-on-color2: #800;
-  --text-color-on-color2-hover: #c63;
-  --text-color-standard: #000;
-  --text-color-inverse: #fff;
-  --background-text-color: #fff;
   --external-link-text-color: #00f;
   --external-link-text-decoration: underline;
   --internal-link-text-color: #800;
   --internal-link-text-color-hover: #e00;
   --internal-link-text-decoration: none;
   --internal-link-text-decoration-hover: underline;
-  --box-border-color: #800;
+  --text-color: maroon;
+  --text-color-on-color1: #fff;
+  --text-color-on-color2: #800;
+  --text-color-on-color2-hover: #c63;
+  --text-color-standard: #000;
+  --text-color-inverse: #fff;
+  --topnav-font-size: 9pt;
+  --topnav-separator-color: #b86;
 }
 
 :root .yotsuba-b {
   --background-base-color: #eef2ff;
   --background-pattern-image: url("/public/assets/background-fade-blue.png");
+  --background-text-color: #fff;
+  --body-font-color: #000;
+  --body-font-family: arial, helvetica, sans-serif;
+  --body-font-size: 10pt;
+  --box-border-color: #000;
   --color1: #98e;
   --color2: #98e;
   --color3: #eef2ff;
-  --text-color: #000;
-  --text-color-on-color1: #000;
-  --text-color-on-color2: #000;
-  --text-color-on-color2-hover: #fff;
-  --text-color-standard: #000;
-  --text-color-inverse: #fff;
-  --background-text-color: #fff;
   --external-link-text-color: #00f;
   --external-link-text-decoration: underline;
   --internal-link-text-color: #34345c;
   --internal-link-text-color-hover: #d00;
   --internal-link-text-decoration: none;
   --internal-link-text-decoration-hover: underline;
+  --text-color: #000;
+  --text-color-on-color1: #000;
+  --text-color-on-color2: #000;
+  --text-color-on-color2-hover: #fff;
+  --text-color-standard: #000;
+  --text-color-inverse: #fff;
+  --topnav-font-size: 9pt;
+  --topnav-separator-color: #89a;
+}
+
+:root .futaba {
+  --background-base-color: #ffe;
+  --background-pattern-image: none;
+  --background-text-color: #fff;
+  --body-font-color: maroon;
+  --body-font-family: times new roman, serif;
+  --body-font-size: 12pt;
+  --box-border-color: #800;
+  --color1: #800;
+  --color2: #fca;
+  --color3: #fed;
+  --external-link-text-color: #00f;
+  --external-link-text-decoration: underline;
+  --internal-link-text-color: #00e;
+  --internal-link-text-color-hover: #e00;
+  --internal-link-text-decoration: underline;
+  --internal-link-text-decoration-hover: underline;
+  --text-color: maroon;
+  --text-color-on-color1: #fff;
+  --text-color-on-color2: #800;
+  --text-color-on-color2-hover: #c63;
+  --text-color-standard: #000;
+  --text-color-inverse: #fff;
+  --topnav-font-size: 11pt;
+  --topnav-separator-color: #89a;
+}
+
+:root .burichan {
+  --background-base-color: #eef2ff;
+  --background-pattern-image: none;
+  --background-text-color: #fff;
+  --body-font-color: #000;
+  --body-font-family: times new roman, serif;
+  --body-font-size: 12pt;
   --box-border-color: #000;
+  --color1: #98e;
+  --color2: #98e;
+  --color3: #eef2ff;
+  --external-link-text-color: #00f;
+  --external-link-text-decoration: underline;
+  --internal-link-text-color: #34345c;
+  --internal-link-text-color-hover: #d00;
+  --internal-link-text-decoration: underline;
+  --internal-link-text-decoration-hover: underline;
+  --text-color: #000;
+  --text-color-on-color1: #000;
+  --text-color-on-color2: #000;
+  --text-color-on-color2-hover: #fff;
+  --text-color-standard: #000;
+  --text-color-inverse: #fff;
+  --topnav-font-size: 11pt;
+  --topnav-separator-color: #89a;
+
 }
 
 :root .tomorrow {
   --background-base-color: #1d1f21;
   --background-pattern-image: none;
+  --background-text-color: #282a2e;
+  --body-font-color: #c5c8c6;
+  --body-font-family: arial, helvetica, sans-serif;
+  --body-font-size: 10pt;
+  --box-border-color: rgb(45, 47, 51);
   --color1: rgb(33, 35, 38);
   --color2: rgb(33, 35, 38);
+  --internal-link-text-color: #81a2be;
+  --internal-link-text-color-hover: #5f89ac;
   --text-color: #c5c8c6;
   --text-color-standard: #c5c8c6;
   --text-color-on-color1: #c5c8c6;
   --text-color-on-color2: #c5c8c6;
   --text-color-on-color3: #c5c8c6;
-  --background-text-color: #282a2e;
-  --box-border-color: rgb(45, 47, 51);
+  --topnav-font-size: 9pt;
+  --topnav-separator-color: #89a;
+}
+
+:root .photon {
+  --background-base-color: #eee;
+  --background-pattern-image: none;
+  --body-font-color: #333;
+  --body-font-family: arial, helvetica, sans-serif;
+  --body-font-size: 10pt;
+  --internal-link-text-color: #f60;
+  --internal-link-text-color-hover: #f30;
+  --text-color: #333;
+  --topnav-font-size: 9pt;
+  --topnav-separator-color: #333;
 }

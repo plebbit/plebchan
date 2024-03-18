@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './views/home';
 import styles from './app.module.css';
 import useTheme from './hooks/use-theme';
 import Subplebbit from './views/subplebbit';
 import { isHomeView } from './lib/utils/view-utils';
+import TopNav from './components/topnav';
 
 const App = () => {
   const [theme] = useTheme();
@@ -23,21 +24,23 @@ const App = () => {
   //   </>
   // );
 
-  // const boardLayout = (
-  //   <>
-  //     <TopNav />
-  //     <ImageBanner />
-  //     <PostForm />
-  //     <Stats />
-  //     <Outlet />
-  //   </>
-  // );
+  const boardLayout = (
+    <>
+      <TopNav />
+      {/* <ImageBanner />
+      <PostForm />
+      <Stats /> */}
+      <Outlet />
+    </>
+  );
 
   return (
     <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
+        <Route element={boardLayout}>
+          <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
+        </Route>
       </Routes>
     </div>
   );

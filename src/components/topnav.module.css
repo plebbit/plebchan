@@ -1,0 +1,27 @@
+
+.boardNavDesktop {
+  padding: 5px;
+  font-size: var(--topnav-font-size);
+}
+
+.boardNavDesktop a {
+  color: var(--internal-link-text-color);
+  text-decoration: var(--internal-link-text-decoration);
+}
+
+.boardNavDesktop a:hover {
+  color: var(--internal-link-text-color-hover);
+  text-decoration: var(--internal-link-text-decoration-hover);
+}
+
+@media (max-width: 640px) {
+  .boardNavDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .boardNavMobile {
+    display: none;
+  }
+}
