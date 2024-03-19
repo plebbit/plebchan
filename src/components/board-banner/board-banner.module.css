@@ -1,0 +1,34 @@
+.content {
+  text-align: center;
+  clear: both;
+}
+
+.bannerCnt img {
+  width: 300px;
+  height: 100px;
+  border: var(--banner-image-border);
+  max-width: 100%;
+}
+
+.boardTitle {
+  font-family: var(--board-title-font-family);
+  font-size: var(--board-title-font-size);
+  font-weight: 700;
+  letter-spacing: -2px;
+  margin-top: 0;
+  color: var(--board-title-text-color);
+}
+
+.boardAddress {
+  padding-top: 5px;
+  font-size: smaller;
+  color: var(--board-title-text-color);
+}
+
+.content hr {
+  width: 90%;
+  /* revert to browser styling for burichan and futaba */
+  border: var(--hr-border, revert);
+  border-top: var(--hr-border-top, revert);
+  height: var(--hr-height, revert);
+}

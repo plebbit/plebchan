@@ -6,6 +6,7 @@ import useTheme from './hooks/use-theme';
 import Subplebbit from './views/subplebbit';
 import { isHomeView } from './lib/utils/view-utils';
 import BoardNav from './components/board-nav';
+import BoardBanner from './components/board-banner';
 
 const App = () => {
   const [theme] = useTheme();
@@ -27,8 +28,8 @@ const App = () => {
   const boardLayout = (
     <>
       <BoardNav />
-      {/* <ImageBanner />
-      <PostForm />
+      <BoardBanner />
+      {/*<PostForm />
       <Stats /> */}
       <Outlet />
     </>

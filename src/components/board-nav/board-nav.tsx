@@ -57,7 +57,7 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
 
 const BoardNav = () => {
   const defaultSubplebbits = useDefaultSubplebbits();
-  const subplebbitAddress = useParams().subplebbitAddress;
+  const { subplebbitAddress } = useParams();
 
   return (
     <>
