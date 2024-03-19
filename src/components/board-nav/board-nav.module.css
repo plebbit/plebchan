@@ -1,7 +1,8 @@
 
 .boardNavDesktop {
   padding: 5px;
-  font-size: var(--topnav-font-size);
+  font-size: var(--boardnav-font-size);
+  color: var(--boardnav-separator-color);
 }
 
 .boardNavDesktop a {
@@ -12,6 +13,23 @@
 .boardNavDesktop a:hover {
   color: var(--internal-link-text-color-hover);
   text-decoration: var(--internal-link-text-decoration-hover);
+}
+
+.boardNavMobile {
+  padding: 2px 4px;
+  background-color: var(--boardnav-mobile-background-color);
+  border-bottom: var(--boardnav-mobile-border-bottom);
+  position: fixed;
+  width: 100%;
+  font-size: 10px;
+}
+
+.boardNavMobile strong {
+  padding-right: 5px;
+}
+
+.boardNavMobile select {
+  font-size: 10px;
 }
 
 @media (max-width: 640px) {

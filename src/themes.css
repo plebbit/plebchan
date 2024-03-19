@@ -2,6 +2,11 @@
   --background-base-color: #ffe;
   --background-pattern-image: url("/public/assets/background-fade.png");
   --background-text-color: #fff;
+  --boardnav-font-size: 9pt;
+  --boardnav-separator-color: #b86;
+  --boardnav-mobile-background-color: #f0e0d6;
+  --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
+  --boardnav-mobile-font-size: 11pt;
   --body-font-color: maroon;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -21,14 +26,17 @@
   --text-color-on-color2-hover: #c63;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
-  --topnav-font-size: 9pt;
-  --topnav-separator-color: #b86;
 }
 
 :root .yotsuba-b {
   --background-base-color: #eef2ff;
   --background-pattern-image: url("/public/assets/background-fade-blue.png");
   --background-text-color: #fff;
+  --boardnav-font-size: 9pt;
+  --boardnav-separator-color: #89a;
+  --boardnav-mobile-background-color: #d6daf0;
+  --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
+  --boardnav-mobile-font-size: 11pt;
   --body-font-color: #000;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -48,14 +56,17 @@
   --text-color-on-color2-hover: #fff;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
-  --topnav-font-size: 9pt;
-  --topnav-separator-color: #89a;
 }
 
 :root .futaba {
   --background-base-color: #ffe;
   --background-pattern-image: none;
   --background-text-color: #fff;
+  --boardnav-font-size: 11pt;
+  --boardnav-separator-color: none;
+  --boardnav-mobile-background-color: #f0e0d6;
+  --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
+  --boardnav-mobile-font-size: 11pt;
   --body-font-color: maroon;
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
@@ -75,14 +86,17 @@
   --text-color-on-color2-hover: #c63;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
-  --topnav-font-size: 11pt;
-  --topnav-separator-color: #89a;
 }
 
 :root .burichan {
   --background-base-color: #eef2ff;
   --background-pattern-image: none;
   --background-text-color: #fff;
+  --boardnav-font-size: 11pt;
+  --boardnav-separator-color: none;
+  --boardnav-mobile-background-color: #d6daf0;
+  --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
+  --boardnav-mobile-font-size: 11pt;
   --body-font-color: #000;
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
@@ -102,8 +116,6 @@
   --text-color-on-color2-hover: #fff;
   --text-color-standard: #000;
   --text-color-inverse: #fff;
-  --topnav-font-size: 11pt;
-  --topnav-separator-color: #89a;
 
 }
 
@@ -111,6 +123,11 @@
   --background-base-color: #1d1f21;
   --background-pattern-image: none;
   --background-text-color: #282a2e;
+  --boardnav-font-size: 9pt;
+  --boardnav-separator-color: #c5c8c6;
+  --boardnav-mobile-background-color: #1d1f21;
+  --boardnav-mobile-border-bottom: 2px solid #282a2e;
+  --boardnav-mobile-font-size: 11pt;
   --body-font-color: #c5c8c6;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -124,19 +141,20 @@
   --text-color-on-color1: #c5c8c6;
   --text-color-on-color2: #c5c8c6;
   --text-color-on-color3: #c5c8c6;
-  --topnav-font-size: 9pt;
-  --topnav-separator-color: #89a;
 }
 
 :root .photon {
   --background-base-color: #eee;
   --background-pattern-image: none;
+  --boardnav-font-size: 9pt;
+  --boardnav-separator-color: #333;
+  --boardnav-mobile-background-color: #ddd;
+  --boardnav-mobile-border-bottom: 2px solid #ccc;
+  --boardnav-mobile-font-size: 11pt;
   --body-font-color: #333;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
   --internal-link-text-color: #f60;
   --internal-link-text-color-hover: #f30;
   --text-color: #333;
-  --topnav-font-size: 9pt;
-  --topnav-separator-color: #333;
 }
