@@ -6,7 +6,7 @@
   --boardnav-separator-color: #b86;
   --boardnav-mobile-background-color: #f0e0d6;
   --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
-  --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-font-size: 10px;
   --body-font-color: maroon;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -36,7 +36,7 @@
   --boardnav-separator-color: #89a;
   --boardnav-mobile-background-color: #d6daf0;
   --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
-  --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-font-size: 10px;
   --body-font-color: #000;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -127,7 +127,7 @@
   --boardnav-separator-color: #c5c8c6;
   --boardnav-mobile-background-color: #1d1f21;
   --boardnav-mobile-border-bottom: 2px solid #282a2e;
-  --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-font-size: 10px;
   --body-font-color: #c5c8c6;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -150,7 +150,7 @@
   --boardnav-separator-color: #333;
   --boardnav-mobile-background-color: #ddd;
   --boardnav-mobile-border-bottom: 2px solid #ccc;
-  --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-font-size: 10px;
   --body-font-color: #333;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;

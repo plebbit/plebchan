@@ -21,7 +21,7 @@
   border-bottom: var(--boardnav-mobile-border-bottom);
   position: fixed;
   width: 100%;
-  font-size: 10px;
+  font-size: var(--boardnav-mobile-font-size);
 }
 
 .boardNavMobile strong {
@@ -29,7 +29,25 @@
 }
 
 .boardNavMobile select {
-  font-size: 10px;
+  font-size: var(--boardnav-mobile-font-size);
+}
+
+.boardSelect {
+  float: left;
+}
+
+.pageJump {
+  float: right;
+  padding: 3px 5px 0 0;
+}
+
+.pageJump span, .pageJump a {
+  padding-right: 5px;
+}
+
+.pageJump a {
+  color: var(--internal-link-text-color);
+  text-decoration: var(--internal-link-text-decoration);
 }
 
 @media (max-width: 640px) {

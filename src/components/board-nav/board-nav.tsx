@@ -28,21 +28,29 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
 const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   const navigate = useNavigate();
 
+  const boardSelect = (
+    <select value={currentSubplebbit} onChange={(e) => navigate(`/p/${e.target.value}`)}>
+      <option value='all'>All</option>
+      <option value='subscriptions'>Subscriptions</option>
+      {subplebbits.map((subplebbit: any, index: number) => (
+        <option key={index} value={subplebbit.address}>
+          {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}
+        </option>
+      ))}
+    </select>
+  );
+
   return (
     <div className={styles.boardNavMobile}>
       <div className={styles.boardSelect}>
         <strong>Board</strong>
-        <select value={currentSubplebbit} onChange={(e) => navigate(`/p/${e.target.value}`)}>
-          <option value='all'>All</option>
-          <option value='subscriptions'>Subscriptions</option>
-          {subplebbits.map((subplebbit: any, index: number) => (
-            <option key={index} value={subplebbit.address}>
-              {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}
-            </option>
-          ))}
-        </select>
+        {boardSelect}
       </div>
-      <div className={styles.pageJump}></div>
+      <div className={styles.pageJump}>
+        <Link to='settings'>Settings</Link>
+        <Link to='/'>Home</Link>
+        {/* <span>App</span> TODO: consider adding apk download link */}
+      </div>
     </div>
   );
 };
