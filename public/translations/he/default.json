@@ -20,5 +20,7 @@
   "board_stats_week": "בשבוע האחרון, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
   "board_stats_month": "בחודש האחרון, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
   "board_stats_all": "מאז, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
-  "board_created": "פורום נוצר"
+  "board_created": "פורום נוצר",
+  "settings": "הגדרות",
+  "home": "בית"
 }

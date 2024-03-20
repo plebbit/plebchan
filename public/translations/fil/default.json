@@ -20,5 +20,7 @@
   "board_stats_week": "Sa nakaraang linggo, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
   "board_stats_month": "Sa nakaraang buwan, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
   "board_stats_all": "Mula noon, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
-  "board_created": "Board na nilikha"
+  "board_created": "Board na nilikha",
+  "settings": "Mga Setting",
+  "home": "Bahay"
 }

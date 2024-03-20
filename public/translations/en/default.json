@@ -20,5 +20,7 @@
   "board_stats_week": "In the past week, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
   "board_stats_month": "In the past month, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
   "board_stats_all": "Since then, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
-  "board_created": "Board created"
+  "board_created": "Board created",
+  "settings": "Settings",
+  "home": "Home"
 }

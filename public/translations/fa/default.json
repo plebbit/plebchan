@@ -20,5 +20,7 @@
   "board_stats_week": "در هفته گذشته، <1>{{userCount}}</1> کاربر <1>{{postCount}}</1> پست ارسال کردند",
   "board_stats_month": "در ماه گذشته، <1>{{userCount}}</1> کاربر <1>{{postCount}}</1> پست ارسال کردند",
   "board_stats_all": "از آن زمان، <1>{{userCount}}</1> کاربر <1>{{postCount}}</1> پست ارسال کرده‌اند",
-  "board_created": "انجمن ایجاد شده"
+  "board_created": "انجمن ایجاد شده",
+  "settings": "تنظیمات",
+  "home": "خانه"
 }

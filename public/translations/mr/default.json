@@ -20,5 +20,7 @@
   "board_stats_week": "मागील सप्ताहात, <1>{{userCount}}</1> वापरकर्ते <1>{{postCount}}</1> पोस्ट्स केले",
   "board_stats_month": "मागील महिन्यात, <1>{{userCount}}</1> वापरकर्ते <1>{{postCount}}</1> पोस्ट्स केले",
   "board_stats_all": "त्यानंतर, <1>{{userCount}}</1> वापरकर्ते <1>{{postCount}}</1> पोस्ट्स केले",
-  "board_created": "संदेश फलक तयार केला"
+  "board_created": "संदेश फलक तयार केला",
+  "settings": "सेटिंग्ज",
+  "home": "होम"
 }

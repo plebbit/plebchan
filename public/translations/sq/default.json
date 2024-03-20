@@ -20,5 +20,7 @@
   "board_stats_week": "Në javën e kaluar, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
   "board_stats_month": "Në muajin e kaluar, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
   "board_stats_all": "Që atëherë, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
-  "board_created": "Forumi është krijuar"
+  "board_created": "Forumi është krijuar",
+  "settings": "Parametrat",
+  "home": "Faqja kryesore"
 }

@@ -20,5 +20,7 @@
   "board_stats_week": "Geçen hafta <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
   "board_stats_month": "Geçen ay <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
   "board_stats_all": "O zamandan beri <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
-  "board_created": "Forum oluşturuldu"
+  "board_created": "Forum oluşturuldu",
+  "settings": "Ayarlar",
+  "home": "Anasayfa"
 }

@@ -20,5 +20,7 @@
   "board_stats_week": "I løpet av den siste uken har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
   "board_stats_month": "I løpet av den siste måneden har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
   "board_stats_all": "Siden den gang har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
-  "board_created": "Forum opprettet"
+  "board_created": "Forum opprettet",
+  "settings": "Innstillinger",
+  "home": "Hjem"
 }

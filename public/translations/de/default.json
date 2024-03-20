@@ -20,5 +20,7 @@
   "board_stats_week": "In der letzten Woche haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
   "board_stats_month": "Im letzten Monat haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
   "board_stats_all": "Seitdem haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
-  "board_created": "Forum erstellt"
+  "board_created": "Forum erstellt",
+  "settings": "Einstellungen",
+  "home": "Startseite"
 }

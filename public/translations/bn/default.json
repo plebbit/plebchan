@@ -20,5 +20,7 @@
   "board_stats_week": "গত সপ্তাহে, <1>{{userCount}}</1> ব্যবহারকারী <1>{{postCount}}</1> পোস্ট করেছেন",
   "board_stats_month": "গত মাসে, <1>{{userCount}}</1> ব্যবহারকারী <1>{{postCount}}</1> পোস্ট করেছেন",
   "board_stats_all": "তারপর থেকে, <1>{{userCount}}</1> ব্যবহারকারী <1>{{postCount}}</1> পোস্ট করেছেন",
-  "board_created": "বোর্ড তৈরি হয়েছে"
+  "board_created": "বোর্ড তৈরি হয়েছে",
+  "settings": "সেটিংস",
+  "home": "হোম"
 }

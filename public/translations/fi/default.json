@@ -20,5 +20,7 @@
   "board_stats_week": "Edellisellä viikolla <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
   "board_stats_month": "Edellisellä kuukaudella <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
   "board_stats_all": "Siitä lähtien <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
-  "board_created": "Luotu foorumi"
+  "board_created": "Luotu foorumi",
+  "settings": "Asetukset",
+  "home": "Koti"
 }

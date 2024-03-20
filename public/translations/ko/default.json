@@ -20,5 +20,7 @@
   "board_stats_week": "지난 1주간 <1>{{userCount}}</1>명의 사용자가 <1>{{postCount}}</1>개의 게시물을 작성했습니다",
   "board_stats_month": "지난 1개월 동안 <1>{{userCount}}</1>명의 사용자가 <1>{{postCount}}</1>개의 게시물을 작성했습니다",
   "board_stats_all": "그 후 <1>{{userCount}}</1>명의 사용자가 <1>{{postCount}}</1>개의 게시물을 작성했습니다",
-  "board_created": "게시판이 생성되었습니다"
+  "board_created": "게시판이 생성되었습니다",
+  "settings": "설정",
+  "home": "홈"
 }
