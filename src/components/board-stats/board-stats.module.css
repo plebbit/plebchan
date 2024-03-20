@@ -1,5 +1,7 @@
 .content hr {
-  width: 468px;
+  min-width: 468px;
+  margin-left: -4px;
+  margin-bottom: 5px;
   /* revert to browser styling for burichan and futaba */
   border: var(--hr-border, revert);
   border-top: var(--hr-border-top, revert);
@@ -7,21 +9,13 @@
 }
 
 .blotter {
-  width: 468px;
+  min-width: 468px;
   margin: auto;
   line-height: 1;
-  margin-top: -1px;
-}
-
-.blotter table {
-  border-spacing: 0px;
-  width: 100%;
-  margin-top: -1px;
-  padding-left: 3px;
+  margin-top: -2px;
 }
 
 .blotter tr {
-  vertical-align: top;
   font-size: 11px;
 }
 

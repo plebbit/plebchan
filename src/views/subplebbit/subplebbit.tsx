@@ -27,7 +27,6 @@ const LanguageSettings = () => {
 
   const onSelectLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     changeLanguage(e.target.value);
-    window.location.reload();
   };
 
   return (

@@ -50,7 +50,6 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
       <div className={styles.pageJump}>
         <Link to='settings'>Settings</Link>
         <Link to='/'>Home</Link>
-        {/* <span>App</span> TODO: consider adding apk download link */}
       </div>
     </div>
   );
