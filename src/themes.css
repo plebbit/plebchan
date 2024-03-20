@@ -10,6 +10,7 @@
   --boardnav-mobile-font-size: 10px;
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
+  --board-subtitle-font-size: x-small;
   --body-font-color: maroon;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -47,6 +48,8 @@
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
   --board-title-text-color: #af0a0f;
+  --board-subtitle-text-color: #af0a0f;
+  --board-subtitle-font-size: x-small;
   --body-font-color: #000;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -80,6 +83,7 @@
   --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
   --boardnav-mobile-font-size: 11pt;
   --board-title-font-size: 32px;
+  --board-subtitle-font-size: 10pt;
   --body-font-color: maroon;
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
@@ -112,6 +116,8 @@
   --boardnav-mobile-font-size: 11pt;
   --board-title-font-size: 32px;
   --board-title-text-color: #af0a0f;
+  --board-subtitle-text-color: #af0a0f;
+  --board-subtitle-font-size: 10pt;
   --body-font-color: #000;
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
@@ -146,6 +152,7 @@
   --boardnav-mobile-font-size: 10px;
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
+  --board-subtitle-font-size: x-small;
   --body-font-color: #c5c8c6;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -176,6 +183,7 @@
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
   --board-title-text-color: #004a99;
+  --board-subtitle-font-size: x-small;
   --body-font-color: #333;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;

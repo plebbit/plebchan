@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from './board-banner.module.css';
 
-const totalBanners = 24;
+const totalBanners = 25;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
