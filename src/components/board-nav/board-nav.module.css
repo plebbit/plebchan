@@ -35,6 +35,9 @@
 
 .boardNavMobile select {
   font-size: var(--boardnav-mobile-font-size);
+  border: var(--select-border, revert);
+  background-color: var(--select-background-color, revert);
+  color: var(--select-color, revert);
 }
 
 .boardSelect {

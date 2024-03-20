@@ -186,6 +186,9 @@
   --internal-link-text-color-hover: #5f89ac;
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
+  --select-border: 1px solid #575a60;
+  --select-background-color: #282a2e;
+  --select-color: #c5c8c6;
   --text-color: #c5c8c6;
   --text-color-standard: #c5c8c6;
   --text-color-on-color1: #c5c8c6;

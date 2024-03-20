@@ -5,6 +5,7 @@ import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from './app.module.css';
 import useTheme from './hooks/use-theme';
 import Home from './views/home';
+import Settings from './views/settings';
 import Subplebbit from './views/subplebbit';
 import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
@@ -54,6 +55,7 @@ const App = () => {
         <Route element={<BoardLayout />}>
           <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
         </Route>
+        <Route path='/settings' element={<Settings />} />
       </Routes>
     </div>
   );

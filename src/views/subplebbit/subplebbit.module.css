@@ -7,4 +7,7 @@
 
 .debug select {
   margin: 2px;
+  border: var(--select-border);
+  background-color: var(--select-background-color);
+  color: var(--select-color);
 }
