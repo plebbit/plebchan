@@ -1,0 +1,15 @@
+.togglePostForm {
+  font-size: var(--post-form-toggle-font-size);
+  font-weight: var(--post-form-toggle-font-weight);
+  text-align: center;
+}
+
+.togglePostForm span {
+  color: var(--post-form-toggle-text-color);
+  text-decoration: var(--post-form-toggle-text-decoration);
+}
+
+.togglePostForm span:hover {
+  cursor: pointer;
+  color: var(--post-form-toggle-text-color-hover);
+}

@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
-import Home from './views/home';
+import { isHomeView } from './lib/utils/view-utils';
 import styles from './app.module.css';
 import useTheme from './hooks/use-theme';
+import Home from './views/home';
 import Subplebbit from './views/subplebbit';
-import { isHomeView } from './lib/utils/view-utils';
 import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
+import PostForm from './components/post-form';
 
 const App = () => {
   const [theme] = useTheme();
@@ -29,8 +30,8 @@ const App = () => {
     <>
       <BoardNav />
       <BoardBanner />
-      {/*<PostForm />
-      <Stats /> */}
+      <PostForm />
+      {/* <Stats /> */}
       <Outlet />
     </>
   );
