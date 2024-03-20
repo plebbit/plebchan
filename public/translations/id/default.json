@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "Unduh aplikasi",
-  "start_new_thread": "Mulai Thread Baru"
+  "start_new_thread": "Mulai Thread Baru",
+  "show_stats": "Tampilkan Statistik",
+  "hide": "Sembunyikan"
 }

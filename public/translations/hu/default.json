@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "App letöltése",
-  "start_new_thread": "Új téma indítása"
+  "start_new_thread": "Új téma indítása",
+  "show_stats": "Statisztikák megjelenítése",
+  "hide": "Elrejtés"
 }

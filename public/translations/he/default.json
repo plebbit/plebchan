@@ -12,5 +12,7 @@
   "whitepaper": "מסמך לבן",
   "token": "אסימון",
   "download_app": "הורד את האפליקציה",
-  "start_new_thread": "התחלה של פוסט חדש"
+  "start_new_thread": "התחלה של פוסט חדש",
+  "show_stats": "הצג סטטיסטיקות",
+  "hide": "הסתר"
 }

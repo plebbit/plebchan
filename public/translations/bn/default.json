@@ -12,5 +12,7 @@
   "whitepaper": "হোয়াইট পেপার",
   "token": "টোকেন",
   "download_app": "অ্যাপ ডাউনলোড করুন",
-  "start_new_thread": "নতুন থ্রেড শুরু করুন"
+  "start_new_thread": "নতুন থ্রেড শুরু করুন",
+  "show_stats": "প্রদর্শন পরিসংখ্যান",
+  "hide": "লুকান"
 }

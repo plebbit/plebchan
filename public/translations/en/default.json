@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "Download app",
-  "start_new_thread": "Start a New Thread"
+  "start_new_thread": "Start a New Thread",
+  "show_stats": "Show Stats",
+  "hide": "Hide"
 }

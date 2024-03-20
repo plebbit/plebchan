@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "I-download ang app",
-  "start_new_thread": "Magsimula ng Bagong Thread"
+  "start_new_thread": "Magsimula ng Bagong Thread",
+  "show_stats": "Ipakita ang mga Estadistika",
+  "hide": "Itago"
 }

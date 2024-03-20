@@ -12,5 +12,7 @@
   "whitepaper": "کاغذ سفید",
   "token": "توکن",
   "download_app": "دانلود اپلیکیشن",
-  "start_new_thread": "شروع موضوع جدید"
+  "start_new_thread": "شروع موضوع جدید",
+  "show_stats": "نمایش آمار",
+  "hide": "پنهان کردن"
 }

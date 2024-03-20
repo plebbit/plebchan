@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "Ladda ner appen",
-  "start_new_thread": "Starta en ny tråd"
+  "start_new_thread": "Starta en ny tråd",
+  "show_stats": "Visa statistik",
+  "hide": "Dölj"
 }

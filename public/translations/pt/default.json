@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "Baixar aplicativo",
-  "start_new_thread": "Iniciar um Novo Tópico"
+  "start_new_thread": "Iniciar um Novo Tópico",
+  "show_stats": "Mostrar Estatísticas",
+  "hide": "Esconder"
 }

@@ -12,5 +12,7 @@
   "whitepaper": "Белая бумага",
   "token": "Токен",
   "download_app": "Скачать приложение",
-  "start_new_thread": "Начать новую тему"
+  "start_new_thread": "Начать новую тему",
+  "show_stats": "Показать статистику",
+  "hide": "Скрыть"
 }

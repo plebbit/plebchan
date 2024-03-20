@@ -12,5 +12,7 @@
   "whitepaper": "Bílá kniha",
   "token": "Token",
   "download_app": "Stáhnout aplikaci",
-  "start_new_thread": "Začít nové vlákno"
+  "start_new_thread": "Začít nové vlákno",
+  "show_stats": "Zobrazit statistiky",
+  "hide": "Skrýt"
 }

@@ -12,5 +12,7 @@
   "whitepaper": "ورقة بيضاء",
   "token": "رمز",
   "download_app": "تحميل التطبيق",
-  "start_new_thread": "بدء موضوع جديد"
+  "start_new_thread": "بدء موضوع جديد",
+  "show_stats": "عرض الإحصائيات",
+  "hide": "إخفاء"
 }

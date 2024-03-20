@@ -12,5 +12,7 @@
   "whitepaper": "เอกสารขาว",
   "token": "โทเค็น",
   "download_app": "ดาวน์โหลดแอพ",
-  "start_new_thread": "เริ่มต้นสร้างกระทู้ใหม่"
+  "start_new_thread": "เริ่มต้นสร้างกระทู้ใหม่",
+  "show_stats": "แสดงสถิติ",
+  "hide": "ซ่อน"
 }

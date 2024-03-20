@@ -12,5 +12,7 @@
   "whitepaper": "व्हाइटपेपर",
   "token": "टोकन",
   "download_app": "ऐप डाउनलोड करें",
-  "start_new_thread": "नया थ्रेड शुरू करें"
+  "start_new_thread": "नया थ्रेड शुरू करें",
+  "show_stats": "आँकड़े दिखाएं",
+  "hide": "छुपाएँ"
 }

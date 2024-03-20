@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "Shkarko aplikacionin",
-  "start_new_thread": "Filloni një temë të re"
+  "start_new_thread": "Filloni një temë të re",
+  "show_stats": "Shfaq Statistikat",
+  "hide": "Fshih"
 }

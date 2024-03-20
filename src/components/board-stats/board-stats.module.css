@@ -32,6 +32,7 @@
 .hideButton {
   color: var(--button-text-color);
   text-decoration: var(--button-text-decoration);
+  text-transform: capitalize;
 }
 
 .hideButton:hover {

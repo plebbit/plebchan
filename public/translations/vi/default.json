@@ -12,5 +12,7 @@
   "whitepaper": "Bản trắng",
   "token": "Token",
   "download_app": "Tải ứng dụng",
-  "start_new_thread": "Bắt đầu một chủ đề mới"
+  "start_new_thread": "Bắt đầu một chủ đề mới",
+  "show_stats": "Hiển thị Thống kê",
+  "hide": "Ẩn"
 }

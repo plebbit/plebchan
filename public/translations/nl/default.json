@@ -12,5 +12,7 @@
   "whitepaper": "Whitepaper",
   "token": "Token",
   "download_app": "App downloaden",
-  "start_new_thread": "Start een nieuw onderwerp"
+  "start_new_thread": "Start een nieuw onderwerp",
+  "show_stats": "Toon statistieken",
+  "hide": "Verbergen"
 }

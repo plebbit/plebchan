@@ -12,5 +12,7 @@
   "whitepaper": "Beyaz kağıt",
   "token": "Jeton",
   "download_app": "Uygulamayı indir",
-  "start_new_thread": "Yeni bir Konu Başlat"
+  "start_new_thread": "Yeni bir Konu Başlat",
+  "show_stats": "İstatistikleri Göster",
+  "hide": "Gizle"
 }

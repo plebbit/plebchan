@@ -12,5 +12,7 @@
   "whitepaper": "白皮书",
   "token": "代币",
   "download_app": "下载应用",
-  "start_new_thread": "开始新主题"
+  "start_new_thread": "开始新主题",
+  "show_stats": "显示统计",
+  "hide": "隐藏"
 }

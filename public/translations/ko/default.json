@@ -12,5 +12,7 @@
   "whitepaper": "화이트페이퍼",
   "token": "토큰",
   "download_app": "앱 다운로드",
-  "start_new_thread": "새로운 쓰레드 시작"
+  "start_new_thread": "새로운 쓰레드 시작",
+  "show_stats": "통계 표시",
+  "hide": "숨기기"
 }

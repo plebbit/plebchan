@@ -12,5 +12,7 @@
   "whitepaper": "Livre blanc",
   "token": "Jeton",
   "download_app": "Télécharger l'application",
-  "start_new_thread": "Démarrer un nouveau fil"
+  "start_new_thread": "Démarrer un nouveau fil",
+  "show_stats": "Afficher les statistiques",
+  "hide": "Masquer"
 }

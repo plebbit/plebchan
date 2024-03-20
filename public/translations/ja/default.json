@@ -12,5 +12,7 @@
   "whitepaper": "ホワイトペーパー",
   "token": "トークン",
   "download_app": "アプリをダウンロード",
-  "start_new_thread": "新しいスレッドを開始"
+  "start_new_thread": "新しいスレッドを開始",
+  "show_stats": "統計を表示",
+  "hide": "非表示"
 }
