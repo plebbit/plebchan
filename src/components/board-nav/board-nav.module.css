@@ -15,6 +15,11 @@
   text-decoration: var(--internal-link-text-decoration-hover);
 }
 
+.navTopRight {
+  float: right;
+  text-transform: capitalize;
+}
+
 .boardNavMobile {
   padding: 2px 4px;
   background-color: var(--boardnav-mobile-background-color);

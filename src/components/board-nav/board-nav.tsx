@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
 import styles from './board-nav.module.css';
 
@@ -9,19 +10,30 @@ interface BoardNavProps {
 }
 
 const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.boardNavDesktop}>
-      [
-      {subplebbits.map((subplebbit: any, index: number) => (
-        <span key={subplebbit.address}>
-          {index === 0 ? null : ' '}
-          <Link to={`/p/${subplebbit.address}`} title={subplebbit.title || ''}>
-            {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}
-          </Link>
-          {index !== subplebbits.length - 1 ? ' /' : null}
-        </span>
-      ))}
-      ]
+      <span className={styles.boardList}>
+        [
+        {subplebbits.map((subplebbit: any, index: number) => (
+          <span key={subplebbit.address}>
+            {index === 0 ? null : ' '}
+            <Link to={`/p/${subplebbit.address}`} title={subplebbit.title || ''}>
+              {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}
+            </Link>
+            {index !== subplebbits.length - 1 ? ' /' : null}
+          </span>
+        ))}
+        ]
+      </span>
+      <span className={styles.navTopRight}>
+        [
+        <Link to='/settings' onClick={(e) => e.preventDefault()}>
+          {t('settings')}
+        </Link>
+        ] [<Link to='/'>{t('home')}</Link>]
+      </span>
     </div>
   );
 };
