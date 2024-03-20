@@ -14,5 +14,11 @@
   "download_app": "Scarica app",
   "start_new_thread": "Inizia un Nuovo Thread",
   "show_stats": "Mostra Statistiche",
-  "hide": "Nascondi"
+  "hide": "Nascondi",
+  "board_stats_hour": "Nell'ultima ora, <1>{{userCount}}</1> utenti hanno inviato <1>{{postCount}}</1> post",
+  "board_stats_day": "Nell'ultimo giorno, <1>{{userCount}}</1> utenti hanno inviato <1>{{postCount}}</1> post",
+  "board_stats_week": "Nell'ultima settimana, <1>{{userCount}}</1> utenti hanno inviato <1>{{postCount}}</1> post",
+  "board_stats_month": "Nell'ultimo mese, <1>{{userCount}}</1> utenti hanno inviato <1>{{postCount}}</1> post",
+  "board_stats_all": "Da allora, <1>{{userCount}}</1> utenti hanno inviato <1>{{postCount}}</1> post",
+  "board_created": "Forum creato"
 }

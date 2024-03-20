@@ -14,5 +14,11 @@
   "download_app": "Download app",
   "start_new_thread": "Start a New Thread",
   "show_stats": "Show Stats",
-  "hide": "Hide"
+  "hide": "Hide",
+  "board_stats_hour": "In the past hour, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
+  "board_stats_day": "In the past day, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
+  "board_stats_week": "In the past week, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
+  "board_stats_month": "In the past month, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
+  "board_stats_all": "Since then, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
+  "board_created": "Board created"
 }

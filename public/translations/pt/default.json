@@ -14,5 +14,11 @@
   "download_app": "Baixar aplicativo",
   "start_new_thread": "Iniciar um Novo Tópico",
   "show_stats": "Mostrar Estatísticas",
-  "hide": "Esconder"
+  "hide": "Esconder",
+  "board_stats_hour": "Nas últimas horas, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
+  "board_stats_day": "Nas últimas horas, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
+  "board_stats_week": "Na última semana, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
+  "board_stats_month": "No último mês, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
+  "board_stats_all": "Desde então, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
+  "board_created": "Fórum criado"
 }

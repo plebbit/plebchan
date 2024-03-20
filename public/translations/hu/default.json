@@ -14,5 +14,11 @@
   "download_app": "App letöltése",
   "start_new_thread": "Új téma indítása",
   "show_stats": "Statisztikák megjelenítése",
-  "hide": "Elrejtés"
+  "hide": "Elrejtés",
+  "board_stats_hour": "Az elmúlt órában <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
+  "board_stats_day": "Az elmúlt napon <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
+  "board_stats_week": "Az elmúlt héten <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
+  "board_stats_month": "Az elmúlt hónapban <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
+  "board_stats_all": "Azóta <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
+  "board_created": "Fórum létrehozva"
 }

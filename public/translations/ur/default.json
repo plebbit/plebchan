@@ -14,5 +14,11 @@
   "download_app": "ایپ ڈاؤن لوڈ کریں",
   "start_new_thread": "نئی دھاگہ شروع کریں",
   "show_stats": "احصائیہ دکھائیں",
-  "hide": "چھپائیں"
+  "hide": "چھپائیں",
+  "board_stats_hour": "گذشتہ گھنٹے میں، <1>{{userCount}}</1> صارفین نے <1>{{postCount}}</1> مواد ارسال کیا ہے",
+  "board_stats_day": "گذشتہ دن، <1>{{userCount}}</1> صارفین نے <1>{{postCount}}</1> مواد ارسال کیا ہے",
+  "board_stats_week": "گذشتہ ہفتے، <1>{{userCount}}</1> صارفین نے <1>{{postCount}}</1> مواد ارسال کیا ہے",
+  "board_stats_month": "گذشتہ مہینے، <1>{{userCount}}</1> صارفین نے <1>{{postCount}}</1> مواد ارسال کیا ہے",
+  "board_stats_all": "اس کے بعد، <1>{{userCount}}</1> صارفین نے <1>{{postCount}}</1> مواد ارسال کیا ہے",
+  "board_created": "پیغام بورڈز بنایا گیا"
 }

@@ -14,5 +14,11 @@
   "download_app": "下载应用",
   "start_new_thread": "开始新主题",
   "show_stats": "显示统计",
-  "hide": "隐藏"
+  "hide": "隐藏",
+  "board_stats_hour": "在过去的一小时内，<1>{{userCount}}</1> 用户发布了<1>{{postCount}}</1>个帖子",
+  "board_stats_day": "在过去的一天内，<1>{{userCount}}</1> 用户发布了<1>{{postCount}}</1>个帖子",
+  "board_stats_week": "在过去的一周内，<1>{{userCount}}</1> 用户发布了<1>{{postCount}}</1>个帖子",
+  "board_stats_month": "在过去的一个月内，<1>{{userCount}}</1> 用户发布了<1>{{postCount}}</1>个帖子",
+  "board_stats_all": "从那时起，<1>{{userCount}}</1> 用户发布了<1>{{postCount}}</1>个帖子",
+  "board_created": "论坛已创建"
 }

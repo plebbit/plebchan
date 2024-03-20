@@ -14,5 +14,11 @@
   "download_app": "I-download ang app",
   "start_new_thread": "Magsimula ng Bagong Thread",
   "show_stats": "Ipakita ang mga Estadistika",
-  "hide": "Itago"
+  "hide": "Itago",
+  "board_stats_hour": "Sa nakaraang oras, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
+  "board_stats_day": "Sa nakaraang araw, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
+  "board_stats_week": "Sa nakaraang linggo, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
+  "board_stats_month": "Sa nakaraang buwan, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
+  "board_stats_all": "Mula noon, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
+  "board_created": "Board na nilikha"
 }

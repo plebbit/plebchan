@@ -14,5 +14,11 @@
   "download_app": "تحميل التطبيق",
   "start_new_thread": "بدء موضوع جديد",
   "show_stats": "عرض الإحصائيات",
-  "hide": "إخفاء"
+  "hide": "إخفاء",
+  "board_stats_hour": "في الساعة الماضية، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
+  "board_stats_day": "خلال اليوم الماضي، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
+  "board_stats_week": "خلال الأسبوع الماضي، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
+  "board_stats_month": "خلال الشهر الماضي، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
+  "board_stats_all": "منذ ذلك الحين، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
+  "board_created": "منتدى تم إنشاؤه"
 }

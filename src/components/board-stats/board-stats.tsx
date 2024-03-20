@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import styles from './board-stats.module.css';
+import { Trans, useTranslation } from 'react-i18next';
 
 export interface BoardStatsProps {
   address: string | undefined;
@@ -8,6 +9,7 @@ export interface BoardStatsProps {
 }
 
 const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
+  const { t } = useTranslation();
   const stats = useSubplebbitStats({ subplebbitAddress: address });
   const [showStats, setShowStats] = useState(true);
 
@@ -19,8 +21,6 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
     return month + '/' + day + '/' + year;
   };
 
-  const pluralize = (count: number, singular: string, plural: string) => (count === 1 ? singular : plural);
-
   return (
     <div className={styles.content}>
       <hr />
@@ -29,25 +29,43 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
           <tbody id='blotter-msgs'>
             <tr>
               <td>
-                In the past hour, <span id='stat-number'>{stats.hourActiveUserCount}</span> {pluralize(stats.hourActiveUserCount, 'user', 'users')} made{' '}
-                <span id='stat-number'>{stats.hourPostCount}</span> {pluralize(stats.hourPostCount, 'post', 'posts')} / in the past day,{' '}
-                <span id='stat-number'>{stats.dayActiveUserCount}</span> {pluralize(stats.dayActiveUserCount, 'user', 'users')} made{' '}
-                <span id='stat-number'>{stats.dayPostCount}</span> {pluralize(stats.dayPostCount, 'post', 'posts')}
+                <Trans
+                  i18nKey='board_stats_hour'
+                  values={{ userCount: stats.hourActiveUserCount, postCount: stats.hourPostCount }}
+                  components={{ 1: <span className={styles.statValue} /> }}
+                />
+                {' / '}
+                <Trans
+                  i18nKey='board_stats_day'
+                  values={{ userCount: stats.dayActiveUserCount, postCount: stats.dayPostCount }}
+                  components={{ 1: <span className={styles.statValue} /> }}
+                />
               </td>
             </tr>
             <tr>
               <td>
-                In the past week, <span id='stat-number'>{stats.weekActiveUserCount}</span> {pluralize(stats.weekActiveUserCount, 'user', 'users')} made{' '}
-                <span id='stat-number'>{stats.weekPostCount}</span> {pluralize(stats.weekPostCount, 'post', 'posts')} / in the past month,{' '}
-                <span id='stat-number'>{stats.monthActiveUserCount}</span> {pluralize(stats.monthActiveUserCount, 'user', 'users')} made{' '}
-                <span id='stat-number'>{stats.monthPostCount}</span> {pluralize(stats.monthPostCount, 'post', 'posts')}
+                <Trans
+                  i18nKey='board_stats_week'
+                  values={{ userCount: stats.weekActiveUserCount, postCount: stats.weekPostCount }}
+                  components={{ 1: <span className={styles.statValue} /> }}
+                />
+                {' / '}
+                <Trans
+                  i18nKey='board_stats_month'
+                  values={{ userCount: stats.monthActiveUserCount, postCount: stats.monthPostCount }}
+                  components={{ 1: <span className={styles.statValue} /> }}
+                />
               </td>
             </tr>
             <tr>
-              <td>
-                {unixToMMDDYYYY(createdAt)} board created / since then, <span id='stat-number'>{stats.allActiveUserCount}</span>{' '}
-                {pluralize(stats.allActiveUserCount, 'user', 'users')} have made <span id='stat-number'>{stats.allPostCount}</span>{' '}
-                {pluralize(stats.allPostCount, 'post', 'posts')}
+              <td className={styles.lowercase}>
+                {unixToMMDDYYYY(createdAt)} {t('board_created')}
+                {' / '}
+                <Trans
+                  i18nKey='board_stats_all'
+                  values={{ userCount: stats.allActiveUserCount, postCount: stats.allPostCount }}
+                  components={{ 1: <span className={styles.statValue} /> }}
+                />
               </td>
             </tr>
           </tbody>
@@ -57,7 +75,7 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
             <td colSpan={2}>
               [
               <span className={styles.hideButton} onClick={() => setShowStats(!showStats)}>
-                {showStats ? 'Hide' : 'Show Stats'}
+                {showStats ? t('hide') : t('show_stats')}
               </span>
               ]
             </td>

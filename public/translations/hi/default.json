@@ -14,5 +14,11 @@
   "download_app": "ऐप डाउनलोड करें",
   "start_new_thread": "नया थ्रेड शुरू करें",
   "show_stats": "आँकड़े दिखाएं",
-  "hide": "छुपाएँ"
+  "hide": "छुपाएँ",
+  "board_stats_hour": "पिछले घंटे में, <1>{{userCount}}</1> उपयोगकर्ता <1>{{postCount}}</1> पोस्ट की",
+  "board_stats_day": "पिछले दिन, <1>{{userCount}}</1> उपयोगकर्ता <1>{{postCount}}</1> पोस्ट की",
+  "board_stats_week": "पिछले सप्ताह, <1>{{userCount}}</1> उपयोगकर्ता <1>{{postCount}}</1> पोस्ट की",
+  "board_stats_month": "पिछले महीने, <1>{{userCount}}</1> उपयोगकर्ता <1>{{postCount}}</1> पोस्ट की",
+  "board_stats_all": "उस समय से, <1>{{userCount}}</1> उपयोगकर्ता <1>{{postCount}}</1> पोस्ट की",
+  "board_created": "बोर्ड बनाया गया"
 }
