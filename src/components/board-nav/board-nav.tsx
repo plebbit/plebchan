@@ -1,9 +1,10 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
 import styles from './board-nav.module.css';
 
 interface BoardNavProps {
-  subplebbits: any;
+  address?: string | undefined;
+  subplebbits?: any;
   currentSubplebbit?: string | undefined;
 }
 
@@ -55,14 +56,13 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   );
 };
 
-const BoardNav = () => {
+const BoardNav = ({ address }: BoardNavProps) => {
   const defaultSubplebbits = useDefaultSubplebbits();
-  const { subplebbitAddress } = useParams();
 
   return (
     <>
       <BoardNavDesktop subplebbits={defaultSubplebbits} />
-      <BoardNavMobile subplebbits={defaultSubplebbits} currentSubplebbit={subplebbitAddress} />
+      <BoardNavMobile subplebbits={defaultSubplebbits} currentSubplebbit={address} />
     </>
   );
 };

@@ -21,8 +21,8 @@
 
 .boardAddress {
   padding-top: 5px;
-  font-size: var(--board-subtitle-font-size);
-  color: var(--board-subtitle-text-color);
+  font-size: var(--board-address-font-size);
+  color: var(--board-address-text-color);
 }
 
 .content hr {

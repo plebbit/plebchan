@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from './board-banner.module.css';
 
 const totalBanners = 25;
@@ -14,15 +12,16 @@ const ImageBanner = () => {
   return <img src={imagePath} alt='banner' />;
 };
 
-const BoardBanner = () => {
-  const { subplebbitAddress } = useParams();
-  const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { address, title } = subplebbit || {};
+interface BoardBannerProps {
+  title: string | undefined;
+  address: string | undefined;
+}
 
+const BoardBanner = ({ title, address }: BoardBannerProps) => {
   return (
     <div className={styles.content}>
       <div className={styles.bannerCnt}>
-        <ImageBanner key={subplebbitAddress} />
+        <ImageBanner key={address} />
       </div>
       <div className={styles.boardTitle}>{title || `p/${address}`}</div>
       {title && <div className={styles.boardAddress}>p/{address}</div>}

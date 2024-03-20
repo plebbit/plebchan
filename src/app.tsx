@@ -1,13 +1,34 @@
 import { useEffect } from 'react';
-import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { isHomeView } from './lib/utils/view-utils';
+import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from './app.module.css';
 import useTheme from './hooks/use-theme';
 import Home from './views/home';
 import Subplebbit from './views/subplebbit';
 import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
+import BoardStats from './components/board-stats';
 import PostForm from './components/post-form';
+
+const BoardLayout = () => {
+  const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+
+  return (
+    <>
+      {subplebbitAddress && (
+        <>
+          <BoardNav address={subplebbitAddress} />
+          <BoardBanner title={subplebbit.title} address={subplebbitAddress} />
+          <PostForm address={subplebbitAddress} />
+          <BoardStats address={subplebbitAddress} />
+        </>
+      )}
+      <Outlet />
+    </>
+  );
+};
 
 const App = () => {
   const [theme] = useTheme();
@@ -26,21 +47,11 @@ const App = () => {
   //   </>
   // );
 
-  const boardLayout = (
-    <>
-      <BoardNav />
-      <BoardBanner />
-      <PostForm />
-      {/* <Stats /> */}
-      <Outlet />
-    </>
-  );
-
   return (
     <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route element={boardLayout}>
+        <Route element={<BoardLayout />}>
           <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
         </Route>
       </Routes>
