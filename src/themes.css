@@ -15,6 +15,8 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
   --box-border-color: #800;
+  --button-text-color: #00e;
+  --button-text-color-hover: red;
   --color1: #800;
   --color2: #fca;
   --color3: #fed;
@@ -29,8 +31,6 @@
   --internal-link-text-decoration-hover: underline;
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --post-form-toggle-text-color: #00e;
-  --post-form-toggle-text-color-hover: red;
   --text-color: maroon;
   --text-color-on-color1: #fff;
   --text-color-on-color2: #800;
@@ -58,6 +58,8 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
   --box-border-color: #000;
+  --button-text-color: #34345c;
+  --button-text-color-hover: #d00;
   --color1: #98e;
   --color2: #98e;
   --color3: #eef2ff;
@@ -71,8 +73,6 @@
   --internal-link-text-decoration-hover: underline;
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --post-form-toggle-text-color: #34345c;
-  --post-form-toggle-text-color-hover: #d00;
   --text-color: #000;
   --text-color-on-color1: #000;
   --text-color-on-color2: #000;
@@ -96,6 +96,9 @@
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
   --box-border-color: #800;
+  --button-text-color: #00e;
+  --button-text-color-hover: red;
+  --button-text-decoration: underline;
   --color1: #800;
   --color2: #fca;
   --color3: #fed;
@@ -107,9 +110,6 @@
   --internal-link-text-decoration-hover: underline;
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --post-form-toggle-text-color: #00e;
-  --post-form-toggle-text-decoration: underline;
-  --post-form-toggle-text-color-hover: red;
   --text-color: maroon;
   --text-color-on-color1: #fff;
   --text-color-on-color2: #800;
@@ -135,6 +135,9 @@
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
   --box-border-color: #000;
+  --button-text-color: #34345c;
+  --button-text-decoration: underline;
+  --button-text-color-hover: #d00;
   --color1: #98e;
   --color2: #98e;
   --color3: #eef2ff;
@@ -146,9 +149,6 @@
   --internal-link-text-decoration-hover: underline;
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --post-form-toggle-text-color: #34345c;
-  --post-form-toggle-text-decoration: underline;
-  --post-form-toggle-text-color-hover: #d00;
   --text-color: #000;
   --text-color-on-color1: #000;
   --text-color-on-color2: #000;
@@ -175,6 +175,8 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
   --box-border-color: rgb(45, 47, 51);
+  --button-text-color: #81a2be;
+  --button-text-color-hover: #5f89ac;
   --color1: rgb(33, 35, 38);
   --color2: rgb(33, 35, 38);
   --hr-border: none;
@@ -184,8 +186,6 @@
   --internal-link-text-color-hover: #5f89ac;
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --post-form-toggle-text-color: #81a2be;
-  --post-form-toggle-text-color-hover: #5f89ac;
   --text-color: #c5c8c6;
   --text-color-standard: #c5c8c6;
   --text-color-on-color1: #c5c8c6;
@@ -209,6 +209,8 @@
   --body-font-color: #333;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
+  --button-text-color: #f60;
+  --button-text-color-hover: #f30;
   --hr-border: none;
   --hr-border-top: 1px solid #ddd;
   --hr-height: 0px;
@@ -216,7 +218,5 @@
   --internal-link-text-color-hover: #f30;
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --post-form-toggle-text-color: #f60;
-  --post-form-toggle-text-color-hover: #f30;
   --text-color: #333;
 }

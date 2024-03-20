@@ -22,7 +22,7 @@ const BoardLayout = () => {
           <BoardNav address={subplebbitAddress} />
           <BoardBanner title={subplebbit.title} address={subplebbitAddress} />
           <PostForm address={subplebbitAddress} />
-          <BoardStats address={subplebbitAddress} />
+          <BoardStats address={subplebbitAddress} createdAt={subplebbit.createdAt} />
         </>
       )}
       <Outlet />

@@ -5,11 +5,11 @@
 }
 
 .togglePostForm span {
-  color: var(--post-form-toggle-text-color);
-  text-decoration: var(--post-form-toggle-text-decoration);
+  color: var(--button-text-color);
+  text-decoration: var(--button-text-decoration);
 }
 
 .togglePostForm span:hover {
   cursor: pointer;
-  color: var(--post-form-toggle-text-color-hover);
+  color: var(--button-text-color-hover);
 }
