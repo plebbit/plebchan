@@ -11,5 +11,14 @@
   "about": "Om",
   "whitepaper": "Whitepaper",
   "token": "Token",
-  "download_app": "Ladda ner appen"
+  "download_app": "Ladda ner appen",
+  "start_new_thread": "Starta en ny tråd",
+  "show_stats": "Visa statistik",
+  "hide": "Dölj",
+  "board_stats_hour": "Under den senaste timmen har <1>{{userCount}}</1> användare gjort <1>{{postCount}}</1> inlägg",
+  "board_stats_day": "Under den senaste dagen har <1>{{userCount}}</1> användare gjort <1>{{postCount}}</1> inlägg",
+  "board_stats_week": "Under den senaste veckan har <1>{{userCount}}</1> användare gjort <1>{{postCount}}</1> inlägg",
+  "board_stats_month": "Under den senaste månaden har <1>{{userCount}}</1> användare gjort <1>{{postCount}}</1> inlägg",
+  "board_stats_all": "Sedan dess har <1>{{userCount}}</1> användare gjort <1>{{postCount}}</1> inlägg",
+  "board_created": "Forum skapat"
 }

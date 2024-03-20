@@ -11,5 +11,14 @@
   "about": "Hakkında",
   "whitepaper": "Beyaz kağıt",
   "token": "Jeton",
-  "download_app": "Uygulamayı indir"
+  "download_app": "Uygulamayı indir",
+  "start_new_thread": "Yeni bir Konu Başlat",
+  "show_stats": "İstatistikleri Göster",
+  "hide": "Gizle",
+  "board_stats_hour": "Son saatte <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
+  "board_stats_day": "Son gün içinde <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
+  "board_stats_week": "Geçen hafta <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
+  "board_stats_month": "Geçen ay <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
+  "board_stats_all": "O zamandan beri <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
+  "board_created": "Forum oluşturuldu"
 }

@@ -4,9 +4,12 @@ _Telegram group for this repo https://t.me/plebchanreact_
 
 _Demo https://plebchan.netlify.app and https://plebchan.eth.limo_
 
-### Development:
+## To run locally
 
-For development it is recommened to use the [mock content env variables](https://github.com/plebbit/plebbit-react-hooks/blob/master/docs/mock-content.md#add-env-variable-for-mocking) because the demo subplebbits are slow and often offline.
+1. Install Node v18 (Download from https://nodejs.org)
+2. Install Yarn: `npm install -g yarn`
+3. `yarn install --frozen-lockfile` to install Plebchan dependencies
+4. `yarn start` to run the web client
 
 ### Scripts:
 

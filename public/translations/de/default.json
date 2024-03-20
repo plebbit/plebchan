@@ -11,5 +11,14 @@
   "about": "Über",
   "whitepaper": "Whitepaper",
   "token": "Token",
-  "download_app": "App herunterladen"
+  "download_app": "App herunterladen",
+  "start_new_thread": "Starte einen neuen Thread",
+  "show_stats": "Statistiken anzeigen",
+  "hide": "Verstecken",
+  "board_stats_hour": "In der letzten Stunde haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
+  "board_stats_day": "Im letzten Tag haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
+  "board_stats_week": "In der letzten Woche haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
+  "board_stats_month": "Im letzten Monat haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
+  "board_stats_all": "Seitdem haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
+  "board_created": "Forum erstellt"
 }

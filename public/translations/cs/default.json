@@ -11,5 +11,14 @@
   "about": "O nás",
   "whitepaper": "Bílá kniha",
   "token": "Token",
-  "download_app": "Stáhnout aplikaci"
+  "download_app": "Stáhnout aplikaci",
+  "start_new_thread": "Začít nové vlákno",
+  "show_stats": "Zobrazit statistiky",
+  "hide": "Skrýt",
+  "board_stats_hour": "V poslední hodině <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
+  "board_stats_day": "V posledním dni <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
+  "board_stats_week": "V posledním týdnu <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
+  "board_stats_month": "V posledním měsíci <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
+  "board_stats_all": "Od té doby <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
+  "board_created": "Fórum vytvořeno"
 }

@@ -11,5 +11,14 @@
   "about": "אודות",
   "whitepaper": "מסמך לבן",
   "token": "אסימון",
-  "download_app": "הורד את האפליקציה"
+  "download_app": "הורד את האפליקציה",
+  "start_new_thread": "התחלה של פוסט חדש",
+  "show_stats": "הצג סטטיסטיקות",
+  "hide": "הסתר",
+  "board_stats_hour": "בשעה האחרונה, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
+  "board_stats_day": "ביום האחרון, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
+  "board_stats_week": "בשבוע האחרון, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
+  "board_stats_month": "בחודש האחרון, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
+  "board_stats_all": "מאז, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
+  "board_created": "פורום נוצר"
 }

@@ -11,5 +11,14 @@
   "about": "Tietoa",
   "whitepaper": "Whitepaper",
   "token": "Token",
-  "download_app": "Lataa sovellus"
+  "download_app": "Lataa sovellus",
+  "start_new_thread": "Aloita uusi lanka",
+  "show_stats": "Näytä tilastot",
+  "hide": "Piilota",
+  "board_stats_hour": "Edellisen tunnin aikana <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
+  "board_stats_day": "Edellisenä päivänä <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
+  "board_stats_week": "Edellisellä viikolla <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
+  "board_stats_month": "Edellisellä kuukaudella <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
+  "board_stats_all": "Siitä lähtien <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
+  "board_created": "Luotu foorumi"
 }

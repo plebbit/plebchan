@@ -1,0 +1,43 @@
+.content hr {
+  min-width: 468px;
+  margin-left: -4px;
+  margin-bottom: 5px;
+  /* revert to browser styling for burichan and futaba */
+  border: var(--hr-border, revert);
+  border-top: var(--hr-border-top, revert);
+  height: var(--hr-height, revert);
+}
+
+.blotter {
+  min-width: 468px;
+  margin: auto;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+.blotter tr {
+  font-size: 11px;
+}
+
+.blotter tfoot {
+  text-align: right;
+}
+
+.hideButton {
+  color: var(--button-text-color);
+  text-decoration: var(--button-text-decoration);
+  text-transform: capitalize;
+}
+
+.hideButton:hover {
+  cursor: pointer;
+  color: var(--button-text-color-hover);
+}
+
+.statValue {
+  color: var(--button-text-color);
+}
+
+.lowercase {
+  text-transform: lowercase;
+}

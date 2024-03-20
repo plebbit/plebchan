@@ -11,5 +11,14 @@
   "about": "గురించి",
   "whitepaper": "వైట్‌పేపర్",
   "token": "టోకెన్",
-  "download_app": "అప్లికేషన్‌ను డౌన్‌లోడ్ చేయండి"
+  "download_app": "అప్లికేషన్‌ను డౌన్‌లోడ్ చేయండి",
+  "start_new_thread": "కొత్త థ్రెడ్‌ను ప్రారంభించండి",
+  "show_stats": "సాంకేతికాలను చూపించు",
+  "hide": "దాచు",
+  "board_stats_hour": "గత గంటలో, <1>{{userCount}}</1> యూజర్‌లు <1>{{postCount}}</1> పోస్టులు చేశారు",
+  "board_stats_day": "గత రోజు, <1>{{userCount}}</1> యూజర్‌లు <1>{{postCount}}</1> పోస్టులు చేశారు",
+  "board_stats_week": "గత వారం, <1>{{userCount}}</1> వాడుకరులు <1>{{postCount}}</1> పోస్టులు చేశారు",
+  "board_stats_month": "గత నెలలో, <1>{{userCount}}</1> వాడుకరులు <1>{{postCount}}</1> పోస్టులు చేశారు",
+  "board_stats_all": "అప్పుడు నుండి, <1>{{userCount}}</1> వాడుకరులు <1>{{postCount}}</1> పోస్టులు చేశారు",
+  "board_created": "బోర్డు సృష్టించబడింది"
 }

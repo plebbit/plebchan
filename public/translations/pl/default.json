@@ -11,5 +11,14 @@
   "about": "O",
   "whitepaper": "Whitepaper",
   "token": "Token",
-  "download_app": "Pobierz aplikację"
+  "download_app": "Pobierz aplikację",
+  "start_new_thread": "Rozpocznij nowy wątek",
+  "show_stats": "Pokaż statystyki",
+  "hide": "Ukryj",
+  "board_stats_hour": "W ciągu ostatniej godziny <1>{{userCount}}</1> użytkowników napisało <1>{{postCount}}</1> postów",
+  "board_stats_day": "W ciągu ostatniego dnia <1>{{userCount}}</1> użytkowników napisało <1>{{postCount}}</1> postów",
+  "board_stats_week": "W ciągu ostatniego tygodnia <1>{{userCount}}</1> użytkowników napisało <1>{{postCount}}</1> postów",
+  "board_stats_month": "W ciągu ostatniego miesiąca <1>{{userCount}}</1> użytkowników napisało <1>{{postCount}}</1> postów",
+  "board_stats_all": "Od tego czasu <1>{{userCount}}</1> użytkowników napisało <1>{{postCount}}</1> postów",
+  "board_created": "Forum utworzone"
 }

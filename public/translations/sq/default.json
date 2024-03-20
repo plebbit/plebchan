@@ -11,5 +11,14 @@
   "about": "Rreth",
   "whitepaper": "Whitepaper",
   "token": "Token",
-  "download_app": "Shkarko aplikacionin"
+  "download_app": "Shkarko aplikacionin",
+  "start_new_thread": "Filloni një temë të re",
+  "show_stats": "Shfaq Statistikat",
+  "hide": "Fshih",
+  "board_stats_hour": "Në orën e fundit, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
+  "board_stats_day": "Në ditën e fundit, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
+  "board_stats_week": "Në javën e kaluar, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
+  "board_stats_month": "Në muajin e kaluar, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
+  "board_stats_all": "Që atëherë, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
+  "board_created": "Forumi është krijuar"
 }

@@ -11,5 +11,14 @@
   "about": "À propos de",
   "whitepaper": "Livre blanc",
   "token": "Jeton",
-  "download_app": "Télécharger l'application"
+  "download_app": "Télécharger l'application",
+  "start_new_thread": "Démarrer un nouveau fil",
+  "show_stats": "Afficher les statistiques",
+  "hide": "Masquer",
+  "board_stats_hour": "Au cours de la dernière heure, <1>{{userCount}}</1> utilisateurs ont publié <1>{{postCount}}</1> messages",
+  "board_stats_day": "Au cours de la dernière journée, <1>{{userCount}}</1> utilisateurs ont publié <1>{{postCount}}</1> messages",
+  "board_stats_week": "Au cours de la dernière semaine, <1>{{userCount}}</1> utilisateurs ont publié <1>{{postCount}}</1> messages",
+  "board_stats_month": "Au cours du dernier mois, <1>{{userCount}}</1> utilisateurs ont publié <1>{{postCount}}</1> messages",
+  "board_stats_all": "Depuis lors, <1>{{userCount}}</1> utilisateurs ont publié <1>{{postCount}}</1> messages",
+  "board_created": "Forum créé"
 }

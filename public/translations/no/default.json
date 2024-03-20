@@ -11,5 +11,14 @@
   "about": "Om",
   "whitepaper": "Whitepaper",
   "token": "Token",
-  "download_app": "Last ned appen"
+  "download_app": "Last ned appen",
+  "start_new_thread": "Start en ny tråd",
+  "show_stats": "Vis statistikk",
+  "hide": "Skjul",
+  "board_stats_hour": "I løpet av den siste timen har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
+  "board_stats_day": "I løpet av den siste dagen har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
+  "board_stats_week": "I løpet av den siste uken har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
+  "board_stats_month": "I løpet av den siste måneden har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
+  "board_stats_all": "Siden den gang har <1>{{userCount}}</1> brukere laget <1>{{postCount}}</1> innlegg",
+  "board_created": "Forum opprettet"
 }
