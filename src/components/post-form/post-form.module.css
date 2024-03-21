@@ -29,6 +29,7 @@
   color: var(--button-text-color-mobile);
   border: var(--button-border-mobile);
   background-image: var(--button-background-image-mobile);
+  background: var(--button-background-mobile);
   background-repeat: var(--button-background-repeat-mobile);
   text-decoration: var(--button-text-decoration-mobile);
   user-select: none;

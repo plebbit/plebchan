@@ -161,6 +161,14 @@
   --button-text-color-hover: red;
   --button-text-decoration: underline;
 
+  /* mobile buttons */
+  --button-font-size-mobile: 11pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #800;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-color-mobile: #f0e0d6;
+  --button-border-mobile: 1px solid #c0a69d;
+
   /* footer */
   --footer-item-background-color-desktop: #fed;
 
@@ -215,6 +223,14 @@
   --button-text-decoration: underline;
   --button-text-color-hover: #d00;
 
+  /* mobile buttons */
+  --button-font-size-mobile: 11pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #34345c;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
+  --button-background-color-mobile: #d6daf0;
+  --button-border-mobile: 1px solid #b7c5d9;
+
   /* footer */
   --footer-item-background-color-desktop: #eef2ff;
 
@@ -265,6 +281,14 @@
   --button-text-color: #81a2be;
   --button-text-color-hover: #5f89ac;
 
+  /* mobile buttons */
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #707070;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade-dark.png");
+  --button-background-color-mobile: #1b1c1e;
+  --button-border-mobile: 1px solid #282a2e;
+
   /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #282a2e;
@@ -308,6 +332,13 @@
   /* buttons */
   --button-text-color: #f60;
   --button-text-color-hover: #f30;
+
+  /* mobile buttons */
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #333;
+  --button-background-mobile: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+  --button-border-mobile: 1px solid #ccc;
 
   /* horizontal rule */
   --hr-border: none;
