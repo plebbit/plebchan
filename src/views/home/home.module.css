@@ -26,22 +26,22 @@
   padding-bottom: 0.5em;
 }
 
-.boxBar {
+.boxBar, .infoboxBar {
   padding-left: 0.5em;
   line-height: 2em;
 }
 
-.color1ColorBar {
-  background: var(--color1);
+.infoboxBar {
+  background: var(--homepage-infobox-bar-background-color);
   color: var(--homepage-infobox-bar-text-color);
 }
 
-.color2ColorBar {
-  background: var(--color2);
+.boxBar {
+  background: var(--homepage-box-bar-background-color);
   color: var(--homepage-box-bar-text-color);
 }
 
-.boxBar h2 {
+.boxBar h2, .infoboxBar h2{
   font-size: 131%;
   font-weight: 700;
 }
@@ -185,7 +185,7 @@
   }
 
   .footer li {
-    background: var(--color3);
+    background: var(--footer-item-background-color-desktop);
     border: 1px solid;
     padding: 2px 1em 2px 1em;
     border-left: none;

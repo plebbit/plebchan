@@ -31,23 +31,23 @@
   --button-background-color-mobile: #f0e0d6;
   --button-border-mobile: 1px solid #c0a69d;
 
-  /* main colors */
-  --color1: #800;
-  --color2: #fca;
-  --color3: #fed;
-
   /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #d9bfb7;
   --hr-height: 0px;
 
-  /* homepage boxes */
-  --homepage-infobox-bar-text-color: #fff;
+  /* homepage */
   --homepage-infobox-text-color: #000;
+  --homepage-infobox-bar-text-color: #fff;
+  --homepage-infobox-bar-background-color: #800;
   --homepage-box-background-color: #fff;
   --homepage-box-border-color: #800;
   --homepage-box-bar-text-color: #800;
   --homepage-box-bar-text-color-hover: #c63;
+  --homepage-box-bar-background-color: #fca;
+
+  /* footer */
+  --footer-item-background-color-desktop: #fed;
 
   /* links */
   --link-external-text-color: #00f;
@@ -85,13 +85,15 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
 
-  /* homepage boxes */
+  /* homepage */
+  --homepage-infobox-text-color: #000;
+  --homepage-infobox-bar-text-color: #000;
+  --homepage-infobox-bar-background-color: #98e;
   --homepage-box-background-color: #fff;
   --homepage-box-border-color: #000;
   --homepage-box-bar-text-color: #000;
   --homepage-box-bar-text-color-hover: #fff;
-  --homepage-infobox-text-color: #000;
-  --homepage-infobox-bar-text-color: #000;
+  --homepage-box-bar-background-color: #98e;
 
   /* desktop buttons */
   --button-text-color: #34345c;
@@ -105,10 +107,8 @@
   --button-background-color-mobile: #d6daf0;
   --button-border-mobile: 1px solid #b7c5d9;
 
-  /* main colors */
-  --color1: #98e;
-  --color2: #98e;
-  --color3: #eef2ff;
+  /* footer */
+  --footer-item-background-color-desktop: #eef2ff;
 
   /* horizontal rule */
   --hr-border: none;
@@ -135,13 +135,15 @@
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
 
-  /* homepage boxes */
+  /* homepage */
+  --homepage-infobox-text-color: #000;
+  --homepage-infobox-bar-text-color: #fff;
+  --homepage-infobox-bar-background-color: #800;
   --homepage-box-background-color: #fff;
   --homepage-box-border-color: #800;
   --homepage-box-bar-text-color: #800;
   --homepage-box-bar-text-color-hover: #c63;
-  --homepage-infobox-text-color: #000;
-  --homepage-infobox-bar-text-color: #fff;
+  --homepage-box-bar-background-color: #fca;
 
   /* board nav */
   --boardnav-font-size: 11pt;
@@ -159,10 +161,8 @@
   --button-text-color-hover: red;
   --button-text-decoration: underline;
 
-  /* colors */
-  --color1: #800;
-  --color2: #fca;
-  --color3: #fed;
+  /* footer */
+  --footer-item-background-color-desktop: #fed;
 
   /* links */
   --link-external-text-color: #00f;
@@ -200,23 +200,23 @@
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
 
-  /* homepage boxes */
+  /* homepage */
+  --homepage-infobox-text-color: #000;
+  --homepage-infobox-bar-text-color: #000;
+  --homepage-infobox-bar-background-color: #98e;
   --homepage-box-background-color: #fff;
   --homepage-box-border-color: #000;
   --homepage-box-bar-text-color: #000;
+  --homepage-box-bar-background-color: #98e;
   --homepage-box-bar-text-color-hover: #fff;
-  --homepage-infobox-text-color: #000;
-  --homepage-infobox-bar-text-color: #000;
 
   /* buttons */
   --button-text-color: #34345c;
   --button-text-decoration: underline;
   --button-text-color-hover: #d00;
 
-  /* colors */
-  --color1: #98e;
-  --color2: #98e;
-  --color3: #eef2ff;
+  /* footer */
+  --footer-item-background-color-desktop: #eef2ff;
 
   /* links */
   --link-external-text-color: #00f;
@@ -239,13 +239,15 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
 
-  /* homepage boxes */
+  /* homepage */
+  --homepage-infobox-text-color: #c5c8c6;
+  --homepage-infobox-bar-text-color: #c5c8c6;
+  --homepage-infobox-bar-background-color: rgb(33, 35, 38);
   --homepage-box-background-color: #282a2e;
+  --homepage-box-bar-background-color: rgb(33, 35, 38);
   --homepage-box-border-color: rgb(45, 47, 51);
   --homepage-box-bar-text-color: #c5c8c6;
   --homepage-box-bar-text-color-hover: #c5c8c6;
-  --homepage-infobox-text-color: #c5c8c6;
-  --homepage-infobox-bar-text-color: #c5c8c6;
 
   /* board nav */
   --boardnav-font-size: 9pt;
@@ -262,10 +264,6 @@
   /* buttons */
   --button-text-color: #81a2be;
   --button-text-color-hover: #5f89ac;
-
-  /* colors */
-  --color1: rgb(33, 35, 38);
-  --color2: rgb(33, 35, 38);
 
   /* horizontal rule */
   --hr-border: none;
@@ -284,9 +282,6 @@
   --select-border: 1px solid #575a60;
   --select-background-color: #282a2e;
   --select-color: #c5c8c6;
-
-  /* text color on color3 */
-  --text-color-on-color3: #c5c8c6;
 }
 
 :root .photon {

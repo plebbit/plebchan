@@ -28,11 +28,7 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
         ]
       </span>
       <span className={styles.navTopRight}>
-        [
-        <Link to='/settings' onClick={(e) => e.preventDefault()}>
-          {t('settings')}
-        </Link>
-        ] [<Link to='/'>{t('home')}</Link>]
+        [<Link to='/settings'>{t('settings')}</Link>] [<Link to='/'>{t('home')}</Link>]
       </span>
     </div>
   );

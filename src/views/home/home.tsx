@@ -52,7 +52,7 @@ const InfoBox = () => {
   const { t } = useTranslation();
   return (
     <div className={styles.box}>
-      <div className={`${styles.boxBar} ${styles.color1ColorBar}`}>
+      <div className={styles.infoboxBar}>
         <h2>{t('what_is_plebchan')}</h2>
       </div>
       <div className={styles.boxContent}>
@@ -71,7 +71,7 @@ const Boards = () => {
 
   return (
     <div className={styles.box}>
-      <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
+      <div className={styles.boxBar}>
         <h2 className={styles.capitalize}>{t('boards')}</h2>
         <span>{t('options')} ▼</span>
       </div>
