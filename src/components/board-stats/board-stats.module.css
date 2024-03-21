@@ -41,3 +41,10 @@
 .lowercase {
   text-transform: lowercase;
 }
+
+
+@media (max-width: 640px) {
+  .content {
+    display: none;
+  }
+}

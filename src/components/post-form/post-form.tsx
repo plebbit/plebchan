@@ -9,9 +9,14 @@ const PostForm = ({ address }: PostFormProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.togglePostForm}>
-      [<span>{t('start_new_thread')}</span>]
-    </div>
+    <>
+      <div className={styles.postFormButtonDesktop}>
+        [<span>{t('start_new_thread')}</span>]
+      </div>
+      <div className={styles.postFormButtonMobile}>
+        <span>{t('start_new_thread')}</span>
+      </div>
+    </>
   );
 };
 

@@ -17,6 +17,10 @@
   --box-border-color: #800;
   --button-text-color: #00e;
   --button-text-color-hover: red;
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-background-image-mobile: url("/public/assets/buttons/buttonfade.png");
+  --button-border-mobile: 1px solid #c0a69d;
   --color1: #800;
   --color2: #fca;
   --color3: #fed;

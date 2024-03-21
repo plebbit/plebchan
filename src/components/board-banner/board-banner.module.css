@@ -32,3 +32,10 @@
   border-top: var(--hr-border-top, revert);
   height: var(--hr-height, revert);
 }
+
+
+@media (max-width: 640px) {
+  .bannerCnt {
+    padding-top: 35px;
+  }
+ }
