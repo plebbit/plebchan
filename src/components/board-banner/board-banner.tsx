@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './board-banner.module.css';
 
-const totalBanners = 25;
+const totalBanners = 38;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
