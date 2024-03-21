@@ -1,5 +1,5 @@
 .app {
-  background: var(--background-base-color) var(--background-pattern-image) top center repeat-x;
+  background: var(--body-background-base-color) var(--body-background-pattern-image) top center repeat-x;
   font-size: var(--body-font-size);
   font-family: var(--body-font-family);
   color: var(--body-font-color);

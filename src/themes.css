@@ -1,229 +1,329 @@
 :root .yotsuba {
-  --background-base-color: #ffe;
-  --background-pattern-image: url("/public/assets/background-fade.png");
-  --background-text-color: #fff;
+  /* board banner */
   --banner-image-border: 1px solid #800;
+  --board-title-font-size: 28px;
+  --board-title-font-family: Tahoma, sans-serif;
+  --board-address-font-size: x-small;
+  
+  /* board nav */
   --boardnav-font-size: 9pt;
   --boardnav-separator-color: #b86;
   --boardnav-mobile-background-color: #f0e0d6;
   --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
   --boardnav-mobile-font-size: 10px;
-  --board-title-font-size: 28px;
-  --board-title-font-family: Tahoma, sans-serif;
-  --board-address-font-size: x-small;
+
+  /* body */
+  --body-background-base-color: #ffe;
+  --body-background-pattern-image: url("/public/assets/background-fade.png");
   --body-font-color: maroon;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
-  --box-border-color: #800;
+
+  /* desktop buttons */
   --button-text-color: #00e;
   --button-text-color-hover: red;
+
+  /* mobile buttons */
   --button-font-size-mobile: 10pt;
   --button-font-weight-mobile: 700;
-  --button-background-image-mobile: url("/public/assets/buttons/buttonfade.png");
+  --button-text-color-mobile: #800;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-color-mobile: #f0e0d6;
   --button-border-mobile: 1px solid #c0a69d;
+
+  /* main colors */
   --color1: #800;
   --color2: #fca;
   --color3: #fed;
-  --external-link-text-color: #00f;
-  --external-link-text-decoration: underline;
+
+  /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #d9bfb7;
   --hr-height: 0px;
-  --internal-link-text-color: #800;
-  --internal-link-text-color-hover: #e00;
-  --internal-link-text-decoration: none;
-  --internal-link-text-decoration-hover: underline;
+
+  /* homepage boxes */
+  --homepage-infobox-bar-text-color: #fff;
+  --homepage-infobox-text-color: #000;
+  --homepage-box-background-color: #fff;
+  --homepage-box-border-color: #800;
+  --homepage-box-bar-text-color: #800;
+  --homepage-box-bar-text-color-hover: #c63;
+
+  /* links */
+  --link-external-text-color: #00f;
+  --link-external-text-decoration: underline;
+  --link-internal-text-color: #800;
+  --link-internal-text-color-hover: #e00;
+  --link-internal-text-decoration: none;
+  --link-internal-text-decoration-hover: underline;
+
+  /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --text-color: maroon;
-  --text-color-on-color1: #fff;
-  --text-color-on-color2: #800;
-  --text-color-on-color2-hover: #c63;
-  --text-color-standard: #000;
-  --text-color-inverse: #fff;
 }
 
 :root .yotsuba-b {
-  --background-base-color: #eef2ff;
-  --background-pattern-image: url("/public/assets/background-fade-blue.png");
-  --background-text-color: #fff;
+  /* board banner */
   --banner-image-border: 1px solid #000;
+  --board-title-font-size: 28px;
+  --board-title-font-family: Tahoma, sans-serif;
+  --board-address-font-size: x-small;
+  --board-title-text-color: #af0a0f;
+  --board-address-text-color: #af0a0f;
+
+  /* board nav */
   --boardnav-font-size: 9pt;
   --boardnav-separator-color: #89a;
   --boardnav-mobile-background-color: #d6daf0;
   --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
   --boardnav-mobile-font-size: 10px;
-  --board-title-font-size: 28px;
-  --board-title-font-family: Tahoma, sans-serif;
-  --board-title-text-color: #af0a0f;
-  --board-address-text-color: #af0a0f;
-  --board-address-font-size: x-small;
+
+  /* body */
+  --body-background-base-color: #eef2ff;
+  --body-background-pattern-image: url("/public/assets/background-fade-blue.png");
   --body-font-color: #000;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
-  --box-border-color: #000;
+
+  /* homepage boxes */
+  --homepage-box-background-color: #fff;
+  --homepage-box-border-color: #000;
+  --homepage-box-bar-text-color: #000;
+  --homepage-box-bar-text-color-hover: #fff;
+  --homepage-infobox-text-color: #000;
+  --homepage-infobox-bar-text-color: #000;
+
+  /* desktop buttons */
   --button-text-color: #34345c;
   --button-text-color-hover: #d00;
+
+  /* mobile buttons */
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #34345c;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
+  --button-background-color-mobile: #d6daf0;
+  --button-border-mobile: 1px solid #b7c5d9;
+
+  /* main colors */
   --color1: #98e;
   --color2: #98e;
   --color3: #eef2ff;
-  --external-link-text-color: #00f;
-  --external-link-text-decoration: underline;
+
+  /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #b7c5d9;
-  --internal-link-text-color: #34345c;
-  --internal-link-text-color-hover: #d00;
-  --internal-link-text-decoration: none;
-  --internal-link-text-decoration-hover: underline;
+
+  /* links */
+  --link-external-text-color: #00f;
+  --link-external-text-decoration: underline;
+  --link-internal-text-color: #34345c;
+  --link-internal-text-color-hover: #d00;
+  --link-internal-text-decoration: none;
+  --link-internal-text-decoration-hover: underline;
+
+  /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --text-color: #000;
-  --text-color-on-color1: #000;
-  --text-color-on-color2: #000;
-  --text-color-on-color2-hover: #fff;
-  --text-color-standard: #000;
-  --text-color-inverse: #fff;
 }
 
 :root .futaba {
-  --background-base-color: #ffe;
-  --background-pattern-image: none;
-  --background-text-color: #fff;
+  /* body */
+  --body-background-base-color: #ffe;
+  --body-background-pattern-image: none;
+  --body-font-color: maroon;
+  --body-font-family: times new roman, serif;
+  --body-font-size: 12pt;
+
+  /* homepage boxes */
+  --homepage-box-background-color: #fff;
+  --homepage-box-border-color: #800;
+  --homepage-box-bar-text-color: #800;
+  --homepage-box-bar-text-color-hover: #c63;
+  --homepage-infobox-text-color: #000;
+  --homepage-infobox-bar-text-color: #fff;
+
+  /* board nav */
   --boardnav-font-size: 11pt;
   --boardnav-separator-color: none;
   --boardnav-mobile-background-color: #f0e0d6;
   --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
   --boardnav-mobile-font-size: 11pt;
+
+  /* board title */
   --board-title-font-size: 32px;
   --board-address-font-size: 10pt;
-  --body-font-color: maroon;
-  --body-font-family: times new roman, serif;
-  --body-font-size: 12pt;
-  --box-border-color: #800;
+
+  /* buttons */
   --button-text-color: #00e;
   --button-text-color-hover: red;
   --button-text-decoration: underline;
+
+  /* colors */
   --color1: #800;
   --color2: #fca;
   --color3: #fed;
-  --external-link-text-color: #00f;
-  --external-link-text-decoration: underline;
-  --internal-link-text-color: #00e;
-  --internal-link-text-color-hover: #e00;
-  --internal-link-text-decoration: underline;
-  --internal-link-text-decoration-hover: underline;
+
+  /* links */
+  --link-external-text-color: #00f;
+  --link-external-text-decoration: underline;
+  --link-internal-text-color: #00e;
+  --link-internal-text-color-hover: #e00;
+  --link-internal-text-decoration: underline;
+  --link-internal-text-decoration-hover: underline;
+
+  /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --text-color: maroon;
-  --text-color-on-color1: #fff;
-  --text-color-on-color2: #800;
-  --text-color-on-color2-hover: #c63;
-  --text-color-standard: #000;
-  --text-color-inverse: #fff;
 }
 
 :root .burichan {
-  --background-base-color: #eef2ff;
-  --background-pattern-image: none;
-  --background-text-color: #fff;
+  /* board banner */
+  --banner-image-border: 1px solid #000;
+  --board-title-font-size: 32px;
+  --board-title-text-color: #af0a0f;
+  --board-title-font-family: Tahoma, sans-serif;
+  --board-address-font-size: 10pt;
+  --board-address-text-color: #af0a0f;
+
+  /* board nav */
   --boardnav-font-size: 11pt;
   --boardnav-separator-color: none;
   --boardnav-mobile-background-color: #d6daf0;
   --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
   --boardnav-mobile-font-size: 11pt;
-  --board-title-font-size: 32px;
-  --board-title-text-color: #af0a0f;
-  --board-address-text-color: #af0a0f;
-  --board-address-font-size: 10pt;
+
+  /* body */
+  --body-background-base-color: #eef2ff;
+  --body-background-pattern-image: none;
   --body-font-color: #000;
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
-  --box-border-color: #000;
+
+  /* homepage boxes */
+  --homepage-box-background-color: #fff;
+  --homepage-box-border-color: #000;
+  --homepage-box-bar-text-color: #000;
+  --homepage-box-bar-text-color-hover: #fff;
+  --homepage-infobox-text-color: #000;
+  --homepage-infobox-bar-text-color: #000;
+
+  /* buttons */
   --button-text-color: #34345c;
   --button-text-decoration: underline;
   --button-text-color-hover: #d00;
+
+  /* colors */
   --color1: #98e;
   --color2: #98e;
   --color3: #eef2ff;
-  --external-link-text-color: #00f;
-  --external-link-text-decoration: underline;
-  --internal-link-text-color: #34345c;
-  --internal-link-text-color-hover: #d00;
-  --internal-link-text-decoration: underline;
-  --internal-link-text-decoration-hover: underline;
+
+  /* links */
+  --link-external-text-color: #00f;
+  --link-external-text-decoration: underline;
+  --link-internal-text-color: #34345c;
+  --link-internal-text-color-hover: #d00;
+  --link-internal-text-decoration: underline;
+  --link-internal-text-decoration-hover: underline;
+
+  /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --text-color: #000;
-  --text-color-on-color1: #000;
-  --text-color-on-color2: #000;
-  --text-color-on-color2-hover: #fff;
-  --text-color-standard: #000;
-  --text-color-inverse: #fff;
-
 }
 
 :root .tomorrow {
-  --background-base-color: #1d1f21;
-  --background-pattern-image: none;
-  --background-text-color: #282a2e;
-  --banner-image-border: 1px solid #000;
+  /* body */
+  --body-background-base-color: #1d1f21;
+  --body-background-pattern-image: none;
+  --body-font-color: #c5c8c6;
+  --body-font-family: arial, helvetica, sans-serif;
+  --body-font-size: 10pt;
+
+  /* homepage boxes */
+  --homepage-box-background-color: #282a2e;
+  --homepage-box-border-color: rgb(45, 47, 51);
+  --homepage-box-bar-text-color: #c5c8c6;
+  --homepage-box-bar-text-color-hover: #c5c8c6;
+  --homepage-infobox-text-color: #c5c8c6;
+  --homepage-infobox-bar-text-color: #c5c8c6;
+
+  /* board nav */
   --boardnav-font-size: 9pt;
   --boardnav-separator-color: #c5c8c6;
   --boardnav-mobile-background-color: #1d1f21;
   --boardnav-mobile-border-bottom: 2px solid #282a2e;
   --boardnav-mobile-font-size: 10px;
+
+  /* board title */
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
   --board-address-font-size: x-small;
-  --body-font-color: #c5c8c6;
-  --body-font-family: arial, helvetica, sans-serif;
-  --body-font-size: 10pt;
-  --box-border-color: rgb(45, 47, 51);
+
+  /* buttons */
   --button-text-color: #81a2be;
   --button-text-color-hover: #5f89ac;
+
+  /* colors */
   --color1: rgb(33, 35, 38);
   --color2: rgb(33, 35, 38);
+
+  /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #282a2e;
   --hr-height: 0px;
-  --internal-link-text-color: #81a2be;
-  --internal-link-text-color-hover: #5f89ac;
+
+  /* links */
+  --link-internal-text-color: #81a2be;
+  --link-internal-text-color-hover: #5f89ac;
+
+  /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
+
+  /* select */
   --select-border: 1px solid #575a60;
   --select-background-color: #282a2e;
   --select-color: #c5c8c6;
-  --text-color: #c5c8c6;
-  --text-color-standard: #c5c8c6;
-  --text-color-on-color1: #c5c8c6;
-  --text-color-on-color2: #c5c8c6;
+
+  /* text color on color3 */
   --text-color-on-color3: #c5c8c6;
 }
 
 :root .photon {
-  --background-base-color: #eee;
-  --background-pattern-image: none;
-  --banner-image-border: 1px solid #000;
+  /* body */
+  --body-background-base-color: #eee;
+  --body-background-pattern-image: none;
+  --body-font-color: #333;
+  --body-font-family: arial, helvetica, sans-serif;
+  --body-font-size: 10pt;
+
+  /* board nav */
   --boardnav-font-size: 9pt;
   --boardnav-separator-color: #333;
   --boardnav-mobile-background-color: #ddd;
   --boardnav-mobile-border-bottom: 2px solid #ccc;
   --boardnav-mobile-font-size: 10px;
+
+  /* board title */
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
   --board-title-text-color: #004a99;
   --board-address-font-size: x-small;
-  --body-font-color: #333;
-  --body-font-family: arial, helvetica, sans-serif;
-  --body-font-size: 10pt;
+
+  /* buttons */
   --button-text-color: #f60;
   --button-text-color-hover: #f30;
+
+  /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #ddd;
   --hr-height: 0px;
-  --internal-link-text-color: #f60;
-  --internal-link-text-color-hover: #f30;
+
+  /* links */
+  --link-internal-text-color: #f60;
+  --link-internal-text-color-hover: #f30;
+
+  /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
-  --text-color: #333;
 }

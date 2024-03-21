@@ -19,9 +19,9 @@
 
 .box {
   position: relative;
-  background: var(--background-text-color);
-  color: var(--text-color-standard);
-  border: 1px solid var(--box-border-color);
+  background: var(--homepage-box-background-color);
+  color: var(--homepage-infobox-text-color);
+  border: 1px solid var(--homepage-box-border-color);
   margin-bottom: 0.5em;
   padding-bottom: 0.5em;
 }
@@ -33,12 +33,12 @@
 
 .color1ColorBar {
   background: var(--color1);
-  color: var(--text-color-on-color1);
+  color: var(--homepage-infobox-bar-text-color);
 }
 
 .color2ColorBar {
   background: var(--color2);
-  color: var(--text-color-on-color2);
+  color: var(--homepage-box-bar-text-color);
 }
 
 .boxBar h2 {
@@ -56,7 +56,7 @@
 
 .boxBar span:hover {
   cursor: pointer;
-  color: var(--text-color-on-color2-hover);
+  color: var(--homepage-box-bar-text-color-hover);
 }
 
 .boxContent {
@@ -72,7 +72,7 @@
 }
 
 .boxContent a, .boxContent a:visited{
-  color: var(--external-link-text-color);
+  color: var(--link-external-text-color);
 }
 
 .searchBar {
@@ -111,13 +111,13 @@
 
 .list a {
   display: inline-block;
-  color: var(--internal-link-text-color);
-  text-decoration: var(--internal-link-text-decoration);
+  color: var(--link-internal-text-color);
+  text-decoration: var(--link-internal-text-decoration);
 }
 
 .list a:hover {
-  color: var(--internal-link-text-color-hover);
-  text-decoration: var(--internal-link-text-decoration-hover);
+  color: var(--link-internal-text-color-hover);
+  text-decoration: var(--link-internal-text-decoration-hover);
 }
 
 .boardsBoxContent {
@@ -140,7 +140,7 @@
   font-size: 100%;
   font-weight: 700;
   text-decoration: underline;
-  color: var(--text-color-on-color2);
+  color: var(--homepage-box-bar-text-color);
 }
 
 .footer a {
@@ -170,7 +170,7 @@
   }
 
   .footer a {
-    color: var(--external-link-text-color);
+    color: var(--link-external-text-color);
     text-decoration: underline;
   }
 }
@@ -198,7 +198,7 @@
   }
 
   .footer a {
-    color: var(--text-color-on-color2);
+    color: var(--homepage-box-bar-text-color);
     text-decoration: none;
   }
 }
