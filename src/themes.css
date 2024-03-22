@@ -11,6 +11,7 @@
   --boardnav-mobile-background-color: #f0e0d6;
   --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
   --boardnav-mobile-font-size: 10px;
+  --boardnav-mobile-button-text-color: navy;
 
   /* body */
   --body-background-base-color: #ffe;
@@ -77,6 +78,7 @@
   --boardnav-mobile-background-color: #d6daf0;
   --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
   --boardnav-mobile-font-size: 10px;
+  --boardnav-mobile-button-text-color: #34345c;
 
   /* body */
   --body-background-base-color: #eef2ff;
@@ -151,6 +153,7 @@
   --boardnav-mobile-background-color: #f0e0d6;
   --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
   --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-button-text-color: #00f;
 
   /* board title */
   --board-title-font-size: 32px;
@@ -200,6 +203,7 @@
   --boardnav-mobile-background-color: #d6daf0;
   --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
   --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-button-text-color: #34345c;
 
   /* body */
   --body-background-base-color: #eef2ff;
@@ -271,6 +275,7 @@
   --boardnav-mobile-background-color: #1d1f21;
   --boardnav-mobile-border-bottom: 2px solid #282a2e;
   --boardnav-mobile-font-size: 10px;
+  --boardnav-mobile-button-text-color: #81a2be;
 
   /* board title */
   --board-title-font-size: 28px;
@@ -322,6 +327,7 @@
   --boardnav-mobile-background-color: #ddd;
   --boardnav-mobile-border-bottom: 2px solid #ccc;
   --boardnav-mobile-font-size: 10px;
+  --boardnav-mobile-button-text-color: #f60;
 
   /* board title */
   --board-title-font-size: 28px;
