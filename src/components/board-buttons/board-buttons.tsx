@@ -41,7 +41,14 @@ export const DesktopBoardButtons = ({ address }: BoardButtonsProps) => {
   return (
     <div className={styles.desktopBoardButtons}>
       <hr />
-      <SubscribeButton address={address} />
+      [
+      <OptionsButton />
+      ] [
+      <CatalogButton />]
+      <span className={styles.subscribeButton}>
+        [
+        <SubscribeButton address={address} />]
+      </span>
     </div>
   );
 };

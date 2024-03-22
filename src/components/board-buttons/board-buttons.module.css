@@ -17,4 +17,8 @@
   .mobileBoardButtons {
     display: none;
   }
+
+  .subscribeButton {
+    float: right;
+  }
 }
