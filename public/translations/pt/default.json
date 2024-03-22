@@ -20,5 +20,14 @@
   "board_stats_week": "Na última semana, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
   "board_stats_month": "No último mês, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
   "board_stats_all": "Desde então, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
-  "board_created": "Fórum criado"
+  "board_created": "Fórum criado",
+  "settings": "Configurações",
+  "home": "Início",
+  "subscribe": "Subscrever",
+  "unsubscribe": "Cancelar subscrição",
+  "close_post_form": "Fechar formulário de postagem",
+  "catalog": "Catálogo",
+  "all": "Todos",
+  "subscriptions": "Inscrições",
+  "board": "Fórum"
 }

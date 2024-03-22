@@ -20,5 +20,14 @@
   "board_stats_week": "Trong tuần qua, <1>{{userCount}}</1> người dùng đã đăng <1>{{postCount}}</1> bài",
   "board_stats_month": "Trong tháng qua, <1>{{userCount}}</1> người dùng đã đăng <1>{{postCount}}</1> bài",
   "board_stats_all": "Từ đó, <1>{{userCount}}</1> người dùng đã đăng <1>{{postCount}}</1> bài",
-  "board_created": "Diễn đàn được tạo"
+  "board_created": "Diễn đàn được tạo",
+  "settings": "Cài đặt",
+  "home": "Trang chủ",
+  "subscribe": "Đăng ký",
+  "unsubscribe": "Hủy đăng ký",
+  "close_post_form": "Đóng biểu mẫu đăng bài",
+  "catalog": "Catalog",
+  "all": "Tất cả",
+  "subscriptions": "Đăng ký",
+  "board": "Diễn đàn"
 }

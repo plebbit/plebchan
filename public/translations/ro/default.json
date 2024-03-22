@@ -20,5 +20,14 @@
   "board_stats_week": "În ultima săptămână, <1>{{userCount}}</1> utilizatori au făcut <1>{{postCount}}</1> postări",
   "board_stats_month": "În ultima lună, <1>{{userCount}}</1> utilizatori au făcut <1>{{postCount}}</1> postări",
   "board_stats_all": "De atunci, <1>{{userCount}}</1> utilizatori au făcut <1>{{postCount}}</1> postări",
-  "board_created": "Forum creat"
+  "board_created": "Forum creat",
+  "settings": "Setări",
+  "home": "Acasă",
+  "subscribe": "Abonare",
+  "unsubscribe": "Dezabonare",
+  "close_post_form": "Închideți formularul de postare",
+  "catalog": "Catalog",
+  "all": "Toate",
+  "subscriptions": "Abonamente",
+  "board": "Forum"
 }

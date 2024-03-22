@@ -20,5 +20,14 @@
   "board_stats_week": "За минулий тиждень <1>{{userCount}}</1> користувачів зробили <1>{{postCount}}</1> повідомлень",
   "board_stats_month": "За минулий місяць <1>{{userCount}}</1> користувачів зробили <1>{{postCount}}</1> повідомлень",
   "board_stats_all": "З того часу <1>{{userCount}}</1> користувачів зробили <1>{{postCount}}</1> повідомлень",
-  "board_created": "Форум створено"
+  "board_created": "Форум створено",
+  "settings": "Налаштування",
+  "home": "Головна",
+  "subscribe": "Підписатися",
+  "unsubscribe": "Відмовитися від підписки",
+  "close_post_form": "Закрити форму публікації",
+  "catalog": "Каталог",
+  "all": "Всі",
+  "subscriptions": "Підписки",
+  "board": "Форум"
 }

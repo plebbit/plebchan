@@ -6,7 +6,7 @@
   "no_global_rules_info": "Tidak ada aturan global, setiap papan adalah sepenuhnya independen dan pemiliknya yang menentukan bagaimana/apa yang dimoderasi.",
   "boards": "papan pesan",
   "popular_threads": "Benang populer",
-  "options": "Pilihan",
+  "options": "Opsi",
   "stats": "Statistik",
   "about": "Tentang",
   "whitepaper": "Whitepaper",
@@ -20,5 +20,14 @@
   "board_stats_week": "Dalam seminggu terakhir, <1>{{userCount}}</1> pengguna telah membuat <1>{{postCount}}</1> postingan",
   "board_stats_month": "Dalam sebulan terakhir, <1>{{userCount}}</1> pengguna telah membuat <1>{{postCount}}</1> postingan",
   "board_stats_all": "Sejak saat itu, <1>{{userCount}}</1> pengguna telah membuat <1>{{postCount}}</1> postingan",
-  "board_created": "Papan pesan dibuat"
+  "board_created": "Papan pesan dibuat",
+  "settings": "Pengaturan",
+  "home": "Beranda",
+  "subscribe": "Berlangganan",
+  "unsubscribe": "Berhenti berlangganan",
+  "close_post_form": "Tutup formulir kiriman",
+  "catalog": "Katalog",
+  "all": "Semua",
+  "subscriptions": "Langganan",
+  "board": "Forum"
 }

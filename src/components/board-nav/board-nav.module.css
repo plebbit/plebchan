@@ -6,13 +6,18 @@
 }
 
 .boardNavDesktop a {
-  color: var(--internal-link-text-color);
-  text-decoration: var(--internal-link-text-decoration);
+  color: var(--link-internal-text-color);
+  text-decoration: var(--link-internal-text-decoration);
 }
 
 .boardNavDesktop a:hover {
-  color: var(--internal-link-text-color-hover);
-  text-decoration: var(--internal-link-text-decoration-hover);
+  color: var(--link-internal-text-color-hover);
+  text-decoration: var(--link-internal-text-decoration-hover);
+}
+
+.navTopRight {
+  float: right;
+  text-transform: capitalize;
 }
 
 .boardNavMobile {
@@ -24,12 +29,20 @@
   font-size: var(--boardnav-mobile-font-size);
 }
 
+.boardNavMobile .pageJump a {
+  color: var(--boardnav-mobile-button-text-color);
+}
+
 .boardNavMobile strong {
+  text-transform: capitalize;
   padding-right: 5px;
 }
 
 .boardNavMobile select {
   font-size: var(--boardnav-mobile-font-size);
+  border: var(--select-border, revert);
+  background-color: var(--select-background-color, revert);
+  color: var(--select-color, revert);
 }
 
 .boardSelect {
@@ -46,8 +59,8 @@
 }
 
 .pageJump a {
-  color: var(--internal-link-text-color);
-  text-decoration: var(--internal-link-text-decoration);
+  color: var(--link-internal-text-color);
+  text-decoration: var(--link-internal-text-decoration);
 }
 
 @media (max-width: 640px) {

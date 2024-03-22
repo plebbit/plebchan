@@ -20,5 +20,14 @@
   "board_stats_week": "In de afgelopen week hebben <1>{{userCount}}</1> gebruikers <1>{{postCount}}</1> berichten gemaakt",
   "board_stats_month": "In de afgelopen maand hebben <1>{{userCount}}</1> gebruikers <1>{{postCount}}</1> berichten gemaakt",
   "board_stats_all": "Sindsdien hebben <1>{{userCount}}</1> gebruikers <1>{{postCount}}</1> berichten gemaakt",
-  "board_created": "Forum aangemaakt"
+  "board_created": "Forum aangemaakt",
+  "settings": "Instellingen",
+  "home": "Home",
+  "subscribe": "Abonneren",
+  "unsubscribe": "Afmelden",
+  "close_post_form": "Sluit postformulier",
+  "catalog": "Catalogus",
+  "all": "Alles",
+  "subscriptions": "Abonnementen",
+  "board": "Forum"
 }

@@ -26,7 +26,7 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
       <table className={styles.blotter}>
         <hr />
         {showStats && (
-          <tbody id='blotter-msgs'>
+          <tbody>
             <tr>
               <td>
                 <Trans

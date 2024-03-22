@@ -20,5 +20,14 @@
   "board_stats_week": "I den sidste uge har <1>{{userCount}}</1> brugere sendt <1>{{postCount}}</1> indlæg",
   "board_stats_month": "I den sidste måned har <1>{{userCount}}</1> brugere sendt <1>{{postCount}}</1> indlæg",
   "board_stats_all": "Siden da har <1>{{userCount}}</1> brugere sendt <1>{{postCount}}</1> indlæg",
-  "board_created": "Forum oprettet"
+  "board_created": "Forum oprettet",
+  "settings": "Indstillinger",
+  "home": "Hjem",
+  "subscribe": "Abonner",
+  "unsubscribe": "Afmeld",
+  "close_post_form": "Luk postformularen",
+  "catalog": "Katalog",
+  "all": "Alle",
+  "subscriptions": "Abonnementer",
+  "board": "Forum"
 }

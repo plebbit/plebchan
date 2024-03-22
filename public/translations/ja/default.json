@@ -20,5 +20,14 @@
   "board_stats_week": "直近1週間で<1>{{userCount}}</1>人のユーザーが<1>{{postCount}}</1>件の投稿をしました",
   "board_stats_month": "直近1ヶ月で<1>{{userCount}}</1>人のユーザーが<1>{{postCount}}</1>件の投稿をしました",
   "board_stats_all": "その後、<1>{{userCount}}</1>人のユーザーが<1>{{postCount}}</1>件の投稿をしました",
-  "board_created": "掲示板が作成されました"
+  "board_created": "掲示板が作成されました",
+  "settings": "設定",
+  "home": "ホーム",
+  "subscribe": "購読",
+  "unsubscribe": "購読解除",
+  "close_post_form": "投稿フォームを閉じる",
+  "catalog": "カタログ",
+  "all": "すべて",
+  "subscriptions": "購読",
+  "board": "掲示板"
 }

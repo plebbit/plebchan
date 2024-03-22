@@ -6,7 +6,7 @@
   "no_global_rules_info": "Nincsenek globális szabályok, minden fórum teljesen független, és tulajdonosa dönti el, hogyan/ha moderálja azt.",
   "boards": "fórumok",
   "popular_threads": "Népszerű szálak",
-  "options": "Lehetőségek",
+  "options": "Beállítások",
   "stats": "Statisztikák",
   "about": "Rólunk",
   "whitepaper": "Whitepaper",
@@ -20,5 +20,14 @@
   "board_stats_week": "Az elmúlt héten <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
   "board_stats_month": "Az elmúlt hónapban <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
   "board_stats_all": "Azóta <1>{{userCount}}</1> felhasználó <1>{{postCount}}</1> hozzászólást küldött",
-  "board_created": "Fórum létrehozva"
+  "board_created": "Fórum létrehozva",
+  "settings": "Beállítások",
+  "home": "Kezdőlap",
+  "subscribe": "Feliratkozás",
+  "unsubscribe": "Leiratkozás",
+  "close_post_form": "Bejegyzés űrlap bezárása",
+  "catalog": "Katalógus",
+  "all": "Összes",
+  "subscriptions": "Előfizetések",
+  "board": "Fórum"
 }

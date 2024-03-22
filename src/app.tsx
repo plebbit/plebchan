@@ -5,11 +5,14 @@ import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from './app.module.css';
 import useTheme from './hooks/use-theme';
 import Home from './views/home';
+import Settings from './views/settings';
 import Subplebbit from './views/subplebbit';
 import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
 import BoardStats from './components/board-stats';
 import PostForm from './components/post-form';
+import { MobileBoardButtons } from './components/board-buttons';
+import { DesktopBoardButtons } from './components/board-buttons';
 
 const BoardLayout = () => {
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
@@ -21,8 +24,10 @@ const BoardLayout = () => {
         <>
           <BoardNav address={subplebbitAddress} />
           <BoardBanner title={subplebbit.title} address={subplebbitAddress} />
+          <MobileBoardButtons address={subplebbitAddress} />
           <PostForm address={subplebbitAddress} />
           <BoardStats address={subplebbitAddress} createdAt={subplebbit.createdAt} />
+          <DesktopBoardButtons address={subplebbitAddress} />
         </>
       )}
       <Outlet />
@@ -54,6 +59,7 @@ const App = () => {
         <Route element={<BoardLayout />}>
           <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
         </Route>
+        <Route path='/settings' element={<Settings />} />
       </Routes>
     </div>
   );

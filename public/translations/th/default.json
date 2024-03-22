@@ -20,5 +20,14 @@
   "board_stats_week": "ในช่วงสัปดาห์ที่ผ่านมา <1>{{userCount}}</1> ผู้ใช้งานได้สร้าง <1>{{postCount}}</1> โพสต์",
   "board_stats_month": "ในช่วงเดือนที่ผ่านมา <1>{{userCount}}</1> ผู้ใช้งานได้สร้าง <1>{{postCount}}</1> โพสต์",
   "board_stats_all": "ตั้งแต่นั้นมา <1>{{userCount}}</1> ผู้ใช้งานได้สร้าง <1>{{postCount}}</1> โพสต์",
-  "board_created": "สร้างกระดานข่าวแล้ว"
+  "board_created": "สร้างกระดานข่าวแล้ว",
+  "settings": "การตั้งค่า",
+  "home": "หน้าแรก",
+  "subscribe": "สมัครสมาชิก",
+  "unsubscribe": "ยกเลิกการสมัครสมาชิก",
+  "close_post_form": "ปิดแบบฟอร์มโพสต์",
+  "catalog": "แคตตาล็อก",
+  "all": "ทั้งหมด",
+  "subscriptions": "การสมัครสมาชิก",
+  "board": "กระดาน"
 }

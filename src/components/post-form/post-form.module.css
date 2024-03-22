@@ -1,15 +1,22 @@
-.togglePostForm {
+.postFormButtonDesktop {
   font-size: var(--post-form-toggle-font-size);
   font-weight: var(--post-form-toggle-font-weight);
   text-align: center;
 }
 
-.togglePostForm span {
-  color: var(--button-text-color);
-  text-decoration: var(--button-text-decoration);
+.postFormButtonMobile {
+  text-align: center;
+  padding-top: 9px;
 }
 
-.togglePostForm span:hover {
-  cursor: pointer;
-  color: var(--button-text-color-hover);
+@media (max-width: 640px) {
+  .postFormButtonDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .postFormButtonMobile {
+    display: none;
+  }
 }

@@ -20,5 +20,14 @@
   "board_stats_week": "خلال الأسبوع الماضي، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
   "board_stats_month": "خلال الشهر الماضي، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
   "board_stats_all": "منذ ذلك الحين، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
-  "board_created": "منتدى تم إنشاؤه"
+  "board_created": "منتدى تم إنشاؤه",
+  "settings": "الإعدادات",
+  "home": "الصفحة الرئيسية",
+  "subscribe": "اشتراك",
+  "unsubscribe": "إلغاء الاشتراك",
+  "close_post_form": "إغلاق نموذج المشاركة",
+  "catalog": "فهرس",
+  "all": "الكل",
+  "subscriptions": "الاشتراكات",
+  "board": "منتدى"
 }

@@ -20,5 +20,14 @@
   "board_stats_week": "V posledním týdnu <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
   "board_stats_month": "V posledním měsíci <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
   "board_stats_all": "Od té doby <1>{{userCount}}</1> uživatelů napsalo <1>{{postCount}}</1> příspěvků",
-  "board_created": "Fórum vytvořeno"
+  "board_created": "Fórum vytvořeno",
+  "settings": "Nastavení",
+  "home": "Domovská stránka",
+  "subscribe": "Přihlásit se k odběru",
+  "unsubscribe": "Odebrat odběr",
+  "close_post_form": "Zavřít formulář příspěvku",
+  "catalog": "Katalog",
+  "all": "Vše",
+  "subscriptions": "Předplatné",
+  "board": "Fórum"
 }
