@@ -5,13 +5,13 @@
 }
 
 .boardNavDesktop a {
-  color: var(--link-internal-text-color);
-  text-decoration: var(--link-internal-text-decoration);
+  color: var(--button-desktop-text-color);
+  text-decoration: var(--button-desktop-text-color-decoration);
 }
 
 .boardNavDesktop a:hover {
-  color: var(--link-internal-text-color-hover);
-  text-decoration: var(--link-internal-text-decoration-hover);
+  color: var(--button-desktop-text-color-hover);
+  text-decoration: var(--button-desktop-text-color-hover);
 }
 
 .navTopRight {
@@ -58,8 +58,8 @@
 }
 
 .pageJump a {
-  color: var(--link-internal-text-color);
-  text-decoration: var(--link-internal-text-decoration);
+  color: var(--homepage-box-link-text-color);
+  text-decoration: var(--homepage-box-link-text-decoration);
 }
 
 @media (max-width: 640px) {

@@ -46,17 +46,21 @@
   --homepage-box-bar-text-color: #800;
   --homepage-box-bar-text-color-hover: #c63;
   --homepage-box-bar-background-color: #fca;
+  --homepage-infobox-link-text-color: #00f;
+  --homepage-infobox-link-text-decoration: underline;
+  --homepage-box-link-text-color: #800;
+  --homepage-box-link-text-color-hover: #e00;
+  --homepage-box-link-text-decoration: none;
+  --homepage-box-link-text-decoration-hover: underline;
 
   /* footer */
   --footer-item-background-color-desktop: #fed;
 
   /* links */
-  --link-external-text-color: #00f;
-  --link-external-text-decoration: underline;
-  --link-internal-text-color: #800;
-  --link-internal-text-color-hover: #e00;
-  --link-internal-text-decoration: none;
-  --link-internal-text-decoration-hover: underline;
+  --post-link-text-color: #00e;
+  --post-link-text-decoration: underline;
+  --post-link-text-color-hover: red;
+  --post-link-text-decoration-hover: underline;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -96,6 +100,12 @@
   --homepage-box-bar-text-color: #000;
   --homepage-box-bar-text-color-hover: #fff;
   --homepage-box-bar-background-color: #98e;
+  --homepage-infobox-link-text-color: #00f;
+  --homepage-infobox-link-text-decoration: underline;
+  --homepage-box-link-text-color: #34345c;
+  --homepage-box-link-text-color-hover: #d00;
+  --homepage-box-link-text-decoration: none;
+  --homepage-box-link-text-decoration-hover: underline;
 
   /* desktop buttons */
   --button-desktop-text-color: #34345c;
@@ -117,12 +127,10 @@
   --hr-border-top: 1px solid #b7c5d9;
 
   /* links */
-  --link-external-text-color: #00f;
-  --link-external-text-decoration: underline;
-  --link-internal-text-color: #34345c;
-  --link-internal-text-color-hover: #d00;
-  --link-internal-text-decoration: none;
-  --link-internal-text-decoration-hover: underline;
+  --post-link-text-color: #34345c;
+  --post-link-text-decoration: underline;
+  --post-link-text-color-hover: #d00;
+  --post-link-text-decoration-hover: underline;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -136,16 +144,6 @@
   --body-font-color: maroon;
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
-
-  /* homepage */
-  --homepage-infobox-text-color: #000;
-  --homepage-infobox-bar-text-color: #fff;
-  --homepage-infobox-bar-background-color: #800;
-  --homepage-box-background-color: #fff;
-  --homepage-box-border-color: #800;
-  --homepage-box-bar-text-color: #800;
-  --homepage-box-bar-text-color-hover: #c63;
-  --homepage-box-bar-background-color: #fca;
 
   /* board nav */
   --boardnav-font-size: 11pt;
@@ -176,12 +174,10 @@
   --footer-item-background-color-desktop: #fed;
 
   /* links */
-  --link-external-text-color: #00f;
-  --link-external-text-decoration: underline;
-  --link-internal-text-color: #00e;
-  --link-internal-text-color-hover: #e00;
-  --link-internal-text-decoration: underline;
-  --link-internal-text-decoration-hover: underline;
+  --post-link-text-color: #00e;
+  --post-link-text-decoration: underline;
+  --post-link-text-color-hover: red;
+  --post-link-text-decoration-hover: underline;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -239,12 +235,10 @@
   --footer-item-background-color-desktop: #eef2ff;
 
   /* links */
-  --link-external-text-color: #00f;
-  --link-external-text-decoration: underline;
-  --link-internal-text-color: #34345c;
-  --link-internal-text-color-hover: #d00;
-  --link-internal-text-decoration: underline;
-  --link-internal-text-decoration-hover: underline;
+  --post-link-text-color: #34345c;
+  --post-link-text-decoration: underline;
+  --post-link-text-color-hover: #d00;
+  --post-link-text-decoration-hover: underline;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -300,8 +294,10 @@
   --hr-height: 0px;
 
   /* links */
-  --link-internal-text-color: #81a2be;
-  --link-internal-text-color-hover: #5f89ac;
+  --post-link-text-color: #81a2be;
+  --post-link-text-decoration: underline;
+  --post-link-text-color-hover: #5f89ac;
+  --post-link-text-decoration-hover: underline;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -352,8 +348,10 @@
   --hr-height: 0px;
 
   /* links */
-  --link-internal-text-color: #f60;
-  --link-internal-text-color-hover: #f30;
+  --post-link-text-color: #f60;
+  --post-link-text-decoration: underline;
+  --post-link-text-color-hover: #f30;
+  --post-link-text-decoration-hover: underline;
 
   /* post form */
   --post-form-toggle-font-size: 22px;

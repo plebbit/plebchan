@@ -1,3 +1,13 @@
 .thread {
   clear: both;
 }
+
+.link a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-link-text-decoration);
+}
+
+.link a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-link-text-decoration-hover);
+}
