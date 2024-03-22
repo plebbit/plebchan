@@ -22,5 +22,9 @@
   "board_stats_all": "Từ đó, <1>{{userCount}}</1> người dùng đã đăng <1>{{postCount}}</1> bài",
   "board_created": "Diễn đàn được tạo",
   "settings": "Cài đặt",
-  "home": "Trang chủ"
+  "home": "Trang chủ",
+  "subscribe": "Đăng ký",
+  "unsubscribe": "Hủy đăng ký",
+  "close_post_form": "Đóng biểu mẫu đăng bài",
+  "catalog": "Catalog"
 }

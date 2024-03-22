@@ -22,5 +22,9 @@
   "board_stats_all": "Depuis lors, <1>{{userCount}}</1> utilisateurs ont publié <1>{{postCount}}</1> messages",
   "board_created": "Forum créé",
   "settings": "Paramètres",
-  "home": "Accueil"
+  "home": "Accueil",
+  "subscribe": "S'abonner",
+  "unsubscribe": "Se désabonner",
+  "close_post_form": "Fermer le formulaire de publication",
+  "catalog": "Catalogue"
 }

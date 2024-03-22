@@ -22,5 +22,9 @@
   "board_stats_all": "O zamandan beri <1>{{userCount}}</1> kullanıcı <1>{{postCount}}</1> gönderi yaptı",
   "board_created": "Forum oluşturuldu",
   "settings": "Ayarlar",
-  "home": "Anasayfa"
+  "home": "Anasayfa",
+  "subscribe": "Abone Ol",
+  "unsubscribe": "Abonelikten çık",
+  "close_post_form": "Gönderi formunu kapat",
+  "catalog": "Katalog"
 }

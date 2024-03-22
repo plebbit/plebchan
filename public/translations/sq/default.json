@@ -22,5 +22,9 @@
   "board_stats_all": "Që atëherë, <1>{{userCount}}</1> përdorues ka bërë <1>{{postCount}}</1> postime",
   "board_created": "Forumi është krijuar",
   "settings": "Parametrat",
-  "home": "Faqja kryesore"
+  "home": "Faqja kryesore",
+  "subscribe": "Pajtohu",
+  "unsubscribe": "Hiq pajtimin",
+  "close_post_form": "Mbyllni formularin e postës",
+  "catalog": "Katalog"
 }

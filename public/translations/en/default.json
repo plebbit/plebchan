@@ -22,5 +22,9 @@
   "board_stats_all": "Since then, <1>{{userCount}}</1> users made <1>{{postCount}}</1> posts",
   "board_created": "Board created",
   "settings": "Settings",
-  "home": "Home"
+  "home": "Home",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
+  "close_post_form": "Close post form",
+  "catalog": "Catalog"
 }

@@ -22,5 +22,9 @@
   "board_stats_all": "Siitä lähtien <1>{{userCount}}</1> käyttäjää on lähettänyt <1>{{postCount}}</1> viestiä",
   "board_created": "Luotu foorumi",
   "settings": "Asetukset",
-  "home": "Koti"
+  "home": "Koti",
+  "subscribe": "Tilaa",
+  "unsubscribe": "Peruuta tilaus",
+  "close_post_form": "Sulje postilomake",
+  "catalog": "Luettelo"
 }

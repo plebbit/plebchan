@@ -22,5 +22,9 @@
   "board_stats_all": "منذ ذلك الحين، <1>{{userCount}}</1> مستخدم قاموا بإرسال <1>{{postCount}}</1> منشور",
   "board_created": "منتدى تم إنشاؤه",
   "settings": "الإعدادات",
-  "home": "الصفحة الرئيسية"
+  "home": "الصفحة الرئيسية",
+  "subscribe": "اشتراك",
+  "unsubscribe": "إلغاء الاشتراك",
+  "close_post_form": "إغلاق نموذج المشاركة",
+  "catalog": "فهرس"
 }

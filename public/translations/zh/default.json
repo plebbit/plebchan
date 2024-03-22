@@ -22,5 +22,9 @@
   "board_stats_all": "从那时起，<1>{{userCount}}</1> 用户发布了<1>{{postCount}}</1>个帖子",
   "board_created": "论坛已创建",
   "settings": "设置",
-  "home": "首页"
+  "home": "首页",
+  "subscribe": "订阅",
+  "unsubscribe": "取消订阅",
+  "close_post_form": "关闭帖子表单",
+  "catalog": "目录"
 }

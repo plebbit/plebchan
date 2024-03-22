@@ -22,5 +22,9 @@
   "board_stats_all": "С тех пор <1>{{userCount}}</1> пользователей опубликовали <1>{{postCount}}</1> сообщений",
   "board_created": "Форум создан",
   "settings": "Настройки",
-  "home": "Главная"
+  "home": "Главная",
+  "subscribe": "Подписаться",
+  "unsubscribe": "Отписаться",
+  "close_post_form": "Закрыть форму публикации",
+  "catalog": "Каталог"
 }

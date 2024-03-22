@@ -22,5 +22,9 @@
   "board_stats_all": "అప్పుడు నుండి, <1>{{userCount}}</1> వాడుకరులు <1>{{postCount}}</1> పోస్టులు చేశారు",
   "board_created": "బోర్డు సృష్టించబడింది",
   "settings": "అమరికలు",
-  "home": "హోమ్"
+  "home": "హోమ్",
+  "subscribe": "చేరండి",
+  "unsubscribe": "సబ్‌స్క్రిప్షన్ రద్దు చేయండి",
+  "close_post_form": "పోస్టు ఫారమ్ మూసేయి",
+  "catalog": "కాటలాగ్"
 }

@@ -22,5 +22,9 @@
   "board_stats_all": "מאז, <1>{{userCount}}</1> משתמשים פרסמו <1>{{postCount}}</1> הודעות",
   "board_created": "פורום נוצר",
   "settings": "הגדרות",
-  "home": "בית"
+  "home": "בית",
+  "subscribe": "הירשם",
+  "unsubscribe": "הסר רישום",
+  "close_post_form": "סגור את טופס הפוסט",
+  "catalog": "קטלוג"
 }

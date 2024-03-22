@@ -22,5 +22,9 @@
   "board_stats_all": "Sedan dess har <1>{{userCount}}</1> användare gjort <1>{{postCount}}</1> inlägg",
   "board_created": "Forum skapat",
   "settings": "Inställningar",
-  "home": "Hem"
+  "home": "Hem",
+  "subscribe": "Prenumerera",
+  "unsubscribe": "Avsluta prenumeration",
+  "close_post_form": "Stäng inläggsformuläret",
+  "catalog": "Katalog"
 }

@@ -22,5 +22,9 @@
   "board_stats_all": "Seitdem haben <1>{{userCount}}</1> Benutzer <1>{{postCount}}</1> Beiträge veröffentlicht",
   "board_created": "Forum erstellt",
   "settings": "Einstellungen",
-  "home": "Startseite"
+  "home": "Startseite",
+  "subscribe": "Abonnieren",
+  "unsubscribe": "Abbestellen",
+  "close_post_form": "Postformular schließen",
+  "catalog": "Katalog"
 }

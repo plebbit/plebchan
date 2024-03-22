@@ -6,7 +6,7 @@
   "no_global_rules_info": "Walang global na mga patakaran, bawat board ay lubusang independiyente at ang may-ari nito ang nagdedesisyon kung paano / kung ito ay isasakdal.",
   "boards": "mga board",
   "popular_threads": "Mga popular na thread",
-  "options": "Mga opsyon",
+  "options": "Mga Opsyon",
   "stats": "Estadistika",
   "about": "Tungkol sa",
   "whitepaper": "Whitepaper",
@@ -22,5 +22,9 @@
   "board_stats_all": "Mula noon, <1>{{userCount}}</1> mga gumagamit ang gumawa ng <1>{{postCount}}</1> na mga post",
   "board_created": "Board na nilikha",
   "settings": "Mga Setting",
-  "home": "Bahay"
+  "home": "Bahay",
+  "subscribe": "Mag-subscribe",
+  "unsubscribe": "Huwag mag-subscribe",
+  "close_post_form": "Isara ang porma ng post",
+  "catalog": "Katalogo"
 }

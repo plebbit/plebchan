@@ -22,5 +22,9 @@
   "board_stats_all": "Siden da har <1>{{userCount}}</1> brugere sendt <1>{{postCount}}</1> indlæg",
   "board_created": "Forum oprettet",
   "settings": "Indstillinger",
-  "home": "Hjem"
+  "home": "Hjem",
+  "subscribe": "Abonner",
+  "unsubscribe": "Afmeld",
+  "close_post_form": "Luk postformularen",
+  "catalog": "Katalog"
 }

@@ -22,5 +22,9 @@
   "board_stats_all": "اس کے بعد، <1>{{userCount}}</1> صارفین نے <1>{{postCount}}</1> مواد ارسال کیا ہے",
   "board_created": "پیغام بورڈز بنایا گیا",
   "settings": "ترتیبات",
-  "home": "ہوم"
+  "home": "ہوم",
+  "subscribe": "سبسکرائب کریں",
+  "unsubscribe": "سبسکرائب کی منسوخی",
+  "close_post_form": "پوسٹ فارم بند کریں",
+  "catalog": "کیٹالوگ"
 }

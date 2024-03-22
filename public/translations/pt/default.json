@@ -22,5 +22,9 @@
   "board_stats_all": "Desde então, <1>{{userCount}}</1> usuários fizeram <1>{{postCount}}</1> postagens",
   "board_created": "Fórum criado",
   "settings": "Configurações",
-  "home": "Início"
+  "home": "Início",
+  "subscribe": "Subscrever",
+  "unsubscribe": "Cancelar subscrição",
+  "close_post_form": "Fechar formulário de postagem",
+  "catalog": "Catálogo"
 }
