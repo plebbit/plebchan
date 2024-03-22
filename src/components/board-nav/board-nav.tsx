@@ -35,6 +35,7 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
 };
 
 const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const boardSelect = (
@@ -52,12 +53,12 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   return (
     <div className={styles.boardNavMobile}>
       <div className={styles.boardSelect}>
-        <strong>Board</strong>
+        <strong>{t('board')}</strong>
         {boardSelect}
       </div>
       <div className={styles.pageJump}>
-        <Link to='settings'>Settings</Link>
-        <Link to='/'>Home</Link>
+        <Link to='settings'>{t('settings')}</Link>
+        <Link to='/'>{t('home')}</Link>
       </div>
     </div>
   );

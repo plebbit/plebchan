@@ -26,5 +26,8 @@
   "subscribe": "Tilaa",
   "unsubscribe": "Peruuta tilaus",
   "close_post_form": "Sulje postilomake",
-  "catalog": "Luettelo"
+  "catalog": "Luettelo",
+  "all": "Kaikki",
+  "subscriptions": "Tilaukset",
+  "board": "Foorumi"
 }

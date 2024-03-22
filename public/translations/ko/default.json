@@ -26,5 +26,8 @@
   "subscribe": "구독",
   "unsubscribe": "구독 취소",
   "close_post_form": "게시물 양식 닫기",
-  "catalog": "카탈로그"
+  "catalog": "카탈로그",
+  "all": "모두",
+  "subscriptions": "구독",
+  "board": "게시판"
 }

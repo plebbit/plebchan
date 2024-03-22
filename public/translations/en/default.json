@@ -26,5 +26,8 @@
   "subscribe": "Subscribe",
   "unsubscribe": "Unsubscribe",
   "close_post_form": "Close post form",
-  "catalog": "Catalog"
+  "catalog": "Catalog",
+  "all": "All",
+  "subscriptions": "Subscriptions",
+  "board": "Board"
 }

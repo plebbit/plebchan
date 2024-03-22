@@ -26,5 +26,8 @@
   "subscribe": "Pajtohu",
   "unsubscribe": "Hiq pajtimin",
   "close_post_form": "Mbyllni formularin e postës",
-  "catalog": "Katalog"
+  "catalog": "Katalog",
+  "all": "Të gjitha",
+  "subscriptions": "Abonimet",
+  "board": "Forumi"
 }

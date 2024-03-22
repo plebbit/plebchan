@@ -26,5 +26,8 @@
   "subscribe": "Berlangganan",
   "unsubscribe": "Berhenti berlangganan",
   "close_post_form": "Tutup formulir kiriman",
-  "catalog": "Katalog"
+  "catalog": "Katalog",
+  "all": "Semua",
+  "subscriptions": "Langganan",
+  "board": "Forum"
 }

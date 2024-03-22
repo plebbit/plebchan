@@ -26,5 +26,8 @@
   "subscribe": "اشتراك",
   "unsubscribe": "إلغاء الاشتراك",
   "close_post_form": "إغلاق نموذج المشاركة",
-  "catalog": "فهرس"
+  "catalog": "فهرس",
+  "all": "الكل",
+  "subscriptions": "الاشتراكات",
+  "board": "منتدى"
 }

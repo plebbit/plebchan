@@ -26,5 +26,8 @@
   "subscribe": "Abonner",
   "unsubscribe": "Afmeld",
   "close_post_form": "Luk postformularen",
-  "catalog": "Katalog"
+  "catalog": "Katalog",
+  "all": "Alle",
+  "subscriptions": "Abonnementer",
+  "board": "Forum"
 }

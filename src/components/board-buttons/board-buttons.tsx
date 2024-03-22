@@ -1,24 +1,28 @@
 import { useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
+import { useTranslation } from 'react-i18next';
 
 interface BoardButtonsProps {
   address: string;
 }
 
 const OptionsButton = () => {
-  return <button className='button'>options</button>;
+  const { t } = useTranslation();
+  return <button className='button'>{t('options')}</button>;
 };
 
 const CatalogButton = () => {
-  return <button className='button'>catalog</button>;
+  const { t } = useTranslation();
+  return <button className='button'>{t('catalog')}</button>;
 };
 
 const SubscribeButton = ({ address }: BoardButtonsProps) => {
+  const { t } = useTranslation();
   const { subscribed, subscribe, unsubscribe } = useSubscribe({ subplebbitAddress: address });
 
   return (
     <button className='button' onClick={subscribed ? unsubscribe : subscribe}>
-      {subscribed ? 'Unsubscribe' : 'Subscribe'}
+      {subscribed ? t('unsubscribe') : t('subscribe')}
     </button>
   );
 };

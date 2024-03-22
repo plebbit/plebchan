@@ -26,5 +26,8 @@
   "subscribe": "Feliratkozás",
   "unsubscribe": "Leiratkozás",
   "close_post_form": "Bejegyzés űrlap bezárása",
-  "catalog": "Katalógus"
+  "catalog": "Katalógus",
+  "all": "Összes",
+  "subscriptions": "Előfizetések",
+  "board": "Fórum"
 }

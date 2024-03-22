@@ -26,5 +26,8 @@
   "subscribe": "Prenumerera",
   "unsubscribe": "Avsluta prenumeration",
   "close_post_form": "Stäng inläggsformuläret",
-  "catalog": "Katalog"
+  "catalog": "Katalog",
+  "all": "Allt",
+  "subscriptions": "Prenumerationer",
+  "board": "Forum"
 }

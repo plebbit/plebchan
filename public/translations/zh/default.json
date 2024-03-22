@@ -26,5 +26,8 @@
   "subscribe": "订阅",
   "unsubscribe": "取消订阅",
   "close_post_form": "关闭帖子表单",
-  "catalog": "目录"
+  "catalog": "目录",
+  "all": "所有",
+  "subscriptions": "订阅",
+  "board": "论坛"
 }

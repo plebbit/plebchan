@@ -26,5 +26,8 @@
   "subscribe": "Abonare",
   "unsubscribe": "Dezabonare",
   "close_post_form": "Închideți formularul de postare",
-  "catalog": "Catalog"
+  "catalog": "Catalog",
+  "all": "Toate",
+  "subscriptions": "Abonamente",
+  "board": "Forum"
 }

@@ -26,5 +26,8 @@
   "subscribe": "Suscribirse",
   "unsubscribe": "Cancelar suscripción",
   "close_post_form": "Cerrar formulario de publicación",
-  "catalog": "Catálogo"
+  "catalog": "Catálogo",
+  "all": "Todo",
+  "subscriptions": "Suscripciones",
+  "board": "Foro"
 }

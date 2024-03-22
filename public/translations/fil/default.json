@@ -26,5 +26,8 @@
   "subscribe": "Mag-subscribe",
   "unsubscribe": "Huwag mag-subscribe",
   "close_post_form": "Isara ang porma ng post",
-  "catalog": "Katalogo"
+  "catalog": "Katalogo",
+  "all": "Lahat",
+  "subscriptions": "Mga Subscription",
+  "board": "Board"
 }

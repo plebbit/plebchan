@@ -26,5 +26,8 @@
   "subscribe": "Abonner",
   "unsubscribe": "Avslutt abonnement",
   "close_post_form": "Lukk postskjema",
-  "catalog": "Katalog"
+  "catalog": "Katalog",
+  "all": "Alle",
+  "subscriptions": "Abonnementer",
+  "board": "Forum"
 }

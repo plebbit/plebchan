@@ -26,5 +26,8 @@
   "subscribe": "購読",
   "unsubscribe": "購読解除",
   "close_post_form": "投稿フォームを閉じる",
-  "catalog": "カタログ"
+  "catalog": "カタログ",
+  "all": "すべて",
+  "subscriptions": "購読",
+  "board": "掲示板"
 }

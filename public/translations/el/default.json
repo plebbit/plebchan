@@ -26,5 +26,8 @@
   "subscribe": "Εγγραφή",
   "unsubscribe": "Διακοπή συνδρομής",
   "close_post_form": "Κλείστε τη φόρμα δημοσίευσης",
-  "catalog": "Κατάλογος"
+  "catalog": "Κατάλογος",
+  "all": "Όλα",
+  "subscriptions": "Συνδρομές",
+  "board": "Φόρουμ"
 }

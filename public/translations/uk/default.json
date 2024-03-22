@@ -26,5 +26,8 @@
   "subscribe": "Підписатися",
   "unsubscribe": "Відмовитися від підписки",
   "close_post_form": "Закрити форму публікації",
-  "catalog": "Каталог"
+  "catalog": "Каталог",
+  "all": "Всі",
+  "subscriptions": "Підписки",
+  "board": "Форум"
 }

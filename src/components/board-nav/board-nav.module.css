@@ -30,6 +30,7 @@
 }
 
 .boardNavMobile strong {
+  text-transform: capitalize;
   padding-right: 5px;
 }
 
