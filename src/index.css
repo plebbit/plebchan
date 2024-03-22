@@ -11,3 +11,36 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
   margin: 0;
   padding: 0;
 }
+
+@media (max-width: 640px) {
+  .button {
+    text-transform: capitalize;
+    font-size: var(--button-font-size-mobile);
+    font-weight: var(--button-font-weight-mobile);
+    font-family: var(--button-font-family-mobile);
+    border-radius: 3px;
+    padding: 5px 10px 5px;
+    background-color: var(--button-background-color-mobile);
+    color: var(--button-text-color-mobile);
+    border: var(--button-border-mobile);
+    background-image: var(--button-background-image-mobile);
+    background-repeat: var(--button-background-repeat-mobile);
+    text-decoration: var(--button-text-decoration-mobile);
+    user-select: none;
+    display: inline-block;
+  }
+}
+
+@media (min-width: 640px) {
+  .button {
+    all: unset;
+    text-transform: capitalize;
+    color: var(--button-desktop-text-color);
+    text-decoration: var(--button-text-decoration);
+  }
+
+  .button:hover {
+    color: var(--button-desktop-text-color-hover);
+    cursor: pointer;
+  }
+}

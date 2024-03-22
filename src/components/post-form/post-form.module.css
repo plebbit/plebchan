@@ -4,36 +4,9 @@
   text-align: center;
 }
 
-.postFormButtonDesktop span {
-  color: var(--button-text-color);
-  text-decoration: var(--button-text-decoration);
-}
-
-.postFormButtonDesktop span:hover {
-  cursor: pointer;
-  color: var(--button-text-color-hover);
-}
-
 .postFormButtonMobile {
   text-align: center;
-  padding-top: 5px;
-}
-
-.postFormButtonMobile span {
-  font-size: var(--button-font-size-mobile);
-  font-weight: var(--button-font-weight-mobile);
-  font-family: var(--button-font-family-mobile);
-  border-radius: 3px;
-  padding: 5px 10px 5px;
-  background-color: var(--button-background-color-mobile);
-  color: var(--button-text-color-mobile);
-  border: var(--button-border-mobile);
-  background-image: var(--button-background-image-mobile);
-  background: var(--button-background-mobile);
-  background-repeat: var(--button-background-repeat-mobile);
-  text-decoration: var(--button-text-decoration-mobile);
-  user-select: none;
-  display: inline-block;
+  padding-top: 9px;
 }
 
 @media (max-width: 640px) {

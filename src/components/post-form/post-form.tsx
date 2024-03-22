@@ -11,10 +11,10 @@ const PostForm = ({ address }: PostFormProps) => {
   return (
     <>
       <div className={styles.postFormButtonDesktop}>
-        [<span>{t('start_new_thread')}</span>]
+        [<button className='button'>{t('start_new_thread')}</button>]
       </div>
       <div className={styles.postFormButtonMobile}>
-        <span>{t('start_new_thread')}</span>
+        <button className='button'>{t('start_new_thread')}</button>
       </div>
     </>
   );

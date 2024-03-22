@@ -24,18 +24,18 @@
 }
 
 .hideButton {
-  color: var(--button-text-color);
+  color: var(--button-desktop-text-color);
   text-decoration: var(--button-text-decoration);
   text-transform: capitalize;
 }
 
 .hideButton:hover {
   cursor: pointer;
-  color: var(--button-text-color-hover);
+  color: var(--button-desktop-text-color-hover);
 }
 
 .statValue {
-  color: var(--button-text-color);
+  color: var(--button-desktop-text-color);
 }
 
 .lowercase {
