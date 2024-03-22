@@ -90,6 +90,9 @@
   border-radius: 0px;
   border: 1px solid rgb(170, 170, 170);
   outline: none;
+  flex-grow: 1;
+  min-width: 0;
+  max-width: 400px;
 }
 
 .searchBar input {
@@ -103,6 +106,8 @@
   display: inline-block;
   text-transform: capitalize;
   font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .capitalize {
