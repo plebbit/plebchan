@@ -1,6 +1,5 @@
 
 .boardNavDesktop {
-  padding: 5px;
   font-size: var(--boardnav-font-size);
   color: var(--boardnav-separator-color);
 }

@@ -27,10 +27,6 @@
 
 .content hr {
   width: 90%;
-  /* revert to browser styling for burichan and futaba */
-  border: var(--hr-border, revert);
-  border-top: var(--hr-border-top, revert);
-  height: var(--hr-height, revert);
 }
 
 
