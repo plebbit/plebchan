@@ -2,12 +2,32 @@
   clear: both;
 }
 
-.link a {
+.postDesktop .link a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-link-text-decoration);
 }
 
-.link a:hover {
+.postDesktop .link a:hover {
   color: var(--post-link-text-color-hover);
   text-decoration: var(--post-link-text-decoration-hover);
+}
+
+.postDesktop .postInfo {
+  width: 100%;
+}
+
+.postDesktop .subject {
+  color: var(--post-subject-text-color);
+  font-weight: var(--post-subject-font-weight);
+}
+
+.postDesktop .name {
+  color: var(--post-name-text-color);
+  font-weight: var(--post-name-font-weight);
+}
+
+@media (max-width: 640px) {
+  .postDesktop {
+    display: none;
+  }
 }

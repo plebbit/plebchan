@@ -5,13 +5,13 @@
 }
 
 .boardNavDesktop a {
-  color: var(--button-desktop-text-color);
-  text-decoration: var(--button-desktop-text-color-decoration);
+  color: var(--boardnav-desktop-link-text-color);
+  text-decoration: var(--boardnav-desktop-link-text-decoration);
 }
 
 .boardNavDesktop a:hover {
-  color: var(--button-desktop-text-color-hover);
-  text-decoration: var(--button-desktop-text-color-hover);
+  color: var(--boardnav-desktop-link-text-color-hover);
+  text-decoration: var(--boardnav-desktop-link-text-decoration-hover);
 }
 
 .navTopRight {

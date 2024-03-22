@@ -4,14 +4,15 @@ import useReplies from '../../hooks/use-replies';
 import { getLinkMediaInfoMemoized } from '../../lib/utils/media-utils';
 
 const Post = ({ post }: Comment) => {
-  const { content, link, title } = post;
+  const { author, content, link, title } = post || {};
+  const { displayName, shortAddress } = author || {};
   const replies = useReplies(post);
   const linkMediaInfo = getLinkMediaInfoMemoized(link);
   return (
     <div className={styles.thread}>
-      <hr />
       <div className={styles.postContainer}>
         <div className={styles.postDesktop}>
+          <hr />
           {linkMediaInfo?.url && (
             <div className={styles.link}>
               Link:{' '}
@@ -21,7 +22,14 @@ const Post = ({ post }: Comment) => {
               ({linkMediaInfo?.type})
             </div>
           )}
-          <div className={styles.postInfo}></div>
+          <div className={styles.postInfo}>
+            {title && <span className={styles.subject}>{title.length > 75 ? title.slice(0, 75) + '...' : title}</span>}{' '}
+            <span className={styles.nameBlock}>
+              <span className={styles.name}>{displayName || 'Anonymous'} </span>
+              <span className={styles.userAddress}>(u/{shortAddress})</span>
+            </span>
+            <span className={styles.dateTime}></span>
+          </div>
           <div className={styles.postMessage}></div>
         </div>
       </div>
