@@ -37,16 +37,21 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
 const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const displaySubplebbit = currentSubplebbit && currentSubplebbit.length > 10 ? currentSubplebbit.slice(0, 10).concat('...') : currentSubplebbit;
 
   const boardSelect = (
-    <select value={currentSubplebbit} onChange={(e) => navigate(`/p/${e.target.value}`)}>
+    <select value={displaySubplebbit} onChange={(e) => navigate(`/p/${e.target.value}`)}>
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
-      {subplebbits.map((subplebbit: any, index: number) => (
-        <option key={index} value={subplebbit.address}>
-          {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}
-        </option>
-      ))}
+      {subplebbits.map((subplebbit: any, index: number) => {
+        const { address, title } = subplebbit;
+        const subplebbitAddress = address.includes('.') ? address : title || address.slice(0, 10).concat('...');
+        return (
+          <option key={index} value={subplebbit.address}>
+            {subplebbitAddress}
+          </option>
+        );
+      })}
     </select>
   );
 
