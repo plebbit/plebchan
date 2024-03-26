@@ -71,6 +71,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
+  --post-menu-button-color: #000080;
+  --post-menu-button-color-hover: red;
+  --post-greentext-color: #789922;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -151,6 +154,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
+  --post-menu-button-color: #34345c;
+  --post-menu-button-color-hover: #d00;
+  --post-greentext-color: #789922;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -208,6 +214,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
+  --post-menu-button-color: #000080;
+  --post-menu-button-color-hover: red;
+  --post-greentext-color: #789922;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -279,6 +288,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
+  --post-menu-button-color: #34345c;
+  --post-menu-button-color-hover: #d00;
+  --post-greentext-color: #789922;
   
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -348,6 +360,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #c5c8c6;
   --post-name-font-weight: 700;
+  --post-menu-button-color: #5F89AC;
+  --post-menu-button-color-hover: #81a2be;
+  --post-greentext-color: #b5bd68;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -412,6 +427,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #004a99;
   --post-name-font-weight: 700;
+  --post-menu-button-color: #FF6600;
+  --post-menu-button-color-hover: #FF3300;
+  --post-greentext-color: #789922;
 
   /* post form */
   --post-form-toggle-font-size: 22px;

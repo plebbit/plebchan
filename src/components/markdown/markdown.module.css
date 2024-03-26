@@ -1,0 +1,17 @@
+.markdown a {
+  color: var(--post-link-text-color);
+  text-decoration: none;
+}
+
+.markdown a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: none;
+}
+
+.markdown ol {
+  padding-left: 15px;
+}
+
+.markdown ul {
+  padding-left: 40px;
+}
