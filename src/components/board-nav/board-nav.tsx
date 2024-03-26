@@ -40,8 +40,8 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
 
   const boardSelect = (
     <select value={currentSubplebbit} onChange={(e) => navigate(`/p/${e.target.value}`)}>
-      <option value='all'>All</option>
-      <option value='subscriptions'>Subscriptions</option>
+      <option value='all'>{t('all')}</option>
+      <option value='subscriptions'>{t('subscriptions')}</option>
       {subplebbits.map((subplebbit: any, index: number) => (
         <option key={index} value={subplebbit.address}>
           {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}

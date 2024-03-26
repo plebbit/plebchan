@@ -2,6 +2,15 @@
   clear: both;
 }
 
+.hrWrapper hr {
+  margin: 0; /* margin bugs Virtuoso scrolling */
+}
+
+.hrWrapper {
+  padding-top: 0.5em; /* instead of using margin, wrap with padding */
+  padding-bottom: 0.5em;
+}
+
 .postDesktop .link a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-link-text-decoration);
@@ -24,6 +33,56 @@
 .postDesktop .name {
   color: var(--post-name-text-color);
   font-weight: var(--post-name-font-weight);
+}
+
+.postDesktop .postNumLink a, .postDesktop .postNumLink span {
+  color: unset;
+  text-decoration: unset;
+}
+
+.postDesktop .postNumLink a:hover, .postDesktop .postNumLink span:hover {
+  cursor: pointer;
+  color: var(--button-desktop-text-color-hover);
+}
+
+.postDesktop .stickyIconWrapper {
+  padding-left: 5px;
+}
+
+.postDesktop .closedIconWrapper {
+  padding-left: 3px;
+}
+
+.postDesktop .stickyIconWrapper img, .postDesktop .closedIconWrapper img {
+  width: 16px;
+  height: 16px;
+  border: none;
+  image-rendering: pixelated;
+}
+
+.postDesktop .replyButton {
+  padding-left: 10px;
+}
+
+.postDesktop .replyButton a {
+  color: var(--button-desktop-text-color);
+  text-decoration: var(--button-desktop-text-decoration);
+  text-transform: capitalize;
+}
+
+.postDesktop .replyButton a:hover {
+  cursor: pointer;
+  color: var(--button-desktop-text-color-hover);
+}
+
+.postMenuBtn {
+  padding-left: 5px;
+  color: var(--post-menu-button-color);
+}
+
+.postMenuBtn:hover {
+  cursor: pointer;
+  color: var(--post-menu-button-color-hover);
 }
 
 @media (max-width: 640px) {

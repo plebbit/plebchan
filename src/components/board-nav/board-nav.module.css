@@ -28,10 +28,6 @@
   font-size: var(--boardnav-mobile-font-size);
 }
 
-.boardNavMobile .pageJump a {
-  color: var(--boardnav-mobile-button-text-color);
-}
-
 .boardNavMobile strong {
   text-transform: capitalize;
   padding-right: 5px;
@@ -53,13 +49,11 @@
   padding: 3px 5px 0 0;
 }
 
-.pageJump span, .pageJump a {
+.pageJump a, .mobileSearchButton {
   padding-right: 5px;
-}
-
-.pageJump a {
   color: var(--homepage-box-link-text-color);
   text-decoration: var(--homepage-box-link-text-decoration);
+  text-transform: capitalize;
 }
 
 @media (max-width: 640px) {
