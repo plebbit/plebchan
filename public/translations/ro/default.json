@@ -29,5 +29,11 @@
   "catalog": "Catalog",
   "all": "Toate",
   "subscriptions": "Abonamente",
-  "board": "Forum"
+  "board": "Forum",
+  "link_to_post": "Link către acest mesaj",
+  "reply_to_post": "Răspunde la acest mesaj",
+  "sticky": "Lipit",
+  "closed": "Închis",
+  "reply": "Răspunde",
+  "link": "Legătură"
 }

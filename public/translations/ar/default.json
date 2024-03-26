@@ -29,5 +29,11 @@
   "catalog": "فهرس",
   "all": "الكل",
   "subscriptions": "الاشتراكات",
-  "board": "منتدى"
+  "board": "منتدى",
+  "link_to_post": "الرابط لهذه الرسالة",
+  "reply_to_post": "الرد على هذه المشاركة",
+  "sticky": "مثبت",
+  "closed": "مغلق",
+  "reply": "رد",
+  "link": "رابط"
 }

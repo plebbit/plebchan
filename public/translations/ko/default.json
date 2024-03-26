@@ -29,5 +29,11 @@
   "catalog": "카탈로그",
   "all": "모두",
   "subscriptions": "구독",
-  "board": "게시판"
+  "board": "게시판",
+  "link_to_post": "이 게시물에 대한 링크",
+  "reply_to_post": "이 게시물에 답장하기",
+  "sticky": "고정된",
+  "closed": "닫힘",
+  "reply": "답장",
+  "link": "링크"
 }

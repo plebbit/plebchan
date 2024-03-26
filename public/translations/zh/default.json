@@ -29,5 +29,11 @@
   "catalog": "目录",
   "all": "所有",
   "subscriptions": "订阅",
-  "board": "论坛"
+  "board": "论坛",
+  "link_to_post": "链接到此帖",
+  "reply_to_post": "回复此帖",
+  "sticky": "置顶",
+  "closed": "关闭",
+  "reply": "回复",
+  "link": "链接"
 }

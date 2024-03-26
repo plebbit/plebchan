@@ -29,5 +29,11 @@
   "catalog": "Katalog",
   "all": "Tümü",
   "subscriptions": "Abonelikler",
-  "board": "Forum"
+  "board": "Forum",
+  "link_to_post": "Bu gönderiye bağlantı",
+  "reply_to_post": "Bu gönderiye yanıtla",
+  "sticky": "Yapışkan",
+  "closed": "Kapalı",
+  "reply": "Yanıtla",
+  "link": "Bağlantı"
 }

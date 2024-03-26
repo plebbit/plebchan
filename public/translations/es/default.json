@@ -29,5 +29,11 @@
   "catalog": "Catálogo",
   "all": "Todo",
   "subscriptions": "Suscripciones",
-  "board": "Foro"
+  "board": "Foro",
+  "link_to_post": "Enlace a esta publicación",
+  "reply_to_post": "Responder a esta publicación",
+  "sticky": "Fijado",
+  "closed": "Cerrado",
+  "reply": "Responder",
+  "link": "Enlace"
 }

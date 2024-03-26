@@ -29,5 +29,11 @@
   "catalog": "カタログ",
   "all": "すべて",
   "subscriptions": "購読",
-  "board": "掲示板"
+  "board": "掲示板",
+  "link_to_post": "この投稿へのリンク",
+  "reply_to_post": "この投稿に返信",
+  "sticky": "固定",
+  "closed": "閉鎖",
+  "reply": "返信",
+  "link": "リンク"
 }

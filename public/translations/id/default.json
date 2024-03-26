@@ -29,5 +29,11 @@
   "catalog": "Katalog",
   "all": "Semua",
   "subscriptions": "Langganan",
-  "board": "Forum"
+  "board": "Forum",
+  "link_to_post": "Tautan ke pos ini",
+  "reply_to_post": "Balas ke pos ini",
+  "sticky": "Menempel",
+  "closed": "Tutup",
+  "reply": "Balas",
+  "link": "Tautan"
 }

@@ -29,5 +29,11 @@
   "catalog": "Katalog",
   "all": "Allt",
   "subscriptions": "Prenumerationer",
-  "board": "Forum"
+  "board": "Forum",
+  "link_to_post": "Länk till detta inlägg",
+  "reply_to_post": "Svara på detta inlägg",
+  "sticky": "Klistrad",
+  "closed": "Stängd",
+  "reply": "Svara",
+  "link": "Länk"
 }

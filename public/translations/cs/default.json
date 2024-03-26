@@ -29,5 +29,11 @@
   "catalog": "Katalog",
   "all": "Vše",
   "subscriptions": "Předplatné",
-  "board": "Fórum"
+  "board": "Fórum",
+  "link_to_post": "Odkaz na tento příspěvek",
+  "reply_to_post": "Odpovědět na tento příspěvek",
+  "sticky": "Připnutý",
+  "closed": "Zavřeno",
+  "reply": "Odpovědět",
+  "link": "Odkaz"
 }

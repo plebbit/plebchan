@@ -29,5 +29,11 @@
   "catalog": "Katalógus",
   "all": "Összes",
   "subscriptions": "Előfizetések",
-  "board": "Fórum"
+  "board": "Fórum",
+  "link_to_post": "Hivatkozás erre a hozzászólásra",
+  "reply_to_post": "Válasz erre a hozzászólásra",
+  "sticky": "Rögzített",
+  "closed": "Zárt",
+  "reply": "Válaszolás",
+  "link": "Hivatkozás"
 }

@@ -29,5 +29,11 @@
   "catalog": "Katalogo",
   "all": "Lahat",
   "subscriptions": "Mga Subscription",
-  "board": "Board"
+  "board": "Board",
+  "link_to_post": "Link sa post na ito",
+  "reply_to_post": "Tumugon sa post na ito",
+  "sticky": "Malagkit",
+  "closed": "Sarado",
+  "reply": "Tumugon",
+  "link": "Link"
 }
