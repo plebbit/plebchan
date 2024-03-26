@@ -37,10 +37,13 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
 const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const displaySubplebbit = currentSubplebbit && currentSubplebbit.length > 10 ? currentSubplebbit.slice(0, 10).concat('...') : currentSubplebbit;
+  const displaySubplebbitAddress = currentSubplebbit && currentSubplebbit.length > 30 ? currentSubplebbit.slice(0, 30).concat('...') : currentSubplebbit;
+
+  const currentSubplebbitIsInList = subplebbits.some((subplebbit: any) => subplebbit.address === currentSubplebbit);
 
   const boardSelect = (
-    <select value={displaySubplebbit} onChange={(e) => navigate(`/p/${e.target.value}`)}>
+    <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}`)}>
+      {!currentSubplebbitIsInList && currentSubplebbit && <option value={currentSubplebbit}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
       {subplebbits.map((subplebbit: any, index: number) => {

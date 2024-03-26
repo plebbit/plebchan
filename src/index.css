@@ -12,6 +12,12 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
   padding: 0;
 }
 
+hr {
+  border: var(--hr-border, revert);
+  border-top: var(--hr-border-top, revert);
+  height: var(--hr-height, revert);
+}
+
 .greentext {
   color: var(--post-greentext-color);
 }
@@ -46,11 +52,5 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
   .button:hover {
     color: var(--button-desktop-text-color-hover);
     cursor: pointer;
-  }
-
-  hr {
-    border: var(--hr-border, revert);
-    border-top: var(--hr-border-top, revert);
-    height: var(--hr-height, revert);
   }
 }
