@@ -5,6 +5,10 @@
   transform: translate(-50%, -50%);
 }
 
+.version {
+  display: block;
+}
+
 .content select {
   background-color: var(--select-background-color, revert);
   border: var(--select-border, revert);
