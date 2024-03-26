@@ -24,7 +24,13 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
   return (
     <div className={styles.content}>
       <table className={styles.blotter}>
-        <hr />
+        <thead>
+          <tr>
+            <td>
+              <hr />
+            </td>
+          </tr>
+        </thead>
         {showStats && (
           <tbody>
             <tr>
