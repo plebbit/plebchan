@@ -62,13 +62,13 @@ const Post = ({ post }: Comment) => {
             </span>
             <span className={styles.postMenuBtn}>▶</span>
           </div>
-          <div className={styles.postMessage}>
-            {content && (
+          {content && (
+            <div className={styles.postMessage}>
               <blockquote>
                 <Markdown content={content} />
               </blockquote>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

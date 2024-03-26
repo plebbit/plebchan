@@ -67,6 +67,11 @@ const Markdown = ({ content }: MarkdownProps) => {
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
           source: ({ src }) => <span>{src}</span>,
+          hr: () => (
+            <div className={styles.hrWrapper}>
+              <hr />
+            </div>
+          ),
         }}
       />
     </span>

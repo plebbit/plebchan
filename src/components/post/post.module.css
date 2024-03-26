@@ -85,6 +85,10 @@
   color: var(--post-menu-button-color-hover);
 }
 
+.postDesktop .postMessage {
+  padding: 1em 40px;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
     display: none;

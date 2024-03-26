@@ -15,3 +15,11 @@
 .markdown ul {
   padding-left: 40px;
 }
+
+.hrWrapper {
+  padding: 0.5em 0;
+}
+
+.hrWrapper hr {
+  margin: 0;
+}
