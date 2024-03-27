@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
 import supersub from 'remark-supersub';
-import { visit } from 'unist-util-visit';
 
 interface MarkdownProps {
   content: string;

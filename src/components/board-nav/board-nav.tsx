@@ -1,11 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
+import { Subplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from './board-nav.module.css';
 
 interface BoardNavProps {
   address?: string | undefined;
-  subplebbits?: any;
+  subplebbits: (Subplebbit | undefined)[];
   currentSubplebbit?: string | undefined;
 }
 
@@ -16,15 +16,18 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
         [
-        {subplebbits.map((subplebbit: any, index: number) => (
-          <span key={subplebbit.address}>
-            {index === 0 ? null : ' '}
-            <Link to={`/p/${subplebbit.address}`} title={subplebbit.title || ''}>
-              {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}
-            </Link>
-            {index !== subplebbits.length - 1 ? ' /' : null}
-          </span>
-        ))}
+        {subplebbits.map((subplebbit: any, index: number) => {
+          const { address, title } = subplebbit;
+          return (
+            <span key={address}>
+              {index === 0 ? null : ' '}
+              <Link to={`/p/${address}`} title={title || ''}>
+                {address.includes('.') ? address : title || address.slice(0, 10).concat('...')}
+              </Link>
+              {index !== subplebbits.length - 1 ? ' /' : null}
+            </span>
+          );
+        })}
         ]
       </span>
       <span className={styles.navTopRight}>
@@ -72,13 +75,11 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   );
 };
 
-const BoardNav = ({ address }: BoardNavProps) => {
-  const defaultSubplebbits = useDefaultSubplebbits();
-
+const BoardNav = ({ address, subplebbits }: BoardNavProps) => {
   return (
     <>
-      <BoardNavDesktop subplebbits={defaultSubplebbits} />
-      <BoardNavMobile subplebbits={defaultSubplebbits} currentSubplebbit={address} />
+      <BoardNavDesktop subplebbits={subplebbits} />
+      <BoardNavMobile subplebbits={subplebbits} currentSubplebbit={address} />
     </>
   );
 };

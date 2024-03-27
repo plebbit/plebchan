@@ -2,11 +2,11 @@
   clear: both;
 }
 
-.hrWrapper hr {
+.postDesktop .hrWrapper hr {
   margin: 0; /* margin bugs Virtuoso scrolling */
 }
 
-.hrWrapper {
+.postDesktop .hrWrapper {
   padding-top: 0.5em; /* instead of using margin, wrap with padding */
   padding-bottom: 0.5em;
 }
@@ -89,8 +89,24 @@
   padding: 1em 40px;
 }
 
+.postMobile hr {
+  padding-bottom: 30px;
+}
+
+.postMobile .thread {
+  border-top: none;
+  margin: 0;
+  clear: both;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .postMobile {
     display: none;
   }
 }
