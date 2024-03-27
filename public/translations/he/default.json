@@ -29,5 +29,11 @@
   "catalog": "קטלוג",
   "all": "הכל",
   "subscriptions": "מנויים",
-  "board": "פורום"
+  "board": "פורום",
+  "link_to_post": "קישור להודעה זו",
+  "reply_to_post": "הגבה להודעה זו",
+  "sticky": "מדבקה",
+  "closed": "סגור",
+  "reply": "הגב",
+  "link": "קישור"
 }

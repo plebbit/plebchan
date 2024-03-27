@@ -40,7 +40,15 @@ export const MobileBoardButtons = ({ address }: BoardButtonsProps) => {
 export const DesktopBoardButtons = ({ address }: BoardButtonsProps) => {
   return (
     <div className={styles.desktopBoardButtons}>
-      <SubscribeButton address={address} />
+      <hr />
+      [
+      <OptionsButton />
+      ] [
+      <CatalogButton />]
+      <span className={styles.subscribeButton}>
+        [
+        <SubscribeButton address={address} />]
+      </span>
     </div>
   );
 };

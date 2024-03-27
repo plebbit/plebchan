@@ -17,14 +17,15 @@ interface BoardBannerProps {
   address: string | undefined;
 }
 
-const BoardBanner = ({ title, address }: BoardBannerProps) => {
+const BoardBanner = ({ address, title }: BoardBannerProps) => {
+  const displayAddress = address && address.length > 10 && !address.includes('.') ? address.slice(0, 13).concat('...') : address;
   return (
     <div className={styles.content}>
       <div className={styles.bannerCnt}>
         <ImageBanner key={address} />
       </div>
-      <div className={styles.boardTitle}>{title || `p/${address}`}</div>
-      {title && <div className={styles.boardAddress}>p/{address}</div>}
+      <div className={styles.boardTitle}>{title || `p/${displayAddress}`}</div>
+      <div className={styles.boardAddress}>p/{address}</div>
       <hr />
     </div>
   );

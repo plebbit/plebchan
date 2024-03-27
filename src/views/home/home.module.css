@@ -72,7 +72,7 @@
 }
 
 .boxContent a, .boxContent a:visited{
-  color: var(--link-external-text-color);
+  color: var(--homepage-infobox-link-text-color);
 }
 
 .searchBar {
@@ -116,13 +116,13 @@
 
 .list a {
   display: inline-block;
-  color: var(--link-internal-text-color);
-  text-decoration: var(--link-internal-text-decoration);
+  color: var(--homepage-box-link-text-color);
+  text-decoration: var(--homepage-box-link-text-decoration);
 }
 
 .list a:hover {
-  color: var(--link-internal-text-color-hover);
-  text-decoration: var(--link-internal-text-decoration-hover);
+  color: var(--homepage-box-link-text-color-hover);
+  text-decoration: var(--homepage-box-link-text-decoration-hover);
 }
 
 .boardsBoxContent {
@@ -175,7 +175,7 @@
   }
 
   .footer a {
-    color: var(--link-external-text-color);
+    color: var(--homepage-infobox-link-text-color);
     text-decoration: underline;
   }
 }

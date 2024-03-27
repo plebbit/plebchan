@@ -29,5 +29,11 @@
   "catalog": "کیٹالوگ",
   "all": "سب",
   "subscriptions": "سبسکرپشنز",
-  "board": "پیغام بورڈ"
+  "board": "پیغام بورڈ",
+  "link_to_post": "اس پوسٹ کا لنک",
+  "reply_to_post": "اس پوسٹ کا جواب دیں",
+  "sticky": "چسپی",
+  "closed": "بند",
+  "reply": "جواب دیں",
+  "link": "لنک"
 }

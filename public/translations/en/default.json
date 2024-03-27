@@ -29,5 +29,11 @@
   "catalog": "Catalog",
   "all": "All",
   "subscriptions": "Subscriptions",
-  "board": "Board"
+  "board": "Board",
+  "link_to_post": "Link to this post",
+  "reply_to_post": "Reply to this post",
+  "sticky": "Sticky",
+  "closed": "Closed",
+  "reply": "Reply",
+  "link": "Link"
 }

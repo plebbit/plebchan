@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 export interface BoardStatsProps {
   address: string | undefined;
-  createdAt: number;
+  createdAt: number | undefined;
 }
 
 const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
@@ -59,7 +59,7 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
             </tr>
             <tr>
               <td className={styles.lowercase}>
-                {unixToMMDDYYYY(createdAt)} {t('board_created')}
+                {createdAt && unixToMMDDYYYY(createdAt)} {t('board_created')}
                 {' / '}
                 <Trans
                   i18nKey='board_stats_all'

@@ -29,5 +29,11 @@
   "catalog": "कैटलॉग",
   "all": "सभी",
   "subscriptions": "सदस्यता",
-  "board": "फोरम"
+  "board": "फोरम",
+  "link_to_post": "इस पोस्ट का लिंक",
+  "reply_to_post": "इस पोस्ट का जवाब दें",
+  "sticky": "चिपकाया",
+  "closed": "बंद",
+  "reply": "जवाब दें",
+  "link": "लिंक"
 }

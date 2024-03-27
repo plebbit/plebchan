@@ -29,5 +29,11 @@
   "catalog": "Luettelo",
   "all": "Kaikki",
   "subscriptions": "Tilaukset",
-  "board": "Foorumi"
+  "board": "Foorumi",
+  "link_to_post": "Linkki tähän viestiin",
+  "reply_to_post": "Vastaa tähän viestiin",
+  "sticky": "Tikki",
+  "closed": "Suljettu",
+  "reply": "Vastaa",
+  "link": "Linkki"
 }

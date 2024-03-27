@@ -7,7 +7,7 @@
   "dependencies": {
     "@capacitor/app": "1.1.1",
     "@floating-ui/react": "0.26.1",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#40dfddc6982c85cf07fdfc499cd3787265bc6fe5",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#63833e978ca25f9846544d32b9c67810af0daf19",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "13.0.0",
     "@testing-library/user-event": "13.2.1",
@@ -43,7 +43,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false react-scripts build",
-    "build-netlify": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true REACT_APP_COMMIT_REF=$COMMIT_REF react-scripts build",
+    "build-netlify": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true REACT_APP_COMMIT_REF=$COMMIT_REF CI='' react-scripts build",
     "test": "react-scripts test",
     "analyze-bundle": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true react-scripts build && source-map-explorer 'build/static/js/*.js'",
     "eject": "react-scripts eject",

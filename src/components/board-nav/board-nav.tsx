@@ -37,16 +37,24 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
 const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const displaySubplebbitAddress = currentSubplebbit && currentSubplebbit.length > 30 ? currentSubplebbit.slice(0, 30).concat('...') : currentSubplebbit;
+
+  const currentSubplebbitIsInList = subplebbits.some((subplebbit: any) => subplebbit.address === currentSubplebbit);
 
   const boardSelect = (
-    <select value={currentSubplebbit} onChange={(e) => navigate(`/p/${e.target.value}`)}>
-      <option value='all'>All</option>
-      <option value='subscriptions'>Subscriptions</option>
-      {subplebbits.map((subplebbit: any, index: number) => (
-        <option key={index} value={subplebbit.address}>
-          {subplebbit.address.includes('.') ? subplebbit.address : subplebbit.title || subplebbit.address.slice(0, 10).concat('...')}
-        </option>
-      ))}
+    <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}`)}>
+      {!currentSubplebbitIsInList && currentSubplebbit && <option value={currentSubplebbit}>{displaySubplebbitAddress}</option>}
+      <option value='all'>{t('all')}</option>
+      <option value='subscriptions'>{t('subscriptions')}</option>
+      {subplebbits.map((subplebbit: any, index: number) => {
+        const { address, title } = subplebbit;
+        const subplebbitAddress = address.includes('.') ? address : title || address.slice(0, 10).concat('...');
+        return (
+          <option key={index} value={subplebbit.address}>
+            {subplebbitAddress}
+          </option>
+        );
+      })}
     </select>
   );
 

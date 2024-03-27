@@ -9,3 +9,9 @@
   overflow-x: hidden;
   min-height: 100vh;
 }
+
+@media (min-width: 640px) {
+  .app {
+    padding: 5px;
+  }
+}

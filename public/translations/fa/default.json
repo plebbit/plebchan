@@ -29,5 +29,11 @@
   "catalog": "کاتالوگ",
   "all": "همه",
   "subscriptions": "اشتراک‌ها",
-  "board": "تالار"
+  "board": "تالار",
+  "link_to_post": "پیوند به این پست",
+  "reply_to_post": "پاسخ به این پست",
+  "sticky": "چسبیده",
+  "closed": "بسته",
+  "reply": "پاسخ",
+  "link": "لینک"
 }

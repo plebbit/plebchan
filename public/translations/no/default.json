@@ -29,5 +29,11 @@
   "catalog": "Katalog",
   "all": "Alle",
   "subscriptions": "Abonnementer",
-  "board": "Forum"
+  "board": "Forum",
+  "link_to_post": "Lenke til dette innlegget",
+  "reply_to_post": "Svar på dette innlegget",
+  "sticky": "Klistret",
+  "closed": "Stengt",
+  "reply": "Svar",
+  "link": "Lenke"
 }

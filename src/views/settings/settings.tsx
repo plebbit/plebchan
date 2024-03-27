@@ -2,6 +2,9 @@ import { useTranslation } from 'react-i18next';
 import useTheme from '../../hooks/use-theme';
 import styles from './settings.module.css';
 import { Link } from 'react-router-dom';
+import packageJson from '../../../package.json';
+const isElectron = window.isElectron === true;
+const commitRef = process.env.REACT_APP_COMMIT_REF;
 
 // TODO: remove theme and languages selectors for debugging
 const ThemeSettings = () => {
@@ -46,6 +49,26 @@ const LanguageSettings = () => {
 const Settings = () => {
   return (
     <div className={styles.content}>
+      <div className={styles.version}>
+        <a href={`https://github.com/plebbit/plebchan/releases/tag/v${packageJson.version}`} target='_blank' rel='noopener noreferrer'>
+          v{packageJson.version}
+        </a>
+        {isElectron && (
+          <a className={styles.fullNodeStats} href='http://localhost:5001/webui/' target='_blank' rel='noreferrer'>
+            node stats
+          </a>
+        )}
+        {commitRef && (
+          <>
+            {' '}
+            (
+            <a href={`https://github.com/plebbit/plebchan/commit/${commitRef}`} target='_blank' rel='noopener noreferrer'>
+              {commitRef.slice(0, 7)}
+            </a>
+            )
+          </>
+        )}
+      </div>
       <div>
         <Link to='/'>Home</Link>
       </div>

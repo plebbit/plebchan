@@ -29,5 +29,11 @@
   "catalog": "Catalogus",
   "all": "Alles",
   "subscriptions": "Abonnementen",
-  "board": "Forum"
+  "board": "Forum",
+  "link_to_post": "Link naar dit bericht",
+  "reply_to_post": "Reageren op dit bericht",
+  "sticky": "Vastgemaakt",
+  "closed": "Gesloten",
+  "reply": "Antwoord",
+  "link": "Link"
 }

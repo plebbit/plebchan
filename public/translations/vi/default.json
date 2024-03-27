@@ -29,5 +29,11 @@
   "catalog": "Catalog",
   "all": "Tất cả",
   "subscriptions": "Đăng ký",
-  "board": "Diễn đàn"
+  "board": "Diễn đàn",
+  "link_to_post": "Liên kết đến bài viết này",
+  "reply_to_post": "Trả lời bài viết này",
+  "sticky": "Dán",
+  "closed": "Đóng",
+  "reply": "Trả lời",
+  "link": "Liên kết"
 }

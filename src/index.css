@@ -7,9 +7,19 @@ body {
   background-color: white;
 }
 
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, iframe {
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, th, td, iframe, blockquote {
   margin: 0;
   padding: 0;
+}
+
+hr {
+  border: var(--hr-border, revert);
+  border-top: var(--hr-border-top, revert);
+  height: var(--hr-height, revert);
+}
+
+.greentext {
+  color: var(--post-greentext-color);
 }
 
 @media (max-width: 640px) {

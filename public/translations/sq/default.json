@@ -29,5 +29,11 @@
   "catalog": "Katalog",
   "all": "Të gjitha",
   "subscriptions": "Abonimet",
-  "board": "Forumi"
+  "board": "Forumi",
+  "link_to_post": "Link për këtë postim",
+  "reply_to_post": "Përgjigju në këtë postim",
+  "sticky": "Ngjitës",
+  "closed": "Mbyllur",
+  "reply": "Përgjigju",
+  "link": "Lidhje"
 }
