@@ -49,8 +49,6 @@ const App = () => {
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
   const { subplebbits } = useSubplebbits({ subplebbitAddresses });
 
-  console.log(subplebbits);
-
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
     document.body.classList.add(theme);

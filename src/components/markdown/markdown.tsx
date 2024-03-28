@@ -37,7 +37,7 @@ const blockquoteToGreentext = () => (tree: any) => {
 const Markdown = ({ content }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
-  if (content.length <= MAX_LENGTH_FOR_GFM) {
+  if (content && content.length <= MAX_LENGTH_FOR_GFM) {
     remarkPlugins.push([remarkGfm, { singleTilde: false }]);
   }
 

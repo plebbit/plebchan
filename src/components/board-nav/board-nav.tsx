@@ -17,9 +17,10 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
       <span className={styles.boardList}>
         [
         {subplebbits.map((subplebbit: any, index: number) => {
-          const { address, title } = subplebbit;
+          const address = subplebbit?.address || '';
+          const title = subplebbit?.title || '';
           return (
-            <span key={address}>
+            <span key={index}>
               {index === 0 ? null : ' '}
               <Link to={`/p/${address}`} title={title || ''}>
                 {address.includes('.') ? address : title || address.slice(0, 10).concat('...')}
@@ -50,10 +51,11 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
       {subplebbits.map((subplebbit: any, index: number) => {
-        const { address, title } = subplebbit;
-        const subplebbitAddress = address.includes('.') ? address : title || address.slice(0, 10).concat('...');
+        const address = subplebbit?.address || '';
+        const title = subplebbit?.title || '';
+        const subplebbitAddress = address?.includes('.') ? address : title || address?.slice(0, 10).concat('...');
         return (
-          <option key={index} value={subplebbit.address}>
+          <option key={index} value={address}>
             {subplebbitAddress}
           </option>
         );
