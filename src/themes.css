@@ -74,6 +74,17 @@
   --post-menu-button-color: #000080;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
+  --post-mobile-background-color: #f5e9e1;
+  --post-mobile-info-border-bottom: 1px solid #d9bfb7;
+  --post-mobile-info-background-color: #ead6ca;
+  --post-mobile-menu-button-color: #00e;
+  --post-mobile-name-text-color: #117743;
+  --post-mobile-name-font-weight: 700;
+  --post-mobile-subject-text-color: #cc1105;
+  --post-mobile-subject-font-weight: 700;
+  --post-mobile-link-background-color: #ead6ca;
+  --post-mobile-link-border-top: 1px solid #d9bfb7;
+  --post-mobile-link-info-text-color: #800;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -157,6 +168,17 @@
   --post-menu-button-color: #34345c;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
+  --post-mobile-background-color: #d6daf0;
+  --post-mobile-info-border-bottom: 1px solid #b7c5d9;
+  --post-mobile-info-background-color: #c9cde8;
+  --post-mobile-menu-button-color: #34345c;
+  --post-mobile-name-text-color: purple;
+  --post-mobile-name-font-weight: 700;
+  --post-mobile-subject-text-color: #0f0c5d;
+  --post-mobile-subject-font-weight: 700;
+  --post-mobile-link-background-color: #c9cde8;
+  --post-mobile-link-border-top: 1px solid #b7c5d9;
+  --post-mobile-link-info-text-color: #34345c;
 
   /* post form */
   --post-form-toggle-font-size: 22px;

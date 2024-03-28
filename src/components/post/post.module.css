@@ -2,13 +2,12 @@
   clear: both;
 }
 
-.postDesktop .hrWrapper hr {
+.hrWrapper hr {
   margin: 0; /* margin bugs Virtuoso scrolling */
 }
 
 .postDesktop .hrWrapper {
-  padding-top: 0.5em; /* instead of using margin, wrap with padding */
-  padding-bottom: 0.5em;
+  padding: 0.5em 0; /* instead of using margin, wrap with padding */
 }
 
 .postDesktop .link a {
@@ -97,6 +96,80 @@
   border-top: none;
   margin: 0;
   clear: both;
+  padding-bottom: 30px;
+}
+
+.postMobile .postContainer {
+  background-color: var(--post-mobile-background-color);
+}
+
+.postMobile .postOp {
+  display: inline;
+}
+
+.postMobile .postInfo {
+  overflow: hidden;
+  border-bottom: var(--post-mobile-info-border-bottom);
+  background-color: var(--post-mobile-info-background-color);
+  padding: 5px;
+  clear: left;
+}
+
+.postMobile .postMenuBtn {
+  color: var(--post-mobile-menu-button-color);
+  line-height: 1em;
+  width: 10px;
+  text-align: center;
+  transition: transform 0.1s;
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  float: left;
+  font-weight: 700;
+  font-size: 16px;
+  height: 100%;
+}
+
+.postMobile .nameBlock {
+  clear: none;
+}
+
+.postMobile .nameBlock .name {
+  color: var(--post-mobile-name-text-color);
+  font-weight: var(--post-mobile-name-font-weight);
+}
+
+.postMobile .nameBlock .subject {
+  color: var(--post-mobile-subject-text-color);
+  font-weight: var(--post-mobile-subject-font-weight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.postMobile .dateTimePostNum {
+  display: block;
+  text-align: right;
+}
+
+.postMobile .postMessage {
+  padding: 10px;
+  font-size: 11pt;
+}
+
+.postMobile .postLink {
+  clear: both;
+  background-color: var(--post-mobile-link-background-color);
+  border-top: var(--post-mobile-link-border-top);
+  padding: 5px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.postMobile .postLink .info {
+  color: var(--post-mobile-link-info-text-color);
 }
 
 @media (max-width: 640px) {

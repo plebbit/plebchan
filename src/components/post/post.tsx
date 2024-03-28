@@ -6,6 +6,7 @@ import useReplies from '../../hooks/use-replies';
 import { getLinkMediaInfoMemoized } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
 import Markdown from '../markdown';
+import { countLinksInCommentReplies } from '../../lib/utils/comment-utils';
 
 const PostDesktop = ({ post }: Comment) => {
   const { t } = useTranslation();
@@ -13,6 +14,7 @@ const PostDesktop = ({ post }: Comment) => {
   const { displayName, shortAddress } = author || {};
   const replies = useReplies(post);
   const linkMediaInfo = getLinkMediaInfoMemoized(link);
+  const displayTitle = title && title.length > 75 ? title.slice(0, 75) + '...' : title;
 
   return (
     <div className={styles.postDesktop}>
@@ -29,7 +31,7 @@ const PostDesktop = ({ post }: Comment) => {
         </div>
       )}
       <div className={styles.postInfo}>
-        {title && <span className={styles.subject}>{title.length > 75 ? title.slice(0, 75) + '...' : title}</span>}{' '}
+        {title && <span className={styles.subject}>{displayTitle}</span>}{' '}
         <span className={styles.nameBlock}>
           <span className={styles.name}>{displayName || 'Anonymous'} </span>
           <span className={styles.userAddress}>(u/{shortAddress}) </span>
@@ -72,13 +74,51 @@ const PostDesktop = ({ post }: Comment) => {
 };
 
 const PostMobile = ({ post }: Comment) => {
+  const { author, cid, content, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { address, displayName, shortAddress } = author || {};
+  const linkCount = countLinksInCommentReplies(post);
+  const displayTitle = title && title.length > 30 ? title.slice(0, 30) + '(...)' : title;
+
   return (
     <div className={styles.postMobile}>
-      <hr />
+      <div className={styles.hrWrapper}>
+        <hr />
+      </div>
       <div className={styles.thread}>
         <div className={styles.postContainer}>
-          <div className={styles.postOp}></div>
-          <div className={styles.postLinkMobile}></div>
+          <div className={styles.postOp}>
+            <div className={styles.postInfo}>
+              <span className={styles.postMenuBtn} title='Post menu'>
+                ...
+              </span>
+              <span className={styles.nameBlock}>
+                <span className={styles.name}>{displayName || 'Anonymous'} </span>
+                <span className={styles.address}>(u/{shortAddress || address.slice(0, 12) + '...'})</span>
+                {title && (
+                  <>
+                    <br />
+                    <span className={styles.subject}>{displayTitle}</span>
+                  </>
+                )}
+              </span>
+              <span className={styles.dateTimePostNum}>
+                {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
+                <span className={styles.replyToPost}>{shortCid}</span>
+              </span>
+            </div>
+            <blockquote className={styles.postMessage}>
+              <Markdown content={content} />
+            </blockquote>
+          </div>
+          <div className={styles.postLink}>
+            <span className={styles.info}>
+              {replyCount} Replies
+              {linkCount > 0 && ` / ${linkCount} Links`}
+            </span>
+            <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
+              View Thread
+            </Link>
+          </div>
         </div>
       </div>
     </div>
