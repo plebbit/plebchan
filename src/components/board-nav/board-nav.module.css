@@ -28,6 +28,16 @@
   font-size: var(--boardnav-mobile-font-size);
 }
 
+.boardNavMobile .pageJump a {
+  color: var(--button-text-color-mobile);
+  text-decoration: var(--button-text-decoration-mobile);
+}
+
+.boardNavMobile .pageJump a:hover {
+  color: var(--button-text-color-hover-mobile);
+  text-decoration: var(--button-text-decoration-hover-mobile);
+}
+
 .boardNavMobile strong {
   text-transform: capitalize;
   padding-right: 5px;

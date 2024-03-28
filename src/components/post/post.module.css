@@ -74,18 +74,33 @@
   color: var(--button-desktop-text-color-hover);
 }
 
-.postMenuBtn {
+.postDesktop .postMenuBtn {
   padding-left: 5px;
   color: var(--post-menu-button-color);
 }
 
-.postMenuBtn:hover {
+.postDesktop .postMenuBtn:hover {
   cursor: pointer;
   color: var(--post-menu-button-color-hover);
 }
 
 .postDesktop .postMessage {
   padding: 1em 40px;
+}
+
+.postDesktop .abbr {
+  color: var(--post-mobile-abbr-text-color);
+  font-size: var(--post-mobile-abbr-font-size);
+}
+
+.postDesktop .abbr a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.postDesktop .abbr a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
 .postMobile hr {
@@ -154,7 +169,7 @@
 
 .postMobile .postMessage {
   padding: 10px;
-  font-size: 11pt;
+  font-size: var(--post-mobile-content-font-size);
 }
 
 .postMobile .postLink {
@@ -170,6 +185,22 @@
 
 .postMobile .postLink .info {
   color: var(--post-mobile-link-info-text-color);
+}
+
+.postMobile .abbr {
+  color: var(--post-mobile-abbr-text-color);
+  font-size: var(--post-mobile-abbr-font-size);
+}
+
+.postMobile .abbr a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+
+}
+
+.postMobile .abbr a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
 @media (max-width: 640px) {

@@ -15,6 +15,7 @@ const PostDesktop = ({ post }: Comment) => {
   const replies = useReplies(post);
   const linkMediaInfo = getLinkMediaInfoMemoized(link);
   const displayTitle = title && title.length > 75 ? title.slice(0, 75) + '...' : title;
+  const displayContent = content && content.length > 1000 ? content.slice(0, 1000) + '(...)' : content;
 
   return (
     <div className={styles.postDesktop}>
@@ -63,11 +64,15 @@ const PostDesktop = ({ post }: Comment) => {
         <span className={styles.postMenuBtn}>▶</span>
       </div>
       {content && (
-        <div className={styles.postMessage}>
-          <blockquote>
-            <Markdown content={content} />
-          </blockquote>
-        </div>
+        <blockquote className={styles.postMessage}>
+          <Markdown content={displayContent} />
+          {content.length > 1000 && (
+            <span className={styles.abbr}>
+              <br />
+              Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+            </span>
+          )}
+        </blockquote>
       )}
     </div>
   );
@@ -78,6 +83,7 @@ const PostMobile = ({ post }: Comment) => {
   const { address, displayName, shortAddress } = author || {};
   const linkCount = countLinksInCommentReplies(post);
   const displayTitle = title && title.length > 30 ? title.slice(0, 30) + '(...)' : title;
+  const displayContent = content && content.length > 1000 ? content.slice(0, 1000) : content;
 
   return (
     <div className={styles.postMobile}>
@@ -106,9 +112,17 @@ const PostMobile = ({ post }: Comment) => {
                 <span className={styles.replyToPost}>{shortCid}</span>
               </span>
             </div>
-            <blockquote className={styles.postMessage}>
-              <Markdown content={content} />
-            </blockquote>
+            {content && (
+              <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>
+                <Markdown content={displayContent} />
+                {content.length > 1000 && (
+                  <span className={styles.abbr}>
+                    <br />
+                    Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+                  </span>
+                )}
+              </blockquote>
+            )}
           </div>
           <div className={styles.postLink}>
             <span className={styles.info}>

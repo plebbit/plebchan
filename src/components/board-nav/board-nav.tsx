@@ -43,7 +43,7 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   const navigate = useNavigate();
   const displaySubplebbitAddress = currentSubplebbit && currentSubplebbit.length > 30 ? currentSubplebbit.slice(0, 30).concat('...') : currentSubplebbit;
 
-  const currentSubplebbitIsInList = subplebbits.some((subplebbit: any) => subplebbit.address === currentSubplebbit);
+  const currentSubplebbitIsInList = subplebbits.some((subplebbit: any) => subplebbit?.address === currentSubplebbit);
 
   const boardSelect = (
     <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}`)}>
