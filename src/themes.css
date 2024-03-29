@@ -69,6 +69,8 @@
   --post-content-link-text-decoration-hover: none;
 
   /* post */
+  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-red.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
   --post-subject-text-color: #cc1105;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -168,6 +170,8 @@
   --post-content-link-text-decoration-hover: none;
 
   /* post */
+  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-blue.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
   --post-subject-text-color: #0f0c5d;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;

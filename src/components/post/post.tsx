@@ -1,34 +1,56 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
-import styles from './post.module.css';
-import useReplies from '../../hooks/use-replies';
-import { getLinkMediaInfoMemoized } from '../../lib/utils/media-utils';
+import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
+import useReplies from '../../hooks/use-replies';
+import styles from './post.module.css';
 import Markdown from '../markdown';
+import { Thumbnail } from '../media';
+
 import { countLinksInCommentReplies } from '../../lib/utils/comment-utils';
 
 const PostDesktop = ({ post }: Comment) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, locked, pinned, postCid, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { displayName, shortAddress } = author || {};
   const replies = useReplies(post);
-  const linkMediaInfo = getLinkMediaInfoMemoized(link);
   const displayTitle = title && title.length > 75 ? title.slice(0, 75) + '...' : title;
   const displayContent = content && content.length > 1000 ? content.slice(0, 1000) + '(...)' : content;
+
+  const commentMediaInfo = getCommentMediaInfoMemoized(post);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   return (
     <div className={styles.postDesktop}>
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      {linkMediaInfo?.url && (
-        <div className={styles.link}>
-          {t('link')}:{' '}
-          <a href={linkMediaInfo?.url} target='_blank' rel='noopener noreferrer'>
-            {linkMediaInfo.url.length > 30 ? linkMediaInfo?.url.slice(0, 30) + '...' : linkMediaInfo?.url}
-          </a>{' '}
-          ({linkMediaInfo?.type})
+      <span className={styles.threadHideButtonWrapper}>
+        <span className={`${styles.threadHideButton} ${styles.hideThread}`} />
+      </span>
+      {commentMediaInfo?.url && (
+        <div className={styles.file}>
+          <div className={styles.fileText}>
+            {t('link')}:{' '}
+            <a href={commentMediaInfo?.url} target='_blank' rel='noopener noreferrer'>
+              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url.slice(0, 30) + '...' : commentMediaInfo?.url}
+            </a>{' '}
+            ({commentMediaInfo?.type})
+          </div>
+          {hasThumbnail && (
+            <span className={styles.fileThumb}>
+              <Thumbnail
+                cid={cid}
+                commentMediaInfo={commentMediaInfo}
+                isReply={false}
+                link={link}
+                linkHeight={linkHeight}
+                linkWidth={linkWidth}
+                subplebbitAddress={subplebbitAddress}
+              />
+            </span>
+          )}
         </div>
       )}
       <div className={styles.postInfo}>

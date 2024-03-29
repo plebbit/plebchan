@@ -10,12 +10,35 @@
   padding: 0.5em 0; /* instead of using margin, wrap with padding */
 }
 
-.postDesktop .link a {
+.threadHideButtonWrapper {
+  padding-right: 5px;
+  float: left;
+}
+
+.postDesktop .threadHideButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  image-rendering: pixelated;
+  cursor: pointer;
+}
+
+.postDesktop .hideThread {
+  background-image: var(--post-hide-button-background-image);
+}
+
+.postDesktop .unhideThread {
+  background-image: var(--post-unhide-button-background-image);
+}
+
+.postDesktop .fileText a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-link-text-decoration);
 }
 
-.postDesktop .link a:hover {
+.postDesktop .fileText a:hover {
   color: var(--post-link-text-color-hover);
   text-decoration: var(--post-link-text-decoration-hover);
 }
