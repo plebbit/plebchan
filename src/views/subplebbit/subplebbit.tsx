@@ -60,7 +60,7 @@ const Subplebbit = ({ subplebbits }: SubplebbitProps) => {
   return (
     <div className={styles.content}>
       <Virtuoso
-        increaseViewportBy={{ bottom: 1200, top: 600 }}
+        increaseViewportBy={{ bottom: 1200, top: 1200 }}
         totalCount={feed?.length || 0}
         data={feed}
         itemContent={(index, post) => <Post index={index} post={post} />}

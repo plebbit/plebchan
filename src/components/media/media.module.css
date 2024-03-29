@@ -1,23 +1,29 @@
-.thumbnail {
+.thumbnailBig {
+  width: var(--width);
+  height: var(--height);
   float: left;
   padding: 3px 20px 5px 0;
-  width: var(--width, 250px);
-  height: var(--height, 250px);
 }
 
-.thumbnailHidden {
-  display: none;
+.thumbnailSmall {
+  width: var(--width);
+  height: var(--height);
+  float: left;
+  padding: 3px 10px 5px 5px;
 }
 
-.thumbnailVisible {
-  display: block;
-}
-
-.thumbnailWrapper {
-  background-color: var(--background-thumbnail);
+.thumbnailWrapperBig {
+  background-color: var(--post-thumbnail-background-color);
+  display: inline-block;
   height: 250px;
   width: 250px;
+}
+
+.thumbnailWrapperSmall {
+  background-color: var(--post-thumbnail-background-color);
   display: inline-block;
+  height: 150px;
+  width: 150px;
 }
 
 .transparentThumbnailWrapper {
@@ -26,6 +32,7 @@
 }
 
 .thumbnail img, .thumbnail video {
+  object-fit: contain;
   width: 100%;
   height: 100%;
 }

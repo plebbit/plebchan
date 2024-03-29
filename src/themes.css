@@ -92,6 +92,7 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
+  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -193,6 +194,7 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
+  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -272,6 +274,7 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
+  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -350,6 +353,7 @@
   --post-menu-button-color: #34345c;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
+  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
   
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -424,6 +428,7 @@
   --post-menu-button-color: #5F89AC;
   --post-menu-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
+  --post-thumbnail-background-color: rgba(255, 255, 255, 0.01);
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -493,6 +498,7 @@
   --post-menu-button-color: #FF6600;
   --post-menu-button-color-hover: #FF3300;
   --post-greentext-color: #789922;
+  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
   /* post form */
   --post-form-toggle-font-size: 22px;

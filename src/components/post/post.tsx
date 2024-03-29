@@ -40,15 +40,7 @@ const PostDesktop = ({ post }: Comment) => {
           </div>
           {hasThumbnail && (
             <span className={styles.fileThumb}>
-              <Thumbnail
-                cid={cid}
-                commentMediaInfo={commentMediaInfo}
-                isReply={false}
-                link={link}
-                linkHeight={linkHeight}
-                linkWidth={linkWidth}
-                subplebbitAddress={subplebbitAddress}
-              />
+              <Thumbnail commentMediaInfo={commentMediaInfo} isMobile={false} isReply={false} linkHeight={linkHeight} linkWidth={linkWidth} />
             </span>
           )}
         </div>
@@ -101,11 +93,14 @@ const PostDesktop = ({ post }: Comment) => {
 };
 
 const PostMobile = ({ post }: Comment) => {
-  const { author, cid, content, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const linkCount = countLinksInCommentReplies(post);
   const displayTitle = title && title.length > 30 ? title.slice(0, 30) + '(...)' : title;
   const displayContent = content && content.length > 1000 ? content.slice(0, 1000) : content;
+
+  const commentMediaInfo = getCommentMediaInfoMemoized(post);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   return (
     <div className={styles.postMobile}>
@@ -134,6 +129,11 @@ const PostMobile = ({ post }: Comment) => {
                 <span className={styles.replyToPost}>{shortCid}</span>
               </span>
             </div>
+            {hasThumbnail && (
+              <span className={styles.fileThumb}>
+                <Thumbnail commentMediaInfo={commentMediaInfo} isMobile={true} isReply={false} linkHeight={linkHeight} linkWidth={linkWidth} />
+              </span>
+            )}
             {content && (
               <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>
                 <Markdown content={displayContent} />
