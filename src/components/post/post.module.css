@@ -25,6 +25,13 @@
   cursor: pointer;
 }
 
+/* clearfix to the container of the floatied elements to contain them */
+.postDesktop::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .postDesktop .hideThread {
   background-image: var(--post-hide-button-background-image);
 }

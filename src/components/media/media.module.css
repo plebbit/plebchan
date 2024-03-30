@@ -1,14 +1,14 @@
 .thumbnailBig {
+  float: left;
   width: var(--width);
   height: var(--height);
-  float: left;
   padding: 3px 20px 5px 0;
 }
 
 .thumbnailSmall {
+  float: left;
   width: var(--width);
   height: var(--height);
-  float: left;
   padding: 3px 10px 5px 5px;
 }
 
