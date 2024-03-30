@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './media.module.css';
 import { CommentMediaInfo } from '../../lib/utils/media-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
@@ -11,28 +12,33 @@ interface ThumbnailProps {
   toggleExpanded?: () => void;
 }
 
-export const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth }: ThumbnailProps) => {
-  const iframeThumbnail = commentMediaInfo?.patternThumbnailUrl || commentMediaInfo?.thumbnail;
-  let displayWidth, displayHeight, hasLinkDimensions;
-  const maxThumbnailSize = isMobile || isReply ? 125 : 250;
+const ThumbnailBig = ({ style, children }: { style: React.CSSProperties; children: React.ReactNode }) => (
+  <span className={styles.thumbnailBig} style={style}>
+    {children}
+  </span>
+);
 
+const ThumbnailSmall = ({ style, children }: { style: React.CSSProperties; children: React.ReactNode }) => (
+  <span className={styles.thumbnailSmall} style={style}>
+    {children}
+  </span>
+);
+
+export const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth }: ThumbnailProps) => {
+  let displayWidth, displayHeight;
+  const maxThumbnailSize = isMobile || isReply ? 125 : 250;
   if (linkWidth && linkHeight) {
-    hasLinkDimensions = true;
     let scale = Math.min(1, maxThumbnailSize / Math.max(linkWidth, linkHeight));
     displayWidth = `${linkWidth * scale}px`;
     displayHeight = `${linkHeight * scale}px`;
   } else {
-    hasLinkDimensions = false;
     displayWidth = `${maxThumbnailSize}px`;
     displayHeight = `${maxThumbnailSize}px`;
   }
 
-  const thumbnailStyle = hasLinkDimensions ? ({ '--width': displayWidth, '--height': displayHeight } as React.CSSProperties) : {};
-  const thumbnailWrapperClass = hasLinkDimensions ? styles.transparentThumbnailWrapper : isMobile ? styles.thumbnailWrapperSmall : styles.thumbnailWrapperBig;
-
-  let mediaComponent = null;
+  let mediaComponent: React.ReactNode = null;
+  const iframeThumbnail = commentMediaInfo?.patternThumbnailUrl || commentMediaInfo?.thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(commentMediaInfo?.type === 'gif' ? commentMediaInfo.url : undefined);
-
   if (commentMediaInfo?.type === 'image') {
     mediaComponent = <img src={commentMediaInfo.url} alt='' />;
   } else if (commentMediaInfo?.type === 'video') {
@@ -45,12 +51,12 @@ export const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, lin
     mediaComponent = <img src={gifFrameUrl} alt='' />;
   }
 
-  return (
-    <span className={styles.thumbnail} style={thumbnailStyle}>
-      <span className={isMobile || isReply ? styles.thumbnailSmall : styles.thumbnailBig}>
-        <span className={thumbnailWrapperClass}>{mediaComponent}</span>
-      </span>
-    </span>
+  const thumbnailStyle = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
+
+  return isMobile || isReply ? (
+    <ThumbnailSmall style={thumbnailStyle}>{mediaComponent}</ThumbnailSmall>
+  ) : (
+    <ThumbnailBig style={thumbnailStyle}>{mediaComponent}</ThumbnailBig>
   );
 };
 
