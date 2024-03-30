@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
 import supersub from 'remark-supersub';
-import { visit } from 'unist-util-visit';
 
 interface MarkdownProps {
   content: string;
@@ -38,7 +37,7 @@ const blockquoteToGreentext = () => (tree: any) => {
 const Markdown = ({ content }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
-  if (content.length <= MAX_LENGTH_FOR_GFM) {
+  if (content && content.length <= MAX_LENGTH_FOR_GFM) {
     remarkPlugins.push([remarkGfm, { singleTilde: false }]);
   }
 

@@ -1,0 +1,29 @@
+.thumbnailBig {
+  background-color: var(--post-thumbnail-background-color);
+  width: var(--width);
+  height: var(--height);
+  margin: 3px 20px 5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.thumbnailSmall {
+  background-color: var(--post-thumbnail-background-color);
+  width: var(--width);
+  height: var(--height);
+  margin: 3px 10px 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.thumbnailBig img, .thumbnailBig video {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.thumbnailSmall img, .thumbnailSmall video {
+  max-width: 125px;
+  max-height: 125px;
+}

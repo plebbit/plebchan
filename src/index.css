@@ -39,6 +39,11 @@ hr {
     user-select: none;
     display: inline-block;
   }
+
+  .button:hover {
+    color: var(--button-text-color-hover-mobile);
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 640px) {

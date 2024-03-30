@@ -6,17 +6,50 @@
   margin: 0; /* margin bugs Virtuoso scrolling */
 }
 
-.hrWrapper {
-  padding-top: 0.5em; /* instead of using margin, wrap with padding */
-  padding-bottom: 0.5em;
+.postDesktop .hrWrapper {
+  padding: 0.5em 0; /* instead of using margin, wrap with padding */
 }
 
-.postDesktop .link a {
+.threadHideButtonWrapper {
+  padding-right: 5px;
+  float: left;
+}
+
+.postDesktop .threadHideButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  image-rendering: pixelated;
+  cursor: pointer;
+}
+
+/* clearfix to the container of the floatied elements to contain them */
+.postDesktop::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.postDesktop .hideThread {
+  background-image: var(--post-hide-button-background-image);
+}
+
+.postDesktop .unhideThread {
+  background-image: var(--post-unhide-button-background-image);
+}
+
+.postDesktop .fileThumb {
+  float: left;
+}
+
+.postDesktop .fileText a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-link-text-decoration);
 }
 
-.postDesktop .link a:hover {
+.postDesktop .fileText a:hover {
   color: var(--post-link-text-color-hover);
   text-decoration: var(--post-link-text-decoration-hover);
 }
@@ -75,12 +108,12 @@
   color: var(--button-desktop-text-color-hover);
 }
 
-.postMenuBtn {
+.postDesktop .postMenuBtn {
   padding-left: 5px;
   color: var(--post-menu-button-color);
 }
 
-.postMenuBtn:hover {
+.postDesktop .postMenuBtn:hover {
   cursor: pointer;
   color: var(--post-menu-button-color-hover);
 }
@@ -89,8 +122,141 @@
   padding: 1em 40px;
 }
 
+.postDesktop .abbr {
+  color: var(--post-mobile-abbr-text-color);
+  font-size: var(--post-mobile-abbr-font-size);
+}
+
+.postDesktop .abbr a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.postDesktop .abbr a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
+.postMobile hr {
+  padding-bottom: 30px;
+}
+
+.postMobile .thread {
+  border-top: none;
+  margin: 0;
+  clear: both;
+  padding-bottom: 30px;
+}
+
+.postMobile .postContainer {
+  background-color: var(--post-mobile-background-color);
+}
+
+.postMobile .postOp {
+  display: inline;
+}
+
+.postMobile .postInfo {
+  overflow: hidden;
+  border-bottom: var(--post-mobile-info-border-bottom);
+  background-color: var(--post-mobile-info-background-color);
+  padding: 5px;
+  clear: left;
+}
+
+.postMobile .postMenuBtn {
+  color: var(--post-mobile-menu-button-color);
+  line-height: 1em;
+  width: 10px;
+  text-align: center;
+  transition: transform 0.1s;
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  float: left;
+  font-weight: 700;
+  font-size: 16px;
+  height: 100%;
+}
+
+.postMobile .nameBlock {
+  clear: none;
+}
+
+.postMobile .nameBlock .name {
+  color: var(--post-mobile-name-text-color);
+  font-weight: var(--post-mobile-name-font-weight);
+}
+
+.postMobile .nameBlock .subject {
+  color: var(--post-mobile-subject-text-color);
+  font-weight: var(--post-mobile-subject-font-weight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.postMobile .dateTimePostNum {
+  display: block;
+  text-align: right;
+}
+
+.postMobile .fileThumb {
+  float: left;
+}
+
+.postMobile .fileThumb .fileInfo {
+  padding-bottom: 5px;
+  text-align: center;
+  color: var(--post-mobile-file-info-text-color); 
+  font-size: 9pt;
+  display: block;
+}
+
+.postMobile .postMessage {
+  padding: 10px;
+  font-size: var(--post-mobile-content-font-size);
+}
+
+.postMobile .postLink {
+  clear: both;
+  background-color: var(--post-mobile-link-background-color);
+  border-top: var(--post-mobile-link-border-top);
+  padding: 5px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.postMobile .postLink .info {
+  color: var(--post-mobile-link-info-text-color);
+}
+
+.postMobile .abbr {
+  color: var(--post-mobile-abbr-text-color);
+  font-size: var(--post-mobile-abbr-font-size);
+}
+
+.postMobile .abbr a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+
+}
+
+.postMobile .abbr a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
 @media (max-width: 640px) {
   .postDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .postMobile {
     display: none;
   }
 }

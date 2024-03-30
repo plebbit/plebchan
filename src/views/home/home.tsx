@@ -2,8 +2,12 @@ import { useRef } from 'react';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import { Subplebbit } from '@plebbit/plebbit-react-hooks';
 import packageJson from '../../../package.json';
+
+interface HomeProps {
+  subplebbits: (Subplebbit | undefined)[];
+}
 
 const isValidAddress = (address: string): boolean => {
   if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
@@ -65,9 +69,8 @@ const InfoBox = () => {
   );
 };
 
-const Boards = () => {
+const Boards = ({ subplebbits }: HomeProps) => {
   const { t } = useTranslation();
-  const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
 
   return (
     <div className={styles.box}>
@@ -79,11 +82,16 @@ const Boards = () => {
         <div className={styles.column}>
           <h3>Default SFW</h3>
           <div className={styles.list}>
-            {defaultSubplebbitAddresses.map((address) => (
-              <div className={styles.subplebbit} key={address}>
-                <Link to={`/p/${address}`}>{address}</Link>
-              </div>
-            ))}
+            {subplebbits
+              .filter((subplebbit): subplebbit is Subplebbit => subplebbit !== undefined)
+              .map((subplebbit) => {
+                const address = subplebbit.address;
+                return (
+                  <div className={styles.subplebbit} key={address}>
+                    <Link to={`/p/${address}`}>{address}</Link>
+                  </div>
+                );
+              })}
           </div>
         </div>
         <div className={styles.column}>
@@ -193,7 +201,7 @@ const Footer = () => {
   );
 };
 
-const Home = () => {
+const Home = ({ subplebbits }: HomeProps) => {
   return (
     <div className={styles.content}>
       <Link to='/'>
@@ -203,7 +211,7 @@ const Home = () => {
       </Link>
       <SearchBar />
       <InfoBox />
-      <Boards />
+      <Boards subplebbits={subplebbits} />
       <PopularThreads />
       <Stats />
       <Footer />

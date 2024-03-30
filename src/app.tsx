@@ -1,33 +1,39 @@
 import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { isHomeView } from './lib/utils/view-utils';
-import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
-import styles from './app.module.css';
+import { Subplebbit as SubplebbitType, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useDefaultSubplebbitAddresses } from './hooks/use-default-subplebbits';
 import useTheme from './hooks/use-theme';
+import styles from './app.module.css';
 import Home from './views/home';
 import Settings from './views/settings';
 import Subplebbit from './views/subplebbit';
 import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
+import { DesktopBoardButtons } from './components/board-buttons';
+import { MobileBoardButtons } from './components/board-buttons';
 import BoardStats from './components/board-stats';
 import PostForm from './components/post-form';
-import { MobileBoardButtons } from './components/board-buttons';
-import { DesktopBoardButtons } from './components/board-buttons';
 
-const BoardLayout = () => {
+interface BoardLayoutProps {
+  subplebbits: (SubplebbitType | undefined)[];
+}
+
+const BoardLayout = ({ subplebbits }: BoardLayoutProps) => {
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = subplebbits.find((s) => s?.address === subplebbitAddress);
+  const { address, createdAt, title } = subplebbit || {};
 
   return (
     <>
-      {subplebbitAddress && (
+      {address && (
         <>
-          <BoardNav address={subplebbitAddress} />
-          <BoardBanner title={subplebbit.title} address={subplebbitAddress} />
-          <MobileBoardButtons address={subplebbitAddress} />
-          <PostForm address={subplebbitAddress} />
-          <BoardStats address={subplebbitAddress} createdAt={subplebbit.createdAt} />
-          <DesktopBoardButtons address={subplebbitAddress} />
+          <BoardNav address={address} subplebbits={subplebbits} />
+          <BoardBanner title={title} address={address} />
+          <MobileBoardButtons address={address} />
+          <PostForm address={address} />
+          <BoardStats address={address} createdAt={createdAt} />
+          <DesktopBoardButtons address={address} />
         </>
       )}
       <Outlet />
@@ -39,6 +45,9 @@ const App = () => {
   const [theme] = useTheme();
   const location = useLocation();
   const isInHomeView = isHomeView(location.pathname);
+
+  const subplebbitAddresses = useDefaultSubplebbitAddresses();
+  const { subplebbits } = useSubplebbits({ subplebbitAddresses });
 
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
@@ -55,9 +64,9 @@ const App = () => {
   return (
     <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route element={<BoardLayout />}>
-          <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
+        <Route path='/' element={<Home subplebbits={subplebbits} />} />
+        <Route element={<BoardLayout subplebbits={subplebbits} />}>
+          <Route path='/p/:subplebbitAddress' element={<Subplebbit subplebbits={subplebbits} />} />
         </Route>
         <Route path='/settings' element={<Settings />} />
       </Routes>
