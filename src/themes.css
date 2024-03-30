@@ -98,6 +98,9 @@
   
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
+  /* reply desktop */
+  --side-arrows-color: #e0bfb7;
+
   /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;

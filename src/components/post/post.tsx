@@ -10,13 +10,50 @@ import { Thumbnail } from '../media';
 
 import { countLinksInCommentReplies } from '../../lib/utils/comment-utils';
 
-const ReplyDesktop = ({ reply }: Comment) => {
-  const { content, link, linkHeight, linkWidth, shortCid, subplebbitAddress, timestamp } = reply || {};
+const ReplyDesktop = ({ index, reply }: { index: number; reply: Comment }) => {
+  const { t } = useTranslation();
+  const { author, content, link, linkHeight, linkWidth, pinned, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { displayName, shortAddress } = author || {};
+
   return (
-    <div className={styles.replyDesktop}>
-      <div className={styles.sideArrows}>{'>>'}</div>
-      {content}
-    </div>
+    index < 5 && (
+      <div className={styles.replyDesktop}>
+        <div className={styles.sideArrows}>{'>>'}</div>
+        <div className={styles.reply}>
+          <div className={styles.postInfo}>
+            <span className={styles.checkbox}>
+              <input type='checkbox' />
+            </span>
+            <span className={styles.nameBlock}>
+              <span className={styles.name}>{displayName || 'Anonymous'} </span>
+              <span className={styles.userAddress}>(u/{shortAddress}) </span>
+            </span>
+            <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
+            <span className={styles.postNum}>
+              <span className={styles.postNumLink}>
+                <Link to={`/p/${subplebbitAddress}/c/${reply.cid}`} className={styles.linkToPost} title='Link to post'>
+                  c/
+                </Link>
+                <span className={styles.replyToPost} title='Reply to post'>
+                  {shortCid}
+                </span>
+              </span>
+              {pinned && (
+                <span className={styles.stickyIconWrapper}>
+                  <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+                </span>
+              )}
+            </span>
+            <span className={styles.postMenuBtn}>▶</span>
+          </div>
+          {content && (
+            <blockquote className={styles.postMessage}>
+              <Markdown content={content} />
+            </blockquote>
+          )}
+        </div>
+      </div>
+    )
   );
 };
 
@@ -29,6 +66,8 @@ const PostDesktop = ({ post }: Comment) => {
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+
+  const replies = useReplies(post);
 
   return (
     <div className={styles.postDesktop}>
@@ -55,7 +94,10 @@ const PostDesktop = ({ post }: Comment) => {
         </div>
       )}
       <div className={styles.postInfo}>
-        {title && <span className={styles.subject}>{displayTitle}</span>}{' '}
+        <span className={styles.checkbox}>
+          <input type='checkbox' />
+        </span>
+        {title && <span className={styles.subject}>{displayTitle} </span>}
         <span className={styles.nameBlock}>
           <span className={styles.name}>{displayName || 'Anonymous'} </span>
           <span className={styles.userAddress}>(u/{shortAddress}) </span>
@@ -97,6 +139,12 @@ const PostDesktop = ({ post }: Comment) => {
           )}
         </blockquote>
       )}
+      {!pinned &&
+        replies.map((reply, index) => (
+          <div key={reply.cid} className={styles.replyContainer}>
+            <ReplyDesktop index={index} reply={reply} />
+          </div>
+        ))}
     </div>
   );
 };
@@ -172,19 +220,12 @@ const PostMobile = ({ post }: Comment) => {
 };
 
 const Post = ({ post }: Comment) => {
-  const replies = useReplies(post);
-
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
         <PostDesktop post={post} />
         <PostMobile post={post} />
       </div>
-      {replies.map((reply) => (
-        <div key={reply.cid} className={styles.replyContainer}>
-          <ReplyDesktop reply={reply} />
-        </div>
-      ))}
     </div>
   );
 };
