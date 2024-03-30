@@ -100,6 +100,8 @@
 
   /* reply desktop */
   --side-arrows-color: #e0bfb7;
+  --reply-desktop-background-color: #f0e0d6;
+  --reply-desktop-border: 1px solid #d9bfb7;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -201,7 +203,13 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
+
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
+  /* reply desktop */
+  --side-arrows-color: #b7c5d9;
+  --reply-desktop-background-color: #d6daf0;
+  --reply-desktop-border: 1px solid #b7c5d9;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -281,7 +289,13 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
+
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
+  /* reply desktop */
+  --side-arrows-color: #e0bfb7;
+  --reply-desktop-background-color: #f0e0d6;
+  --reply-desktop-border: 1px solid #d9bfb7;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -360,7 +374,13 @@
   --post-menu-button-color: #34345c;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
+
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
+  /* reply desktop */
+  --side-arrows-color: #b7c5d9;
+  --reply-desktop-background-color: #d6daf0;
+  --reply-desktop-border: 1px solid #b7c5d9;
   
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -435,7 +455,13 @@
   --post-menu-button-color: #5F89AC;
   --post-menu-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
+
   --post-thumbnail-background-color: rgba(255, 255, 255, 0.01);
+
+  /* reply desktop */
+  --side-arrows-color: #c5c8c6;
+  --reply-desktop-background-color: #282a2e;
+  --reply-desktop-border: 1px solid #282a2e;
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -505,7 +531,13 @@
   --post-menu-button-color: #FF6600;
   --post-menu-button-color-hover: #FF3300;
   --post-greentext-color: #789922;
+
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
+  /* reply desktop */
+  --side-arrows-color: #333;
+  --reply-desktop-background-color: #ddd;
+  --reply-desktop-border: 1px solid #ccc;
 
   /* post form */
   --post-form-toggle-font-size: 22px;

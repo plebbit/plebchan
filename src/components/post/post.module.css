@@ -171,7 +171,7 @@
 .postMobile .postMenuBtn {
   color: var(--post-mobile-menu-button-color);
   line-height: 1em;
-  width: 10px;
+  width: 1em;
   text-align: center;
   transition: transform 0.1s;
   transform: rotate(90deg);
@@ -264,8 +264,8 @@
 }
 
 .replyDesktop .reply {
-  background-color: #f0e0d6;
-  border: 1px solid #d9bfb7;
+  background-color: var(--reply-desktop-background-color);
+  border: var(--reply-desktop-border);
   border-left: none;
   border-top: none;
   display: table;
@@ -274,6 +274,34 @@
 
 .replyDesktop .postInfo {
   padding: 3px 3px 0 0;
+}
+
+.replyMobile {
+  padding-top: 7px;
+}
+
+.replyMobile .reply {
+  background-color: var(--post-mobile-background-color);
+}
+
+.replyMobile .postInfo {
+  padding: 5px;
+  border-bottom: var(--post-mobile-info-border-bottom);
+  background-color: var(--post-mobile-info-background-color);
+}
+
+.replyMobile .postInfo .postMenuBtn {
+  width: 1em;
+}
+
+.replyMobile .nameBlock {
+  display: inline;
+  float: left;
+}
+
+.replyMobile .dateTimePostNum {
+  float: right;
+  text-align: right;
 }
 
 @media (max-width: 640px) {

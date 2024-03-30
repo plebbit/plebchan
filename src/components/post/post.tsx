@@ -149,8 +149,36 @@ const PostDesktop = ({ post }: Comment) => {
   );
 };
 
+const ReplyMobile = ({ index, reply }: { index: number; reply: Comment }) => {
+  const { author, content, link, linkHeight, linkWidth, pinned, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { displayName, shortAddress } = author || {};
+
+  return (
+    index < 5 && (
+      <div className={styles.replyMobile}>
+        <div className={styles.reply}>
+          <div className={styles.postInfo}>
+            <span className={styles.postMenuBtn}>...</span>
+            <span className={styles.nameBlock}>
+              <span className={styles.name}>{displayName || 'Anonymous'} </span>
+              <span className={styles.address}>(u/{shortAddress})</span>
+            </span>
+            <span className={styles.dateTimePostNum}>
+              {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
+              <span className={styles.replyToPost}>{shortCid}</span>
+            </span>
+          </div>
+          <blockquote className={styles.postMessage}>
+            <Markdown content={content} />
+          </blockquote>
+        </div>
+      </div>
+    )
+  );
+};
+
 const PostMobile = ({ post }: Comment) => {
-  const { author, cid, content, link, linkHeight, linkWidth, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const linkCount = countLinksInCommentReplies(post);
   const displayTitle = title && title.length > 30 ? title.slice(0, 30) + '(...)' : title;
@@ -158,6 +186,8 @@ const PostMobile = ({ post }: Comment) => {
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+
+  const replies = useReplies(post);
 
   return (
     <div className={styles.postMobile}>
@@ -214,6 +244,12 @@ const PostMobile = ({ post }: Comment) => {
             </Link>
           </div>
         </div>
+        {!pinned &&
+          replies.map((reply, index) => (
+            <div key={reply.cid} className={styles.replyContainer}>
+              <ReplyMobile index={index} reply={reply} />
+            </div>
+          ))}
       </div>
     </div>
   );
