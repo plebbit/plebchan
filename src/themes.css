@@ -68,7 +68,7 @@
   --post-content-link-text-decoration: none;
   --post-content-link-text-decoration-hover: none;
 
-  /* post */
+  /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-red.png");
   --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
   --post-subject-text-color: #cc1105;
@@ -78,6 +78,8 @@
   --post-menu-button-color: #000080;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
+
+  /* post mobile */
   --post-mobile-background-color: #f5e9e1;
   --post-mobile-info-border-bottom: 1px solid #d9bfb7;
   --post-mobile-info-background-color: #ead6ca;
@@ -91,7 +93,9 @@
   --post-mobile-link-info-text-color: #800;
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 10pt;
+  --post-mobile-file-info-text-color: #707070;
   --post-mobile-content-font-size: 11pt;
+  
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
   /* post form */

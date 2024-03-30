@@ -40,6 +40,10 @@
   background-image: var(--post-unhide-button-background-image);
 }
 
+.postDesktop .fileThumb {
+  float: left;
+}
+
 .postDesktop .fileText a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-link-text-decoration);
@@ -195,6 +199,18 @@
 .postMobile .dateTimePostNum {
   display: block;
   text-align: right;
+}
+
+.postMobile .fileThumb {
+  float: left;
+}
+
+.postMobile .fileThumb .fileInfo {
+  padding-bottom: 5px;
+  text-align: center;
+  color: var(--post-mobile-file-info-text-color); 
+  font-size: 9pt;
+  display: block;
 }
 
 .postMobile .postMessage {

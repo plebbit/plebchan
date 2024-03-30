@@ -1,38 +1,29 @@
 .thumbnailBig {
-  float: left;
+  background-color: var(--post-thumbnail-background-color);
   width: var(--width);
   height: var(--height);
-  padding: 3px 20px 5px 0;
+  margin: 3px 20px 5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .thumbnailSmall {
-  float: left;
+  background-color: var(--post-thumbnail-background-color);
   width: var(--width);
   height: var(--height);
-  padding: 3px 10px 5px 5px;
+  margin: 3px 10px 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.thumbnailWrapperBig {
-  background-color: var(--post-thumbnail-background-color);
-  display: inline-block;
-  height: 250px;
-  width: 250px;
+.thumbnailBig img, .thumbnailBig video {
+  max-width: 250px;
+  max-height: 250px;
 }
 
-.thumbnailWrapperSmall {
-  background-color: var(--post-thumbnail-background-color);
-  display: inline-block;
-  height: 150px;
-  width: 150px;
-}
-
-.transparentThumbnailWrapper {
-  background-color: transparent;
-  opacity: 1;
-}
-
-.thumbnail img, .thumbnail video {
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
+.thumbnailSmall img, .thumbnailSmall video {
+  max-width: 125px;
+  max-height: 125px;
 }

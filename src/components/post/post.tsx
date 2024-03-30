@@ -10,11 +10,20 @@ import { Thumbnail } from '../media';
 
 import { countLinksInCommentReplies } from '../../lib/utils/comment-utils';
 
+const ReplyDesktop = ({ reply }: Comment) => {
+  const { content, link, linkHeight, linkWidth, shortCid, subplebbitAddress, timestamp } = reply || {};
+  return (
+    <div className={styles.replyDesktop}>
+      <div className={styles.sideArrows}>{'>>'}</div>
+      {content}
+    </div>
+  );
+};
+
 const PostDesktop = ({ post }: Comment) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { displayName, shortAddress } = author || {};
-  const replies = useReplies(post);
   const displayTitle = title && title.length > 75 ? title.slice(0, 75) + '...' : title;
   const displayContent = content && content.length > 1000 ? content.slice(0, 1000) + '(...)' : content;
 
@@ -132,6 +141,7 @@ const PostMobile = ({ post }: Comment) => {
             {hasThumbnail && (
               <span className={styles.fileThumb}>
                 <Thumbnail commentMediaInfo={commentMediaInfo} isMobile={true} isReply={false} linkHeight={linkHeight} linkWidth={linkWidth} />
+                {commentMediaInfo?.type && <div className={styles.fileInfo}>{commentMediaInfo.type}</div>}
               </span>
             )}
             {content && (
@@ -162,12 +172,19 @@ const PostMobile = ({ post }: Comment) => {
 };
 
 const Post = ({ post }: Comment) => {
+  const replies = useReplies(post);
+
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
         <PostDesktop post={post} />
         <PostMobile post={post} />
       </div>
+      {replies.map((reply) => (
+        <div key={reply.cid} className={styles.replyContainer}>
+          <ReplyDesktop reply={reply} />
+        </div>
+      ))}
     </div>
   );
 };
