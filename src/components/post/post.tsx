@@ -128,6 +128,7 @@ const PostDesktop = ({ post }: Comment) => {
         </span>
         <span className={styles.postMenuBtn}>▶</span>
       </div>
+      {!content && !link && <div className={styles.spacer} />}
       {content && (
         <blockquote className={styles.postMessage}>
           <Markdown content={displayContent} />
