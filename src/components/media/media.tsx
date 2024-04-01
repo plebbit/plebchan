@@ -98,7 +98,7 @@ const Media = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, sho
         ) : commentMediaInfo?.type === 'image' ? (
           <img src={commentMediaInfo.url} alt='' onClick={() => setShowThumbnail(true)} />
         ) : commentMediaInfo?.type === 'webpage' ? (
-          <img src={commentMediaInfo.url} alt='' />
+          <img src={commentMediaInfo.thumbnail} alt='' onClick={() => setShowThumbnail(true)} />
         ) : null}
         {isMobile && commentMediaInfo?.type && (
           <div className={styles.fileInfo}>
