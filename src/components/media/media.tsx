@@ -75,7 +75,7 @@ const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth 
 
 const Media = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
-  const mediaClass = isMobile ? styles.mediaMobile : styles.mediaDesktop;
+  const mediaClass = isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp;
 
   return (
     <span className={styles.content}>

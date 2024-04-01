@@ -82,3 +82,11 @@
 .mediaMobile img, .mediaMobile video, .mediaMobile iframe, .mediaMobile audio {
   padding: 3px 0 5px 0;
 }
+
+.mediaDesktopReply img, .mediaDesktopReply video, .mediaDesktopReply iframe, .mediaDesktopReply audio {
+  padding: 3px 20px 5px 20px;
+}
+
+.mediaDesktopOp img, .mediaDesktopOp video, .mediaDesktopOp iframe, .mediaDesktopOp audio {
+  padding: 3px 20px 5px 0;
+}
