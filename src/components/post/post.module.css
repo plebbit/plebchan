@@ -217,14 +217,6 @@
   text-align: right;
 }
 
-.postMobile .fileThumb .fileInfo {
-  padding-bottom: 5px;
-  text-align: center;
-  color: var(--post-mobile-file-info-text-color); 
-  font-size: 9pt;
-  display: block;
-}
-
 .postMobile .postMessage {
   padding: 10px;
   font-size: var(--post-mobile-content-font-size);

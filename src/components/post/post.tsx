@@ -249,7 +249,6 @@ const PostMobile = ({ post }: Comment) => {
                   showThumbnail={showThumbnail}
                   setShowThumbnail={setShowThumbnail}
                 />
-                {commentMediaInfo?.type && <div className={styles.fileInfo}>{commentMediaInfo.type}</div>}
               </>
             )}
             {content && (
