@@ -58,6 +58,16 @@ const ReplyDesktop = ({ index, reply }: { index: number; reply: Comment }) => {
                 <a href={link} target='_blank' rel='noopener noreferrer'>
                   {link.length > 30 ? link.slice(0, 30) + '...' : link}
                 </a>
+                {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+                  <span>
+                    {' '}
+                    [
+                    <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
+                      {t('close')}
+                    </span>
+                    ]
+                  </span>
+                )}
               </div>
               {hasThumbnail && (
                 <Media
