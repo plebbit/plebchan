@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './media.module.css';
 import { CommentMediaInfo } from '../../lib/utils/media-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
+import Embed from '../embed';
 
-interface ThumbnailProps {
+interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
   isMobile: boolean;
   isReply: boolean;
   linkHeight?: number;
   linkWidth?: number;
+  showThumbnail: boolean;
+  setShowThumbnail: (showThumbnail: boolean) => void;
   toggleExpanded?: () => void;
 }
 
@@ -24,7 +27,7 @@ const ThumbnailSmall = ({ style, children }: { style: React.CSSProperties; child
   </span>
 );
 
-export const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth }: ThumbnailProps) => {
+const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth }: MediaProps) => {
   let displayWidth, displayHeight;
   const maxThumbnailSize = isMobile || isReply ? 125 : 250;
   if (linkWidth && linkHeight) {
@@ -60,6 +63,35 @@ export const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, lin
   );
 };
 
-export const Media = () => {
-  return <></>;
+const Media = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
+  return (
+    <span className={styles.content}>
+      <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`} onClick={() => setShowThumbnail(false)}>
+        <Thumbnail
+          commentMediaInfo={commentMediaInfo}
+          isMobile={isMobile}
+          isReply={isReply}
+          linkHeight={linkHeight}
+          linkWidth={linkWidth}
+          showThumbnail={showThumbnail}
+          setShowThumbnail={setShowThumbnail}
+        />
+      </span>
+      <span className={`${showThumbnail ? styles.hide : styles.show} ${styles.media}`}>
+        {commentMediaInfo?.type === 'iframe' ? (
+          <Embed url={commentMediaInfo.url} />
+        ) : commentMediaInfo?.type === 'gif' ? (
+          <img src={commentMediaInfo.url} alt='' onClick={() => setShowThumbnail(true)} />
+        ) : commentMediaInfo?.type === 'video' ? (
+          <video src={commentMediaInfo.url} controls autoPlay loop muted />
+        ) : commentMediaInfo?.type === 'image' ? (
+          <img src={commentMediaInfo.url} alt='' onClick={() => setShowThumbnail(true)} />
+        ) : commentMediaInfo?.type === 'webpage' ? (
+          <img src={commentMediaInfo.url} alt='' />
+        ) : null}
+      </span>
+    </span>
+  );
 };
+
+export default Media;

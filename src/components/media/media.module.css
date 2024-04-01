@@ -3,6 +3,7 @@
   width: var(--width);
   height: var(--height);
   margin: 3px 20px 5px 0;
+  float: left;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,6 +14,7 @@
   width: var(--width);
   height: var(--height);
   margin: 3px 10px 5px 5px;
+  float: left;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,4 +28,34 @@
 .thumbnailSmall img, .thumbnailSmall video {
   max-width: 125px;
   max-height: 125px;
+}
+
+.hide {
+  display: none !important;
+}
+
+.thumbnail .show {
+  display: block;
+}
+
+.content img {
+  cursor: pointer;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.content iframe {
+  border: none;
+}
+
+@media (min-width: 640px) {
+  .media img, .media iframe, .media video, .media audio {
+    margin: 3px 20px 5px 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .media img, .media iframe, .media video, .media audio {
+    margin: 3px 10px 5px 5px;
+  }
 }

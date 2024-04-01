@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
@@ -6,7 +7,7 @@ import { getFormattedDate } from '../../lib/utils/time-utils';
 import useReplies from '../../hooks/use-replies';
 import styles from './post.module.css';
 import Markdown from '../markdown';
-import { Thumbnail } from '../media';
+import Media from '../media';
 
 import { countLinksInCommentReplies } from '../../lib/utils/comment-utils';
 
@@ -69,6 +70,8 @@ const PostDesktop = ({ post }: Comment) => {
 
   const replies = useReplies(post);
 
+  const [showThumbnail, setShowThumbnail] = useState(true);
+
   return (
     <div className={styles.postDesktop}>
       <div className={styles.hrWrapper}>
@@ -85,11 +88,27 @@ const PostDesktop = ({ post }: Comment) => {
               {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url.slice(0, 30) + '...' : commentMediaInfo?.url}
             </a>{' '}
             ({commentMediaInfo?.type})
+            {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+              <span>
+                {' '}
+                [
+                <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
+                  {t('close')}
+                </span>
+                ]
+              </span>
+            )}
           </div>
           {hasThumbnail && (
-            <span className={styles.fileThumb}>
-              <Thumbnail commentMediaInfo={commentMediaInfo} isMobile={false} isReply={false} linkHeight={linkHeight} linkWidth={linkWidth} />
-            </span>
+            <Media
+              commentMediaInfo={commentMediaInfo}
+              isMobile={false}
+              isReply={false}
+              linkHeight={linkHeight}
+              linkWidth={linkWidth}
+              showThumbnail={showThumbnail}
+              setShowThumbnail={setShowThumbnail}
+            />
           )}
         </div>
       )}
@@ -128,7 +147,7 @@ const PostDesktop = ({ post }: Comment) => {
         </span>
         <span className={styles.postMenuBtn}>▶</span>
       </div>
-      {!content && !link && <div className={styles.spacer} />}
+      {!content && <div className={styles.spacer} />}
       {content && (
         <blockquote className={styles.postMessage}>
           <Markdown content={displayContent} />
@@ -190,6 +209,8 @@ const PostMobile = ({ post }: Comment) => {
 
   const replies = useReplies(post);
 
+  const [showThumbnail, setShowThumbnail] = useState(true);
+
   return (
     <div className={styles.postMobile}>
       <div className={styles.hrWrapper}>
@@ -218,10 +239,18 @@ const PostMobile = ({ post }: Comment) => {
               </span>
             </div>
             {hasThumbnail && (
-              <span className={styles.fileThumb}>
-                <Thumbnail commentMediaInfo={commentMediaInfo} isMobile={true} isReply={false} linkHeight={linkHeight} linkWidth={linkWidth} />
+              <>
+                <Media
+                  commentMediaInfo={commentMediaInfo}
+                  isMobile={true}
+                  isReply={false}
+                  linkHeight={linkHeight}
+                  linkWidth={linkWidth}
+                  showThumbnail={showThumbnail}
+                  setShowThumbnail={setShowThumbnail}
+                />
                 {commentMediaInfo?.type && <div className={styles.fileInfo}>{commentMediaInfo.type}</div>}
-              </span>
+              </>
             )}
             {content && (
               <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>

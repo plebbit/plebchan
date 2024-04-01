@@ -40,10 +40,6 @@
   background-image: var(--post-unhide-button-background-image);
 }
 
-.postDesktop .fileThumb {
-  float: left;
-}
-
 .postDesktop .fileText a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-link-text-decoration);
@@ -95,6 +91,17 @@
   height: 16px;
   border: none;
   image-rendering: pixelated;
+}
+
+.postDesktop .closeMedia {
+  color: var(--button-desktop-text-color);
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+
+.postDesktop .closeMedia:hover {
+  cursor: pointer;
+  color: var(--button-desktop-text-color-hover);
 }
 
 .postDesktop .replyButton {
@@ -208,10 +215,6 @@
 .postMobile .dateTimePostNum {
   display: block;
   text-align: right;
-}
-
-.postMobile .fileThumb {
-  float: left;
 }
 
 .postMobile .fileThumb .fileInfo {

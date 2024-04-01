@@ -15,21 +15,16 @@ interface SubplebbitProps {
 
 const Subplebbit = ({ subplebbits }: SubplebbitProps) => {
   const { t } = useTranslation();
-
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
-  const subplebbit = subplebbits.find((s) => s?.address === subplebbitAddress);
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress]) as string[];
-  const { shortAddress, state, title } = subplebbit || {};
-
   const sortType = 'active';
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType });
+
+  const subplebbit = subplebbits.find((s) => s?.address === subplebbitAddress);
+  const { shortAddress, state, title } = subplebbit || {};
+
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
-
   const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
-
-  useEffect(() => {
-    document.title = title ? title : shortAddress;
-  }, [title, shortAddress]);
 
   const Footer = () => {
     let footerContent;
@@ -57,6 +52,11 @@ const Subplebbit = ({ subplebbits }: SubplebbitProps) => {
   }, [subplebbitAddress, sortType]);
 
   const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress + sortType];
+
+  useEffect(() => {
+    document.title = title ? title : shortAddress;
+  }, [title, shortAddress]);
+
   return (
     <div className={styles.content}>
       <Virtuoso

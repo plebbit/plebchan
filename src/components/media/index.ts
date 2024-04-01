@@ -1,1 +1,1 @@
-export { Thumbnail, Media } from './media';
+export { default } from './media';
