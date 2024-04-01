@@ -280,8 +280,15 @@
   padding-top: 7px;
 }
 
-.replyMobile .reply {
+.replyMobile .replyContainer {
   background-color: var(--post-mobile-background-color);
+}
+
+/* clearfix to the container of the floatied elements to contain them */
+.replyContainer::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .replyMobile .postInfo {

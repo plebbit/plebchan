@@ -19,7 +19,7 @@ interface MediaProps {
 interface ThumbnailProps {
   style: React.CSSProperties;
   children: React.ReactNode;
-  type?: string;
+  thumbnailSmallPadding?: string;
 }
 
 const ThumbnailBig = ({ style, children }: ThumbnailProps) => (
@@ -28,8 +28,8 @@ const ThumbnailBig = ({ style, children }: ThumbnailProps) => (
   </span>
 );
 
-const ThumbnailSmall = ({ style, children, type }: ThumbnailProps) => (
-  <span className={styles.thumbnailSmall} style={style}>
+const ThumbnailSmall = ({ style, children, thumbnailSmallPadding }: ThumbnailProps) => (
+  <span className={`${styles.thumbnailSmall} ${thumbnailSmallPadding}`} style={style}>
     {children}
   </span>
 );
@@ -61,19 +61,22 @@ const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth 
     mediaComponent = <img src={gifFrameUrl} alt='' />;
   }
 
-  const thumbnailStyle = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
+  const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
+  const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
 
   return isMobile || isReply ? (
-    <ThumbnailSmall style={thumbnailStyle} type={commentMediaInfo?.type}>
+    <ThumbnailSmall style={thumbnailDimensions} thumbnailSmallPadding={thumbnailSmallPadding}>
       {mediaComponent}
     </ThumbnailSmall>
   ) : (
-    <ThumbnailBig style={thumbnailStyle}>{mediaComponent}</ThumbnailBig>
+    <ThumbnailBig style={thumbnailDimensions}>{mediaComponent}</ThumbnailBig>
   );
 };
 
 const Media = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
+  const mediaClass = isMobile ? styles.mediaMobile : styles.mediaDesktop;
+
   return (
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`} onClick={() => setShowThumbnail(false)}>
@@ -88,7 +91,7 @@ const Media = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, sho
         />
         {isMobile && commentMediaInfo?.type && <div className={styles.fileInfo}>{commentMediaInfo.type}</div>}
       </span>
-      <span className={`${showThumbnail ? styles.hide : styles.show} ${styles.media}`}>
+      <span className={`${showThumbnail ? styles.hide : styles.show} ${mediaClass}`}>
         {commentMediaInfo?.type === 'iframe' ? (
           <Embed url={commentMediaInfo.url} />
         ) : commentMediaInfo?.type === 'gif' ? (

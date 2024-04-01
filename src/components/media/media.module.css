@@ -71,14 +71,14 @@
   padding: 5px 0 10px 0;
 }
 
-@media (min-width: 640px) {
-  .media img, .media iframe, .media video, .media audio {
-    margin: 3px 20px 5px 0;
-  }
+.thumbnailReplyDesktop {
+  margin: 3px 20px 5px 20px;
 }
 
-@media (max-width: 640px) {
-  .media img, .media iframe, .media video, .media audio {
-    padding: 3px 0 5px 0;
-  }
+.thumbnailMobile {
+  margin: 8px 10px 5px 5px;
+}
+
+.mediaMobile img, .mediaMobile video, .mediaMobile iframe, .mediaMobile audio {
+  padding: 3px 0 5px 0;
 }
