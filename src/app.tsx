@@ -6,6 +6,7 @@ import { useDefaultSubplebbitAddresses } from './hooks/use-default-subplebbits';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
 import Home from './views/home';
+import PostPage from './views/post-page';
 import Settings from './views/settings';
 import Subplebbit from './views/subplebbit';
 import BoardNav from './components/board-nav';
@@ -67,6 +68,7 @@ const App = () => {
         <Route path='/' element={<Home subplebbits={subplebbits} />} />
         <Route element={<BoardLayout subplebbits={subplebbits} />}>
           <Route path='/p/:subplebbitAddress' element={<Subplebbit subplebbits={subplebbits} />} />
+          <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
         </Route>
         <Route path='/settings' element={<Settings />} />
       </Routes>
