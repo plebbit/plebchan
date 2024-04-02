@@ -153,6 +153,33 @@
   text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
+.postDesktop .summary {
+  padding-top: 10px;
+  color: var(--post-mobile-abbr-text-color);
+}
+
+.postDesktop .summary .expandButton {
+  background-image: var(--post-replies-expand-button-background-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  image-rendering: pixelated;
+  margin: 0 3px -4px 2px;
+  cursor: pointer;
+}
+
+.postDesktop .summary a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.postDesktop .summary a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
 .postMobile hr {
   padding-bottom: 30px;
 }

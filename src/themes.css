@@ -78,6 +78,7 @@
   --post-menu-button-color: #000080;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
 
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
@@ -189,6 +190,9 @@
   --post-menu-button-color: #34345c;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
+
+  /* post mobile */
   --post-mobile-background-color: #d6daf0;
   --post-mobile-info-border-bottom: 1px solid #b7c5d9;
   --post-mobile-info-background-color: #c9cde8;
@@ -275,6 +279,9 @@
   --post-menu-button-color: #000080;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
+
+  /* post mobile */
   --post-mobile-background-color: #f5e9e1;
   --post-mobile-info-border-bottom: 1px solid #d9bfb7;
   --post-mobile-info-background-color: #ead6ca;
@@ -374,6 +381,7 @@
   --post-menu-button-color: #34345c;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
 
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
@@ -455,6 +463,7 @@
   --post-menu-button-color: #5F89AC;
   --post-menu-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-dark.png");
 
   --post-thumbnail-background-color: rgba(255, 255, 255, 0.01);
 
@@ -531,6 +540,7 @@
   --post-menu-button-color: #FF6600;
   --post-menu-button-color-hover: #FF3300;
   --post-greentext-color: #789922;
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-photon.png");
 
   --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 

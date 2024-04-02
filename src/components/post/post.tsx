@@ -4,12 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
+import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
 import styles from './post.module.css';
 import Markdown from '../markdown';
 import Media from '../media';
-
-import { countLinksInCommentReplies } from '../../lib/utils/comment-utils';
 
 const ReplyDesktop = ({ index, reply }: { index: number; reply: Comment }) => {
   const { t } = useTranslation();
@@ -95,7 +94,7 @@ const ReplyDesktop = ({ index, reply }: { index: number; reply: Comment }) => {
 
 const PostDesktop = ({ post }: Comment) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { displayName, shortAddress } = author || {};
   const displayTitle = title && title.length > 75 ? title.slice(0, 75) + '...' : title;
   const displayContent = content && content.length > 1000 ? content.slice(0, 1000) + '(...)' : content;
@@ -105,6 +104,10 @@ const PostDesktop = ({ post }: Comment) => {
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
+  const visibleLinkCount = useCountLinksInReplies(post, 5);
+  const totalLinkCount = useCountLinksInReplies(post);
+  const repliesCount = pinned ? replyCount : replyCount - 5;
+  const linkCount = pinned ? totalLinkCount : totalLinkCount - visibleLinkCount;
 
   return (
     <div className={styles.postDesktop}>
@@ -193,6 +196,15 @@ const PostDesktop = ({ post }: Comment) => {
           )}
         </blockquote>
       )}
+      {(replies.length > 5 || pinned) && (
+        <span className={styles.summary}>
+          <span className={styles.expandButton} />
+          <span>
+            {repliesCount} replies {linkCount > 0 && `and ${linkCount} links`} omitted.{' '}
+          </span>
+          <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view.
+        </span>
+      )}
       {!pinned &&
         replies.map((reply, index) => (
           <div key={reply.cid} className={styles.replyContainer}>
@@ -251,7 +263,7 @@ const ReplyMobile = ({ index, reply }: { index: number; reply: Comment }) => {
 const PostMobile = ({ post }: Comment) => {
   const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
-  const linkCount = countLinksInCommentReplies(post);
+  const linkCount = useCountLinksInReplies(post);
   const displayTitle = title && title.length > 30 ? title.slice(0, 30) + '(...)' : title;
   const displayContent = content && content.length > 1000 ? content.slice(0, 1000) : content;
 
