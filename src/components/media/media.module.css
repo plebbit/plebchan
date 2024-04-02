@@ -18,6 +18,10 @@
   align-items: center;
 }
 
+.thumbnail {
+  float: left;
+}
+
 .thumbnailBig img, .thumbnailBig video {
   max-width: 250px;
   max-height: 250px;
@@ -26,4 +30,67 @@
 .thumbnailSmall img, .thumbnailSmall video {
   max-width: 125px;
   max-height: 125px;
+}
+
+.hide {
+  display: none !important;
+}
+
+.thumbnail .show {
+  display: block;
+}
+
+.content img, .content video, .content iframe, .content audio {
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.content img {
+  cursor: pointer;
+}
+
+.content iframe {
+  border: none;
+}
+
+.fileInfo {
+  padding-bottom: 5px;
+  text-align: center;
+  color: var(--post-mobile-file-info-text-color); 
+  font-size: 9pt;
+}
+
+.fileInfo a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-link-text-decoration);
+}
+
+.fileInfo a:hover {
+  color: var(--post-link-text-color-hover);
+}
+
+.closeButton {
+  text-align: center;
+  padding: 5px 0 10px 0;
+}
+
+.thumbnailReplyDesktop {
+  margin: 3px 20px 5px 20px;
+}
+
+.thumbnailMobile {
+  margin: 8px 10px 5px 5px;
+}
+
+.mediaMobile img, .mediaMobile video, .mediaMobile iframe, .mediaMobile audio {
+  padding: 3px 0 5px 0;
+}
+
+.mediaDesktopReply img, .mediaDesktopReply video, .mediaDesktopReply iframe, .mediaDesktopReply audio {
+  padding: 3px 20px 5px 20px;
+}
+
+.mediaDesktopOp img, .mediaDesktopOp video, .mediaDesktopOp iframe, .mediaDesktopOp audio {
+  padding: 3px 20px 5px 0;
 }

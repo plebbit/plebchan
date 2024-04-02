@@ -40,10 +40,6 @@
   background-image: var(--post-unhide-button-background-image);
 }
 
-.postDesktop .fileThumb {
-  float: left;
-}
-
 .postDesktop .fileText a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-link-text-decoration);
@@ -58,27 +54,31 @@
   width: 100%;
 }
 
+.postDesktop .checkbox, .replyDesktop .checkbox {
+  padding: 3px 7px 3px 4px;
+}
+
 .postDesktop .subject {
   color: var(--post-subject-text-color);
   font-weight: var(--post-subject-font-weight);
 }
 
-.postDesktop .name {
+.postDesktop .name, .replyDesktop .name {
   color: var(--post-name-text-color);
   font-weight: var(--post-name-font-weight);
 }
 
-.postDesktop .postNumLink a, .postDesktop .postNumLink span {
+.postDesktop .postNumLink a, .postDesktop .postNumLink span, .replyDesktop .postNumLink a, .replyDesktop .postNumLink span {
   color: unset;
   text-decoration: unset;
 }
 
-.postDesktop .postNumLink a:hover, .postDesktop .postNumLink span:hover {
+.postDesktop .postNumLink a:hover, .postDesktop .postNumLink span:hover, .replyDesktop .postNumLink a:hover, .replyDesktop .postNumLink span:hover {
   cursor: pointer;
   color: var(--button-desktop-text-color-hover);
 }
 
-.postDesktop .stickyIconWrapper {
+.postDesktop .stickyIconWrapper, .replyDesktop .stickyIconWrapper {
   padding-left: 5px;
 }
 
@@ -86,11 +86,22 @@
   padding-left: 3px;
 }
 
-.postDesktop .stickyIconWrapper img, .postDesktop .closedIconWrapper img {
+.postDesktop .stickyIconWrapper img, .postDesktop .closedIconWrapper img, .replyDesktop .stickyIconWrapper img, .replyDesktop .closedIconWrapper img {
   width: 16px;
   height: 16px;
   border: none;
   image-rendering: pixelated;
+}
+
+.postDesktop .closeMedia {
+  color: var(--button-desktop-text-color);
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+
+.postDesktop .closeMedia:hover {
+  cursor: pointer;
+  color: var(--button-desktop-text-color-hover);
 }
 
 .postDesktop .replyButton {
@@ -108,17 +119,22 @@
   color: var(--button-desktop-text-color-hover);
 }
 
-.postDesktop .postMenuBtn {
+.postDesktop .postMenuBtn, .replyDesktop .postMenuBtn {
   padding-left: 5px;
   color: var(--post-menu-button-color);
 }
 
-.postDesktop .postMenuBtn:hover {
+.postDesktop .postMenuBtn:hover, .replyDesktop .postMenuBtn:hover {
   cursor: pointer;
   color: var(--post-menu-button-color-hover);
 }
 
-.postDesktop .postMessage {
+.postDesktop .spacer {
+  width: 100%;
+  padding: 5px;
+}
+
+.postDesktop .postMessage, .replyDesktop .postMessage {
   padding: 1em 40px;
 }
 
@@ -133,6 +149,33 @@
 }
 
 .postDesktop .abbr a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
+.postDesktop .summary {
+  padding-top: 10px;
+  color: var(--post-mobile-abbr-text-color);
+}
+
+.postDesktop .summary .expandButton {
+  background-image: var(--post-replies-expand-button-background-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  image-rendering: pixelated;
+  margin: 0 3px -4px 2px;
+  cursor: pointer;
+}
+
+.postDesktop .summary a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.postDesktop .summary a:hover {
   color: var(--post-link-text-color-hover);
   text-decoration: var(--post-content-link-text-decoration-hover);
 }
@@ -167,7 +210,7 @@
 .postMobile .postMenuBtn {
   color: var(--post-mobile-menu-button-color);
   line-height: 1em;
-  width: 10px;
+  width: 1em;
   text-align: center;
   transition: transform 0.1s;
   transform: rotate(90deg);
@@ -199,18 +242,6 @@
 .postMobile .dateTimePostNum {
   display: block;
   text-align: right;
-}
-
-.postMobile .fileThumb {
-  float: left;
-}
-
-.postMobile .fileThumb .fileInfo {
-  padding-bottom: 5px;
-  text-align: center;
-  color: var(--post-mobile-file-info-text-color); 
-  font-size: 9pt;
-  display: block;
 }
 
 .postMobile .postMessage {
@@ -249,14 +280,80 @@
   text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
+.replyDesktop {
+  padding-bottom: 4px;
+}
+
+.replyDesktop .sideArrows {
+  color: var(--side-arrows-color);
+  float: left;
+  padding: 0 2px;
+}
+
+.replyDesktop .reply {
+  background-color: var(--reply-desktop-background-color);
+  border: var(--reply-desktop-border);
+  border-left: none;
+  border-top: none;
+  display: table;
+  padding: 2px;
+}
+
+.replyDesktop .postInfo {
+  padding: 3px 3px 0 0;
+}
+
+.replyMobile {
+  padding-top: 7px;
+}
+
+.replyMobile .replyContainer {
+  background-color: var(--post-mobile-background-color);
+}
+
+/* clearfix to the container of the floatied elements to contain them */
+.replyMobile .replyContainer::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.replyMobile .postInfo {
+  padding: 5px;
+  border-bottom: var(--post-mobile-info-border-bottom);
+  background-color: var(--post-mobile-info-background-color);
+}
+
+.replyMobile .postInfo .postMenuBtn {
+  width: 1em;
+}
+
+.replyMobile .nameBlock {
+  display: inline;
+  float: left;
+}
+
+.replyMobile .dateTimePostNum {
+  float: right;
+  text-align: right;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
+    display: none;
+  }
+
+  .replyDesktop {
     display: none;
   }
 }
 
 @media (min-width: 641px) {
   .postMobile {
+    display: none;
+  }
+
+  .replyMobile {
     display: none;
   }
 }
