@@ -311,6 +311,13 @@
   background-color: var(--post-mobile-background-color);
 }
 
+/* clearfix to the container of the floatied elements to contain them */
+.replyMobile .replyContainer::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .replyMobile .postInfo {
   padding: 5px;
   border-bottom: var(--post-mobile-info-border-bottom);
