@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
-import { useTranslation } from 'react-i18next';
+import { isPostPageView } from '../../lib/utils/view-utils';
 
 interface BoardButtonsProps {
   address: string;
@@ -11,9 +13,13 @@ const OptionsButton = () => {
   return <button className='button'>{t('options')}</button>;
 };
 
-const CatalogButton = () => {
+const CatalogButton = ({ address }: BoardButtonsProps) => {
   const { t } = useTranslation();
-  return <button className='button'>{t('catalog')}</button>;
+  return (
+    <button className='button'>
+      <Link to={`/p/${address}/catalog`}>{t('catalog')}</Link>
+    </button>
+  );
 };
 
 const SubscribeButton = ({ address }: BoardButtonsProps) => {
@@ -27,28 +33,69 @@ const SubscribeButton = ({ address }: BoardButtonsProps) => {
   );
 };
 
+const ReturnButton = ({ address }: BoardButtonsProps) => {
+  const { t } = useTranslation();
+  return (
+    <button className='button'>
+      <Link to={`/p/${address}`}>{t('return')}</Link>
+    </button>
+  );
+};
+
+const BottomButton = () => {
+  const { t } = useTranslation();
+  return (
+    <button className='button' onClick={() => window.scrollTo(0, document.body.scrollHeight)}>
+      {t('bottom')}
+    </button>
+  );
+};
+
 export const MobileBoardButtons = ({ address }: BoardButtonsProps) => {
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
   return (
     <div className={styles.mobileBoardButtons}>
-      <OptionsButton />
-      <CatalogButton />
-      <SubscribeButton address={address} />
+      {isInPostPage ? (
+        <div className={styles.mobilePostPageButtons}>
+          <ReturnButton address={address} />
+          <CatalogButton address={address} />
+          <BottomButton />
+          <div>
+            <OptionsButton />
+            <SubscribeButton address={address} />
+          </div>
+        </div>
+      ) : (
+        <>
+          <OptionsButton />
+          <CatalogButton address={address} />
+          <SubscribeButton address={address} />
+        </>
+      )}
     </div>
   );
 };
 
 export const DesktopBoardButtons = ({ address }: BoardButtonsProps) => {
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
   return (
     <div className={styles.desktopBoardButtons}>
       <hr />
-      [
-      <OptionsButton />
-      ] [
-      <CatalogButton />]
-      <span className={styles.subscribeButton}>
-        [
-        <SubscribeButton address={address} />]
-      </span>
+      {isInPostPage ? (
+        <>
+          [<ReturnButton address={address} />] [<CatalogButton address={address} />] [<BottomButton />] [<OptionsButton />]
+          <span className={styles.subscribeButton}>
+            [<SubscribeButton address={address} />]
+          </span>
+        </>
+      ) : (
+        <>
+          [<OptionsButton />] [<CatalogButton address={address} />]
+          <span className={styles.subscribeButton}>
+            [<SubscribeButton address={address} />]
+          </span>
+        </>
+      )}
     </div>
   );
 };

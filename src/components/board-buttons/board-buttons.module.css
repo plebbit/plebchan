@@ -5,6 +5,11 @@
 
 .mobileBoardButtons button {
   margin: 0 2px;
+  text-transform: capitalize;
+}
+
+.mobileBoardButtons a, .desktopBoardButtons a {
+  all: unset;
 }
 
 @media (max-width: 640px) {

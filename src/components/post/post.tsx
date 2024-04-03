@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
+import { isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
 import styles from './post.module.css';
@@ -280,6 +281,7 @@ const ReplyMobile = ({ reply }: Comment) => {
 };
 
 const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: boolean }) => {
+  const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const linkCount = useCountLinksInReplies(post);
@@ -291,6 +293,10 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
+
+  const location = useLocation();
+  const params = useParams();
+  const isInPostPage = isPostPageView(location.pathname, params);
 
   return (
     <div className={styles.postMobile}>
@@ -342,15 +348,17 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
               </blockquote>
             )}
           </div>
-          <div className={styles.postLink}>
-            <span className={styles.info}>
-              {replyCount} Replies
-              {linkCount > 0 && ` / ${linkCount} Links`}
-            </span>
-            <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
-              View Thread
-            </Link>
-          </div>
+          {!isInPostPage && (
+            <div className={styles.postLink}>
+              <span className={styles.info}>
+                {replyCount} Replies
+                {linkCount > 0 && ` / ${linkCount} Links`}
+              </span>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
+                {t('view_thread')}
+              </Link>
+            </div>
+          )}
         </div>
         {!pinned &&
           replies?.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
