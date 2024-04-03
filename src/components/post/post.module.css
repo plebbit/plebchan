@@ -202,7 +202,9 @@
 .postMobile .postInfo {
   overflow: hidden;
   border-bottom: var(--post-mobile-info-border-bottom);
+  border-top: var(--post-mobile-info-border-top);
   background-color: var(--post-mobile-info-background-color);
+  color: var(--post-mobile-info-text-color);
   padding: 5px;
   clear: left;
 }
@@ -303,12 +305,23 @@
   padding: 3px 3px 0 0;
 }
 
+.quoteLink {
+  color: var(--post-quotelink-text-color);
+  text-decoration: var(--post-quotelink-text-decoration);
+}
+
+.quoteLink:hover {
+  color: var(--post-quotelink-text-color-hover);
+  text-decoration: var(--post-quotelink-text-decoration-hover);
+}
+
 .replyMobile {
   padding-top: 7px;
 }
 
 .replyMobile .replyContainer {
   background-color: var(--post-mobile-background-color);
+  border-bottom: var(--post-mobile-border-bottom);
 }
 
 /* clearfix to the container of the floatied elements to contain them */
@@ -320,8 +333,10 @@
 
 .replyMobile .postInfo {
   padding: 5px;
+  border-top: var(--post-mobile-info-border-top);
   border-bottom: var(--post-mobile-info-border-bottom);
   background-color: var(--post-mobile-info-background-color);
+  color: var(--post-mobile-info-text-color);
 }
 
 .replyMobile .postInfo .postMenuBtn {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
@@ -12,12 +13,14 @@ import Media from '../media';
 
 const ReplyDesktop = ({ reply }: Comment) => {
   const { t } = useTranslation();
-  const { author, content, link, linkHeight, linkWidth, pinned, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { displayName, shortAddress } = author || {};
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
+
+  const isReplyingToReply = postCid !== parentCid;
 
   return (
     <div className={styles.replyDesktop}>
@@ -54,7 +57,7 @@ const ReplyDesktop = ({ reply }: Comment) => {
             <div className={styles.fileText}>
               {t('link')}:{' '}
               <a href={link} target='_blank' rel='noopener noreferrer'>
-                {link.length > 30 ? link.slice(0, 30) + '...' : link}
+                {link.length > 30 ? link?.slice(0, 30) + '...' : link}
               </a>
               {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
                 <span>
@@ -82,6 +85,14 @@ const ReplyDesktop = ({ reply }: Comment) => {
         )}
         {content && (
           <blockquote className={styles.postMessage}>
+            {isReplyingToReply && (
+              <>
+                <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+                  {`c/${Plebbit.getShortCid(parentCid)}`}
+                </Link>
+                <br />
+              </>
+            )}
             <Markdown content={content} />
           </blockquote>
         )}
@@ -94,8 +105,8 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { displayName, shortAddress } = author || {};
-  const displayTitle = title && title.length > 75 ? title.slice(0, 75) + '...' : title;
-  const displayContent = content && content.length > 1000 ? content.slice(0, 1000) + '(...)' : content;
+  const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
+  const displayContent = content && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -120,7 +131,7 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
           <div className={styles.fileText}>
             {t('link')}:{' '}
             <a href={commentMediaInfo?.url} target='_blank' rel='noopener noreferrer'>
-              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url.slice(0, 30) + '...' : commentMediaInfo?.url}
+              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url?.slice(0, 30) + '...' : commentMediaInfo?.url}
             </a>{' '}
             ({commentMediaInfo?.type})
             {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
@@ -204,7 +215,7 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
         </span>
       )}
       {!pinned &&
-        replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
+        replies?.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
           <div key={reply.cid} className={styles.replyContainer}>
             <ReplyDesktop index={index} reply={reply} />
           </div>
@@ -214,12 +225,14 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
 };
 
 const ReplyMobile = ({ reply }: Comment) => {
-  const { author, content, link, linkHeight, linkWidth, pinned, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { displayName, shortAddress } = author || {};
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
+
+  const isReplyingToReply = postCid !== parentCid;
 
   return (
     <div className={styles.replyMobile}>
@@ -247,9 +260,19 @@ const ReplyMobile = ({ reply }: Comment) => {
               setShowThumbnail={setShowThumbnail}
             />
           )}
-          <blockquote className={styles.postMessage}>
-            <Markdown content={content} />
-          </blockquote>
+          {content && (
+            <blockquote className={styles.postMessage}>
+              {isReplyingToReply && (
+                <>
+                  <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+                    {`c/${Plebbit.getShortCid(parentCid)}`}
+                  </Link>
+                  <br />
+                </>
+              )}
+              <Markdown content={content} />
+            </blockquote>
+          )}
         </div>
       </div>
     </div>
@@ -260,8 +283,8 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
   const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const linkCount = useCountLinksInReplies(post);
-  const displayTitle = title && title.length > 30 ? title.slice(0, 30) + '(...)' : title;
-  const displayContent = content && content.length > 1000 ? content.slice(0, 1000) : content;
+  const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
+  const displayContent = content && content.length > 1000 ? content?.slice(0, 1000) : content;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -283,7 +306,7 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
               </span>
               <span className={styles.nameBlock}>
                 <span className={styles.name}>{displayName || 'Anonymous'} </span>
-                <span className={styles.address}>(u/{shortAddress || address.slice(0, 12) + '...'})</span>
+                <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>
                 {title && (
                   <>
                     <br />
@@ -330,7 +353,7 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
           </div>
         </div>
         {!pinned &&
-          replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
+          replies?.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
               <ReplyMobile index={index} reply={reply} />
             </div>
