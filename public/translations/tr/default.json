@@ -25,7 +25,7 @@
   "home": "Anasayfa",
   "subscribe": "Abone Ol",
   "unsubscribe": "Abonelikten çık",
-  "close_post_form": "Gönderi formunu kapat",
+  "close_post_form": "Yazı Formunu Kapat",
   "catalog": "Katalog",
   "all": "Tümü",
   "subscriptions": "Abonelikler",
@@ -36,5 +36,10 @@
   "closed": "Kapalı",
   "reply": "Yanıtla",
   "link": "Bağlantı",
-  "close": "Kapat"
+  "close": "Kapat",
+  "post_a_reply": "Yanıtı Yayınla",
+  "view_thread": "Konuyu Görüntüle",
+  "return": "Dönüş",
+  "bottom": "Alt",
+  "top": "Üst"
 }

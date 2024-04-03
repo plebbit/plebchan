@@ -25,7 +25,7 @@
   "home": "Hjem",
   "subscribe": "Abonner",
   "unsubscribe": "Afmeld",
-  "close_post_form": "Luk postformularen",
+  "close_post_form": "Luk Indlægsformular",
   "catalog": "Katalog",
   "all": "Alle",
   "subscriptions": "Abonnementer",
@@ -36,5 +36,10 @@
   "closed": "Lukket",
   "reply": "Svar",
   "link": "Link",
-  "close": "Luk"
+  "close": "Luk",
+  "post_a_reply": "Indsend Et Svar",
+  "view_thread": "Vis Tråd",
+  "return": "Vende tilbage",
+  "bottom": "Bund",
+  "top": "Top"
 }

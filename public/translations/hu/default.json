@@ -25,7 +25,7 @@
   "home": "Kezdőlap",
   "subscribe": "Feliratkozás",
   "unsubscribe": "Leiratkozás",
-  "close_post_form": "Bejegyzés űrlap bezárása",
+  "close_post_form": "Bejegyzés Űrlap Bezárása",
   "catalog": "Katalógus",
   "all": "Összes",
   "subscriptions": "Előfizetések",
@@ -36,5 +36,10 @@
   "closed": "Zárt",
   "reply": "Válaszolás",
   "link": "Hivatkozás",
-  "close": "Bezárás"
+  "close": "Bezárás",
+  "post_a_reply": "Válasz Postázása",
+  "view_thread": "Téma Megtekintése",
+  "return": "Visszatérés",
+  "bottom": "Alja",
+  "top": "Felső"
 }

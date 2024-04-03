@@ -36,5 +36,10 @@
   "closed": "ปิด",
   "reply": "ตอบ",
   "link": "ลิงก์",
-  "close": "ปิด"
+  "close": "ปิด",
+  "post_a_reply": "โพสต์คำตอบ",
+  "view_thread": "ดูกระทู้",
+  "return": "กลับ",
+  "bottom": "ด้านล่าง",
+  "top": "ด้านบน"
 }

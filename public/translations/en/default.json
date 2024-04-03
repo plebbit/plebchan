@@ -25,7 +25,7 @@
   "home": "Home",
   "subscribe": "Subscribe",
   "unsubscribe": "Unsubscribe",
-  "close_post_form": "Close post form",
+  "close_post_form": "Close Post Form",
   "catalog": "Catalog",
   "all": "All",
   "subscriptions": "Subscriptions",
@@ -36,5 +36,10 @@
   "closed": "Closed",
   "reply": "Reply",
   "link": "Link",
-  "close": "Close"
+  "close": "Close",
+  "post_a_reply": "Post a Reply",
+  "view_thread": "View Thread",
+  "return": "Return",
+  "bottom": "Bottom",
+  "top": "Top"
 }

@@ -25,7 +25,7 @@
   "home": "Hjem",
   "subscribe": "Abonner",
   "unsubscribe": "Avslutt abonnement",
-  "close_post_form": "Lukk postskjema",
+  "close_post_form": "Lukk Innleggsformular",
   "catalog": "Katalog",
   "all": "Alle",
   "subscriptions": "Abonnementer",
@@ -36,5 +36,10 @@
   "closed": "Stengt",
   "reply": "Svar",
   "link": "Lenke",
-  "close": "Lukk"
+  "close": "Lukk",
+  "post_a_reply": "Legg Inn Et Svar",
+  "view_thread": "Vis Tråd",
+  "return": "Retur",
+  "bottom": "Bunnen",
+  "top": "Topp"
 }

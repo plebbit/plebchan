@@ -36,5 +36,10 @@
   "closed": "关闭",
   "reply": "回复",
   "link": "链接",
-  "close": "关闭"
+  "close": "关闭",
+  "post_a_reply": "发表回复",
+  "view_thread": "查看线程",
+  "return": "返回",
+  "bottom": "底部",
+  "top": "顶部"
 }

@@ -36,5 +36,10 @@
   "closed": "닫힘",
   "reply": "답장",
   "link": "링크",
-  "close": "닫기"
+  "close": "닫기",
+  "post_a_reply": "답글 게시",
+  "view_thread": "스레드 보기",
+  "return": "돌아 가기",
+  "bottom": "하단",
+  "top": "맨 위로"
 }

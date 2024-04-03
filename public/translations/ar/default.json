@@ -25,7 +25,7 @@
   "home": "الصفحة الرئيسية",
   "subscribe": "اشتراك",
   "unsubscribe": "إلغاء الاشتراك",
-  "close_post_form": "إغلاق نموذج المشاركة",
+  "close_post_form": "إغلاق نموذج المنشور",
   "catalog": "فهرس",
   "all": "الكل",
   "subscriptions": "الاشتراكات",
@@ -36,5 +36,10 @@
   "closed": "مغلق",
   "reply": "رد",
   "link": "رابط",
-  "close": "إغلاق"
+  "close": "إغلاق",
+  "post_a_reply": "أضف ردًا",
+  "view_thread": "عرض الموضوع",
+  "return": "العودة",
+  "bottom": "القاع",
+  "top": "أعلى"
 }

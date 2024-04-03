@@ -25,7 +25,7 @@
   "home": "Accueil",
   "subscribe": "S'abonner",
   "unsubscribe": "Se désabonner",
-  "close_post_form": "Fermer le formulaire de publication",
+  "close_post_form": "Fermer le Formulaire de Publication",
   "catalog": "Catalogue",
   "all": "Tous",
   "subscriptions": "Abonnements",
@@ -36,5 +36,10 @@
   "closed": "Fermé",
   "reply": "Répondre",
   "link": "Lien",
-  "close": "Fermer"
+  "close": "Fermer",
+  "post_a_reply": "Publier une Réponse",
+  "view_thread": "Voir le Fil",
+  "return": "Retour",
+  "bottom": "Bas",
+  "top": "Haut"
 }

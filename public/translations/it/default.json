@@ -25,7 +25,7 @@
   "home": "Home",
   "subscribe": "Iscriviti",
   "unsubscribe": "Lascia",
-  "close_post_form": "Chiudi modulo d'invio",
+  "close_post_form": "Chiudi Modulo d'Invio",
   "catalog": "Catalogo",
   "all": "Tutti",
   "subscriptions": "Iscrizioni",
@@ -36,5 +36,10 @@
   "closed": "Chiuso",
   "reply": "Commenta",
   "link": "Link",
-  "close": "Chiudi"
+  "close": "Chiudi",
+  "post_a_reply": "Invia un Commento",
+  "view_thread": "Visualizza Thread",
+  "return": "Indietro",
+  "bottom": "Vai sotto",
+  "top": "Vai sopra"
 }

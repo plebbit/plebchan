@@ -25,7 +25,7 @@
   "home": "Beranda",
   "subscribe": "Berlangganan",
   "unsubscribe": "Berhenti berlangganan",
-  "close_post_form": "Tutup formulir kiriman",
+  "close_post_form": "Tutup Formulir Kiriman",
   "catalog": "Katalog",
   "all": "Semua",
   "subscriptions": "Langganan",
@@ -36,5 +36,10 @@
   "closed": "Tutup",
   "reply": "Balas",
   "link": "Tautan",
-  "close": "Tutup"
+  "close": "Tutup",
+  "post_a_reply": "Kirim Balasan",
+  "view_thread": "Lihat Thread",
+  "return": "Kembali",
+  "bottom": "Bawah",
+  "top": "Atas"
 }

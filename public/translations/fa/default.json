@@ -25,7 +25,7 @@
   "home": "خانه",
   "subscribe": "اشتراک",
   "unsubscribe": "لغو اشتراک",
-  "close_post_form": "بستن فرم پست",
+  "close_post_form": "بستن فرم ارسال",
   "catalog": "کاتالوگ",
   "all": "همه",
   "subscriptions": "اشتراک‌ها",
@@ -36,5 +36,10 @@
   "closed": "بسته",
   "reply": "پاسخ",
   "link": "لینک",
-  "close": "بستن"
+  "close": "بستن",
+  "post_a_reply": "ارسال یک پاسخ",
+  "view_thread": "مشاهده نخ",
+  "return": "برگشت",
+  "bottom": "پایین",
+  "top": "بالا"
 }

@@ -25,7 +25,7 @@
   "home": "Bahay",
   "subscribe": "Mag-subscribe",
   "unsubscribe": "Huwag mag-subscribe",
-  "close_post_form": "Isara ang porma ng post",
+  "close_post_form": "Isara ang Porma ng Post",
   "catalog": "Katalogo",
   "all": "Lahat",
   "subscriptions": "Mga Subscription",
@@ -36,5 +36,10 @@
   "closed": "Sarado",
   "reply": "Tumugon",
   "link": "Link",
-  "close": "Isara"
+  "close": "Isara",
+  "post_a_reply": "Mag-post ng Isang Tugon",
+  "view_thread": "Tingnan ang Thread",
+  "return": "Bumalik",
+  "bottom": "Ilalim",
+  "top": "Itaas"
 }
