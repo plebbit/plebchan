@@ -106,8 +106,11 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { displayName, shortAddress } = author || {};
+
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
-  const displayContent = content && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
+  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -124,9 +127,11 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      <span className={styles.threadHideButtonWrapper}>
-        <span className={`${styles.threadHideButton} ${styles.hideThread}`} />
-      </span>
+      {!isInPostPage && (
+        <span className={styles.threadHideButtonWrapper}>
+          <span className={`${styles.threadHideButton} ${styles.hideThread}`} />
+        </span>
+      )}
       {commentMediaInfo?.url && (
         <div className={styles.file}>
           <div className={styles.fileText}>
@@ -198,7 +203,7 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
       {content && (
         <blockquote className={styles.postMessage}>
           <Markdown content={displayContent} />
-          {content.length > 1000 && (
+          {content.length > 1000 && !isInPostPage && (
             <span className={styles.abbr}>
               <br />
               Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
@@ -206,7 +211,7 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
           )}
         </blockquote>
       )}
-      {(replies.length > 5 || pinned) && (
+      {(replies.length > 5 || pinned) && !isInPostPage && (
         <span className={styles.summary}>
           <span className={styles.expandButton} />
           <span>
@@ -215,8 +220,9 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
           <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view.
         </span>
       )}
-      {!pinned &&
-        replies?.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
+      {!(pinned && !isInPostPage) &&
+        replies &&
+        replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
           <div key={reply.cid} className={styles.replyContainer}>
             <ReplyDesktop index={index} reply={reply} />
           </div>
@@ -294,9 +300,7 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
 
   const replies = useReplies(post);
 
-  const location = useLocation();
-  const params = useParams();
-  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
 
   return (
     <div className={styles.postMobile}>
@@ -339,7 +343,7 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
             {content && (
               <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>
                 <Markdown content={displayContent} />
-                {content.length > 1000 && (
+                {content.length > 1000 && !isInPostPage && (
                   <span className={styles.abbr}>
                     <br />
                     Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
