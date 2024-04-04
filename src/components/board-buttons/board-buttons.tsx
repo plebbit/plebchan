@@ -60,7 +60,7 @@ export const MobileBoardButtons = ({ address }: BoardButtonsProps) => {
           <ReturnButton address={address} />
           <CatalogButton address={address} />
           <BottomButton />
-          <div>
+          <div className={styles.mobilePostPageButtonsSecondRow}>
             <OptionsButton />
             <SubscribeButton address={address} />
           </div>
