@@ -128,8 +128,8 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
         <hr />
       </div>
       {!isInPostPage && (
-        <span className={styles.threadHideButtonWrapper}>
-          <span className={`${styles.threadHideButton} ${styles.hideThread}`} />
+        <span className={styles.hideButtonWrapper}>
+          <span className={`${styles.hideButton} ${styles.hideThread}`} />
         </span>
       )}
       {commentMediaInfo?.url && (
@@ -213,7 +213,9 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
       )}
       {(replies.length > 5 || pinned) && !isInPostPage && (
         <span className={styles.summary}>
-          <span className={styles.expandButton} />
+          <span className={styles.expandButtonWrapper}>
+            <span className={styles.expandButton} />
+          </span>
           <span>
             {repliesCount} replies {linkCount > 0 && `and ${linkCount} links`} omitted.{' '}
           </span>

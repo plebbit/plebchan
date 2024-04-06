@@ -10,12 +10,12 @@
   padding: 0.5em 0; /* instead of using margin, wrap with padding */
 }
 
-.threadHideButtonWrapper {
+.hideButtonWrapper {
   padding-right: 5px;
   float: left;
 }
 
-.postDesktop .threadHideButton {
+.postDesktop .hideButton {
   background-repeat: no-repeat;
   background-position: center;
   width: 18px;
@@ -23,6 +23,7 @@
   display: inline-block;
   image-rendering: pixelated;
   cursor: pointer;
+  transform: translateY(-1px);
 }
 
 /* clearfix to the container of the floatied elements to contain them */
@@ -155,7 +156,15 @@
 
 .postDesktop .summary {
   padding-top: 10px;
+  padding-left: 23px;
+  position: relative;
   color: var(--post-mobile-abbr-text-color);
+}
+
+.postDesktop .summary .expandButtonWrapper {
+  position: absolute;
+  top: 8px;
+  left: 2px;
 }
 
 .postDesktop .summary .expandButton {
@@ -166,7 +175,6 @@
   height: 18px;
   display: inline-block;
   image-rendering: pixelated;
-  margin: 0 3px -4px 2px;
   cursor: pointer;
 }
 
