@@ -292,17 +292,17 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
+
   const linkCount = useCountLinksInReplies(post);
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
-  const displayContent = content && content.length > 1000 ? content?.slice(0, 1000) : content;
+  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
-
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
 
   return (
     <div className={styles.postMobile}>
@@ -366,8 +366,9 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
             </div>
           )}
         </div>
-        {!pinned &&
-          replies?.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
+        {!(pinned && !isInPostPage) &&
+          replies &&
+          replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
               <ReplyMobile index={index} reply={reply} />
             </div>
