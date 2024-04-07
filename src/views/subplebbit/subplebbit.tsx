@@ -1,26 +1,23 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Subplebbit as SubplebbitType, useFeed } from '@plebbit/plebbit-react-hooks';
+import { useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './subplebbit.module.css';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import Post from '../../components/post';
+
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-interface SubplebbitProps {
-  subplebbits: (SubplebbitType | undefined)[];
-}
-
-const Subplebbit = ({ subplebbits }: SubplebbitProps) => {
+const Subplebbit = () => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress]) as string[];
   const sortType = 'active';
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType });
 
-  const subplebbit = subplebbits.find((s) => s?.address === subplebbitAddress);
+  const subplebbit = useSubplebbit({ subplebbitAddress });
   const { shortAddress, state, title } = subplebbit || {};
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
