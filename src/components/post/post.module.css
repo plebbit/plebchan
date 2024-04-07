@@ -26,7 +26,7 @@
   transform: translateY(-1px);
 }
 
-/* clearfix to the container of the floatied elements to contain them */
+/* clearfix to contain float elements */
 .postDesktop::after {
   content: "";
   display: table;
@@ -188,6 +188,13 @@
   text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
+/* clearfix to contain float elements */
+.postMobile .postOp::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .postMobile hr {
   padding-bottom: 30px;
 }
@@ -332,7 +339,7 @@
   border-bottom: var(--post-mobile-border-bottom);
 }
 
-/* clearfix to the container of the floatied elements to contain them */
+/* clearfix to contain float elements */
 .replyMobile .replyContainer::after {
   content: "";
   display: table;
