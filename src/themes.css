@@ -478,6 +478,9 @@
   --button-desktop-text-color: #81a2be;
   --button-desktop-text-color-hover: #5f89ac;
 
+  /* filter for inputs */
+  --filter80: brightness(85%);
+
   /* mobile buttons */
   --button-font-size-mobile: 10pt;
   --button-font-weight-mobile: 700;
