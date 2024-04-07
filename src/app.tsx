@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { isHomeView } from './lib/utils/view-utils';
-import { Subplebbit as SubplebbitType, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { Subplebbit as SubplebbitType, useSubplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { useDefaultSubplebbitAddresses } from './hooks/use-default-subplebbits';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
 import Home from './views/home';
+import PostPage from './views/post-page';
 import Settings from './views/settings';
 import Subplebbit from './views/subplebbit';
 import BoardNav from './components/board-nav';
@@ -19,9 +20,9 @@ interface BoardLayoutProps {
   subplebbits: (SubplebbitType | undefined)[];
 }
 
-const BoardLayout = ({ subplebbits }: BoardLayoutProps) => {
+const BoardLayout = React.memo(({ subplebbits }: BoardLayoutProps) => {
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
-  const subplebbit = subplebbits.find((s) => s?.address === subplebbitAddress);
+  const subplebbit = useSubplebbit({ subplebbitAddress });
   const { address, createdAt, title } = subplebbit || {};
 
   return (
@@ -39,7 +40,7 @@ const BoardLayout = ({ subplebbits }: BoardLayoutProps) => {
       <Outlet />
     </>
   );
-};
+});
 
 const App = () => {
   const [theme] = useTheme();
@@ -66,7 +67,8 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home subplebbits={subplebbits} />} />
         <Route element={<BoardLayout subplebbits={subplebbits} />}>
-          <Route path='/p/:subplebbitAddress' element={<Subplebbit subplebbits={subplebbits} />} />
+          <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
+          <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
         </Route>
         <Route path='/settings' element={<Settings />} />
       </Routes>

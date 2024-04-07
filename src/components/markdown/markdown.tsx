@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from './markdown.module.css';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
@@ -77,4 +77,4 @@ const Markdown = ({ content }: MarkdownProps) => {
   );
 };
 
-export default Markdown;
+export default React.memo(Markdown);

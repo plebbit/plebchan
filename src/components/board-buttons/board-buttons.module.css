@@ -5,6 +5,16 @@
 
 .mobileBoardButtons button {
   margin: 0 2px;
+  text-transform: capitalize;
+}
+
+.mobileBoardButtons a, .desktopBoardButtons a {
+  all: unset;
+}
+
+.mobilePostPageButtonsSecondRow {
+  padding-top: 5px;
+  padding-bottom: 20px;
 }
 
 @media (max-width: 640px) {

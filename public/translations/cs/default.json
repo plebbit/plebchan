@@ -25,7 +25,7 @@
   "home": "Domovská stránka",
   "subscribe": "Přihlásit se k odběru",
   "unsubscribe": "Odebrat odběr",
-  "close_post_form": "Zavřít formulář příspěvku",
+  "close_post_form": "Zavřít Formulář Příspěvku",
   "catalog": "Katalog",
   "all": "Vše",
   "subscriptions": "Předplatné",
@@ -36,5 +36,10 @@
   "closed": "Zavřeno",
   "reply": "Odpovědět",
   "link": "Odkaz",
-  "close": "Zavřít"
+  "close": "Zavřít",
+  "post_a_reply": "Zveřejnit Odpověď",
+  "view_thread": "Zobrazit Vlákno",
+  "return": "Návrat",
+  "bottom": "Dno",
+  "top": "Nahoře"
 }

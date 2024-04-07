@@ -1,103 +1,116 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
+import { isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
 import styles from './post.module.css';
 import Markdown from '../markdown';
 import Media from '../media';
 
-const ReplyDesktop = ({ index, reply }: { index: number; reply: Comment }) => {
+const ReplyDesktop = ({ reply }: Comment) => {
   const { t } = useTranslation();
-  const { author, content, link, linkHeight, linkWidth, pinned, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { displayName, shortAddress } = author || {};
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
+  const isReplyingToReply = postCid !== parentCid;
+
   return (
-    index < 5 && (
-      <div className={styles.replyDesktop}>
-        <div className={styles.sideArrows}>{'>>'}</div>
-        <div className={styles.reply}>
-          <div className={styles.postInfo}>
-            <span className={styles.checkbox}>
-              <input type='checkbox' />
-            </span>
-            <span className={styles.nameBlock}>
-              <span className={styles.name}>{displayName || 'Anonymous'} </span>
-              <span className={styles.userAddress}>(u/{shortAddress}) </span>
-            </span>
-            <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
-            <span className={styles.postNum}>
-              <span className={styles.postNumLink}>
-                <Link to={`/p/${subplebbitAddress}/c/${reply.cid}`} className={styles.linkToPost} title='Link to post'>
-                  c/
-                </Link>
-                <span className={styles.replyToPost} title='Reply to post'>
-                  {shortCid}
-                </span>
+    <div className={styles.replyDesktop}>
+      <div className={styles.sideArrows}>{'>>'}</div>
+      <div className={styles.reply}>
+        <div className={styles.postInfo}>
+          <span className={styles.checkbox}>
+            <input type='checkbox' />
+          </span>
+          <span className={styles.nameBlock}>
+            <span className={styles.name}>{displayName || 'Anonymous'} </span>
+            <span className={styles.userAddress}>(u/{shortAddress}) </span>
+          </span>
+          <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
+          <span className={styles.postNum}>
+            <span className={styles.postNumLink}>
+              <Link to={`/p/${subplebbitAddress}/c/${reply.cid}`} className={styles.linkToPost} title='Link to post'>
+                c/
+              </Link>
+              <span className={styles.replyToPost} title='Reply to post'>
+                {shortCid}
               </span>
-              {pinned && (
-                <span className={styles.stickyIconWrapper}>
-                  <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
-                </span>
-              )}
             </span>
-            <span className={styles.postMenuBtn}>▶</span>
-          </div>
-          {link && (
-            <div className={styles.file}>
-              <div className={styles.fileText}>
-                {t('link')}:{' '}
-                <a href={link} target='_blank' rel='noopener noreferrer'>
-                  {link.length > 30 ? link.slice(0, 30) + '...' : link}
-                </a>
-                {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
-                  <span>
-                    {' '}
-                    [
-                    <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
-                      {t('close')}
-                    </span>
-                    ]
+            {pinned && (
+              <span className={styles.stickyIconWrapper}>
+                <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+              </span>
+            )}
+          </span>
+          <span className={styles.postMenuBtn}>▶</span>
+        </div>
+        {link && (
+          <div className={styles.file}>
+            <div className={styles.fileText}>
+              {t('link')}:{' '}
+              <a href={link} target='_blank' rel='noopener noreferrer'>
+                {link.length > 30 ? link?.slice(0, 30) + '...' : link}
+              </a>
+              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+                <span>
+                  {' '}
+                  [
+                  <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
+                    {t('close')}
                   </span>
-                )}
-              </div>
-              {hasThumbnail && (
-                <Media
-                  commentMediaInfo={commentMediaInfo}
-                  isMobile={false}
-                  isReply={true}
-                  linkHeight={linkHeight}
-                  linkWidth={linkWidth}
-                  showThumbnail={showThumbnail}
-                  setShowThumbnail={setShowThumbnail}
-                />
+                  ]
+                </span>
               )}
             </div>
-          )}
-          {content && (
-            <blockquote className={styles.postMessage}>
-              <Markdown content={content} />
-            </blockquote>
-          )}
-        </div>
+            {hasThumbnail && (
+              <Media
+                commentMediaInfo={commentMediaInfo}
+                isMobile={false}
+                isReply={true}
+                linkHeight={linkHeight}
+                linkWidth={linkWidth}
+                showThumbnail={showThumbnail}
+                setShowThumbnail={setShowThumbnail}
+              />
+            )}
+          </div>
+        )}
+        {content && (
+          <blockquote className={styles.postMessage}>
+            {isReplyingToReply && (
+              <>
+                <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+                  {`c/${Plebbit.getShortCid(parentCid)}`}
+                </Link>
+                <br />
+              </>
+            )}
+            <Markdown content={content} />
+          </blockquote>
+        )}
       </div>
-    )
+    </div>
   );
 };
 
-const PostDesktop = ({ post }: Comment) => {
+const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: boolean }) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { displayName, shortAddress } = author || {};
-  const displayTitle = title && title.length > 75 ? title.slice(0, 75) + '...' : title;
-  const displayContent = content && content.length > 1000 ? content.slice(0, 1000) + '(...)' : content;
+
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+
+  const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
+  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -114,15 +127,17 @@ const PostDesktop = ({ post }: Comment) => {
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      <span className={styles.threadHideButtonWrapper}>
-        <span className={`${styles.threadHideButton} ${styles.hideThread}`} />
-      </span>
+      {!isInPostPage && (
+        <span className={styles.hideButtonWrapper}>
+          <span className={`${styles.hideButton} ${styles.hideThread}`} />
+        </span>
+      )}
       {commentMediaInfo?.url && (
         <div className={styles.file}>
           <div className={styles.fileText}>
             {t('link')}:{' '}
             <a href={commentMediaInfo?.url} target='_blank' rel='noopener noreferrer'>
-              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url.slice(0, 30) + '...' : commentMediaInfo?.url}
+              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url?.slice(0, 30) + '...' : commentMediaInfo?.url}
             </a>{' '}
             ({commentMediaInfo?.type})
             {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
@@ -188,7 +203,7 @@ const PostDesktop = ({ post }: Comment) => {
       {content && (
         <blockquote className={styles.postMessage}>
           <Markdown content={displayContent} />
-          {content.length > 1000 && (
+          {content.length > 1000 && !isInPostPage && (
             <span className={styles.abbr}>
               <br />
               Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
@@ -196,17 +211,20 @@ const PostDesktop = ({ post }: Comment) => {
           )}
         </blockquote>
       )}
-      {(replies.length > 5 || pinned) && (
+      {(replies.length > 5 || pinned) && !isInPostPage && (
         <span className={styles.summary}>
-          <span className={styles.expandButton} />
+          <span className={styles.expandButtonWrapper}>
+            <span className={styles.expandButton} />
+          </span>
           <span>
             {repliesCount} replies {linkCount > 0 && `and ${linkCount} links`} omitted.{' '}
           </span>
           <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view.
         </span>
       )}
-      {!pinned &&
-        replies.map((reply, index) => (
+      {!(pinned && !isInPostPage) &&
+        replies &&
+        replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
           <div key={reply.cid} className={styles.replyContainer}>
             <ReplyDesktop index={index} reply={reply} />
           </div>
@@ -215,57 +233,70 @@ const PostDesktop = ({ post }: Comment) => {
   );
 };
 
-const ReplyMobile = ({ index, reply }: { index: number; reply: Comment }) => {
-  const { author, content, link, linkHeight, linkWidth, pinned, shortCid, subplebbitAddress, timestamp } = reply || {};
+const ReplyMobile = ({ reply }: Comment) => {
+  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { displayName, shortAddress } = author || {};
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
+  const isReplyingToReply = postCid !== parentCid;
+
   return (
-    index < 5 && (
-      <div className={styles.replyMobile}>
-        <div className={styles.reply}>
-          <div className={styles.replyContainer}>
-            <div className={styles.postInfo}>
-              <span className={styles.postMenuBtn}>...</span>
-              <span className={styles.nameBlock}>
-                <span className={styles.name}>{displayName || 'Anonymous'} </span>
-                <span className={styles.address}>(u/{shortAddress})</span>
-              </span>
-              <span className={styles.dateTimePostNum}>
-                {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
-                <span className={styles.replyToPost}>{shortCid}</span>
-              </span>
-            </div>
-            {hasThumbnail && (
-              <Media
-                commentMediaInfo={commentMediaInfo}
-                isMobile={true}
-                isReply={false}
-                linkHeight={linkHeight}
-                linkWidth={linkWidth}
-                showThumbnail={showThumbnail}
-                setShowThumbnail={setShowThumbnail}
-              />
-            )}
+    <div className={styles.replyMobile}>
+      <div className={styles.reply}>
+        <div className={styles.replyContainer}>
+          <div className={styles.postInfo}>
+            <span className={styles.postMenuBtn}>...</span>
+            <span className={styles.nameBlock}>
+              <span className={styles.name}>{displayName || 'Anonymous'} </span>
+              <span className={styles.address}>(u/{shortAddress})</span>
+            </span>
+            <span className={styles.dateTimePostNum}>
+              {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
+              <span className={styles.replyToPost}>{shortCid}</span>
+            </span>
+          </div>
+          {hasThumbnail && (
+            <Media
+              commentMediaInfo={commentMediaInfo}
+              isMobile={true}
+              isReply={false}
+              linkHeight={linkHeight}
+              linkWidth={linkWidth}
+              showThumbnail={showThumbnail}
+              setShowThumbnail={setShowThumbnail}
+            />
+          )}
+          {content && (
             <blockquote className={styles.postMessage}>
+              {isReplyingToReply && (
+                <>
+                  <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+                    {`c/${Plebbit.getShortCid(parentCid)}`}
+                  </Link>
+                  <br />
+                </>
+              )}
               <Markdown content={content} />
             </blockquote>
-          </div>
+          )}
         </div>
       </div>
-    )
+    </div>
   );
 };
 
-const PostMobile = ({ post }: Comment) => {
+const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: boolean }) => {
+  const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
+
   const linkCount = useCountLinksInReplies(post);
-  const displayTitle = title && title.length > 30 ? title.slice(0, 30) + '(...)' : title;
-  const displayContent = content && content.length > 1000 ? content.slice(0, 1000) : content;
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+  const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
+  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -287,7 +318,7 @@ const PostMobile = ({ post }: Comment) => {
               </span>
               <span className={styles.nameBlock}>
                 <span className={styles.name}>{displayName || 'Anonymous'} </span>
-                <span className={styles.address}>(u/{shortAddress || address.slice(0, 12) + '...'})</span>
+                <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>
                 {title && (
                   <>
                     <br />
@@ -314,7 +345,7 @@ const PostMobile = ({ post }: Comment) => {
             {content && (
               <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>
                 <Markdown content={displayContent} />
-                {content.length > 1000 && (
+                {content.length > 1000 && !isInPostPage && (
                   <span className={styles.abbr}>
                     <br />
                     Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
@@ -323,18 +354,21 @@ const PostMobile = ({ post }: Comment) => {
               </blockquote>
             )}
           </div>
-          <div className={styles.postLink}>
-            <span className={styles.info}>
-              {replyCount} Replies
-              {linkCount > 0 && ` / ${linkCount} Links`}
-            </span>
-            <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
-              View Thread
-            </Link>
-          </div>
+          {!isInPostPage && (
+            <div className={styles.postLink}>
+              <span className={styles.info}>
+                {replyCount} Replies
+                {linkCount > 0 && ` / ${linkCount} Links`}
+              </span>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
+                {t('view_thread')}
+              </Link>
+            </div>
+          )}
         </div>
-        {!pinned &&
-          replies.map((reply, index) => (
+        {!(pinned && !isInPostPage) &&
+          replies &&
+          replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
               <ReplyMobile index={index} reply={reply} />
             </div>
@@ -344,12 +378,18 @@ const PostMobile = ({ post }: Comment) => {
   );
 };
 
-const Post = ({ post }: Comment) => {
+interface PostProps {
+  index?: number;
+  post: Comment;
+  showAllReplies?: boolean;
+}
+
+const Post = ({ post, showAllReplies = false }: PostProps) => {
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
-        <PostDesktop post={post} />
-        <PostMobile post={post} />
+        <PostDesktop post={post} showAllReplies={showAllReplies} />
+        <PostMobile post={post} showAllReplies={showAllReplies} />
       </div>
     </div>
   );

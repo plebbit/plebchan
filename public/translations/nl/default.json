@@ -25,7 +25,7 @@
   "home": "Home",
   "subscribe": "Abonneren",
   "unsubscribe": "Afmelden",
-  "close_post_form": "Sluit postformulier",
+  "close_post_form": "Sluit Postformulier",
   "catalog": "Catalogus",
   "all": "Alles",
   "subscriptions": "Abonnementen",
@@ -36,5 +36,10 @@
   "closed": "Gesloten",
   "reply": "Antwoord",
   "link": "Link",
-  "close": "Sluiten"
+  "close": "Sluiten",
+  "post_a_reply": "Een Antwoord Plaatsen",
+  "view_thread": "Bekijk Thread",
+  "return": "Terugkeer",
+  "bottom": "Onderkant",
+  "top": "Boven"
 }

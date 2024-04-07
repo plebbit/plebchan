@@ -25,7 +25,7 @@
   "home": "Trang chủ",
   "subscribe": "Đăng ký",
   "unsubscribe": "Hủy đăng ký",
-  "close_post_form": "Đóng biểu mẫu đăng bài",
+  "close_post_form": "Đóng Biểu Mẫu Bài Viết",
   "catalog": "Catalog",
   "all": "Tất cả",
   "subscriptions": "Đăng ký",
@@ -36,5 +36,10 @@
   "closed": "Đóng",
   "reply": "Trả lời",
   "link": "Liên kết",
-  "close": "Đóng"
+  "close": "Đóng",
+  "post_a_reply": "Đăng Một Câu Trả Lời",
+  "view_thread": "Xem Chủ Đề",
+  "return": "Trở lại",
+  "bottom": "Đáy",
+  "top": "Đầu"
 }

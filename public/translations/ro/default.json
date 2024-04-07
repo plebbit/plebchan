@@ -25,7 +25,7 @@
   "home": "Acasă",
   "subscribe": "Abonare",
   "unsubscribe": "Dezabonare",
-  "close_post_form": "Închideți formularul de postare",
+  "close_post_form": "Închideți Formularul de Postare",
   "catalog": "Catalog",
   "all": "Toate",
   "subscriptions": "Abonamente",
@@ -36,5 +36,10 @@
   "closed": "Închis",
   "reply": "Răspunde",
   "link": "Legătură",
-  "close": "Închide"
+  "close": "Închide",
+  "post_a_reply": "Postează un Răspuns",
+  "view_thread": "Vizualizați Firul",
+  "return": "Întoarcere",
+  "bottom": "Partea de jos",
+  "top": "Sus"
 }

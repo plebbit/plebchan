@@ -25,7 +25,7 @@
   "home": "Inicio",
   "subscribe": "Suscribirse",
   "unsubscribe": "Cancelar suscripción",
-  "close_post_form": "Cerrar formulario de publicación",
+  "close_post_form": "Cerrar Formulario de Publicación",
   "catalog": "Catálogo",
   "all": "Todo",
   "subscriptions": "Suscripciones",
@@ -36,5 +36,10 @@
   "closed": "Cerrado",
   "reply": "Responder",
   "link": "Enlace",
-  "close": "Cerrar"
+  "close": "Cerrar",
+  "post_a_reply": "Publicar una Respuesta",
+  "view_thread": "Ver Hilo",
+  "return": "Regresar",
+  "bottom": "Fondo",
+  "top": "Arriba"
 }

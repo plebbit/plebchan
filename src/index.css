@@ -24,7 +24,6 @@ hr {
 
 @media (max-width: 640px) {
   .button {
-    text-transform: capitalize;
     font-size: var(--button-font-size-mobile);
     font-weight: var(--button-font-weight-mobile);
     font-family: var(--button-font-family-mobile);

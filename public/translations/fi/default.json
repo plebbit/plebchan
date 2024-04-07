@@ -25,7 +25,7 @@
   "home": "Koti",
   "subscribe": "Tilaa",
   "unsubscribe": "Peruuta tilaus",
-  "close_post_form": "Sulje postilomake",
+  "close_post_form": "Sulje Julkaisulomake",
   "catalog": "Luettelo",
   "all": "Kaikki",
   "subscriptions": "Tilaukset",
@@ -36,5 +36,10 @@
   "closed": "Suljettu",
   "reply": "Vastaa",
   "link": "Linkki",
-  "close": "Sulje"
+  "close": "Sulje",
+  "post_a_reply": "Lähetä Vastaus",
+  "view_thread": "Näytä Ketju",
+  "return": "Palata",
+  "bottom": "Pohja",
+  "top": "Ylös"
 }

@@ -36,5 +36,10 @@
   "closed": "סגור",
   "reply": "הגב",
   "link": "קישור",
-  "close": "סגור"
+  "close": "סגור",
+  "post_a_reply": "פרסם תגובה",
+  "view_thread": "הצג אשכול",
+  "return": "חזור",
+  "bottom": "תחתית",
+  "top": "עליון"
 }

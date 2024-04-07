@@ -25,7 +25,7 @@
   "home": "Hem",
   "subscribe": "Prenumerera",
   "unsubscribe": "Avsluta prenumeration",
-  "close_post_form": "Stäng inläggsformuläret",
+  "close_post_form": "Stäng Inläggsformuläret",
   "catalog": "Katalog",
   "all": "Allt",
   "subscriptions": "Prenumerationer",
@@ -36,5 +36,10 @@
   "closed": "Stängd",
   "reply": "Svara",
   "link": "Länk",
-  "close": "Stäng"
+  "close": "Stäng",
+  "post_a_reply": "Posta Ett Svar",
+  "view_thread": "Visa Tråd",
+  "return": "Återgång",
+  "bottom": "Botten",
+  "top": "Topp"
 }

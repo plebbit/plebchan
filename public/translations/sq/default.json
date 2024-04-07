@@ -25,7 +25,7 @@
   "home": "Faqja kryesore",
   "subscribe": "Pajtohu",
   "unsubscribe": "Hiq pajtimin",
-  "close_post_form": "Mbyllni formularin e postës",
+  "close_post_form": "Mbyll Formularin e Postës",
   "catalog": "Katalog",
   "all": "Të gjitha",
   "subscriptions": "Abonimet",
@@ -36,5 +36,10 @@
   "closed": "Mbyllur",
   "reply": "Përgjigju",
   "link": "Lidhje",
-  "close": "Mbylle"
+  "close": "Mbylle",
+  "post_a_reply": "Posto një Përgjigje",
+  "view_thread": "Shiko Thread",
+  "return": "Kthimi",
+  "bottom": "Fund",
+  "top": "Sipër"
 }

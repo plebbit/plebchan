@@ -10,12 +10,12 @@
   padding: 0.5em 0; /* instead of using margin, wrap with padding */
 }
 
-.threadHideButtonWrapper {
+.hideButtonWrapper {
   padding-right: 5px;
   float: left;
 }
 
-.postDesktop .threadHideButton {
+.postDesktop .hideButton {
   background-repeat: no-repeat;
   background-position: center;
   width: 18px;
@@ -23,9 +23,10 @@
   display: inline-block;
   image-rendering: pixelated;
   cursor: pointer;
+  transform: translateY(-1px);
 }
 
-/* clearfix to the container of the floatied elements to contain them */
+/* clearfix to contain float elements */
 .postDesktop::after {
   content: "";
   display: table;
@@ -155,7 +156,15 @@
 
 .postDesktop .summary {
   padding-top: 10px;
+  padding-left: 23px;
+  position: relative;
   color: var(--post-mobile-abbr-text-color);
+}
+
+.postDesktop .summary .expandButtonWrapper {
+  position: absolute;
+  top: 8px;
+  left: 2px;
 }
 
 .postDesktop .summary .expandButton {
@@ -166,7 +175,6 @@
   height: 18px;
   display: inline-block;
   image-rendering: pixelated;
-  margin: 0 3px -4px 2px;
   cursor: pointer;
 }
 
@@ -178,6 +186,13 @@
 .postDesktop .summary a:hover {
   color: var(--post-link-text-color-hover);
   text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
+/* clearfix to contain float elements */
+.postMobile .postOp::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .postMobile hr {
@@ -202,7 +217,9 @@
 .postMobile .postInfo {
   overflow: hidden;
   border-bottom: var(--post-mobile-info-border-bottom);
+  border-top: var(--post-mobile-info-border-top);
   background-color: var(--post-mobile-info-background-color);
+  color: var(--post-mobile-info-text-color);
   padding: 5px;
   clear: left;
 }
@@ -303,15 +320,26 @@
   padding: 3px 3px 0 0;
 }
 
+.quoteLink {
+  color: var(--post-quotelink-text-color);
+  text-decoration: var(--post-quotelink-text-decoration);
+}
+
+.quoteLink:hover {
+  color: var(--post-quotelink-text-color-hover);
+  text-decoration: var(--post-quotelink-text-decoration-hover);
+}
+
 .replyMobile {
   padding-top: 7px;
 }
 
 .replyMobile .replyContainer {
   background-color: var(--post-mobile-background-color);
+  border-bottom: var(--post-mobile-border-bottom);
 }
 
-/* clearfix to the container of the floatied elements to contain them */
+/* clearfix to contain float elements */
 .replyMobile .replyContainer::after {
   content: "";
   display: table;
@@ -320,8 +348,10 @@
 
 .replyMobile .postInfo {
   padding: 5px;
+  border-top: var(--post-mobile-info-border-top);
   border-bottom: var(--post-mobile-info-border-bottom);
   background-color: var(--post-mobile-info-background-color);
+  color: var(--post-mobile-info-text-color);
 }
 
 .replyMobile .postInfo .postMenuBtn {

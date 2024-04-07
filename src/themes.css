@@ -68,6 +68,9 @@
   --post-content-link-text-decoration: none;
   --post-content-link-text-decoration-hover: none;
 
+  /* media */
+  --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
   /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-red.png");
   --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
@@ -96,8 +99,12 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-file-info-text-color: #707070;
   --post-mobile-content-font-size: 11pt;
-  
-  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
+  /* quotelink */
+  --post-quotelink-text-color: navy;
+  --post-quotelink-text-color-hover: red;
+  --post-quotelink-text-decoration: underline;
+  --post-quotelink-text-decoration-hover: underline; 
 
   /* reply desktop */
   --side-arrows-color: #e0bfb7;
@@ -180,6 +187,9 @@
   --post-content-link-text-decoration: none;
   --post-content-link-text-decoration-hover: none;
 
+  /* media */
+  --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
   /* post */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-blue.png");
   --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
@@ -197,7 +207,7 @@
   --post-mobile-info-border-bottom: 1px solid #b7c5d9;
   --post-mobile-info-background-color: #c9cde8;
   --post-mobile-menu-button-color: #34345c;
-  --post-mobile-name-text-color: purple;
+  --post-mobile-name-text-color: #117743;
   --post-mobile-name-font-weight: 700;
   --post-mobile-subject-text-color: #0f0c5d;
   --post-mobile-subject-font-weight: 700;
@@ -208,7 +218,11 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
-  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+  /* quotelink */
+  --post-quotelink-text-color: #d00;
+  --post-quotelink-text-color-hover: #d00;
+  --post-quotelink-text-decoration: underline;
+  --post-quotelink-text-decoration-hover: underline; 
 
   /* reply desktop */
   --side-arrows-color: #b7c5d9;
@@ -271,6 +285,9 @@
   --post-content-link-text-decoration: underline;
   --post-content-link-text-decoration-hover: underline;
 
+  /* media */
+  --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
   /* post */
   --post-subject-text-color: #cc1105;
   --post-subject-font-weight: 700;
@@ -297,7 +314,11 @@
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
 
-  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+  /* quotelink */
+  --post-quotelink-text-color: navy;
+  --post-quotelink-text-color-hover: red;
+  --post-quotelink-text-decoration: underline;
+  --post-quotelink-text-decoration-hover: underline; 
 
   /* reply desktop */
   --side-arrows-color: #e0bfb7;
@@ -373,6 +394,9 @@
   --post-content-link-text-decoration: none;
   --post-content-link-text-decoration-hover: none;
 
+  /* media */
+  --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
   /* post */
   --post-subject-text-color: #0f0c5d;
   --post-subject-font-weight: 700;
@@ -383,7 +407,27 @@
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
 
-  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+  /* post mobile */
+  --post-mobile-background-color: #d6daf0;
+  --post-mobile-info-border-bottom: 1px solid #b7c5d9;
+  --post-mobile-info-background-color: #c9cde8;
+  --post-mobile-menu-button-color: #34345c;
+  --post-mobile-name-text-color: #117743;
+  --post-mobile-name-font-weight: 700;
+  --post-mobile-subject-text-color: #0f0c5d;
+  --post-mobile-subject-font-weight: 700;
+  --post-mobile-link-background-color: #c9cde8;
+  --post-mobile-link-border-top: 1px solid #b7c5d9;
+  --post-mobile-link-info-text-color: #34345c;
+  --post-mobile-abbr-text-color: #707070;
+  --post-mobile-abbr-font-size: 12pt;
+  --post-mobile-content-font-size: 13pt;
+
+  /* quotelink */
+  --post-quotelink-text-color: #d00;
+  --post-quotelink-text-color-hover: #d00;
+  --post-quotelink-text-decoration: underline;
+  --post-quotelink-text-decoration-hover: underline; 
 
   /* reply desktop */
   --side-arrows-color: #b7c5d9;
@@ -455,6 +499,9 @@
   --post-content-link-text-decoration: none;
   --post-content-link-text-decoration-hover: none;
 
+  /* media */
+  --media-thumbnail-background-color: rgba(255, 255, 255, 0.01);
+
   /* post */
   --post-subject-text-color: #b294bb;
   --post-subject-font-weight: 700;
@@ -465,7 +512,28 @@
   --post-greentext-color: #b5bd68;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-dark.png");
 
-  --post-thumbnail-background-color: rgba(255, 255, 255, 0.01);
+  /* post mobile */
+  --post-mobile-background-color: #282A2E;
+  --post-mobile-info-border-bottom: 1px solid #2D2F33;
+  --post-mobile-info-background-color: #212326;
+  --post-mobile-info-text-color: #707070;
+  --post-mobile-menu-button-color: #81A2BE;
+  --post-mobile-name-text-color: #117743;
+  --post-mobile-name-font-weight: 700;
+  --post-mobile-subject-text-color: #B294BB;
+  --post-mobile-subject-font-weight: 700;
+  --post-mobile-link-background-color: #212326;
+  --post-mobile-link-border-top: 1px solid #2D2F33;
+  --post-mobile-link-info-text-color: #707070;
+  --post-mobile-abbr-text-color: #707070;
+  --post-mobile-abbr-font-size: 10pt;
+  --post-mobile-content-font-size: 11pt;
+
+  /* quotelink */
+  --post-quotelink-text-color: #5f89ac;
+  --post-quotelink-text-color-hover: #81a2be;
+  --post-quotelink-text-decoration: underline;
+  --post-quotelink-text-decoration-hover: underline; 
 
   /* reply desktop */
   --side-arrows-color: #c5c8c6;
@@ -532,6 +600,9 @@
   --post-content-link-text-decoration: none;
   --post-content-link-text-decoration-hover: none;
 
+  /* media */
+  --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
   /* post */
   --post-subject-text-color: #111;
   --post-subject-font-weight: 700;
@@ -542,7 +613,30 @@
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-photon.png");
 
-  --post-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+  /* post mobile */
+  --post-mobile-background-color: #eee;
+  --post-mobile-info-border-bottom: 1px solid #ccc;
+  --post-mobile-info-border-top: 1px solid #ccc;
+  --post-mobile-info-background-color: #ddd;
+  --post-mobile-info-text-color: #707070;
+  --post-mobile-menu-button-color: #f60;
+  --post-mobile-name-text-color: #004a99;
+  --post-mobile-name-font-weight: 700;
+  --post-mobile-subject-text-color: #111;
+  --post-mobile-subject-font-weight: 700;
+  --post-mobile-link-background-color: #ddd;
+  --post-mobile-link-border-top: 1px solid #ccc;
+  --post-mobile-link-info-text-color: #333;
+  --post-mobile-abbr-text-color: #333;
+  --post-mobile-abbr-font-size: 10pt;
+  --post-mobile-content-font-size: 11pt;
+  --post-mobile-border-bottom: 1px solid #ccc;
+
+  /* quotelink */
+  --post-quotelink-text-color: #f60;
+  --post-quotelink-text-color-hover: #f30;
+  --post-quotelink-text-decoration: underline;
+  --post-quotelink-text-decoration-hover: underline; 
 
   /* reply desktop */
   --side-arrows-color: #333;

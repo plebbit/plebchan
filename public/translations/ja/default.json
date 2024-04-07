@@ -36,5 +36,10 @@
   "closed": "閉鎖",
   "reply": "返信",
   "link": "リンク",
-  "close": "閉じる"
+  "close": "閉じる",
+  "post_a_reply": "返信を投稿する",
+  "view_thread": "スレッドを見る",
+  "return": "戻る",
+  "bottom": "下へ",
+  "top": "上へ"
 }
