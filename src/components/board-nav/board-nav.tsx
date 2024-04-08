@@ -1,10 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Subplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from './board-nav.module.css';
 
 interface BoardNavProps {
-  address?: string | undefined;
   subplebbits: (Subplebbit | undefined)[];
   currentSubplebbit?: string | undefined;
 }
@@ -77,7 +76,8 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   );
 };
 
-const BoardNav = ({ address, subplebbits }: BoardNavProps) => {
+const BoardNav = ({ subplebbits }: BoardNavProps) => {
+  const { subplebbitAddress: address } = useParams();
   return (
     <>
       <BoardNavDesktop subplebbits={subplebbits} />
