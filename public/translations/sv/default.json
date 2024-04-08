@@ -41,5 +41,7 @@
   "view_thread": "Visa Tråd",
   "return": "Återgång",
   "bottom": "Botten",
-  "top": "Topp"
+  "top": "Topp",
+  "thread_closed": "Tråd stängd.",
+  "may_not_reply": "Du kanske inte kan svara vid den här tiden."
 }

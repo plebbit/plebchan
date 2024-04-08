@@ -41,5 +41,7 @@
   "view_thread": "Konuyu Görüntüle",
   "return": "Dönüş",
   "bottom": "Alt",
-  "top": "Üst"
+  "top": "Üst",
+  "thread_closed": "Konu kapatıldı.",
+  "may_not_reply": "Şu anda cevap veremeyebilirsiniz."
 }

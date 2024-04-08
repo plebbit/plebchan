@@ -27,9 +27,9 @@ const PostForm = () => {
       <div className={styles.postFormButtonDesktop}>
         {isThreadClosed ? (
           <div className={styles.closed}>
-            Thread closed.
+            {t('thread_closed')}
             <br />
-            You may not reply at this time.
+            {t('may_not_reply')}
           </div>
         ) : (
           <div>

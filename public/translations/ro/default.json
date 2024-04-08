@@ -41,5 +41,7 @@
   "view_thread": "Vizualizați Firul",
   "return": "Întoarcere",
   "bottom": "Partea de jos",
-  "top": "Sus"
+  "top": "Sus",
+  "thread_closed": "Thread închis.",
+  "may_not_reply": "Poate că nu puteți răspunde în acest moment."
 }

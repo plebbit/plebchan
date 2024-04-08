@@ -41,5 +41,7 @@
   "view_thread": "スレッドを見る",
   "return": "戻る",
   "bottom": "下へ",
-  "top": "上へ"
+  "top": "上へ",
+  "thread_closed": "スレッドが閉じられました。",
+  "may_not_reply": "現在、返信することはできません。"
 }

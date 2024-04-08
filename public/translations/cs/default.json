@@ -41,5 +41,7 @@
   "view_thread": "Zobrazit Vlákno",
   "return": "Návrat",
   "bottom": "Dno",
-  "top": "Nahoře"
+  "top": "Nahoře",
+  "thread_closed": "Vlákno uzavřeno.",
+  "may_not_reply": "V tuto chvíli nemůžete odpovědět."
 }

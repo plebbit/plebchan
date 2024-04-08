@@ -41,5 +41,7 @@
   "view_thread": "Vis Tråd",
   "return": "Retur",
   "bottom": "Bunnen",
-  "top": "Topp"
+  "top": "Topp",
+  "thread_closed": "Tråd stengt.",
+  "may_not_reply": "Du kan kanskje ikke svare på dette tidspunktet."
 }

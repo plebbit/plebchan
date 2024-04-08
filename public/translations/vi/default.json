@@ -41,5 +41,7 @@
   "view_thread": "Xem Chủ Đề",
   "return": "Trở lại",
   "bottom": "Đáy",
-  "top": "Đầu"
+  "top": "Đầu",
+  "thread_closed": "Chủ đề đã đóng.",
+  "may_not_reply": "Bạn có thể không thể trả lời vào thời điểm này."
 }

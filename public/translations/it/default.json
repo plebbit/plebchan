@@ -41,5 +41,7 @@
   "view_thread": "Visualizza Thread",
   "return": "Indietro",
   "bottom": "Vai sotto",
-  "top": "Vai sopra"
+  "top": "Vai sopra",
+  "thread_closed": "Thread chiuso.",
+  "may_not_reply": "Non puoi rispondere in questo momento."
 }

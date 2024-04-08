@@ -41,5 +41,7 @@
   "view_thread": "스레드 보기",
   "return": "돌아 가기",
   "bottom": "하단",
-  "top": "맨 위로"
+  "top": "맨 위로",
+  "thread_closed": "스레드가 닫혔습니다.",
+  "may_not_reply": "현재 시간에는 답글을 달 수 없습니다."
 }

@@ -41,5 +41,7 @@
   "view_thread": "Lihat Thread",
   "return": "Kembali",
   "bottom": "Bawah",
-  "top": "Atas"
+  "top": "Atas",
+  "thread_closed": "Benang ditutup.",
+  "may_not_reply": "Anda mungkin tidak bisa membalas pada saat ini."
 }
