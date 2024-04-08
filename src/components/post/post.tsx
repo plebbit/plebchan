@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
@@ -11,10 +12,20 @@ import styles from './post.module.css';
 import Markdown from '../markdown';
 import Media from '../media';
 
-const PostDesktop = ({ post, showAllReplies }: PostProps) => {
+interface PostProps {
+  index?: number;
+  post?: any;
+  reply?: any;
+  roles?: Role[];
+  showAllReplies?: boolean;
+}
+
+const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
-  const { displayName, shortAddress } = author || {};
+  const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
+
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const isInPostPage = isPostPageView(useLocation().pathname, useParams());
@@ -80,7 +91,10 @@ const PostDesktop = ({ post, showAllReplies }: PostProps) => {
         </span>
         {title && <span className={styles.subject}>{displayTitle} </span>}
         <span className={styles.nameBlock}>
-          <span className={`${styles.name} ${(isDescription || isRules) && styles.capcodeMod}`}>{displayName || 'Anonymous'} </span>
+          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
+            {displayName || 'Anonymous'}
+            {authorRole && ` ## Board ${authorRole}`}{' '}
+          </span>
           {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress}) </span>}
         </span>
         <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
@@ -138,17 +152,18 @@ const PostDesktop = ({ post, showAllReplies }: PostProps) => {
         replies &&
         replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
           <div key={reply.cid} className={styles.replyContainer}>
-            <ReplyDesktop index={index} reply={reply} />
+            <ReplyDesktop index={index} reply={reply} roles={roles} />
           </div>
         ))}
     </div>
   );
 };
 
-const ReplyDesktop = ({ reply }: any) => {
+const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
-  const { displayName, shortAddress } = author || {};
+  const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -165,7 +180,10 @@ const ReplyDesktop = ({ reply }: any) => {
             <input type='checkbox' />
           </span>
           <span className={styles.nameBlock}>
-            <span className={styles.name}>{displayName || 'Anonymous'} </span>
+            <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+              {displayName || 'Anonymous'}
+              {authorRole && ` ## Board ${authorRole}`}{' '}
+            </span>
             <span className={styles.userAddress}>(u/{shortAddress}) </span>
           </span>
           <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
@@ -235,10 +253,12 @@ const ReplyDesktop = ({ reply }: any) => {
   );
 };
 
-const PostMobile = ({ post, showAllReplies }: PostProps) => {
+const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
+
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const linkCount = useCountLinksInReplies(post);
@@ -265,7 +285,10 @@ const PostMobile = ({ post, showAllReplies }: PostProps) => {
                 ...
               </span>
               <span className={styles.nameBlock}>
-                <span className={`${styles.name} ${(isDescription || isRules) && styles.capcodeMod}`}>{displayName || 'Anonymous'} </span>
+                <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+                  {displayName || 'Anonymous'}
+                  {authorRole && ` ## Board ${authorRole}`}{' '}
+                </span>
                 {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>}
                 {title && (
                   <>
@@ -323,7 +346,7 @@ const PostMobile = ({ post, showAllReplies }: PostProps) => {
           replies &&
           replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
-              <ReplyMobile index={index} reply={reply} />
+              <ReplyMobile index={index} reply={reply} roles={roles} />
             </div>
           ))}
       </div>
@@ -331,9 +354,10 @@ const PostMobile = ({ post, showAllReplies }: PostProps) => {
   );
 };
 
-const ReplyMobile = ({ reply }: any) => {
+const ReplyMobile = ({ reply, roles }: PostProps) => {
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
-  const { displayName, shortAddress } = author || {};
+  const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -348,7 +372,10 @@ const ReplyMobile = ({ reply }: any) => {
           <div className={styles.postInfo}>
             <span className={styles.postMenuBtn}>...</span>
             <span className={styles.nameBlock}>
-              <span className={styles.name}>{displayName || 'Anonymous'} </span>
+              <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+                {displayName || 'Anonymous'}
+                {authorRole && ` ## Board ${authorRole}`}{' '}
+              </span>
               <span className={styles.address}>(u/{shortAddress})</span>
             </span>
             <span className={styles.dateTimePostNum}>
@@ -386,18 +413,13 @@ const ReplyMobile = ({ reply }: any) => {
   );
 };
 
-interface PostProps {
-  index?: number;
-  post: any;
-  showAllReplies?: boolean;
-}
-
 const Post = ({ post, showAllReplies = false }: PostProps) => {
+  const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
-        <PostDesktop post={post} showAllReplies={showAllReplies} />
-        <PostMobile post={post} showAllReplies={showAllReplies} />
+        <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
       </div>
     </div>
   );

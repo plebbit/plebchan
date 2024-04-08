@@ -370,6 +370,7 @@
 
 .capcodeMod {
   color: var(--post-capcode-mod-text-color) !important;
+  text-transform: capitalize;
 }
 
 @media (max-width: 640px) {
