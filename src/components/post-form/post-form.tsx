@@ -42,9 +42,17 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormButtonMobile}>
-        <button className='button' onClick={() => setShowForm(!showForm)}>
-          {showForm ? t('close_post_form') : isInPostPage ? t('post_a_reply') : t('start_new_thread')}
-        </button>
+        {isThreadClosed ? (
+          <div className={styles.closed}>
+            Thread closed.
+            <br />
+            You may not reply at this time.
+          </div>
+        ) : (
+          <button className='button' onClick={() => setShowForm(true)}>
+            {isInPostPage ? t('post_a_reply') : t('start_new_thread')}
+          </button>
+        )}
       </div>
     </>
   );

@@ -336,7 +336,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                 {replyCount > 0 && `${replyCount} Replies`}
                 {linkCount > 0 && ` / ${linkCount} Links`}
               </span>
-              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
+              <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} className='button'>
                 {t('view_thread')}
               </Link>
             </div>
