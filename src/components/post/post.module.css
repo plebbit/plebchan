@@ -57,6 +57,7 @@
 
 .postDesktop .checkbox, .replyDesktop .checkbox {
   padding: 3px 7px 3px 4px;
+  filter: var(--filter80);
 }
 
 .postDesktop .subject {

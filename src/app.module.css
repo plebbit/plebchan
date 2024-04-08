@@ -15,7 +15,3 @@
     padding: 5px;
   }
 }
-
-select, button, input, textarea {
-  filter: var(--filter80);
-}
