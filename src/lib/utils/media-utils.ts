@@ -17,6 +17,7 @@ export const getHasThumbnail = (commentMediaInfo: CommentMediaInfo | undefined, 
     commentMediaInfo &&
     (commentMediaInfo.type === 'image' ||
       commentMediaInfo.type === 'video' ||
+      commentMediaInfo.type === 'audio' ||
       commentMediaInfo.type === 'gif' ||
       (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
       (commentMediaInfo.type === 'iframe' && iframeThumbnail))

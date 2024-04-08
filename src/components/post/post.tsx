@@ -61,7 +61,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
               {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url?.slice(0, 30) + '...' : commentMediaInfo?.url}
             </a>{' '}
             ({commentMediaInfo?.type})
-            {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+            {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'audio') && (
               <span>
                 {' '}
                 [
@@ -211,7 +211,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               <a href={link} target='_blank' rel='noopener noreferrer'>
                 {link.length > 30 ? link?.slice(0, 30) + '...' : link}
               </a>
-              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'audio') && (
                 <span>
                   {' '}
                   [
