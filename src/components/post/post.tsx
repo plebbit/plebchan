@@ -11,96 +11,6 @@ import styles from './post.module.css';
 import Markdown from '../markdown';
 import Media from '../media';
 
-const ReplyDesktop = ({ reply }: any) => {
-  const { t } = useTranslation();
-  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
-  const { displayName, shortAddress } = author || {};
-
-  const commentMediaInfo = getCommentMediaInfoMemoized(reply);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  const [showThumbnail, setShowThumbnail] = useState(true);
-
-  const isReplyingToReply = postCid !== parentCid;
-
-  return (
-    <div className={styles.replyDesktop}>
-      <div className={styles.sideArrows}>{'>>'}</div>
-      <div className={styles.reply}>
-        <div className={styles.postInfo}>
-          <span className={styles.checkbox}>
-            <input type='checkbox' />
-          </span>
-          <span className={styles.nameBlock}>
-            <span className={styles.name}>{displayName || 'Anonymous'} </span>
-            <span className={styles.userAddress}>(u/{shortAddress}) </span>
-          </span>
-          <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
-          <span className={styles.postNum}>
-            <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/c/${reply.cid}`} className={styles.linkToPost} title='Link to post'>
-                c/
-              </Link>
-              <span className={styles.replyToPost} title='Reply to post'>
-                {shortCid}
-              </span>
-            </span>
-            {pinned && (
-              <span className={styles.stickyIconWrapper}>
-                <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
-              </span>
-            )}
-          </span>
-          <span className={styles.postMenuBtn}>▶</span>
-        </div>
-        {link && (
-          <div className={styles.file}>
-            <div className={styles.fileText}>
-              {t('link')}:{' '}
-              <a href={link} target='_blank' rel='noopener noreferrer'>
-                {link.length > 30 ? link?.slice(0, 30) + '...' : link}
-              </a>
-              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
-                <span>
-                  {' '}
-                  [
-                  <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
-                    {t('close')}
-                  </span>
-                  ]
-                </span>
-              )}
-            </div>
-            {hasThumbnail && (
-              <Media
-                commentMediaInfo={commentMediaInfo}
-                isMobile={false}
-                isReply={true}
-                linkHeight={linkHeight}
-                linkWidth={linkWidth}
-                showThumbnail={showThumbnail}
-                setShowThumbnail={setShowThumbnail}
-              />
-            )}
-          </div>
-        )}
-        {content && (
-          <blockquote className={styles.postMessage}>
-            {isReplyingToReply && (
-              <>
-                <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-                  {`c/${Plebbit.getShortCid(parentCid)}`}
-                </Link>
-                <br />
-              </>
-            )}
-            <Markdown content={content} />
-          </blockquote>
-        )}
-      </div>
-    </div>
-  );
-};
-
 const PostDesktop = ({ post, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
@@ -235,7 +145,8 @@ const PostDesktop = ({ post, showAllReplies }: PostProps) => {
   );
 };
 
-const ReplyMobile = ({ reply }: any) => {
+const ReplyDesktop = ({ reply }: any) => {
+  const { t } = useTranslation();
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { displayName, shortAddress } = author || {};
 
@@ -246,45 +157,79 @@ const ReplyMobile = ({ reply }: any) => {
   const isReplyingToReply = postCid !== parentCid;
 
   return (
-    <div className={styles.replyMobile}>
+    <div className={styles.replyDesktop}>
+      <div className={styles.sideArrows}>{'>>'}</div>
       <div className={styles.reply}>
-        <div className={styles.replyContainer}>
-          <div className={styles.postInfo}>
-            <span className={styles.postMenuBtn}>...</span>
-            <span className={styles.nameBlock}>
-              <span className={styles.name}>{displayName || 'Anonymous'} </span>
-              <span className={styles.address}>(u/{shortAddress})</span>
+        <div className={styles.postInfo}>
+          <span className={styles.checkbox}>
+            <input type='checkbox' />
+          </span>
+          <span className={styles.nameBlock}>
+            <span className={styles.name}>{displayName || 'Anonymous'} </span>
+            <span className={styles.userAddress}>(u/{shortAddress}) </span>
+          </span>
+          <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
+          <span className={styles.postNum}>
+            <span className={styles.postNumLink}>
+              <Link to={`/p/${subplebbitAddress}/c/${reply.cid}`} className={styles.linkToPost} title='Link to post'>
+                c/
+              </Link>
+              <span className={styles.replyToPost} title='Reply to post'>
+                {shortCid}
+              </span>
             </span>
-            <span className={styles.dateTimePostNum}>
-              {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
-              <span className={styles.replyToPost}>{shortCid}</span>
-            </span>
-          </div>
-          {hasThumbnail && (
-            <Media
-              commentMediaInfo={commentMediaInfo}
-              isMobile={true}
-              isReply={false}
-              linkHeight={linkHeight}
-              linkWidth={linkWidth}
-              showThumbnail={showThumbnail}
-              setShowThumbnail={setShowThumbnail}
-            />
-          )}
-          {content && (
-            <blockquote className={styles.postMessage}>
-              {isReplyingToReply && (
-                <>
-                  <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-                    {`c/${Plebbit.getShortCid(parentCid)}`}
-                  </Link>
-                  <br />
-                </>
-              )}
-              <Markdown content={content} />
-            </blockquote>
-          )}
+            {pinned && (
+              <span className={styles.stickyIconWrapper}>
+                <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+              </span>
+            )}
+          </span>
+          <span className={styles.postMenuBtn}>▶</span>
         </div>
+        {link && (
+          <div className={styles.file}>
+            <div className={styles.fileText}>
+              {t('link')}:{' '}
+              <a href={link} target='_blank' rel='noopener noreferrer'>
+                {link.length > 30 ? link?.slice(0, 30) + '...' : link}
+              </a>
+              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+                <span>
+                  {' '}
+                  [
+                  <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
+                    {t('close')}
+                  </span>
+                  ]
+                </span>
+              )}
+            </div>
+            {hasThumbnail && (
+              <Media
+                commentMediaInfo={commentMediaInfo}
+                isMobile={false}
+                isReply={true}
+                linkHeight={linkHeight}
+                linkWidth={linkWidth}
+                showThumbnail={showThumbnail}
+                setShowThumbnail={setShowThumbnail}
+              />
+            )}
+          </div>
+        )}
+        {content && (
+          <blockquote className={styles.postMessage}>
+            {isReplyingToReply && (
+              <>
+                <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+                  {`c/${Plebbit.getShortCid(parentCid)}`}
+                </Link>
+                <br />
+              </>
+            )}
+            <Markdown content={content} />
+          </blockquote>
+        )}
       </div>
     </div>
   );
@@ -381,6 +326,61 @@ const PostMobile = ({ post, showAllReplies }: PostProps) => {
               <ReplyMobile index={index} reply={reply} />
             </div>
           ))}
+      </div>
+    </div>
+  );
+};
+
+const ReplyMobile = ({ reply }: any) => {
+  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { displayName, shortAddress } = author || {};
+
+  const commentMediaInfo = getCommentMediaInfoMemoized(reply);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  const [showThumbnail, setShowThumbnail] = useState(true);
+
+  const isReplyingToReply = postCid !== parentCid;
+
+  return (
+    <div className={styles.replyMobile}>
+      <div className={styles.reply}>
+        <div className={styles.replyContainer}>
+          <div className={styles.postInfo}>
+            <span className={styles.postMenuBtn}>...</span>
+            <span className={styles.nameBlock}>
+              <span className={styles.name}>{displayName || 'Anonymous'} </span>
+              <span className={styles.address}>(u/{shortAddress})</span>
+            </span>
+            <span className={styles.dateTimePostNum}>
+              {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
+              <span className={styles.replyToPost}>{shortCid}</span>
+            </span>
+          </div>
+          {hasThumbnail && (
+            <Media
+              commentMediaInfo={commentMediaInfo}
+              isMobile={true}
+              isReply={false}
+              linkHeight={linkHeight}
+              linkWidth={linkWidth}
+              showThumbnail={showThumbnail}
+              setShowThumbnail={setShowThumbnail}
+            />
+          )}
+          {content && (
+            <blockquote className={styles.postMessage}>
+              {isReplyingToReply && (
+                <>
+                  <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+                    {`c/${Plebbit.getShortCid(parentCid)}`}
+                  </Link>
+                  <br />
+                </>
+              )}
+              <Markdown content={content} />
+            </blockquote>
+          )}
+        </div>
       </div>
     </div>
   );
