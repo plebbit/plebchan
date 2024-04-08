@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Comment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
@@ -12,7 +11,7 @@ import styles from './post.module.css';
 import Markdown from '../markdown';
 import Media from '../media';
 
-const ReplyDesktop = ({ reply }: Comment) => {
+const ReplyDesktop = ({ reply }: any) => {
   const { t } = useTranslation();
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { displayName, shortAddress } = author || {};
@@ -102,10 +101,11 @@ const ReplyDesktop = ({ reply }: Comment) => {
   );
 };
 
-const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: boolean }) => {
+const PostDesktop = ({ post, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { displayName, shortAddress } = author || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const isInPostPage = isPostPageView(useLocation().pathname, useParams());
 
@@ -170,19 +170,21 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
         </span>
         {title && <span className={styles.subject}>{displayTitle} </span>}
         <span className={styles.nameBlock}>
-          <span className={styles.name}>{displayName || 'Anonymous'} </span>
-          <span className={styles.userAddress}>(u/{shortAddress}) </span>
+          <span className={`${styles.name} ${(isDescription || isRules) && styles.capcodeMod}`}>{displayName || 'Anonymous'} </span>
+          {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress}) </span>}
         </span>
         <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
         <span className={styles.postNum}>
-          <span className={styles.postNumLink}>
-            <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')}>
-              c/
-            </Link>
-            <span className={styles.replyToPost} title={t('reply_to_post')}>
-              {shortCid}
+          {!(isDescription || isRules) && (
+            <span className={styles.postNumLink}>
+              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')}>
+                c/
+              </Link>
+              <span className={styles.replyToPost} title={t('reply_to_post')}>
+                {shortCid}
+              </span>
             </span>
-          </span>
+          )}
           {pinned && (
             <span className={styles.stickyIconWrapper}>
               <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -194,7 +196,7 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
             </span>
           )}
           <span className={styles.replyButton}>
-            [<Link to={`/p/${subplebbitAddress}/c/${postCid}`}>{t('reply')}</Link>]
+            [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{t('reply')}</Link>]
           </span>
         </span>
         <span className={styles.postMenuBtn}>▶</span>
@@ -211,7 +213,7 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
           )}
         </blockquote>
       )}
-      {(replies.length > 5 || pinned) && !isInPostPage && (
+      {(replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
         <span className={styles.summary}>
           <span className={styles.expandButtonWrapper}>
             <span className={styles.expandButton} />
@@ -233,7 +235,7 @@ const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: 
   );
 };
 
-const ReplyMobile = ({ reply }: Comment) => {
+const ReplyMobile = ({ reply }: any) => {
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { displayName, shortAddress } = author || {};
 
@@ -288,10 +290,11 @@ const ReplyMobile = ({ reply }: Comment) => {
   );
 };
 
-const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: boolean }) => {
+const PostMobile = ({ post, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const linkCount = useCountLinksInReplies(post);
   const isInPostPage = isPostPageView(useLocation().pathname, useParams());
@@ -317,8 +320,8 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
                 ...
               </span>
               <span className={styles.nameBlock}>
-                <span className={styles.name}>{displayName || 'Anonymous'} </span>
-                <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>
+                <span className={`${styles.name} ${(isDescription || isRules) && styles.capcodeMod}`}>{displayName || 'Anonymous'} </span>
+                {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>}
                 {title && (
                   <>
                     <br />
@@ -327,8 +330,13 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
                 )}
               </span>
               <span className={styles.dateTimePostNum}>
-                {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
-                <span className={styles.replyToPost}>{shortCid}</span>
+                {getFormattedDate(timestamp)}{' '}
+                {!(isDescription || isRules) && (
+                  <>
+                    <span className={styles.linkToPost}>c/</span>
+                    <span className={styles.replyToPost}>{shortCid}</span>
+                  </>
+                )}
               </span>
             </div>
             {hasThumbnail && (
@@ -357,7 +365,7 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
           {!isInPostPage && (
             <div className={styles.postLink}>
               <span className={styles.info}>
-                {replyCount} Replies
+                {replyCount > 0 && `${replyCount} Replies`}
                 {linkCount > 0 && ` / ${linkCount} Links`}
               </span>
               <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
@@ -380,7 +388,7 @@ const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: b
 
 interface PostProps {
   index?: number;
-  post: Comment;
+  post: any;
   showAllReplies?: boolean;
 }
 

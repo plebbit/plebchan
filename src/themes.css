@@ -100,6 +100,9 @@
   --post-mobile-file-info-text-color: #707070;
   --post-mobile-content-font-size: 11pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
   /* quotelink */
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
@@ -218,6 +221,9 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
   /* quotelink */
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
@@ -313,6 +319,9 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
+
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
 
   /* quotelink */
   --post-quotelink-text-color: navy;
@@ -423,6 +432,9 @@
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
   /* quotelink */
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
@@ -532,6 +544,9 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: #81a2be;
+
   /* quotelink */
   --post-quotelink-text-color: #5f89ac;
   --post-quotelink-text-color-hover: #81a2be;
@@ -634,6 +649,9 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
   --post-mobile-border-bottom: 1px solid #ccc;
+
+  /* post capcodes */
+  --post-capcode-mod-text-color: #f60;
 
   /* quotelink */
   --post-quotelink-text-color: #f60;

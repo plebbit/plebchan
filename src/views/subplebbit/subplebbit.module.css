@@ -1,13 +1,3 @@
-.debug {
-  position: fixed;
-  top: 50px;
-  right: 0;
-  padding: 0.5em;
-}
-
-.debug select {
-  margin: 2px;
-  border: var(--select-border);
-  background-color: var(--select-background-color);
-  color: var(--select-color);
+.footer {
+  padding-top: 10px;
 }

@@ -368,6 +368,10 @@
   text-align: right;
 }
 
+.capcodeMod {
+  color: var(--post-capcode-mod-text-color) !important;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
     display: none;

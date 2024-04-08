@@ -18,7 +18,36 @@ const Subplebbit = () => {
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType });
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { shortAddress, state, title } = subplebbit || {};
+  const { createdAt, description, rules, shortAddress, state, suggested, title } = subplebbit || {};
+
+  const descriptionPost = useMemo(
+    () => ({
+      isDescription: true,
+      subplebbitAddress,
+      timestamp: createdAt,
+      author: { displayName: '## Board Mods' },
+      content: description,
+      link: suggested?.avatarUrl,
+      title: 'Welcome to ' + (title || `p/${shortAddress}`) + '!',
+      pinned: true,
+      locked: true,
+    }),
+    [subplebbitAddress, createdAt, description, suggested?.avatarUrl, title, shortAddress],
+  );
+
+  const rulesPost = useMemo(
+    () => ({
+      isRules: true,
+      subplebbitAddress,
+      timestamp: createdAt,
+      author: { displayName: '## Board Mods' },
+      content: rules && rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
+      title: 'Rules',
+      pinned: true,
+      locked: true,
+    }),
+    [subplebbitAddress, createdAt, rules],
+  );
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
@@ -56,6 +85,12 @@ const Subplebbit = () => {
 
   return (
     <div className={styles.content}>
+      {createdAt && (
+        <>
+          {rules && rules.length > 0 && <Post post={rulesPost} />}
+          {description && description.length > 0 && <Post post={descriptionPost} />}
+        </>
+      )}
       <Virtuoso
         increaseViewportBy={{ bottom: 1200, top: 1200 }}
         totalCount={feed?.length || 0}
