@@ -41,5 +41,7 @@
   "view_thread": "Näytä Ketju",
   "return": "Palata",
   "bottom": "Pohja",
-  "top": "Ylös"
+  "top": "Ylös",
+  "thread_closed": "Keskustelu suljettu.",
+  "may_not_reply": "Et ehkä voi vastata tällä hetkellä."
 }

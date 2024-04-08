@@ -1,15 +1,26 @@
 import { useState } from 'react';
-import { useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import { useLocation, useParams } from 'react-router-dom';
+import { useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import styles from './board-stats.module.css';
 import { Trans, useTranslation } from 'react-i18next';
+import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 
-export interface BoardStatsProps {
-  address: string | undefined;
-  createdAt: number | undefined;
-}
-
-const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
+const BoardStats = () => {
   const { t } = useTranslation();
+  const { commentCid, subplebbitAddress } = useParams<{ subplebbitAddress: string; commentCid: string }>();
+
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { address, createdAt } = subplebbit || {};
+
+  const location = useLocation();
+  const params = useParams();
+  const isInDescriptionView = isDescriptionView(location.pathname, params);
+  const isInRulesView = isRulesView(location.pathname, params);
+
+  const comment = useComment({ commentCid });
+  const { deleted, locked, removed } = comment || {};
+  const hideStats = deleted || locked || removed || isInDescriptionView || isInRulesView;
+
   const stats = useSubplebbitStats({ subplebbitAddress: address });
   const [showStats, setShowStats] = useState(true);
 
@@ -22,7 +33,7 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
   };
 
   return (
-    <div className={styles.content}>
+    <div className={`${styles.content} ${hideStats ? styles.hide : styles.show}`}>
       <table className={styles.blotter}>
         <thead>
           <tr>

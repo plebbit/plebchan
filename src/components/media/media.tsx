@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './media.module.css';
 import { CommentMediaInfo } from '../../lib/utils/media-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
@@ -34,7 +34,7 @@ const ThumbnailSmall = ({ style, children, thumbnailSmallPadding }: ThumbnailPro
   </span>
 );
 
-const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth }: MediaProps) => {
+const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
   let displayWidth, displayHeight;
   const maxThumbnailSize = isMobile || isReply ? 125 : 250;
   if (linkWidth && linkHeight) {
@@ -46,19 +46,30 @@ const Thumbnail = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth 
     displayHeight = `${maxThumbnailSize}px`;
   }
 
+  if (commentMediaInfo?.type === 'audio') {
+    displayWidth = '250px';
+    displayHeight = '75px';
+  }
+
   let mediaComponent: React.ReactNode = null;
   const iframeThumbnail = commentMediaInfo?.patternThumbnailUrl || commentMediaInfo?.thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(commentMediaInfo?.type === 'gif' ? commentMediaInfo.url : undefined);
   if (commentMediaInfo?.type === 'image') {
-    mediaComponent = <img src={commentMediaInfo.url} alt='' />;
+    mediaComponent = <img src={commentMediaInfo.url} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (commentMediaInfo?.type === 'video') {
-    mediaComponent = commentMediaInfo.thumbnail ? <img src={commentMediaInfo.thumbnail} alt='' /> : <video src={`${commentMediaInfo.url}#t=0.001`} />;
+    mediaComponent = commentMediaInfo.thumbnail ? (
+      <img src={commentMediaInfo.thumbnail} alt='' />
+    ) : (
+      <video src={`${commentMediaInfo.url}#t=0.001`} onClick={() => setShowThumbnail(false)} />
+    );
   } else if (commentMediaInfo?.type === 'webpage') {
-    mediaComponent = <img src={commentMediaInfo.thumbnail} alt='' />;
+    mediaComponent = <img src={commentMediaInfo.thumbnail} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (commentMediaInfo?.type === 'iframe') {
-    mediaComponent = iframeThumbnail ? <img src={iframeThumbnail} alt='' /> : null;
+    mediaComponent = iframeThumbnail ? <img src={iframeThumbnail} alt='' onClick={() => setShowThumbnail(false)} /> : null;
   } else if (commentMediaInfo?.type === 'gif' && gifFrameUrl) {
-    mediaComponent = <img src={gifFrameUrl} alt='' />;
+    mediaComponent = <img src={gifFrameUrl} alt='' onClick={() => setShowThumbnail(false)} />;
+  } else if (commentMediaInfo?.type === 'audio') {
+    mediaComponent = <audio src={commentMediaInfo.url} controls />;
   }
 
   const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
@@ -79,7 +90,7 @@ const Media = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, sho
 
   return (
     <span className={styles.content}>
-      <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`} onClick={() => setShowThumbnail(false)}>
+      <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
         <Thumbnail
           commentMediaInfo={commentMediaInfo}
           isMobile={isMobile}
@@ -111,7 +122,7 @@ const Media = ({ commentMediaInfo, isMobile, isReply, linkHeight, linkWidth, sho
             ({commentMediaInfo?.type})
           </div>
         )}
-        {isMobile && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+        {isMobile && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'audio') && (
           <div className={styles.closeButton}>
             <span className='button' onClick={() => setShowThumbnail(true)}>
               {t('close')}

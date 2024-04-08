@@ -41,5 +41,7 @@
   "view_thread": "Téma Megtekintése",
   "return": "Visszatérés",
   "bottom": "Alja",
-  "top": "Felső"
+  "top": "Felső",
+  "thread_closed": "A téma lezárult.",
+  "may_not_reply": "Jelenleg nem válaszolhatsz erre."
 }

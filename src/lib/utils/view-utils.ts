@@ -7,8 +7,20 @@ export const isHomeView = (pathname: string): boolean => {
   return pathname === '/';
 };
 
+export const isDescriptionView = (pathname: string, params: ParamsType): boolean => {
+  const decodedPathname = decodeURIComponent(pathname);
+  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/description`) : false;
+};
+
+export const isRulesView = (pathname: string, params: ParamsType): boolean => {
+  const decodedPathname = decodeURIComponent(pathname);
+  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/rules`) : false;
+};
+
 export const isPostPageView = (pathname: string, params: ParamsType): boolean => {
-  // some subs might use emojis in their address, so we need to decode the pathname
+  if (isDescriptionView(pathname, params) || isRulesView(pathname, params)) {
+    return true;
+  }
   const decodedPathname = decodeURIComponent(pathname);
   return params.subplebbitAddress && params.commentCid ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/c/${params.commentCid}`) : false;
 };

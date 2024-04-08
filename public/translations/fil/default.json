@@ -41,5 +41,7 @@
   "view_thread": "Tingnan ang Thread",
   "return": "Bumalik",
   "bottom": "Ilalim",
-  "top": "Itaas"
+  "top": "Itaas",
+  "thread_closed": "Thread na isara.",
+  "may_not_reply": "Hindi ka maaaring mag-reply sa oras na ito."
 }

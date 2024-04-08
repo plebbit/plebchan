@@ -100,6 +100,13 @@
   --post-mobile-file-info-text-color: #707070;
   --post-mobile-content-font-size: 11pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
@@ -111,9 +118,8 @@
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 11px;
 }
 
 :root .yotsuba-b {
@@ -218,6 +224,13 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
@@ -229,9 +242,8 @@
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 11px;
 }
 
 :root .futaba {
@@ -264,15 +276,12 @@
   --button-text-decoration: underline;
 
   /* mobile buttons */
-  --button-font-size-mobile: 12pt;
-  --button-font-weight-mobile: unset;
-  --button-text-color-mobile: #00e;
-  --button-background-image-mobile: none;
-  --button-background-color-mobile: none;
-  --button-border-mobile: none;
-  --button-text-decoration-mobile: underline;
-  --button-text-color-hover-mobile: red;
-  --button-text-decoration-hover-mobile: underline;
+  --button-font-size-mobile: 11pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #800;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-color-mobile: #f0e0d6;
+  --button-border-mobile: 1px solid #c0a69d;
 
   /* footer */
   --footer-item-background-color-desktop: #fed;
@@ -314,6 +323,13 @@
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
@@ -325,9 +341,8 @@
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 10pt;
 }
 
 :root .burichan {
@@ -380,8 +395,6 @@
   --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
   --button-background-color-mobile: #d6daf0;
   --button-border-mobile: 1px solid #b7c5d9;
-  --button-text-color-hover-mobile: red;
-  --button-text-decoration-hover-mobile: underline;
 
   /* footer */
   --footer-item-background-color-desktop: #eef2ff;
@@ -423,6 +436,13 @@
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+  
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
@@ -433,10 +453,9 @@
   --side-arrows-color: #b7c5d9;
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
-  
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+
+  /* stats */
+  --stats-font-size: 10pt;
 }
 
 :root .tomorrow {
@@ -477,6 +496,9 @@
   /* desktop buttons */
   --button-desktop-text-color: #81a2be;
   --button-desktop-text-color-hover: #5f89ac;
+
+  /* filter for inputs */
+  --filter80: brightness(85%);
 
   /* mobile buttons */
   --button-font-size-mobile: 10pt;
@@ -529,6 +551,9 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: #81a2be;
+
   /* quotelink */
   --post-quotelink-text-color: #5f89ac;
   --post-quotelink-text-color-hover: #81a2be;
@@ -548,6 +573,9 @@
   --select-border: 1px solid #575a60;
   --select-background-color: #282a2e;
   --select-color: #c5c8c6;
+
+  /* stats */
+  --stats-font-size: 11px;
 }
 
 :root .photon {
@@ -632,6 +660,13 @@
   --post-mobile-content-font-size: 11pt;
   --post-mobile-border-bottom: 1px solid #ccc;
 
+  /* post capcodes */
+  --post-capcode-mod-text-color: #f60;
+
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: #f60;
   --post-quotelink-text-color-hover: #f30;
@@ -643,7 +678,6 @@
   --reply-desktop-background-color: #ddd;
   --reply-desktop-border: 1px solid #ccc;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 11px;
 }

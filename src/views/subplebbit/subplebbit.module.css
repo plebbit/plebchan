@@ -1,13 +1,9 @@
-.debug {
-  position: fixed;
-  top: 50px;
-  right: 0;
-  padding: 0.5em;
+.footer {
+  padding-top: 10px;
 }
 
-.debug select {
-  margin: 2px;
-  border: var(--select-border);
-  background-color: var(--select-background-color);
-  color: var(--select-color);
+@media (max-width: 768px) {
+  .footer {
+    padding-left: 5px;
+  }
 }

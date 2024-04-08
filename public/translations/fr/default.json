@@ -41,5 +41,7 @@
   "view_thread": "Voir le Fil",
   "return": "Retour",
   "bottom": "Bas",
-  "top": "Haut"
+  "top": "Haut",
+  "thread_closed": "Fil fermé.",
+  "may_not_reply": "Vous ne pouvez peut-être pas répondre en ce moment."
 }

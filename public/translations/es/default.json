@@ -41,5 +41,7 @@
   "view_thread": "Ver Hilo",
   "return": "Regresar",
   "bottom": "Fondo",
-  "top": "Arriba"
+  "top": "Arriba",
+  "thread_closed": "Hilo cerrado.",
+  "may_not_reply": "Es posible que no puedas responder en este momento."
 }

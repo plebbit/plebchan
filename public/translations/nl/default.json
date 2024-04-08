@@ -41,5 +41,7 @@
   "view_thread": "Bekijk Thread",
   "return": "Terugkeer",
   "bottom": "Onderkant",
-  "top": "Boven"
+  "top": "Boven",
+  "thread_closed": "Thread gesloten.",
+  "may_not_reply": "U kunt op dit moment mogelijk niet antwoorden."
 }

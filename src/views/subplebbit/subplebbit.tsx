@@ -10,6 +10,52 @@ import Post from '../../components/post';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
+interface DescriptionPostProps {
+  subplebbitAddress: string | undefined;
+  createdAt: number;
+  description: string;
+  avatarUrl?: string;
+  title: string;
+}
+
+export const DescriptionPost = ({ subplebbitAddress, createdAt, description, avatarUrl, title }: DescriptionPostProps) => {
+  const post = {
+    isDescription: true,
+    subplebbitAddress,
+    timestamp: createdAt,
+    author: { displayName: '## Board Mods' },
+    content: description,
+    link: avatarUrl,
+    title: 'Welcome to ' + title,
+    pinned: true,
+    locked: true,
+  };
+
+  return <Post post={post} />;
+};
+
+interface RulesPostProps {
+  subplebbitAddress: string | undefined;
+  createdAt: number;
+  rules: string[];
+}
+
+export const RulesPost = ({ subplebbitAddress, createdAt, rules }: RulesPostProps) => {
+  const content = rules.map((rule, index) => `${index + 1}. ${rule}`).join('\n');
+  const post = {
+    isRules: true,
+    subplebbitAddress,
+    timestamp: createdAt,
+    author: { displayName: '## Board Mods' },
+    content,
+    title: 'Rules',
+    pinned: true,
+    locked: true,
+  };
+
+  return <Post post={post} />;
+};
+
 const Subplebbit = () => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
@@ -18,7 +64,7 @@ const Subplebbit = () => {
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType });
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { shortAddress, state, title } = subplebbit || {};
+  const { createdAt, description, rules, shortAddress, state, suggested, title } = subplebbit || {};
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
@@ -56,6 +102,14 @@ const Subplebbit = () => {
 
   return (
     <div className={styles.content}>
+      {createdAt && (
+        <>
+          {rules && rules.length > 0 && <RulesPost subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
+          {description && description.length > 0 && (
+            <DescriptionPost avatarUrl={suggested?.avatarUrl} subplebbitAddress={subplebbitAddress} createdAt={createdAt} description={description} title={title} />
+          )}
+        </>
+      )}
       <Virtuoso
         increaseViewportBy={{ bottom: 1200, top: 1200 }}
         totalCount={feed?.length || 0}

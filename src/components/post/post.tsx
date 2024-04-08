@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Comment } from '@plebbit/plebbit-react-hooks';
+import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
@@ -12,10 +12,158 @@ import styles from './post.module.css';
 import Markdown from '../markdown';
 import Media from '../media';
 
-const ReplyDesktop = ({ reply }: Comment) => {
+interface PostProps {
+  index?: number;
+  post?: any;
+  reply?: any;
+  roles?: Role[];
+  showAllReplies?: boolean;
+}
+
+const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
+  const { t } = useTranslation();
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
+
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
+
+  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+
+  const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
+  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
+
+  const commentMediaInfo = getCommentMediaInfoMemoized(post);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  const [showThumbnail, setShowThumbnail] = useState(true);
+
+  const replies = useReplies(post);
+  const visibleLinkCount = useCountLinksInReplies(post, 5);
+  const totalLinkCount = useCountLinksInReplies(post);
+  const repliesCount = pinned ? replyCount : replyCount - 5;
+  const linkCount = pinned ? totalLinkCount : totalLinkCount - visibleLinkCount;
+
+  return (
+    <div className={styles.postDesktop}>
+      <div className={styles.hrWrapper}>
+        <hr />
+      </div>
+      {!isInPostPage && (
+        <span className={styles.hideButtonWrapper}>
+          <span className={`${styles.hideButton} ${styles.hideThread}`} />
+        </span>
+      )}
+      {commentMediaInfo?.url && (
+        <div className={styles.file}>
+          <div className={styles.fileText}>
+            {t('link')}:{' '}
+            <a href={commentMediaInfo?.url} target='_blank' rel='noopener noreferrer'>
+              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url?.slice(0, 30) + '...' : commentMediaInfo?.url}
+            </a>{' '}
+            ({commentMediaInfo?.type})
+            {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'audio') && (
+              <span>
+                {' '}
+                [
+                <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
+                  {t('close')}
+                </span>
+                ]
+              </span>
+            )}
+          </div>
+          {hasThumbnail && (
+            <Media
+              commentMediaInfo={commentMediaInfo}
+              isMobile={false}
+              isReply={false}
+              linkHeight={linkHeight}
+              linkWidth={linkWidth}
+              showThumbnail={showThumbnail}
+              setShowThumbnail={setShowThumbnail}
+            />
+          )}
+        </div>
+      )}
+      <div className={styles.postInfo}>
+        <span className={styles.checkbox}>
+          <input type='checkbox' />
+        </span>
+        {title && <span className={styles.subject}>{displayTitle} </span>}
+        <span className={styles.nameBlock}>
+          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
+            {displayName || 'Anonymous'}
+            {authorRole && ` ## Board ${authorRole}`}{' '}
+          </span>
+          {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress}) </span>}
+        </span>
+        <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
+        <span className={styles.postNum}>
+          {!(isDescription || isRules) && (
+            <span className={styles.postNumLink}>
+              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')}>
+                c/
+              </Link>
+              <span className={styles.replyToPost} title={t('reply_to_post')}>
+                {shortCid}
+              </span>
+            </span>
+          )}
+          {pinned && (
+            <span className={styles.stickyIconWrapper}>
+              <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+            </span>
+          )}
+          {locked && (
+            <span className={styles.closedIconWrapper}>
+              <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+            </span>
+          )}
+          <span className={styles.replyButton}>
+            [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{t('reply')}</Link>]
+          </span>
+        </span>
+        <span className={styles.postMenuBtn}>▶</span>
+      </div>
+      {!content && <div className={styles.spacer} />}
+      {content && (
+        <blockquote className={styles.postMessage}>
+          <Markdown content={displayContent} />
+          {content.length > 1000 && !isInPostPage && (
+            <span className={styles.abbr}>
+              <br />
+              Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+            </span>
+          )}
+        </blockquote>
+      )}
+      {(replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
+        <span className={styles.summary}>
+          <span className={styles.expandButtonWrapper}>
+            <span className={styles.expandButton} />
+          </span>
+          <span>
+            {repliesCount} replies {linkCount > 0 && `and ${linkCount} links`} omitted.{' '}
+          </span>
+          <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view.
+        </span>
+      )}
+      {!(pinned && !isInPostPage) &&
+        replies &&
+        (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+          <div key={reply.cid} className={styles.replyContainer}>
+            <ReplyDesktop index={index} reply={reply} roles={roles} />
+          </div>
+        ))}
+    </div>
+  );
+};
+
+const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
-  const { displayName, shortAddress } = author || {};
+  const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -32,7 +180,10 @@ const ReplyDesktop = ({ reply }: Comment) => {
             <input type='checkbox' />
           </span>
           <span className={styles.nameBlock}>
-            <span className={styles.name}>{displayName || 'Anonymous'} </span>
+            <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+              {displayName || 'Anonymous'}
+              {authorRole && ` ## Board ${authorRole}`}{' '}
+            </span>
             <span className={styles.userAddress}>(u/{shortAddress}) </span>
           </span>
           <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
@@ -60,7 +211,7 @@ const ReplyDesktop = ({ reply }: Comment) => {
               <a href={link} target='_blank' rel='noopener noreferrer'>
                 {link.length > 30 ? link?.slice(0, 30) + '...' : link}
               </a>
-              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
+              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'audio') && (
                 <span>
                   {' '}
                   [
@@ -102,140 +253,111 @@ const ReplyDesktop = ({ reply }: Comment) => {
   );
 };
 
-const PostDesktop = ({ post, showAllReplies }: { post: Comment; showAllReplies: boolean }) => {
+const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
-  const { displayName, shortAddress } = author || {};
+  const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
 
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
+
+  const linkCount = useCountLinksInReplies(post);
   const isInPostPage = isPostPageView(useLocation().pathname, useParams());
-
-  const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
-  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
+  const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
+  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
-  const visibleLinkCount = useCountLinksInReplies(post, 5);
-  const totalLinkCount = useCountLinksInReplies(post);
-  const repliesCount = pinned ? replyCount : replyCount - 5;
-  const linkCount = pinned ? totalLinkCount : totalLinkCount - visibleLinkCount;
 
   return (
-    <div className={styles.postDesktop}>
+    <div className={styles.postMobile}>
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      {!isInPostPage && (
-        <span className={styles.hideButtonWrapper}>
-          <span className={`${styles.hideButton} ${styles.hideThread}`} />
-        </span>
-      )}
-      {commentMediaInfo?.url && (
-        <div className={styles.file}>
-          <div className={styles.fileText}>
-            {t('link')}:{' '}
-            <a href={commentMediaInfo?.url} target='_blank' rel='noopener noreferrer'>
-              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url?.slice(0, 30) + '...' : commentMediaInfo?.url}
-            </a>{' '}
-            ({commentMediaInfo?.type})
-            {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video') && (
-              <span>
-                {' '}
-                [
-                <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
-                  {t('close')}
-                </span>
-                ]
+      <div className={styles.thread}>
+        <div className={styles.postContainer}>
+          <div className={styles.postOp}>
+            <div className={styles.postInfo}>
+              <span className={styles.postMenuBtn} title='Post menu'>
+                ...
               </span>
+              <span className={styles.nameBlock}>
+                <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+                  {displayName || 'Anonymous'}
+                  {authorRole && ` ## Board ${authorRole}`}{' '}
+                </span>
+                {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>}
+                {title && (
+                  <>
+                    <br />
+                    <span className={styles.subject}>{displayTitle}</span>
+                  </>
+                )}
+              </span>
+              <span className={styles.dateTimePostNum}>
+                {getFormattedDate(timestamp)}{' '}
+                {!(isDescription || isRules) && (
+                  <>
+                    <span className={styles.linkToPost}>c/</span>
+                    <span className={styles.replyToPost}>{shortCid}</span>
+                  </>
+                )}
+              </span>
+            </div>
+            {hasThumbnail && (
+              <Media
+                commentMediaInfo={commentMediaInfo}
+                isMobile={true}
+                isReply={false}
+                linkHeight={linkHeight}
+                linkWidth={linkWidth}
+                showThumbnail={showThumbnail}
+                setShowThumbnail={setShowThumbnail}
+              />
+            )}
+            {content && (
+              <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>
+                <Markdown content={displayContent} />
+                {content.length > 1000 && !isInPostPage && (
+                  <span className={styles.abbr}>
+                    <br />
+                    Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+                  </span>
+                )}
+              </blockquote>
             )}
           </div>
-          {hasThumbnail && (
-            <Media
-              commentMediaInfo={commentMediaInfo}
-              isMobile={false}
-              isReply={false}
-              linkHeight={linkHeight}
-              linkWidth={linkWidth}
-              showThumbnail={showThumbnail}
-              setShowThumbnail={setShowThumbnail}
-            />
+          {!isInPostPage && (
+            <div className={styles.postLink}>
+              <span className={styles.info}>
+                {replyCount > 0 && `${replyCount} Replies`}
+                {linkCount > 0 && ` / ${linkCount} Links`}
+              </span>
+              <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} className='button'>
+                {t('view_thread')}
+              </Link>
+            </div>
           )}
         </div>
-      )}
-      <div className={styles.postInfo}>
-        <span className={styles.checkbox}>
-          <input type='checkbox' />
-        </span>
-        {title && <span className={styles.subject}>{displayTitle} </span>}
-        <span className={styles.nameBlock}>
-          <span className={styles.name}>{displayName || 'Anonymous'} </span>
-          <span className={styles.userAddress}>(u/{shortAddress}) </span>
-        </span>
-        <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
-        <span className={styles.postNum}>
-          <span className={styles.postNumLink}>
-            <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')}>
-              c/
-            </Link>
-            <span className={styles.replyToPost} title={t('reply_to_post')}>
-              {shortCid}
-            </span>
-          </span>
-          {pinned && (
-            <span className={styles.stickyIconWrapper}>
-              <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
-            </span>
-          )}
-          {locked && (
-            <span className={styles.closedIconWrapper}>
-              <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
-            </span>
-          )}
-          <span className={styles.replyButton}>
-            [<Link to={`/p/${subplebbitAddress}/c/${postCid}`}>{t('reply')}</Link>]
-          </span>
-        </span>
-        <span className={styles.postMenuBtn}>▶</span>
+        {!(pinned && !isInPostPage) &&
+          replies &&
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+            <div key={reply.cid} className={styles.replyContainer}>
+              <ReplyMobile index={index} reply={reply} roles={roles} />
+            </div>
+          ))}
       </div>
-      {!content && <div className={styles.spacer} />}
-      {content && (
-        <blockquote className={styles.postMessage}>
-          <Markdown content={displayContent} />
-          {content.length > 1000 && !isInPostPage && (
-            <span className={styles.abbr}>
-              <br />
-              Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
-            </span>
-          )}
-        </blockquote>
-      )}
-      {(replies.length > 5 || pinned) && !isInPostPage && (
-        <span className={styles.summary}>
-          <span className={styles.expandButtonWrapper}>
-            <span className={styles.expandButton} />
-          </span>
-          <span>
-            {repliesCount} replies {linkCount > 0 && `and ${linkCount} links`} omitted.{' '}
-          </span>
-          <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view.
-        </span>
-      )}
-      {!(pinned && !isInPostPage) &&
-        replies &&
-        replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
-          <div key={reply.cid} className={styles.replyContainer}>
-            <ReplyDesktop index={index} reply={reply} />
-          </div>
-        ))}
     </div>
   );
 };
 
-const ReplyMobile = ({ reply }: Comment) => {
+const ReplyMobile = ({ reply, roles }: PostProps) => {
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
-  const { displayName, shortAddress } = author || {};
+  const { address, displayName, shortAddress } = author || {};
+  const authorRole = roles?.[address]?.role;
 
   const commentMediaInfo = getCommentMediaInfoMemoized(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -250,7 +372,10 @@ const ReplyMobile = ({ reply }: Comment) => {
           <div className={styles.postInfo}>
             <span className={styles.postMenuBtn}>...</span>
             <span className={styles.nameBlock}>
-              <span className={styles.name}>{displayName || 'Anonymous'} </span>
+              <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+                {displayName || 'Anonymous'}
+                {authorRole && ` ## Board ${authorRole}`}{' '}
+              </span>
               <span className={styles.address}>(u/{shortAddress})</span>
             </span>
             <span className={styles.dateTimePostNum}>
@@ -288,108 +413,13 @@ const ReplyMobile = ({ reply }: Comment) => {
   );
 };
 
-const PostMobile = ({ post, showAllReplies }: { post: Comment; showAllReplies: boolean }) => {
-  const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
-  const { address, displayName, shortAddress } = author || {};
-
-  const linkCount = useCountLinksInReplies(post);
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
-  const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
-  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
-
-  const commentMediaInfo = getCommentMediaInfoMemoized(post);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  const [showThumbnail, setShowThumbnail] = useState(true);
-
-  const replies = useReplies(post);
-
-  return (
-    <div className={styles.postMobile}>
-      <div className={styles.hrWrapper}>
-        <hr />
-      </div>
-      <div className={styles.thread}>
-        <div className={styles.postContainer}>
-          <div className={styles.postOp}>
-            <div className={styles.postInfo}>
-              <span className={styles.postMenuBtn} title='Post menu'>
-                ...
-              </span>
-              <span className={styles.nameBlock}>
-                <span className={styles.name}>{displayName || 'Anonymous'} </span>
-                <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>
-                {title && (
-                  <>
-                    <br />
-                    <span className={styles.subject}>{displayTitle}</span>
-                  </>
-                )}
-              </span>
-              <span className={styles.dateTimePostNum}>
-                {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
-                <span className={styles.replyToPost}>{shortCid}</span>
-              </span>
-            </div>
-            {hasThumbnail && (
-              <Media
-                commentMediaInfo={commentMediaInfo}
-                isMobile={true}
-                isReply={false}
-                linkHeight={linkHeight}
-                linkWidth={linkWidth}
-                showThumbnail={showThumbnail}
-                setShowThumbnail={setShowThumbnail}
-              />
-            )}
-            {content && (
-              <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>
-                <Markdown content={displayContent} />
-                {content.length > 1000 && !isInPostPage && (
-                  <span className={styles.abbr}>
-                    <br />
-                    Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
-                  </span>
-                )}
-              </blockquote>
-            )}
-          </div>
-          {!isInPostPage && (
-            <div className={styles.postLink}>
-              <span className={styles.info}>
-                {replyCount} Replies
-                {linkCount > 0 && ` / ${linkCount} Links`}
-              </span>
-              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className='button'>
-                {t('view_thread')}
-              </Link>
-            </div>
-          )}
-        </div>
-        {!(pinned && !isInPostPage) &&
-          replies &&
-          replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
-            <div key={reply.cid} className={styles.replyContainer}>
-              <ReplyMobile index={index} reply={reply} />
-            </div>
-          ))}
-      </div>
-    </div>
-  );
-};
-
-interface PostProps {
-  index?: number;
-  post: Comment;
-  showAllReplies?: boolean;
-}
-
 const Post = ({ post, showAllReplies = false }: PostProps) => {
+  const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
-        <PostDesktop post={post} showAllReplies={showAllReplies} />
-        <PostMobile post={post} showAllReplies={showAllReplies} />
+        <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
       </div>
     </div>
   );

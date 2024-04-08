@@ -57,6 +57,7 @@
 
 .postDesktop .checkbox, .replyDesktop .checkbox {
   padding: 3px 7px 3px 4px;
+  filter: var(--filter80);
 }
 
 .postDesktop .subject {
@@ -366,6 +367,11 @@
 .replyMobile .dateTimePostNum {
   float: right;
   text-align: right;
+}
+
+.capcodeMod {
+  color: var(--post-capcode-mod-text-color) !important;
+  text-transform: capitalize;
 }
 
 @media (max-width: 640px) {

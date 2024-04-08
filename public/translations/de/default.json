@@ -41,5 +41,7 @@
   "view_thread": "Thread Anzeigen",
   "return": "Zurück",
   "bottom": "Unten",
-  "top": "Oben"
+  "top": "Oben",
+  "thread_closed": "Thread geschlossen.",
+  "may_not_reply": "Sie können möglicherweise zu diesem Zeitpunkt nicht antworten."
 }

@@ -41,5 +41,7 @@
   "view_thread": "Zobacz Wątek",
   "return": "Powrót",
   "bottom": "Dół",
-  "top": "Góra"
+  "top": "Góra",
+  "thread_closed": "Wątek zamknięty.",
+  "may_not_reply": "Może nie możesz teraz odpowiedzieć."
 }

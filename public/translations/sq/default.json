@@ -41,5 +41,7 @@
   "view_thread": "Shiko Thread",
   "return": "Kthimi",
   "bottom": "Fund",
-  "top": "Sipër"
+  "top": "Sipër",
+  "thread_closed": "Fjala është e mbyllur.",
+  "may_not_reply": "Nuk mund të përgjigjeni në këtë kohë."
 }

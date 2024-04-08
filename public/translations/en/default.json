@@ -41,5 +41,7 @@
   "view_thread": "View Thread",
   "return": "Return",
   "bottom": "Bottom",
-  "top": "Top"
+  "top": "Top",
+  "thread_closed": "Thread closed.",
+  "may_not_reply": "You may not reply at this time."
 }

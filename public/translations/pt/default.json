@@ -41,5 +41,7 @@
   "view_thread": "Ver Tópico",
   "return": "Retorno",
   "bottom": "Fundo",
-  "top": "Topo"
+  "top": "Topo",
+  "thread_closed": "Tópico fechado.",
+  "may_not_reply": "Você pode não conseguir responder neste momento."
 }

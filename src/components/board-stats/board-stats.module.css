@@ -1,3 +1,11 @@
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
 .content hr {
   min-width: 468px;
   margin-left: -4px;
@@ -12,7 +20,7 @@
 }
 
 .blotter tr {
-  font-size: 11px;
+  font-size: var(--stats-font-size);
 }
 
 .blotter tfoot {
