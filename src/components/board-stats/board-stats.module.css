@@ -20,7 +20,7 @@
 }
 
 .blotter tr {
-  font-size: 11px;
+  font-size: var(--stats-font-size);
 }
 
 .blotter tfoot {

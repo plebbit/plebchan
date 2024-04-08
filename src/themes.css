@@ -103,6 +103,10 @@
   /* post capcodes */
   --post-capcode-mod-text-color: purple;
 
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
@@ -114,9 +118,8 @@
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 11px;
 }
 
 :root .yotsuba-b {
@@ -224,6 +227,10 @@
   /* post capcodes */
   --post-capcode-mod-text-color: purple;
 
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
@@ -235,9 +242,8 @@
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 11px;
 }
 
 :root .futaba {
@@ -320,6 +326,10 @@
   /* post capcodes */
   --post-capcode-mod-text-color: purple;
 
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
@@ -331,9 +341,8 @@
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 10pt;
 }
 
 :root .burichan {
@@ -429,6 +438,10 @@
 
   /* post capcodes */
   --post-capcode-mod-text-color: purple;
+  
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
 
   /* quotelink */
   --post-quotelink-text-color: #d00;
@@ -440,10 +453,9 @@
   --side-arrows-color: #b7c5d9;
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
-  
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+
+  /* stats */
+  --stats-font-size: 10pt;
 }
 
 :root .tomorrow {
@@ -561,6 +573,9 @@
   --select-border: 1px solid #575a60;
   --select-background-color: #282a2e;
   --select-color: #c5c8c6;
+
+  /* stats */
+  --stats-font-size: 11px;
 }
 
 :root .photon {
@@ -648,6 +663,10 @@
   /* post capcodes */
   --post-capcode-mod-text-color: #f60;
 
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+
   /* quotelink */
   --post-quotelink-text-color: #f60;
   --post-quotelink-text-color-hover: #f30;
@@ -659,7 +678,6 @@
   --reply-desktop-background-color: #ddd;
   --reply-desktop-border: 1px solid #ccc;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
+  /* stats */
+  --stats-font-size: 11px;
 }
