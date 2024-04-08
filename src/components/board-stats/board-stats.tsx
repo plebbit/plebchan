@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import styles from './board-stats.module.css';
 import { Trans, useTranslation } from 'react-i18next';
+import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 
 const BoardStats = () => {
   const { t } = useTranslation();
@@ -11,9 +12,14 @@ const BoardStats = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { address, createdAt } = subplebbit || {};
 
+  const location = useLocation();
+  const params = useParams();
+  const isInDescriptionView = isDescriptionView(location.pathname, params);
+  const isInRulesView = isRulesView(location.pathname, params);
+
   const comment = useComment({ commentCid });
   const { deleted, locked, removed } = comment || {};
-  const hideStats = deleted || locked || removed;
+  const hideStats = deleted || locked || removed || isInDescriptionView || isInRulesView;
 
   const stats = useSubplebbitStats({ subplebbitAddress: address });
   const [showStats, setShowStats] = useState(true);

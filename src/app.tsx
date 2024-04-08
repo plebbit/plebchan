@@ -55,6 +55,8 @@ const App = () => {
         <Route element={boardLayout}>
           <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
+          <Route path='/p/:subplebbitAddress/description' element={<PostPage />} />
+          <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
         </Route>
         <Route path='/settings' element={<Settings />} />
       </Routes>

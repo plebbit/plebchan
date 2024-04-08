@@ -2,19 +2,25 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { useComment } from '@plebbit/plebbit-react-hooks';
-import { isPostPageView } from '../../lib/utils/view-utils';
+import { isDescriptionView, isPostPageView, isRulesView } from '../../lib/utils/view-utils';
 import styles from './post-form.module.css';
 
 const PostForm = () => {
   const { t } = useTranslation();
-  const { subplebbitAddress, commentCid } = useParams<{ subplebbitAddress: string; commentCid: string }>();
+
+  const location = useLocation();
+  const params = useParams();
+  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInDescriptionView = isDescriptionView(location.pathname, params);
+  const isInRulesView = isRulesView(location.pathname, params);
+
+  const { subplebbitAddress, commentCid } = params || {};
 
   const comment = useComment({ commentCid });
   const { deleted, locked, removed } = comment || {};
-  const isThreadClosed = deleted || locked || removed;
+  const isThreadClosed = deleted || locked || removed || isInDescriptionView || isInRulesView;
 
   const [showForm, setShowForm] = useState(false);
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
 
   return (
     <>

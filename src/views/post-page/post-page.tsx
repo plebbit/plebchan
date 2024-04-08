@@ -1,12 +1,21 @@
 import { useEffect } from 'react';
-import { useComment } from '@plebbit/plebbit-react-hooks';
-import { useParams } from 'react-router-dom';
+import { useComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useLocation, useParams } from 'react-router-dom';
 import Post from '../../components/post/post';
 import styles from './post-page.module.css';
+import { DescriptionPost, RulesPost } from '../subplebbit/subplebbit';
+import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 
 const PostPage = () => {
   const params = useParams();
-  const { commentCid } = params;
+  const { commentCid, subplebbitAddress } = params;
+
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { createdAt, description, rules, suggested, title } = subplebbit;
+
+  const location = useLocation();
+  const isInDescriptionView = isDescriptionView(location.pathname, params);
+  const isInRulesView = isRulesView(location.pathname, params);
 
   const post = useComment({ commentCid });
 
@@ -16,7 +25,13 @@ const PostPage = () => {
 
   return (
     <div className={styles.content}>
-      <Post post={post} showAllReplies={true} />
+      {isInDescriptionView ? (
+        <DescriptionPost avatarUrl={suggested?.avatarUrl} createdAt={createdAt} description={description} subplebbitAddress={subplebbitAddress} title={title} />
+      ) : isInRulesView ? (
+        <RulesPost createdAt={createdAt} rules={rules} subplebbitAddress={subplebbitAddress} />
+      ) : (
+        <Post post={post} showAllReplies={true} />
+      )}
     </div>
   );
 };

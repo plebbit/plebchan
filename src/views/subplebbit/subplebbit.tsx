@@ -10,6 +10,52 @@ import Post from '../../components/post';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
+interface DescriptionPostProps {
+  subplebbitAddress: string | undefined;
+  createdAt: number;
+  description: string;
+  avatarUrl?: string;
+  title: string;
+}
+
+export const DescriptionPost = ({ subplebbitAddress, createdAt, description, avatarUrl, title }: DescriptionPostProps) => {
+  const post = {
+    isDescription: true,
+    subplebbitAddress,
+    timestamp: createdAt,
+    author: { displayName: '## Board Mods' },
+    content: description,
+    link: avatarUrl,
+    title: 'Welcome to ' + title,
+    pinned: true,
+    locked: true,
+  };
+
+  return <Post post={post} />;
+};
+
+interface RulesPostProps {
+  subplebbitAddress: string | undefined;
+  createdAt: number;
+  rules: string[];
+}
+
+export const RulesPost = ({ subplebbitAddress, createdAt, rules }: RulesPostProps) => {
+  const content = rules.map((rule, index) => `${index + 1}. ${rule}`).join('\n');
+  const post = {
+    isRules: true,
+    subplebbitAddress,
+    timestamp: createdAt,
+    author: { displayName: '## Board Mods' },
+    content,
+    title: 'Rules',
+    pinned: true,
+    locked: true,
+  };
+
+  return <Post post={post} />;
+};
+
 const Subplebbit = () => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
@@ -19,35 +65,6 @@ const Subplebbit = () => {
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, state, suggested, title } = subplebbit || {};
-
-  const descriptionPost = useMemo(
-    () => ({
-      isDescription: true,
-      subplebbitAddress,
-      timestamp: createdAt,
-      author: { displayName: '## Board Mods' },
-      content: description,
-      link: suggested?.avatarUrl,
-      title: 'Welcome to ' + (title || `p/${shortAddress}`) + '!',
-      pinned: true,
-      locked: true,
-    }),
-    [subplebbitAddress, createdAt, description, suggested?.avatarUrl, title, shortAddress],
-  );
-
-  const rulesPost = useMemo(
-    () => ({
-      isRules: true,
-      subplebbitAddress,
-      timestamp: createdAt,
-      author: { displayName: '## Board Mods' },
-      content: rules && rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
-      title: 'Rules',
-      pinned: true,
-      locked: true,
-    }),
-    [subplebbitAddress, createdAt, rules],
-  );
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
@@ -87,8 +104,10 @@ const Subplebbit = () => {
     <div className={styles.content}>
       {createdAt && (
         <>
-          {rules && rules.length > 0 && <Post post={rulesPost} />}
-          {description && description.length > 0 && <Post post={descriptionPost} />}
+          {rules && rules.length > 0 && <RulesPost subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
+          {description && description.length > 0 && (
+            <DescriptionPost avatarUrl={suggested?.avatarUrl} subplebbitAddress={subplebbitAddress} createdAt={createdAt} description={description} title={title} />
+          )}
         </>
       )}
       <Virtuoso
