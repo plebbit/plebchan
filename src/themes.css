@@ -277,8 +277,6 @@
   --button-background-color-mobile: none;
   --button-border-mobile: none;
   --button-text-decoration-mobile: underline;
-  --button-text-color-hover-mobile: red;
-  --button-text-decoration-hover-mobile: underline;
 
   /* footer */
   --footer-item-background-color-desktop: #fed;
@@ -389,8 +387,6 @@
   --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
   --button-background-color-mobile: #d6daf0;
   --button-border-mobile: 1px solid #b7c5d9;
-  --button-text-color-hover-mobile: red;
-  --button-text-decoration-hover-mobile: underline;
 
   /* footer */
   --footer-item-background-color-desktop: #eef2ff;
