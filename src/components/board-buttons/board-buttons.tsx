@@ -5,7 +5,7 @@ import styles from './board-buttons.module.css';
 import { isPostPageView } from '../../lib/utils/view-utils';
 
 interface BoardButtonsProps {
-  address: string;
+  address: string | undefined;
 }
 
 const OptionsButton = () => {
@@ -51,7 +51,8 @@ const BottomButton = () => {
   );
 };
 
-export const MobileBoardButtons = ({ address }: BoardButtonsProps) => {
+export const MobileBoardButtons = () => {
+  const { subplebbitAddress: address } = useParams<{ subplebbitAddress: string }>();
   const isInPostPage = isPostPageView(useLocation().pathname, useParams());
   return (
     <div className={styles.mobileBoardButtons}>
@@ -76,7 +77,8 @@ export const MobileBoardButtons = ({ address }: BoardButtonsProps) => {
   );
 };
 
-export const DesktopBoardButtons = ({ address }: BoardButtonsProps) => {
+export const DesktopBoardButtons = () => {
+  const { subplebbitAddress: address } = useParams<{ subplebbitAddress: string }>();
   const isInPostPage = isPostPageView(useLocation().pathname, useParams());
   return (
     <div className={styles.desktopBoardButtons}>

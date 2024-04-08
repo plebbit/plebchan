@@ -10,6 +10,15 @@
   padding-bottom: 0.5em;
 }
 
+.closed {
+  font-size: x-large;
+  text-align: center;
+  color: red;
+  font-weight: 700;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
 @media (max-width: 640px) {
   .postFormButtonDesktop {
     display: none;

@@ -1,15 +1,20 @@
 import { useState } from 'react';
-import { useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import { useParams } from 'react-router-dom';
+import { useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import styles from './board-stats.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 
-export interface BoardStatsProps {
-  address: string | undefined;
-  createdAt: number | undefined;
-}
-
-const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
+const BoardStats = () => {
   const { t } = useTranslation();
+  const { commentCid, subplebbitAddress } = useParams<{ subplebbitAddress: string; commentCid: string }>();
+
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { address, createdAt } = subplebbit || {};
+
+  const comment = useComment({ commentCid });
+  const { deleted, locked, removed } = comment || {};
+  const hideStats = deleted || locked || removed;
+
   const stats = useSubplebbitStats({ subplebbitAddress: address });
   const [showStats, setShowStats] = useState(true);
 
@@ -22,7 +27,7 @@ const BoardStats = ({ address, createdAt }: BoardStatsProps) => {
   };
 
   return (
-    <div className={styles.content}>
+    <div className={`${styles.content} ${hideStats ? styles.hide : styles.show}`}>
       <table className={styles.blotter}>
         <thead>
           <tr>
