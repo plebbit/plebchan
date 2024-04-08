@@ -150,7 +150,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
       )}
       {!(pinned && !isInPostPage) &&
         replies &&
-        replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
+        (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
           <div key={reply.cid} className={styles.replyContainer}>
             <ReplyDesktop index={index} reply={reply} roles={roles} />
           </div>
@@ -344,7 +344,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
         </div>
         {!(pinned && !isInPostPage) &&
           replies &&
-          replies.slice(0, showAllReplies ? replies.length : 5).map((reply, index) => (
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
               <ReplyMobile index={index} reply={reply} roles={roles} />
             </div>
