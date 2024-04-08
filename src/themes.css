@@ -270,13 +270,12 @@
   --button-text-decoration: underline;
 
   /* mobile buttons */
-  --button-font-size-mobile: 12pt;
-  --button-font-weight-mobile: unset;
-  --button-text-color-mobile: #00e;
-  --button-background-image-mobile: none;
-  --button-background-color-mobile: none;
-  --button-border-mobile: none;
-  --button-text-decoration-mobile: underline;
+  --button-font-size-mobile: 11pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #800;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-color-mobile: #f0e0d6;
+  --button-border-mobile: 1px solid #c0a69d;
 
   /* footer */
   --footer-item-background-color-desktop: #fed;
