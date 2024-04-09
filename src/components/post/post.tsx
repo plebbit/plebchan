@@ -10,7 +10,7 @@ import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
 import styles from './post.module.css';
 import Markdown from '../markdown';
-import Media from '../media';
+import CommentMedia from '../comment-media';
 
 interface PostProps {
   index?: number;
@@ -73,9 +73,10 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
             )}
           </div>
           {hasThumbnail && (
-            <Media
+            <CommentMedia
               commentMediaInfo={commentMediaInfo}
               isMobile={false}
+              isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
               isReply={false}
               linkHeight={linkHeight}
               linkWidth={linkWidth}
@@ -223,7 +224,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               )}
             </div>
             {hasThumbnail && (
-              <Media
+              <CommentMedia
                 commentMediaInfo={commentMediaInfo}
                 isMobile={false}
                 isReply={true}
@@ -308,9 +309,10 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
               </span>
             </div>
             {hasThumbnail && (
-              <Media
+              <CommentMedia
                 commentMediaInfo={commentMediaInfo}
                 isMobile={true}
+                isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
                 isReply={false}
                 linkHeight={linkHeight}
                 linkWidth={linkWidth}
@@ -384,7 +386,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
             </span>
           </div>
           {hasThumbnail && (
-            <Media
+            <CommentMedia
               commentMediaInfo={commentMediaInfo}
               isMobile={true}
               isReply={false}
