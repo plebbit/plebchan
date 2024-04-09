@@ -13,7 +13,7 @@ import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
 import { DesktopBoardButtons } from './components/board-buttons';
 import { MobileBoardButtons } from './components/board-buttons';
-import BoardStats from './components/board-stats';
+import SubplebbitStats from './components/subplebbit-stats';
 import PostForm from './components/post-form';
 
 const App = () => {
@@ -42,7 +42,7 @@ const App = () => {
       <BoardBanner />
       <MobileBoardButtons />
       <PostForm />
-      <BoardStats />
+      <SubplebbitStats />
       <DesktopBoardButtons />
       <Outlet />
     </>

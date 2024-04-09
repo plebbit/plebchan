@@ -7,54 +7,10 @@ import styles from './subplebbit.module.css';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import Post from '../../components/post';
+import SubplebbitDescription from '../../components/subplebbit-description';
+import SubplebbitRules from '../../components/subplebbit-rules';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
-
-interface DescriptionPostProps {
-  subplebbitAddress: string | undefined;
-  createdAt: number;
-  description: string;
-  avatarUrl?: string;
-  title: string;
-}
-
-export const DescriptionPost = ({ subplebbitAddress, createdAt, description, avatarUrl, title }: DescriptionPostProps) => {
-  const post = {
-    isDescription: true,
-    subplebbitAddress,
-    timestamp: createdAt,
-    author: { displayName: '## Board Mods' },
-    content: description,
-    link: avatarUrl,
-    title: 'Welcome to ' + title,
-    pinned: true,
-    locked: true,
-  };
-
-  return <Post post={post} />;
-};
-
-interface RulesPostProps {
-  subplebbitAddress: string | undefined;
-  createdAt: number;
-  rules: string[];
-}
-
-export const RulesPost = ({ subplebbitAddress, createdAt, rules }: RulesPostProps) => {
-  const content = rules.map((rule, index) => `${index + 1}. ${rule}`).join('\n');
-  const post = {
-    isRules: true,
-    subplebbitAddress,
-    timestamp: createdAt,
-    author: { displayName: '## Board Mods' },
-    content,
-    title: 'Rules',
-    pinned: true,
-    locked: true,
-  };
-
-  return <Post post={post} />;
-};
 
 const Subplebbit = () => {
   const { t } = useTranslation();
@@ -104,9 +60,9 @@ const Subplebbit = () => {
     <div className={styles.content}>
       {createdAt && (
         <>
-          {rules && rules.length > 0 && <RulesPost subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
+          {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
           {description && description.length > 0 && (
-            <DescriptionPost avatarUrl={suggested?.avatarUrl} subplebbitAddress={subplebbitAddress} createdAt={createdAt} description={description} title={title} />
+            <SubplebbitDescription avatarUrl={suggested?.avatarUrl} subplebbitAddress={subplebbitAddress} createdAt={createdAt} description={description} title={title} />
           )}
         </>
       )}
