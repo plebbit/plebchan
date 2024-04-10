@@ -17,13 +17,14 @@ import SubplebbitStats from './components/subplebbit-stats';
 import PostForm from './components/post-form';
 
 const App = () => {
-  const [theme] = useTheme();
   const location = useLocation();
   const isInHomeView = isHomeView(location.pathname);
 
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
   const { subplebbits } = useSubplebbits({ subplebbitAddresses });
 
+  // add theme className to body so it can set the correct body background in index.css
+  const [theme] = useTheme();
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
     document.body.classList.add(theme);

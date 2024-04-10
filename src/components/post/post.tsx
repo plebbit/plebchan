@@ -8,6 +8,7 @@ import { getFormattedDate } from '../../lib/utils/time-utils';
 import { isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
+import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
 import Markdown from '../markdown';
 import CommentMedia from '../comment-media';
@@ -417,11 +418,15 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
 
 const Post = ({ post, showAllReplies = false }: PostProps) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
+  const isMobile = useWindowWidth() < 640;
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
-        <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
-        <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        {isMobile ? (
+          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        ) : (
+          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        )}
       </div>
     </div>
   );

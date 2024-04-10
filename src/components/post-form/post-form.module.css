@@ -25,7 +25,7 @@
   }
 }
 
-@media (min-width: 641px) {
+@media (min-width: 640px) {
   .postFormButtonMobile {
     display: none;
   }
