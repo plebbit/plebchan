@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
 import { isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
@@ -33,7 +33,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(post);
+  const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -166,7 +166,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(reply);
+  const commentMediaInfo = getCommentMediaInfo(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -267,7 +267,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(post);
+  const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -361,7 +361,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(reply);
+  const commentMediaInfo = getCommentMediaInfo(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
