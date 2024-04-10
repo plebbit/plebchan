@@ -152,6 +152,22 @@
   text-transform: capitalize;
 }
 
+.version {
+  text-align: center;
+  padding-top: 2em;
+  padding-bottom: 1em;
+  font-size: 11px;
+}
+
+.version a {
+  text-decoration: none;
+  color: unset;
+}
+
+.version a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 640px) {
   .content {
     min-width: 0;
