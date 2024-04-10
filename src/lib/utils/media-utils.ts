@@ -30,8 +30,6 @@ const getYouTubeVideoId = (url: URL): string | null => {
     return url.pathname.slice(1);
   } else if (url.searchParams.has('v')) {
     return url.searchParams.get('v');
-  } else if (url.host.startsWith('yt.')) {
-    return url.searchParams.get('v');
   }
   return null;
 };
