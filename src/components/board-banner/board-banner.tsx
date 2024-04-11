@@ -3,7 +3,7 @@ import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useState } from 'react';
 import styles from './board-banner.module.css';
 
-const totalBanners = 38;
+const totalBanners = 46;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
