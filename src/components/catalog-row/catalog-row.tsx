@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import styles from './catalog-row.module.css';
-import { Link } from 'react-router-dom';
 
 const CatalogPostMedia = ({ commentMediaInfo, link }: { commentMediaInfo: any; link: string }) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
@@ -28,7 +29,8 @@ const CatalogPostMedia = ({ commentMediaInfo, link }: { commentMediaInfo: any; l
 };
 
 const CatalogPost = ({ post }: { post: Comment }) => {
-  const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, replyCount, subplebbitAddress, title } = post || {};
+  const { t } = useTranslation();
+  const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type } = commentMediaInfo || {};
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -50,21 +52,36 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     displayHeight = '75px';
   }
 
+  if (isDescription || isRules) {
+    displayWidth = 'unset';
+    displayHeight = 'unset';
+  }
+
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
   const postLink = `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`;
 
   const linkCount = useCountLinksInReplies(post);
 
+  const threadIcons = (
+    <div className={styles.threadIcons}>
+      {pinned && <span className={styles.stickyIcon} title={t('sticky')} />}
+      {locked && <span className={styles.closedIcon} title={t('closed')} />}
+    </div>
+  );
+
   return (
     <div className={styles.post}>
-      {hasThumbnail && (
+      {hasThumbnail ? (
         <Link to={postLink}>
           <div className={styles.mediaPaddingWrapper}>
+            {threadIcons}
             <div className={styles.mediaWrapper} style={thumbnailDimensions}>
               <CatalogPostMedia commentMediaInfo={commentMediaInfo} link={link} />
             </div>
           </div>
         </Link>
+      ) : (
+        threadIcons
       )}
       <div className={styles.meta}>
         R: <b>{replyCount || '0'}</b>

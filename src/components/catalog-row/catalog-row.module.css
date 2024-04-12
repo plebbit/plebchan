@@ -21,6 +21,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.threadIcons {
+  position: absolute;
+  top: 2px;
+  right: 16px;
+}
+
+.threadIcons span {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  border: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+.threadIcons .stickyIcon {
+  background-image: url("/public/assets/icons/sticky.gif");
+}
+
+.threadIcons .closedIcon {
+  background-image: url("/public/assets/icons/closed.gif");
 }
 
 .mediaWrapper {
