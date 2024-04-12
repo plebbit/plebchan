@@ -24,3 +24,8 @@ export const isPostPageView = (pathname: string, params: ParamsType): boolean =>
   const decodedPathname = decodeURIComponent(pathname);
   return params.subplebbitAddress && params.commentCid ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/c/${params.commentCid}`) : false;
 };
+
+export const isCatalogView = (pathname: string, params: ParamsType): boolean => {
+  const decodedPathname = decodeURIComponent(pathname);
+  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/catalog`) : false;
+};

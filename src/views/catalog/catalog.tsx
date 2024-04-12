@@ -118,7 +118,7 @@ const Catalog = () => {
       });
     window.addEventListener('scroll', setLastVirtuosoState);
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, []);
+  }, [subplebbitAddress]);
 
   const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress + 'catalog'];
 
@@ -128,21 +128,24 @@ const Catalog = () => {
   }, [title, shortAddress]);
 
   return (
-    <div>
-      <Virtuoso
-        increaseViewportBy={{ bottom: 1200, top: 1200 }}
-        totalCount={rows?.length || 0}
-        data={rows}
-        itemContent={(index, row) => (
-          <CatalogRow description={index === 0 && includeDescription && descriptionPost} index={index} row={row} rules={index === 0 && includeRules && rulesPost} />
-        )}
-        useWindowScroll={true}
-        components={{ Footer }}
-        endReached={loadMore}
-        ref={virtuosoRef}
-        restoreStateFrom={lastVirtuosoState}
-        initialScrollTop={lastVirtuosoState?.scrollTop}
-      />
+    <div className={styles.content}>
+      <hr />
+      <div className={styles.catalog}>
+        <Virtuoso
+          increaseViewportBy={{ bottom: 1200, top: 1200 }}
+          totalCount={rows?.length || 0}
+          data={rows}
+          itemContent={(index, row) => (
+            <CatalogRow description={index === 0 && includeDescription && descriptionPost} index={index} row={row} rules={index === 0 && includeRules && rulesPost} />
+          )}
+          useWindowScroll={true}
+          components={{ Footer }}
+          endReached={loadMore}
+          ref={virtuosoRef}
+          restoreStateFrom={lastVirtuosoState}
+          initialScrollTop={lastVirtuosoState?.scrollTop}
+        />
+      </div>
     </div>
   );
 };

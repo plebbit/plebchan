@@ -1,39 +1,59 @@
 .row {
   display: flex; 
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 20px;
 }
 
 .post {
   width: 180px;
-  font-size: 12px;
-
-  /* fix text overflowing */
+  position: relative;
+  max-height: 320px;
+  padding: 10px 0 3px 0;
+  vertical-align: top;
+  display: inline-block;
   overflow: hidden;
 }
 
-.postHeader {
-  /* make cursors like button */
-  cursor: pointer;
+.mediaPaddingWrapper {
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.postStats {
-  font-weight: bold;
-}
-
-.media {
-  height: 180px;
-}
-
-/* media and no media must be the same height, or the infinite scroll bugs out */
 .mediaWrapper {
-  overflow: hidden;
-  width: 180px;
-  height: 180px;
+  background-color: var(--media-thumbnail-background-color);
+  width: var(--width);
+  height: var(--height);
+  max-width: 150px;
+  max-height: 150px;
 }
 
-/* add some padding to rows when there's no image */
-.noMedia {
-  height: 2px;
+.post img, .post video, .post audio {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100%;
+  min-width: 50px;
+  min-height: 50px;
+  object-fit: contain;
+}
+
+.meta {
+  font-size: 11px;
+  line-height: 8px;
+  padding: 2px 0 1px 0;
+}
+
+.teaser {
+  display: block;
+  padding: 0 15px;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.post a {
+  color: unset;
+  text-decoration: none;
 }
