@@ -384,7 +384,7 @@
   }
 }
 
-@media (min-width: 641px) {
+@media (min-width: 640px) {
   .postMobile {
     display: none;
   }

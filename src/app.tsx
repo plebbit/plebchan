@@ -5,6 +5,7 @@ import { useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { useDefaultSubplebbitAddresses } from './hooks/use-default-subplebbits';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
+import Catalog from './views/catalog';
 import Home from './views/home';
 import PostPage from './views/post-page';
 import Settings from './views/settings';
@@ -13,17 +14,18 @@ import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
 import { DesktopBoardButtons } from './components/board-buttons';
 import { MobileBoardButtons } from './components/board-buttons';
-import BoardStats from './components/board-stats';
+import SubplebbitStats from './components/subplebbit-stats';
 import PostForm from './components/post-form';
 
 const App = () => {
-  const [theme] = useTheme();
   const location = useLocation();
   const isInHomeView = isHomeView(location.pathname);
 
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
   const { subplebbits } = useSubplebbits({ subplebbitAddresses });
 
+  // add theme className to body so it can set the correct body background in index.css
+  const [theme] = useTheme();
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
     document.body.classList.add(theme);
@@ -42,7 +44,7 @@ const App = () => {
       <BoardBanner />
       <MobileBoardButtons />
       <PostForm />
-      <BoardStats />
+      <SubplebbitStats />
       <DesktopBoardButtons />
       <Outlet />
     </>
@@ -57,6 +59,7 @@ const App = () => {
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
           <Route path='/p/:subplebbitAddress/description' element={<PostPage />} />
           <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
+          <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
         </Route>
         <Route path='/settings' element={<Settings />} />
       </Routes>

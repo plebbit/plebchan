@@ -151,53 +151,73 @@ const downloadAppLink = (() => {
   }
 })();
 
+const isElectron = window.isElectron === true;
+const commitRef = process.env.REACT_APP_COMMIT_REF;
+
 const Footer = () => {
   const { t } = useTranslation();
   return (
-    <ul className={styles.footer}>
-      <li>
-        <a href='https://plebbit.com' target='_blank' rel='noopener noreferrer'>
-          {t('about')}
-        </a>
-      </li>
-      <li>
-        <a href='https://twitter.com/plebchan_eth' target='_blank' rel='noopener noreferrer'>
-          Twitter
-        </a>
-      </li>
-      <li>
-        <a href='https://t.me/plebbit' target='_blank' rel='noopener noreferrer'>
-          Telegram
-        </a>
-      </li>
-      <li>
-        <a href='https://discord.gg/E7ejphwzGW' target='_blank' rel='noopener noreferrer'>
-          Discord
-        </a>
-      </li>
-      <li>
-        <a href='https://github.com/plebbit/plebchan' target='_blank' rel='noopener noreferrer'>
-          GitHub
-        </a>
-      </li>
-      {downloadAppLink && (
+    <>
+      <ul className={styles.footer}>
         <li>
-          <a href={downloadAppLink} target='_blank' rel='noopener noreferrer'>
-            {t('download_app')}
+          <a href='https://plebbit.com' target='_blank' rel='noopener noreferrer'>
+            {t('about')}
           </a>
         </li>
-      )}
-      <li>
-        <a href='https://etherscan.io/token/0xEA81DaB2e0EcBc6B5c4172DE4c22B6Ef6E55Bd8f' target='_blank' rel='noopener noreferrer'>
-          {t('token')}
+        <li>
+          <a href='https://twitter.com/plebchan_eth' target='_blank' rel='noopener noreferrer'>
+            Twitter
+          </a>
+        </li>
+        <li>
+          <a href='https://t.me/plebbit' target='_blank' rel='noopener noreferrer'>
+            Telegram
+          </a>
+        </li>
+        <li>
+          <a href='https://discord.gg/E7ejphwzGW' target='_blank' rel='noopener noreferrer'>
+            Discord
+          </a>
+        </li>
+        <li>
+          <a href='https://github.com/plebbit/plebchan' target='_blank' rel='noopener noreferrer'>
+            GitHub
+          </a>
+        </li>
+        {downloadAppLink && (
+          <li>
+            <a href={downloadAppLink} target='_blank' rel='noopener noreferrer'>
+              {t('download_app')}
+            </a>
+          </li>
+        )}
+        <li>
+          <a href='https://etherscan.io/token/0xEA81DaB2e0EcBc6B5c4172DE4c22B6Ef6E55Bd8f' target='_blank' rel='noopener noreferrer'>
+            {t('token')}
+          </a>
+        </li>
+        <li>
+          <a href='https://github.com/plebbit/whitepaper/discussions/2' target='_blank' rel='noopener noreferrer'>
+            {t('whitepaper')}
+          </a>
+        </li>
+      </ul>
+      <div className={styles.version}>
+        <a href={`https://github.com/plebbit/plebchan/releases/tag/v${packageJson.version}`} target='_blank' rel='noopener noreferrer'>
+          v{packageJson.version}
         </a>
-      </li>
-      <li>
-        <a href='https://github.com/plebbit/whitepaper/discussions/2' target='_blank' rel='noopener noreferrer'>
-          {t('whitepaper')}
-        </a>
-      </li>
-    </ul>
+        {isElectron && (
+          <a className={styles.fullNodeStats} href='http://localhost:5001/webui/' target='_blank' rel='noreferrer'>
+            node stats
+          </a>
+        )}
+        {commitRef && (
+          <a href={`https://github.com/plebbit/plebchan/commit/${commitRef}`} target='_blank' rel='noopener noreferrer'>
+            {commitRef.slice(0, 7)}
+          </a>
+        )}
+      </div>
+    </>
   );
 };
 

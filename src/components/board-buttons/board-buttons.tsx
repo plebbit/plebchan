@@ -2,10 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
-import { isPostPageView } from '../../lib/utils/view-utils';
+import { isCatalogView, isPostPageView } from '../../lib/utils/view-utils';
 
 interface BoardButtonsProps {
   address: string | undefined;
+  isInCatalogView?: boolean;
 }
 
 const OptionsButton = () => {
@@ -13,11 +14,11 @@ const OptionsButton = () => {
   return <button className='button'>{t('options')}</button>;
 };
 
-const CatalogButton = ({ address }: BoardButtonsProps) => {
+const CatalogButton = ({ address, isInCatalogView }: BoardButtonsProps) => {
   const { t } = useTranslation();
   return (
     <button className='button'>
-      <Link to={`/p/${address}/catalog`}>{t('catalog')}</Link>
+      <Link to={isInCatalogView ? `/p/${address}` : `/p/${address}/catalog`}>{t(isInCatalogView ? 'return' : 'catalog')}</Link>
     </button>
   );
 };
@@ -79,20 +80,25 @@ export const MobileBoardButtons = () => {
 
 export const DesktopBoardButtons = () => {
   const { subplebbitAddress: address } = useParams<{ subplebbitAddress: string }>();
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+
+  const location = useLocation();
+  const params = useParams();
+  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInCatalogView = isCatalogView(location.pathname, params);
+
   return (
     <div className={styles.desktopBoardButtons}>
       <hr />
       {isInPostPage ? (
         <>
-          [<ReturnButton address={address} />] [<CatalogButton address={address} />] [<BottomButton />] [<OptionsButton />]
+          [<ReturnButton address={address} />] [<CatalogButton address={address} isInCatalogView={isInCatalogView} />] [<BottomButton />] [<OptionsButton />]
           <span className={styles.subscribeButton}>
             [<SubscribeButton address={address} />]
           </span>
         </>
       ) : (
         <>
-          [<OptionsButton />] [<CatalogButton address={address} />]
+          [<OptionsButton />] [<CatalogButton address={address} isInCatalogView={isInCatalogView} />]
           <span className={styles.subscribeButton}>
             [<SubscribeButton address={address} />]
           </span>

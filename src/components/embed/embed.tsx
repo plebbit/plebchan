@@ -7,7 +7,7 @@ interface EmbedProps {
 const Embed = ({ url }: EmbedProps) => {
   const parsedUrl = new URL(url);
 
-  if (youtubeHosts.has(parsedUrl.host) || parsedUrl.host.startsWith('yt.')) {
+  if (youtubeHosts.has(parsedUrl.host) || (parsedUrl.host.startsWith('yt.') && parsedUrl.searchParams.has('v'))) {
     return <YoutubeEmbed parsedUrl={parsedUrl} />;
   }
   if (xHosts.has(parsedUrl.host)) {
@@ -271,6 +271,8 @@ const canEmbedHosts = new Set<string>([
   ...spotifyHosts,
 ]);
 
-export const canEmbed = (parsedUrl: URL): boolean => canEmbedHosts.has(parsedUrl.host);
+export const canEmbed = (parsedUrl: URL): boolean => {
+  return canEmbedHosts.has(parsedUrl.host) || (parsedUrl.host.startsWith('yt.') && parsedUrl.searchParams.has('v'));
+};
 
 export default Embed;

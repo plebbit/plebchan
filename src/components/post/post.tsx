@@ -3,14 +3,15 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { getCommentMediaInfoMemoized, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
 import { isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
+import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
 import Markdown from '../markdown';
-import Media from '../media';
+import CommentMedia from '../comment-media';
 
 interface PostProps {
   index?: number;
@@ -33,7 +34,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(post);
+  const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -73,9 +74,10 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
             )}
           </div>
           {hasThumbnail && (
-            <Media
+            <CommentMedia
               commentMediaInfo={commentMediaInfo}
               isMobile={false}
+              isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
               isReply={false}
               linkHeight={linkHeight}
               linkWidth={linkWidth}
@@ -165,7 +167,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(reply);
+  const commentMediaInfo = getCommentMediaInfo(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -223,7 +225,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               )}
             </div>
             {hasThumbnail && (
-              <Media
+              <CommentMedia
                 commentMediaInfo={commentMediaInfo}
                 isMobile={false}
                 isReply={true}
@@ -266,7 +268,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(post);
+  const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -308,9 +310,10 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
               </span>
             </div>
             {hasThumbnail && (
-              <Media
+              <CommentMedia
                 commentMediaInfo={commentMediaInfo}
                 isMobile={true}
+                isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
                 isReply={false}
                 linkHeight={linkHeight}
                 linkWidth={linkWidth}
@@ -359,7 +362,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
-  const commentMediaInfo = getCommentMediaInfoMemoized(reply);
+  const commentMediaInfo = getCommentMediaInfo(reply);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -384,7 +387,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
             </span>
           </div>
           {hasThumbnail && (
-            <Media
+            <CommentMedia
               commentMediaInfo={commentMediaInfo}
               isMobile={true}
               isReply={false}
@@ -415,11 +418,15 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
 
 const Post = ({ post, showAllReplies = false }: PostProps) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
+  const isMobile = useWindowWidth() < 640;
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
-        <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
-        <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        {isMobile ? (
+          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        ) : (
+          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+        )}
       </div>
     </div>
   );

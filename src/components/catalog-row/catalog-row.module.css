@@ -1,0 +1,84 @@
+.row {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.post {
+  width: 180px;
+  position: relative;
+  max-height: 320px;
+  padding: 10px 0 3px 0;
+  vertical-align: top;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.mediaPaddingWrapper {
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.threadIcons {
+  position: absolute;
+  top: 2px;
+  right: 16px;
+}
+
+.threadIcons span {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  border: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+.threadIcons .stickyIcon {
+  background-image: url("/public/assets/icons/sticky.gif");
+}
+
+.threadIcons .closedIcon {
+  background-image: url("/public/assets/icons/closed.gif");
+}
+
+.mediaWrapper {
+  background-color: var(--media-thumbnail-background-color);
+  width: var(--width);
+  height: var(--height);
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.post img, .post video, .post audio {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100%;
+  min-width: 50px;
+  min-height: 50px;
+  object-fit: contain;
+}
+
+.meta {
+  font-size: 11px;
+  line-height: 8px;
+  padding: 2px 0 1px 0;
+}
+
+.teaser {
+  display: block;
+  padding: 0 15px;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.post a {
+  color: unset;
+  text-decoration: none;
+}

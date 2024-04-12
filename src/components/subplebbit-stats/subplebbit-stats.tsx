@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
-import styles from './board-stats.module.css';
+import styles from './subplebbit-stats.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 
-const BoardStats = () => {
+const SubplebbitStats = () => {
   const { t } = useTranslation();
   const { commentCid, subplebbitAddress } = useParams<{ subplebbitAddress: string; commentCid: string }>();
 
@@ -103,4 +103,4 @@ const BoardStats = () => {
   );
 };
 
-export default BoardStats;
+export default SubplebbitStats;
