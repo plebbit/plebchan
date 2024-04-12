@@ -91,6 +91,9 @@ const CatalogPost = ({ post }: { post: Comment }) => {
             / L: <b>{linkCount}</b>
           </span>
         )}
+        <span className={styles.postMenuBtn} title='Thread Menu'>
+          ▶
+        </span>
       </div>
       <Link to={postLink}>
         <div className={styles.teaser}>
