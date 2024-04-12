@@ -1,4 +1,5 @@
 import Post from '../post';
+
 interface DescriptionPostProps {
   subplebbitAddress: string | undefined;
   createdAt: number;
@@ -7,7 +8,7 @@ interface DescriptionPostProps {
   title: string;
 }
 
-export const SubplebbitDescription = ({ subplebbitAddress, createdAt, description, avatarUrl, title }: DescriptionPostProps) => {
+const SubplebbitDescription = ({ subplebbitAddress, createdAt, description, avatarUrl, title }: DescriptionPostProps) => {
   const post = {
     isDescription: true,
     subplebbitAddress,

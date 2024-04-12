@@ -1,0 +1,39 @@
+.row {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.post {
+  width: 180px;
+  font-size: 12px;
+
+  /* fix text overflowing */
+  overflow: hidden;
+}
+
+.postHeader {
+  /* make cursors like button */
+  cursor: pointer;
+}
+
+.postStats {
+  font-weight: bold;
+}
+
+.media {
+  height: 180px;
+}
+
+/* media and no media must be the same height, or the infinite scroll bugs out */
+.mediaWrapper {
+  overflow: hidden;
+  width: 180px;
+  height: 180px;
+}
+
+/* add some padding to rows when there's no image */
+.noMedia {
+  height: 2px;
+}

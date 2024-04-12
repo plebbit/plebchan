@@ -5,6 +5,7 @@ import { useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { useDefaultSubplebbitAddresses } from './hooks/use-default-subplebbits';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
+import Catalog from './views/catalog';
 import Home from './views/home';
 import PostPage from './views/post-page';
 import Settings from './views/settings';
@@ -58,6 +59,7 @@ const App = () => {
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
           <Route path='/p/:subplebbitAddress/description' element={<PostPage />} />
           <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
+          <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
         </Route>
         <Route path='/settings' element={<Settings />} />
       </Routes>

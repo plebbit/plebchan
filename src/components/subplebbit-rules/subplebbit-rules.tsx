@@ -6,7 +6,7 @@ interface RulesPostProps {
   rules: string[];
 }
 
-export const SubplebbitRules = ({ subplebbitAddress, createdAt, rules }: RulesPostProps) => {
+const SubplebbitRules = ({ subplebbitAddress, createdAt, rules }: RulesPostProps) => {
   const content = rules.map((rule, index) => `${index + 1}. ${rule}`).join('\n');
   const post = {
     isRules: true,
