@@ -11,7 +11,7 @@ const ImageBanner = () => {
     return `assets/banners/banner-${randomBannerIndex}.jpg`;
   });
 
-  return <img src={imagePath} alt='banner' />;
+  return <img src={imagePath} alt='' />;
 };
 
 const BoardBanner = () => {
