@@ -82,17 +82,27 @@
 
 .postDesktop .stickyIconWrapper, .replyDesktop .stickyIconWrapper {
   padding-left: 5px;
+  padding-right: 10px;
 }
 
 .postDesktop .closedIconWrapper {
-  padding-left: 3px;
+  padding-left: 5px;
+  padding-right: 10px;
 }
 
-.postDesktop .stickyIconWrapper img, .postDesktop .closedIconWrapper img, .replyDesktop .stickyIconWrapper img, .replyDesktop .closedIconWrapper img {
+.postDesktop .addPaddingInBetween {
+  padding-left: 8px;
+}
+
+.stickyIconWrapper img, .closedIconWrapper img {
+  position: absolute;
   width: 16px;
   height: 16px;
-  border: none;
   image-rendering: pixelated;
+}
+
+.postDesktop .addPaddingBeforeReply {
+  padding-right: 15px;
 }
 
 .postDesktop .closeMedia {
@@ -121,9 +131,27 @@
   color: var(--button-desktop-text-color-hover);
 }
 
-.postDesktop .postMenuBtn, .replyDesktop .postMenuBtn {
+.postMenuBtnWrapper {
+  position: relative;
   padding-left: 5px;
+}
+
+.replyDesktop .postMenuBtnWrapper {
+  padding-right: 12px;
+}
+
+.replyDesktop .stickyIconWrapper {
+  padding-right: 18px;
+}
+
+.postDesktop .postMenuBtn, .replyDesktop .postMenuBtn {
   color: var(--post-menu-button-color);
+  transition: transform 0.1s;
+  position: absolute;
+}
+
+.replyDesktop .postMenuBtn {
+  right: -2px;
 }
 
 .postDesktop .postMenuBtn:hover, .replyDesktop .postMenuBtn:hover {
@@ -246,6 +274,18 @@
 .postMobile .nameBlock .name {
   color: var(--post-mobile-name-text-color);
   font-weight: var(--post-mobile-name-font-weight);
+}
+
+.postMobile .stickyIconWrapper {
+  padding: 0 5px;
+}
+
+.postMobile .closedIconWrapper {
+  padding: 0 5px;
+}
+
+.postMobile .addPaddingInBetween {
+  padding: 0 13px;
 }
 
 .postMobile .nameBlock .subject {
