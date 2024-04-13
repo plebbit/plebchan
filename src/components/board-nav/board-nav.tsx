@@ -1,6 +1,7 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Subplebbit } from '@plebbit/plebbit-react-hooks';
+import { isCatalogView } from '../../lib/utils/view-utils';
 import styles from './board-nav.module.css';
 
 interface BoardNavProps {
@@ -10,6 +11,7 @@ interface BoardNavProps {
 
 const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
   const { t } = useTranslation();
+  const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
   return (
     <div className={styles.boardNavDesktop}>
@@ -21,7 +23,7 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
           return (
             <span key={index}>
               {index === 0 ? null : ' '}
-              <Link to={`/p/${address}`} title={title || ''}>
+              <Link to={`/p/${address}${isInCatalogView && '/catalog'}`} title={title || ''}>
                 {address.includes('.') ? address : title || address.slice(0, 10).concat('...')}
               </Link>
               {index !== subplebbits.length - 1 ? ' /' : null}
@@ -44,8 +46,10 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
 
   const currentSubplebbitIsInList = subplebbits.some((subplebbit: any) => subplebbit?.address === currentSubplebbit);
 
+  const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
+
   const boardSelect = (
-    <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}`)}>
+    <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}${isInCatalogView && '/catalog'}`)}>
       {!currentSubplebbitIsInList && currentSubplebbit && <option value={currentSubplebbit}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
