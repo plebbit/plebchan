@@ -55,10 +55,12 @@ const Markdown = ({ content }: MarkdownProps) => {
 
   remarkPlugins.push([blockquoteToGreentext]);
 
+  const doubleNewlineContent = content?.replace(/\n/g, '&nbsp;\n\n');
+
   return (
     <span className={styles.markdown}>
       <ReactMarkdown
-        children={content}
+        children={doubleNewlineContent}
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
