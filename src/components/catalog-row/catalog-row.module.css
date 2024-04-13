@@ -79,11 +79,36 @@
   text-decoration: none;
 }
 
+.postMenuBtnPadding {
+  left: 5px;
+  top: 5px;
+  position: relative;
+}
+
 .postMenuBtn {
   position: absolute;
-  display: inline-block;
-  padding-left: 5px;
+  bottom: 5px;
+  line-height: 1em;
+  color: var(--catalog-post-menu-btn-color);
+  opacity: 0;
+  transition: transform 0.1s;
+}
 
-  width: 1em;
-  height: 1em
+.post:hover .postMenuBtn {
+  opacity: var(--catalog-post-menu-btn-opacity);
+}
+
+.post:hover .postMenuBtn:hover {
+  cursor: pointer;
+  color: var(--catalog-post-menu-btn-hover-color);
+  opacity: var(--catalog-post-menu-btn-hover-opacity);
+}
+
+.postMenuBtn {
+  /* preserve unicode triangle for button, some browsers will use an emoji */
+  font-variant: normal;
+  font-feature-settings: "tnum";
+  -webkit-font-feature-settings: "tnum"; /* Chrome, Opera, and Safari */
+  -moz-font-feature-settings: "tnum";    /* Firefox */
+  font-variant-numeric: tabular-nums;
 }

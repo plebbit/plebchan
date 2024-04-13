@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
@@ -69,6 +70,8 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     </div>
   );
 
+  const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+
   return (
     <div className={styles.post}>
       {hasThumbnail ? (
@@ -91,8 +94,15 @@ const CatalogPost = ({ post }: { post: Comment }) => {
             / L: <b>{linkCount}</b>
           </span>
         )}
-        <span className={styles.postMenuBtn} title='Thread Menu'>
-          ▶
+        <span className={styles.postMenuBtnPadding}>
+          <span
+            className={styles.postMenuBtn}
+            title='Thread Menu'
+            onClick={() => setMenuBtnRotated(!menuBtnRotated)}
+            style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          >
+            ▶
+          </span>
         </span>
       </div>
       <Link to={postLink}>
