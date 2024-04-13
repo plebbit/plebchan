@@ -9,7 +9,7 @@ import Catalog from './views/catalog';
 import Home from './views/home';
 import PostPage from './views/post-page';
 import Settings from './views/settings';
-import Subplebbit from './views/subplebbit';
+import Board from './views/board';
 import BoardNav from './components/board-nav';
 import BoardBanner from './components/board-banner';
 import { DesktopBoardButtons } from './components/board-buttons';
@@ -55,7 +55,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home subplebbits={subplebbits} />} />
         <Route element={boardLayout}>
-          <Route path='/p/:subplebbitAddress' element={<Subplebbit />} />
+          <Route path='/p/:subplebbitAddress' element={<Board />} />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
           <Route path='/p/:subplebbitAddress/description' element={<PostPage />} />
           <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
