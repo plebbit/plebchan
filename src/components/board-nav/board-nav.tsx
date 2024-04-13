@@ -23,7 +23,7 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
           return (
             <span key={index}>
               {index === 0 ? null : ' '}
-              <Link to={`/p/${address}${isInCatalogView && '/catalog'}`} title={title || ''}>
+              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`} title={title || ''}>
                 {address.includes('.') ? address : title || address.slice(0, 10).concat('...')}
               </Link>
               {index !== subplebbits.length - 1 ? ' /' : null}
@@ -49,7 +49,7 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
   const boardSelect = (
-    <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}${isInCatalogView && '/catalog'}`)}>
+    <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}${isInCatalogView ? '/catalog' : ''}`)}>
       {!currentSubplebbitIsInList && currentSubplebbit && <option value={currentSubplebbit}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
