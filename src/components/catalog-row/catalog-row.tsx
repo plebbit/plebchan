@@ -48,12 +48,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     displayHeight = `${maxThumbnailSize}px`;
   }
 
-  if (type === 'audio') {
-    displayWidth = '150px';
-    displayHeight = '75px';
-  }
-
-  if (isDescription || isRules) {
+  if (type === 'audio' || isDescription || isRules) {
     displayWidth = 'unset';
     displayHeight = 'unset';
   }
