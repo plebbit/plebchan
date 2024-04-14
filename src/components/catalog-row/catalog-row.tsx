@@ -116,15 +116,12 @@ const CatalogPost = ({ post }: { post: Comment }) => {
 };
 
 interface CatalogRowProps {
-  description: any | undefined;
-  index: number;
-  rules: any | undefined;
+  index?: number;
   row: Comment[];
 }
 
-const CatalogRow = ({ description, index, row, rules }: CatalogRowProps) => {
-  const rowPosts = index === 0 ? [...(rules?.content?.length > 0 ? [rules] : []), ...(description?.content?.length > 0 ? [description] : []), ...row] : row;
-  const posts = rowPosts.map((post, index) => <CatalogPost key={index} post={post} />);
+const CatalogRow = ({ row }: CatalogRowProps) => {
+  const posts = row.map((post, index) => <CatalogPost key={index} post={post} />);
   return <div className={styles.row}>{posts}</div>;
 };
 
