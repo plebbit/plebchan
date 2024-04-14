@@ -226,7 +226,7 @@ const Home = ({ subplebbits }: HomeProps) => {
     <div className={styles.content}>
       <Link to='/'>
         <div className={styles.logo}>
-          <img alt='plebchan' src='/assets/logo/logo-transparent.png' />
+          <img alt='' src='/assets/logo/logo-transparent.png' />
         </div>
       </Link>
       <SearchBar />

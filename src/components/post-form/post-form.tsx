@@ -7,7 +7,6 @@ import styles from './post-form.module.css';
 
 const PostForm = () => {
   const { t } = useTranslation();
-
   const location = useLocation();
   const params = useParams();
   const isInPostPage = isPostPageView(location.pathname, params);
@@ -44,9 +43,9 @@ const PostForm = () => {
       <div className={styles.postFormButtonMobile}>
         {isThreadClosed ? (
           <div className={styles.closed}>
-            Thread closed.
+            {t('thread_closed')}
             <br />
-            You may not reply at this time.
+            {t('may_not_reply')}
           </div>
         ) : (
           <button className='button' onClick={() => setShowForm(true)}>
