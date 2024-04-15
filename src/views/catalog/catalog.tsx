@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Subplebbit, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useWindowWidth from '../../hooks/use-window-width';
@@ -11,40 +11,63 @@ import styles from './catalog.module.css';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const useFeedRows = (feed: any[], columnCount: number, includeDescription: boolean, includeRules: boolean) => {
-  const rowsRef = useRef<any[]>([]);
-  return useMemo(() => {
-    const rows: any[] = [];
-    let startIndex = 0;
-    let adjustment = 0; // Adjustment for the first row if description/rules are included
-
-    // Calculate adjustment for the first row
-    if (includeDescription) adjustment += 1;
-    if (includeRules) adjustment += 1;
-
-    while (startIndex < feed.length) {
-      let currentColumnCount = columnCount;
-
-      // Adjust the number of items in the first row to compensate for description/rules
-      if (rows.length === 0 && adjustment > 0) {
-        currentColumnCount = columnCount - adjustment;
-      }
-
-      // Ensure we don't try to slice more items than are available
-      const endIndex = Math.min(startIndex + currentColumnCount, feed.length);
-
-      if (rowsRef.current[rows.length] && rowsRef.current[rows.length].length === currentColumnCount) {
-        rows.push(rowsRef.current[rows.length]);
-      } else {
-        rows.push(feed.slice(startIndex, endIndex));
-      }
-
-      startIndex = endIndex; // Update startIndex to the end of the current row
+const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit) => {
+  const modifiedFeed = useMemo(() => {
+    if (!isFeedLoaded) {
+      return []; // prevent rules and description from appearing while feed is loading
     }
+    if (!subplebbit?.description && !subplebbit?.rules) {
+      return feed;
+    }
+    const _feed = [...feed];
+    if (subplebbit?.description) {
+      _feed.unshift({
+        isDescription: true,
+        subplebbitAddress: subplebbit?.address,
+        timestamp: subplebbit?.createdAt,
+        author: { displayName: '## Board Mods' },
+        content: subplebbit?.description,
+        link: subplebbit?.suggested?.avatarUrl,
+        title: 'Welcome to ' + (subplebbit?.title || `p/${subplebbit?.shortAddress}`),
+        pinned: true,
+        locked: true,
+      });
+    }
+    if (subplebbit?.rules) {
+      _feed.unshift({
+        isRules: true,
+        subplebbitAddress: subplebbit?.address,
+        timestamp: subplebbit?.createdAt,
+        author: { displayName: '## Board Mods' },
+        content: subplebbit?.rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
+        title: 'Rules',
+        pinned: true,
+        locked: true,
+      });
+    }
+    return _feed;
+  }, [
+    feed,
+    subplebbit?.description,
+    subplebbit?.rules,
+    subplebbit?.address,
+    isFeedLoaded,
+    subplebbit?.createdAt,
+    subplebbit?.title,
+    subplebbit?.shortAddress,
+    subplebbit?.suggested?.avatarUrl,
+  ]);
 
-    rowsRef.current = rows;
+  // Memoize rows calculation, ensuring it updates on changes to the modified feed or column count
+  const rows = useMemo(() => {
+    const rows = [];
+    for (let i = 0; i < modifiedFeed.length; i += columnCount) {
+      rows.push(modifiedFeed.slice(i, i + columnCount));
+    }
     return rows;
-  }, [feed, columnCount, includeDescription, includeRules]);
+  }, [modifiedFeed, columnCount]);
+
+  return rows;
 };
 
 const columnWidth = 180;
@@ -62,8 +85,7 @@ const Catalog = () => {
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { createdAt, description, rules, shortAddress, state, suggested, title } = subplebbit || {};
-  const { avatarUrl } = suggested || {};
+  const { shortAddress, state, title } = subplebbit || {};
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
 
@@ -78,34 +100,10 @@ const Catalog = () => {
     return <div className={styles.footer}>{footerContent}</div>;
   };
 
+  const isFeedloaded = feed.length > 0 || state === 'failed';
+
   // split feed into rows
-  const includeDescription = !!description && description.length > 0;
-  const includeRules = !!rules && rules.length > 0;
-  const rows = useFeedRows(feed, columnCount, includeDescription, includeRules);
-
-  const descriptionPost = {
-    isDescription: true,
-    subplebbitAddress,
-    timestamp: createdAt,
-    author: { displayName: '## Board Mods' },
-    content: description,
-    link: avatarUrl,
-    title: 'Welcome to ' + (title || `p/${shortAddress}`),
-    pinned: true,
-    locked: true,
-  };
-
-  const content = rules?.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n');
-  const rulesPost = {
-    isRules: true,
-    subplebbitAddress,
-    timestamp: createdAt,
-    author: { displayName: '## Board Mods' },
-    content,
-    title: 'Rules',
-    pinned: true,
-    locked: true,
-  };
+  const rows = useFeedRows(columnCount, feed, isFeedloaded, subplebbit);
 
   // save the last Virtuoso state to restore it when navigating back
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
@@ -135,9 +133,7 @@ const Catalog = () => {
           increaseViewportBy={{ bottom: 1200, top: 1200 }}
           totalCount={rows?.length || 0}
           data={rows}
-          itemContent={(index, row) => (
-            <CatalogRow description={index === 0 && includeDescription && descriptionPost} index={index} row={row} rules={index === 0 && includeRules && rulesPost} />
-          )}
+          itemContent={(index, row) => <CatalogRow index={index} row={row} />}
           useWindowScroll={true}
           components={{ Footer }}
           endReached={loadMore}

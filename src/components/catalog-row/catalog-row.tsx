@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
@@ -47,12 +48,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     displayHeight = `${maxThumbnailSize}px`;
   }
 
-  if (type === 'audio') {
-    displayWidth = '150px';
-    displayHeight = '75px';
-  }
-
-  if (isDescription || isRules) {
+  if (type === 'audio' || isDescription || isRules) {
     displayWidth = 'unset';
     displayHeight = 'unset';
   }
@@ -68,6 +64,8 @@ const CatalogPost = ({ post }: { post: Comment }) => {
       {locked && <span className={styles.closedIcon} title={t('closed')} />}
     </div>
   );
+
+  const [menuBtnRotated, setMenuBtnRotated] = useState(false);
 
   return (
     <div className={styles.post}>
@@ -91,6 +89,16 @@ const CatalogPost = ({ post }: { post: Comment }) => {
             / L: <b>{linkCount}</b>
           </span>
         )}
+        <span className={styles.postMenuBtnPadding}>
+          <span
+            className={styles.postMenuBtn}
+            title='Thread Menu'
+            onClick={() => setMenuBtnRotated(!menuBtnRotated)}
+            style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          >
+            ▶
+          </span>
+        </span>
       </div>
       <Link to={postLink}>
         <div className={styles.teaser}>
@@ -103,15 +111,12 @@ const CatalogPost = ({ post }: { post: Comment }) => {
 };
 
 interface CatalogRowProps {
-  description: any | undefined;
-  index: number;
-  rules: any | undefined;
+  index?: number;
   row: Comment[];
 }
 
-const CatalogRow = ({ description, index, row, rules }: CatalogRowProps) => {
-  const rowPosts = index === 0 ? [...(rules?.content?.length > 0 ? [rules] : []), ...(description?.content?.length > 0 ? [description] : []), ...row] : row;
-  const posts = rowPosts.map((post, index) => <CatalogPost key={index} post={post} />);
+const CatalogRow = ({ row }: CatalogRowProps) => {
+  const posts = row.map((post, index) => <CatalogPost key={index} post={post} />);
   return <div className={styles.row}>{posts}</div>;
 };
 

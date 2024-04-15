@@ -24,6 +24,12 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
 
+  /* catalog post */
+  --catalog-post-menu-btn-color: navy;
+  --catalog-post-menu-btn-hover-color: red;
+  --catalog-post-menu-btn-opacity: 0.5;
+  --catalog-post-menu-btn-hover-opacity: 1;
+
   /* desktop buttons */
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
@@ -150,6 +156,12 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
 
+  /* catalog post */
+  --catalog-post-menu-btn-color: navy;
+  --catalog-post-menu-btn-hover-color: #d00;
+  --catalog-post-menu-btn-opacity: 0.5;
+  --catalog-post-menu-btn-hover-opacity: 1;
+
   /* homepage */
   --homepage-infobox-text-color: #000;
   --homepage-infobox-bar-text-color: #000;
@@ -270,6 +282,12 @@
   --board-title-font-size: 32px;
   --board-address-font-size: 10pt;
 
+  /* catalog post */
+  --catalog-post-menu-btn-color: navy;
+  --catalog-post-menu-btn-hover-color: red;
+  --catalog-post-menu-btn-opacity: 0.5;
+  --catalog-post-menu-btn-hover-opacity: 1;
+
   /* desktop buttons */
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
@@ -385,6 +403,12 @@
   --homepage-box-bar-background-color: #98e;
   --homepage-box-bar-text-color-hover: #fff;
 
+  /* catalog post */
+  --catalog-post-menu-btn-color: navy;
+  --catalog-post-menu-btn-hover-color: red;
+  --catalog-post-menu-btn-opacity: 0.5;
+  --catalog-post-menu-btn-hover-opacity: 1;
+
   /* desktop buttons */
   --button-desktop-text-color: #34345c;
   --button-text-decoration: underline;
@@ -496,6 +520,12 @@
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
   --board-address-font-size: x-small;
+
+  /* catalog post */
+  --catalog-post-menu-btn-color: #5f89ac;
+  --catalog-post-menu-btn-hover-color: #5f89ac;
+  --catalog-post-menu-btn-opacity: 0.5;
+  --catalog-post-menu-btn-hover-opacity: 1;
 
   /* desktop buttons */
   --button-desktop-text-color: #81a2be;
@@ -609,6 +639,12 @@
   --board-title-font-family: Tahoma, sans-serif;
   --board-title-text-color: #004a99;
   --board-address-font-size: x-small;
+
+  /* catalog post */
+  --catalog-post-menu-btn-color: #f60;
+  --catalog-post-menu-btn-hover-color: #f30;
+  --catalog-post-menu-btn-opacity: 0.5;
+  --catalog-post-menu-btn-hover-opacity: 1;
 
   /* desktop buttons */
   --button-desktop-text-color: #f60;

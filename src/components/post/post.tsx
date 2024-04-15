@@ -44,6 +44,8 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linkCount = pinned ? totalLinkCount : totalLinkCount - visibleLinkCount;
 
+  const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+
   return (
     <div className={styles.postDesktop}>
       <div className={styles.hrWrapper}>
@@ -99,7 +101,10 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
           </span>
           {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress}) </span>}
         </span>
-        <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
+        <span className={styles.dateTime}>
+          {getFormattedDate(timestamp)}
+          {isDescription || isRules ? '' : ' '}
+        </span>
         <span className={styles.postNum}>
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
@@ -112,12 +117,12 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
             </span>
           )}
           {pinned && (
-            <span className={styles.stickyIconWrapper}>
+            <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
               <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
             </span>
           )}
           {locked && (
-            <span className={styles.closedIconWrapper}>
+            <span className={`${styles.closedIconWrapper} ${styles.addPaddingBeforeReply} ${pinned && styles.addPaddingInBetween}`}>
               <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
@@ -125,7 +130,16 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
             [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{t('reply')}</Link>]
           </span>
         </span>
-        <span className={styles.postMenuBtn}>▶</span>
+        <span className={styles.postMenuBtnWrapper}>
+          <span
+            className={styles.postMenuBtn}
+            title='Post menu'
+            onClick={() => setMenuBtnRotated(!menuBtnRotated)}
+            style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          >
+            ▶
+          </span>
+        </span>
       </div>
       {!content && <div className={styles.spacer} />}
       {content && (
@@ -173,6 +187,8 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
 
   const isReplyingToReply = postCid !== parentCid;
 
+  const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
@@ -204,7 +220,16 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               </span>
             )}
           </span>
-          <span className={styles.postMenuBtn}>▶</span>
+          <span className={styles.postMenuBtnWrapper}>
+            <span
+              className={styles.postMenuBtn}
+              title='Post menu'
+              onClick={() => setMenuBtnRotated(!menuBtnRotated)}
+              style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}
+            >
+              ▶
+            </span>
+          </span>
         </div>
         {link && (
           <div className={styles.file}>
@@ -257,7 +282,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
 
 const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
@@ -292,6 +317,16 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                   {authorRole && ` ## Board ${authorRole}`}{' '}
                 </span>
                 {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>}
+                {pinned && (
+                  <span className={styles.stickyIconWrapper}>
+                    <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+                  </span>
+                )}
+                {locked && (
+                  <span className={`${styles.closedIconWrapper} ${pinned && styles.addPaddingInBetween}`}>
+                    <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+                  </span>
+                )}
                 {title && (
                   <>
                     <br />
@@ -358,6 +393,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
 };
 
 const ReplyMobile = ({ reply, roles }: PostProps) => {
+  const { t } = useTranslation();
   const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
@@ -380,6 +416,11 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
                 {authorRole && ` ## Board ${authorRole}`}{' '}
               </span>
               <span className={styles.address}>(u/{shortAddress})</span>
+              {pinned && (
+                <span className={styles.stickyIconWrapper}>
+                  <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+                </span>
+              )}
             </span>
             <span className={styles.dateTimePostNum}>
               {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
