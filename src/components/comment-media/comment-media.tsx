@@ -89,15 +89,16 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   return isMobile || isReply ? (
     <ThumbnailSmall style={thumbnailDimensions} thumbnailSmallPadding={thumbnailSmallPadding}>
       {thumbnailComponent}
-      {isMobile && !hasThumbnail && linkWithoutThumbnail ? (
-        canEmbed(linkWithoutThumbnail) ? (
+      {isMobile &&
+        !hasThumbnail &&
+        linkWithoutThumbnail &&
+        (canEmbed(linkWithoutThumbnail) ? (
           <span onClick={() => setShowThumbnail(false)}>{getHostname(url)}</span>
         ) : (
           <a href={url} target='_blank' rel='noreferrer'>
-            {getHostname(url)}
+            {getHostname(url) || (url.length > 30 ? url.slice(0, 30) + '...' : url)}
           </a>
-        )
-      ) : null}
+        ))}
     </ThumbnailSmall>
   ) : (
     <ThumbnailBig style={thumbnailDimensions}>{thumbnailComponent}</ThumbnailBig>
@@ -144,19 +145,22 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
 
 const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
   const isMobile = useWindowWidth() < 640;
+  const { type, url } = commentMediaInfo || {};
   return (
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
-        <Thumbnail
-          commentMediaInfo={commentMediaInfo}
-          isOutOfFeed={isOutOfFeed}
-          isReply={isReply}
-          linkHeight={linkHeight}
-          linkWidth={linkWidth}
-          showThumbnail={showThumbnail}
-          setShowThumbnail={setShowThumbnail}
-        />
-        {isMobile && commentMediaInfo?.type && <div className={styles.fileInfo}>{commentMediaInfo.type}</div>}
+        {url && (
+          <Thumbnail
+            commentMediaInfo={commentMediaInfo}
+            isOutOfFeed={isOutOfFeed}
+            isReply={isReply}
+            linkHeight={linkHeight}
+            linkWidth={linkWidth}
+            showThumbnail={showThumbnail}
+            setShowThumbnail={setShowThumbnail}
+          />
+        )}
+        {isMobile && type && <div className={styles.fileInfo}>{type}</div>}
       </span>
       {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={isReply} setShowThumbnail={setShowThumbnail} />}
     </span>

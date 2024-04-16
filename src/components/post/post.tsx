@@ -12,6 +12,7 @@ import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
 import Markdown from '../markdown';
 import CommentMedia from '../comment-media';
+import { canEmbed } from '../embed';
 
 interface PostProps {
   index?: number;
@@ -35,6 +36,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
   const commentMediaInfo = getCommentMediaInfo(post);
+  const { type, url } = commentMediaInfo || {};
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -56,15 +58,15 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
           <span className={`${styles.hideButton} ${styles.hideThread}`} />
         </span>
       )}
-      {commentMediaInfo?.url && (
+      {url && (
         <div className={styles.file}>
           <div className={styles.fileText}>
             {t('link')}:{' '}
-            <a href={commentMediaInfo?.url} target='_blank' rel='noopener noreferrer'>
-              {commentMediaInfo.url.length > 30 ? commentMediaInfo?.url?.slice(0, 30) + '...' : commentMediaInfo?.url}
+            <a href={url} target='_blank' rel='noopener noreferrer'>
+              {url.length > 30 ? url.slice(0, 30) + '...' : url}
             </a>{' '}
-            ({commentMediaInfo?.type})
-            {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'audio') && (
+            ({type})
+            {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
               <span>
                 {' '}
                 [
@@ -191,6 +193,8 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const authorRole = roles?.[address]?.role;
 
   const commentMediaInfo = getCommentMediaInfo(reply);
+  const { type, url } = commentMediaInfo || {};
+  const embedUrl = url && new URL(url);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -240,14 +244,14 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
             </span>
           </span>
         </div>
-        {link && (
+        {url && (
           <div className={styles.file}>
             <div className={styles.fileText}>
               {t('link')}:{' '}
               <a href={link} target='_blank' rel='noopener noreferrer'>
                 {link.length > 30 ? link?.slice(0, 30) + '...' : link}
               </a>
-              {!showThumbnail && (commentMediaInfo?.type === 'iframe' || commentMediaInfo?.type === 'video' || commentMediaInfo?.type === 'audio') && (
+              {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
                 <span>
                   {' '}
                   [
@@ -257,7 +261,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
                   ]
                 </span>
               )}
-              {showThumbnail && !hasThumbnail && (
+              {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
                 <span>
                   {' '}
                   [
