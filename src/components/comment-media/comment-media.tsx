@@ -4,10 +4,10 @@ import { CommentMediaInfo } from '../../lib/utils/media-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import Embed from '../embed';
 import { useTranslation } from 'react-i18next';
+import useWindowWidth from '../../hooks/use-window-width';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
-  isMobile: boolean;
   isOutOfFeed?: boolean; // virtuoso wrapper unneeded
   isReply: boolean;
   linkHeight?: number;
@@ -35,10 +35,11 @@ const ThumbnailSmall = ({ style, children, thumbnailSmallPadding }: ThumbnailPro
   </span>
 );
 
-const Thumbnail = ({ commentMediaInfo, isMobile, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
+const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
 
   let displayWidth, displayHeight;
+  const isMobile = useWindowWidth() < 640;
   const maxThumbnailSize = isMobile || isReply ? 125 : 250;
 
   if (linkWidth && linkHeight) {
@@ -90,9 +91,10 @@ const Thumbnail = ({ commentMediaInfo, isMobile, isOutOfFeed, isReply, linkHeigh
   );
 };
 
-const Media = ({ commentMediaInfo, isMobile, isReply, setShowThumbnail }: MediaProps) => {
+const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const { thumbnail, type, url } = commentMediaInfo || {};
+  const isMobile = useWindowWidth() < 640;
   const mediaClass = isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp;
 
   return (
@@ -127,13 +129,13 @@ const Media = ({ commentMediaInfo, isMobile, isReply, setShowThumbnail }: MediaP
   );
 };
 
-const CommentMedia = ({ commentMediaInfo, isMobile, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
+const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
+  const isMobile = useWindowWidth() < 640;
   return (
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
         <Thumbnail
           commentMediaInfo={commentMediaInfo}
-          isMobile={isMobile}
           isOutOfFeed={isOutOfFeed}
           isReply={isReply}
           linkHeight={linkHeight}
@@ -143,7 +145,7 @@ const CommentMedia = ({ commentMediaInfo, isMobile, isOutOfFeed, isReply, linkHe
         />
         {isMobile && commentMediaInfo?.type && <div className={styles.fileInfo}>{commentMediaInfo.type}</div>}
       </span>
-      {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isMobile={isMobile} isReply={isReply} setShowThumbnail={setShowThumbnail} />}
+      {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={isReply} setShowThumbnail={setShowThumbnail} />}
     </span>
   );
 };

@@ -78,7 +78,6 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
           {hasThumbnail && (
             <CommentMedia
               commentMediaInfo={commentMediaInfo}
-              isMobile={false}
               isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
               isReply={false}
               linkHeight={linkHeight}
@@ -252,7 +251,6 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
             {hasThumbnail && (
               <CommentMedia
                 commentMediaInfo={commentMediaInfo}
-                isMobile={false}
                 isReply={true}
                 linkHeight={linkHeight}
                 linkWidth={linkWidth}
@@ -347,7 +345,6 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
             {hasThumbnail && (
               <CommentMedia
                 commentMediaInfo={commentMediaInfo}
-                isMobile={true}
                 isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
                 isReply={false}
                 linkHeight={linkHeight}
@@ -430,7 +427,6 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
           {hasThumbnail && (
             <CommentMedia
               commentMediaInfo={commentMediaInfo}
-              isMobile={true}
               isReply={false}
               linkHeight={linkHeight}
               linkWidth={linkWidth}
