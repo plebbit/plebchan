@@ -12,7 +12,7 @@ import SubplebbitRules from '../../components/subplebbit-rules';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const Subplebbit = () => {
+const Board = () => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress]) as string[];
@@ -58,7 +58,7 @@ const Subplebbit = () => {
 
   return (
     <div className={styles.content}>
-      {createdAt && (
+      {feed.length > 0 && (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
           {description && description.length > 0 && (
@@ -82,4 +82,4 @@ const Subplebbit = () => {
   );
 };
 
-export default Subplebbit;
+export default Board;
