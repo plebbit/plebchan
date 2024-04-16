@@ -24,7 +24,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
       return feed;
     }
     const _feed = [...feed];
-    if (subplebbit?.description && subplebbit?.description.length > 0) {
+    if (description && description.length > 0) {
       _feed.unshift({
         isDescription: true,
         subplebbitAddress: address,

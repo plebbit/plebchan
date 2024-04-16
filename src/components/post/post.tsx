@@ -74,8 +74,18 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
                 ]
               </span>
             )}
+            {showThumbnail && !hasThumbnail && (
+              <span>
+                {' '}
+                [
+                <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
+                  {t('open')}
+                </span>
+                ]
+              </span>
+            )}
           </div>
-          {hasThumbnail && (
+          {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
             <CommentMedia
               commentMediaInfo={commentMediaInfo}
               isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
@@ -247,8 +257,18 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
                   ]
                 </span>
               )}
+              {showThumbnail && !hasThumbnail && (
+                <span>
+                  {' '}
+                  [
+                  <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
+                    {t('open')}
+                  </span>
+                  ]
+                </span>
+              )}
             </div>
-            {hasThumbnail && (
+            {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
               <CommentMedia
                 commentMediaInfo={commentMediaInfo}
                 isReply={true}
@@ -342,7 +362,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                 )}
               </span>
             </div>
-            {hasThumbnail && (
+            {(hasThumbnail || link) && (
               <CommentMedia
                 commentMediaInfo={commentMediaInfo}
                 isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
@@ -424,7 +444,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
               <span className={styles.replyToPost}>{shortCid}</span>
             </span>
           </div>
-          {hasThumbnail && (
+          {(hasThumbnail || link) && (
             <CommentMedia
               commentMediaInfo={commentMediaInfo}
               isReply={false}

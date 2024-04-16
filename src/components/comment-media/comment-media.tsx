@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './comment-media.module.css';
-import { CommentMediaInfo } from '../../lib/utils/media-utils';
+import { CommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
-import Embed from '../embed';
+import Embed, { canEmbed } from '../embed';
 import { useTranslation } from 'react-i18next';
 import useWindowWidth from '../../hooks/use-window-width';
+import { getHostname } from '../../lib/utils/url-utils';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
@@ -52,8 +53,8 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   }
 
   if (type === 'audio') {
-    displayWidth = '250px';
-    displayHeight = '75px';
+    displayWidth = '100%';
+    displayHeight = '100%';
   }
 
   if (isOutOfFeed) {
@@ -64,6 +65,7 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   let thumbnailComponent: React.ReactNode = null;
   const iframeThumbnail = patternThumbnailUrl || thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, url);
 
   if (type === 'image') {
     thumbnailComponent = <img src={url} alt='' onClick={() => setShowThumbnail(false)} />;
@@ -82,9 +84,20 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
 
+  const linkWithoutThumbnail = url && new URL(url);
+
   return isMobile || isReply ? (
     <ThumbnailSmall style={thumbnailDimensions} thumbnailSmallPadding={thumbnailSmallPadding}>
       {thumbnailComponent}
+      {isMobile && !hasThumbnail && linkWithoutThumbnail ? (
+        canEmbed(linkWithoutThumbnail) ? (
+          <span onClick={() => setShowThumbnail(false)}>{getHostname(url)}</span>
+        ) : (
+          <a href={url} target='_blank' rel='noreferrer'>
+            {getHostname(url)}
+          </a>
+        )
+      ) : null}
     </ThumbnailSmall>
   ) : (
     <ThumbnailBig style={thumbnailDimensions}>{thumbnailComponent}</ThumbnailBig>

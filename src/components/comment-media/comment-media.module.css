@@ -22,6 +22,14 @@
   align-items: center;
 }
 
+.thumbnailSmall span, .thumbnailSmall a {
+  width: 100%;
+  display: inline-block;
+  word-wrap: break-word;
+  text-align: center;
+  cursor: pointer;
+}
+
 .thumbnail {
   float: left;
 }
