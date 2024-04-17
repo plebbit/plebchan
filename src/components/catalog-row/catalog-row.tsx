@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
@@ -29,7 +29,13 @@ const CatalogPostMedia = ({ commentMediaInfo, link }: { commentMediaInfo: any; l
   return thumbnailComponent;
 };
 
-const CatalogPost = ({ post }: { post: Comment }) => {
+interface CatalogPostProps {
+  post: Comment;
+  openMenu: boolean;
+  toggleMenu: () => void;
+}
+
+const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
   const { t } = useTranslation();
   const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
@@ -65,7 +71,18 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     </div>
   );
 
-  const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+  useEffect(() => {
+    const handlePageClick = () => {
+      if (openMenu) {
+        toggleMenu();
+      }
+    };
+    document.addEventListener('click', handlePageClick);
+
+    return () => {
+      document.removeEventListener('click', handlePageClick);
+    };
+  }, [openMenu, toggleMenu]);
 
   return (
     <div className={styles.post}>
@@ -93,8 +110,11 @@ const CatalogPost = ({ post }: { post: Comment }) => {
           <span
             className={styles.postMenuBtn}
             title='Thread Menu'
-            onClick={() => setMenuBtnRotated(!menuBtnRotated)}
-            style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMenu();
+            }}
+            style={{ transform: openMenu ? 'rotate(90deg)' : 'rotate(0deg)' }}
           >
             ▶
           </span>
@@ -116,8 +136,19 @@ interface CatalogRowProps {
 }
 
 const CatalogRow = ({ row }: CatalogRowProps) => {
-  const posts = row.map((post, index) => <CatalogPost key={index} post={post} />);
-  return <div className={styles.row}>{posts}</div>;
+  const [postWithMenuOpen, setPostWithMenuOpen] = useState<number | null>(null);
+
+  const handleToggleMenu = (index: number) => {
+    setPostWithMenuOpen(postWithMenuOpen === index ? null : index);
+  };
+
+  return (
+    <div className={styles.row}>
+      {row.map((post, index) => (
+        <CatalogPost key={index} post={post} openMenu={postWithMenuOpen === index} toggleMenu={() => handleToggleMenu(index)} />
+      ))}
+    </div>
+  );
 };
 
 export default CatalogRow;
