@@ -71,6 +71,11 @@
 
 .soundcloudEmbed {
   height: 166px; /* default height of soundcloud embeds */
-  width: 100%;
-  max-width: 640px;
+  width: 700px;
+}
+
+@media (max-width: 640px) {
+  .soundcloudEmbed {
+    width: 100% !important;
+  }
 }
