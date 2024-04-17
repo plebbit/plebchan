@@ -124,6 +124,17 @@
   text-decoration: var(--homepage-box-link-text-decoration-hover);
 }
 
+.list span {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--homepage-box-link-text-color);
+}
+
+.list span:hover {
+  color: var(--homepage-box-link-text-color-hover);
+  cursor: pointer;
+}
+
 .boardsBoxContent {
   font-size: 93%;
   padding: 0.5em;
@@ -135,9 +146,24 @@
 
 .boardsBoxContent .column {
   float: left;
-  width: 163px;
-  margin-right: 20px;
+  min-width: 163px;
+  padding-right: 20px;
   overflow: hidden;
+}
+
+.subplebbit {
+  position: relative;
+}
+
+.offlineIcon {
+  background-image: url('/public/assets/icons/offline.png');
+  background-size: 100%;
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  margin-left: 3px;
+  display: inline-block;
+  image-rendering: pixelated;
 }
 
 .boardsBoxContent h3 {
