@@ -2,12 +2,9 @@ import { useRef } from 'react';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Subplebbit } from '@plebbit/plebbit-react-hooks';
+import { Subplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import packageJson from '../../../package.json';
-
-interface HomeProps {
-  subplebbits: (Subplebbit | undefined)[];
-}
+import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 
 const isValidAddress = (address: string): boolean => {
   if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
@@ -69,7 +66,7 @@ const InfoBox = () => {
   );
 };
 
-const Boards = ({ subplebbits }: HomeProps) => {
+const Boards = ({ subplebbits }: { subplebbits: (Subplebbit | undefined)[] }) => {
   const { t } = useTranslation();
 
   return (
@@ -83,8 +80,8 @@ const Boards = ({ subplebbits }: HomeProps) => {
           <h3>Default SFW</h3>
           <div className={styles.list}>
             {subplebbits
-              .filter((subplebbit): subplebbit is Subplebbit => subplebbit !== undefined)
-              .map((subplebbit) => {
+              .filter((subplebbit: Subplebbit | undefined): subplebbit is Subplebbit => subplebbit !== undefined)
+              .map((subplebbit: Subplebbit) => {
                 const address = subplebbit.address;
                 return (
                   <div className={styles.subplebbit} key={address}>
@@ -221,7 +218,10 @@ const Footer = () => {
   );
 };
 
-const Home = ({ subplebbits }: HomeProps) => {
+const Home = () => {
+  const subplebbitAddresses = useDefaultSubplebbitAddresses();
+  const { subplebbits } = useSubplebbits({ subplebbitAddresses });
+
   return (
     <div className={styles.content}>
       <Link to='/'>
