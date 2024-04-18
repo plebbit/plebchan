@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { isHomeView } from './lib/utils/view-utils';
-import { useSubplebbits } from '@plebbit/plebbit-react-hooks';
-import { useDefaultSubplebbitAddresses } from './hooks/use-default-subplebbits';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
 import Catalog from './views/catalog';
@@ -21,9 +19,6 @@ const App = () => {
   const location = useLocation();
   const isInHomeView = isHomeView(location.pathname);
 
-  const subplebbitAddresses = useDefaultSubplebbitAddresses();
-  const { subplebbits } = useSubplebbits({ subplebbitAddresses });
-
   // add theme className to body so it can set the correct body background in index.css
   const [theme] = useTheme();
   useEffect(() => {
@@ -40,7 +35,7 @@ const App = () => {
 
   const boardLayout = (
     <>
-      <BoardNav subplebbits={subplebbits} />
+      <BoardNav />
       <BoardBanner />
       <MobileBoardButtons />
       <PostForm />
@@ -53,7 +48,7 @@ const App = () => {
   return (
     <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
       <Routes>
-        <Route path='/' element={<Home subplebbits={subplebbits} />} />
+        <Route path='/' element={<Home />} />
         <Route element={boardLayout}>
           <Route path='/p/:subplebbitAddress' element={<Board />} />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />

@@ -68,3 +68,14 @@
     height: 50vh !important;
   }
 }
+
+.soundcloudEmbed {
+  height: 166px; /* default height of soundcloud embeds */
+  width: 700px;
+}
+
+@media (max-width: 640px) {
+  .soundcloudEmbed {
+    width: 100% !important;
+  }
+}

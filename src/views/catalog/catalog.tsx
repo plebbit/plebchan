@@ -12,60 +12,54 @@ import styles from './catalog.module.css';
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
 const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit) => {
-  const modifiedFeed = useMemo(() => {
+  const { t } = useTranslation();
+  const { address, createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
+  const { avatarUrl } = suggested || {};
+
+  const feedWithDescriptionAndRules = useMemo(() => {
     if (!isFeedLoaded) {
       return []; // prevent rules and description from appearing while feed is loading
     }
-    if (!subplebbit?.description && !subplebbit?.rules) {
+    if (!description && !rules) {
       return feed;
     }
     const _feed = [...feed];
-    if (subplebbit?.description) {
+    if (description && description.length > 0) {
       _feed.unshift({
         isDescription: true,
-        subplebbitAddress: subplebbit?.address,
-        timestamp: subplebbit?.createdAt,
+        subplebbitAddress: address,
+        timestamp: createdAt,
         author: { displayName: '## Board Mods' },
-        content: subplebbit?.description,
-        link: subplebbit?.suggested?.avatarUrl,
-        title: 'Welcome to ' + (subplebbit?.title || `p/${subplebbit?.shortAddress}`),
+        content: description,
+        link: avatarUrl,
+        title: 'Welcome to ' + (title || `p/${shortAddress}`),
         pinned: true,
         locked: true,
       });
     }
-    if (subplebbit?.rules) {
+    if (rules && rules.length > 0) {
       _feed.unshift({
         isRules: true,
-        subplebbitAddress: subplebbit?.address,
-        timestamp: subplebbit?.createdAt,
+        subplebbitAddress: address,
+        timestamp: createdAt,
         author: { displayName: '## Board Mods' },
-        content: subplebbit?.rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
+        content: rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
         title: 'Rules',
         pinned: true,
         locked: true,
       });
     }
     return _feed;
-  }, [
-    feed,
-    subplebbit?.description,
-    subplebbit?.rules,
-    subplebbit?.address,
-    isFeedLoaded,
-    subplebbit?.createdAt,
-    subplebbit?.title,
-    subplebbit?.shortAddress,
-    subplebbit?.suggested?.avatarUrl,
-  ]);
+  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl]);
 
   // Memoize rows calculation, ensuring it updates on changes to the modified feed or column count
   const rows = useMemo(() => {
     const rows = [];
-    for (let i = 0; i < modifiedFeed.length; i += columnCount) {
-      rows.push(modifiedFeed.slice(i, i + columnCount));
+    for (let i = 0; i < feedWithDescriptionAndRules.length; i += columnCount) {
+      rows.push(feedWithDescriptionAndRules.slice(i, i + columnCount));
     }
     return rows;
-  }, [modifiedFeed, columnCount]);
+  }, [feedWithDescriptionAndRules, columnCount]);
 
   return rows;
 };

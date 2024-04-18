@@ -1,15 +1,15 @@
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Subplebbit } from '@plebbit/plebbit-react-hooks';
 import { isCatalogView } from '../../lib/utils/view-utils';
 import styles from './board-nav.module.css';
+import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 
 interface BoardNavProps {
-  subplebbits: (Subplebbit | undefined)[];
-  currentSubplebbit?: string | undefined;
+  subplebbitAddresses: string[];
+  subplebbitAddress?: string;
 }
 
-const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
+const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
   const { t } = useTranslation();
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
@@ -17,16 +17,12 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
         [
-        {subplebbits.map((subplebbit: any, index: number) => {
-          const address = subplebbit?.address || '';
-          const title = subplebbit?.title || '';
+        {subplebbitAddresses.map((address: string, index: number) => {
           return (
             <span key={index}>
               {index === 0 ? null : ' '}
-              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`} title={title || ''}>
-                {address.includes('.') ? address : title || address.slice(0, 10).concat('...')}
-              </Link>
-              {index !== subplebbits.length - 1 ? ' /' : null}
+              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>{address.includes('.') ? address : address.slice(0, 10).concat('...')}</Link>
+              {index !== address.length - 1 ? ' /' : null}
             </span>
           );
         })}
@@ -39,24 +35,23 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
   );
 };
 
-const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
+const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const displaySubplebbitAddress = currentSubplebbit && currentSubplebbit.length > 30 ? currentSubplebbit.slice(0, 30).concat('...') : currentSubplebbit;
+  const displaySubplebbitAddress = subplebbitAddress && subplebbitAddress.length > 30 ? subplebbitAddress.slice(0, 30).concat('...') : subplebbitAddress;
 
-  const currentSubplebbitIsInList = subplebbits.some((subplebbit: any) => subplebbit?.address === currentSubplebbit);
+  const currentSubplebbitIsInList = subplebbitAddresses.some((address: string) => address === subplebbitAddress);
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
   const boardSelect = (
-    <select value={currentSubplebbit || 'all'} onChange={(e) => navigate(`/p/${e.target.value}${isInCatalogView ? '/catalog' : ''}`)}>
-      {!currentSubplebbitIsInList && currentSubplebbit && <option value={currentSubplebbit}>{displaySubplebbitAddress}</option>}
+    <select value={subplebbitAddress || 'all'} onChange={(e) => navigate(`/p/${e.target.value}${isInCatalogView ? '/catalog' : ''}`)}>
+      {!currentSubplebbitIsInList && subplebbitAddress && <option value={subplebbitAddress}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
-      {subplebbits.map((subplebbit: any, index: number) => {
+      {subplebbitAddresses.map((subplebbit: any, index: number) => {
         const address = subplebbit?.address || '';
-        const title = subplebbit?.title || '';
-        const subplebbitAddress = address?.includes('.') ? address : title || address?.slice(0, 10).concat('...');
+        const subplebbitAddress = address?.includes('.') ? address : address?.slice(0, 10).concat('...');
         return (
           <option key={index} value={address}>
             {subplebbitAddress}
@@ -80,12 +75,13 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
   );
 };
 
-const BoardNav = ({ subplebbits }: BoardNavProps) => {
-  const { subplebbitAddress: address } = useParams();
+const BoardNav = () => {
+  const subplebbitAddresses = useDefaultSubplebbitAddresses();
+  const { subplebbitAddress } = useParams();
   return (
     <>
-      <BoardNavDesktop subplebbits={subplebbits} />
-      <BoardNavMobile subplebbits={subplebbits} currentSubplebbit={address} />
+      <BoardNavDesktop subplebbitAddresses={subplebbitAddresses} />
+      <BoardNavMobile subplebbitAddresses={subplebbitAddresses} subplebbitAddress={subplebbitAddress} />
     </>
   );
 };
