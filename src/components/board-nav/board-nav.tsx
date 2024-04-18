@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Subplebbit } from '@plebbit/plebbit-react-hooks';
@@ -14,25 +13,11 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
   const { t } = useTranslation();
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
-  const sortedSubplebbits = useMemo(() => {
-    const oneHourAgo = Date.now() - 60 * 60 * 1000;
-    const retainedSubplebbits: (Subplebbit | undefined)[] = [];
-
-    subplebbits.forEach((sub: Subplebbit | undefined) => {
-      if (!sub || sub.updatedAt === undefined || sub.updatedAt * 1000 > oneHourAgo) {
-        // retain the position of loading, undefined, or online subplebbits
-        retainedSubplebbits.push(sub);
-      }
-      // don't include offline subs
-    });
-    return retainedSubplebbits;
-  }, [subplebbits]);
-
   return (
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
         [
-        {sortedSubplebbits.map((subplebbit: any, index: number) => {
+        {subplebbits.map((subplebbit: any, index: number) => {
           const address = subplebbit?.address || '';
           const title = subplebbit?.title || '';
           return (
@@ -41,7 +26,7 @@ const BoardNavDesktop = ({ subplebbits }: BoardNavProps) => {
               <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`} title={title || ''}>
                 {address.includes('.') ? address : title || address.slice(0, 10).concat('...')}
               </Link>
-              {index !== sortedSubplebbits.length - 1 ? ' /' : null}
+              {index !== subplebbits.length - 1 ? ' /' : null}
             </span>
           );
         })}
@@ -61,20 +46,6 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
 
   const currentSubplebbitIsInList = subplebbits.some((subplebbit: any) => subplebbit?.address === currentSubplebbit);
 
-  const sortedSubplebbits = useMemo(() => {
-    const oneHourAgo = Date.now() - 60 * 60 * 1000;
-    const retainedSubplebbits: (Subplebbit | undefined)[] = [];
-
-    subplebbits.forEach((sub: Subplebbit | undefined) => {
-      if (!sub || sub.updatedAt === undefined || sub.updatedAt * 1000 > oneHourAgo) {
-        // retain the position of loading, undefined, or online subplebbits
-        retainedSubplebbits.push(sub);
-      }
-      // don't include offline subs
-    });
-    return retainedSubplebbits;
-  }, [subplebbits]);
-
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
   const boardSelect = (
@@ -82,7 +53,7 @@ const BoardNavMobile = ({ subplebbits, currentSubplebbit }: BoardNavProps) => {
       {!currentSubplebbitIsInList && currentSubplebbit && <option value={currentSubplebbit}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
-      {sortedSubplebbits.map((subplebbit: any, index: number) => {
+      {subplebbits.map((subplebbit: any, index: number) => {
         const address = subplebbit?.address || '';
         const title = subplebbit?.title || '';
         const subplebbitAddress = address?.includes('.') ? address : title || address?.slice(0, 10).concat('...');
