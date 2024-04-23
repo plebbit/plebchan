@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { isHomeView } from './lib/utils/view-utils';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
@@ -15,6 +15,20 @@ import { MobileBoardButtons } from './components/board-buttons';
 import SubplebbitStats from './components/subplebbit-stats';
 import PostForm from './components/post-form';
 
+const BoardLayout = () => {
+  const { subplebbitAddress } = useParams();
+  return (
+    <>
+      <BoardNav />
+      <BoardBanner />
+      <MobileBoardButtons />
+      <PostForm key={subplebbitAddress} />
+      <SubplebbitStats />
+      <DesktopBoardButtons />
+      <Outlet />
+    </>
+  );
+};
 const App = () => {
   const location = useLocation();
   const isInHomeView = isHomeView(location.pathname);
@@ -33,23 +47,11 @@ const App = () => {
   //   </>
   // );
 
-  const boardLayout = (
-    <>
-      <BoardNav />
-      <BoardBanner />
-      <MobileBoardButtons />
-      <PostForm />
-      <SubplebbitStats />
-      <DesktopBoardButtons />
-      <Outlet />
-    </>
-  );
-
   return (
     <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route element={boardLayout}>
+        <Route element={<BoardLayout />}>
           <Route path='/p/:subplebbitAddress' element={<Board />} />
           <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
           <Route path='/p/:subplebbitAddress/description' element={<PostPage />} />
