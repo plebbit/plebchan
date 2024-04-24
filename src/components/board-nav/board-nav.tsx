@@ -49,8 +49,7 @@ const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProp
       {!currentSubplebbitIsInList && subplebbitAddress && <option value={subplebbitAddress}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
-      {subplebbitAddresses.map((subplebbit: any, index: number) => {
-        const address = subplebbit?.address || '';
+      {subplebbitAddresses.map((address: any, index: number) => {
         const subplebbitAddress = address?.includes('.') ? address : address?.slice(0, 10).concat('...');
         return (
           <option key={index} value={address}>
