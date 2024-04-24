@@ -1,13 +1,22 @@
-.postFormButtonDesktop {
+.postFormTable {
   font-size: var(--post-form-toggle-font-size);
   font-weight: var(--post-form-toggle-font-weight);
-  text-align: center;
+  width: auto;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  border-spacing: 1px;
 }
 
-.postFormButtonMobile {
+.postFormMobile {
   text-align: center;
   padding-top: 9px;
   padding-bottom: 0.5em;
+}
+
+.postFormMobile .showFormButton {
+  margin-bottom: 5px;
 }
 
 .closed {
@@ -19,15 +28,7 @@
   padding-bottom: 100px;
 }
 
-.postFormButtonDesktop table {
-  display: table;
-  border-spacing: 1px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-
-.postFormButtonDesktop td:first-child {
+.postFormTable td:first-child {
   background-color: var(--post-form-field-title-background-color);
   color: var(--post-form-field-title-color);
   font-weight: var(--post-form-field-title-font-weight);
@@ -37,14 +38,14 @@
   width: 80px;
 }
 
-.postFormButtonDesktop td {
+.postFormTable td {
   margin: 0;
   padding: 0;
   font-size: 10pt;
   position: relative;
 }
 
-.postFormButtonDesktop input[type="text"], .postFormButtonDesktop textarea {
+.postFormTable input[type="text"], .postFormTable textarea {
   border: var(--post-form-field-input-border, revert);
   font-family: var(--post-form-field-font-family, revert);
   appearance: var(--post-form-field-input-appearance, revert);
@@ -56,22 +57,22 @@
   font-size: 10pt;
 }
 
-.postFormButtonDesktop input[type="text"]:focus, .postFormButtonDesktop textarea:focus {
+.postFormTable input[type="text"]:focus, .postFormTable textarea:focus {
   border: var(--post-form-field-input-focus-border, revert);
 }
       
-.postFormButtonDesktop td > input[type="text"] {
+.postFormTable td > input[type="text"] {
   width: 244px;
 }
 
-.postFormButtonDesktop textarea {
+.postFormTable textarea {
   width: 292px;
   
   /* textareas have a gap below them that differs along browsers https://stackoverflow.com/a/7144960 */
   vertical-align: top;
 }
 
-.postFormButtonDesktop button {
+.postFormTable button {
   margin-left: 2px;
   filter: var(--filter80);
 }
@@ -85,13 +86,13 @@
 }
 
 @media (max-width: 640px) {
-  .postFormButtonDesktop {
+  .postFormDesktop {
     display: none;
   }
 }
 
 @media (min-width: 640px) {
-  .postFormButtonMobile {
+  .postFormMobile {
     display: none;
   }
 }

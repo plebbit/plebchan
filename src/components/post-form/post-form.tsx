@@ -19,7 +19,7 @@ const PostFormTable = () => {
   const [link, setLink] = useState('');
 
   return (
-    <table>
+    <table className={styles.postFormTable}>
       <tbody>
         <tr>
           <td>Name</td>
@@ -74,7 +74,7 @@ const PostForm = () => {
 
   return (
     <>
-      <div className={styles.postFormButtonDesktop}>
+      <div className={styles.postFormDesktop}>
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -93,7 +93,7 @@ const PostForm = () => {
           <PostFormTable />
         )}
       </div>
-      <div className={styles.postFormButtonMobile}>
+      <div className={styles.postFormMobile}>
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -101,9 +101,12 @@ const PostForm = () => {
             {t('may_not_reply')}
           </div>
         ) : (
-          <button className='button' onClick={() => setShowForm(true)}>
-            {isInPostPage ? t('post_a_reply') : t('start_new_thread')}
-          </button>
+          <>
+            <button className={`${styles.showFormButton} button`} onClick={() => setShowForm(showForm ? false : true)}>
+              {showForm ? t('close_post_form') : isInPostPage ? t('post_a_reply') : t('start_new_thread')}
+            </button>
+            {showForm && <PostFormTable />}
+          </>
         )}
       </div>
     </>

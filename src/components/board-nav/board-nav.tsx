@@ -22,7 +22,7 @@ const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
             <span key={index}>
               {index === 0 ? null : ' '}
               <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>{address.includes('.') ? address : address.slice(0, 10).concat('...')}</Link>
-              {index !== address.length - 1 ? ' /' : null}
+              {index !== subplebbitAddresses.length - 1 ? ' /' : null}
             </span>
           );
         })}
