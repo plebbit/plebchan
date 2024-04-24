@@ -1,9 +1,60 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
-import { useComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useComment } from '@plebbit/plebbit-react-hooks';
+import { getLinkMediaInfo } from '../../lib/utils/media-utils';
+import { isValidURL } from '../../lib/utils/url-utils';
 import { isDescriptionView, isPostPageView, isRulesView } from '../../lib/utils/view-utils';
 import styles from './post-form.module.css';
+
+const LinkTypePreviewer = ({ link }: { link: string }) => {
+  const mediaInfo = getLinkMediaInfo(link);
+  return isValidURL(link) ? mediaInfo?.type : 'Invalid URL';
+};
+
+const PostFormTable = () => {
+  const account = useAccount();
+  const { displayName } = account || {};
+
+  const [link, setLink] = useState('');
+
+  return (
+    <table>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>
+            <input type='text' placeholder={!displayName ? 'Anonymous' : undefined} defaultValue={displayName || undefined} />
+          </td>
+        </tr>
+        <tr>
+          <td>Subject</td>
+          <td>
+            <input type='text' />
+            <button>Post</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Comment</td>
+          <textarea cols={48} rows={4} wrap='soft' />
+        </tr>
+        <tr>
+          <td>Link</td>
+          <td>
+            <input type='text' onChange={(e) => setLink(e.target.value)} />
+            <span className={styles.linkType}>
+              {link && (
+                <>
+                  (<LinkTypePreviewer link={link} />)
+                </>
+              )}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+};
 
 const PostForm = () => {
   const { t } = useTranslation();
@@ -30,7 +81,7 @@ const PostForm = () => {
             <br />
             {t('may_not_reply')}
           </div>
-        ) : (
+        ) : !showForm ? (
           <div>
             [
             <button className='button' onClick={() => setShowForm(true)}>
@@ -38,6 +89,8 @@ const PostForm = () => {
             </button>
             ]
           </div>
+        ) : (
+          <PostFormTable />
         )}
       </div>
       <div className={styles.postFormButtonMobile}>

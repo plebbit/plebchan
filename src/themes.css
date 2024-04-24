@@ -242,6 +242,10 @@
   /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
+  --post-form-field-title-background-color: #98e;
+  --post-form-field-title-color: #000;
+  --post-form-field-border: 1px solid #000;
+  --post-form-field-title-font-weight: 700;
 
   /* quotelink */
   --post-quotelink-text-color: #d00;

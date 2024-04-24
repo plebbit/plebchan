@@ -45,7 +45,7 @@ const getPatternThumbnailUrl = (url: URL): string | undefined => {
   }
 };
 
-const getLinkMediaInfo = memoize(
+export const getLinkMediaInfo = memoize(
   (link: string): CommentMediaInfo | undefined => {
     if (!isValidURL(link)) {
       return;

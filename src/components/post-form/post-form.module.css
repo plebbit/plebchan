@@ -19,6 +19,65 @@
   padding-bottom: 100px;
 }
 
+.postFormButtonDesktop table {
+  display: table;
+  border-spacing: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.postFormButtonDesktop td:first-child {
+  background-color: var(--post-form-field-title-background-color);
+  color: var(--post-form-field-title-color);
+  font-weight: var(--post-form-field-title-font-weight);
+  border: var(--post-form-field-border);
+  padding: 0 5px;
+  width: 80px;
+  font-size: 10pt;
+}
+
+.postFormButtonDesktop td {
+  margin: 0;
+  padding: 0;
+  font-size: 10pt;
+  position: relative;
+}
+      
+.postFormButtonDesktop td > input[type="text"] {
+  width: 244px;
+  margin: 0;
+  margin-right: 2px;
+  padding: 2px 4px 3px;
+  border: 1px solid #aaa;
+  outline: none;
+  appearance: none;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+.postFormButtonDesktop textarea {
+  width: 292px;
+  margin-bottom: 0;
+  outline: none;
+  border-radius: none;
+  border: 1px solid #aaa;
+  padding: 2px 4px 3px;
+  appearance: none;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 10pt;
+  
+  /* textareas have a gap below them that differs along browsers https://stackoverflow.com/a/7144960 */
+  vertical-align: top;
+}
+
+.linkType {
+  font-weight: normal;
+  position: absolute;
+  white-space: nowrap;
+  bottom: 3px;
+}
+
 @media (max-width: 640px) {
   .postFormButtonDesktop {
     display: none;
