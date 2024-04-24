@@ -1,12 +1,16 @@
 .postFormTable {
-  font-size: var(--post-form-toggle-font-size);
-  font-weight: var(--post-form-toggle-font-weight);
   width: auto;
   text-align: left;
   margin-left: auto;
   margin-right: auto;
   display: table;
   border-spacing: 1px;
+}
+
+.postFormDesktop {
+  font-size: var(--post-form-toggle-font-size);
+  font-weight: var(--post-form-toggle-font-weight);
+  text-align: center;
 }
 
 .postFormMobile {

@@ -36,7 +36,9 @@ const PostFormTable = () => {
         </tr>
         <tr>
           <td>Comment</td>
-          <textarea cols={48} rows={4} wrap='soft' />
+          <td>
+            <textarea cols={48} rows={4} wrap='soft' />
+          </td>
         </tr>
         <tr>
           <td>Link</td>
