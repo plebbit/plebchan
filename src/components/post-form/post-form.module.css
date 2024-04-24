@@ -32,9 +32,9 @@
   color: var(--post-form-field-title-color);
   font-weight: var(--post-form-field-title-font-weight);
   border: var(--post-form-field-border);
-  padding: 0 5px;
+  padding: var(--post-form-field-title-padding);
+  font-size: var(--post-form-field-title-font-size);
   width: 80px;
-  font-size: 10pt;
 }
 
 .postFormButtonDesktop td {
@@ -43,32 +43,37 @@
   font-size: 10pt;
   position: relative;
 }
+
+.postFormButtonDesktop input[type="text"], .postFormButtonDesktop textarea {
+  border: var(--post-form-field-input-border, revert);
+  font-family: var(--post-form-field-font-family, revert);
+  appearance: var(--post-form-field-input-appearance, revert);
+  outline: var(--post-form-field-input-outline, revert);
+  background-color: var(--post-form-field-input-background-color, revert);
+  color: var(--post-form-field-input-color, revert);
+  filter: var(--filter80);
+  padding: 2px 4px 3px;
+  font-size: 10pt;
+}
+
+.postFormButtonDesktop input[type="text"]:focus, .postFormButtonDesktop textarea:focus {
+  border: var(--post-form-field-input-focus-border, revert);
+}
       
 .postFormButtonDesktop td > input[type="text"] {
   width: 244px;
-  margin: 0;
-  margin-right: 2px;
-  padding: 2px 4px 3px;
-  border: 1px solid #aaa;
-  outline: none;
-  appearance: none;
-  font-family: arial, helvetica, sans-serif;
-  font-size: 10pt;
 }
 
 .postFormButtonDesktop textarea {
   width: 292px;
-  margin-bottom: 0;
-  outline: none;
-  border-radius: none;
-  border: 1px solid #aaa;
-  padding: 2px 4px 3px;
-  appearance: none;
-  font-family: arial, helvetica, sans-serif;
-  font-size: 10pt;
   
   /* textareas have a gap below them that differs along browsers https://stackoverflow.com/a/7144960 */
   vertical-align: top;
+}
+
+.postFormButtonDesktop button {
+  margin-left: 2px;
+  filter: var(--filter80);
 }
 
 .linkType {
@@ -76,6 +81,7 @@
   position: absolute;
   white-space: nowrap;
   bottom: 3px;
+  padding-left: 3px;
 }
 
 @media (max-width: 640px) {
