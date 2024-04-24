@@ -312,6 +312,7 @@
   clear: both;
   background-color: var(--post-mobile-link-background-color);
   border-top: var(--post-mobile-link-border-top);
+  border-bottom: var(--post-mobile-link-border-bottom);
   padding: 5px;
   overflow: hidden;
   display: flex;

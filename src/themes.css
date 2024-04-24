@@ -604,6 +604,7 @@
 
   /* post mobile */
   --post-mobile-background-color: #282A2E;
+  --post-mobile-info-border-top: 1px solid #2D2F33;
   --post-mobile-info-border-bottom: 1px solid #2D2F33;
   --post-mobile-info-background-color: #212326;
   --post-mobile-info-text-color: #707070;
@@ -614,6 +615,7 @@
   --post-mobile-subject-font-weight: 700;
   --post-mobile-link-background-color: #212326;
   --post-mobile-link-border-top: 1px solid #2D2F33;
+  --post-mobile-link-border-bottom: 1px solid #2D2F33;
   --post-mobile-link-info-text-color: #707070;
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 10pt;
@@ -730,8 +732,8 @@
 
   /* post mobile */
   --post-mobile-background-color: #eee;
-  --post-mobile-info-border-bottom: 1px solid #ccc;
   --post-mobile-info-border-top: 1px solid #ccc;
+  --post-mobile-info-border-bottom: 1px solid #ccc;
   --post-mobile-info-background-color: #ddd;
   --post-mobile-info-text-color: #707070;
   --post-mobile-menu-button-color: #f60;
@@ -741,11 +743,11 @@
   --post-mobile-subject-font-weight: 700;
   --post-mobile-link-background-color: #ddd;
   --post-mobile-link-border-top: 1px solid #ccc;
+  --post-mobile-link-border-bottom: 1px solid #ccc;
   --post-mobile-link-info-text-color: #333;
   --post-mobile-abbr-text-color: #333;
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
-  --post-mobile-border-bottom: 1px solid #ccc;
 
   /* post capcodes */
   --post-capcode-mod-text-color: #f60;
