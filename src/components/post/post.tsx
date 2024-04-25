@@ -37,6 +37,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
 
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type, url } = commentMediaInfo || {};
+  const embedUrl = url && new URL(url);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
@@ -76,7 +77,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
                 ]
               </span>
             )}
-            {showThumbnail && !hasThumbnail && (
+            {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
               <span>
                 {' '}
                 [
