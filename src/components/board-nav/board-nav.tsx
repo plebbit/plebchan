@@ -1,3 +1,4 @@
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isCatalogView } from '../../lib/utils/view-utils';
@@ -76,7 +77,11 @@ const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProp
 
 const BoardNav = () => {
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
-  const { subplebbitAddress } = useParams();
+
+  const params = useParams();
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
+
   return (
     <>
       <BoardNavDesktop subplebbitAddresses={subplebbitAddresses} />
