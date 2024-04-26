@@ -30,9 +30,19 @@
   --catalog-post-menu-btn-opacity: 0.5;
   --catalog-post-menu-btn-hover-opacity: 1;
 
+  /* challenge modal */
+  --challenge-modal-background-color: #f0e0d6;
+  --challenge-modal-border: 1px solid #d9bfb7;
+  --challenge-modal-title-background-color: #ea8;
+  --challenge-modal-title-text-color: #800;
+  --challenge-modal-title-border: 1px solid #800;
+  --challenge-modal-title-font-size: 10pt;
+  --challenge-modal-title-font-weight: 700;
+
   /* desktop buttons */
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
+  --close-button-background-image: url("/public/assets/buttons/cross-red.png");
 
   /* mobile buttons */
   --button-font-size-mobile: 10pt;

@@ -5,7 +5,7 @@ import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
-import { isPostPageView } from '../../lib/utils/view-utils';
+import { isPostPageView, isPendingPostView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
 import useWindowWidth from '../../hooks/use-window-width';
@@ -24,13 +24,16 @@ interface PostProps {
 
 const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+  const params = useParams();
+  const location = useLocation();
+  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPendingPostPage = isPendingPostView(location.pathname, params);
 
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
@@ -120,12 +123,21 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
         <span className={styles.postNum}>
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')}>
+              <Link
+                to={`/p/${subplebbitAddress}/${cid}`}
+                className={styles.linkToPost}
+                title={t('link_to_post')}
+                onClick={(e) => isInPendingPostPage && e.preventDefault()}
+              >
                 c/
               </Link>
-              <span className={styles.replyToPost} title={t('reply_to_post')}>
-                {shortCid}
-              </span>
+              {isInPendingPostPage ? (
+                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+              ) : (
+                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                  {shortCid}
+                </span>
+              )}
             </span>
           )}
           {pinned && (
@@ -305,14 +317,18 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
 
 const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
+  const params = useParams();
+  const location = useLocation();
+  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPendingPostPage = isPendingPostView(location.pathname, params);
+
   const linkCount = useCountLinksInReplies(post);
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
@@ -360,10 +376,23 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
               <span className={styles.dateTimePostNum}>
                 {getFormattedDate(timestamp)}{' '}
                 {!(isDescription || isRules) && (
-                  <>
-                    <span className={styles.linkToPost}>c/</span>
-                    <span className={styles.replyToPost}>{shortCid}</span>
-                  </>
+                  <span className={styles.postNumLink}>
+                    <Link
+                      to={`/p/${subplebbitAddress}/${cid}`}
+                      className={styles.linkToPost}
+                      title={t('link_to_post')}
+                      onClick={(e) => isInPendingPostPage && e.preventDefault()}
+                    >
+                      c/
+                    </Link>
+                    {isInPendingPostPage ? (
+                      <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+                    ) : (
+                      <span className={styles.replyToPost} title={t('reply_to_post')}>
+                        {shortCid}
+                      </span>
+                    )}
+                  </span>
                 )}
               </span>
             </div>
