@@ -1,3 +1,4 @@
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isCatalogView } from '../../lib/utils/view-utils';
@@ -22,7 +23,7 @@ const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
             <span key={index}>
               {index === 0 ? null : ' '}
               <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>{address.includes('.') ? address : address.slice(0, 10).concat('...')}</Link>
-              {index !== address.length - 1 ? ' /' : null}
+              {index !== subplebbitAddresses.length - 1 ? ' /' : null}
             </span>
           );
         })}
@@ -49,8 +50,7 @@ const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProp
       {!currentSubplebbitIsInList && subplebbitAddress && <option value={subplebbitAddress}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
-      {subplebbitAddresses.map((subplebbit: any, index: number) => {
-        const address = subplebbit?.address || '';
+      {subplebbitAddresses.map((address: any, index: number) => {
         const subplebbitAddress = address?.includes('.') ? address : address?.slice(0, 10).concat('...');
         return (
           <option key={index} value={address}>
@@ -77,7 +77,11 @@ const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProp
 
 const BoardNav = () => {
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
-  const { subplebbitAddress } = useParams();
+
+  const params = useParams();
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
+
   return (
     <>
       <BoardNavDesktop subplebbitAddresses={subplebbitAddresses} />

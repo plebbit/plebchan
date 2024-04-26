@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
-import { isCatalogView, isPostPageView } from '../../lib/utils/view-utils';
+import { isCatalogView, isPendingPostView, isPostPageView } from '../../lib/utils/view-utils';
 
 interface BoardButtonsProps {
   address: string | undefined;
@@ -53,25 +53,30 @@ const BottomButton = () => {
 };
 
 export const MobileBoardButtons = () => {
-  const { subplebbitAddress: address } = useParams<{ subplebbitAddress: string }>();
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+  const params = useParams();
+  const location = useLocation();
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
+  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPendingPostPage = isPendingPostView(location.pathname, params);
+
   return (
     <div className={styles.mobileBoardButtons}>
-      {isInPostPage ? (
+      {isInPostPage || isInPendingPostPage ? (
         <div className={styles.mobilePostPageButtons}>
-          <ReturnButton address={address} />
-          <CatalogButton address={address} />
+          <ReturnButton address={subplebbitAddress} />
+          <CatalogButton address={subplebbitAddress} />
           <BottomButton />
           <div className={styles.mobilePostPageButtonsSecondRow}>
             <OptionsButton />
-            <SubscribeButton address={address} />
+            <SubscribeButton address={subplebbitAddress} />
           </div>
         </div>
       ) : (
         <>
           <OptionsButton />
-          <CatalogButton address={address} />
-          <SubscribeButton address={address} />
+          <CatalogButton address={subplebbitAddress} />
+          <SubscribeButton address={subplebbitAddress} />
         </>
       )}
     </div>
@@ -79,28 +84,30 @@ export const MobileBoardButtons = () => {
 };
 
 export const DesktopBoardButtons = () => {
-  const { subplebbitAddress: address } = useParams<{ subplebbitAddress: string }>();
-
-  const location = useLocation();
   const params = useParams();
+  const location = useLocation();
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
   const isInPostPage = isPostPageView(location.pathname, params);
   const isInCatalogView = isCatalogView(location.pathname, params);
+  const isInPendingPostPage = isPendingPostView(location.pathname, params);
 
   return (
     <div className={styles.desktopBoardButtons}>
       <hr />
-      {isInPostPage ? (
+      {isInPostPage || isInPendingPostPage ? (
         <>
-          [<ReturnButton address={address} />] [<CatalogButton address={address} isInCatalogView={isInCatalogView} />] [<BottomButton />] [<OptionsButton />]
+          [<ReturnButton address={subplebbitAddress} />] [<CatalogButton address={subplebbitAddress} isInCatalogView={isInCatalogView} />] [<BottomButton />] [
+          <OptionsButton />]
           <span className={styles.subscribeButton}>
-            [<SubscribeButton address={address} />]
+            [<SubscribeButton address={subplebbitAddress} />]
           </span>
         </>
       ) : (
         <>
-          [<OptionsButton />] [<CatalogButton address={address} isInCatalogView={isInCatalogView} />]
+          [<OptionsButton />] [<CatalogButton address={subplebbitAddress} isInCatalogView={isInCatalogView} />]
           <span className={styles.subscribeButton}>
-            [<SubscribeButton address={address} />]
+            [<SubscribeButton address={subplebbitAddress} />]
           </span>
         </>
       )}

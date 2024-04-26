@@ -1,23 +1,25 @@
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment, useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import styles from './subplebbit-stats.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 
 const SubplebbitStats = () => {
   const { t } = useTranslation();
-  const { commentCid, subplebbitAddress } = useParams<{ subplebbitAddress: string; commentCid: string }>();
+  const params = useParams();
+
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { address, createdAt } = subplebbit || {};
 
   const location = useLocation();
-  const params = useParams();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
-  const comment = useComment({ commentCid });
+  const comment = useComment({ commentCid: params?.commentCid });
   const { deleted, locked, removed } = comment || {};
   const hideStats = deleted || locked || removed || isInDescriptionView || isInRulesView;
 

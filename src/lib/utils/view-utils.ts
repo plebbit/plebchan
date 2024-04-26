@@ -1,4 +1,5 @@
 export type ParamsType = {
+  accountCommentIndex?: string;
   commentCid?: string;
   subplebbitAddress?: string;
 };
@@ -28,4 +29,8 @@ export const isPostPageView = (pathname: string, params: ParamsType): boolean =>
 export const isCatalogView = (pathname: string, params: ParamsType): boolean => {
   const decodedPathname = decodeURIComponent(pathname);
   return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/catalog`) : false;
+};
+
+export const isPendingPostView = (pathname: string, params: ParamsType): boolean => {
+  return pathname === `/profile/${params.accountCommentIndex}`;
 };

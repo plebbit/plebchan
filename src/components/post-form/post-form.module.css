@@ -1,13 +1,26 @@
-.postFormButtonDesktop {
+.postFormTable {
+  width: auto;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  border-spacing: 1px;
+}
+
+.postFormDesktop {
   font-size: var(--post-form-toggle-font-size);
   font-weight: var(--post-form-toggle-font-weight);
   text-align: center;
 }
 
-.postFormButtonMobile {
+.postFormMobile {
   text-align: center;
   padding-top: 9px;
   padding-bottom: 0.5em;
+}
+
+.postFormMobile .showFormButton {
+  margin-bottom: 5px;
 }
 
 .closed {
@@ -19,14 +32,71 @@
   padding-bottom: 100px;
 }
 
+.postFormTable td:first-child {
+  background-color: var(--post-form-field-title-background-color);
+  color: var(--post-form-field-title-color);
+  font-weight: var(--post-form-field-title-font-weight);
+  border: var(--post-form-field-border);
+  padding: var(--post-form-field-title-padding);
+  font-size: var(--post-form-field-title-font-size);
+  width: 80px;
+}
+
+.postFormTable td {
+  margin: 0;
+  padding: 0;
+  font-size: 10pt;
+  position: relative;
+}
+
+.postFormTable input[type="text"], .postFormTable textarea {
+  border: var(--post-form-field-input-border, revert);
+  font-family: var(--post-form-field-font-family, revert);
+  appearance: var(--post-form-field-input-appearance, revert);
+  outline: var(--post-form-field-input-outline, revert);
+  background-color: var(--post-form-field-input-background-color, revert);
+  color: var(--post-form-field-input-color, revert);
+  filter: var(--filter80);
+  padding: 2px 4px 3px;
+  font-size: 10pt;
+}
+
+.postFormTable input[type="text"]:focus, .postFormTable textarea:focus {
+  border: var(--post-form-field-input-focus-border, revert);
+}
+      
+.postFormTable td > input[type="text"] {
+  width: 244px;
+}
+
+.postFormTable textarea {
+  width: 292px;
+  
+  /* textareas have a gap below them that differs along browsers https://stackoverflow.com/a/7144960 */
+  vertical-align: top;
+}
+
+.postFormTable button {
+  margin-left: 2px;
+  filter: var(--filter80);
+}
+
+.linkType {
+  font-weight: normal;
+  position: absolute;
+  white-space: nowrap;
+  bottom: 3px;
+  padding-left: 3px;
+}
+
 @media (max-width: 640px) {
-  .postFormButtonDesktop {
+  .postFormDesktop {
     display: none;
   }
 }
 
 @media (min-width: 640px) {
-  .postFormButtonMobile {
+  .postFormMobile {
     display: none;
   }
 }

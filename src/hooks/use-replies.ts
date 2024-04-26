@@ -17,12 +17,14 @@ const useRepliesAndAccountReplies = (comment: Comment) => {
   }, [flattenedReplies, accountComments]);
 
   const repliesAndNotYetPublishedReplies = useMemo(() => {
-    return [
+    const repliesSortedByVotes = [
       // put the author's unpublished replies at the top, latest first (reverse)
       ...accountRepliesNotYetPublished.reverse(),
       // put the published replies after,
       ...(flattenedReplies || []),
     ];
+    // sort by timestamp
+    return repliesSortedByVotes.sort((a: Comment, b: Comment) => a.timestamp - b.timestamp);
   }, [flattenedReplies, accountRepliesNotYetPublished]);
 
   return repliesAndNotYetPublishedReplies;

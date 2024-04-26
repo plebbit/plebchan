@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useState } from 'react';
 import styles from './board-banner.module.css';
 
-const totalBanners = 53;
+const totalBanners = 57;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
@@ -15,7 +15,10 @@ const ImageBanner = () => {
 };
 
 const BoardBanner = () => {
-  const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
+  const params = useParams();
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
+
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { address, title } = subplebbit || {};
   const displayAddress = address && address.length > 10 && !address.includes('.') ? address.slice(0, 13).concat('...') : address;
