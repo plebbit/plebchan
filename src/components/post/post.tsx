@@ -5,7 +5,7 @@ import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
-import { isPostPageView, isPendingPostView } from '../../lib/utils/view-utils';
+import { isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
@@ -35,7 +35,6 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const params = useParams();
   const location = useLocation();
   const isInPostPage = isPostPageView(location.pathname, params);
-  const isInPendingPostPage = isPendingPostView(location.pathname, params);
 
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
@@ -125,15 +124,10 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
         <span className={styles.postNum}>
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
-              <Link
-                to={`/p/${subplebbitAddress}/${cid}`}
-                className={styles.linkToPost}
-                title={t('link_to_post')}
-                onClick={(e) => isInPendingPostPage && e.preventDefault()}
-              >
+              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
-              {isInPendingPostPage ? (
+              {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
               ) : (
                 <span className={styles.replyToPost} title={t('reply_to_post')}>
@@ -343,7 +337,6 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const params = useParams();
   const location = useLocation();
   const isInPostPage = isPostPageView(location.pathname, params);
-  const isInPendingPostPage = isPendingPostView(location.pathname, params);
 
   const linkCount = useCountLinksInReplies(post);
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
@@ -368,7 +361,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                 ...
               </span>
               <span className={styles.nameBlock}>
-                <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+                <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
                   {displayName || 'Anonymous'}
                   {authorRole && ` ## Board ${authorRole}`}{' '}
                 </span>
@@ -394,15 +387,10 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                 {getFormattedDate(timestamp)}{' '}
                 {!(isDescription || isRules) && (
                   <span className={styles.postNumLink}>
-                    <Link
-                      to={`/p/${subplebbitAddress}/${cid}`}
-                      className={styles.linkToPost}
-                      title={t('link_to_post')}
-                      onClick={(e) => isInPendingPostPage && e.preventDefault()}
-                    >
+                    <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                       c/
                     </Link>
-                    {isInPendingPostPage ? (
+                    {!cid ? (
                       <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
                     ) : (
                       <span className={styles.replyToPost} title={t('reply_to_post')}>
@@ -462,7 +450,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
 
 const ReplyMobile = ({ reply, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { author, content, cid, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
@@ -491,8 +479,19 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
               )}
             </span>
             <span className={styles.dateTimePostNum}>
-              {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
-              <span className={styles.replyToPost}>{shortCid}</span>
+              {getFormattedDate(timestamp)}{' '}
+              <span className={styles.postNumLink}>
+                <Link to={`/p/${subplebbitAddress}/c/${cid}`} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                  c/
+                </Link>
+              </span>
+              {!cid ? (
+                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+              ) : (
+                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                  {shortCid}
+                </span>
+              )}
             </span>
           </div>
           {(hasThumbnail || link) && (
