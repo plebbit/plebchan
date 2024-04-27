@@ -44,6 +44,7 @@
   font-size: 10pt;
   outline: medium none;
   width: 298px;
+  filter: var(--filter80);
   padding: 2px;
   margin-bottom: 1px;
 }
@@ -75,5 +76,6 @@
 .challengeFooter button {
   margin: 5px 5px 0 0;
   cursor: pointer;
+  filter: var(--filter80);
   text-transform: capitalize;
 }
