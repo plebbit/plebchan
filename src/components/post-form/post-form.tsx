@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PublishCommentOptions, setAccount, useAccount, useAccountComment, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
@@ -9,6 +9,7 @@ import { getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isDescriptionView, isPostPageView, isRulesView } from '../../lib/utils/view-utils';
 import challengesStore from '../../hooks/use-challenges';
+import useReply from '../../hooks/use-reply';
 
 type SubmitState = {
   subplebbitAddress: string | undefined;
@@ -66,7 +67,7 @@ const PostFormTable = () => {
 
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
-  const onPublish = () => {
+  const onPublishPost = () => {
     if (!title && !content && !link) {
       alert(`Cannot post empty comment`);
       return;
@@ -97,6 +98,38 @@ const PostFormTable = () => {
     }
   }, [index, resetSubmitStore, navigate]);
 
+  // in post page, publish a reply to the post
+  const location = useLocation();
+  const isInPostPage = isPostPageView(location.pathname, params);
+  const cid = params?.commentCid as string;
+  const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid, subplebbitAddress });
+
+  const textRef = useRef<HTMLTextAreaElement>(null);
+  const urlRef = useRef<HTMLInputElement>(null);
+
+  const onPublishReply = () => {
+    const currentContent = textRef.current?.value || '';
+    const currentUrl = urlRef.current?.value || '';
+
+    if (!currentContent.trim() && !currentUrl) {
+      alert(`Cannot post empty comment`);
+      return;
+    }
+
+    if (currentUrl && !isValidURL(currentUrl)) {
+      alert('The provided link is not a valid URL.');
+      return;
+    }
+    publishReply();
+  };
+
+  useEffect(() => {
+    if (typeof replyIndex === 'number') {
+      resetContent();
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [replyIndex, resetContent]);
+
   return (
     <table className={styles.postFormTable}>
       <tbody>
@@ -109,19 +142,35 @@ const PostFormTable = () => {
               defaultValue={displayName || undefined}
               onChange={(e) => setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } })}
             />
+            <button onClick={onPublishReply}>Post</button>
           </td>
         </tr>
-        <tr>
-          <td>Subject</td>
-          <td>
-            <input type='text' onChange={(e) => setSubmitStore({ title: e.target.value })} />
-            <button onClick={onPublish}>Post</button>
-          </td>
-        </tr>
+        {!isInPostPage && (
+          <tr>
+            <td>Subject</td>
+            <td>
+              <input
+                type='text'
+                onChange={(e) => {
+                  setSubmitStore({ title: e.target.value });
+                }}
+              />
+              <button onClick={onPublishPost}>Post</button>
+            </td>
+          </tr>
+        )}
         <tr>
           <td>Comment</td>
           <td>
-            <textarea cols={48} rows={4} wrap='soft' onChange={(e) => setSubmitStore({ content: e.target.value })} />
+            <textarea
+              cols={48}
+              rows={4}
+              wrap='soft'
+              ref={textRef}
+              onChange={(e) => {
+                isInPostPage ? setContent.content(e.target.value) : setSubmitStore({ content: e.target.value });
+              }}
+            />
           </td>
         </tr>
         <tr>
@@ -132,9 +181,10 @@ const PostFormTable = () => {
               autoCorrect='off'
               autoComplete='off'
               spellCheck='false'
+              ref={urlRef}
               onChange={(e) => {
                 setUrl(e.target.value);
-                setSubmitStore({ link: e.target.value });
+                isInPostPage ? setContent.link(e.target.value) : setSubmitStore({ link: e.target.value });
               }}
             />
             <span className={styles.linkType}>

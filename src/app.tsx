@@ -18,18 +18,24 @@ import PostForm from './components/post-form';
 
 const BoardLayout = () => {
   const { subplebbitAddress } = useParams();
+  const location = useLocation();
+
+  // force rerender of post form when navigating between pages
+  const key = `${subplebbitAddress}-${location.pathname}`;
+
   return (
     <>
       <BoardNav />
       <BoardBanner />
       <MobileBoardButtons />
-      <PostForm key={subplebbitAddress} />
+      <PostForm key={key} />
       <SubplebbitStats />
       <DesktopBoardButtons />
       <Outlet />
     </>
   );
 };
+
 const App = () => {
   const location = useLocation();
   const isInHomeView = isHomeView(location.pathname);

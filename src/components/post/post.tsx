@@ -8,8 +8,10 @@ import { getFormattedDate } from '../../lib/utils/time-utils';
 import { isPostPageView, isPendingPostView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
+import useStateString from '../../hooks/use-state-string';
 import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
+import LoadingEllipsis from '../loading-ellipsis';
 import Markdown from '../markdown';
 import CommentMedia from '../comment-media';
 import { canEmbed } from '../embed';
@@ -201,7 +203,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
 
 const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { author, cid, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
@@ -214,6 +216,11 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const isReplyingToReply = postCid !== parentCid;
 
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+
+  const stateString = useStateString(reply);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
 
   return (
     <div className={styles.replyDesktop}>
@@ -233,12 +240,16 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
           <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
           <span className={styles.postNum}>
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/c/${reply.cid}`} className={styles.linkToPost} title='Link to post'>
+              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
-              <span className={styles.replyToPost} title='Reply to post'>
-                {shortCid}
-              </span>
+              {!cid ? (
+                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+              ) : (
+                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                  {shortCid}
+                </span>
+              )}
             </span>
             {pinned && (
               <span className={styles.stickyIconWrapper}>
@@ -308,6 +319,12 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               </>
             )}
             <Markdown content={content} />
+            {!cid && (
+              <>
+                <br />
+                {loadingString}
+              </>
+            )}
           </blockquote>
         )}
       </div>
