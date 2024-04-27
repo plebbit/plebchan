@@ -43,5 +43,10 @@
   "bottom": "底部",
   "top": "顶部",
   "thread_closed": "主题已关闭。",
-  "may_not_reply": "您现在可能无法回复。"
+  "may_not_reply": "您现在可能无法回复。",
+  "post": "发布",
+  "name": "名字",
+  "comment": "评论",
+  "subject": "主题",
+  "anonymous": "匿名"
 }

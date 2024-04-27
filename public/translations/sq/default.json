@@ -34,7 +34,7 @@
   "reply_to_post": "Përgjigju në këtë postim",
   "sticky": "Ngjitës",
   "closed": "Mbyllur",
-  "reply": "Përgjigju",
+  "reply": "përgjigju",
   "link": "Lidhje",
   "close": "Mbylle",
   "post_a_reply": "Posto një Përgjigje",
@@ -43,5 +43,10 @@
   "bottom": "Fund",
   "top": "Sipër",
   "thread_closed": "Fjala është e mbyllur.",
-  "may_not_reply": "Nuk mund të përgjigjeni në këtë kohë."
+  "may_not_reply": "Nuk mund të përgjigjeni në këtë kohë.",
+  "post": "postë",
+  "name": "emri",
+  "comment": "koment",
+  "subject": "subjekt",
+  "anonymous": "anonim"
 }

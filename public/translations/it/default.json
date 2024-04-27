@@ -34,7 +34,7 @@
   "reply_to_post": "Commenta questo post",
   "sticky": "Incollato",
   "closed": "Chiuso",
-  "reply": "Commenta",
+  "reply": "rispondi",
   "link": "Link",
   "close": "Chiudi",
   "post_a_reply": "Invia un Commento",
@@ -43,5 +43,10 @@
   "bottom": "Vai sotto",
   "top": "Vai sopra",
   "thread_closed": "Thread chiuso.",
-  "may_not_reply": "Non puoi rispondere in questo momento."
+  "may_not_reply": "Non puoi rispondere in questo momento.",
+  "post": "invia",
+  "name": "nome",
+  "comment": "commento",
+  "subject": "oggetto",
+  "anonymous": "anonimo"
 }

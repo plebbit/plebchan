@@ -34,7 +34,7 @@
   "reply_to_post": "Vastaa tähän viestiin",
   "sticky": "Tikki",
   "closed": "Suljettu",
-  "reply": "Vastaa",
+  "reply": "vastata",
   "link": "Linkki",
   "close": "Sulje",
   "post_a_reply": "Lähetä Vastaus",
@@ -43,5 +43,10 @@
   "bottom": "Pohja",
   "top": "Ylös",
   "thread_closed": "Keskustelu suljettu.",
-  "may_not_reply": "Et ehkä voi vastata tällä hetkellä."
+  "may_not_reply": "Et ehkä voi vastata tällä hetkellä.",
+  "post": "lähetä",
+  "name": "nimi",
+  "comment": "kommentti",
+  "subject": "aihe",
+  "anonymous": "anonyymi"
 }

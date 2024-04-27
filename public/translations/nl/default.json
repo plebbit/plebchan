@@ -34,7 +34,7 @@
   "reply_to_post": "Reageren op dit bericht",
   "sticky": "Vastgemaakt",
   "closed": "Gesloten",
-  "reply": "Antwoord",
+  "reply": "antwoorden",
   "link": "Link",
   "close": "Sluiten",
   "post_a_reply": "Een Antwoord Plaatsen",
@@ -43,5 +43,10 @@
   "bottom": "Onderkant",
   "top": "Boven",
   "thread_closed": "Thread gesloten.",
-  "may_not_reply": "U kunt op dit moment mogelijk niet antwoorden."
+  "may_not_reply": "U kunt op dit moment mogelijk niet antwoorden.",
+  "post": "plaatsen",
+  "name": "naam",
+  "comment": "opmerking",
+  "subject": "onderwerp",
+  "anonymous": "anoniem"
 }

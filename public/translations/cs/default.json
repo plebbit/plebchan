@@ -34,7 +34,7 @@
   "reply_to_post": "Odpovědět na tento příspěvek",
   "sticky": "Připnutý",
   "closed": "Zavřeno",
-  "reply": "Odpovědět",
+  "reply": "odpovědět",
   "link": "Odkaz",
   "close": "Zavřít",
   "post_a_reply": "Zveřejnit Odpověď",
@@ -43,5 +43,10 @@
   "bottom": "Dno",
   "top": "Nahoře",
   "thread_closed": "Vlákno uzavřeno.",
-  "may_not_reply": "V tuto chvíli nemůžete odpovědět."
+  "may_not_reply": "V tuto chvíli nemůžete odpovědět.",
+  "post": "odeslat",
+  "name": "název",
+  "comment": "komentář",
+  "subject": "předmět",
+  "anonymous": "anonymní"
 }

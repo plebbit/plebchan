@@ -34,7 +34,7 @@
   "reply_to_post": "Antworten auf diesen Beitrag",
   "sticky": "Angeheftet",
   "closed": "Geschlossen",
-  "reply": "Antworten",
+  "reply": "antworten",
   "link": "Link",
   "close": "Schließen",
   "post_a_reply": "Eine Antwort Posten",
@@ -43,5 +43,10 @@
   "bottom": "Unten",
   "top": "Oben",
   "thread_closed": "Thread geschlossen.",
-  "may_not_reply": "Sie können möglicherweise zu diesem Zeitpunkt nicht antworten."
+  "may_not_reply": "Sie können möglicherweise zu diesem Zeitpunkt nicht antworten.",
+  "post": "posten",
+  "name": "Name",
+  "comment": "Kommentar",
+  "subject": "Betreff",
+  "anonymous": "anonym"
 }

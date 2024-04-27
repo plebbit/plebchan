@@ -34,7 +34,7 @@
   "reply_to_post": "Balas ke pos ini",
   "sticky": "Menempel",
   "closed": "Tutup",
-  "reply": "Balas",
+  "reply": "balas",
   "link": "Tautan",
   "close": "Tutup",
   "post_a_reply": "Kirim Balasan",
@@ -43,5 +43,10 @@
   "bottom": "Bawah",
   "top": "Atas",
   "thread_closed": "Benang ditutup.",
-  "may_not_reply": "Anda mungkin tidak bisa membalas pada saat ini."
+  "may_not_reply": "Anda mungkin tidak bisa membalas pada saat ini.",
+  "post": "posting",
+  "name": "nama",
+  "comment": "komentar",
+  "subject": "subjek",
+  "anonymous": "anonim"
 }

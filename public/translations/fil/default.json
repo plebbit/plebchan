@@ -34,7 +34,7 @@
   "reply_to_post": "Tumugon sa post na ito",
   "sticky": "Malagkit",
   "closed": "Sarado",
-  "reply": "Tumugon",
+  "reply": "sumagot",
   "link": "Link",
   "close": "Isara",
   "post_a_reply": "Mag-post ng Isang Tugon",
@@ -43,5 +43,10 @@
   "bottom": "Ilalim",
   "top": "Itaas",
   "thread_closed": "Thread na isara.",
-  "may_not_reply": "Hindi ka maaaring mag-reply sa oras na ito."
+  "may_not_reply": "Hindi ka maaaring mag-reply sa oras na ito.",
+  "post": "mag-post",
+  "name": "pangalan",
+  "comment": "komento",
+  "subject": "paksa",
+  "anonymous": "anonimo"
 }
