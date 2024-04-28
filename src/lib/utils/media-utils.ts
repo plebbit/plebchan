@@ -11,6 +11,21 @@ export interface CommentMediaInfo {
   patternThumbnailUrl?: string;
 }
 
+export const getDisplayMediaInfoType = (type: string, t: any) => {
+  switch (type) {
+    case 'image':
+      return t('image');
+    case 'iframe':
+      return t('iframe');
+    case 'video':
+      return t('video');
+    case 'audio':
+      return t('audio');
+    default:
+      return t('webpage');
+  }
+};
+
 export const getHasThumbnail = (commentMediaInfo: CommentMediaInfo | undefined, link: string | undefined): boolean => {
   const iframeThumbnail = commentMediaInfo?.patternThumbnailUrl || commentMediaInfo?.thumbnail;
   return link &&

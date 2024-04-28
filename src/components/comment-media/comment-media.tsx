@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './comment-media.module.css';
-import { CommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
-import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
-import Embed, { canEmbed } from '../embed';
 import { useTranslation } from 'react-i18next';
-import useWindowWidth from '../../hooks/use-window-width';
+import styles from './comment-media.module.css';
+import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getHostname } from '../../lib/utils/url-utils';
+import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
+import useWindowWidth from '../../hooks/use-window-width';
+import Embed, { canEmbed } from '../embed';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
@@ -129,7 +129,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
           <a href={url} target='_blank' rel='noopener noreferrer'>
             {url && url.length > 30 ? url.slice(0, 30) + '...' : url}
           </a>{' '}
-          ({type})
+          ({getDisplayMediaInfoType(type, t)})
         </div>
       )}
       {isMobile && (type === 'iframe' || type === 'video' || type === 'audio') && (
@@ -144,8 +144,10 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
 };
 
 const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
+  const { t } = useTranslation();
   const isMobile = useWindowWidth() < 640;
   const { type, url } = commentMediaInfo || {};
+
   return (
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
@@ -160,7 +162,7 @@ const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, link
             setShowThumbnail={setShowThumbnail}
           />
         )}
-        {isMobile && type && <div className={styles.fileInfo}>{type}</div>}
+        {isMobile && type && <div className={styles.fileInfo}>{getDisplayMediaInfoType(type, t)}</div>}
       </span>
       {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={isReply} setShowThumbnail={setShowThumbnail} />}
     </span>

@@ -70,7 +70,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
             <a href={url} target='_blank' rel='noopener noreferrer'>
               {url.length > 30 ? url.slice(0, 30) + '...' : url}
             </a>{' '}
-            ({type})
+            ({type && getDisplayMediaInfoType(type, t)})
             {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
               <span>
                 {' '}
@@ -112,7 +112,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
         {title && <span className={styles.subject}>{displayTitle} </span>}
         <span className={styles.nameBlock}>
           <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-            {displayName || 'Anonymous'}
+            {displayName || _.capitalize(t('anonymous'))}
             {authorRole && ` ## Board ${authorRole}`}{' '}
           </span>
           {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress}) </span>}
@@ -226,7 +226,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
           </span>
           <span className={styles.nameBlock}>
             <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
-              {displayName || 'Anonymous'}
+              {displayName || _.capitalize(t('anonymous'))}
               {authorRole && ` ## Board ${authorRole}`}{' '}
             </span>
             <span className={styles.userAddress}>(u/{shortAddress}) </span>
@@ -268,7 +268,8 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               {t('link')}:{' '}
               <a href={link} target='_blank' rel='noopener noreferrer'>
                 {link.length > 30 ? link?.slice(0, 30) + '...' : link}
-              </a>
+              </a>{' '}
+              ({type && getDisplayMediaInfoType(type, t)})
               {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
                 <span>
                   {' '}
@@ -362,7 +363,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
               </span>
               <span className={styles.nameBlock}>
                 <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-                  {displayName || 'Anonymous'}
+                  {displayName || _.capitalize(t('anonymous'))}
                   {authorRole && ` ## Board ${authorRole}`}{' '}
                 </span>
                 {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>}
@@ -468,7 +469,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
             <span className={styles.postMenuBtn}>...</span>
             <span className={styles.nameBlock}>
               <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
-                {displayName || 'Anonymous'}
+                {displayName || _.capitalize(t('anonymous'))}
                 {authorRole && ` ## Board ${authorRole}`}{' '}
               </span>
               <span className={styles.address}>(u/{shortAddress})</span>
@@ -528,11 +529,12 @@ const Post = ({ post, showAllReplies = false }: PostProps) => {
   const isMobile = useWindowWidth() < 640;
   return (
     <div className={styles.thread}>
+      {showReplyModal && <ReplyModal closeModal={closeModal} parentCid={post?.cid} />}
       <div className={styles.postContainer}>
         {isMobile ? (
-          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openModal={openModal} closeModal={closeModal} activeCid={activeCid} />
         ) : (
-          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openModal={openModal} closeModal={closeModal} activeCid={activeCid} />
         )}
       </div>
     </div>
