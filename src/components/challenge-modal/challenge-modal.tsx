@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Challenge as ChallengeType, useComment } from '@plebbit/plebbit-react-hooks';
+import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
+import { Challenge as ChallengeType } from '@plebbit/plebbit-react-hooks';
+import { getPublicationType } from '../../lib/utils/challenge-utils';
 import useChallenges from '../../hooks/use-challenges';
 import styles from './challenge-modal.module.css';
-import { getPublicationType } from '../../lib/utils/challenge-utils';
-import Draggable from 'react-draggable';
 
 interface ChallengeProps {
   challenge: ChallengeType;

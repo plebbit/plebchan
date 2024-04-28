@@ -40,6 +40,7 @@
   padding: var(--post-form-field-title-padding);
   font-size: var(--post-form-field-title-font-size);
   width: 80px;
+  text-transform: capitalize;
 }
 
 .postFormTable td {
@@ -78,7 +79,11 @@
 
 .postFormTable button {
   margin-left: 2px;
+  bottom: 0px;
   filter: var(--filter80);
+  position: absolute;
+  cursor: pointer;
+  text-transform: capitalize;
 }
 
 .linkType {

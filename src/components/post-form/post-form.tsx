@@ -10,6 +10,7 @@ import { isValidURL } from '../../lib/utils/url-utils';
 import { isDescriptionView, isPostPageView, isRulesView } from '../../lib/utils/view-utils';
 import challengesStore from '../../hooks/use-challenges';
 import useReply from '../../hooks/use-reply';
+import _ from 'lodash';
 
 type SubmitState = {
   subplebbitAddress: string | undefined;
@@ -58,6 +59,7 @@ const LinkTypePreviewer = ({ link }: { link: string }) => {
 };
 
 const PostFormTable = () => {
+  const { t } = useTranslation();
   const account = useAccount();
   const { displayName } = account?.author || {};
 
@@ -134,20 +136,20 @@ const PostFormTable = () => {
     <table className={styles.postFormTable}>
       <tbody>
         <tr>
-          <td>Name</td>
+          <td>{t('name')}</td>
           <td>
             <input
               type='text'
-              placeholder={!displayName ? 'Anonymous' : undefined}
+              placeholder={!displayName ? _.capitalize(t('anonymous')) : undefined}
               defaultValue={displayName || undefined}
               onChange={(e) => setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } })}
             />
-            <button onClick={onPublishReply}>Post</button>
+            {isInPostPage && <button onClick={onPublishReply}>{t('post')}</button>}
           </td>
         </tr>
         {!isInPostPage && (
           <tr>
-            <td>Subject</td>
+            <td>{t('subject')}</td>
             <td>
               <input
                 type='text'
@@ -155,12 +157,12 @@ const PostFormTable = () => {
                   setSubmitStore({ title: e.target.value });
                 }}
               />
-              <button onClick={onPublishPost}>Post</button>
+              <button onClick={onPublishPost}>{t('post')}</button>
             </td>
           </tr>
         )}
         <tr>
-          <td>Comment</td>
+          <td>{t('comment')}</td>
           <td>
             <textarea
               cols={48}
@@ -174,7 +176,7 @@ const PostFormTable = () => {
           </td>
         </tr>
         <tr>
-          <td>Link</td>
+          <td>{t('link')}</td>
           <td>
             <input
               type='text'
