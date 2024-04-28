@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { Challenge as ChallengeType } from '@plebbit/plebbit-react-hooks';
@@ -50,9 +50,12 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
     }
   };
 
+  // react-draggable requires a ref to the modal node
+  const nodeRef = useRef(null);
+
   return (
-    <Draggable handle='.challengeHandle'>
-      <div className={styles.container}>
+    <Draggable handle='.challengeHandle' nodeRef={nodeRef}>
+      <div className={styles.container} ref={nodeRef}>
         <div className={`challengeHandle ${styles.title}`}>
           Challenge for {publicationType}
           <button className={styles.closeIcon} onClick={closeModal} title='close' />
