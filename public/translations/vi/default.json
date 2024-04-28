@@ -48,5 +48,10 @@
   "name": "tên",
   "comment": "bình luận",
   "subject": "chủ đề",
-  "anonymous": "ẩn danh"
+  "anonymous": "ẩn danh",
+  "image": "hình ảnh",
+  "video": "video",
+  "audio": "âm thanh",
+  "webpage": "trang web",
+  "iframe": "iframe"
 }

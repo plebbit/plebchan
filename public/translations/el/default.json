@@ -48,5 +48,10 @@
   "name": "όνομα",
   "comment": "σχόλιο",
   "subject": "θέμα",
-  "anonymous": "ανώνυμος"
+  "anonymous": "ανώνυμος",
+  "image": "εικόνα",
+  "video": "βίντεο",
+  "audio": "ήχος",
+  "webpage": "ιστοσελίδα",
+  "iframe": "πλαίσιο"
 }

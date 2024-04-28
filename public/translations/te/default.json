@@ -48,5 +48,10 @@
   "name": "పేరు",
   "comment": "వ్యాఖ్య",
   "subject": "విషయం",
-  "anonymous": "అనామధుడు"
+  "anonymous": "అనామధుడు",
+  "image": "చిత్రం",
+  "video": "వీడియో",
+  "audio": "ఆడియో",
+  "webpage": "వెబ్ పేజీ",
+  "iframe": "iframe"
 }

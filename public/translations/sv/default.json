@@ -48,5 +48,10 @@
   "name": "namn",
   "comment": "kommentar",
   "subject": "ämne",
-  "anonymous": "anonym"
+  "anonymous": "anonym",
+  "image": "bild",
+  "video": "video",
+  "audio": "ljud",
+  "webpage": "webbsida",
+  "iframe": "iframe"
 }

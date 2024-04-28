@@ -48,5 +48,10 @@
   "name": "שם",
   "comment": "תגובה",
   "subject": "נושא",
-  "anonymous": "אנונימי"
+  "anonymous": "אנונימי",
+  "image": "תמונה",
+  "video": "וידאו",
+  "audio": "שמע",
+  "webpage": "דף אינטרנט",
+  "iframe": "מסגרת"
 }

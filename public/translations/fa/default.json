@@ -48,5 +48,10 @@
   "name": "نام",
   "comment": "نظر",
   "subject": "موضوع",
-  "anonymous": "ناشناس"
+  "anonymous": "ناشناس",
+  "image": "تصویر",
+  "video": "ویدیو",
+  "audio": "صدا",
+  "webpage": "صفحه وب",
+  "iframe": "فریم"
 }

@@ -48,5 +48,10 @@
   "name": "名字",
   "comment": "评论",
   "subject": "主题",
-  "anonymous": "匿名"
+  "anonymous": "匿名",
+  "image": "图片",
+  "video": "视频",
+  "audio": "音频",
+  "webpage": "网页",
+  "iframe": "框架"
 }

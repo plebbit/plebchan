@@ -48,5 +48,10 @@
   "name": "nume",
   "comment": "comentariu",
   "subject": "subiect",
-  "anonymous": "anonim"
+  "anonymous": "anonim",
+  "image": "imagine",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "pagină web",
+  "iframe": "iframe"
 }

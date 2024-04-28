@@ -48,5 +48,10 @@
   "name": "nama",
   "comment": "komentar",
   "subject": "subjek",
-  "anonymous": "anonim"
+  "anonymous": "anonim",
+  "image": "gambar",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "halaman web",
+  "iframe": "iframe"
 }

@@ -48,5 +48,10 @@
   "name": "navn",
   "comment": "kommentar",
   "subject": "emne",
-  "anonymous": "anonym"
+  "anonymous": "anonym",
+  "image": "bilde",
+  "video": "video",
+  "audio": "lyd",
+  "webpage": "nettside",
+  "iframe": "iframe"
 }

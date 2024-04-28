@@ -48,5 +48,10 @@
   "name": "nimi",
   "comment": "kommentti",
   "subject": "aihe",
-  "anonymous": "anonyymi"
+  "anonymous": "anonyymi",
+  "image": "kuva",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "verkkosivu",
+  "iframe": "iframe"
 }

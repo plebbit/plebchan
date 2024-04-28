@@ -48,5 +48,10 @@
   "name": "имя",
   "comment": "комментарий",
   "subject": "тема",
-  "anonymous": "анонимный"
+  "anonymous": "анонимный",
+  "image": "изображение",
+  "video": "видео",
+  "audio": "аудио",
+  "webpage": "веб-страница",
+  "iframe": "iframe"
 }

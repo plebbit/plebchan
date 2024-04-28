@@ -48,5 +48,10 @@
   "name": "naam",
   "comment": "opmerking",
   "subject": "onderwerp",
-  "anonymous": "anoniem"
+  "anonymous": "anoniem",
+  "image": "afbeelding",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "webpagina",
+  "iframe": "iframe"
 }

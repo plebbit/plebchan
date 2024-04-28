@@ -48,5 +48,10 @@
   "name": "emri",
   "comment": "koment",
   "subject": "subjekt",
-  "anonymous": "anonim"
+  "anonymous": "anonim",
+  "image": "imazh",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "faqja web",
+  "iframe": "iframe"
 }

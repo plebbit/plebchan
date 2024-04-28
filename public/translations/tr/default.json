@@ -48,5 +48,10 @@
   "name": "isim",
   "comment": "yorum",
   "subject": "konu",
-  "anonymous": "anonim"
+  "anonymous": "anonim",
+  "image": "görüntü",
+  "video": "video",
+  "audio": "ses",
+  "webpage": "web sayfası",
+  "iframe": "iframe"
 }

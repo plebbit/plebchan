@@ -48,5 +48,10 @@
   "name": "الاسم",
   "comment": "تعليق",
   "subject": "الموضوع",
-  "anonymous": "مجهول"
+  "anonymous": "مجهول",
+  "image": "صورة",
+  "video": "فيديو",
+  "audio": "صوت",
+  "webpage": "صفحة ويب",
+  "iframe": "إطار"
 }

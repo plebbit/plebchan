@@ -48,5 +48,10 @@
   "name": "이름",
   "comment": "댓글",
   "subject": "제목",
-  "anonymous": "익명"
+  "anonymous": "익명",
+  "image": "이미지",
+  "video": "비디오",
+  "audio": "오디오",
+  "webpage": "웹 페이지",
+  "iframe": "iframe"
 }

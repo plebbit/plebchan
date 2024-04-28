@@ -48,5 +48,10 @@
   "name": "név",
   "comment": "megjegyzés",
   "subject": "tárgy",
-  "anonymous": "névtelen"
+  "anonymous": "névtelen",
+  "image": "kép",
+  "video": "videó",
+  "audio": "hang",
+  "webpage": "weboldal",
+  "iframe": "iframe"
 }

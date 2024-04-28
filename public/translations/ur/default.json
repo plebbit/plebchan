@@ -48,5 +48,10 @@
   "name": "نام",
   "comment": "تبصرہ",
   "subject": "موضوع",
-  "anonymous": "ناشناس"
+  "anonymous": "ناشناس",
+  "image": "تصویر",
+  "video": "ویڈیو",
+  "audio": "آڈیو",
+  "webpage": "ویب پیج",
+  "iframe": "آئی فریم"
 }

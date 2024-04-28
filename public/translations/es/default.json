@@ -48,5 +48,10 @@
   "name": "nombre",
   "comment": "comentario",
   "subject": "asunto",
-  "anonymous": "anónimo"
+  "anonymous": "anónimo",
+  "image": "imagen",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "página web",
+  "iframe": "iframe"
 }

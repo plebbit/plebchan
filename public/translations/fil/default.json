@@ -48,5 +48,10 @@
   "name": "pangalan",
   "comment": "komento",
   "subject": "paksa",
-  "anonymous": "anonimo"
+  "anonymous": "anonimo",
+  "image": "larawan",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "pahinahon",
+  "iframe": "iframe"
 }

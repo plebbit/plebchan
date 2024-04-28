@@ -48,5 +48,10 @@
   "name": "名前",
   "comment": "コメント",
   "subject": "件名",
-  "anonymous": "匿名"
+  "anonymous": "匿名",
+  "image": "画像",
+  "video": "ビデオ",
+  "audio": "音声",
+  "webpage": "ウェブページ",
+  "iframe": "アイフレーム"
 }

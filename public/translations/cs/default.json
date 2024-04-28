@@ -48,5 +48,10 @@
   "name": "název",
   "comment": "komentář",
   "subject": "předmět",
-  "anonymous": "anonymní"
+  "anonymous": "anonymní",
+  "image": "obrázek",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "webová stránka",
+  "iframe": "iframe"
 }

@@ -48,5 +48,10 @@
   "name": "ชื่อ",
   "comment": "ความคิดเห็น",
   "subject": "หัวข้อ",
-  "anonymous": "นิรนาม"
+  "anonymous": "นิรนาม",
+  "image": "ภาพ",
+  "video": "วิดีโอ",
+  "audio": "เสียง",
+  "webpage": "หน้าเว็บ",
+  "iframe": "iframe"
 }

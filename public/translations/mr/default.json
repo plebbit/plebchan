@@ -48,5 +48,10 @@
   "name": "नाव",
   "comment": "टिप्पणी",
   "subject": "विषय",
-  "anonymous": "अनाम"
+  "anonymous": "अनाम",
+  "image": "चित्र",
+  "video": "व्हिडिओ",
+  "audio": "ऑडिओ",
+  "webpage": "वेबपेज",
+  "iframe": "आयफ्रेम"
 }
