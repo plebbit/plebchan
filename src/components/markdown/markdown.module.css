@@ -8,12 +8,8 @@
   text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
-.markdown ol {
-  padding-left: 15px;
-}
-
-.markdown ul {
-  padding-left: 40px;
+.markdown li {
+  list-style-position: inside;
 }
 
 .hrWrapper {
