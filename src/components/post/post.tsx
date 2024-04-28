@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Role, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
@@ -11,10 +11,13 @@ import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
-import LoadingEllipsis from '../loading-ellipsis';
-import Markdown from '../markdown';
 import CommentMedia from '../comment-media';
 import { canEmbed } from '../embed';
+import LoadingEllipsis from '../loading-ellipsis';
+import Markdown from '../markdown';
+import ReplyModal from '../reply-modal';
+import _ from 'lodash';
+import { getDisplayMediaInfoType } from '../../lib/utils/media-utils';
 
 interface PostProps {
   index?: number;
@@ -22,9 +25,10 @@ interface PostProps {
   reply?: any;
   roles?: Role[];
   showAllReplies?: boolean;
+  openReplyModal?: (cid: string) => void;
 }
 
-const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
+const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -52,6 +56,10 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const linkCount = pinned ? totalLinkCount : totalLinkCount - visibleLinkCount;
 
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
 
   return (
     <div className={styles.postDesktop}>
@@ -115,7 +123,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
             {displayName || _.capitalize(t('anonymous'))}
             {authorRole && ` ## Board ${authorRole}`}{' '}
           </span>
-          {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress}) </span>}
+          {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>}
         </span>
         <span className={styles.dateTime}>
           {getFormattedDate(timestamp)}
@@ -124,13 +132,13 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
         <span className={styles.postNum}>
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
               {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
                 </span>
               )}
@@ -187,15 +195,15 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
       {!(pinned && !isInPostPage) &&
         replies &&
         (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-          <div key={reply.cid} className={styles.replyContainer}>
-            <ReplyDesktop index={index} reply={reply} roles={roles} />
+          <div key={index} className={styles.replyContainer}>
+            <ReplyDesktop index={index} reply={reply} roles={roles} openReplyModal={openReplyModal} />
           </div>
         ))}
     </div>
   );
 };
 
-const ReplyDesktop = ({ reply, roles }: PostProps) => {
+const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
@@ -216,6 +224,10 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
 
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
+
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
@@ -229,18 +241,18 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               {displayName || _.capitalize(t('anonymous'))}
               {authorRole && ` ## Board ${authorRole}`}{' '}
             </span>
-            <span className={styles.userAddress}>(u/{shortAddress}) </span>
+            <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>
           </span>
           <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
           <span className={styles.postNum}>
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
               {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
                 </span>
               )}
@@ -314,7 +326,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               </>
             )}
             <Markdown content={content} />
-            {!cid && (
+            {!cid && state === 'pending' && (
               <>
                 <br />
                 {loadingString}
@@ -327,7 +339,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
   );
 };
 
-const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
+const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -349,6 +361,10 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
 
   const replies = useReplies(post);
 
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
+
   return (
     <div className={styles.postMobile}>
       <div className={styles.hrWrapper}>
@@ -366,7 +382,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                   {displayName || _.capitalize(t('anonymous'))}
                   {authorRole && ` ## Board ${authorRole}`}{' '}
                 </span>
-                {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>}
+                {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
                 {pinned && (
                   <span className={styles.stickyIconWrapper}>
                     <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -394,7 +410,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                     {!cid ? (
                       <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
                     ) : (
-                      <span className={styles.replyToPost} title={t('reply_to_post')}>
+                      <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                         {shortCid}
                       </span>
                     )}
@@ -441,7 +457,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
           replies &&
           (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
-              <ReplyMobile index={index} reply={reply} roles={roles} />
+              <ReplyMobile index={index} reply={reply} roles={roles} openReplyModal={openReplyModal} />
             </div>
           ))}
       </div>
@@ -449,7 +465,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   );
 };
 
-const ReplyMobile = ({ reply, roles }: PostProps) => {
+const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
   const { t } = useTranslation();
   const { author, content, cid, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
@@ -460,6 +476,15 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const isReplyingToReply = postCid !== parentCid;
+
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
+
+  const stateString = useStateString(reply);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
 
   return (
     <div className={styles.replyMobile}>
@@ -472,7 +497,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
                 {displayName || _.capitalize(t('anonymous'))}
                 {authorRole && ` ## Board ${authorRole}`}{' '}
               </span>
-              <span className={styles.address}>(u/{shortAddress})</span>
+              <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>
               {pinned && (
                 <span className={styles.stickyIconWrapper}>
                   <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -489,7 +514,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
               {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
                 </span>
               )}
@@ -516,6 +541,12 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
                 </>
               )}
               <Markdown content={content} />
+              {!cid && state === 'pending' && (
+                <>
+                  <br />
+                  {loadingString}
+                </>
+              )}
             </blockquote>
           )}
         </div>
@@ -527,14 +558,36 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
 const Post = ({ post, showAllReplies = false }: PostProps) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   const isMobile = useWindowWidth() < 640;
+
+  const [showReplyModal, setShowReplyModal] = useState(false);
+  const [activeCid, setActiveCid] = useState<string | null>(null);
+
+  const openReplyModal = (cid: string) => {
+    if (activeCid && activeCid !== cid) {
+      closeModal();
+      setActiveCid(cid);
+      setShowReplyModal(true);
+    } else if (!activeCid) {
+      setActiveCid(cid);
+      setShowReplyModal(true);
+    } else {
+      return;
+    }
+  };
+
+  const closeModal = () => {
+    setActiveCid(null);
+    setShowReplyModal(false);
+  };
+
   return (
     <div className={styles.thread}>
-      {showReplyModal && <ReplyModal closeModal={closeModal} parentCid={post?.cid} />}
+      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} />}
       <div className={styles.postContainer}>
         {isMobile ? (
-          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openModal={openModal} closeModal={closeModal} activeCid={activeCid} />
+          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openReplyModal={openReplyModal} />
         ) : (
-          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openModal={openModal} closeModal={closeModal} activeCid={activeCid} />
+          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openReplyModal={openReplyModal} />
         )}
       </div>
     </div>

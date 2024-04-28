@@ -53,28 +53,8 @@
   vertical-align: top;
 }
 
-.challengeAnswer {
-  font-size: 11px !important;
-  padding: 0px 2px;
-  font-family: monospace !important;
-}
-
-.challengeMediaWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5px 0;
-}
-
-.challengeFooter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.challengeFooter button {
-  cursor: pointer;
-  filter: var(--filter80);
+.footer button {
   text-transform: capitalize;
+  float: right;
+  cursor: pointer;
 }
