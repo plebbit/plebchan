@@ -34,7 +34,7 @@
   "reply_to_post": "Trả lời bài viết này",
   "sticky": "Dán",
   "closed": "Đóng",
-  "reply": "Trả lời",
+  "reply": "trả lời",
   "link": "Liên kết",
   "close": "Đóng",
   "post_a_reply": "Đăng Một Câu Trả Lời",
@@ -43,5 +43,10 @@
   "bottom": "Đáy",
   "top": "Đầu",
   "thread_closed": "Chủ đề đã đóng.",
-  "may_not_reply": "Bạn có thể không thể trả lời vào thời điểm này."
+  "may_not_reply": "Bạn có thể không thể trả lời vào thời điểm này.",
+  "post": "đăng",
+  "name": "tên",
+  "comment": "bình luận",
+  "subject": "chủ đề",
+  "anonymous": "ẩn danh"
 }

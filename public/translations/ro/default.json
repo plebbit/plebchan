@@ -34,7 +34,7 @@
   "reply_to_post": "Răspunde la acest mesaj",
   "sticky": "Lipit",
   "closed": "Închis",
-  "reply": "Răspunde",
+  "reply": "răspunde",
   "link": "Legătură",
   "close": "Închide",
   "post_a_reply": "Postează un Răspuns",
@@ -43,5 +43,10 @@
   "bottom": "Partea de jos",
   "top": "Sus",
   "thread_closed": "Thread închis.",
-  "may_not_reply": "Poate că nu puteți răspunde în acest moment."
+  "may_not_reply": "Poate că nu puteți răspunde în acest moment.",
+  "post": "posta",
+  "name": "nume",
+  "comment": "comentariu",
+  "subject": "subiect",
+  "anonymous": "anonim"
 }

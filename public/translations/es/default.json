@@ -34,7 +34,7 @@
   "reply_to_post": "Responder a esta publicación",
   "sticky": "Fijado",
   "closed": "Cerrado",
-  "reply": "Responder",
+  "reply": "responder",
   "link": "Enlace",
   "close": "Cerrar",
   "post_a_reply": "Publicar una Respuesta",
@@ -43,5 +43,10 @@
   "bottom": "Fondo",
   "top": "Arriba",
   "thread_closed": "Hilo cerrado.",
-  "may_not_reply": "Es posible que no puedas responder en este momento."
+  "may_not_reply": "Es posible que no puedas responder en este momento.",
+  "post": "publicar",
+  "name": "nombre",
+  "comment": "comentario",
+  "subject": "asunto",
+  "anonymous": "anónimo"
 }

@@ -34,7 +34,7 @@
   "reply_to_post": "הגבה להודעה זו",
   "sticky": "מדבקה",
   "closed": "סגור",
-  "reply": "הגב",
+  "reply": "להגיב",
   "link": "קישור",
   "close": "סגור",
   "post_a_reply": "פרסם תגובה",
@@ -43,5 +43,10 @@
   "bottom": "תחתית",
   "top": "עליון",
   "thread_closed": "השרשור נסגר.",
-  "may_not_reply": "אולי אינך יכול להגיב כרגע."
+  "may_not_reply": "אולי אינך יכול להגיב כרגע.",
+  "post": "לפרסם",
+  "name": "שם",
+  "comment": "תגובה",
+  "subject": "נושא",
+  "anonymous": "אנונימי"
 }

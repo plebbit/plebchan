@@ -34,7 +34,7 @@
   "reply_to_post": "Svar på dette indlæg",
   "sticky": "Fikseret",
   "closed": "Lukket",
-  "reply": "Svar",
+  "reply": "besvar",
   "link": "Link",
   "close": "Luk",
   "post_a_reply": "Indsend Et Svar",
@@ -43,5 +43,10 @@
   "bottom": "Bund",
   "top": "Top",
   "thread_closed": "Tråd lukket.",
-  "may_not_reply": "Du kan muligvis ikke svare på dette tidspunkt."
+  "may_not_reply": "Du kan muligvis ikke svare på dette tidspunkt.",
+  "post": "send",
+  "name": "navn",
+  "comment": "kommentar",
+  "subject": "emne",
+  "anonymous": "anonym"
 }

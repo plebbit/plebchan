@@ -1,0 +1,81 @@
+.container {
+  position: fixed;
+  top: calc(50% - 150px);
+  left: calc(50% - 150px);
+  display: block;
+  padding: 2px;
+  font-size: 10pt;
+  border-left: none;
+  border-top: none;
+  z-index: 1000;
+  background-color: var(--challenge-modal-background-color);
+  border: var(--challenge-modal-border);
+}
+
+.title {
+  font-size: var(--challenge-modal-title-font-size);
+  text-align: center;
+  margin-bottom: 1px;
+  padding: 0;
+  height: 18px;
+  line-height: 18px;
+  cursor: move;
+  font-weight: var(--challenge-modal-title-font-weight);
+  background-color: var(--challenge-modal-title-background-color);
+  color: var(--challenge-modal-title-text-color);
+  border: var(--challenge-modal-title-border);
+}
+
+.closeIcon {
+  all: unset;
+  float: right;
+  cursor: pointer;
+  margin-bottom: -4px;
+  width: 18px;
+  height: 18px;
+  border: none;
+  image-rendering: pixelated;
+  background-image: var(--close-button-background-image);
+}
+
+.container input, .container textarea {
+  border: 1px solid #aaa;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  outline: medium none;
+  width: 298px;
+  filter: var(--filter80);
+  padding: 2px;
+  margin-bottom: 1px;
+}
+
+.content textarea {
+  vertical-align: top;
+}
+
+.challengeAnswer {
+  font-size: 11px !important;
+  padding: 0px 2px;
+  font-family: monospace !important;
+}
+
+.challengeMediaWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.challengeFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.challengeFooter button {
+  margin: 5px 5px 0 0;
+  cursor: pointer;
+  filter: var(--filter80);
+  text-transform: capitalize;
+}

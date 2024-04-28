@@ -34,7 +34,7 @@
   "reply_to_post": "Svar på dette innlegget",
   "sticky": "Klistret",
   "closed": "Stengt",
-  "reply": "Svar",
+  "reply": "svare",
   "link": "Lenke",
   "close": "Lukk",
   "post_a_reply": "Legg Inn Et Svar",
@@ -43,5 +43,10 @@
   "bottom": "Bunnen",
   "top": "Topp",
   "thread_closed": "Tråd stengt.",
-  "may_not_reply": "Du kan kanskje ikke svare på dette tidspunktet."
+  "may_not_reply": "Du kan kanskje ikke svare på dette tidspunktet.",
+  "post": "poste",
+  "name": "navn",
+  "comment": "kommentar",
+  "subject": "emne",
+  "anonymous": "anonym"
 }

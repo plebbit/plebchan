@@ -43,5 +43,10 @@
   "bottom": "下へ",
   "top": "上へ",
   "thread_closed": "スレッドが閉じられました。",
-  "may_not_reply": "現在、返信することはできません。"
+  "may_not_reply": "現在、返信することはできません。",
+  "post": "投稿",
+  "name": "名前",
+  "comment": "コメント",
+  "subject": "件名",
+  "anonymous": "匿名"
 }

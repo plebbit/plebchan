@@ -303,6 +303,11 @@
   text-align: right;
 }
 
+.postMobile .postNumLink a {
+  color: unset;
+  text-decoration: unset;
+}
+
 .postMobile .postMessage {
   padding: 10px;
   font-size: var(--post-mobile-content-font-size);
@@ -414,6 +419,11 @@
 .capcodeMod {
   color: var(--post-capcode-mod-text-color) !important;
   text-transform: capitalize;
+}
+
+.pendingCid {
+  color: red !important;
+  font-weight: 700 !important;
 }
 
 @media (max-width: 640px) {

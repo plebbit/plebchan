@@ -43,5 +43,10 @@
   "bottom": "하단",
   "top": "맨 위로",
   "thread_closed": "스레드가 닫혔습니다.",
-  "may_not_reply": "현재 시간에는 답글을 달 수 없습니다."
+  "may_not_reply": "현재 시간에는 답글을 달 수 없습니다.",
+  "post": "게시",
+  "name": "이름",
+  "comment": "댓글",
+  "subject": "제목",
+  "anonymous": "익명"
 }

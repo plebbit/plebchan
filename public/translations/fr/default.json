@@ -34,7 +34,7 @@
   "reply_to_post": "Répondre à ce message",
   "sticky": "Épinglé",
   "closed": "Fermé",
-  "reply": "Répondre",
+  "reply": "répondre",
   "link": "Lien",
   "close": "Fermer",
   "post_a_reply": "Publier une Réponse",
@@ -43,5 +43,10 @@
   "bottom": "Bas",
   "top": "Haut",
   "thread_closed": "Fil fermé.",
-  "may_not_reply": "Vous ne pouvez peut-être pas répondre en ce moment."
+  "may_not_reply": "Vous ne pouvez peut-être pas répondre en ce moment.",
+  "post": "poster",
+  "name": "nom",
+  "comment": "commentaire",
+  "subject": "sujet",
+  "anonymous": "anonyme"
 }

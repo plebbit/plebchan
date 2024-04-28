@@ -8,8 +8,10 @@ import { getFormattedDate } from '../../lib/utils/time-utils';
 import { isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
+import useStateString from '../../hooks/use-state-string';
 import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
+import LoadingEllipsis from '../loading-ellipsis';
 import Markdown from '../markdown';
 import CommentMedia from '../comment-media';
 import { canEmbed } from '../embed';
@@ -24,13 +26,15 @@ interface PostProps {
 
 const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
+  const params = useParams();
+  const location = useLocation();
+  const isInPostPage = isPostPageView(location.pathname, params);
 
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
@@ -120,12 +124,16 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
         <span className={styles.postNum}>
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')}>
+              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
-              <span className={styles.replyToPost} title={t('reply_to_post')}>
-                {shortCid}
-              </span>
+              {!cid ? (
+                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+              ) : (
+                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                  {shortCid}
+                </span>
+              )}
             </span>
           )}
           {pinned && (
@@ -189,7 +197,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
 
 const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { author, cid, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
@@ -202,6 +210,11 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
   const isReplyingToReply = postCid !== parentCid;
 
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+
+  const stateString = useStateString(reply);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
 
   return (
     <div className={styles.replyDesktop}>
@@ -221,12 +234,16 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
           <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
           <span className={styles.postNum}>
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/c/${reply.cid}`} className={styles.linkToPost} title='Link to post'>
+              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
-              <span className={styles.replyToPost} title='Reply to post'>
-                {shortCid}
-              </span>
+              {!cid ? (
+                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+              ) : (
+                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                  {shortCid}
+                </span>
+              )}
             </span>
             {pinned && (
               <span className={styles.stickyIconWrapper}>
@@ -296,6 +313,12 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               </>
             )}
             <Markdown content={content} />
+            {!cid && (
+              <>
+                <br />
+                {loadingString}
+              </>
+            )}
           </blockquote>
         )}
       </div>
@@ -305,14 +328,17 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
 
 const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
+  const params = useParams();
+  const location = useLocation();
+  const isInPostPage = isPostPageView(location.pathname, params);
+
   const linkCount = useCountLinksInReplies(post);
-  const isInPostPage = isPostPageView(useLocation().pathname, useParams());
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
@@ -335,7 +361,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                 ...
               </span>
               <span className={styles.nameBlock}>
-                <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
+                <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
                   {displayName || 'Anonymous'}
                   {authorRole && ` ## Board ${authorRole}`}{' '}
                 </span>
@@ -360,10 +386,18 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
               <span className={styles.dateTimePostNum}>
                 {getFormattedDate(timestamp)}{' '}
                 {!(isDescription || isRules) && (
-                  <>
-                    <span className={styles.linkToPost}>c/</span>
-                    <span className={styles.replyToPost}>{shortCid}</span>
-                  </>
+                  <span className={styles.postNumLink}>
+                    <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                      c/
+                    </Link>
+                    {!cid ? (
+                      <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+                    ) : (
+                      <span className={styles.replyToPost} title={t('reply_to_post')}>
+                        {shortCid}
+                      </span>
+                    )}
+                  </span>
                 )}
               </span>
             </div>
@@ -416,7 +450,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
 
 const ReplyMobile = ({ reply, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, subplebbitAddress, timestamp } = reply || {};
+  const { author, content, cid, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
   const authorRole = roles?.[address]?.role;
 
@@ -445,8 +479,19 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
               )}
             </span>
             <span className={styles.dateTimePostNum}>
-              {getFormattedDate(timestamp)} <span className={styles.linkToPost}>c/</span>
-              <span className={styles.replyToPost}>{shortCid}</span>
+              {getFormattedDate(timestamp)}{' '}
+              <span className={styles.postNumLink}>
+                <Link to={`/p/${subplebbitAddress}/c/${cid}`} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                  c/
+                </Link>
+              </span>
+              {!cid ? (
+                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+              ) : (
+                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                  {shortCid}
+                </span>
+              )}
             </span>
           </div>
           {(hasThumbnail || link) && (

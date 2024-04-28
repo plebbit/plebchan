@@ -30,9 +30,19 @@
   --catalog-post-menu-btn-opacity: 0.5;
   --catalog-post-menu-btn-hover-opacity: 1;
 
+  /* challenge modal */
+  --challenge-modal-background-color: #f0e0d6;
+  --challenge-modal-border: 1px solid #d9bfb7;
+  --challenge-modal-title-background-color: #ea8;
+  --challenge-modal-title-text-color: #800;
+  --challenge-modal-title-border: 1px solid #800;
+  --challenge-modal-title-font-size: 10pt;
+  --challenge-modal-title-font-weight: 700;
+
   /* desktop buttons */
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
+  --close-button-background-image: url("/public/assets/buttons/cross-red.png");
 
   /* mobile buttons */
   --button-font-size-mobile: 10pt;
@@ -173,6 +183,15 @@
   --catalog-post-menu-btn-opacity: 0.5;
   --catalog-post-menu-btn-hover-opacity: 1;
 
+  /* challenge modal */
+  --challenge-modal-background-color: #d6daf0;
+  --challenge-modal-border: 1px solid #b7c5d9;
+  --challenge-modal-title-background-color: #98e;
+  --challenge-modal-title-text-color: #000;
+  --challenge-modal-title-border: 1px solid #000;
+  --challenge-modal-title-font-size: 10pt;
+  --challenge-modal-title-font-weight: 700;
+
   /* homepage */
   --homepage-infobox-text-color: #000;
   --homepage-infobox-bar-text-color: #000;
@@ -192,6 +211,7 @@
   /* desktop buttons */
   --button-desktop-text-color: #34345c;
   --button-desktop-text-color-hover: #d00;
+  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
 
   /* mobile buttons */
   --button-font-size-mobile: 10pt;
@@ -310,10 +330,20 @@
   --catalog-post-menu-btn-opacity: 0.5;
   --catalog-post-menu-btn-hover-opacity: 1;
 
+  /* challenge modal */
+  --challenge-modal-background-color: #f0e0d6;
+  --challenge-modal-border: 1px solid #d9bfb7;
+  --challenge-modal-title-background-color: #ea8;
+  --challenge-modal-title-text-color: #800;
+  --challenge-modal-title-border: 1px solid #800;
+  --challenge-modal-title-font-size: 12pt;
+  --challenge-modal-title-font-weight: 700;
+
   /* desktop buttons */
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
   --button-text-decoration: underline;
+  --close-button-background-image: url("/public/assets/buttons/cross-red.png");
 
   /* mobile buttons */
   --button-font-size-mobile: 11pt;
@@ -420,6 +450,15 @@
   --body-font-family: times new roman, serif;
   --body-font-size: 12pt;
 
+  /* challenge modal */
+  --challenge-modal-background-color: #d6daf0;
+  --challenge-modal-border: 1px solid #b7c5d9;
+  --challenge-modal-title-background-color: #98e;
+  --challenge-modal-title-text-color: #000;
+  --challenge-modal-title-border: 1px solid #000;
+  --challenge-modal-title-font-size: 12pt;
+  --challenge-modal-title-font-weight: 700;
+
   /* homepage */
   --homepage-infobox-text-color: #000;
   --homepage-infobox-bar-text-color: #000;
@@ -440,6 +479,7 @@
   --button-desktop-text-color: #34345c;
   --button-text-decoration: underline;
   --button-desktop-text-color-hover: #d00;
+  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
 
   /* mobile buttons */
   --button-font-size-mobile: 11pt;
@@ -559,9 +599,19 @@
   --catalog-post-menu-btn-opacity: 0.5;
   --catalog-post-menu-btn-hover-opacity: 1;
 
+  /* challenge modal */
+  --challenge-modal-background-color: #282a2e;
+  --challenge-modal-border: 1px solid #111;
+  --challenge-modal-title-background-color: #282a2e;
+  --challenge-modal-title-text-color: #c5c8c6;
+  --challenge-modal-title-border: unset;
+  --challenge-modal-title-font-size: 10pt;
+  --challenge-modal-title-font-weight: 700;
+
   /* desktop buttons */
   --button-desktop-text-color: #81a2be;
   --button-desktop-text-color-hover: #5f89ac;
+  --close-button-background-image: url("/public/assets/buttons/cross-dark.png");
 
   /* filter for inputs */
   --filter80: brightness(85%);
@@ -691,9 +741,19 @@
   --catalog-post-menu-btn-opacity: 0.5;
   --catalog-post-menu-btn-hover-opacity: 1;
 
+  /* challenge modal */
+  --challenge-modal-background-color: #ddd;
+  --challenge-modal-border: 1px solid #ccc;
+  --challenge-modal-title-background-color: #ddd;
+  --challenge-modal-title-text-color: #333;
+  --challenge-modal-title-border: unset;
+  --challenge-modal-title-font-size: 10pt;
+  --challenge-modal-title-font-weight: 700;
+
   /* desktop buttons */
   --button-desktop-text-color: #f60;
   --button-desktop-text-color-hover: #f30;
+  --close-button-background-image: url("/public/assets/buttons/cross-photon.png");
 
   /* mobile buttons */
   --button-font-size-mobile: 10pt;
@@ -735,7 +795,7 @@
   --post-mobile-info-border-top: 1px solid #ccc;
   --post-mobile-info-border-bottom: 1px solid #ccc;
   --post-mobile-info-background-color: #ddd;
-  --post-mobile-info-text-color: #707070;
+  --post-mobile-info-text-color: #333;
   --post-mobile-menu-button-color: #f60;
   --post-mobile-name-text-color: #004a99;
   --post-mobile-name-font-weight: 700;

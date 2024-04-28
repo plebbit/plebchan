@@ -34,7 +34,7 @@
   "reply_to_post": "Bu gönderiye yanıtla",
   "sticky": "Yapışkan",
   "closed": "Kapalı",
-  "reply": "Yanıtla",
+  "reply": "yanıtla",
   "link": "Bağlantı",
   "close": "Kapat",
   "post_a_reply": "Yanıtı Yayınla",
@@ -43,5 +43,10 @@
   "bottom": "Alt",
   "top": "Üst",
   "thread_closed": "Konu kapatıldı.",
-  "may_not_reply": "Şu anda cevap veremeyebilirsiniz."
+  "may_not_reply": "Şu anda cevap veremeyebilirsiniz.",
+  "post": "posta",
+  "name": "isim",
+  "comment": "yorum",
+  "subject": "konu",
+  "anonymous": "anonim"
 }

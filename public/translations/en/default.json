@@ -34,7 +34,7 @@
   "reply_to_post": "Reply to this post",
   "sticky": "Sticky",
   "closed": "Closed",
-  "reply": "Reply",
+  "reply": "reply",
   "link": "Link",
   "close": "Close",
   "post_a_reply": "Post a Reply",
@@ -43,5 +43,10 @@
   "bottom": "Bottom",
   "top": "Top",
   "thread_closed": "Thread closed.",
-  "may_not_reply": "You may not reply at this time."
+  "may_not_reply": "You may not reply at this time.",
+  "post": "post",
+  "name": "name",
+  "comment": "comment",
+  "subject": "subject",
+  "anonymous": "anonymous"
 }

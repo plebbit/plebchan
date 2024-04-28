@@ -34,7 +34,7 @@
   "reply_to_post": "Válasz erre a hozzászólásra",
   "sticky": "Rögzített",
   "closed": "Zárt",
-  "reply": "Válaszolás",
+  "reply": "válasz",
   "link": "Hivatkozás",
   "close": "Bezárás",
   "post_a_reply": "Válasz Postázása",
@@ -43,5 +43,10 @@
   "bottom": "Alja",
   "top": "Felső",
   "thread_closed": "A téma lezárult.",
-  "may_not_reply": "Jelenleg nem válaszolhatsz erre."
+  "may_not_reply": "Jelenleg nem válaszolhatsz erre.",
+  "post": "posta",
+  "name": "név",
+  "comment": "megjegyzés",
+  "subject": "tárgy",
+  "anonymous": "névtelen"
 }

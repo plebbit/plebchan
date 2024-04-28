@@ -34,7 +34,7 @@
   "reply_to_post": "Svara på detta inlägg",
   "sticky": "Klistrad",
   "closed": "Stängd",
-  "reply": "Svara",
+  "reply": "svara",
   "link": "Länk",
   "close": "Stäng",
   "post_a_reply": "Posta Ett Svar",
@@ -43,5 +43,10 @@
   "bottom": "Botten",
   "top": "Topp",
   "thread_closed": "Tråd stängd.",
-  "may_not_reply": "Du kanske inte kan svara vid den här tiden."
+  "may_not_reply": "Du kanske inte kan svara vid den här tiden.",
+  "post": "skicka",
+  "name": "namn",
+  "comment": "kommentar",
+  "subject": "ämne",
+  "anonymous": "anonym"
 }

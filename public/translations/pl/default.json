@@ -34,7 +34,7 @@
   "reply_to_post": "Odpowiedz na ten post",
   "sticky": "Przyklejony",
   "closed": "Zamknięty",
-  "reply": "Odpowiedz",
+  "reply": "odpowiedź",
   "link": "Link",
   "close": "Zamknij",
   "post_a_reply": "Opublikuj Odpowiedź",
@@ -43,5 +43,10 @@
   "bottom": "Dół",
   "top": "Góra",
   "thread_closed": "Wątek zamknięty.",
-  "may_not_reply": "Może nie możesz teraz odpowiedzieć."
+  "may_not_reply": "Może nie możesz teraz odpowiedzieć.",
+  "post": "postać",
+  "name": "nazwa",
+  "comment": "komentarz",
+  "subject": "temat",
+  "anonymous": "anonimowy"
 }
