@@ -12,7 +12,7 @@
   "whitepaper": "Libro bianco",
   "token": "Token",
   "download_app": "Scarica app",
-  "start_new_thread": "Inizia un Nuovo Thread",
+  "start_new_thread": "Invia un Nuovo Thread",
   "show_stats": "Mostra Statistiche",
   "hide": "Nascondi",
   "board_stats_hour": "Nell'ultima ora, <1>{{userCount}}</1> utenti hanno inviato <1>{{postCount}}</1> post",
@@ -53,5 +53,10 @@
   "video": "video",
   "audio": "audio",
   "webpage": "pagina web",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "regole",
+  "welcome_to_board": "Benvenuti su {{board}}",
+  "comment_too_long": "Commento troppo lungo. <1>Clicca qui</1> per vedere il testo completo.",
+  "replies_omitted": "{{repliesCount}} risposte omesse. <1>Clicca qui</1> per visualizzare.",
+  "replies_and_links_omitted": "{{repliesCount}} risposte e {{linksCount}} link omessi. <1>Clicca qui</1> per visualizzare."
 }

@@ -53,5 +53,10 @@
   "video": "ویدیو",
   "audio": "صدا",
   "webpage": "صفحه وب",
-  "iframe": "فریم"
+  "iframe": "فریم",
+  "rules": "قوانین",
+  "welcome_to_board": "خوش آمدید به {{board}}",
+  "comment_too_long": "نظر بسیار طولانی است. <1>اینجا کلیک کنید</1> تا متن کامل را ببینید.",
+  "replies_omitted": "{{repliesCount}} پاسخ حذف شده است. <1>اینجا کلیک کنید</1> تا آنها را مشاهده کنید.",
+  "replies_and_links_omitted": "{{repliesCount}} پاسخ و {{linksCount}} لینک حذف شده است. <1>اینجا کلیک کنید</1> تا آنها را مشاهده کنید."
 }

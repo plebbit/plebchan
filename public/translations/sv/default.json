@@ -53,5 +53,10 @@
   "video": "video",
   "audio": "ljud",
   "webpage": "webbsida",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "regler",
+  "welcome_to_board": "Välkommen till {{board}}",
+  "comment_too_long": "Kommentaren är för lång. <1>Klicka här</1> för att se hela texten.",
+  "replies_omitted": "{{repliesCount}} svar utelämnade. <1>Klicka här</1> för att visa dem.",
+  "replies_and_links_omitted": "{{repliesCount}} svar och {{linksCount}} länkar utelämnade. <1>Klicka här</1> för att visa dem."
 }

@@ -53,5 +53,10 @@
   "video": "відео",
   "audio": "аудіо",
   "webpage": "веб-сторінка",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "правила",
+  "welcome_to_board": "Ласкаво просимо до {{board}}",
+  "comment_too_long": "Коментар занадто довгий. <1>Натисніть тут</1>, щоб переглянути повний текст.",
+  "replies_omitted": "{{repliesCount}} відповідей пропущено. <1>Натисніть тут</1>, щоб переглянути.",
+  "replies_and_links_omitted": "{{repliesCount}} відповідей та {{linksCount}} посилань пропущено. <1>Натисніть тут</1>, щоб переглянути."
 }

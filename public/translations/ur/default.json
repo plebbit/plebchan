@@ -53,5 +53,10 @@
   "video": "ویڈیو",
   "audio": "آڈیو",
   "webpage": "ویب پیج",
-  "iframe": "آئی فریم"
+  "iframe": "آئی فریم",
+  "rules": "اصول",
+  "welcome_to_board": "{{board}} میں خوش آمدید",
+  "comment_too_long": "تبصرہ بہت طویل ہے۔ <1>مکمل متن دیکھنے کے لیے یہاں کلک کریں</1>۔",
+  "replies_omitted": "{{repliesCount}} جوابات چھوڑ دیے گئے ہیں۔ <1>مکمل دیکھنے کے لیے یہاں کلک کریں</1>۔",
+  "replies_and_links_omitted": "{{repliesCount}} جوابات اور {{linksCount}} لنکس چھوڑ دیے گئے ہیں۔ <1>مکمل دیکھنے کے لیے یہاں کلک کریں</1>۔"
 }

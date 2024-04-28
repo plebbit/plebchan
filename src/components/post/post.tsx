@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Role, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -50,10 +50,10 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
-  const visibleLinkCount = useCountLinksInReplies(post, 5);
-  const totalLinkCount = useCountLinksInReplies(post);
+  const visiblelinksCount = useCountLinksInReplies(post, 5);
+  const totallinksCount = useCountLinksInReplies(post);
   const repliesCount = pinned ? replyCount : replyCount - 5;
-  const linkCount = pinned ? totalLinkCount : totalLinkCount - visibleLinkCount;
+  const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
 
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
 
@@ -176,7 +176,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           {content.length > 1000 && !isInPostPage && (
             <span className={styles.abbr}>
               <br />
-              Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+              <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
             </span>
           )}
         </blockquote>
@@ -186,10 +186,16 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           <span className={styles.expandButtonWrapper}>
             <span className={styles.expandButton} />
           </span>
-          <span>
-            {repliesCount} replies {linkCount > 0 && `and ${linkCount} links`} omitted.{' '}
-          </span>
-          <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view.
+          {linksCount > 0 ? (
+            <Trans
+              i18nKey={'replies_and_links_omitted'}
+              shouldUnescape={true}
+              components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
+              values={{ repliesCount, linksCount }}
+            />
+          ) : (
+            <Trans i18nKey={'replies_omitted'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} values={{ repliesCount }} />
+          )}
         </span>
       )}
       {!(pinned && !isInPostPage) &&
@@ -351,7 +357,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
   const location = useLocation();
   const isInPostPage = isPostPageView(location.pathname, params);
 
-  const linkCount = useCountLinksInReplies(post);
+  const linksCount = useCountLinksInReplies(post);
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
@@ -435,7 +441,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                 {content.length > 1000 && !isInPostPage && (
                   <span className={styles.abbr}>
                     <br />
-                    Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+                    <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
                   </span>
                 )}
               </blockquote>
@@ -445,7 +451,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
             <div className={styles.postLink}>
               <span className={styles.info}>
                 {replyCount > 0 && `${replyCount} Replies`}
-                {linkCount > 0 && ` / ${linkCount} Links`}
+                {linksCount > 0 && ` / ${linksCount} Links`}
               </span>
               <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} className='button'>
                 {t('view_thread')}

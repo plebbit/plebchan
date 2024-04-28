@@ -53,5 +53,10 @@
   "video": "video",
   "audio": "audio",
   "webpage": "webpagina",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "regels",
+  "welcome_to_board": "Welkom bij {{board}}",
+  "comment_too_long": "Reactie te lang. <1>Klik hier</1> om de volledige tekst te bekijken.",
+  "replies_omitted": "{{repliesCount}} reacties weggelaten. <1>Klik hier</1> om ze te bekijken.",
+  "replies_and_links_omitted": "{{repliesCount}} reacties en {{linksCount}} links weggelaten. <1>Klik hier</1> om ze te bekijken."
 }

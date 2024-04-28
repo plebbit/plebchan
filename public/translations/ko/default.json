@@ -53,5 +53,10 @@
   "video": "비디오",
   "audio": "오디오",
   "webpage": "웹 페이지",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "규칙",
+  "welcome_to_board": "{{board}}에 오신 것을 환영합니다",
+  "comment_too_long": "댓글이 너무 깁니다. <1>여기를 클릭하십시오</1> 전체 텍스트를 보려면.",
+  "replies_omitted": "{{repliesCount}}개의 답글이 생략되었습니다. <1>여기를 클릭하십시오</1> 보려면.",
+  "replies_and_links_omitted": "{{repliesCount}}개의 답글과 {{linksCount}}개의 링크가 생략되었습니다. <1>여기를 클릭하십시오</1> 보려면."
 }

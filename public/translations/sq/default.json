@@ -53,5 +53,10 @@
   "video": "video",
   "audio": "audio",
   "webpage": "faqja web",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "rregullat",
+  "welcome_to_board": "Mirë se vini te {{board}}",
+  "comment_too_long": "Komenti është shumë i gjatë. <1>Kliko këtu</1> për të parë tekstin e plotë.",
+  "replies_omitted": "{{repliesCount}} përgjigje janë lënë jashtë. <1>Kliko këtu</1> për t'i shikuar.",
+  "replies_and_links_omitted": "{{repliesCount}} përgjigje dhe {{linksCount}} lidhje janë lënë jashtë. <1>Kliko këtu</1> për t'i shikuar."
 }

@@ -53,5 +53,10 @@
   "video": "Video",
   "audio": "Audio",
   "webpage": "Webseite",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "Regeln",
+  "welcome_to_board": "Willkommen bei {{board}}",
+  "comment_too_long": "Kommentar zu lang. <1>Klicken Sie hier</1>, um den vollständigen Text anzuzeigen.",
+  "replies_omitted": "{{repliesCount}} Antworten ausgelassen. <1>Klicken Sie hier</1>, um sie anzuzeigen.",
+  "replies_and_links_omitted": "{{repliesCount}} Antworten und {{linksCount}} Links ausgelassen. <1>Klicken Sie hier</1>, um sie anzuzeigen."
 }

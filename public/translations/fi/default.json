@@ -53,5 +53,10 @@
   "video": "video",
   "audio": "audio",
   "webpage": "verkkosivu",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "säännöt",
+  "welcome_to_board": "Tervetuloa {{board}}",
+  "comment_too_long": "Kommentti on liian pitkä. <1>Napsauta tästä</1> nähdäksesi koko tekstin.",
+  "replies_omitted": "{{repliesCount}} vastausta jätetty pois. <1>Napsauta tästä</1> nähdäksesi ne.",
+  "replies_and_links_omitted": "{{repliesCount}} vastausta ja {{linksCount}} linkkiä jätetty pois. <1>Napsauta tästä</1> nähdäksesi ne."
 }

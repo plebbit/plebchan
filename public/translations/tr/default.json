@@ -53,5 +53,10 @@
   "video": "video",
   "audio": "ses",
   "webpage": "web sayfası",
-  "iframe": "iframe"
+  "iframe": "iframe",
+  "rules": "kurallar",
+  "welcome_to_board": "{{board}}'a hoş geldiniz",
+  "comment_too_long": "Yorum çok uzun. <1>Buraya tıklayın</1> tam metni görüntülemek için.",
+  "replies_omitted": "{{repliesCount}} yanıt göz ardı edildi. <1>Buraya tıklayın</1> görüntülemek için.",
+  "replies_and_links_omitted": "{{repliesCount}} yanıt ve {{linksCount}} bağlantı göz ardı edildi. <1>Buraya tıklayın</1> görüntülemek için."
 }

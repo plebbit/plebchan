@@ -53,5 +53,10 @@
   "video": "视频",
   "audio": "音频",
   "webpage": "网页",
-  "iframe": "框架"
+  "iframe": "框架",
+  "rules": "规则",
+  "welcome_to_board": "欢迎来到{{board}}",
+  "comment_too_long": "评论太长。 <1>点击这里</1>查看完整文本。",
+  "replies_omitted": "省略了{{repliesCount}}条回复。 <1>点击这里</1>查看。",
+  "replies_and_links_omitted": "省略了{{repliesCount}}条回复和{{linksCount}}个链接。 <1>点击这里</1>查看。"
 }
