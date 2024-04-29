@@ -2,14 +2,15 @@ import Post from '../post';
 import { useTranslation } from 'react-i18next';
 
 interface DescriptionPostProps {
-  subplebbitAddress: string | undefined;
+  avatarUrl?: string;
   createdAt: number;
   description: string;
-  avatarUrl?: string;
+  shortAddress: string;
+  subplebbitAddress: string | undefined;
   title: string;
 }
 
-const SubplebbitDescription = ({ subplebbitAddress, createdAt, description, avatarUrl, title }: DescriptionPostProps) => {
+const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress, subplebbitAddress, title }: DescriptionPostProps) => {
   const { t } = useTranslation();
   const post = {
     isDescription: true,
@@ -18,7 +19,7 @@ const SubplebbitDescription = ({ subplebbitAddress, createdAt, description, avat
     author: { displayName: '## Board Mods' },
     content: description,
     link: avatarUrl,
-    title: t('welcome_to_board', { board: title }),
+    title: t('welcome_to_board', { board: title || `p/${shortAddress}` }),
     pinned: true,
     locked: true,
   };

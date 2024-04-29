@@ -3,10 +3,21 @@ import { Comment, useAccountComments } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils';
 
 const useRepliesAndAccountReplies = (comment: Comment) => {
-  // filter only the parent cid
-  const filter = useCallback((accountComment: Comment) => accountComment.parentCid === (comment?.cid || 'n/a'), [comment?.cid]);
-  const { accountComments } = useAccountComments({ filter });
+  // flatten all replies including nested ones from the original comment
   const flattenedReplies = useMemo(() => flattenCommentsPages(comment.replies), [comment.replies]);
+
+  // gemerate a Set of CIDs from flattened replies for quick lookup
+  const replyCids = useMemo(() => new Set(flattenedReplies.map((reply) => reply.cid)), [flattenedReplies]);
+
+  // filter against all CIDs in flattened replies
+  const filter = useCallback(
+    (accountComment: Comment) => {
+      return replyCids.has(accountComment.parentCid);
+    },
+    [replyCids],
+  );
+
+  const { accountComments } = useAccountComments({ filter });
 
   // the account's replies have a delay before getting published, so get them locally from accountComments instead
   const accountRepliesNotYetPublished = useMemo(() => {

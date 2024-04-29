@@ -4,24 +4,26 @@ const useReplyModal = () => {
   const [showReplyModal, setShowReplyModal] = useState(false);
   const [activeCid, setActiveCid] = useState<string | null>(null);
 
+  const closeModal = useCallback(() => {
+    setActiveCid(null);
+    setShowReplyModal(false);
+  }, []);
+
   const openReplyModal = useCallback(
     (cid: string) => {
       if (activeCid && activeCid !== cid) {
-        closeModal(); // close modal if a different CID is clicked
-        setActiveCid(cid);
-        setShowReplyModal(true);
+        closeModal();
+        setTimeout(() => {
+          setActiveCid(cid);
+          setShowReplyModal(true);
+        }, 0); // minimal timeout to allow for state reset
       } else if (!activeCid) {
         setActiveCid(cid);
         setShowReplyModal(true);
       }
     },
-    [activeCid],
+    [activeCid, closeModal],
   );
-
-  const closeModal = useCallback(() => {
-    setActiveCid(null);
-    setShowReplyModal(false);
-  }, []);
 
   return { showReplyModal, activeCid, openReplyModal, closeModal };
 };

@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { useAccount } from '@plebbit/plebbit-react-hooks';
+import { setAccount, useAccount } from '@plebbit/plebbit-react-hooks';
 import { isValidURL } from '../../lib/utils/url-utils';
 import useReply from '../../hooks/use-reply';
+import useWindowWidth from '../../hooks/use-window-width';
 import styles from './reply-modal.module.css';
 import _ from 'lodash';
 
@@ -48,31 +49,68 @@ const ReplyModal = ({ closeModal, parentCid }: ReplyModalProps) => {
     }
   }, [replyIndex, resetContent, closeModal]);
 
-  // react-draggable requires a ref to the modal node
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
+  const isMobile = useWindowWidth() < 640;
 
-  return (
-    <Draggable handle='.replyModalHandle' nodeRef={nodeRef}>
-      <div className={styles.container} ref={nodeRef}>
-        <div className={`replyModalHandle ${styles.title}`}>
-          Reply to c/{parentCid && Plebbit.getShortCid(parentCid)}
-          <button className={styles.closeIcon} onClick={closeModal} title='close' />
+  // on mobile, the position is absolute instead of fixed, so we need to calculate the top position
+  useEffect(() => {
+    if (nodeRef.current && isMobile) {
+      const viewportHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+      const modalHeight = 150;
+      const centeredPosition = scrollY + viewportHeight / 2 - modalHeight / 2;
+      nodeRef.current.style.top = `${centeredPosition}px`;
+    }
+  }, [isMobile]);
+
+  const modalContent = (
+    <div className={styles.container} ref={nodeRef}>
+      <div className={`replyModalHandle ${styles.title}`}>
+        {t('reply_to_cid', { cid: `c/${parentCid && Plebbit.getShortCid(parentCid)}`, interpolation: { escapeValue: false } })}
+        <button
+          className={styles.closeIcon}
+          onClick={(e) => {
+            e.stopPropagation();
+            closeModal();
+          }}
+          title='close'
+        />
+      </div>
+      <div className={styles.replyForm}>
+        <div className={styles.name}>
+          <input
+            type='text'
+            defaultValue={displayName}
+            placeholder={displayName ? undefined : _.capitalize(t('anonymous'))}
+            onChange={(e) => setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } })}
+          />
         </div>
-        <div className={styles.replyForm}>
-          <div className={styles.name}>
-            <input type='text' defaultValue={displayName} placeholder={displayName ? undefined : _.capitalize(t('anonymous'))} />
-          </div>
-          <div className={styles.link}>
-            <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
-          </div>
-          <div className={styles.content}>
-            <textarea cols={48} rows={4} wrap='soft' ref={textRef} placeholder={_.capitalize(t('comment'))} onChange={(e) => setContent.content(e.target.value)} />
-          </div>
-          <div className={styles.footer}>
-            <button onClick={onPublishReply}>{t('reply')}</button>
-          </div>
+        <div className={styles.link}>
+          <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
+        </div>
+        <div className={styles.content}>
+          <textarea
+            cols={48}
+            rows={4}
+            wrap='soft'
+            ref={textRef}
+            placeholder={_.capitalize(t('comment'))}
+            onChange={(e) => setContent.content(e.target.value)}
+            autoFocus
+          />
+        </div>
+        <div className={styles.footer}>
+          <button onClick={onPublishReply}>{t('reply')}</button>
         </div>
       </div>
+    </div>
+  );
+
+  return isMobile ? (
+    modalContent
+  ) : (
+    <Draggable handle='.replyModalHandle' nodeRef={nodeRef}>
+      {modalContent}
     </Draggable>
   );
 };

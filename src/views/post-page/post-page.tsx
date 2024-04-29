@@ -16,7 +16,7 @@ const PostPage = () => {
   const { commentCid, subplebbitAddress } = params;
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { createdAt, description, rules, suggested, title } = subplebbit;
+  const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
 
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
@@ -36,7 +36,14 @@ const PostPage = () => {
     <div className={styles.content}>
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} />}
       {isInDescriptionView ? (
-        <SubplebbitDescription avatarUrl={suggested?.avatarUrl} createdAt={createdAt} description={description} subplebbitAddress={subplebbitAddress} title={title} />
+        <SubplebbitDescription
+          avatarUrl={suggested?.avatarUrl}
+          createdAt={createdAt}
+          description={description}
+          subplebbitAddress={subplebbitAddress}
+          shortAddress={shortAddress}
+          title={title}
+        />
       ) : isInRulesView ? (
         <SubplebbitRules createdAt={createdAt} rules={rules} subplebbitAddress={subplebbitAddress} />
       ) : (

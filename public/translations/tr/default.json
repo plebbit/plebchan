@@ -59,5 +59,7 @@
   "comment_too_long": "Yorum çok uzun. <1>Buraya tıklayın</1> tam metni görüntülemek için.",
   "replies_omitted": "{{repliesCount}} yanıt göz ardı edildi. <1>Buraya tıklayın</1> görüntülemek için.",
   "replies_and_links_omitted": "{{repliesCount}} yanıt ve {{linksCount}} bağlantı göz ardı edildi. <1>Buraya tıklayın</1> görüntülemek için.",
-  "thread_closed_alert": "Bu konu kapatılmıştır"
+  "thread_closed_alert": "Bu konu kapatılmıştır",
+  "reply_to_cid": "{{cid}}’ye yanıt ver",
+  "submit": "Gönder"
 }

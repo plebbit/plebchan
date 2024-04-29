@@ -59,5 +59,7 @@
   "comment_too_long": "टिप्पणी खूप लांब आहे. <1>पूर्ण मजकूर पाहण्यासाठी येथे क्लिक करा</1>.",
   "replies_omitted": "{{repliesCount}} प्रतिसाद वगळले गेले आहेत. <1>पाहण्यासाठी येथे क्लिक करा</1>.",
   "replies_and_links_omitted": "{{repliesCount}} प्रतिसाद आणि {{linksCount}} दुवे वगळले गेले आहेत. <1>पाहण्यासाठी येथे क्लिक करा</1>.",
-  "thread_closed_alert": "हा थ्रेड बंद आहे"
+  "thread_closed_alert": "हा थ्रेड बंद आहे",
+  "reply_to_cid": "{{cid}} ला उत्तर द्या",
+  "submit": "सबमिट करा"
 }

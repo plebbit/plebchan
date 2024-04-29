@@ -317,7 +317,7 @@
   --boardnav-desktop-link-text-decoration-hover: underline;
   --boardnav-mobile-background-color: #f0e0d6;
   --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
-  --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-font-size: 10pt;
   --boardnav-mobile-button-text-color: #00f;
 
   /* board title */
@@ -440,7 +440,7 @@
   --boardnav-desktop-link-text-decoration-hover: underline;
   --boardnav-mobile-background-color: #d6daf0;
   --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
-  --boardnav-mobile-font-size: 11pt;
+  --boardnav-mobile-font-size: 10pt;
   --boardnav-mobile-button-text-color: #34345c;
 
   /* body */

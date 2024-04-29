@@ -23,9 +23,27 @@
   padding: 2px 4px;
   background-color: var(--boardnav-mobile-background-color);
   border-bottom: var(--boardnav-mobile-border-bottom);
+  font-size: var(--boardnav-mobile-font-size);
   position: fixed;
   width: 100%;
-  font-size: var(--boardnav-mobile-font-size);
+  z-index: 6;
+  animation-name: stickyMenuAnimation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@keyframes stickyMenuAnimation {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: -50px;
+  }
 }
 
 .boardNavMobile .pageJump a {

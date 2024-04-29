@@ -67,7 +67,14 @@ const Board = () => {
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
           {description && description.length > 0 && (
-            <SubplebbitDescription avatarUrl={suggested?.avatarUrl} subplebbitAddress={subplebbitAddress} createdAt={createdAt} description={description} title={title} />
+            <SubplebbitDescription
+              avatarUrl={suggested?.avatarUrl}
+              subplebbitAddress={subplebbitAddress}
+              createdAt={createdAt}
+              description={description}
+              shortAddress={shortAddress}
+              title={title}
+            />
           )}
         </>
       )}

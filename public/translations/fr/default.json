@@ -59,5 +59,7 @@
   "comment_too_long": "Commentaire trop long. <1>Cliquez ici</1> pour voir le texte complet.",
   "replies_omitted": "{{repliesCount}} réponses omises. <1>Cliquez ici</1> pour les afficher.",
   "replies_and_links_omitted": "{{repliesCount}} réponses et {{linksCount}} liens omis. <1>Cliquez ici</1> pour les afficher.",
-  "thread_closed_alert": "Le fil est fermé"
+  "thread_closed_alert": "Le fil est fermé",
+  "reply_to_cid": "Répondre à {{cid}}",
+  "submit": "Soumettre"
 }

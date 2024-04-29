@@ -59,5 +59,7 @@
   "comment_too_long": "نظر بسیار طولانی است. <1>اینجا کلیک کنید</1> تا متن کامل را ببینید.",
   "replies_omitted": "{{repliesCount}} پاسخ حذف شده است. <1>اینجا کلیک کنید</1> تا آنها را مشاهده کنید.",
   "replies_and_links_omitted": "{{repliesCount}} پاسخ و {{linksCount}} لینک حذف شده است. <1>اینجا کلیک کنید</1> تا آنها را مشاهده کنید.",
-  "thread_closed_alert": "موضوع بسته شده است"
+  "thread_closed_alert": "موضوع بسته شده است",
+  "reply_to_cid": "پاسخ به {{cid}}",
+  "submit": "ارسال"
 }
