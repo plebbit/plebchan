@@ -93,7 +93,12 @@ const Board = () => {
         increaseViewportBy={{ bottom: 1200, top: 1200 }}
         totalCount={feed?.length || 0}
         data={feed}
-        itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
+        itemContent={(index, post) => {
+          const { deleted, locked, removed } = post || {};
+          const isThreadLocked = deleted || locked || removed;
+
+          return <Post index={index} post={post} openReplyModal={isThreadLocked ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
+        }}
         useWindowScroll={true}
         components={{ Footer }}
         endReached={loadMore}

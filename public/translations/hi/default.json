@@ -58,5 +58,6 @@
   "welcome_to_board": "{{board}} में आपका स्वागत है",
   "comment_too_long": "टिप्पणी बहुत लंबी है। <1>पूरा टेक्स्ट देखने के लिए यहां क्लिक करें</1>।",
   "replies_omitted": "{{repliesCount}} उत्तर छोड़े गए हैं। <1>देखने के लिए यहां क्लिक करें</1>।",
-  "replies_and_links_omitted": "{{repliesCount}} उत्तर और {{linksCount}} लिंक छोड़े गए हैं। <1>देखने के लिए यहां क्लिक करें</1>।"
+  "replies_and_links_omitted": "{{repliesCount}} उत्तर और {{linksCount}} लिंक छोड़े गए हैं। <1>देखने के लिए यहां क्लिक करें</1>।",
+  "thread_closed_alert": "यह थ्रेड बंद है"
 }

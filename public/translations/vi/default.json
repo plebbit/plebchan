@@ -58,5 +58,6 @@
   "welcome_to_board": "Chào mừng bạn đến với {{board}}",
   "comment_too_long": "Bình luận quá dài. <1>Nhấn vào đây</1> để xem toàn bộ văn bản.",
   "replies_omitted": "{{repliesCount}} câu trả lời bị bỏ qua. <1>Nhấn vào đây</1> để xem.",
-  "replies_and_links_omitted": "{{repliesCount}} câu trả lời và {{linksCount}} liên kết bị bỏ qua. <1>Nhấn vào đây</1> để xem."
+  "replies_and_links_omitted": "{{repliesCount}} câu trả lời và {{linksCount}} liên kết bị bỏ qua. <1>Nhấn vào đây</1> để xem.",
+  "thread_closed_alert": "Chủ đề này đã đóng"
 }

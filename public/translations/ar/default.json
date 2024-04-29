@@ -58,5 +58,6 @@
   "welcome_to_board": "مرحبًا بك في {{board}}",
   "comment_too_long": "التعليق طويل جدًا. <1>اضغط هنا</1> لعرض النص الكامل.",
   "replies_omitted": "{{repliesCount}} ردود محذوفة. <1>اضغط هنا</1> لعرضها.",
-  "replies_and_links_omitted": "{{repliesCount}} ردود و{{linksCount}} روابط محذوفة. <1>اضغط هنا</1> لعرضها."
+  "replies_and_links_omitted": "{{repliesCount}} ردود و{{linksCount}} روابط محذوفة. <1>اضغط هنا</1> لعرضها.",
+  "thread_closed_alert": "الموضوع مغلق"
 }

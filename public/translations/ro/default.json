@@ -58,5 +58,6 @@
   "welcome_to_board": "Bine ați venit la {{board}}",
   "comment_too_long": "Comentariul este prea lung. <1>Click aici</1> pentru a vedea textul complet.",
   "replies_omitted": "{{repliesCount}} răspunsuri omise. <1>Click aici</1> pentru a le vizualiza.",
-  "replies_and_links_omitted": "{{repliesCount}} răspunsuri și {{linksCount}} linkuri omise. <1>Click aici</1> pentru a le vizualiza."
+  "replies_and_links_omitted": "{{repliesCount}} răspunsuri și {{linksCount}} linkuri omise. <1>Click aici</1> pentru a le vizualiza.",
+  "thread_closed_alert": "Acest fir de discuție este închis"
 }

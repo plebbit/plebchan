@@ -58,5 +58,6 @@
   "welcome_to_board": "Üdvözöljük a(z) {{board}} oldalon",
   "comment_too_long": "A megjegyzés túl hosszú. <1>Kattintson ide</1> a teljes szöveg megtekintéséhez.",
   "replies_omitted": "{{repliesCount}} válasz kihagyva. <1>Kattintson ide</1> a megtekintéshez.",
-  "replies_and_links_omitted": "{{repliesCount}} válasz és {{linksCount}} link kihagyva. <1>Kattintson ide</1> a megtekintéshez."
+  "replies_and_links_omitted": "{{repliesCount}} válasz és {{linksCount}} link kihagyva. <1>Kattintson ide</1> a megtekintéshez.",
+  "thread_closed_alert": "A téma lezárva"
 }

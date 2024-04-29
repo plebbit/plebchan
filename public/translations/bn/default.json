@@ -58,5 +58,6 @@
   "welcome_to_board": "স্বাগতম {{board}}",
   "comment_too_long": "মন্তব্য খুব দীর্ঘ। <1>পূর্ণ পাঠ্য দেখতে এখানে ক্লিক করুন</1>।",
   "replies_omitted": "{{repliesCount}}টি উত্তর বাদ দেওয়া হয়েছে। <1>দেখতে এখানে ক্লিক করুন</1>।",
-  "replies_and_links_omitted": "{{repliesCount}}টি উত্তর এবং {{linksCount}}টি লিঙ্ক বাদ দেওয়া হয়েছে। <1>দেখতে এখানে ক্লিক করুন</1>।"
+  "replies_and_links_omitted": "{{repliesCount}}টি উত্তর এবং {{linksCount}}টি লিঙ্ক বাদ দেওয়া হয়েছে। <1>দেখতে এখানে ক্লিক করুন</1>।",
+  "thread_closed_alert": "থ্রেডটি বন্ধ করা হয়েছে"
 }

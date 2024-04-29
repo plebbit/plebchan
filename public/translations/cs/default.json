@@ -58,5 +58,6 @@
   "welcome_to_board": "Vítejte na {{board}}",
   "comment_too_long": "Komentář je příliš dlouhý. <1>Klikněte zde</1> pro zobrazení celého textu.",
   "replies_omitted": "{{repliesCount}} odpovědí vynecháno. <1>Klikněte zde</1> pro zobrazení.",
-  "replies_and_links_omitted": "{{repliesCount}} odpovědí a {{linksCount}} odkazů vynecháno. <1>Klikněte zde</1> pro zobrazení."
+  "replies_and_links_omitted": "{{repliesCount}} odpovědí a {{linksCount}} odkazů vynecháno. <1>Klikněte zde</1> pro zobrazení.",
+  "thread_closed_alert": "Vlákno je uzavřeno"
 }
