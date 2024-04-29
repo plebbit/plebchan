@@ -210,7 +210,7 @@ const Footer = () => {
         )}
         {commitRef && (
           <a href={`https://github.com/plebbit/plebchan/commit/${commitRef}`} target='_blank' rel='noopener noreferrer'>
-            {commitRef.slice(0, 7)}
+            #{commitRef.slice(0, 7)}
           </a>
         )}
       </div>
