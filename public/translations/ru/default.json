@@ -60,5 +60,6 @@
   "replies_omitted": "{{repliesCount}} ответов пропущено. <1>Нажмите здесь</1>, чтобы посмотреть.",
   "replies_and_links_omitted": "{{repliesCount}} ответов и {{linksCount}} ссылок пропущено. <1>Нажмите здесь</1>, чтобы посмотреть.",
   "thread_closed_alert": "Тема закрыта",
-  "reply_to_cid": "Ответить на {{cid}}"
+  "reply_to_cid": "Ответить на {{cid}}",
+  "submit": "Отправить"
 }

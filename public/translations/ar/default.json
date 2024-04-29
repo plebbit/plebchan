@@ -60,5 +60,6 @@
   "replies_omitted": "{{repliesCount}} ردود محذوفة. <1>اضغط هنا</1> لعرضها.",
   "replies_and_links_omitted": "{{repliesCount}} ردود و{{linksCount}} روابط محذوفة. <1>اضغط هنا</1> لعرضها.",
   "thread_closed_alert": "الموضوع مغلق",
-  "reply_to_cid": "الرد على {{cid}}"
+  "reply_to_cid": "الرد على {{cid}}",
+  "submit": "إرسال"
 }

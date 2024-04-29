@@ -60,5 +60,6 @@
   "replies_omitted": "ข้าม {{repliesCount}} คำตอบ <1>คลิกที่นี่</1> เพื่อดู.",
   "replies_and_links_omitted": "ข้าม {{repliesCount}} คำตอบและ {{linksCount}} ลิงก์ <1>คลิกที่นี่</1> เพื่อดู.",
   "thread_closed_alert": "กระทู้นี้ถูกปิด",
-  "reply_to_cid": "ตอบกลับ {{cid}}"
+  "reply_to_cid": "ตอบกลับ {{cid}}",
+  "submit": "ส่ง"
 }

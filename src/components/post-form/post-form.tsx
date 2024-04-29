@@ -128,7 +128,6 @@ const PostFormTable = () => {
   useEffect(() => {
     if (typeof replyIndex === 'number') {
       resetContent();
-      window.scrollTo(0, document.body.scrollHeight);
     }
   }, [replyIndex, resetContent]);
 

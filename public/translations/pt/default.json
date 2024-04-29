@@ -60,5 +60,6 @@
   "replies_omitted": "{{repliesCount}} respostas omitidas. <1>Clique aqui</1> para visualizar.",
   "replies_and_links_omitted": "{{repliesCount}} respostas e {{linksCount}} links omitidos. <1>Clique aqui</1> para visualizar.",
   "thread_closed_alert": "O tópico está fechado",
-  "reply_to_cid": "Responder a {{cid}}"
+  "reply_to_cid": "Responder a {{cid}}",
+  "submit": "Enviar"
 }

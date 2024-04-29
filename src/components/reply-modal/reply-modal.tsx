@@ -89,7 +89,15 @@ const ReplyModal = ({ closeModal, parentCid }: ReplyModalProps) => {
           <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
         </div>
         <div className={styles.content}>
-          <textarea cols={48} rows={4} wrap='soft' ref={textRef} placeholder={_.capitalize(t('comment'))} onChange={(e) => setContent.content(e.target.value)} />
+          <textarea
+            cols={48}
+            rows={4}
+            wrap='soft'
+            ref={textRef}
+            placeholder={_.capitalize(t('comment'))}
+            onChange={(e) => setContent.content(e.target.value)}
+            autoFocus
+          />
         </div>
         <div className={styles.footer}>
           <button onClick={onPublishReply}>{t('reply')}</button>

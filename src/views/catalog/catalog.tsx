@@ -8,6 +8,7 @@ import useWindowWidth from '../../hooks/use-window-width';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import styles from './catalog.module.css';
+import _ from 'lodash';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -32,7 +33,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         author: { displayName: '## Board Mods' },
         content: description,
         link: avatarUrl,
-        title: 'Welcome to ' + (title || `p/${shortAddress}`),
+        title: t('welcome_to_board', { board: title || `p/${shortAddress}` }),
         pinned: true,
         locked: true,
       });
@@ -44,13 +45,13 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         timestamp: createdAt,
         author: { displayName: '## Board Mods' },
         content: rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
-        title: 'Rules',
+        title: _.capitalize(t('rules')),
         pinned: true,
         locked: true,
       });
     }
     return _feed;
-  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl]);
+  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t]);
 
   // Memoize rows calculation, ensuring it updates on changes to the modified feed or column count
   const rows = useMemo(() => {

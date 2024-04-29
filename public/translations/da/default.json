@@ -60,5 +60,6 @@
   "replies_omitted": "{{repliesCount}} svar udeladt. <1>Klik her</1> for at se dem.",
   "replies_and_links_omitted": "{{repliesCount}} svar og {{linksCount}} links udeladt. <1>Klik her</1> for at se dem.",
   "thread_closed_alert": "Tråden er lukket",
-  "reply_to_cid": "Svar til {{cid}}"
+  "reply_to_cid": "Svar til {{cid}}",
+  "submit": "Indsend"
 }
