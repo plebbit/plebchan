@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './board.module.css';
 import useFeedStateString from '../../hooks/use-feed-state-string';
+import useReplyModal from '../../hooks/use-reply-modal';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import Post from '../../components/post';
 import ReplyModal from '../../components/reply-modal';
@@ -22,6 +23,8 @@ const Board = () => {
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, state, suggested, title } = subplebbit || {};
+
+  const { showReplyModal, activeCid, openReplyModal, closeModal } = useReplyModal();
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
@@ -53,27 +56,6 @@ const Board = () => {
 
   const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress + sortType];
 
-  const [showReplyModal, setShowReplyModal] = useState(false);
-  const [activeCid, setActiveCid] = useState<string | null>(null);
-
-  const openReplyModal = (cid: string) => {
-    if (activeCid && activeCid !== cid) {
-      closeModal();
-      setActiveCid(cid);
-      setShowReplyModal(true);
-    } else if (!activeCid) {
-      setActiveCid(cid);
-      setShowReplyModal(true);
-    } else {
-      return;
-    }
-  };
-
-  const closeModal = () => {
-    setActiveCid(null);
-    setShowReplyModal(false);
-  };
-
   useEffect(() => {
     document.title = title ? title : shortAddress;
   }, [title, shortAddress]);
@@ -95,9 +77,9 @@ const Board = () => {
         data={feed}
         itemContent={(index, post) => {
           const { deleted, locked, removed } = post || {};
-          const isThreadLocked = deleted || locked || removed;
+          const isThreadClosed = deleted || locked || removed;
 
-          return <Post index={index} post={post} openReplyModal={isThreadLocked ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
+          return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
         }}
         useWindowScroll={true}
         components={{ Footer }}
