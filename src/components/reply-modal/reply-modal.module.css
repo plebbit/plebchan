@@ -58,3 +58,13 @@
   float: right;
   cursor: pointer;
 }
+
+@media (max-width: 640px) {
+  .container {
+    position: absolute;
+  }
+
+  .title {
+    cursor: default;
+  }
+}
