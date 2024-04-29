@@ -15,7 +15,6 @@ import CommentMedia from '../comment-media';
 import { canEmbed } from '../embed';
 import LoadingEllipsis from '../loading-ellipsis';
 import Markdown from '../markdown';
-import ReplyModal from '../reply-modal';
 import _ from 'lodash';
 import { getDisplayMediaInfoType } from '../../lib/utils/media-utils';
 
@@ -561,34 +560,12 @@ const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
   );
 };
 
-const Post = ({ post, showAllReplies = false }: PostProps) => {
+const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   const isMobile = useWindowWidth() < 640;
 
-  const [showReplyModal, setShowReplyModal] = useState(false);
-  const [activeCid, setActiveCid] = useState<string | null>(null);
-
-  const openReplyModal = (cid: string) => {
-    if (activeCid && activeCid !== cid) {
-      closeModal();
-      setActiveCid(cid);
-      setShowReplyModal(true);
-    } else if (!activeCid) {
-      setActiveCid(cid);
-      setShowReplyModal(true);
-    } else {
-      return;
-    }
-  };
-
-  const closeModal = () => {
-    setActiveCid(null);
-    setShowReplyModal(false);
-  };
-
   return (
     <div className={styles.thread}>
-      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} />}
       <div className={styles.postContainer}>
         {isMobile ? (
           <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openReplyModal={openReplyModal} />

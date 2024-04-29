@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
@@ -7,6 +7,7 @@ import styles from './board.module.css';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import Post from '../../components/post';
+import ReplyModal from '../../components/reply-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 
@@ -52,12 +53,34 @@ const Board = () => {
 
   const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress + sortType];
 
+  const [showReplyModal, setShowReplyModal] = useState(false);
+  const [activeCid, setActiveCid] = useState<string | null>(null);
+
+  const openReplyModal = (cid: string) => {
+    if (activeCid && activeCid !== cid) {
+      closeModal();
+      setActiveCid(cid);
+      setShowReplyModal(true);
+    } else if (!activeCid) {
+      setActiveCid(cid);
+      setShowReplyModal(true);
+    } else {
+      return;
+    }
+  };
+
+  const closeModal = () => {
+    setActiveCid(null);
+    setShowReplyModal(false);
+  };
+
   useEffect(() => {
     document.title = title ? title : shortAddress;
   }, [title, shortAddress]);
 
   return (
     <div className={styles.content}>
+      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} />}
       {feed.length > 0 && (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
@@ -70,7 +93,7 @@ const Board = () => {
         increaseViewportBy={{ bottom: 1200, top: 1200 }}
         totalCount={feed?.length || 0}
         data={feed}
-        itemContent={(index, post) => <Post index={index} post={post} />}
+        itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
         useWindowScroll={true}
         components={{ Footer }}
         endReached={loadMore}
