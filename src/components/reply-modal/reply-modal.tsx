@@ -61,7 +61,7 @@ const ReplyModal = ({ closeModal, parentCid }: ReplyModalProps) => {
       const centeredPosition = scrollY + viewportHeight / 2 - modalHeight / 2;
       nodeRef.current.style.top = `${centeredPosition}px`;
     }
-  }, []);
+  }, [isMobile]);
 
   const ReplyForm = React.memo(() => (
     <div className={styles.replyForm}>

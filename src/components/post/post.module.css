@@ -426,6 +426,10 @@
   font-weight: 700 !important;
 }
 
+.replyToPost {
+  cursor: pointer;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
     display: none;
