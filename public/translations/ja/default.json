@@ -48,5 +48,16 @@
   "name": "名前",
   "comment": "コメント",
   "subject": "件名",
-  "anonymous": "匿名"
+  "anonymous": "匿名",
+  "image": "画像",
+  "video": "ビデオ",
+  "audio": "音声",
+  "webpage": "ウェブページ",
+  "iframe": "アイフレーム",
+  "rules": "ルール",
+  "welcome_to_board": "{{board}}へようこそ",
+  "comment_too_long": "コメントが長すぎます。 <1>ここをクリック</1>して全文を表示。",
+  "replies_omitted": "{{repliesCount}}件の返信が省略されました。 <1>ここをクリック</1>して表示。",
+  "replies_and_links_omitted": "{{repliesCount}}件の返信と{{linksCount}}件のリンクが省略されました。 <1>ここをクリック</1>して表示。",
+  "thread_closed_alert": "このスレッドは閉じられています"
 }

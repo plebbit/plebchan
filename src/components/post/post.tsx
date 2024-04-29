@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Trans, useTranslation } from 'react-i18next';
+import { Role, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
@@ -11,10 +11,12 @@ import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
-import LoadingEllipsis from '../loading-ellipsis';
-import Markdown from '../markdown';
 import CommentMedia from '../comment-media';
 import { canEmbed } from '../embed';
+import LoadingEllipsis from '../loading-ellipsis';
+import Markdown from '../markdown';
+import _ from 'lodash';
+import { getDisplayMediaInfoType } from '../../lib/utils/media-utils';
 
 interface PostProps {
   index?: number;
@@ -22,9 +24,10 @@ interface PostProps {
   reply?: any;
   roles?: Role[];
   showAllReplies?: boolean;
+  openReplyModal?: (cid: string) => void;
 }
 
-const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
+const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -46,12 +49,16 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
-  const visibleLinkCount = useCountLinksInReplies(post, 5);
-  const totalLinkCount = useCountLinksInReplies(post);
+  const visiblelinksCount = useCountLinksInReplies(post, 5);
+  const totallinksCount = useCountLinksInReplies(post);
   const repliesCount = pinned ? replyCount : replyCount - 5;
-  const linkCount = pinned ? totalLinkCount : totalLinkCount - visibleLinkCount;
+  const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
 
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
+
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
 
   return (
     <div className={styles.postDesktop}>
@@ -70,7 +77,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
             <a href={url} target='_blank' rel='noopener noreferrer'>
               {url.length > 30 ? url.slice(0, 30) + '...' : url}
             </a>{' '}
-            ({type})
+            ({type && getDisplayMediaInfoType(type, t)})
             {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
               <span>
                 {' '}
@@ -112,10 +119,10 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
         {title && <span className={styles.subject}>{displayTitle} </span>}
         <span className={styles.nameBlock}>
           <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-            {displayName || 'Anonymous'}
+            {displayName || _.capitalize(t('anonymous'))}
             {authorRole && ` ## Board ${authorRole}`}{' '}
           </span>
-          {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress}) </span>}
+          {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>}
         </span>
         <span className={styles.dateTime}>
           {getFormattedDate(timestamp)}
@@ -124,13 +131,13 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
         <span className={styles.postNum}>
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
               {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
                 </span>
               )}
@@ -168,7 +175,7 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
           {content.length > 1000 && !isInPostPage && (
             <span className={styles.abbr}>
               <br />
-              Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+              <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
             </span>
           )}
         </blockquote>
@@ -178,24 +185,30 @@ const PostDesktop = ({ post, roles, showAllReplies }: PostProps) => {
           <span className={styles.expandButtonWrapper}>
             <span className={styles.expandButton} />
           </span>
-          <span>
-            {repliesCount} replies {linkCount > 0 && `and ${linkCount} links`} omitted.{' '}
-          </span>
-          <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view.
+          {linksCount > 0 ? (
+            <Trans
+              i18nKey={'replies_and_links_omitted'}
+              shouldUnescape={true}
+              components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
+              values={{ repliesCount, linksCount }}
+            />
+          ) : (
+            <Trans i18nKey={'replies_omitted'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} values={{ repliesCount }} />
+          )}
         </span>
       )}
       {!(pinned && !isInPostPage) &&
         replies &&
         (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-          <div key={reply.cid} className={styles.replyContainer}>
-            <ReplyDesktop index={index} reply={reply} roles={roles} />
+          <div key={index} className={styles.replyContainer}>
+            <ReplyDesktop index={index} reply={reply} roles={roles} openReplyModal={openReplyModal} />
           </div>
         ))}
     </div>
   );
 };
 
-const ReplyDesktop = ({ reply, roles }: PostProps) => {
+const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
@@ -216,6 +229,10 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
 
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
+
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
@@ -226,21 +243,21 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
           </span>
           <span className={styles.nameBlock}>
             <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
-              {displayName || 'Anonymous'}
+              {displayName || _.capitalize(t('anonymous'))}
               {authorRole && ` ## Board ${authorRole}`}{' '}
             </span>
-            <span className={styles.userAddress}>(u/{shortAddress}) </span>
+            <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>
           </span>
           <span className={styles.dateTime}>{getFormattedDate(timestamp)} </span>
           <span className={styles.postNum}>
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                 c/
               </Link>
               {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
                 </span>
               )}
@@ -268,7 +285,8 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               {t('link')}:{' '}
               <a href={link} target='_blank' rel='noopener noreferrer'>
                 {link.length > 30 ? link?.slice(0, 30) + '...' : link}
-              </a>
+              </a>{' '}
+              ({type && getDisplayMediaInfoType(type, t)})
               {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
                 <span>
                   {' '}
@@ -313,7 +331,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
               </>
             )}
             <Markdown content={content} />
-            {!cid && (
+            {!cid && state === 'pending' && (
               <>
                 <br />
                 {loadingString}
@@ -326,7 +344,7 @@ const ReplyDesktop = ({ reply, roles }: PostProps) => {
   );
 };
 
-const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
+const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -338,7 +356,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const location = useLocation();
   const isInPostPage = isPostPageView(location.pathname, params);
 
-  const linkCount = useCountLinksInReplies(post);
+  const linksCount = useCountLinksInReplies(post);
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
@@ -347,6 +365,10 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
+
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
 
   return (
     <div className={styles.postMobile}>
@@ -362,10 +384,10 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
               </span>
               <span className={styles.nameBlock}>
                 <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-                  {displayName || 'Anonymous'}
+                  {displayName || _.capitalize(t('anonymous'))}
                   {authorRole && ` ## Board ${authorRole}`}{' '}
                 </span>
-                {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || address?.slice(0, 12) + '...'})</span>}
+                {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
                 {pinned && (
                   <span className={styles.stickyIconWrapper}>
                     <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -393,7 +415,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                     {!cid ? (
                       <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
                     ) : (
-                      <span className={styles.replyToPost} title={t('reply_to_post')}>
+                      <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                         {shortCid}
                       </span>
                     )}
@@ -418,7 +440,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
                 {content.length > 1000 && !isInPostPage && (
                   <span className={styles.abbr}>
                     <br />
-                    Comment too long. <Link to={`/p/${subplebbitAddress}/c/${cid}`}>Click here</Link> to view the full text.
+                    <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
                   </span>
                 )}
               </blockquote>
@@ -428,7 +450,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
             <div className={styles.postLink}>
               <span className={styles.info}>
                 {replyCount > 0 && `${replyCount} Replies`}
-                {linkCount > 0 && ` / ${linkCount} Links`}
+                {linksCount > 0 && ` / ${linksCount} Links`}
               </span>
               <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} className='button'>
                 {t('view_thread')}
@@ -440,7 +462,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
           replies &&
           (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
-              <ReplyMobile index={index} reply={reply} roles={roles} />
+              <ReplyMobile index={index} reply={reply} roles={roles} openReplyModal={openReplyModal} />
             </div>
           ))}
       </div>
@@ -448,7 +470,7 @@ const PostMobile = ({ post, roles, showAllReplies }: PostProps) => {
   );
 };
 
-const ReplyMobile = ({ reply, roles }: PostProps) => {
+const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
   const { t } = useTranslation();
   const { author, content, cid, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
@@ -460,6 +482,15 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
 
   const isReplyingToReply = postCid !== parentCid;
 
+  // pending reply by account is not yet published
+  const account = useAccount();
+  const accountShortAddress = account?.author?.shortAddress;
+
+  const stateString = useStateString(reply);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
+
   return (
     <div className={styles.replyMobile}>
       <div className={styles.reply}>
@@ -468,10 +499,10 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
             <span className={styles.postMenuBtn}>...</span>
             <span className={styles.nameBlock}>
               <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
-                {displayName || 'Anonymous'}
+                {displayName || _.capitalize(t('anonymous'))}
                 {authorRole && ` ## Board ${authorRole}`}{' '}
               </span>
-              <span className={styles.address}>(u/{shortAddress})</span>
+              <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>
               {pinned && (
                 <span className={styles.stickyIconWrapper}>
                   <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -488,7 +519,7 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
               {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
                 </span>
               )}
@@ -515,6 +546,12 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
                 </>
               )}
               <Markdown content={content} />
+              {!cid && state === 'pending' && (
+                <>
+                  <br />
+                  {loadingString}
+                </>
+              )}
             </blockquote>
           )}
         </div>
@@ -523,16 +560,17 @@ const ReplyMobile = ({ reply, roles }: PostProps) => {
   );
 };
 
-const Post = ({ post, showAllReplies = false }: PostProps) => {
+const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   const isMobile = useWindowWidth() < 640;
+
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
         {isMobile ? (
-          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openReplyModal={openReplyModal} />
         ) : (
-          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} />
+          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openReplyModal={openReplyModal} />
         )}
       </div>
     </div>

@@ -48,5 +48,16 @@
   "name": "nama",
   "comment": "komentar",
   "subject": "subjek",
-  "anonymous": "anonim"
+  "anonymous": "anonim",
+  "image": "gambar",
+  "video": "video",
+  "audio": "audio",
+  "webpage": "halaman web",
+  "iframe": "iframe",
+  "rules": "aturan",
+  "welcome_to_board": "Selamat datang di {{board}}",
+  "comment_too_long": "Komentar terlalu panjang. <1>Klik di sini</1> untuk melihat teks lengkap.",
+  "replies_omitted": "{{repliesCount}} balasan dihilangkan. <1>Klik di sini</1> untuk melihat.",
+  "replies_and_links_omitted": "{{repliesCount}} balasan dan {{linksCount}} tautan dihilangkan. <1>Klik di sini</1> untuk melihat.",
+  "thread_closed_alert": "Thread ini ditutup"
 }

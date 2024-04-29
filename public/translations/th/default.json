@@ -48,5 +48,16 @@
   "name": "ชื่อ",
   "comment": "ความคิดเห็น",
   "subject": "หัวข้อ",
-  "anonymous": "นิรนาม"
+  "anonymous": "นิรนาม",
+  "image": "ภาพ",
+  "video": "วิดีโอ",
+  "audio": "เสียง",
+  "webpage": "หน้าเว็บ",
+  "iframe": "iframe",
+  "rules": "กฎ",
+  "welcome_to_board": "ยินดีต้อนรับสู่ {{board}}",
+  "comment_too_long": "ความคิดเห็นยาวเกินไป <1>คลิกที่นี่</1> เพื่อดูข้อความเต็ม.",
+  "replies_omitted": "ข้าม {{repliesCount}} คำตอบ <1>คลิกที่นี่</1> เพื่อดู.",
+  "replies_and_links_omitted": "ข้าม {{repliesCount}} คำตอบและ {{linksCount}} ลิงก์ <1>คลิกที่นี่</1> เพื่อดู.",
+  "thread_closed_alert": "กระทู้นี้ถูกปิด"
 }

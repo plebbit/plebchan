@@ -48,5 +48,16 @@
   "name": "పేరు",
   "comment": "వ్యాఖ్య",
   "subject": "విషయం",
-  "anonymous": "అనామధుడు"
+  "anonymous": "అనామధుడు",
+  "image": "చిత్రం",
+  "video": "వీడియో",
+  "audio": "ఆడియో",
+  "webpage": "వెబ్ పేజీ",
+  "iframe": "iframe",
+  "rules": "నియమాలు",
+  "welcome_to_board": "{{board}} కు స్వాగతం",
+  "comment_too_long": "వ్యాఖ్య చాలా పొడవుగా ఉంది. <1>పూర్తి టెక్స్ట్ చూడటానికి ఇక్కడ క్లిక్ చేయండి</1>.",
+  "replies_omitted": "{{repliesCount}} స్పందనలు వదిలివేయబడ్డాయి. <1>చూడటానికి ఇక్కడ క్లిక్ చేయండి</1>.",
+  "replies_and_links_omitted": "{{repliesCount}} స్పందనలు మరియు {{linksCount}} లింకులు వదిలివేయబడ్డాయి. <1>చూడటానికి ఇక్కడ క్లిక్ చేయండి</1>.",
+  "thread_closed_alert": "ఈ థ్రెడ్ మూసివేయబడింది"
 }

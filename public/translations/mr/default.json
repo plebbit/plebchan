@@ -48,5 +48,16 @@
   "name": "नाव",
   "comment": "टिप्पणी",
   "subject": "विषय",
-  "anonymous": "अनाम"
+  "anonymous": "अनाम",
+  "image": "चित्र",
+  "video": "व्हिडिओ",
+  "audio": "ऑडिओ",
+  "webpage": "वेबपेज",
+  "iframe": "आयफ्रेम",
+  "rules": "नियम",
+  "welcome_to_board": "{{board}} वर आपले स्वागत आहे",
+  "comment_too_long": "टिप्पणी खूप लांब आहे. <1>पूर्ण मजकूर पाहण्यासाठी येथे क्लिक करा</1>.",
+  "replies_omitted": "{{repliesCount}} प्रतिसाद वगळले गेले आहेत. <1>पाहण्यासाठी येथे क्लिक करा</1>.",
+  "replies_and_links_omitted": "{{repliesCount}} प्रतिसाद आणि {{linksCount}} दुवे वगळले गेले आहेत. <1>पाहण्यासाठी येथे क्लिक करा</1>.",
+  "thread_closed_alert": "हा थ्रेड बंद आहे"
 }

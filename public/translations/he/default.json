@@ -48,5 +48,16 @@
   "name": "שם",
   "comment": "תגובה",
   "subject": "נושא",
-  "anonymous": "אנונימי"
+  "anonymous": "אנונימי",
+  "image": "תמונה",
+  "video": "וידאו",
+  "audio": "שמע",
+  "webpage": "דף אינטרנט",
+  "iframe": "מסגרת",
+  "rules": "חוקים",
+  "welcome_to_board": "ברוך הבא ל{{board}}",
+  "comment_too_long": "התגובה ארוכה מדי. <1>לחץ כאן</1> כדי לראות את הטקסט המלא.",
+  "replies_omitted": "{{repliesCount}} תגובות נשמטו. <1>לחץ כאן</1> לצפייה.",
+  "replies_and_links_omitted": "{{repliesCount}} תגובות ו{{linksCount}} קישורים נשמטו. <1>לחץ כאן</1> לצפייה.",
+  "thread_closed_alert": "האשכול סגור"
 }

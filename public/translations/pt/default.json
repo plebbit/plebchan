@@ -48,5 +48,16 @@
   "name": "nome",
   "comment": "comentário",
   "subject": "assunto",
-  "anonymous": "anônimo"
+  "anonymous": "anônimo",
+  "image": "imagem",
+  "video": "vídeo",
+  "audio": "áudio",
+  "webpage": "página da web",
+  "iframe": "iframe",
+  "rules": "regras",
+  "welcome_to_board": "Bem-vindo ao {{board}}",
+  "comment_too_long": "Comentário muito longo. <1>Clique aqui</1> para ver o texto completo.",
+  "replies_omitted": "{{repliesCount}} respostas omitidas. <1>Clique aqui</1> para visualizar.",
+  "replies_and_links_omitted": "{{repliesCount}} respostas e {{linksCount}} links omitidos. <1>Clique aqui</1> para visualizar.",
+  "thread_closed_alert": "O tópico está fechado"
 }

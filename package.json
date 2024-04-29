@@ -28,7 +28,7 @@
     "prettier": "3.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-draggable": "^4.4.6",
+    "react-draggable": "4.4.6",
     "react-i18next": "13.2.2",
     "react-markdown": "8.0.6",
     "react-router-dom": "6.16.0",
@@ -135,9 +135,6 @@
       "target": "AppImage",
       "category": "Network"
     }
-  },
-  "resolutions": {
-    "styled-components": "^5"
   },
   "lint-staged": {
     "{src,electron}/**/*.{js,ts,tsx}": [

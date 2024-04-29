@@ -1,4 +1,6 @@
 import Post from '../post';
+import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 
 interface RulesPostProps {
   subplebbitAddress: string | undefined;
@@ -7,6 +9,7 @@ interface RulesPostProps {
 }
 
 const SubplebbitRules = ({ subplebbitAddress, createdAt, rules }: RulesPostProps) => {
+  const { t } = useTranslation();
   const content = rules.map((rule, index) => `${index + 1}. ${rule}`).join('\n');
   const post = {
     isRules: true,
@@ -14,7 +17,7 @@ const SubplebbitRules = ({ subplebbitAddress, createdAt, rules }: RulesPostProps
     timestamp: createdAt,
     author: { displayName: '## Board Mods' },
     content,
-    title: 'Rules',
+    title: _.capitalize(t('rules')),
     pinned: true,
     locked: true,
   };
