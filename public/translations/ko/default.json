@@ -59,5 +59,6 @@
   "comment_too_long": "댓글이 너무 깁니다. <1>여기를 클릭하십시오</1> 전체 텍스트를 보려면.",
   "replies_omitted": "{{repliesCount}}개의 답글이 생략되었습니다. <1>여기를 클릭하십시오</1> 보려면.",
   "replies_and_links_omitted": "{{repliesCount}}개의 답글과 {{linksCount}}개의 링크가 생략되었습니다. <1>여기를 클릭하십시오</1> 보려면.",
-  "thread_closed_alert": "이 스레드는 닫혔습니다"
+  "thread_closed_alert": "이 스레드는 닫혔습니다",
+  "reply_to_cid": "{{cid}}에 답변"
 }

@@ -38,15 +38,19 @@
   background-image: var(--close-button-background-image);
 }
 
-.container input, .container textarea {
-  border: 1px solid #aaa;
-  font-family: Arial, Helvetica, sans-serif;
+.container input[type="text"], .container textarea {
+  border: var(--post-form-field-input-border, revert);
+  font-family: var(--post-form-field-font-family, revert);
   font-size: 10pt;
-  outline: medium none;
+  outline: var(--post-form-field-input-outline, revert);
   width: 298px;
   filter: var(--filter80);
   padding: 2px;
   margin-bottom: 1px;
+}
+
+.container input[type="text"]:focus, .container textarea:focus {
+  border: var(--post-form-field-input-focus-border, revert);
 }
 
 .content textarea {

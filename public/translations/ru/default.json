@@ -59,5 +59,6 @@
   "comment_too_long": "Комментарий слишком длинный. <1>Нажмите здесь</1>, чтобы прочитать полный текст.",
   "replies_omitted": "{{repliesCount}} ответов пропущено. <1>Нажмите здесь</1>, чтобы посмотреть.",
   "replies_and_links_omitted": "{{repliesCount}} ответов и {{linksCount}} ссылок пропущено. <1>Нажмите здесь</1>, чтобы посмотреть.",
-  "thread_closed_alert": "Тема закрыта"
+  "thread_closed_alert": "Тема закрыта",
+  "reply_to_cid": "Ответить на {{cid}}"
 }

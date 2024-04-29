@@ -59,5 +59,6 @@
   "comment_too_long": "评论太长。 <1>点击这里</1>查看完整文本。",
   "replies_omitted": "省略了{{repliesCount}}条回复。 <1>点击这里</1>查看。",
   "replies_and_links_omitted": "省略了{{repliesCount}}条回复和{{linksCount}}个链接。 <1>点击这里</1>查看。",
-  "thread_closed_alert": "该主题已关闭"
+  "thread_closed_alert": "该主题已关闭",
+  "reply_to_cid": "回复{{cid}}"
 }

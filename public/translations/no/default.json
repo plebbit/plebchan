@@ -59,5 +59,6 @@
   "comment_too_long": "Kommentaren er for lang. <1>Klikk her</1> for å se hele teksten.",
   "replies_omitted": "{{repliesCount}} svar utelatt. <1>Klikk her</1> for å se dem.",
   "replies_and_links_omitted": "{{repliesCount}} svar og {{linksCount}} lenker utelatt. <1>Klikk her</1> for å se dem.",
-  "thread_closed_alert": "Tråden er stengt"
+  "thread_closed_alert": "Tråden er stengt",
+  "reply_to_cid": "Svar til {{cid}}"
 }

@@ -59,5 +59,6 @@
   "comment_too_long": "コメントが長すぎます。 <1>ここをクリック</1>して全文を表示。",
   "replies_omitted": "{{repliesCount}}件の返信が省略されました。 <1>ここをクリック</1>して表示。",
   "replies_and_links_omitted": "{{repliesCount}}件の返信と{{linksCount}}件のリンクが省略されました。 <1>ここをクリック</1>して表示。",
-  "thread_closed_alert": "このスレッドは閉じられています"
+  "thread_closed_alert": "このスレッドは閉じられています",
+  "reply_to_cid": "{{cid}}に返信"
 }

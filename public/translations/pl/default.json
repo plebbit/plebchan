@@ -59,5 +59,6 @@
   "comment_too_long": "Komentarz jest za długi. <1>Kliknij tutaj</1>, aby zobaczyć pełny tekst.",
   "replies_omitted": "Pominięto {{repliesCount}} odpowiedzi. <1>Kliknij tutaj</1>, aby je zobaczyć.",
   "replies_and_links_omitted": "Pominięto {{repliesCount}} odpowiedzi i {{linksCount}} linków. <1>Kliknij tutaj</1>, aby je zobaczyć.",
-  "thread_closed_alert": "Wątek jest zamknięty"
+  "thread_closed_alert": "Wątek jest zamknięty",
+  "reply_to_cid": "Odpowiedz na {{cid}}"
 }
