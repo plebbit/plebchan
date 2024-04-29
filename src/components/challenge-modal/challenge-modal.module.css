@@ -78,3 +78,9 @@
   filter: var(--filter80);
   text-transform: capitalize;
 }
+
+@media (max-width: 640px) {
+  .title {
+    cursor: default;
+  }
+}
