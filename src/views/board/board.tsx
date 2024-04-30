@@ -24,7 +24,7 @@ const Board = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, state, suggested, title } = subplebbit || {};
 
-  const { showReplyModal, activeCid, openReplyModal, closeModal } = useReplyModal();
+  const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
@@ -62,7 +62,7 @@ const Board = () => {
 
   return (
     <div className={styles.content}>
-      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} />}
+      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
       {feed.length > 0 && (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
