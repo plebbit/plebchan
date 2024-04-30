@@ -17,7 +17,8 @@ const useReplyModal = () => {
   const openReplyModal = useCallback(
     (cid: string) => {
       if (isMobile) {
-        setScrollY(window.scrollY);
+        const currentScrollY = window.scrollY;
+        setScrollY(currentScrollY);
       }
       if (activeCid && activeCid !== cid) {
         closeModal();

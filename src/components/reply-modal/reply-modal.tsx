@@ -96,7 +96,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             ref={textRef}
             placeholder={_.capitalize(t('comment'))}
             onChange={(e) => setContent.content(e.target.value)}
-            autoFocus
+            autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
           />
         </div>
         <div className={styles.footer}>
