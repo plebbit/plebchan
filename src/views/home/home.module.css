@@ -25,6 +25,11 @@
   padding-bottom: 0.5em;
 }
 
+.boardsBox {
+  height: 343px;
+  overflow: hidden;
+}
+
 .boxBar, .infoboxBar {
   padding-left: 0.5em;
   line-height: 2em;
@@ -165,6 +170,63 @@
 
 .version a:hover {
   text-decoration: underline;
+}
+
+.popularThreads {
+  font-size: 93%;
+  padding: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0;
+  line-height: 130%;
+  text-align: center;
+}
+
+.popularThreads .loading {
+  text-align: left !important;
+}
+
+.popularThread {
+  vertical-align: top;
+  display: inline-block;
+  word-wrap: break-word;
+  overflow: hidden;
+  margin-top: 5px;
+  padding: 5px 0 3px;
+  position: relative;
+  width: 175px;
+  max-height: 320px;
+  margin-bottom: 10px;
+  color: #800;
+}
+
+.popularThread .title {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.popularThread .mediaContainer {
+  width: auto;
+  height: auto;
+  border: 1px solid #800;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  line-height: 0;
+}
+
+.popularThread .mediaContainer img {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.popularThread .threadContent {
+  margin-bottom: 5px;
+  padding: 0 2px;
+  white-space: pre-line;
 }
 
 @media (max-width: 640px) {

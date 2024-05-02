@@ -1,1 +1,1 @@
-export { default } from './catalog-row';
+export { default, CatalogPostMedia } from './catalog-row';

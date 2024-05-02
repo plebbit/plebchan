@@ -1,10 +1,13 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Subplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { Comment, Subplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import packageJson from '../../../package.json';
-import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { CatalogPostMedia } from '../../components/catalog-row';
+import LoadingEllipsis from '../../components/loading-ellipsis';
 
 const isValidAddress = (address: string): boolean => {
   if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
@@ -66,11 +69,11 @@ const InfoBox = () => {
   );
 };
 
-const Boards = ({ subplebbits }: { subplebbits: (Subplebbit | undefined)[] }) => {
+const Boards = ({ defaultSubplebbits }: { defaultSubplebbits: any }) => {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.box}>
+    <div className={`${styles.box} ${styles.boardsBox}`}>
       <div className={styles.boxBar}>
         <h2 className={styles.capitalize}>{t('boards')}</h2>
         <span>{t('options')} ▼</span>
@@ -79,7 +82,7 @@ const Boards = ({ subplebbits }: { subplebbits: (Subplebbit | undefined)[] }) =>
         <div className={styles.column}>
           <h3>Default SFW</h3>
           <div className={styles.list}>
-            {subplebbits
+            {defaultSubplebbits
               .filter((subplebbit: Subplebbit | undefined): subplebbit is Subplebbit => subplebbit !== undefined)
               .map((subplebbit: Subplebbit) => {
                 const address = subplebbit.address;
@@ -105,15 +108,94 @@ const Boards = ({ subplebbits }: { subplebbits: (Subplebbit | undefined)[] }) =>
   );
 };
 
-const PopularThreads = () => {
+interface PopularThreadProps {
+  post: Comment;
+  boardTitle: string | undefined;
+  boardShortAddress: string;
+}
+
+const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThreadProps) => {
+  const { cid, content, subplebbitAddress, title } = post || {};
+  const commentMediaInfo = getCommentMediaInfo(post);
+
+  return (
+    <div className={styles.popularThread} key={cid}>
+      <div className={styles.title}>{boardTitle || boardShortAddress}</div>
+      <div className={styles.mediaContainer}>
+        <Link to={`/p/${subplebbitAddress}/c/${cid}`}>
+          <CatalogPostMedia commentMediaInfo={commentMediaInfo} />
+        </Link>
+      </div>
+      <div className={styles.threadContent}>
+        {title && <b>{title}</b>}
+        {content && (content.length > 99 ? `: ${content.substring(0, 99)}...` : `: ${content}`)}
+      </div>
+    </div>
+  );
+};
+
+const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
   const { t } = useTranslation();
+  const [popularPosts, setPopularPosts] = useState([]);
+
+  useEffect(() => {
+    let subplebbitToPost: any = {};
+
+    subplebbits.forEach((subplebbit: any) => {
+      let mostRecentPost = null;
+
+      if (subplebbit?.posts?.pages?.hot?.comments) {
+        for (const comment of Object.values(subplebbit.posts.pages.hot.comments) as Comment[]) {
+          const { deleted, locked, pinned, removed, replyCount, timestamp } = comment;
+
+          const commentMediaInfo = getCommentMediaInfo(comment);
+          const isMediaShowed = getHasThumbnail(commentMediaInfo, comment.link);
+
+          if (
+            isMediaShowed &&
+            replyCount >= 2 &&
+            !removed &&
+            !deleted &&
+            !locked &&
+            !pinned && // criteria
+            timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 // 30 days
+          ) {
+            if (!mostRecentPost || comment.timestamp > mostRecentPost.timestamp) {
+              mostRecentPost = comment;
+            }
+          }
+
+          if (mostRecentPost) {
+            subplebbitToPost[subplebbit.address] = mostRecentPost;
+          }
+        }
+      }
+    });
+
+    const newPopularPosts: any = Object.values(subplebbitToPost)
+      .sort((a: any, b: any) => b.timestamp - a.timestamp)
+      .slice(0, 8);
+
+    setPopularPosts(newPopularPosts);
+  }, [subplebbits]);
+
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className={styles.capitalize}>{t('popular_threads')}</h2>
         <span>{t('options')} ▼</span>
       </div>
-      <div className={styles.boxContent}></div>
+      <div className={`${styles.boxContent} ${popularPosts.length === 8 ? styles.popularThreads : ''}`}>
+        {popularPosts.length < 8 ? (
+          <span className={styles.loading}>
+            <LoadingEllipsis string={t('loading')} />
+          </span>
+        ) : (
+          popularPosts.map((post: any) => (
+            <PopularThreadCard key={post.cid} post={post} boardTitle={post.subplebbitTitle || post.subplebbitAddress} boardShortAddress={post.subplebbitAddress} />
+          ))
+        )}
+      </div>
     </div>
   );
 };
@@ -219,6 +301,7 @@ const Footer = () => {
 };
 
 const Home = () => {
+  const defaultSubplebbits = useDefaultSubplebbits();
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
   const { subplebbits } = useSubplebbits({ subplebbitAddresses });
 
@@ -231,8 +314,8 @@ const Home = () => {
       </Link>
       <SearchBar />
       <InfoBox />
-      <Boards subplebbits={subplebbits} />
-      <PopularThreads />
+      <Boards defaultSubplebbits={defaultSubplebbits} />
+      <PopularThreads subplebbits={subplebbits} />
       <Stats />
       <Footer />
     </div>
