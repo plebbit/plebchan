@@ -136,47 +136,60 @@ const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThrea
 
 const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
   const { t } = useTranslation();
-  const [popularPosts, setPopularPosts] = useState([]);
+  const [popularPosts, setPopularPosts] = useState<any[]>([]);
 
   useEffect(() => {
-    let subplebbitToPost: any = {};
+    const subplebbitToPost: { [key: string]: any } = {};
+    const uniqueLinks: Set<string> = new Set();
 
     subplebbits.forEach((subplebbit: any) => {
+      let maxTimestamp = -Infinity;
       let mostRecentPost = null;
 
       if (subplebbit?.posts?.pages?.hot?.comments) {
-        for (const comment of Object.values(subplebbit.posts.pages.hot.comments) as Comment[]) {
-          const { deleted, locked, pinned, removed, replyCount, timestamp } = comment;
-
-          const commentMediaInfo = getCommentMediaInfo(comment);
-          const isMediaShowed = getHasThumbnail(commentMediaInfo, comment.link);
+        for (const post of Object.values(subplebbit.posts.pages.hot.comments as Comment)) {
+          const { deleted, link, locked, pinned, removed, replyCount, timestamp } = post;
+          const commentMediaInfo = getCommentMediaInfo(post);
+          const isMediaShowed = getHasThumbnail(commentMediaInfo, link);
 
           if (
             isMediaShowed &&
             replyCount >= 2 &&
-            !removed &&
             !deleted &&
+            !removed &&
             !locked &&
-            !pinned && // criteria
-            timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 // 30 days
+            !pinned &&
+            timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 &&
+            timestamp > maxTimestamp &&
+            !uniqueLinks.has(link)
           ) {
-            if (!mostRecentPost || comment.timestamp > mostRecentPost.timestamp) {
-              mostRecentPost = comment;
-            }
+            maxTimestamp = post.timestamp;
+            mostRecentPost = post;
+            uniqueLinks.add(link);
           }
+        }
 
-          if (mostRecentPost) {
-            subplebbitToPost[subplebbit.address] = mostRecentPost;
-          }
+        if (mostRecentPost) {
+          subplebbitToPost[subplebbit.address] = { post: mostRecentPost, timestamp: maxTimestamp };
         }
       }
     });
 
-    const newPopularPosts: any = Object.values(subplebbitToPost)
-      .sort((a: any, b: any) => b.timestamp - a.timestamp)
-      .slice(0, 8);
+    const sortedPosts = Object.values(subplebbitToPost)
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .map((item) => item.post);
 
-    setPopularPosts(newPopularPosts);
+    setPopularPosts((prevPosts) => {
+      const updatedPosts = [...prevPosts];
+      sortedPosts.forEach((post) => {
+        if (!updatedPosts.find((p) => p.cid === post.cid)) {
+          if (updatedPosts.length < 8) {
+            updatedPosts.push(post);
+          }
+        }
+      });
+      return updatedPosts;
+    });
   }, [subplebbits]);
 
   return (

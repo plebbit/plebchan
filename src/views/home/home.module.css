@@ -218,7 +218,7 @@
   line-height: 0;
 }
 
-.popularThread .mediaContainer img {
+.popularThread .mediaContainer img, .popularThread .mediaContainer video {
   max-width: 150px;
   max-height: 150px;
 }
