@@ -154,7 +154,7 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
 
           if (
             isMediaShowed &&
-            replyCount >= 2 &&
+            replyCount > 0 &&
             !deleted &&
             !removed &&
             !locked &&
@@ -213,14 +213,29 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
   );
 };
 
-const Stats = () => {
+const Stats = ({ subplebbitAddresses }: { subplebbitAddresses: string[] }) => {
   const { t } = useTranslation();
+  // const { totalPosts, currentUsers, boardsTracked } = useSubplebbitStats(subplebbitAddresses);
+
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className={styles.capitalize}>{t('stats')}</h2>
       </div>
-      <div className={styles.boxContent}></div>
+      <div className={`${styles.boxContent} ${styles.stats}`}>
+        {/* <div className={styles.statsInfo}>
+          <p>{t('stats_info')}</p>
+        </div> */}
+        <div className={styles.stat}>
+          <b>Total Posts:</b>{' '}
+        </div>
+        <div className={styles.stat}>
+          <b>Current Users:</b>{' '}
+        </div>
+        <div className={styles.stat}>
+          <b>Boards Tracked:</b>{' '}
+        </div>
+      </div>
     </div>
   );
 };
@@ -329,7 +344,7 @@ const Home = () => {
       <InfoBox />
       <Boards defaultSubplebbits={defaultSubplebbits} />
       <PopularThreads subplebbits={subplebbits} />
-      <Stats />
+      <Stats subplebbitAddresses={subplebbitAddresses} />
       <Footer />
     </div>
   );

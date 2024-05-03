@@ -229,6 +229,17 @@
   white-space: pre-line;
 }
 
+.stats {
+  margin-top: 5px;
+  text-align: center;
+  color: #800;
+}
+
+.stats .stat {
+  display: inline-block;
+  width: 33%;
+}
+
 @media (max-width: 640px) {
   .content {
     min-width: 0;
