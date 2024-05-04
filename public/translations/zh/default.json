@@ -62,5 +62,6 @@
   "thread_closed_alert": "该主题已关闭",
   "reply_to_cid": "回复{{cid}}",
   "submit": "提交",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "正在管理"
 }

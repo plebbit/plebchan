@@ -62,5 +62,6 @@
   "thread_closed_alert": "Chủ đề này đã đóng",
   "reply_to_cid": "Trả lời {{cid}}",
   "submit": "Gửi",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "đang điều hành"
 }

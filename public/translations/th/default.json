@@ -62,5 +62,6 @@
   "thread_closed_alert": "กระทู้นี้ถูกปิด",
   "reply_to_cid": "ตอบกลับ {{cid}}",
   "submit": "ส่ง",
-  "gif": "จีไอเอฟ"
+  "gif": "จีไอเอฟ",
+  "moderating": "กำลังดูแล"
 }

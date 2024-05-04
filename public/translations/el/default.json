@@ -62,5 +62,6 @@
   "thread_closed_alert": "Το νήμα έχει κλείσει",
   "reply_to_cid": "Απάντηση σε {{cid}}",
   "submit": "Υποβολή",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "διαχειρίζεστε"
 }

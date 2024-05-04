@@ -62,5 +62,6 @@
   "thread_closed_alert": "Bu konu kapatılmıştır",
   "reply_to_cid": "{{cid}}’ye yanıt ver",
   "submit": "Gönder",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "moderatörlük yapıyorsun"
 }

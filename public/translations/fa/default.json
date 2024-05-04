@@ -62,5 +62,6 @@
   "thread_closed_alert": "موضوع بسته شده است",
   "reply_to_cid": "پاسخ به {{cid}}",
   "submit": "ارسال",
-  "gif": "گیف"
+  "gif": "گیف",
+  "moderating": "مدیریت"
 }

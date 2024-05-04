@@ -62,5 +62,6 @@
   "thread_closed_alert": "האשכול סגור",
   "reply_to_cid": "תגובה ל{{cid}}",
   "submit": "שלח",
-  "gif": "גיף"
+  "gif": "גיף",
+  "moderating": "מנהל"
 }

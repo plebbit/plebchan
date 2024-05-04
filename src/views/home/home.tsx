@@ -139,7 +139,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
         </div>
         <div className={styles.column}>
           <div className={styles.list}>
-            <h3>Subscriptions</h3>
+            <h3>{t('subscriptions')}</h3>
             {subscriptions.length > 0
               ? subscriptions.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
@@ -149,7 +149,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
               : 'Not subscribed to any board.'}
           </div>
           <div className={styles.list}>
-            <h3>Moderating</h3>
+            <h3>{t('moderating')}</h3>
             {accountSubplebbitAddresses.length > 0
               ? accountSubplebbitAddresses.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>

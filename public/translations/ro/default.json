@@ -62,5 +62,6 @@
   "thread_closed_alert": "Acest fir de discuție este închis",
   "reply_to_cid": "Răspundeți la {{cid}}",
   "submit": "Trimite",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "moderează"
 }

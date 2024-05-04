@@ -62,5 +62,6 @@
   "thread_closed_alert": "Tråden er stengt",
   "reply_to_cid": "Svar til {{cid}}",
   "submit": "Send inn",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "modererer"
 }

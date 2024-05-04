@@ -62,5 +62,6 @@
   "thread_closed_alert": "हा थ्रेड बंद आहे",
   "reply_to_cid": "{{cid}} ला उत्तर द्या",
   "submit": "सबमिट करा",
-  "gif": "जीआईएफ"
+  "gif": "जीआईएफ",
+  "moderating": "मॉडरेट करीत आहे"
 }
