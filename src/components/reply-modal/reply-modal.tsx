@@ -13,9 +13,10 @@ import _ from 'lodash';
 interface ReplyModalProps {
   closeModal: () => void;
   parentCid: string;
+  scrollY: number;
 }
 
-const ReplyModal = ({ closeModal, parentCid }: ReplyModalProps) => {
+const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
   const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
@@ -56,12 +57,11 @@ const ReplyModal = ({ closeModal, parentCid }: ReplyModalProps) => {
   useEffect(() => {
     if (nodeRef.current && isMobile) {
       const viewportHeight = window.innerHeight;
-      const scrollY = window.scrollY;
       const modalHeight = 150;
       const centeredPosition = scrollY + viewportHeight / 2 - modalHeight / 2;
       nodeRef.current.style.top = `${centeredPosition}px`;
     }
-  }, [isMobile]);
+  }, [isMobile, scrollY]);
 
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
@@ -96,7 +96,7 @@ const ReplyModal = ({ closeModal, parentCid }: ReplyModalProps) => {
             ref={textRef}
             placeholder={_.capitalize(t('comment'))}
             onChange={(e) => setContent.content(e.target.value)}
-            autoFocus
+            autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
           />
         </div>
         <div className={styles.footer}>

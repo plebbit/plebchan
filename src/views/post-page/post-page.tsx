@@ -22,7 +22,7 @@ const PostPage = () => {
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
-  const { showReplyModal, activeCid, openReplyModal, closeModal } = useReplyModal();
+  const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
   const post = useComment({ commentCid });
   const { deleted, locked, removed } = post || {};
@@ -34,7 +34,7 @@ const PostPage = () => {
 
   return (
     <div className={styles.content}>
-      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} />}
+      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
       {isInDescriptionView ? (
         <SubplebbitDescription
           avatarUrl={suggested?.avatarUrl}

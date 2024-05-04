@@ -6,15 +6,15 @@ const useRepliesAndAccountReplies = (comment: Comment) => {
   // flatten all replies including nested ones from the original comment
   const flattenedReplies = useMemo(() => flattenCommentsPages(comment.replies), [comment.replies]);
 
-  // gemerate a Set of CIDs from flattened replies for quick lookup
+  // generate a Set of CIDs from flattened replies for quick lookup
   const replyCids = useMemo(() => new Set(flattenedReplies.map((reply) => reply.cid)), [flattenedReplies]);
 
-  // filter against all CIDs in flattened replies
+  // filter against the original comment's CID and all CIDs in flattened replies
   const filter = useCallback(
     (accountComment: Comment) => {
-      return replyCids.has(accountComment.parentCid);
+      return accountComment.parentCid === comment.cid || replyCids.has(accountComment.parentCid);
     },
-    [replyCids],
+    [comment.cid, replyCids],
   );
 
   const { accountComments } = useAccountComments({ filter });

@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "省略了{{repliesCount}}条回复和{{linksCount}}个链接。 <1>点击这里</1>查看。",
   "thread_closed_alert": "该主题已关闭",
   "reply_to_cid": "回复{{cid}}",
-  "submit": "提交"
+  "submit": "提交",
+  "gif": "GIF"
 }

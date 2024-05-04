@@ -15,6 +15,8 @@ export const getDisplayMediaInfoType = (type: string, t: any) => {
   switch (type) {
     case 'image':
       return t('image');
+    case 'gif':
+      return t('gif');
     case 'iframe':
       return t('iframe');
     case 'video':

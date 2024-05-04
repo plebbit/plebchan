@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 
-interface Subplebbit {
+export interface MultisubSubplebbit {
   title?: string;
   address: string;
   tags?: string[];
   features?: string[];
 }
 
-let cache: Subplebbit[] | null = null;
+let cache: MultisubSubplebbit[] | null = null;
 
 const useDefaultSubplebbits = () => {
-  const [subplebbits, setSubplebbits] = useState<Subplebbit[]>([]);
+  const [subplebbits, setSubplebbits] = useState<MultisubSubplebbit[]>([]);
 
   useEffect(() => {
     if (cache) {
@@ -35,7 +35,7 @@ const useDefaultSubplebbits = () => {
 
 export const useDefaultSubplebbitAddresses = () => {
   const defaultSubplebbits = useDefaultSubplebbits();
-  return useMemo(() => defaultSubplebbits.map((subplebbit: Subplebbit) => subplebbit.address), [defaultSubplebbits]);
+  return useMemo(() => defaultSubplebbits.map((subplebbit: MultisubSubplebbit) => subplebbit.address), [defaultSubplebbits]);
 };
 
 export default useDefaultSubplebbits;

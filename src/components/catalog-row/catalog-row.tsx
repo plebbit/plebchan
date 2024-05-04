@@ -7,7 +7,7 @@ import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import styles from './catalog-row.module.css';
 
-const CatalogPostMedia = ({ commentMediaInfo, link }: { commentMediaInfo: any; link: string }) => {
+export const CatalogPostMedia = ({ commentMediaInfo }: { commentMediaInfo: any }) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
   const iframeThumbnail = patternThumbnailUrl || thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
@@ -91,7 +91,7 @@ const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
           <div className={styles.mediaPaddingWrapper}>
             {threadIcons}
             <div className={styles.mediaWrapper} style={thumbnailDimensions}>
-              <CatalogPostMedia commentMediaInfo={commentMediaInfo} link={link} />
+              <CatalogPostMedia commentMediaInfo={commentMediaInfo} />
             </div>
           </div>
         </Link>

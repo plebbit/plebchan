@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} yanıt ve {{linksCount}} bağlantı göz ardı edildi. <1>Buraya tıklayın</1> görüntülemek için.",
   "thread_closed_alert": "Bu konu kapatılmıştır",
   "reply_to_cid": "{{cid}}’ye yanıt ver",
-  "submit": "Gönder"
+  "submit": "Gönder",
+  "gif": "GIF"
 }

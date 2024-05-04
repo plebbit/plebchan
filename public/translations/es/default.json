@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} respuestas y {{linksCount}} enlaces omitidos. <1>Haz clic aquí</1> para verlos.",
   "thread_closed_alert": "El hilo está cerrado",
   "reply_to_cid": "Responder a {{cid}}",
-  "submit": "Enviar"
+  "submit": "Enviar",
+  "gif": "GIF"
 }

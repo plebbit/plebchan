@@ -22,7 +22,7 @@
   --body-background-pattern-image: url("/public/assets/background-fade.png");
   --body-font-color: maroon;
   --body-font-family: arial, helvetica, sans-serif;
-  --body-font-size: 10pt;
+  --body-font-size: 13px;
 
   /* catalog post */
   --catalog-post-menu-btn-color: navy;
@@ -175,7 +175,7 @@
   --body-background-pattern-image: url("/public/assets/background-fade-blue.png");
   --body-font-color: #000;
   --body-font-family: arial, helvetica, sans-serif;
-  --body-font-size: 10pt;
+  --body-font-size: 13px;
 
   /* catalog post */
   --catalog-post-menu-btn-color: navy;
@@ -306,7 +306,7 @@
   --body-background-pattern-image: none;
   --body-font-color: maroon;
   --body-font-family: times new roman, serif;
-  --body-font-size: 12pt;
+  --body-font-size: 16px;
 
   /* board nav */
   --boardnav-font-size: 11pt;
@@ -448,7 +448,7 @@
   --body-background-pattern-image: none;
   --body-font-color: #000;
   --body-font-family: times new roman, serif;
-  --body-font-size: 12pt;
+  --body-font-size: 16px;
 
   /* challenge modal */
   --challenge-modal-background-color: #d6daf0;
@@ -564,7 +564,7 @@
   --body-background-pattern-image: none;
   --body-font-color: #c5c8c6;
   --body-font-family: arial, helvetica, sans-serif;
-  --body-font-size: 10pt;
+  --body-font-size: 13px;
 
   /* homepage */
   --homepage-infobox-text-color: #c5c8c6;
@@ -715,7 +715,7 @@
   --body-background-pattern-image: none;
   --body-font-color: #333;
   --body-font-family: arial, helvetica, sans-serif;
-  --body-font-size: 10pt;
+  --body-font-size: 13px;
 
   /* board nav */
   --boardnav-font-size: 9pt;

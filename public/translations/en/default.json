@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} replies and {{linksCount}} links omitted. <1>Click here</1> to view.",
   "thread_closed_alert": "This thread is closed",
   "reply_to_cid": "Reply to {{cid}}",
-  "submit": "Submit"
+  "submit": "Submit",
+  "gif": "GIF"
 }

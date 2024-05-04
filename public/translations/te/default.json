@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} స్పందనలు మరియు {{linksCount}} లింకులు వదిలివేయబడ్డాయి. <1>చూడటానికి ఇక్కడ క్లిక్ చేయండి</1>.",
   "thread_closed_alert": "ఈ థ్రెడ్ మూసివేయబడింది",
   "reply_to_cid": "{{cid}}కి స్పందించండి",
-  "submit": "సమర్పించు"
+  "submit": "సమర్పించు",
+  "gif": "జీఐఎఫ్"
 }
