@@ -77,7 +77,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
             <a href={url} target='_blank' rel='noopener noreferrer'>
               {url.length > 30 ? url.slice(0, 30) + '...' : url}
             </a>{' '}
-            ({type && getDisplayMediaInfoType(type, t)})
+            ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
             {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
               <span>
                 {' '}
@@ -286,7 +286,7 @@ const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
               <a href={link} target='_blank' rel='noopener noreferrer'>
                 {link.length > 30 ? link?.slice(0, 30) + '...' : link}
               </a>{' '}
-              ({type && getDisplayMediaInfoType(type, t)})
+              ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
               {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
                 <span>
                   {' '}
