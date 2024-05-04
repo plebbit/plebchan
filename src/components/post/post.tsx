@@ -31,6 +31,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
+  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const authorRole = roles?.[address]?.role;
 
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -119,7 +120,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
         {title && <span className={styles.subject}>{displayTitle} </span>}
         <span className={styles.nameBlock}>
           <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-            {displayName || _.capitalize(t('anonymous'))}
+            {shortDisplayName || _.capitalize(t('anonymous'))}
             {authorRole && ` ## Board ${authorRole}`}{' '}
           </span>
           {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>}
@@ -212,6 +213,7 @@ const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
+  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const authorRole = roles?.[address]?.role;
 
   const commentMediaInfo = getCommentMediaInfo(reply);
@@ -243,7 +245,7 @@ const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
           </span>
           <span className={styles.nameBlock}>
             <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
-              {displayName || _.capitalize(t('anonymous'))}
+              {shortDisplayName || _.capitalize(t('anonymous'))}
               {authorRole && ` ## Board ${authorRole}`}{' '}
             </span>
             <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>
@@ -348,6 +350,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
+  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const authorRole = roles?.[address]?.role;
 
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -384,7 +387,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
               </span>
               <span className={styles.nameBlock}>
                 <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-                  {displayName || _.capitalize(t('anonymous'))}
+                  {shortDisplayName || _.capitalize(t('anonymous'))}
                   {authorRole && ` ## Board ${authorRole}`}{' '}
                 </span>
                 {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
@@ -474,6 +477,7 @@ const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
   const { t } = useTranslation();
   const { author, content, cid, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
+  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const authorRole = roles?.[address]?.role;
 
   const commentMediaInfo = getCommentMediaInfo(reply);
@@ -499,7 +503,7 @@ const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
             <span className={styles.postMenuBtn}>...</span>
             <span className={styles.nameBlock}>
               <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
-                {displayName || _.capitalize(t('anonymous'))}
+                {shortDisplayName || _.capitalize(t('anonymous'))}
                 {authorRole && ` ## Board ${authorRole}`}{' '}
               </span>
               <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>
