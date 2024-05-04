@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} відповідей та {{linksCount}} посилань пропущено. <1>Натисніть тут</1>, щоб переглянути.",
   "thread_closed_alert": "Тему закрито",
   "reply_to_cid": "Відповісти на {{cid}}",
-  "submit": "Надіслати"
+  "submit": "Надіслати",
+  "gif": "ГІФ"
 }

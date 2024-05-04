@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} پاسخ و {{linksCount}} لینک حذف شده است. <1>اینجا کلیک کنید</1> تا آنها را مشاهده کنید.",
   "thread_closed_alert": "موضوع بسته شده است",
   "reply_to_cid": "پاسخ به {{cid}}",
-  "submit": "ارسال"
+  "submit": "ارسال",
+  "gif": "گیف"
 }

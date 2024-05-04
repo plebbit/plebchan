@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} balasan dan {{linksCount}} tautan dihilangkan. <1>Klik di sini</1> untuk melihat.",
   "thread_closed_alert": "Thread ini ditutup",
   "reply_to_cid": "Balas ke {{cid}}",
-  "submit": "Kirim"
+  "submit": "Kirim",
+  "gif": "GIF"
 }

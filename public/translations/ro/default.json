@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} răspunsuri și {{linksCount}} linkuri omise. <1>Click aici</1> pentru a le vizualiza.",
   "thread_closed_alert": "Acest fir de discuție este închis",
   "reply_to_cid": "Răspundeți la {{cid}}",
-  "submit": "Trimite"
+  "submit": "Trimite",
+  "gif": "GIF"
 }

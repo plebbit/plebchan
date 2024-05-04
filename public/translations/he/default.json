@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} תגובות ו{{linksCount}} קישורים נשמטו. <1>לחץ כאן</1> לצפייה.",
   "thread_closed_alert": "האשכול סגור",
   "reply_to_cid": "תגובה ל{{cid}}",
-  "submit": "שלח"
+  "submit": "שלח",
+  "gif": "גיף"
 }

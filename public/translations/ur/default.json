@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} جوابات اور {{linksCount}} لنکس چھوڑ دیے گئے ہیں۔ <1>مکمل دیکھنے کے لیے یہاں کلک کریں</1>۔",
   "thread_closed_alert": "یہ دھاگہ بند ہے",
   "reply_to_cid": "{{cid}} کا جواب دیں",
-  "submit": "جمع کرائیں"
+  "submit": "جمع کرائیں",
+  "gif": "جی آئی ایف"
 }

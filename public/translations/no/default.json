@@ -61,5 +61,6 @@
   "replies_and_links_omitted": "{{repliesCount}} svar og {{linksCount}} lenker utelatt. <1>Klikk her</1> for å se dem.",
   "thread_closed_alert": "Tråden er stengt",
   "reply_to_cid": "Svar til {{cid}}",
-  "submit": "Send inn"
+  "submit": "Send inn",
+  "gif": "GIF"
 }
