@@ -26,7 +26,6 @@
 }
 
 .boardsBox {
-  height: 343px;
   overflow: hidden;
 }
 
@@ -149,6 +148,7 @@
   font-size: 100%;
   font-weight: 700;
   text-decoration: underline;
+  text-transform: capitalize;
   color: var(--homepage-box-bar-text-color);
 }
 

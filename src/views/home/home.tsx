@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Comment, Subplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -69,8 +69,20 @@ const InfoBox = () => {
   );
 };
 
-const Boards = ({ defaultSubplebbits }: { defaultSubplebbits: any }) => {
+const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
   const { t } = useTranslation();
+  const account = useAccount();
+  const subscriptions = account?.subscriptions || [];
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
+
+  const plebbitSubs = multisub.filter((sub) => sub.tags.includes('plebbit'));
+  const interestsSubs = multisub.filter(
+    (sub) => sub.tags.includes('topic') && !sub.tags.includes('plebbit') && !sub.tags.includes('country') && !sub.tags.includes('international'),
+  );
+  const randomSubs = multisub.filter((sub) => sub.tags.includes('random') && !sub.tags.includes('plebbit'));
+  const internationalSubs = multisub.filter((sub) => sub.tags.includes('international') || sub.tags.includes('country'));
+  const projectsSubs = multisub.filter((sub) => sub.tags.includes('project') && !sub.tags.includes('plebbit') && !sub.tags.includes('topic'));
 
   return (
     <div className={`${styles.box} ${styles.boardsBox}`}>
@@ -80,28 +92,72 @@ const Boards = ({ defaultSubplebbits }: { defaultSubplebbits: any }) => {
       </div>
       <div className={styles.boardsBoxContent}>
         <div className={styles.column}>
-          <h3>Default SFW</h3>
+          <h3>Plebbit</h3>
           <div className={styles.list}>
-            {defaultSubplebbits
-              .filter((subplebbit: Subplebbit | undefined): subplebbit is Subplebbit => subplebbit !== undefined)
-              .map((subplebbit: Subplebbit) => {
-                const address = subplebbit.address;
-                return (
-                  <div className={styles.subplebbit} key={address}>
-                    <Link to={`/p/${address}`}>{address}</Link>
-                  </div>
-                );
-              })}
+            {plebbitSubs.map((sub) => (
+              <div className={styles.subplebbit} key={sub.address}>
+                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+              </div>
+            ))}
+          </div>
+          <h3>Projects</h3>
+          <div className={styles.list}>
+            {projectsSubs.map((sub) => (
+              <div className={styles.subplebbit} key={sub.address}>
+                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+              </div>
+            ))}
           </div>
         </div>
         <div className={styles.column}>
-          <h3>Default NSFW</h3>
+          <h3>Interests</h3>
+          <div className={styles.list}>
+            {interestsSubs.map((sub) => (
+              <div className={styles.subplebbit} key={sub.address}>
+                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+              </div>
+            ))}
+          </div>
         </div>
         <div className={styles.column}>
-          <h3>Subscriptions</h3>
+          <h3>Random</h3>
+          <div className={styles.list}>
+            {randomSubs.map((sub) => (
+              <div className={styles.subplebbit} key={sub.address}>
+                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+              </div>
+            ))}
+          </div>
+          <h3>International</h3>
+          <div className={styles.list}>
+            {internationalSubs.map((sub) => (
+              <div className={styles.subplebbit} key={sub.address}>
+                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+              </div>
+            ))}
+          </div>
         </div>
         <div className={styles.column}>
-          <h3>Moderating</h3>
+          <div className={styles.list}>
+            <h3>Subscriptions</h3>
+            {subscriptions.length > 0
+              ? subscriptions.map((address: string, index: number) => (
+                  <div className={styles.subplebbit} key={index}>
+                    <Link to={`/p/${address}`}>p/{address}</Link>
+                  </div>
+                ))
+              : 'Not subscribed to any board.'}
+          </div>
+          <div className={styles.list}>
+            <h3>Moderating</h3>
+            {accountSubplebbitAddresses.length > 0
+              ? accountSubplebbitAddresses.map((address: string, index: number) => (
+                  <div className={styles.subplebbit} key={index}>
+                    <Link to={`/p/${address}`}>p/{address}</Link>
+                  </div>
+                ))
+              : 'Not moderating any board.'}
+          </div>
         </div>
       </div>
     </div>
@@ -213,7 +269,7 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
   );
 };
 
-const Stats = ({ subplebbitAddresses }: { subplebbitAddresses: string[] }) => {
+const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAddresses: string[] }) => {
   const { t } = useTranslation();
   // const { totalPosts, currentUsers, boardsTracked } = useSubplebbitStats(subplebbitAddresses);
 
@@ -227,13 +283,13 @@ const Stats = ({ subplebbitAddresses }: { subplebbitAddresses: string[] }) => {
           <p>{t('stats_info')}</p>
         </div> */}
         <div className={styles.stat}>
-          <b>Total Posts:</b>{' '}
+          <b>Total Posts:</b> x,xxx,xxx
         </div>
         <div className={styles.stat}>
-          <b>Current Users:</b>{' '}
+          <b>Current Users:</b> xxx,xxx
         </div>
         <div className={styles.stat}>
-          <b>Boards Tracked:</b>{' '}
+          <b>Boards Tracked:</b> {multisub.length}
         </div>
       </div>
     </div>
@@ -342,9 +398,9 @@ const Home = () => {
       </Link>
       <SearchBar />
       <InfoBox />
-      <Boards defaultSubplebbits={defaultSubplebbits} />
+      <Boards multisub={defaultSubplebbits} />
       <PopularThreads subplebbits={subplebbits} />
-      <Stats subplebbitAddresses={subplebbitAddresses} />
+      <Stats multisub={defaultSubplebbits} subplebbitAddresses={subplebbitAddresses} />
       <Footer />
     </div>
   );
