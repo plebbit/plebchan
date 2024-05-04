@@ -3,14 +3,14 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isCatalogView } from '../../lib/utils/view-utils';
 import styles from './board-nav.module.css';
-import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import useDefaultSubplebbits, { MultisubSubplebbit } from '../../hooks/use-default-subplebbits';
 
 interface BoardNavProps {
-  subplebbitAddresses: string[];
+  defaultSubplebbits: MultisubSubplebbit[];
   subplebbitAddress?: string;
 }
 
-const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
+const BoardNavDesktop = ({ defaultSubplebbits }: BoardNavProps) => {
   const { t } = useTranslation();
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
@@ -18,12 +18,14 @@ const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
         [
-        {subplebbitAddresses.map((address: string, index: number) => {
+        {defaultSubplebbits.map((subplebbit, index: number) => {
+          const { address, title } = subplebbit || {};
+          const displayAddress = address.includes('.') ? address : address.slice(0, 10).concat('...');
           return (
             <span key={index}>
               {index === 0 ? null : ' '}
-              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>{address.includes('.') ? address : address.slice(0, 10).concat('...')}</Link>
-              {index !== subplebbitAddresses.length - 1 ? ' /' : null}
+              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>{title || displayAddress}</Link>
+              {index !== defaultSubplebbits.length - 1 ? ' /' : null}
             </span>
           );
         })}
@@ -36,12 +38,13 @@ const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
   );
 };
 
-const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProps) => {
+const BoardNavMobile = ({ defaultSubplebbits, subplebbitAddress }: BoardNavProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const displaySubplebbitAddress = subplebbitAddress && subplebbitAddress.length > 30 ? subplebbitAddress.slice(0, 30).concat('...') : subplebbitAddress;
 
-  const currentSubplebbitIsInList = subplebbitAddresses.some((address: string) => address === subplebbitAddress);
+  const subplebbitAddresses = new Set(defaultSubplebbits.map((sub) => sub.address.toLowerCase()));
+  const currentSubplebbitIsInList = subplebbitAddress && subplebbitAddresses.has(subplebbitAddress.toLowerCase());
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
@@ -50,11 +53,12 @@ const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProp
       {!currentSubplebbitIsInList && subplebbitAddress && <option value={subplebbitAddress}>{displaySubplebbitAddress}</option>}
       <option value='all'>{t('all')}</option>
       <option value='subscriptions'>{t('subscriptions')}</option>
-      {subplebbitAddresses.map((address: any, index: number) => {
-        const subplebbitAddress = address?.includes('.') ? address : address?.slice(0, 10).concat('...');
+      {defaultSubplebbits.map((subplebbit, index) => {
+        const { address, title } = subplebbit || {};
+        const displayAddress = address.includes('.') ? address : address.slice(0, 10).concat('...');
         return (
           <option key={index} value={address}>
-            {subplebbitAddress}
+            {title || displayAddress}
           </option>
         );
       })}
@@ -122,7 +126,7 @@ if (!window.STICKY_MENU_SCROLL_LISTENER) {
 }
 
 const BoardNav = () => {
-  const subplebbitAddresses = useDefaultSubplebbitAddresses();
+  const defaultSubplebbits = useDefaultSubplebbits();
 
   const params = useParams();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
@@ -130,8 +134,8 @@ const BoardNav = () => {
 
   return (
     <>
-      <BoardNavDesktop subplebbitAddresses={subplebbitAddresses} />
-      <BoardNavMobile subplebbitAddresses={subplebbitAddresses} subplebbitAddress={subplebbitAddress} />
+      <BoardNavDesktop defaultSubplebbits={defaultSubplebbits} />
+      <BoardNavMobile defaultSubplebbits={defaultSubplebbits} subplebbitAddress={subplebbitAddress} />
     </>
   );
 };
