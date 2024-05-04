@@ -19,7 +19,7 @@ const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress
     author: { displayName: '## Board Mods' },
     content: description,
     link: avatarUrl,
-    title: t('welcome_to_board', { board: title || `p/${shortAddress}` }),
+    title: t('welcome_to_board', { board: title || `p/${shortAddress}`, interpolation: { escapeValue: false } }),
     pinned: true,
     locked: true,
   };
