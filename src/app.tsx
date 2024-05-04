@@ -39,13 +39,13 @@ const BoardLayout = () => {
 const App = () => {
   const location = useLocation();
   const isInHomeView = isHomeView(location.pathname);
-
-  // add theme className to body so it can set the correct body background in index.css
   const [theme] = useTheme();
+
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
-    document.body.classList.add(theme);
-  }, [theme]);
+    const classToAdd = isInHomeView ? 'yotsuba' : theme;
+    document.body.classList.add(classToAdd);
+  }, [theme, isInHomeView]);
 
   const globalLayout = (
     <>
@@ -55,7 +55,7 @@ const App = () => {
   );
 
   return (
-    <div className={`${styles.app} ${isInHomeView ? 'yotsuba' : theme}`}>
+    <div className={styles.app}>
       <Routes>
         <Route element={globalLayout}>
           <Route path='/' element={<Home />} />

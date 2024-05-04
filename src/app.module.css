@@ -1,13 +1,5 @@
 .app {
-  background: var(--body-background-base-color) var(--body-background-pattern-image) top center repeat-x;
-  font-size: var(--body-font-size);
-  font-family: var(--body-font-family);
-  color: var(--body-font-color);
   z-index: 1;
-  min-height: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  min-height: 100vh;
 }
 
 @media (min-width: 640px) {
