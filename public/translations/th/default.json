@@ -63,5 +63,14 @@
   "reply_to_cid": "ตอบกลับ {{cid}}",
   "submit": "ส่ง",
   "gif": "จีไอเอฟ",
-  "moderating": "กำลังดูแล"
+  "moderating": "กำลังดูแล",
+  "not_moderating": "ไม่ได้ดูแลกระดานข่าวใด ๆ",
+  "not_subscribed": "ไม่ได้สมัครสมาชิกกระดานข่าวใด ๆ",
+  "total_posts": "โพสต์ทั้งหมด:",
+  "current_users": "ผู้ใช้งานปัจจุบัน:",
+  "boards_tracked": "บอร์ดที่ติดตาม:",
+  "interests": "ความสนใจ",
+  "random": "สุ่ม",
+  "international": "นานาชาติ",
+  "projects": "โครงการ"
 }

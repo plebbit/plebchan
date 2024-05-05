@@ -63,5 +63,14 @@
   "reply_to_cid": "{{cid}}-এ উত্তর দিন",
   "submit": "জমা দিন",
   "gif": "জিআইএফ",
-  "moderating": "মডারেটিং"
+  "moderating": "মডারেটিং",
+  "not_moderating": "কোনো বোর্ডসমূহ মডারেট করছেন না",
+  "not_subscribed": "কোনো বোর্ডসমূহে সাবস্ক্রাইব করা হয়নি",
+  "total_posts": "মোট পোস্টসমূহ:",
+  "current_users": "বর্তমান ব্যবহারকারীরা:",
+  "boards_tracked": "ট্র্যাক করা বোর্ডসমূহ:",
+  "interests": "আগ্রহসমূহ",
+  "random": "এলোমেলো",
+  "international": "আন্তর্জাতিক",
+  "projects": "প্রকল্পসমূহ"
 }

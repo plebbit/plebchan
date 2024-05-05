@@ -63,5 +63,14 @@
   "reply_to_cid": "{{cid}}에 답변",
   "submit": "제출",
   "gif": "GIF",
-  "moderating": "중재 중"
+  "moderating": "중재 중",
+  "not_moderating": "어떤 게시판도 중재하고 있지 않습니다",
+  "not_subscribed": "어떤 게시판에도 구독하지 않았습니다",
+  "total_posts": "총 게시물:",
+  "current_users": "현재 사용자:",
+  "boards_tracked": "추적된 게시판:",
+  "interests": "관심사",
+  "random": "랜덤",
+  "international": "국제적인",
+  "projects": "프로젝트"
 }

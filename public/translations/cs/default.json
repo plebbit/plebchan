@@ -63,5 +63,14 @@
   "reply_to_cid": "Odpovědět na {{cid}}",
   "submit": "Odeslat",
   "gif": "GIF",
-  "moderating": "moderování"
+  "moderating": "moderování",
+  "not_moderating": "Nemoderujete žádné nástěnky",
+  "not_subscribed": "Nejste přihlášeni k odběru žádných nástěnek",
+  "total_posts": "Celkem příspěvků:",
+  "current_users": "současní uživatelé:",
+  "boards_tracked": "sledované nástěnky:",
+  "interests": "zájmy",
+  "random": "náhodný",
+  "international": "mezinárodní",
+  "projects": "projekty"
 }

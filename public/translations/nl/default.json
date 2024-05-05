@@ -63,5 +63,14 @@
   "reply_to_cid": "Reageren op {{cid}}",
   "submit": "Verzenden",
   "gif": "GIF",
-  "moderating": "modereren"
+  "moderating": "modereren",
+  "not_moderating": "Je modereert geen forums",
+  "not_subscribed": "Niet geabonneerd op forums",
+  "total_posts": "Totaal aantal berichten:",
+  "current_users": "huidige gebruikers:",
+  "boards_tracked": "gevolgde borden:",
+  "interests": "interesses",
+  "random": "willekeurig",
+  "international": "internationale",
+  "projects": "projecten"
 }

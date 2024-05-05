@@ -63,5 +63,14 @@
   "reply_to_cid": "תגובה ל{{cid}}",
   "submit": "שלח",
   "gif": "גיף",
-  "moderating": "מנהל"
+  "moderating": "מנהל",
+  "not_moderating": "אינך מנהל פורומים",
+  "not_subscribed": "לא רשום כמנוי לפורומים",
+  "total_posts": "סה\"כ פוסטים:",
+  "current_users": "משתמשים נוכחיים:",
+  "boards_tracked": "פורומים שנמצאים במעקב:",
+  "interests": "עניינים",
+  "random": "אקראי",
+  "international": "בינלאומיים",
+  "projects": "פרויקטים"
 }

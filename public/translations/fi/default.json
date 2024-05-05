@@ -63,5 +63,14 @@
   "reply_to_cid": "Vastaa {{cid}}",
   "submit": "Lähetä",
   "gif": "GIF",
-  "moderating": "moderoit"
+  "moderating": "moderoit",
+  "not_moderating": "Et moderoi mitään foorumeita",
+  "not_subscribed": "Et ole tilaajana missään foorumeissa",
+  "total_posts": "Viestejä yhteensä:",
+  "current_users": "nykyiset käyttäjät:",
+  "boards_tracked": "seuratut foorumit:",
+  "interests": "kiinnostuksen kohteet",
+  "random": "satunnainen",
+  "international": "kansainväliset",
+  "projects": "projektit"
 }

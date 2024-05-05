@@ -63,5 +63,14 @@
   "reply_to_cid": "Répondre à {{cid}}",
   "submit": "Soumettre",
   "gif": "GIF",
-  "moderating": "modération"
+  "moderating": "modération",
+  "not_moderating": "Vous ne modérez aucun forum",
+  "not_subscribed": "Non abonné à aucun forum",
+  "total_posts": "Total des publications:",
+  "current_users": "utilisateurs actuels:",
+  "boards_tracked": "forums suivis:",
+  "interests": "intérêts",
+  "random": "aléatoire",
+  "international": "internationaux",
+  "projects": "projets"
 }

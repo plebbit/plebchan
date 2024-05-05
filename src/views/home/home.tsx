@@ -76,7 +76,7 @@ const InfoBox = () => {
 const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit;
-  const nsfwTags = ['porn', 'gore', 'violence', 'vulgar'];
+  const nsfwTags = ['adult', 'gore'];
   const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
 
   return (
@@ -123,7 +123,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
-          <h3>Projects</h3>
+          <h3>{t('projects')}</h3>
           <div className={styles.list}>
             {projectsSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
@@ -131,7 +131,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
           </div>
         </div>
         <div className={styles.column}>
-          <h3>Interests</h3>
+          <h3>{t('interests')}</h3>
           <div className={styles.list}>
             {interestsSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
@@ -139,13 +139,13 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
           </div>
         </div>
         <div className={styles.column}>
-          <h3>Random</h3>
+          <h3>{t('random')}</h3>
           <div className={styles.list}>
             {randomSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
-          <h3>International</h3>
+          <h3>{t('international')}</h3>
           <div className={styles.list}>
             {internationalSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
@@ -161,7 +161,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
                     <Link to={`/p/${address}`}>p/{address}</Link>
                   </div>
                 ))
-              : 'Not subscribed to any board.'}
+              : t('not_subscribed')}
           </div>
           <div className={styles.list}>
             <h3>{t('moderating')}</h3>
@@ -171,7 +171,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
                     <Link to={`/p/${address}`}>p/{address}</Link>
                   </div>
                 ))
-              : 'Not moderating any board.'}
+              : t('not_moderating')}
           </div>
         </div>
       </div>
@@ -367,13 +367,13 @@ const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAdd
         {enoughStats ? (
           <>
             <div className={styles.stat}>
-              <b>Total Posts:</b> {totalPosts}
+              <b>{t('total_posts')}</b> {totalPosts}
             </div>
             <div className={styles.stat}>
-              <b>Current Users:</b> {currentUsers}
+              <b>{t('current_users')}</b> {currentUsers}
             </div>
             <div className={styles.stat}>
-              <b>Boards Tracked:</b> {boardsTracked}
+              <b>{t('boards_tracked')}</b> {boardsTracked}
             </div>
           </>
         ) : (

@@ -63,5 +63,14 @@
   "reply_to_cid": "{{cid}} ला उत्तर द्या",
   "submit": "सबमिट करा",
   "gif": "जीआईएफ",
-  "moderating": "मॉडरेट करीत आहे"
+  "moderating": "मॉडरेट करीत आहे",
+  "not_moderating": "कोणत्याही संदेश फलकाचे मॉडरेशन करीत नाही आहात",
+  "not_subscribed": "कोणत्याही संदेश फलकावर सदस्यता घेतलेली नाही",
+  "total_posts": "एकूण पोस्ट:",
+  "current_users": "सध्याचे वापरकर्ते:",
+  "boards_tracked": "ट्रॅक केलेले बोर्ड:",
+  "interests": "आवडी",
+  "random": "यादृच्छ",
+  "international": "आंतरराष्ट्रीय",
+  "projects": "प्रकल्प"
 }

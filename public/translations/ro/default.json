@@ -63,5 +63,14 @@
   "reply_to_cid": "Răspundeți la {{cid}}",
   "submit": "Trimite",
   "gif": "GIF",
-  "moderating": "moderează"
+  "moderating": "moderează",
+  "not_moderating": "Nu moderezi niciun forum",
+  "not_subscribed": "Nu sunteți abonat la niciun forum",
+  "total_posts": "Total postări:",
+  "current_users": "utilizatori actuali:",
+  "boards_tracked": "forumuri urmărite:",
+  "interests": "interese",
+  "random": "aleator",
+  "international": "internaționale",
+  "projects": "proiecte"
 }

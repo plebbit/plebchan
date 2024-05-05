@@ -63,5 +63,14 @@
   "reply_to_cid": "Reply to {{cid}}",
   "submit": "Submit",
   "gif": "GIF",
-  "moderating": "moderating"
+  "moderating": "moderating",
+  "not_moderating": "Not moderating any boards",
+  "not_subscribed": "Not subscribed to any boards",
+  "total_posts": "Total Posts:",
+  "current_users": "current users:",
+  "boards_tracked": "boards tracked:",
+  "interests": "interests",
+  "random": "random",
+  "international": "international",
+  "projects": "projects"
 }

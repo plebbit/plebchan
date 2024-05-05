@@ -63,5 +63,14 @@
   "reply_to_cid": "{{cid}} کا جواب دیں",
   "submit": "جمع کرائیں",
   "gif": "جی آئی ایف",
-  "moderating": "منتظم کر رہے ہیں"
+  "moderating": "منتظم کر رہے ہیں",
+  "not_moderating": "آپ کسی پیغام بورڈ کا انتظام نہیں کر رہے",
+  "not_subscribed": "آپ کسی پیغام بورڈ کی سبسکرپشن نہیں لے رہے",
+  "total_posts": "کل پوسٹس:",
+  "current_users": "موجودہ صارفین:",
+  "boards_tracked": "ٹریک کیے گئے بورڈز:",
+  "interests": "دلچسپیاں",
+  "random": "بے ترتیب",
+  "international": "بین الاقوامی",
+  "projects": "منصوبے"
 }

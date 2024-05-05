@@ -63,5 +63,14 @@
   "reply_to_cid": "Trả lời {{cid}}",
   "submit": "Gửi",
   "gif": "GIF",
-  "moderating": "đang điều hành"
+  "moderating": "đang điều hành",
+  "not_moderating": "Không điều hành diễn đàn nào",
+  "not_subscribed": "Không đăng ký bất kỳ diễn đàn nào",
+  "total_posts": "Tổng số bài viết:",
+  "current_users": "người dùng hiện tại:",
+  "boards_tracked": "bảng được theo dõi:",
+  "interests": "sở thích",
+  "random": "ngẫu nhiên",
+  "international": "quốc tế",
+  "projects": "dự án"
 }

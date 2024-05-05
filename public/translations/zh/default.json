@@ -63,5 +63,14 @@
   "reply_to_cid": "回复{{cid}}",
   "submit": "提交",
   "gif": "GIF",
-  "moderating": "正在管理"
+  "moderating": "正在管理",
+  "not_moderating": "你没有管理任何论坛",
+  "not_subscribed": "你没有订阅任何论坛",
+  "total_posts": "总帖数:",
+  "current_users": "当前用户:",
+  "boards_tracked": "跟踪的板块:",
+  "interests": "兴趣",
+  "random": "随机",
+  "international": "国际的",
+  "projects": "项目"
 }
