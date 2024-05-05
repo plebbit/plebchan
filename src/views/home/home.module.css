@@ -135,6 +135,18 @@
   font-size: smaller;
 }
 
+.offlineIcon {
+  background-image: url('/public/assets/icons/offline.png');
+  display: inline-block;
+  vertical-align: text-top;
+  margin-left: 2px;
+  width: 13px;
+  height: 13px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
 .boardsBoxContent {
   font-size: 93%;
   padding: 0.5em;

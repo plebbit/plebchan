@@ -73,7 +73,21 @@ const InfoBox = () => {
   );
 };
 
-const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
+const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
+  const { t } = useTranslation();
+  const { address, title, tags } = subplebbit;
+  const isSubNsfw = tags.includes('porn') || tags.includes('gore') || tags.includes('violence') || tags.includes('vulgar');
+
+  return (
+    <div className={styles.subplebbit} key={address}>
+      <Link to={`/p/${address}`}>{title || address}</Link>
+      {isSubNsfw && <span className={styles.nsfw}> ({t('nsfw')})</span>}
+      {isOffline && <span className={styles.offlineIcon} />}
+    </div>
+  );
+};
+
+const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits: any }) => {
   const { t } = useTranslation();
   const account = useAccount();
   const subscriptions = account?.subscriptions || [];
@@ -88,8 +102,10 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
   const internationalSubs = multisub.filter((sub) => sub.tags.includes('international') || sub.tags.includes('country'));
   const projectsSubs = multisub.filter((sub) => sub.tags.includes('project') && !sub.tags.includes('plebbit') && !sub.tags.includes('topic'));
 
-  const isSubNsfw = (sub: Subplebbit) => {
-    return sub.tags.includes('porn') || sub.tags.includes('gore') || sub.tags.includes('violence') || sub.tags.includes('vulgar');
+  const isSubOffline = (address: string) => {
+    const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
+    const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 30;
+    return isOffline;
   };
 
   return (
@@ -103,19 +119,13 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
           <h3>Plebbit</h3>
           <div className={styles.list}>
             {plebbitSubs.map((sub) => (
-              <div className={styles.subplebbit} key={sub.address}>
-                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
-                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
-              </div>
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
           <h3>Projects</h3>
           <div className={styles.list}>
             {projectsSubs.map((sub) => (
-              <div className={styles.subplebbit} key={sub.address}>
-                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
-                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
-              </div>
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
         </div>
@@ -123,10 +133,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
           <h3>Interests</h3>
           <div className={styles.list}>
             {interestsSubs.map((sub) => (
-              <div className={styles.subplebbit} key={sub.address}>
-                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
-                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
-              </div>
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
         </div>
@@ -134,19 +141,13 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
           <h3>Random</h3>
           <div className={styles.list}>
             {randomSubs.map((sub) => (
-              <div className={styles.subplebbit} key={sub.address}>
-                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
-                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
-              </div>
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
           <h3>International</h3>
           <div className={styles.list}>
             {internationalSubs.map((sub) => (
-              <div className={styles.subplebbit} key={sub.address}>
-                <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
-                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
-              </div>
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
         </div>
@@ -484,7 +485,7 @@ const Home = () => {
       </Link>
       <SearchBar />
       <InfoBox />
-      <Boards multisub={defaultSubplebbits} />
+      <Boards multisub={defaultSubplebbits} subplebbits={subplebbits} />
       <PopularThreads subplebbits={subplebbits} />
       <Stats multisub={defaultSubplebbits} subplebbitAddresses={subplebbitAddresses} />
       <Footer />
