@@ -24,7 +24,7 @@ const BoardLayout = () => {
   const key = `${subplebbitAddress}-${location.pathname}`;
 
   return (
-    <>
+    <div className={styles.boardLayout}>
       <BoardNav />
       <BoardBanner />
       <MobileBoardButtons />
@@ -32,7 +32,7 @@ const BoardLayout = () => {
       <SubplebbitStats />
       <DesktopBoardButtons />
       <Outlet />
-    </>
+    </div>
   );
 };
 

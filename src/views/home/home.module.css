@@ -26,7 +26,6 @@
 }
 
 .boardsBox {
-  height: 343px;
   overflow: hidden;
 }
 
@@ -129,6 +128,25 @@
   text-decoration: var(--homepage-box-link-text-decoration-hover);
 }
 
+.nsfw {
+  color: red;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: smaller;
+}
+
+.offlineIcon {
+  background-image: url('/public/assets/icons/offline.png');
+  display: inline-block;
+  vertical-align: text-top;
+  margin-left: 2px;
+  width: 13px;
+  height: 13px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
 .boardsBoxContent {
   font-size: 93%;
   padding: 0.5em;
@@ -149,6 +167,7 @@
   font-size: 100%;
   font-weight: 700;
   text-decoration: underline;
+  text-transform: capitalize;
   color: var(--homepage-box-bar-text-color);
 }
 
@@ -179,10 +198,6 @@
   padding-bottom: 0;
   line-height: 130%;
   text-align: center;
-}
-
-.popularThreads .loading {
-  text-align: left !important;
 }
 
 .popularThread {

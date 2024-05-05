@@ -62,5 +62,6 @@
   "thread_closed_alert": "الموضوع مغلق",
   "reply_to_cid": "الرد على {{cid}}",
   "submit": "إرسال",
-  "gif": "جي آي إف"
+  "gif": "جي آي إف",
+  "moderating": "تدير"
 }

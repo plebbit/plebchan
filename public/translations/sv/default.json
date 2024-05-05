@@ -62,5 +62,6 @@
   "thread_closed_alert": "Tråden är stängd",
   "reply_to_cid": "Svara på {{cid}}",
   "submit": "Skicka in",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "modererar"
 }

@@ -62,5 +62,6 @@
   "thread_closed_alert": "Temë është mbyllur",
   "reply_to_cid": "Përgjigju në {{cid}}",
   "submit": "Dorëzo",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "moderimi"
 }

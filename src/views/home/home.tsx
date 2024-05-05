@@ -2,12 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Comment, Subplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
+
+// for temporary hook to fetch subplebbit stats
+import { useMemo } from 'react';
+import { create } from 'zustand';
 
 const isValidAddress = (address: string): boolean => {
   if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
@@ -69,8 +73,40 @@ const InfoBox = () => {
   );
 };
 
-const Boards = ({ defaultSubplebbits }: { defaultSubplebbits: any }) => {
+const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
   const { t } = useTranslation();
+  const { address, title, tags } = subplebbit;
+  const isSubNsfw = tags.includes('porn') || tags.includes('gore') || tags.includes('violence') || tags.includes('vulgar');
+
+  return (
+    <div className={styles.subplebbit} key={address}>
+      <Link to={`/p/${address}`}>{title || address}</Link>
+      {isSubNsfw && <span className={styles.nsfw}> ({t('nsfw')})</span>}
+      {isOffline && <span className={styles.offlineIcon} />}
+    </div>
+  );
+};
+
+const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits: any }) => {
+  const { t } = useTranslation();
+  const account = useAccount();
+  const subscriptions = account?.subscriptions || [];
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
+
+  const plebbitSubs = multisub.filter((sub) => sub.tags.includes('plebbit'));
+  const interestsSubs = multisub.filter(
+    (sub) => sub.tags.includes('topic') && !sub.tags.includes('plebbit') && !sub.tags.includes('country') && !sub.tags.includes('international'),
+  );
+  const randomSubs = multisub.filter((sub) => sub.tags.includes('random') && !sub.tags.includes('plebbit'));
+  const internationalSubs = multisub.filter((sub) => sub.tags.includes('international') || sub.tags.includes('country'));
+  const projectsSubs = multisub.filter((sub) => sub.tags.includes('project') && !sub.tags.includes('plebbit') && !sub.tags.includes('topic'));
+
+  const isSubOffline = (address: string) => {
+    const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
+    const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 30;
+    return isOffline;
+  };
 
   return (
     <div className={`${styles.box} ${styles.boardsBox}`}>
@@ -80,28 +116,62 @@ const Boards = ({ defaultSubplebbits }: { defaultSubplebbits: any }) => {
       </div>
       <div className={styles.boardsBoxContent}>
         <div className={styles.column}>
-          <h3>Default SFW</h3>
+          <h3>Plebbit</h3>
           <div className={styles.list}>
-            {defaultSubplebbits
-              .filter((subplebbit: Subplebbit | undefined): subplebbit is Subplebbit => subplebbit !== undefined)
-              .map((subplebbit: Subplebbit) => {
-                const address = subplebbit.address;
-                return (
-                  <div className={styles.subplebbit} key={address}>
-                    <Link to={`/p/${address}`}>{address}</Link>
-                  </div>
-                );
-              })}
+            {plebbitSubs.map((sub) => (
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+            ))}
+          </div>
+          <h3>Projects</h3>
+          <div className={styles.list}>
+            {projectsSubs.map((sub) => (
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+            ))}
           </div>
         </div>
         <div className={styles.column}>
-          <h3>Default NSFW</h3>
+          <h3>Interests</h3>
+          <div className={styles.list}>
+            {interestsSubs.map((sub) => (
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+            ))}
+          </div>
         </div>
         <div className={styles.column}>
-          <h3>Subscriptions</h3>
+          <h3>Random</h3>
+          <div className={styles.list}>
+            {randomSubs.map((sub) => (
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+            ))}
+          </div>
+          <h3>International</h3>
+          <div className={styles.list}>
+            {internationalSubs.map((sub) => (
+              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+            ))}
+          </div>
         </div>
         <div className={styles.column}>
-          <h3>Moderating</h3>
+          <div className={styles.list}>
+            <h3>{t('subscriptions')}</h3>
+            {subscriptions.length > 0
+              ? subscriptions.map((address: string, index: number) => (
+                  <div className={styles.subplebbit} key={index}>
+                    <Link to={`/p/${address}`}>p/{address}</Link>
+                  </div>
+                ))
+              : 'Not subscribed to any board.'}
+          </div>
+          <div className={styles.list}>
+            <h3>{t('moderating')}</h3>
+            {accountSubplebbitAddresses.length > 0
+              ? accountSubplebbitAddresses.map((address: string, index: number) => (
+                  <div className={styles.subplebbit} key={index}>
+                    <Link to={`/p/${address}`}>p/{address}</Link>
+                  </div>
+                ))
+              : 'Not moderating any board.'}
+          </div>
         </div>
       </div>
     </div>
@@ -200,9 +270,7 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
       </div>
       <div className={`${styles.boxContent} ${popularPosts.length === 8 ? styles.popularThreads : ''}`}>
         {popularPosts.length < 8 ? (
-          <span className={styles.loading}>
-            <LoadingEllipsis string={t('loading')} />
-          </span>
+          <LoadingEllipsis string={t('loading')} />
         ) : (
           popularPosts.map((post: any) => (
             <PopularThreadCard key={post.cid} post={post} boardTitle={post.subplebbitTitle || post.subplebbitAddress} boardShortAddress={post.subplebbitAddress} />
@@ -213,28 +281,103 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
   );
 };
 
-const Stats = ({ subplebbitAddresses }: { subplebbitAddresses: string[] }) => {
+// temporary hook to fetch subplebbit stats
+function useSubplebbitsStats(options: any) {
+  const { subplebbitAddresses, accountName } = options || {};
+  const account = useAccount({ accountName });
+  const { subplebbits } = useSubplebbits({ subplebbitAddresses });
+
+  const { setSubplebbitStats, subplebbitsStats } = useSubplebbitsStatsStore();
+
+  useEffect(() => {
+    if (!subplebbitAddresses || subplebbitAddresses.length === 0 || !account) {
+      return;
+    }
+
+    subplebbits.forEach((subplebbit) => {
+      if (subplebbit && subplebbit.statsCid && !subplebbitsStats[subplebbit.address]) {
+        account.plebbit
+          .fetchCid(subplebbit.statsCid)
+          .then((fetchedStats: any) => {
+            setSubplebbitStats(subplebbit.address, JSON.parse(fetchedStats));
+          })
+          .catch((error: any) => {
+            console.error('Fetching subplebbit stats failed', { subplebbitAddress: subplebbit.address, error });
+          });
+      }
+    });
+  }, [account, subplebbits, setSubplebbitStats, subplebbitsStats, subplebbitAddresses]);
+
+  return useMemo(() => {
+    return subplebbitAddresses.reduce((acc: any, address: any) => {
+      acc[address] = subplebbitsStats[address] || { loading: true };
+      return acc;
+    }, {});
+  }, [subplebbitsStats, subplebbitAddresses]);
+}
+
+export type SubplebbitsStatsState = {
+  subplebbitsStats: { [subplebbitAddress: string]: any };
+  setSubplebbitStats: Function;
+};
+
+const useSubplebbitsStatsStore = create<SubplebbitsStatsState>((set) => ({
+  subplebbitsStats: {},
+  setSubplebbitStats: (subplebbitAddress: string, subplebbitStats: any) =>
+    set((state) => ({
+      subplebbitsStats: { ...state.subplebbitsStats, [subplebbitAddress]: subplebbitStats },
+    })),
+}));
+
+const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAddresses: string[] }) => {
   const { t } = useTranslation();
-  // const { totalPosts, currentUsers, boardsTracked } = useSubplebbitStats(subplebbitAddresses);
+  const stats = useSubplebbitsStats({ subplebbitAddresses });
+
+  const allStatsLoaded = useMemo(() => {
+    return subplebbitAddresses.every((address) => stats[address]);
+  }, [stats, subplebbitAddresses]);
+
+  const { totalPosts, currentUsers } = useMemo(() => {
+    let totalPosts = 0;
+    let currentUsers = 0;
+
+    if (allStatsLoaded) {
+      Object.values(stats).forEach((stat: any) => {
+        totalPosts += stat.allPostCount || 0;
+        currentUsers += stat.weekActiveUserCount || 0;
+      });
+    }
+
+    return { totalPosts, currentUsers };
+  }, [stats, allStatsLoaded]);
+
+  const boardsTracked = Object.values(stats).filter((stat: any) => stat && !stat.loading).length;
+  const enoughStats = boardsTracked >= multisub.length / 2;
 
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className={styles.capitalize}>{t('stats')}</h2>
       </div>
-      <div className={`${styles.boxContent} ${styles.stats}`}>
+      <div className={`${styles.boxContent} ${enoughStats ? styles.stats : ''}`}>
         {/* <div className={styles.statsInfo}>
           <p>{t('stats_info')}</p>
         </div> */}
-        <div className={styles.stat}>
-          <b>Total Posts:</b>{' '}
-        </div>
-        <div className={styles.stat}>
-          <b>Current Users:</b>{' '}
-        </div>
-        <div className={styles.stat}>
-          <b>Boards Tracked:</b>{' '}
-        </div>
+        {enoughStats ? (
+          <>
+            <div className={styles.stat}>
+              <b>Total Posts:</b> {totalPosts}
+            </div>
+            <div className={styles.stat}>
+              <b>Current Users:</b> {currentUsers}
+            </div>
+            <div className={styles.stat}>
+              <b>Boards Tracked:</b> {boardsTracked}
+            </div>
+          </>
+        ) : (
+          <LoadingEllipsis string={t('loading')} />
+        )}
       </div>
     </div>
   );
@@ -342,9 +485,9 @@ const Home = () => {
       </Link>
       <SearchBar />
       <InfoBox />
-      <Boards defaultSubplebbits={defaultSubplebbits} />
+      <Boards multisub={defaultSubplebbits} subplebbits={subplebbits} />
       <PopularThreads subplebbits={subplebbits} />
-      <Stats subplebbitAddresses={subplebbitAddresses} />
+      <Stats multisub={defaultSubplebbits} subplebbitAddresses={subplebbitAddresses} />
       <Footer />
     </div>
   );

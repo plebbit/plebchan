@@ -62,5 +62,6 @@
   "thread_closed_alert": "Vlákno je uzavřeno",
   "reply_to_cid": "Odpovědět na {{cid}}",
   "submit": "Odeslat",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "moderování"
 }

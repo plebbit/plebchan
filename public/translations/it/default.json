@@ -62,5 +62,6 @@
   "thread_closed_alert": "Questo thread è chiuso",
   "reply_to_cid": "Rispondi a {{cid}}",
   "submit": "Invia",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "stai moderando"
 }

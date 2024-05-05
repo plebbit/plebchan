@@ -62,5 +62,6 @@
   "thread_closed_alert": "Sarado na ang thread",
   "reply_to_cid": "Tumugon sa {{cid}}",
   "submit": "Isumite",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "namamahala"
 }

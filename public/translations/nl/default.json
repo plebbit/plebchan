@@ -62,5 +62,6 @@
   "thread_closed_alert": "De thread is gesloten",
   "reply_to_cid": "Reageren op {{cid}}",
   "submit": "Verzenden",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "modereren"
 }

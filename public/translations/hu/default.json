@@ -62,5 +62,6 @@
   "thread_closed_alert": "A téma lezárva",
   "reply_to_cid": "Válasz erre: {{cid}}",
   "submit": "Beküldés",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "moderálás"
 }

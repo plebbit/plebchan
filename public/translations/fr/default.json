@@ -62,5 +62,6 @@
   "thread_closed_alert": "Le fil est fermé",
   "reply_to_cid": "Répondre à {{cid}}",
   "submit": "Soumettre",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "modération"
 }

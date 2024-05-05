@@ -62,5 +62,6 @@
   "thread_closed_alert": "Ketju on suljettu",
   "reply_to_cid": "Vastaa {{cid}}",
   "submit": "Lähetä",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "moderoit"
 }

@@ -62,5 +62,6 @@
   "thread_closed_alert": "このスレッドは閉じられています",
   "reply_to_cid": "{{cid}}に返信",
   "submit": "送信",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "モデレート中"
 }

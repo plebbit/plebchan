@@ -62,5 +62,6 @@
   "thread_closed_alert": "이 스레드는 닫혔습니다",
   "reply_to_cid": "{{cid}}에 답변",
   "submit": "제출",
-  "gif": "GIF"
+  "gif": "GIF",
+  "moderating": "중재 중"
 }

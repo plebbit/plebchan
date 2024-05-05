@@ -62,5 +62,6 @@
   "thread_closed_alert": "Тема закрыта",
   "reply_to_cid": "Ответить на {{cid}}",
   "submit": "Отправить",
-  "gif": "ГИФ"
+  "gif": "ГИФ",
+  "moderating": "модерируете"
 }
