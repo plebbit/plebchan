@@ -76,12 +76,13 @@ const InfoBox = () => {
 const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit;
-  const isSubNsfw = tags.includes('porn') || tags.includes('gore') || tags.includes('violence') || tags.includes('vulgar');
+  const nsfwTags = ['porn', 'gore', 'violence', 'vulgar'];
+  const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
 
   return (
     <div className={styles.subplebbit} key={address}>
       <Link to={`/p/${address}`}>{title || address}</Link>
-      {isSubNsfw && <span className={styles.nsfw}> ({t('nsfw')})</span>}
+      {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
       {isOffline && <span className={styles.offlineIcon} />}
     </div>
   );
@@ -104,7 +105,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
 
   const isSubOffline = (address: string) => {
     const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
-    const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 30;
+    const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
     return isOffline;
   };
 
