@@ -181,10 +181,6 @@
   text-align: center;
 }
 
-.popularThreads .loading {
-  text-align: left !important;
-}
-
 .popularThread {
   vertical-align: top;
   display: inline-block;

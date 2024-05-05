@@ -9,6 +9,10 @@ import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-util
 import { CatalogPostMedia } from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 
+// for temporary hook to fetch subplebbit stats
+import { useMemo } from 'react';
+import { create } from 'zustand';
+
 const isValidAddress = (address: string): boolean => {
   if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
     return false;
@@ -256,9 +260,7 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
       </div>
       <div className={`${styles.boxContent} ${popularPosts.length === 8 ? styles.popularThreads : ''}`}>
         {popularPosts.length < 8 ? (
-          <span className={styles.loading}>
-            <LoadingEllipsis string={t('loading')} />
-          </span>
+          <LoadingEllipsis string={t('loading')} />
         ) : (
           popularPosts.map((post: any) => (
             <PopularThreadCard key={post.cid} post={post} boardTitle={post.subplebbitTitle || post.subplebbitAddress} boardShortAddress={post.subplebbitAddress} />
@@ -269,28 +271,105 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
   );
 };
 
+// temporary hook to fetch subplebbit stats
+// Assuming useSubplebbitsStats and its Zustand store are defined as shown previously
+function useSubplebbitsStats(options: any) {
+  const { subplebbitAddresses, accountName } = options || {};
+  const account = useAccount({ accountName });
+  const { subplebbits } = useSubplebbits({ subplebbitAddresses });
+
+  const { setSubplebbitStats, subplebbitsStats } = useSubplebbitsStatsStore();
+
+  useEffect(() => {
+    if (!subplebbitAddresses || subplebbitAddresses.length === 0 || !account) {
+      return;
+    }
+
+    subplebbits.forEach((subplebbit) => {
+      if (subplebbit && subplebbit.statsCid && !subplebbitsStats[subplebbit.address]) {
+        // Only fetch stats if they haven't been fetched yet
+        account.plebbit
+          .fetchCid(subplebbit.statsCid)
+          .then((fetchedStats: any) => {
+            setSubplebbitStats(subplebbit.address, JSON.parse(fetchedStats));
+          })
+          .catch((error: any) => {
+            console.error('Fetching subplebbit stats failed', { subplebbitAddress: subplebbit.address, error });
+          });
+      }
+    });
+  }, [subplebbitAddresses?.toString(), account?.id, subplebbits]);
+
+  return useMemo(() => {
+    return subplebbitAddresses.reduce((acc: any, address: any) => {
+      acc[address] = subplebbitsStats[address] || { loading: true };
+      return acc;
+    }, {});
+  }, [subplebbitsStats, subplebbitAddresses?.toString()]);
+}
+
+export type SubplebbitsStatsState = {
+  subplebbitsStats: { [subplebbitAddress: string]: any };
+  setSubplebbitStats: Function;
+};
+
+const useSubplebbitsStatsStore = create<SubplebbitsStatsState>((set) => ({
+  subplebbitsStats: {},
+  setSubplebbitStats: (subplebbitAddress: string, subplebbitStats: any) =>
+    set((state) => ({
+      subplebbitsStats: { ...state.subplebbitsStats, [subplebbitAddress]: subplebbitStats },
+    })),
+}));
+
 const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAddresses: string[] }) => {
   const { t } = useTranslation();
-  // const { totalPosts, currentUsers, boardsTracked } = useSubplebbitStats(subplebbitAddresses);
+  const stats = useSubplebbitsStats({ subplebbitAddresses });
+
+  const allStatsLoaded = useMemo(() => {
+    return subplebbitAddresses.every((address) => stats[address]);
+  }, [stats, subplebbitAddresses]);
+
+  const { totalPosts, currentUsers } = useMemo(() => {
+    let totalPosts = 0;
+    let currentUsers = 0;
+
+    if (allStatsLoaded) {
+      Object.values(stats).forEach((stat: any) => {
+        totalPosts += stat.allPostCount || 0;
+        currentUsers += stat.weekActiveUserCount || 0;
+      });
+    }
+
+    return { totalPosts, currentUsers };
+  }, [stats, allStatsLoaded]);
+
+  const boardsTracked = Object.values(stats).filter((stat: any) => stat && !stat.loading).length;
+  const enoughStats = boardsTracked > multisub.length / 2;
 
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className={styles.capitalize}>{t('stats')}</h2>
       </div>
-      <div className={`${styles.boxContent} ${styles.stats}`}>
+      <div className={`${styles.boxContent} ${enoughStats ? styles.stats : ''}`}>
         {/* <div className={styles.statsInfo}>
           <p>{t('stats_info')}</p>
         </div> */}
-        <div className={styles.stat}>
-          <b>Total Posts:</b> x,xxx,xxx
-        </div>
-        <div className={styles.stat}>
-          <b>Current Users:</b> xxx,xxx
-        </div>
-        <div className={styles.stat}>
-          <b>Boards Tracked:</b> {multisub.length}
-        </div>
+        {enoughStats ? (
+          <>
+            <div className={styles.stat}>
+              <b>Total Posts:</b> {totalPosts}
+            </div>
+            <div className={styles.stat}>
+              <b>Current Users:</b> {currentUsers}
+            </div>
+            <div className={styles.stat}>
+              <b>Boards Tracked:</b> {boardsTracked}
+            </div>
+          </>
+        ) : (
+          <LoadingEllipsis string={t('loading')} />
+        )}
       </div>
     </div>
   );
