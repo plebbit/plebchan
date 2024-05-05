@@ -272,7 +272,6 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
 };
 
 // temporary hook to fetch subplebbit stats
-// Assuming useSubplebbitsStats and its Zustand store are defined as shown previously
 function useSubplebbitsStats(options: any) {
   const { subplebbitAddresses, accountName } = options || {};
   const account = useAccount({ accountName });
@@ -287,7 +286,6 @@ function useSubplebbitsStats(options: any) {
 
     subplebbits.forEach((subplebbit) => {
       if (subplebbit && subplebbit.statsCid && !subplebbitsStats[subplebbit.address]) {
-        // Only fetch stats if they haven't been fetched yet
         account.plebbit
           .fetchCid(subplebbit.statsCid)
           .then((fetchedStats: any) => {
@@ -298,14 +296,14 @@ function useSubplebbitsStats(options: any) {
           });
       }
     });
-  }, [subplebbitAddresses?.toString(), account?.id, subplebbits]);
+  }, [account, subplebbits, setSubplebbitStats, subplebbitsStats, subplebbitAddresses]);
 
   return useMemo(() => {
     return subplebbitAddresses.reduce((acc: any, address: any) => {
       acc[address] = subplebbitsStats[address] || { loading: true };
       return acc;
     }, {});
-  }, [subplebbitsStats, subplebbitAddresses?.toString()]);
+  }, [subplebbitsStats, subplebbitAddresses]);
 }
 
 export type SubplebbitsStatsState = {
@@ -344,7 +342,9 @@ const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAdd
   }, [stats, allStatsLoaded]);
 
   const boardsTracked = Object.values(stats).filter((stat: any) => stat && !stat.loading).length;
-  const enoughStats = boardsTracked > multisub.length / 2;
+  const enoughStats = boardsTracked >= multisub.length / 2;
+
+  console.log(stats);
 
   return (
     <div className={styles.box}>
