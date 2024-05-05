@@ -88,6 +88,10 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
   const internationalSubs = multisub.filter((sub) => sub.tags.includes('international') || sub.tags.includes('country'));
   const projectsSubs = multisub.filter((sub) => sub.tags.includes('project') && !sub.tags.includes('plebbit') && !sub.tags.includes('topic'));
 
+  const isSubNsfw = (sub: Subplebbit) => {
+    return sub.tags.includes('porn') || sub.tags.includes('gore') || sub.tags.includes('violence') || sub.tags.includes('vulgar');
+  };
+
   return (
     <div className={`${styles.box} ${styles.boardsBox}`}>
       <div className={styles.boxBar}>
@@ -101,6 +105,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
             {plebbitSubs.map((sub) => (
               <div className={styles.subplebbit} key={sub.address}>
                 <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
               </div>
             ))}
           </div>
@@ -109,6 +114,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
             {projectsSubs.map((sub) => (
               <div className={styles.subplebbit} key={sub.address}>
                 <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
               </div>
             ))}
           </div>
@@ -119,6 +125,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
             {interestsSubs.map((sub) => (
               <div className={styles.subplebbit} key={sub.address}>
                 <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
               </div>
             ))}
           </div>
@@ -129,6 +136,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
             {randomSubs.map((sub) => (
               <div className={styles.subplebbit} key={sub.address}>
                 <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
               </div>
             ))}
           </div>
@@ -137,6 +145,7 @@ const Boards = ({ multisub }: { multisub: Subplebbit[] }) => {
             {internationalSubs.map((sub) => (
               <div className={styles.subplebbit} key={sub.address}>
                 <Link to={`/p/${sub.address}`}>{sub.title || sub.address}</Link>
+                {isSubNsfw(sub) && <span className={styles.nsfw}> ({t('nsfw')})</span>}
               </div>
             ))}
           </div>
