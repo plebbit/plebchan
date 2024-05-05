@@ -344,8 +344,6 @@ const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAdd
   const boardsTracked = Object.values(stats).filter((stat: any) => stat && !stat.loading).length;
   const enoughStats = boardsTracked >= multisub.length / 2;
 
-  console.log(stats);
-
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>

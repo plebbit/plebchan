@@ -2,6 +2,11 @@
   z-index: 1;
 }
 
+.boardLayout {
+  overflow-y: hidden;
+  min-height: 100vh;
+}
+
 @media (min-width: 640px) {
   .app {
     padding: 5px;
