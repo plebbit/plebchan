@@ -61,6 +61,11 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
 
+  const stateString = useStateString(post);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
+
   return (
     <div className={styles.postDesktop}>
       <div className={styles.hrWrapper}>
@@ -180,6 +185,12 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
               <br />
               <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
             </span>
+          )}
+          {!cid && state === 'pending' && (
+            <>
+              <br />
+              {loadingString}
+            </>
           )}
         </blockquote>
       )}
@@ -375,6 +386,11 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
 
+  const stateString = useStateString(post);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
+
   return (
     <div className={styles.postMobile}>
       <div className={styles.hrWrapper}>
@@ -447,6 +463,12 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                     <br />
                     <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
                   </span>
+                )}
+                {!cid && state === 'pending' && (
+                  <>
+                    <br />
+                    {loadingString}
+                  </>
                 )}
               </blockquote>
             )}
