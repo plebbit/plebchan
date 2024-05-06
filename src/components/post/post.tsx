@@ -5,7 +5,7 @@ import { Role, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate } from '../../lib/utils/time-utils';
-import { isPostPageView } from '../../lib/utils/view-utils';
+import { isPendingPostView, isPostPageView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
@@ -39,6 +39,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const params = useParams();
   const location = useLocation();
   const isInPostPage = isPostPageView(location.pathname, params);
+  const isPendingPostPage = isPendingPostView(location.pathname, params);
 
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
@@ -212,6 +213,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
         </span>
       )}
       {!(pinned && !isInPostPage) &&
+        !isPendingPostPage &&
         !isDescription &&
         !isRules &&
         replies &&
@@ -373,6 +375,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
   const params = useParams();
   const location = useLocation();
   const isInPostPage = isPostPageView(location.pathname, params);
+  const isPendingPostPage = isPendingPostView(location.pathname, params);
 
   const linksCount = useCountLinksInReplies(post);
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
@@ -488,6 +491,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
           )}
         </div>
         {!(pinned && !isInPostPage) &&
+          !isPendingPostPage &&
           !isDescription &&
           !isRules &&
           replies &&
