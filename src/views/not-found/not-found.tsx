@@ -9,7 +9,8 @@ const totalNotFoundImages = 2;
 const NotFoundImage = () => {
   const [imagePath] = useState(() => {
     const randomBannerIndex = Math.floor(Math.random() * totalNotFoundImages) + 1;
-    return `assets/not-found/not-found-${randomBannerIndex}.jpg`;
+    const cacheBuster = new Date().getTime();
+    return `assets/not-found/not-found-${randomBannerIndex}.jpg?cacheBuster=${cacheBuster}`;
   });
 
   return <img src={imagePath} alt='' />;
