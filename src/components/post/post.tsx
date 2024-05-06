@@ -154,9 +154,11 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
               <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
-          <span className={styles.replyButton}>
-            [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{t('reply')}</Link>]
-          </span>
+          {!isInPostPage && (
+            <span className={styles.replyButton}>
+              [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{t('reply')}</Link>]
+            </span>
+          )}
         </span>
         <span className={styles.postMenuBtnWrapper}>
           <span
