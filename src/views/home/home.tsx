@@ -158,7 +158,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
             {subscriptions.length > 0
               ? subscriptions.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>p/{address}</Link>
+                    <Link to={`/p/${address}`}>{address}</Link>
                   </div>
                 ))
               : t('not_subscribed')}
