@@ -472,6 +472,16 @@ const Footer = () => {
   );
 };
 
+export const HomeLogo = () => {
+  return (
+    <Link to='/'>
+      <div className={styles.logo}>
+        <img alt='' src='/assets/logo/logo-transparent.png' />
+      </div>
+    </Link>
+  );
+};
+
 const Home = () => {
   const defaultSubplebbits = useDefaultSubplebbits();
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
@@ -479,11 +489,7 @@ const Home = () => {
 
   return (
     <div className={styles.content}>
-      <Link to='/'>
-        <div className={styles.logo}>
-          <img alt='' src='/assets/logo/logo-transparent.png' />
-        </div>
-      </Link>
+      <HomeLogo />
       <SearchBar />
       <InfoBox />
       <Boards multisub={defaultSubplebbits} subplebbits={subplebbits} />

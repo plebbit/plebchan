@@ -1,0 +1,56 @@
+.content {
+  margin: auto;
+    text-align: left;
+    width: 57.69em;
+    min-width: 750px;
+}
+
+.boxOuter {
+  background: #fff;
+  border: 1px solid;
+  zoom: 100%;
+  margin-bottom: .5em;
+  padding-bottom: .5em;
+}
+
+.boxBar {
+  background: #fca;
+  color: #800;
+  position: relative;
+  zoom: 100%;
+  padding-left: .5em;
+  line-height: 2em;
+}
+
+.boxBar h2 {
+  text-align: center;
+  font-size: 131%;
+  font-weight: 700;
+}
+
+.boxContent {
+  margin-top: 10px;
+  color: #000;
+  line-height: 1.5em;
+  font-size: 93%;
+  padding: .5em;
+  padding-top: .25em;
+  padding-bottom: 0;
+}
+
+.boxContent img {
+  display: block;
+  margin: auto;
+}
+
+.backToBoard {
+  text-align: center;
+  font-size: 12pt !important;
+  margin: 0 20px 10px 20px;
+  color: #800;
+  font-weight: bold;
+}
+
+.backToBoard a {
+  color: blue;
+}

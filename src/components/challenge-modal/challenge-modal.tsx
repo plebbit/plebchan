@@ -96,9 +96,7 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
           />
           <div className={styles.challengeMediaWrapper}>
             {isTextChallenge && <div className={styles.challengeMedia}>{challenges[currentChallengeIndex]?.challenge}</div>}
-            {isImageChallenge && (
-              <img alt={t('loading')} className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`} />
-            )}
+            {isImageChallenge && <img alt='' className={styles.challengeMedia} src={`data:image/png;base64,${challenges[currentChallengeIndex]?.challenge}`} />}
           </div>
         </div>
         <div className={styles.challengeFooter}>
