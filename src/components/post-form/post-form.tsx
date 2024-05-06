@@ -58,16 +58,29 @@ const LinkTypePreviewer = ({ link }: { link: string }) => {
   return isValidURL(link) ? mediaInfo?.type : 'Invalid URL';
 };
 
-const PostFormTable = () => {
+const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
   const { t } = useTranslation();
   const account = useAccount();
   const { displayName } = account?.author || {};
-
   const [url, setUrl] = useState('');
-
   const { title, content, link, publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
-
   const { index, publishComment } = usePublishComment(publishCommentOptions);
+
+  const textRef = useRef<HTMLTextAreaElement>(null);
+  const urlRef = useRef<HTMLInputElement>(null);
+  const subjectRef = useRef<HTMLInputElement>(null);
+
+  const resetFields = () => {
+    if (textRef.current) {
+      textRef.current.value = '';
+    }
+    if (urlRef.current) {
+      urlRef.current.value = '';
+    }
+    if (subjectRef.current) {
+      subjectRef.current.value = '';
+    }
+  };
 
   const onPublishPost = () => {
     if (!title && !content && !link) {
@@ -96,6 +109,7 @@ const PostFormTable = () => {
   useEffect(() => {
     if (typeof index === 'number') {
       resetSubmitStore();
+      resetFields();
       navigate(`/profile/${index}`);
     }
   }, [index, resetSubmitStore, navigate]);
@@ -105,9 +119,6 @@ const PostFormTable = () => {
   const isInPostPage = isPostPageView(location.pathname, params);
   const cid = params?.commentCid as string;
   const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid, subplebbitAddress });
-
-  const textRef = useRef<HTMLTextAreaElement>(null);
-  const urlRef = useRef<HTMLInputElement>(null);
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -128,6 +139,8 @@ const PostFormTable = () => {
   useEffect(() => {
     if (typeof replyIndex === 'number') {
       resetContent();
+      resetFields();
+      closeForm();
     }
   }, [replyIndex, resetContent]);
 
@@ -152,6 +165,7 @@ const PostFormTable = () => {
             <td>
               <input
                 type='text'
+                ref={subjectRef}
                 onChange={(e) => {
                   setSubmitStore({ title: e.target.value });
                 }}
@@ -234,7 +248,7 @@ const PostForm = () => {
             ]
           </div>
         ) : (
-          <PostFormTable />
+          <PostFormTable closeForm={() => setShowForm(false)} />
         )}
       </div>
       <div className={styles.postFormMobile}>
@@ -249,7 +263,7 @@ const PostForm = () => {
             <button className={`${styles.showFormButton} button`} onClick={() => setShowForm(showForm ? false : true)}>
               {showForm ? t('close_post_form') : isInPostPage ? t('post_a_reply') : t('start_new_thread')}
             </button>
-            {showForm && <PostFormTable />}
+            {showForm && <PostFormTable closeForm={() => setShowForm(false)} />}
           </>
         )}
       </div>
