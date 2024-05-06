@@ -194,7 +194,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           )}
         </blockquote>
       )}
-      {(replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
+      {!isDescription && !isRules && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
         <span className={styles.summary}>
           <span className={styles.expandButtonWrapper}>
             <span className={styles.expandButton} />
@@ -212,6 +212,8 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
         </span>
       )}
       {!(pinned && !isInPostPage) &&
+        !isDescription &&
+        !isRules &&
         replies &&
         (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
           <div key={index} className={styles.replyContainer}>
@@ -486,6 +488,8 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
           )}
         </div>
         {!(pinned && !isInPostPage) &&
+          !isDescription &&
+          !isRules &&
           replies &&
           (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
