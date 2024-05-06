@@ -32,6 +32,7 @@
 .boxBar, .infoboxBar {
   padding-left: 0.5em;
   line-height: 2em;
+  text-transform: capitalize;
 }
 
 .infoboxBar {
@@ -253,6 +254,7 @@
 .stats .stat {
   display: inline-block;
   width: 33%;
+  text-transform: capitalize;
 }
 
 @media (max-width: 640px) {
