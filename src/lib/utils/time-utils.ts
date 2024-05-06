@@ -1,8 +1,10 @@
+import i18next from 'i18next';
+
 export const getFormattedDate = (commentTimestamp: number) => {
   if (commentTimestamp === undefined || isNaN(commentTimestamp)) {
     return '';
   }
-  const locale = Intl.DateTimeFormat().resolvedOptions().locale;
+  const locale = i18next.language || 'en';
   const string = new Intl.DateTimeFormat(locale, {
     hour12: false,
     year: '2-digit',
