@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { isHomeView } from './lib/utils/view-utils';
+import { isHomeView, isNotFoundView } from './lib/utils/view-utils';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
 import Board from './views/board';
 import Catalog from './views/catalog';
 import Home from './views/home';
+import NotFound from './views/not-found';
 import PendingPost from './views/pending-post';
 import PostPage from './views/post-page';
 import Settings from './views/settings';
@@ -17,8 +18,16 @@ import SubplebbitStats from './components/subplebbit-stats';
 import PostForm from './components/post-form';
 
 const BoardLayout = () => {
-  const { subplebbitAddress } = useParams();
+  const { accountCommentIndex, commentCid, subplebbitAddress } = useParams();
   const location = useLocation();
+
+  const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
+  const isValidCommentCid = !commentCid || /^Qm[a-zA-Z0-9]{44}$/.test(commentCid);
+  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3K[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
+
+  if (!isValidAccountCommentIndex || !isValidCommentCid || !isValidSubplebbitAddress) {
+    return <NotFound />;
+  }
 
   // force rerender of post form when navigating between pages
   const key = `${subplebbitAddress}-${location.pathname}`;
@@ -38,14 +47,16 @@ const BoardLayout = () => {
 
 const App = () => {
   const location = useLocation();
+  const params = useParams();
   const isInHomeView = isHomeView(location.pathname);
+  const isInNotFoundPage = isNotFoundView(location.pathname, params);
   const [theme] = useTheme();
 
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
-    const classToAdd = isInHomeView ? 'yotsuba' : theme;
+    const classToAdd = isInHomeView || isInNotFoundPage ? 'yotsuba' : theme;
     document.body.classList.add(classToAdd);
-  }, [theme, isInHomeView]);
+  }, [theme, isInHomeView, isInNotFoundPage]);
 
   const globalLayout = (
     <>
@@ -71,6 +82,8 @@ const App = () => {
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
           </Route>
           <Route path='/settings' element={<Settings />} />
+
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </div>

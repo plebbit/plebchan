@@ -63,5 +63,14 @@
   "reply_to_cid": "Válasz erre: {{cid}}",
   "submit": "Beküldés",
   "gif": "GIF",
-  "moderating": "moderálás"
+  "moderating": "moderálás",
+  "not_moderating": "Nem moderál semmilyen fórumot",
+  "not_subscribed": "Nem vagy feliratkozva semmilyen fórumra",
+  "total_posts": "Összes bejegyzés:",
+  "current_users": "jelenlegi felhasználók:",
+  "boards_tracked": "követett fórumok:",
+  "interests": "érdeklődési körök",
+  "random": "véletlenszerű",
+  "international": "nemzetközi",
+  "projects": "projektek"
 }

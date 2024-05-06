@@ -34,3 +34,14 @@ export const isCatalogView = (pathname: string, params: ParamsType): boolean => 
 export const isPendingPostView = (pathname: string, params: ParamsType): boolean => {
   return pathname === `/profile/${params.accountCommentIndex}`;
 };
+
+export const isNotFoundView = (pathname: string, params: ParamsType): boolean => {
+  return (
+    !isHomeView(pathname) &&
+    !isDescriptionView(pathname, params) &&
+    !isRulesView(pathname, params) &&
+    !isPostPageView(pathname, params) &&
+    !isCatalogView(pathname, params) &&
+    !isPendingPostView(pathname, params)
+  );
+};

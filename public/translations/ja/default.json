@@ -63,5 +63,14 @@
   "reply_to_cid": "{{cid}}に返信",
   "submit": "送信",
   "gif": "GIF",
-  "moderating": "モデレート中"
+  "moderating": "モデレート中",
+  "not_moderating": "掲示板をモデレートしていません",
+  "not_subscribed": "どの掲示板にも購読していません",
+  "total_posts": "総投稿数:",
+  "current_users": "現在のユーザー:",
+  "boards_tracked": "追跡されたボード:",
+  "interests": "興味",
+  "random": "ランダム",
+  "international": "国際的な",
+  "projects": "プロジェクト"
 }

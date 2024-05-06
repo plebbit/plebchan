@@ -63,5 +63,14 @@
   "reply_to_cid": "الرد على {{cid}}",
   "submit": "إرسال",
   "gif": "جي آي إف",
-  "moderating": "تدير"
+  "moderating": "تدير",
+  "not_moderating": "لست تدير أي منتدى",
+  "not_subscribed": "لست مشتركًا في أي منتدى",
+  "total_posts": "إجمالي المشاركات:",
+  "current_users": "المستخدمون الحاليون:",
+  "boards_tracked": "المنتديات المتابعة:",
+  "interests": "اهتمامات",
+  "random": "عشوائي",
+  "international": "دولية",
+  "projects": "مشاريع"
 }

@@ -191,6 +191,10 @@
   color: var(--post-mobile-abbr-text-color);
 }
 
+.stateString {
+  color: var(--post-mobile-abbr-text-color);
+}
+
 .postDesktop .summary .expandButtonWrapper {
   position: absolute;
   top: 8px;

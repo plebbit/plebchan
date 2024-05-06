@@ -63,5 +63,14 @@
   "reply_to_cid": "Svara på {{cid}}",
   "submit": "Skicka in",
   "gif": "GIF",
-  "moderating": "modererar"
+  "moderating": "modererar",
+  "not_moderating": "Modererar inga forum",
+  "not_subscribed": "Inte prenumererar på några forum",
+  "total_posts": "Totalt antal inlägg:",
+  "current_users": "aktuella användare:",
+  "boards_tracked": "spårade forum:",
+  "interests": "intressen",
+  "random": "slumpmässig",
+  "international": "internationella",
+  "projects": "projekt"
 }

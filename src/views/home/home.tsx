@@ -76,12 +76,13 @@ const InfoBox = () => {
 const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit;
-  const isSubNsfw = tags.includes('porn') || tags.includes('gore') || tags.includes('violence') || tags.includes('vulgar');
+  const nsfwTags = ['adult', 'gore'];
+  const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
 
   return (
     <div className={styles.subplebbit} key={address}>
       <Link to={`/p/${address}`}>{title || address}</Link>
-      {isSubNsfw && <span className={styles.nsfw}> ({t('nsfw')})</span>}
+      {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
       {isOffline && <span className={styles.offlineIcon} />}
     </div>
   );
@@ -104,7 +105,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
 
   const isSubOffline = (address: string) => {
     const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
-    const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 30;
+    const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
     return isOffline;
   };
 
@@ -122,7 +123,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
-          <h3>Projects</h3>
+          <h3>{t('projects')}</h3>
           <div className={styles.list}>
             {projectsSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
@@ -130,7 +131,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
           </div>
         </div>
         <div className={styles.column}>
-          <h3>Interests</h3>
+          <h3>{t('interests')}</h3>
           <div className={styles.list}>
             {interestsSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
@@ -138,13 +139,13 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
           </div>
         </div>
         <div className={styles.column}>
-          <h3>Random</h3>
+          <h3>{t('random')}</h3>
           <div className={styles.list}>
             {randomSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
             ))}
           </div>
-          <h3>International</h3>
+          <h3>{t('international')}</h3>
           <div className={styles.list}>
             {internationalSubs.map((sub) => (
               <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
@@ -157,10 +158,10 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
             {subscriptions.length > 0
               ? subscriptions.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>p/{address}</Link>
+                    <Link to={`/p/${address}`}>{address}</Link>
                   </div>
                 ))
-              : 'Not subscribed to any board.'}
+              : t('not_subscribed')}
           </div>
           <div className={styles.list}>
             <h3>{t('moderating')}</h3>
@@ -170,7 +171,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
                     <Link to={`/p/${address}`}>p/{address}</Link>
                   </div>
                 ))
-              : 'Not moderating any board.'}
+              : t('not_moderating')}
           </div>
         </div>
       </div>
@@ -366,13 +367,13 @@ const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAdd
         {enoughStats ? (
           <>
             <div className={styles.stat}>
-              <b>Total Posts:</b> {totalPosts}
+              <b>{t('total_posts')}</b> {totalPosts}
             </div>
             <div className={styles.stat}>
-              <b>Current Users:</b> {currentUsers}
+              <b>{t('current_users')}</b> {currentUsers}
             </div>
             <div className={styles.stat}>
-              <b>Boards Tracked:</b> {boardsTracked}
+              <b>{t('boards_tracked')}</b> {boardsTracked}
             </div>
           </>
         ) : (
@@ -471,6 +472,16 @@ const Footer = () => {
   );
 };
 
+export const HomeLogo = () => {
+  return (
+    <Link to='/'>
+      <div className={styles.logo}>
+        <img alt='' src='/assets/logo/logo-transparent.png' />
+      </div>
+    </Link>
+  );
+};
+
 const Home = () => {
   const defaultSubplebbits = useDefaultSubplebbits();
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
@@ -478,11 +489,7 @@ const Home = () => {
 
   return (
     <div className={styles.content}>
-      <Link to='/'>
-        <div className={styles.logo}>
-          <img alt='' src='/assets/logo/logo-transparent.png' />
-        </div>
-      </Link>
+      <HomeLogo />
       <SearchBar />
       <InfoBox />
       <Boards multisub={defaultSubplebbits} subplebbits={subplebbits} />

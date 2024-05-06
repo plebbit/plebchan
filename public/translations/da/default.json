@@ -63,5 +63,14 @@
   "reply_to_cid": "Svar til {{cid}}",
   "submit": "Indsend",
   "gif": "GIF",
-  "moderating": "modererer"
+  "moderating": "modererer",
+  "not_moderating": "Du modererer ikke nogen opslagstavler",
+  "not_subscribed": "Ikke abonneret på nogen opslagstavler",
+  "total_posts": "Samlede opslag:",
+  "current_users": "nuværende brugere:",
+  "boards_tracked": "sporede opslagstavler:",
+  "interests": "interesser",
+  "random": "tilfældig",
+  "international": "internationale",
+  "projects": "projekter"
 }

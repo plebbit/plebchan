@@ -63,5 +63,14 @@
   "reply_to_cid": "Tumugon sa {{cid}}",
   "submit": "Isumite",
   "gif": "GIF",
-  "moderating": "namamahala"
+  "moderating": "namamahala",
+  "not_moderating": "Hindi namamahala ng anumang mga board",
+  "not_subscribed": "Hindi nakasubscribe sa anumang mga board",
+  "total_posts": "Kabuuang Posts:",
+  "current_users": "kasalukuyang mga gumagamit:",
+  "boards_tracked": "mga board na sinusubaybayan:",
+  "interests": "mga interes",
+  "random": "random",
+  "international": "internasyonal",
+  "projects": "mga proyekto"
 }

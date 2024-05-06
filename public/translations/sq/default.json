@@ -63,5 +63,14 @@
   "reply_to_cid": "Përgjigju në {{cid}}",
   "submit": "Dorëzo",
   "gif": "GIF",
-  "moderating": "moderimi"
+  "moderating": "moderimi",
+  "not_moderating": "Nuk jeni duke moderuar ndonjë forum",
+  "not_subscribed": "Nuk jeni abonuar në ndonjë forum",
+  "total_posts": "Postime totale:",
+  "current_users": "përdoruesit aktualë:",
+  "boards_tracked": "forume të gjurmueshme:",
+  "interests": "interesat",
+  "random": "i rastësishëm",
+  "international": "ndërkombëtare",
+  "projects": "projekte"
 }

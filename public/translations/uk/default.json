@@ -63,5 +63,14 @@
   "reply_to_cid": "Відповісти на {{cid}}",
   "submit": "Надіслати",
   "gif": "ГІФ",
-  "moderating": "модеруєте"
+  "moderating": "модеруєте",
+  "not_moderating": "Ви не модеруєте жодного форуму",
+  "not_subscribed": "Ви не підписані на жоден форум",
+  "total_posts": "Всього повідомлень:",
+  "current_users": "поточні користувачі:",
+  "boards_tracked": "відстежувані форуми:",
+  "interests": "інтереси",
+  "random": "випадковий",
+  "international": "міжнародні",
+  "projects": "проекти"
 }

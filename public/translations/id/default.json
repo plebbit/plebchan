@@ -63,5 +63,14 @@
   "reply_to_cid": "Balas ke {{cid}}",
   "submit": "Kirim",
   "gif": "GIF",
-  "moderating": "memoderasi"
+  "moderating": "memoderasi",
+  "not_moderating": "Tidak memoderasi papan pesan apa pun",
+  "not_subscribed": "Tidak berlangganan papan pesan apa pun",
+  "total_posts": "Total Posting:",
+  "current_users": "pengguna saat ini:",
+  "boards_tracked": "papan yang dilacak:",
+  "interests": "minat",
+  "random": "acak",
+  "international": "internasional",
+  "projects": "proyek"
 }

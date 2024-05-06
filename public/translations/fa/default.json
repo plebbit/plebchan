@@ -63,5 +63,14 @@
   "reply_to_cid": "پاسخ به {{cid}}",
   "submit": "ارسال",
   "gif": "گیف",
-  "moderating": "مدیریت"
+  "moderating": "مدیریت",
+  "not_moderating": "هیچ تالار پیامی را مدیریت نمی‌کنید",
+  "not_subscribed": "به هیچ تالار پیامی اشتراک ندارید",
+  "total_posts": "کل پست‌ها:",
+  "current_users": "کاربران فعلی:",
+  "boards_tracked": "تالارهای پیگیری شده:",
+  "interests": "علایق",
+  "random": "تصادفی",
+  "international": "بین‌المللی",
+  "projects": "پروژه‌ها"
 }

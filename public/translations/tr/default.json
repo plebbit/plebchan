@@ -63,5 +63,14 @@
   "reply_to_cid": "{{cid}}’ye yanıt ver",
   "submit": "Gönder",
   "gif": "GIF",
-  "moderating": "moderatörlük yapıyorsun"
+  "moderating": "moderatörlük yapıyorsun",
+  "not_moderating": "Hiçbir forumu moderatörlük yapmıyorsun",
+  "not_subscribed": "Hiçbir foruma abone değilsiniz",
+  "total_posts": "Toplam Gönderi:",
+  "current_users": "mevcut kullanıcılar:",
+  "boards_tracked": "takip edilen panolar:",
+  "interests": "ilgi alanları",
+  "random": "rastgele",
+  "international": "uluslararası",
+  "projects": "projeler"
 }

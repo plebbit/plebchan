@@ -63,5 +63,14 @@
   "reply_to_cid": "{{cid}} का उत्तर दें",
   "submit": "जमा करें",
   "gif": "जीआईएफ",
-  "moderating": "मॉडरेटिंग"
+  "moderating": "मॉडरेटिंग",
+  "not_moderating": "किसी भी मंच का मॉडरेशन नहीं कर रहे हैं",
+  "not_subscribed": "किसी भी मंच की सदस्यता नहीं ली है",
+  "total_posts": "कुल पोस्ट:",
+  "current_users": "वर्तमान उपयोगकर्ता:",
+  "boards_tracked": "ट्रैक किए गए बोर्ड:",
+  "interests": "रुचियाँ",
+  "random": "यादृच्छिक",
+  "international": "अंतरराष्ट्रीय",
+  "projects": "परियोजनाएं"
 }

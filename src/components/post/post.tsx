@@ -61,6 +61,11 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
 
+  const stateString = useStateString(post);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
+
   return (
     <div className={styles.postDesktop}>
       <div className={styles.hrWrapper}>
@@ -154,9 +159,11 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
               <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
-          <span className={styles.replyButton}>
-            [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{t('reply')}</Link>]
-          </span>
+          {!isInPostPage && (
+            <span className={styles.replyButton}>
+              [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{t('reply')}</Link>]
+            </span>
+          )}
         </span>
         <span className={styles.postMenuBtnWrapper}>
           <span
@@ -179,9 +186,15 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
               <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
             </span>
           )}
+          {!cid && state === 'pending' && (
+            <>
+              <br />
+              {loadingString}
+            </>
+          )}
         </blockquote>
       )}
-      {(replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
+      {!isDescription && !isRules && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
         <span className={styles.summary}>
           <span className={styles.expandButtonWrapper}>
             <span className={styles.expandButton} />
@@ -199,6 +212,8 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
         </span>
       )}
       {!(pinned && !isInPostPage) &&
+        !isDescription &&
+        !isRules &&
         replies &&
         (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
           <div key={index} className={styles.replyContainer}>
@@ -373,6 +388,11 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
 
+  const stateString = useStateString(post);
+  const loadingString = stateString && (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  );
+
   return (
     <div className={styles.postMobile}>
       <div className={styles.hrWrapper}>
@@ -446,6 +466,12 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                     <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
                   </span>
                 )}
+                {!cid && state === 'pending' && (
+                  <>
+                    <br />
+                    {loadingString}
+                  </>
+                )}
               </blockquote>
             )}
           </div>
@@ -462,6 +488,8 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
           )}
         </div>
         {!(pinned && !isInPostPage) &&
+          !isDescription &&
+          !isRules &&
           replies &&
           (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={reply.cid} className={styles.replyContainer}>
