@@ -142,7 +142,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
                 c/
               </Link>
               {!cid ? (
-                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
               ) : (
                 <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
@@ -187,7 +187,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
               <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
             </span>
           )}
-          {!cid && state === 'pending' && (
+          {!cid && state === 'pending' && stateString !== 'Failed' && (
             <>
               <br />
               {loadingString}
@@ -195,7 +195,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           )}
         </blockquote>
       )}
-      {!isDescription && !isRules && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
+      {!isDescription && !isRules && !isPendingPostPage && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
         <span className={styles.summary}>
           <span className={styles.expandButtonWrapper}>
             <span className={styles.expandButton} />
@@ -274,7 +274,7 @@ const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
                 c/
               </Link>
               {!cid ? (
-                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
               ) : (
                 <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
@@ -350,7 +350,7 @@ const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
               </>
             )}
             <Markdown content={content} />
-            {!cid && state === 'pending' && (
+            {!cid && state === 'pending' && stateString !== 'Failed' && (
               <>
                 <br />
                 {loadingString}
@@ -439,7 +439,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                       c/
                     </Link>
                     {!cid ? (
-                      <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+                      <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
                     ) : (
                       <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                         {shortCid}
@@ -469,7 +469,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                     <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
                   </span>
                 )}
-                {!cid && state === 'pending' && (
+                {!cid && state === 'pending' && stateString !== 'Failed' && (
                   <>
                     <br />
                     {loadingString}
@@ -478,7 +478,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
               </blockquote>
             )}
           </div>
-          {!isInPostPage && (
+          {!isInPostPage && !isPendingPostPage && (
             <div className={styles.postLink}>
               <span className={styles.info}>
                 {replyCount > 0 && `${replyCount} Replies`}
@@ -553,7 +553,7 @@ const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
                 </Link>
               </span>
               {!cid ? (
-                <span className={styles.pendingCid}>{state === 'failed' ? 'Failed' : 'Pending'}</span>
+                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
               ) : (
                 <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
@@ -582,7 +582,7 @@ const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
                 </>
               )}
               <Markdown content={content} />
-              {!cid && state === 'pending' && (
+              {!cid && state === 'pending' && stateString !== 'Failed' && (
                 <>
                   <br />
                   {loadingString}
