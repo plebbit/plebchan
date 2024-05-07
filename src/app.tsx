@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { isHomeView, isNotFoundView } from './lib/utils/view-utils';
+import { isHomeView } from './lib/utils/view-utils';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
 import Board from './views/board';
@@ -47,16 +47,14 @@ const BoardLayout = () => {
 
 const App = () => {
   const location = useLocation();
-  const params = useParams();
   const isInHomeView = isHomeView(location.pathname);
-  const isInNotFoundPage = isNotFoundView(location.pathname, params);
   const [theme] = useTheme();
 
   useEffect(() => {
     document.body.classList.forEach((className) => document.body.classList.remove(className));
-    const classToAdd = isInHomeView || isInNotFoundPage ? 'yotsuba' : theme;
+    const classToAdd = isInHomeView ? 'yotsuba' : theme;
     document.body.classList.add(classToAdd);
-  }, [theme, isInHomeView, isInNotFoundPage]);
+  }, [theme, isInHomeView]);
 
   const globalLayout = (
     <>
