@@ -72,5 +72,6 @@
   "interests": "ενδιαφέροντα",
   "random": "τυχαίος",
   "international": "διεθνείς",
-  "projects": "έργα"
+  "projects": "έργα",
+  "challenge_counter": "{{index}} από {{total}}"
 }

@@ -72,5 +72,6 @@
   "interests": "관심사",
   "random": "랜덤",
   "international": "국제적인",
-  "projects": "프로젝트"
+  "projects": "프로젝트",
+  "challenge_counter": "{{index}} 중 {{total}}"
 }

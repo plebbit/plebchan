@@ -72,5 +72,6 @@
   "interests": "mga interes",
   "random": "random",
   "international": "internasyonal",
-  "projects": "mga proyekto"
+  "projects": "mga proyekto",
+  "challenge_counter": "{{index}} ng {{total}}"
 }

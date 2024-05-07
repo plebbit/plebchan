@@ -72,5 +72,6 @@
   "interests": "興味",
   "random": "ランダム",
   "international": "国際的な",
-  "projects": "プロジェクト"
+  "projects": "プロジェクト",
+  "challenge_counter": "{{index}} / {{total}}"
 }

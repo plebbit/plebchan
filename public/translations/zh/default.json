@@ -72,5 +72,6 @@
   "interests": "兴趣",
   "random": "随机",
   "international": "国际的",
-  "projects": "项目"
+  "projects": "项目",
+  "challenge_counter": "{{index}} / {{total}}"
 }

@@ -72,5 +72,6 @@
   "interests": "interessi",
   "random": "casuale",
   "international": "internazionali",
-  "projects": "progetti"
+  "projects": "progetti",
+  "challenge_counter": "{{index}} di {{total}}"
 }

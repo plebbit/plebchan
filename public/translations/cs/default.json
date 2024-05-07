@@ -72,5 +72,6 @@
   "interests": "zájmy",
   "random": "náhodný",
   "international": "mezinárodní",
-  "projects": "projekty"
+  "projects": "projekty",
+  "challenge_counter": "{{index}} z {{total}}"
 }

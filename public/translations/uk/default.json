@@ -72,5 +72,6 @@
   "interests": "інтереси",
   "random": "випадковий",
   "international": "міжнародні",
-  "projects": "проекти"
+  "projects": "проекти",
+  "challenge_counter": "{{index}} з {{total}}"
 }

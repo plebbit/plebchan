@@ -72,5 +72,6 @@
   "interests": "ilgi alanları",
   "random": "rastgele",
   "international": "uluslararası",
-  "projects": "projeler"
+  "projects": "projeler",
+  "challenge_counter": "{{index}} / {{total}}"
 }

@@ -72,5 +72,6 @@
   "interests": "kiinnostuksen kohteet",
   "random": "satunnainen",
   "international": "kansainväliset",
-  "projects": "projektit"
+  "projects": "projektit",
+  "challenge_counter": "{{index}} / {{total}}"
 }

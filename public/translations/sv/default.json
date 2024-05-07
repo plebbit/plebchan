@@ -72,5 +72,6 @@
   "interests": "intressen",
   "random": "slumpmässig",
   "international": "internationella",
-  "projects": "projekt"
+  "projects": "projekt",
+  "challenge_counter": "{{index}} av {{total}}"
 }
