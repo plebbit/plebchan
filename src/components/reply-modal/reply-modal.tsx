@@ -95,7 +95,10 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             wrap='soft'
             ref={textRef}
             placeholder={_.capitalize(t('comment'))}
-            onChange={(e) => setContent.content(e.target.value)}
+            onChange={(e) => {
+              const content = e.target.value.replace(/\n/g, '\n\n');
+              setContent.content(content);
+            }}
             autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
           />
         </div>

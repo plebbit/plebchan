@@ -183,7 +183,8 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
               wrap='soft'
               ref={textRef}
               onChange={(e) => {
-                isInPostPage ? setContent.content(e.target.value) : setSubmitStore({ content: e.target.value });
+                const content = e.target.value.replace(/\n/g, '\n\n');
+                isInPostPage ? setContent.content(content) : setSubmitStore({ content });
               }}
             />
           </td>
