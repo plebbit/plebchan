@@ -344,7 +344,7 @@ const ReplyDesktop = ({ reply, roles, openReplyModal }: PostProps) => {
             {isReplyingToReply && (
               <>
                 <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-                  {`c/${Plebbit.getShortCid(parentCid)}`}
+                  {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
                 </Link>
                 <br />
               </>
@@ -576,7 +576,7 @@ const ReplyMobile = ({ reply, roles, openReplyModal }: PostProps) => {
               {isReplyingToReply && (
                 <>
                   <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-                    {`c/${Plebbit.getShortCid(parentCid)}`}
+                    {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
                   </Link>
                   <br />
                 </>
