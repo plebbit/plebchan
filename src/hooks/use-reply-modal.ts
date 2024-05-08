@@ -21,11 +21,7 @@ const useReplyModal = () => {
         setScrollY(currentScrollY);
       }
       if (activeCid && activeCid !== cid) {
-        closeModal();
-        setTimeout(() => {
-          setActiveCid(cid);
-          setShowReplyModal(true);
-        }, 0); // minimal timeout to allow for state reset
+        return;
       } else if (!activeCid) {
         setActiveCid(cid);
         setShowReplyModal(true);
