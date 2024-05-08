@@ -73,5 +73,7 @@
   "random": "యాదృచ్ఛిక",
   "international": "అంతర్జాతీయ",
   "projects": "ప్రాజెక్టులు",
-  "challenge_counter": "{{index}} లో {{total}}"
+  "challenge_counter": "{{index}} లో {{total}}",
+  "embed": "ఎంబెడ్",
+  "remove": "తొలగించు"
 }

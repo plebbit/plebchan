@@ -73,5 +73,7 @@
   "random": "ランダム",
   "international": "国際的な",
   "projects": "プロジェクト",
-  "challenge_counter": "{{index}} / {{total}}"
+  "challenge_counter": "{{index}} / {{total}}",
+  "embed": "埋め込み",
+  "remove": "削除"
 }

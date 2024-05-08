@@ -73,5 +73,7 @@
   "random": "rastgele",
   "international": "uluslararası",
   "projects": "projeler",
-  "challenge_counter": "{{index}} / {{total}}"
+  "challenge_counter": "{{index}} / {{total}}",
+  "embed": "göm",
+  "remove": "kaldır"
 }

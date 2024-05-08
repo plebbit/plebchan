@@ -73,5 +73,7 @@
   "random": "satunnainen",
   "international": "kansainväliset",
   "projects": "projektit",
-  "challenge_counter": "{{index}} / {{total}}"
+  "challenge_counter": "{{index}} / {{total}}",
+  "embed": "upota",
+  "remove": "poista"
 }

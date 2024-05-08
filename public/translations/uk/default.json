@@ -73,5 +73,7 @@
   "random": "випадковий",
   "international": "міжнародні",
   "projects": "проекти",
-  "challenge_counter": "{{index}} з {{total}}"
+  "challenge_counter": "{{index}} з {{total}}",
+  "embed": "вбудувати",
+  "remove": "видалити"
 }

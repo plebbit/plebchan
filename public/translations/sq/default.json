@@ -73,5 +73,7 @@
   "random": "i rastësishëm",
   "international": "ndërkombëtare",
   "projects": "projekte",
-  "challenge_counter": "{{index}} nga {{total}}"
+  "challenge_counter": "{{index}} nga {{total}}",
+  "embed": "integro",
+  "remove": "hiq"
 }

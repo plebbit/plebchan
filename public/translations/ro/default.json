@@ -73,5 +73,7 @@
   "random": "aleator",
   "international": "internaționale",
   "projects": "proiecte",
-  "challenge_counter": "{{index}} din {{total}}"
+  "challenge_counter": "{{index}} din {{total}}",
+  "embed": "încorpora",
+  "remove": "elimina"
 }

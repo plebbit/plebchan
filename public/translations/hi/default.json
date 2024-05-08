@@ -73,5 +73,7 @@
   "random": "यादृच्छिक",
   "international": "अंतरराष्ट्रीय",
   "projects": "परियोजनाएं",
-  "challenge_counter": "{{index}} में से {{total}}"
+  "challenge_counter": "{{index}} में से {{total}}",
+  "embed": "एम्बेड",
+  "remove": "हटाएं"
 }

@@ -73,5 +73,7 @@
   "random": "랜덤",
   "international": "국제적인",
   "projects": "프로젝트",
-  "challenge_counter": "{{index}} 중 {{total}}"
+  "challenge_counter": "{{index}} 중 {{total}}",
+  "embed": "임베드",
+  "remove": "제거"
 }

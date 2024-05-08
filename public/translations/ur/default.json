@@ -73,5 +73,7 @@
   "random": "بے ترتیب",
   "international": "بین الاقوامی",
   "projects": "منصوبے",
-  "challenge_counter": "{{index}} میں سے {{total}}"
+  "challenge_counter": "{{index}} میں سے {{total}}",
+  "embed": "ایمبیڈ",
+  "remove": "ہٹائیں"
 }

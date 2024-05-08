@@ -73,5 +73,7 @@
   "random": "random",
   "international": "internasyonal",
   "projects": "mga proyekto",
-  "challenge_counter": "{{index}} ng {{total}}"
+  "challenge_counter": "{{index}} ng {{total}}",
+  "embed": "i-embed",
+  "remove": "alisin"
 }

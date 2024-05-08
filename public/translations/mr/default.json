@@ -73,5 +73,7 @@
   "random": "यादृच्छ",
   "international": "आंतरराष्ट्रीय",
   "projects": "प्रकल्प",
-  "challenge_counter": "{{index}} पैकी {{total}}"
+  "challenge_counter": "{{index}} पैकी {{total}}",
+  "embed": "एम्बेड",
+  "remove": "काढा"
 }

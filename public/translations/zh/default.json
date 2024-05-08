@@ -73,5 +73,7 @@
   "random": "随机",
   "international": "国际的",
   "projects": "项目",
-  "challenge_counter": "{{index}} / {{total}}"
+  "challenge_counter": "{{index}} / {{total}}",
+  "embed": "嵌入",
+  "remove": "移除"
 }

@@ -73,5 +73,7 @@
   "random": "عشوائي",
   "international": "دولية",
   "projects": "مشاريع",
-  "challenge_counter": "{{index}} من {{total}}"
+  "challenge_counter": "{{index}} من {{total}}",
+  "embed": "تضمين",
+  "remove": "إزالة"
 }

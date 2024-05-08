@@ -73,5 +73,7 @@
   "random": "אקראי",
   "international": "בינלאומיים",
   "projects": "פרויקטים",
-  "challenge_counter": "{{index}} מתוך {{total}}"
+  "challenge_counter": "{{index}} מתוך {{total}}",
+  "embed": "הטמע",
+  "remove": "הסר"
 }

@@ -73,5 +73,7 @@
   "random": "สุ่ม",
   "international": "นานาชาติ",
   "projects": "โครงการ",
-  "challenge_counter": "{{index}} จาก {{total}}"
+  "challenge_counter": "{{index}} จาก {{total}}",
+  "embed": "ฝัง",
+  "remove": "ลบ"
 }

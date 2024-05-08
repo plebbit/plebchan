@@ -73,5 +73,7 @@
   "random": "τυχαίος",
   "international": "διεθνείς",
   "projects": "έργα",
-  "challenge_counter": "{{index}} από {{total}}"
+  "challenge_counter": "{{index}} από {{total}}",
+  "embed": "ενσωμάτωση",
+  "remove": "αφαίρεση"
 }

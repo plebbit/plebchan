@@ -73,5 +73,7 @@
   "random": "véletlenszerű",
   "international": "nemzetközi",
   "projects": "projektek",
-  "challenge_counter": "{{index}} a(z) {{total}}-ból/ből"
+  "challenge_counter": "{{index}} a(z) {{total}}-ból/ből",
+  "embed": "beágyaz",
+  "remove": "eltávolít"
 }

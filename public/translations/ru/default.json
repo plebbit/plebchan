@@ -73,5 +73,7 @@
   "random": "случайный",
   "international": "международные",
   "projects": "проекты",
-  "challenge_counter": "{{index}} из {{total}}"
+  "challenge_counter": "{{index}} из {{total}}",
+  "embed": "встроить",
+  "remove": "удалить"
 }

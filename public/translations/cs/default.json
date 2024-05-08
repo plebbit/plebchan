@@ -73,5 +73,7 @@
   "random": "náhodný",
   "international": "mezinárodní",
   "projects": "projekty",
-  "challenge_counter": "{{index}} z {{total}}"
+  "challenge_counter": "{{index}} z {{total}}",
+  "embed": "vložit",
+  "remove": "odstranit"
 }

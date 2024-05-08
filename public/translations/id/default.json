@@ -73,5 +73,7 @@
   "random": "acak",
   "international": "internasional",
   "projects": "proyek",
-  "challenge_counter": "{{index}} dari {{total}}"
+  "challenge_counter": "{{index}} dari {{total}}",
+  "embed": "sematkan",
+  "remove": "hapus"
 }

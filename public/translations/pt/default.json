@@ -73,5 +73,7 @@
   "random": "aleatório",
   "international": "internacionais",
   "projects": "projetos",
-  "challenge_counter": "{{index}} de {{total}}"
+  "challenge_counter": "{{index}} de {{total}}",
+  "embed": "embutir",
+  "remove": "remover"
 }
