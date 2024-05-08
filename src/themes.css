@@ -690,15 +690,20 @@
   --post-form-toggle-font-weight: 700;
   --post-form-field-title-background-color: #282a2e;
   --post-form-field-title-color: #c5c8c6;
-  --post-form-field-border: 1px solid #111;
+  --post-form-field-border: 1px solid #000;
   --post-form-field-title-font-weight: 700;
   --post-form-field-title-padding: 0 5px;
   --post-form-field-title-font-size: 10pt;
-  --post-form-field-input-border: 1px solid #aaa;
+  --post-form-field-input-border: 1px solid #000;
+  --post-form-field-input-focus-border: 1px solid #515151;
+  --post-form-field-input-background-color: #282a2e;
+  --post-form-field-input-color: #c5c8c6;
   --post-form-field-font-family: arial, helvetica, sans-serif;
   --post-form-field-input-appearance: none;
   --post-form-field-input-outline: none;
-  --post-form-field-input-focus-border: 1px solid #111;
+
+  /* reply modal */
+  --reply-modal-field-border-focus: 1px solid #757575;
 
   /* select */
   --select-border: 1px solid #575a60;

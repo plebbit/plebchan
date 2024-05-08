@@ -39,18 +39,21 @@
 }
 
 .container input[type="text"], .container textarea {
-  border: var(--post-form-field-input-border, revert);
+  border: var(--post-form-field-input-focus-border, revert);
   font-family: var(--post-form-field-font-family, revert);
+  appearance: var(--post-form-field-input-appearance, revert);
+  outline: var(--post-form-field-input-outline, revert);
+  background-color: var(--post-form-field-input-background-color, revert);
+  color: var(--post-form-field-input-color, revert);
   font-size: 10pt;
   outline: var(--post-form-field-input-outline, revert);
   width: 298px;
-  filter: var(--filter80);
   padding: 2px;
   margin-bottom: 1px;
 }
 
 .container input[type="text"]:focus, .container textarea:focus {
-  border: var(--post-form-field-input-focus-border, revert);
+  border: var(--reply-modal-field-border-focus, revert);
 }
 
 .content textarea {
@@ -61,6 +64,14 @@
   text-transform: capitalize;
   float: right;
   cursor: pointer;
+}
+
+.parentCid input[type="text"] {
+  margin-bottom: -1px !important;
+}
+
+.parentCid input[type="text"]:focus {
+  border: var(--post-form-field-input-focus-border) !important;
 }
 
 @media (max-width: 640px) {

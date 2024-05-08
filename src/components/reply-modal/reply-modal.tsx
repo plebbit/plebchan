@@ -88,6 +88,9 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
         <div className={styles.link}>
           <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
         </div>
+        <div className={styles.parentCid}>
+          <input type='text' readOnly value={`c/${parentCid && Plebbit.getShortCid(parentCid)}`} />
+        </div>
         <div className={styles.content}>
           <textarea
             cols={48}

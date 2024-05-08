@@ -57,7 +57,6 @@
   outline: var(--post-form-field-input-outline, revert);
   background-color: var(--post-form-field-input-background-color, revert);
   color: var(--post-form-field-input-color, revert);
-  filter: var(--filter80);
   padding: 2px 4px 3px;
   font-size: 10pt;
 }
