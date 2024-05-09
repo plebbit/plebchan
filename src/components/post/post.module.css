@@ -77,7 +77,6 @@
 }
 
 .postDesktop .postNumLink a:hover, .postDesktop .postNumLink span:hover, .replyDesktop .postNumLink a:hover, .replyDesktop .postNumLink span:hover {
-  cursor: pointer;
   color: var(--button-desktop-text-color-hover);
 }
 

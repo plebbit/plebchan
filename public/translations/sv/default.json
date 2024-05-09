@@ -72,5 +72,8 @@
   "interests": "intressen",
   "random": "slumpmässig",
   "international": "internationella",
-  "projects": "projekt"
+  "projects": "projekt",
+  "challenge_counter": "{{index}} av {{total}}",
+  "embed": "bädda in",
+  "remove": "ta bort"
 }

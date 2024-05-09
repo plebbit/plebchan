@@ -72,5 +72,8 @@
   "interests": "اهتمامات",
   "random": "عشوائي",
   "international": "دولية",
-  "projects": "مشاريع"
+  "projects": "مشاريع",
+  "challenge_counter": "{{index}} من {{total}}",
+  "embed": "تضمين",
+  "remove": "إزالة"
 }

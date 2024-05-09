@@ -72,5 +72,8 @@
   "interests": "minat",
   "random": "acak",
   "international": "internasional",
-  "projects": "proyek"
+  "projects": "proyek",
+  "challenge_counter": "{{index}} dari {{total}}",
+  "embed": "sematkan",
+  "remove": "hapus"
 }

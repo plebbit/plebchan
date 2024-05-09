@@ -19,3 +19,13 @@
 .hrWrapper hr {
   margin: 0;
 }
+
+.embedButton {
+  color: var(--button-desktop-text-color);
+  text-transform: capitalize;
+}
+
+.embedButton:hover {
+  cursor: pointer;
+  color: var(--button-desktop-text-color-hover);
+}

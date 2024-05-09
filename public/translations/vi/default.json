@@ -72,5 +72,8 @@
   "interests": "sở thích",
   "random": "ngẫu nhiên",
   "international": "quốc tế",
-  "projects": "dự án"
+  "projects": "dự án",
+  "challenge_counter": "{{index}} trong {{total}}",
+  "embed": "nhúng",
+  "remove": "xóa"
 }

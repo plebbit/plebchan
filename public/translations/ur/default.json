@@ -72,5 +72,8 @@
   "interests": "دلچسپیاں",
   "random": "بے ترتیب",
   "international": "بین الاقوامی",
-  "projects": "منصوبے"
+  "projects": "منصوبے",
+  "challenge_counter": "{{index}} میں سے {{total}}",
+  "embed": "ایمبیڈ",
+  "remove": "ہٹائیں"
 }

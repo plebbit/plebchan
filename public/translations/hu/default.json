@@ -72,5 +72,8 @@
   "interests": "érdeklődési körök",
   "random": "véletlenszerű",
   "international": "nemzetközi",
-  "projects": "projektek"
+  "projects": "projektek",
+  "challenge_counter": "{{index}} a(z) {{total}}-ból/ből",
+  "embed": "beágyaz",
+  "remove": "eltávolít"
 }

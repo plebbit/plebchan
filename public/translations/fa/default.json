@@ -72,5 +72,8 @@
   "interests": "علایق",
   "random": "تصادفی",
   "international": "بین‌المللی",
-  "projects": "پروژه‌ها"
+  "projects": "پروژه‌ها",
+  "challenge_counter": "{{index}} از {{total}}",
+  "embed": "جاسازی",
+  "remove": "حذف"
 }

@@ -72,5 +72,8 @@
   "interests": "עניינים",
   "random": "אקראי",
   "international": "בינלאומיים",
-  "projects": "פרויקטים"
+  "projects": "פרויקטים",
+  "challenge_counter": "{{index}} מתוך {{total}}",
+  "embed": "הטמע",
+  "remove": "הסר"
 }

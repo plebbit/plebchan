@@ -88,6 +88,9 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
         <div className={styles.link}>
           <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
         </div>
+        <div className={styles.parentCid}>
+          <input type='text' readOnly value={`c/${parentCid && Plebbit.getShortCid(parentCid)}`} />
+        </div>
         <div className={styles.content}>
           <textarea
             cols={48}
@@ -95,7 +98,10 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             wrap='soft'
             ref={textRef}
             placeholder={_.capitalize(t('comment'))}
-            onChange={(e) => setContent.content(e.target.value)}
+            onChange={(e) => {
+              const content = e.target.value.replace(/\n/g, '\n\n');
+              setContent.content(content);
+            }}
             autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
           />
         </div>

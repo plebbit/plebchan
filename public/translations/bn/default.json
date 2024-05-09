@@ -72,5 +72,8 @@
   "interests": "আগ্রহসমূহ",
   "random": "এলোমেলো",
   "international": "আন্তর্জাতিক",
-  "projects": "প্রকল্পসমূহ"
+  "projects": "প্রকল্পসমূহ",
+  "challenge_counter": "{{index}} থেকে {{total}}",
+  "embed": "এম্বেড",
+  "remove": "অপসারণ"
 }

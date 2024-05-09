@@ -72,5 +72,8 @@
   "interests": "interese",
   "random": "aleator",
   "international": "internaționale",
-  "projects": "proiecte"
+  "projects": "proiecte",
+  "challenge_counter": "{{index}} din {{total}}",
+  "embed": "încorpora",
+  "remove": "elimina"
 }
