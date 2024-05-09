@@ -1,3 +1,13 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+}
+
 .settingsModal {
   top: 60px;
   width: 400px;
@@ -6,10 +16,16 @@
   left: calc(50% - 25px);
   overflow-y: auto;
   margin-left: -178px;
-  position: absolute;
+  position: fixed;
+  z-index: 1000;
   padding: 2px 5px 5px;
   font-size: 14px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  background-color: var(--settings-modal-background-color);
+}
+
+.settingsModal select {
+  filter: var(--filter80);
 }
 
 .header {
@@ -20,6 +36,11 @@
   padding-bottom: 5px;
   text-align: center;
   line-height: 14px;
+  border-bottom: var(--settings-modal-header-border-bottom);
+}
+
+.title {
+  text-transform: capitalize;
 }
 
 .version {
@@ -27,6 +48,15 @@
   position: absolute;
   display: block;
   margin-left: 5px;
+}
+
+.version a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.version a:hover {
+  text-decoration: underline;
 }
 
 .closeButton {
@@ -39,6 +69,7 @@
   position: absolute;
   top: 5px;
   image-rendering: pixelated;
+  background-image: var(--settings-modal-close-button-background-image);
 }
 
 @media (max-width: 640px) {

@@ -149,6 +149,11 @@
   --reply-modal-field-input-border: 1px solid #aaa;
   --reply-modal-field-input-border-focus: 1px solid #ea8;
 
+  /* settings modal */
+  --settings-modal-background-color: #f0e0d6;
+  --settings-modal-header-border-bottom: 1px solid #d9bfb7;
+  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-red.png");
+
   /* stats */
   --stats-font-size: 11px;
 }
@@ -304,6 +309,11 @@
   --reply-modal-field-input-border: 1px solid #aaa;
   --reply-modal-field-input-border-focus: 1px solid #98e;
 
+  /* settings modal */
+  --settings-modal-background-color: #d6daf0;
+  --settings-modal-header-border-bottom: 1px solid #b7c5d9;
+  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+
   /* stats */
   --stats-font-size: 11px;
 }
@@ -425,6 +435,11 @@
   --side-arrows-color: #e0bfb7;
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
+
+  /* settings modal */
+  --settings-modal-background-color: #f0e0d6;
+  --settings-modal-header-border-bottom: 1px solid rgba(0,0,0,.2);
+  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-red.png");
 
   /* stats */
   --stats-font-size: 10pt;
@@ -561,6 +576,11 @@
   --side-arrows-color: #b7c5d9;
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
+
+  /* settings modal */
+  --settings-modal-background-color: #d6daf0;
+  --settings-modal-header-border-bottom: 1px solid rgba(0,0,0,.2);
+  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-blue.png");
 
   /* stats */
   --stats-font-size: 10pt;
@@ -720,6 +740,11 @@
   --select-background-color: #282a2e;
   --select-color: #c5c8c6;
 
+  /* settings modal */
+  --settings-modal-background-color: #282a2e;
+  --settings-modal-header-border-bottom: 1px solid #111;
+  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-dark.png");
+
   /* stats */
   --stats-font-size: 11px;
 }
@@ -856,6 +881,11 @@
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;
   --reply-modal-field-input-border-focus: 1px solid #ea8;
+
+  /* settings modal */
+  --settings-modal-background-color: #ddd;
+  --settings-modal-header-border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-photon.png");
 
   /* stats */
   --stats-font-size: 11px;
