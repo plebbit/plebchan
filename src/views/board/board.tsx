@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import useReplyModal from '../../hooks/use-reply-modal';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import Post from '../../components/post';
 import ReplyModal from '../../components/reply-modal';
+import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 
@@ -16,6 +17,7 @@ const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
 const Board = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress]) as string[];
   const sortType = 'active';
@@ -62,6 +64,7 @@ const Board = () => {
 
   return (
     <div className={styles.content}>
+      {location.pathname === `/p/${subplebbitAddress}/settings` && <SettingsModal />}
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
       {feed.length > 0 && (
         <>

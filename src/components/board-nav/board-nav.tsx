@@ -12,7 +12,9 @@ interface BoardNavProps {
 
 const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
   const { t } = useTranslation();
-  const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
+  const location = useLocation();
+  const params = useParams();
+  const isInCatalogView = isCatalogView(location.pathname, params);
 
   return (
     <div className={styles.boardNavDesktop}>
@@ -30,7 +32,8 @@ const BoardNavDesktop = ({ subplebbitAddresses }: BoardNavProps) => {
         ]
       </span>
       <span className={styles.navTopRight}>
-        [<Link to='/settings'>{t('settings')}</Link>] [<Link to='/'>{t('home')}</Link>]
+        [<Link to={!location.pathname.endsWith('settings') ? location.pathname + '/settings' : location.pathname}>{t('settings')}</Link>] [<Link to='/'>{t('home')}</Link>
+        ]
       </span>
     </div>
   );
@@ -68,7 +71,7 @@ const BoardNavMobile = ({ subplebbitAddresses, subplebbitAddress }: BoardNavProp
         {boardSelect}
       </div>
       <div className={styles.pageJump}>
-        <Link to='settings'>{t('settings')}</Link>
+        <Link to={useLocation().pathname + '/settings'}>{t('settings')}</Link>
         <Link to='/'>{t('home')}</Link>
       </div>
     </div>

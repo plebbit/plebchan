@@ -1,0 +1,50 @@
+.settingsModal {
+  top: 60px;
+  width: 400px;
+  height: auto;
+  max-height: 80%;
+  left: calc(50% - 25px);
+  overflow-y: auto;
+  margin-left: -178px;
+  position: absolute;
+  padding: 2px 5px 5px;
+  font-size: 14px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.header {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  line-height: 14px;
+}
+
+.version {
+  font-size: 11px;
+  position: absolute;
+  display: block;
+  margin-left: 5px;
+}
+
+.closeButton {
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  display: block;
+  background-size: 100%;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  image-rendering: pixelated;
+}
+
+@media (max-width: 640px) {
+  .settingsModal {
+    width: 350px !important;
+    max-height: 60% !important;
+    left: calc(50% - 2px) !important;
+  }
+}

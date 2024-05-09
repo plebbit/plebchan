@@ -9,7 +9,6 @@ import Home from './views/home';
 import NotFound from './views/not-found';
 import PendingPost from './views/pending-post';
 import PostPage from './views/post-page';
-import Settings from './views/settings';
 import BoardBanner from './components/board-banner';
 import { DesktopBoardButtons, MobileBoardButtons } from './components/board-buttons';
 import BoardNav from './components/board-nav';
@@ -70,17 +69,23 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route element={<BoardLayout />}>
             <Route path='/p/:subplebbitAddress' element={<Board />} />
+            <Route path='/p/:subplebbitAddress/settings' element={<Board />} />
 
             <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
+            <Route path='/p/:subplebbitAddress/catalog/settings' element={<Catalog />} />
 
             <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
+            <Route path='/p/:subplebbitAddress/c/:commentCid/settings' element={<PostPage />} />
+
             <Route path='/p/:subplebbitAddress/description' element={<PostPage />} />
+            <Route path='/p/:subplebbitAddress/description/settings' element={<PostPage />} />
+
             <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
+            <Route path='/p/:subplebbitAddress/rules/settings' element={<PostPage />} />
 
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
+            <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />
           </Route>
-          <Route path='/settings' element={<Settings />} />
-
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
