@@ -44,14 +44,6 @@
   --button-desktop-text-color-hover: red;
   --close-button-background-image: url("/public/assets/buttons/cross-red.png");
 
-  /* mobile buttons */
-  --button-font-size-mobile: 10pt;
-  --button-font-weight-mobile: 700;
-  --button-text-color-mobile: #800;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
-  --button-background-color-mobile: #f0e0d6;
-  --button-border-mobile: 1px solid #c0a69d;
-
   /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #d9bfb7;
@@ -87,6 +79,17 @@
   /* media */
   --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
+  /* mobile buttons */
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #800;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-color-mobile: #f0e0d6;
+  --button-border-mobile: 1px solid #c0a69d;
+
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
   /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-red.png");
   --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
@@ -116,9 +119,6 @@
   --post-mobile-file-info-text-color: #707070;
   --post-mobile-content-font-size: 11pt;
 
-  /* post capcodes */
-  --post-capcode-mod-text-color: purple;
-
   /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
@@ -134,10 +134,6 @@
   --post-form-field-input-outline: none;
   --post-form-field-input-focus-border: 1px solid #ea8;
 
-  /* reply modal */
-  --reply-modal-field-input-border: 1px solid #aaa;
-  --reply-modal-field-input-border-focus: 1px solid #ea8;
-
   /* quotelink */
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
@@ -148,6 +144,10 @@
   --side-arrows-color: #e0bfb7;
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
+
+  /* reply modal */
+  --reply-modal-field-input-border: 1px solid #aaa;
+  --reply-modal-field-input-border-focus: 1px solid #ea8;
 
   /* stats */
   --stats-font-size: 11px;
@@ -196,6 +196,14 @@
   --challenge-modal-title-font-size: 10pt;
   --challenge-modal-title-font-weight: 700;
 
+  /* desktop buttons */
+  --button-desktop-text-color: #34345c;
+  --button-desktop-text-color-hover: #d00;
+  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+
+  /* footer */
+  --footer-item-background-color-desktop: #eef2ff;
+
   /* homepage */
   --homepage-infobox-text-color: #000;
   --homepage-infobox-bar-text-color: #000;
@@ -212,22 +220,6 @@
   --homepage-box-link-text-decoration: none;
   --homepage-box-link-text-decoration-hover: underline;
 
-  /* desktop buttons */
-  --button-desktop-text-color: #34345c;
-  --button-desktop-text-color-hover: #d00;
-  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
-
-  /* mobile buttons */
-  --button-font-size-mobile: 10pt;
-  --button-font-weight-mobile: 700;
-  --button-text-color-mobile: #34345c;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
-  --button-background-color-mobile: #d6daf0;
-  --button-border-mobile: 1px solid #b7c5d9;
-
-  /* footer */
-  --footer-item-background-color-desktop: #eef2ff;
-
   /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #b7c5d9;
@@ -243,6 +235,17 @@
   /* media */
   --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
+  /* mobile buttons */
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #34345c;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
+  --button-background-color-mobile: #d6daf0;
+  --button-border-mobile: 1px solid #b7c5d9;
+
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
   /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-blue.png");
   --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
@@ -254,6 +257,21 @@
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
+
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+  --post-form-field-title-background-color: #98e;
+  --post-form-field-title-color: #000;
+  --post-form-field-border: 1px solid #000;
+  --post-form-field-title-font-weight: 700;
+  --post-form-field-title-padding: 0 5px;
+  --post-form-field-title-font-size: 10pt;
+  --post-form-field-input-border: 1px solid #aaa;
+  --post-form-field-font-family: arial, helvetica, sans-serif;
+  --post-form-field-input-appearance: none;
+  --post-form-field-input-outline: none;
+  --post-form-field-input-focus-border: 1px solid #98e;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
@@ -271,28 +289,6 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
-  /* post capcodes */
-  --post-capcode-mod-text-color: purple;
-
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
-  --post-form-field-title-background-color: #98e;
-  --post-form-field-title-color: #000;
-  --post-form-field-border: 1px solid #000;
-  --post-form-field-title-font-weight: 700;
-  --post-form-field-title-padding: 0 5px;
-  --post-form-field-title-font-size: 10pt;
-  --post-form-field-input-border: 1px solid #aaa;
-  --post-form-field-font-family: arial, helvetica, sans-serif;
-  --post-form-field-input-appearance: none;
-  --post-form-field-input-outline: none;
-  --post-form-field-input-focus-border: 1px solid #98e;
-
-  /* reply modal */
-  --reply-modal-field-input-border: 1px solid #aaa;
-  --reply-modal-field-input-border-focus: 1px solid #98e;
-
   /* quotelink */
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
@@ -303,6 +299,10 @@
   --side-arrows-color: #b7c5d9;
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
+
+  /* reply modal */
+  --reply-modal-field-input-border: 1px solid #aaa;
+  --reply-modal-field-input-border-focus: 1px solid #98e;
 
   /* stats */
   --stats-font-size: 11px;
@@ -353,14 +353,6 @@
   --button-text-decoration: underline;
   --close-button-background-image: url("/public/assets/buttons/cross-red.png");
 
-  /* mobile buttons */
-  --button-font-size-mobile: 11pt;
-  --button-font-weight-mobile: 700;
-  --button-text-color-mobile: #800;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
-  --button-background-color-mobile: #f0e0d6;
-  --button-border-mobile: 1px solid #c0a69d;
-
   /* footer */
   --footer-item-background-color-desktop: #fed;
 
@@ -375,6 +367,17 @@
   /* media */
   --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
+  /* mobile buttons */
+  --button-font-size-mobile: 11pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #800;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-color-mobile: #f0e0d6;
+  --button-border-mobile: 1px solid #c0a69d;
+
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
+
   /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-red.png");
   --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
@@ -386,6 +389,15 @@
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
+
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+  --post-form-field-title-background-color: #ea8;
+  --post-form-field-title-color: #800;
+  --post-form-field-border: none;
+  --post-form-field-title-font-weight: 700;
+  --post-form-field-title-font-size: 16px;
 
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
@@ -402,18 +414,6 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
-
-  /* post capcodes */
-  --post-capcode-mod-text-color: purple;
-
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
-  --post-form-field-title-background-color: #ea8;
-  --post-form-field-title-color: #800;
-  --post-form-field-border: none;
-  --post-form-field-title-font-weight: 700;
-  --post-form-field-title-font-size: 16px;
 
   /* quotelink */
   --post-quotelink-text-color: navy;
@@ -458,6 +458,12 @@
   --body-font-family: times new roman, serif;
   --body-font-size: 16px;
 
+  /* catalog post */
+  --catalog-post-menu-btn-color: navy;
+  --catalog-post-menu-btn-hover-color: red;
+  --catalog-post-menu-btn-opacity: 0.5;
+  --catalog-post-menu-btn-hover-opacity: 1;
+
   /* challenge modal */
   --challenge-modal-background-color: #d6daf0;
   --challenge-modal-border: 1px solid #b7c5d9;
@@ -466,6 +472,15 @@
   --challenge-modal-title-border: 1px solid #000;
   --challenge-modal-title-font-size: 12pt;
   --challenge-modal-title-font-weight: 700;
+
+  /* desktop buttons */
+  --button-desktop-text-color: #34345c;
+  --button-text-decoration: underline;
+  --button-desktop-text-color-hover: #d00;
+  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+
+  /* footer */
+  --footer-item-background-color-desktop: #eef2ff;
 
   /* homepage */
   --homepage-infobox-text-color: #000;
@@ -477,17 +492,8 @@
   --homepage-box-bar-background-color: #98e;
   --homepage-box-bar-text-color-hover: #fff;
 
-  /* catalog post */
-  --catalog-post-menu-btn-color: navy;
-  --catalog-post-menu-btn-hover-color: red;
-  --catalog-post-menu-btn-opacity: 0.5;
-  --catalog-post-menu-btn-hover-opacity: 1;
-
-  /* desktop buttons */
-  --button-desktop-text-color: #34345c;
-  --button-text-decoration: underline;
-  --button-desktop-text-color-hover: #d00;
-  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+  /* media */
+  --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
 
   /* mobile buttons */
   --button-font-size-mobile: 11pt;
@@ -497,9 +503,6 @@
   --button-background-color-mobile: #d6daf0;
   --button-border-mobile: 1px solid #b7c5d9;
 
-  /* footer */
-  --footer-item-background-color-desktop: #eef2ff;
-
   /* links */
   --post-link-text-color: #34345c;
   --post-link-text-decoration: underline;
@@ -508,8 +511,8 @@
   --post-content-link-text-decoration: none;
   --post-content-link-text-decoration-hover: none;
 
-  /* media */
-  --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+  /* post capcodes */
+  --post-capcode-mod-text-color: purple;
 
   /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-blue.png");
@@ -522,6 +525,15 @@
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
+  
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+  --post-form-field-title-background-color: #98e;
+  --post-form-field-title-color: #000;
+  --post-form-field-border: none;
+  --post-form-field-title-font-weight: 700;
+  --post-form-field-title-font-size: 16px;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
@@ -538,18 +550,6 @@
   --post-mobile-abbr-text-color: #707070;
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
-
-  /* post capcodes */
-  --post-capcode-mod-text-color: purple;
-  
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
-  --post-form-field-title-background-color: #98e;
-  --post-form-field-title-color: #000;
-  --post-form-field-border: none;
-  --post-form-field-title-font-weight: 700;
-  --post-form-field-title-font-size: 16px;
 
   /* quotelink */
   --post-quotelink-text-color: #d00;
@@ -573,16 +573,6 @@
   --body-font-color: #c5c8c6;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 13px;
-
-  /* homepage */
-  --homepage-infobox-text-color: #c5c8c6;
-  --homepage-infobox-bar-text-color: #c5c8c6;
-  --homepage-infobox-bar-background-color: rgb(33, 35, 38);
-  --homepage-box-background-color: #282a2e;
-  --homepage-box-bar-background-color: rgb(33, 35, 38);
-  --homepage-box-border-color: rgb(45, 47, 51);
-  --homepage-box-bar-text-color: #c5c8c6;
-  --homepage-box-bar-text-color-hover: #c5c8c6;
 
   /* board nav */
   --boardnav-font-size: 9pt;
@@ -624,13 +614,15 @@
   /* filter for inputs */
   --filter80: brightness(85%);
 
-  /* mobile buttons */
-  --button-font-size-mobile: 10pt;
-  --button-font-weight-mobile: 700;
-  --button-text-color-mobile: #707070;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade-dark.png");
-  --button-background-color-mobile: #1b1c1e;
-  --button-border-mobile: 1px solid #282a2e;
+  /* homepage */
+  --homepage-infobox-text-color: #c5c8c6;
+  --homepage-infobox-bar-text-color: #c5c8c6;
+  --homepage-infobox-bar-background-color: rgb(33, 35, 38);
+  --homepage-box-background-color: #282a2e;
+  --homepage-box-bar-background-color: rgb(33, 35, 38);
+  --homepage-box-border-color: rgb(45, 47, 51);
+  --homepage-box-bar-text-color: #c5c8c6;
+  --homepage-box-bar-text-color-hover: #c5c8c6;
 
   /* horizontal rule */
   --hr-border: none;
@@ -648,6 +640,17 @@
   /* media */
   --media-thumbnail-background-color: rgba(255, 255, 255, 0.01);
 
+  /* mobile buttons */
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #707070;
+  --button-background-image-mobile: url("/public/assets/buttons/button-fade-dark.png");
+  --button-background-color-mobile: #1b1c1e;
+  --button-border-mobile: 1px solid #282a2e;
+
+  /* post capcodes */
+  --post-capcode-mod-text-color: #81a2be;
+
   /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-dark.png");
   --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-dark.png");
@@ -659,6 +662,23 @@
   --post-menu-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-dark.png");
+
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+  --post-form-field-title-background-color: #282a2e;
+  --post-form-field-title-color: #c5c8c6;
+  --post-form-field-border: 1px solid #000;
+  --post-form-field-title-font-weight: 700;
+  --post-form-field-title-padding: 0 5px;
+  --post-form-field-title-font-size: 10pt;
+  --post-form-field-input-border: 1px solid #000;
+  --post-form-field-input-focus-border: 1px solid #515151;
+  --post-form-field-input-background-color: #282a2e;
+  --post-form-field-input-color: #c5c8c6;
+  --post-form-field-font-family: arial, helvetica, sans-serif;
+  --post-form-field-input-appearance: none;
+  --post-form-field-input-outline: none;
 
   /* post mobile */
   --post-mobile-background-color: #282A2E;
@@ -679,9 +699,6 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
-  /* post capcodes */
-  --post-capcode-mod-text-color: #81a2be;
-
   /* quotelink */
   --post-quotelink-text-color: #5f89ac;
   --post-quotelink-text-color-hover: #81a2be;
@@ -693,29 +710,10 @@
   --reply-desktop-background-color: #282a2e;
   --reply-desktop-border: 1px solid #282a2e;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
-  --post-form-field-title-background-color: #282a2e;
-  --post-form-field-title-color: #c5c8c6;
-  --post-form-field-border: 1px solid #000;
-  --post-form-field-title-font-weight: 700;
-  --post-form-field-title-padding: 0 5px;
-  --post-form-field-title-font-size: 10pt;
-  --post-form-field-input-border: 1px solid #000;
-  --post-form-field-input-focus-border: 1px solid #515151;
-  --post-form-field-input-background-color: #282a2e;
-  --post-form-field-input-color: #c5c8c6;
-  --post-form-field-font-family: arial, helvetica, sans-serif;
-  --post-form-field-input-appearance: none;
-  --post-form-field-input-outline: none;
-
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #515151;
-  --reply-modal-field-input-border-focus: 1px solid #757575;
-
-  /* reply modal */
   --reply-modal-field-border-focus: 1px solid #757575;
+  --reply-modal-field-input-border-focus: 1px solid #757575;
 
   /* select */
   --select-border: 1px solid #575a60;
@@ -772,13 +770,6 @@
   --button-desktop-text-color-hover: #f30;
   --close-button-background-image: url("/public/assets/buttons/cross-photon.png");
 
-  /* mobile buttons */
-  --button-font-size-mobile: 10pt;
-  --button-font-weight-mobile: 700;
-  --button-text-color-mobile: #333;
-  --button-background-image-mobile: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
-  --button-border-mobile: 1px solid #ccc;
-
   /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #ddd;
@@ -794,6 +785,16 @@
 
   /* media */
   --media-thumbnail-background-color: rgba(0, 0, 0, 0.05);
+
+  /* mobile buttons */
+  --button-font-size-mobile: 10pt;
+  --button-font-weight-mobile: 700;
+  --button-text-color-mobile: #333;
+  --button-background-image-mobile: linear-gradient(to bottom, rgba(238, 238, 238, 1) 0%, rgba(224, 224, 224, 1) 100%);
+  --button-border-mobile: 1px solid #ccc;
+
+  /* post capcodes */
+  --post-capcode-mod-text-color: #f60;
 
   /* post desktop */
   --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-photon.png");
@@ -826,9 +827,6 @@
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
-  /* post capcodes */
-  --post-capcode-mod-text-color: #f60;
-
   /* post form */
   --post-form-toggle-font-size: 22px;
   --post-form-toggle-font-weight: 700;
@@ -844,10 +842,6 @@
   --post-form-field-input-outline: none;
   --post-form-field-input-focus-border: 1px solid #ea8;
 
-  /* reply modal */
-  --reply-modal-field-input-border: 1px solid #aaa;
-  --reply-modal-field-input-border-focus: 1px solid #ea8;
-
   /* quotelink */
   --post-quotelink-text-color: #f60;
   --post-quotelink-text-color-hover: #f30;
@@ -858,6 +852,10 @@
   --side-arrows-color: #333;
   --reply-desktop-background-color: #ddd;
   --reply-desktop-border: 1px solid #ccc;
+
+  /* reply modal */
+  --reply-modal-field-input-border: 1px solid #aaa;
+  --reply-modal-field-input-border-focus: 1px solid #ea8;
 
   /* stats */
   --stats-font-size: 11px;
