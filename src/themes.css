@@ -278,7 +278,7 @@
   --post-form-field-input-appearance: none;
   --post-form-field-input-outline: none;
   --post-form-field-input-focus-border: 1px solid #98e;
-  --post-form-field-input-color: #c5c8c6;
+  --post-form-field-input-color: #000;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
@@ -410,6 +410,7 @@
   --post-form-field-border: none;
   --post-form-field-title-font-weight: 700;
   --post-form-field-title-font-size: 16px;
+  --post-form-field-input-color: #000;
 
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
@@ -551,6 +552,7 @@
   --post-form-field-border: none;
   --post-form-field-title-font-weight: 700;
   --post-form-field-title-font-size: 16px;
+  --post-form-field-input-color: #000;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
@@ -868,6 +870,7 @@
   --post-form-field-input-appearance: none;
   --post-form-field-input-outline: none;
   --post-form-field-input-focus-border: 1px solid #ea8;
+  --post-form-field-input-color: #000;
 
   /* quotelink */
   --post-quotelink-text-color: #f60;

@@ -63,6 +63,16 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
     }
   }, [isMobile, scrollY]);
 
+  const parentCidRef = useRef<HTMLSpanElement>(null);
+  const parentCidWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (parentCidRef.current && parentCidRef.current) {
+      const cidWidth = parentCidRef.current.offsetWidth;
+      parentCidRef.current.style.width = `${cidWidth}px`;
+    }
+  }, [parentCid]);
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>
@@ -89,7 +99,11 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
         </div>
         <div className={styles.content}>
-          <span className={styles.parentCid}>{`c/${parentCid && Plebbit.getShortCid(parentCid)}`}</span>
+          <span className={styles.parentCidWrapper} ref={parentCidWrapperRef}>
+            <span className={styles.parentCid} ref={parentCidRef}>
+              {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
+            </span>
+          </span>
           <textarea
             cols={48}
             rows={4}
