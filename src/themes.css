@@ -133,6 +133,7 @@
   --post-form-field-input-appearance: none;
   --post-form-field-input-outline: none;
   --post-form-field-input-focus-border: 1px solid #ea8;
+  --post-form-field-input-color: #000;
 
   /* quotelink */
   --post-quotelink-text-color: navy;
@@ -277,6 +278,7 @@
   --post-form-field-input-appearance: none;
   --post-form-field-input-outline: none;
   --post-form-field-input-focus-border: 1px solid #98e;
+  --post-form-field-input-color: #c5c8c6;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;

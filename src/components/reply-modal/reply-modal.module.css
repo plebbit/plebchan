@@ -56,8 +56,13 @@
   border: var(--reply-modal-field-input-border-focus, revert);
 }
 
+.content {
+  position: relative;
+}
+
 .content textarea {
   vertical-align: top;
+  padding-top: 2em;
 }
 
 .footer button {
@@ -66,12 +71,13 @@
   cursor: pointer;
 }
 
-.parentCid input[type="text"] {
-  margin-bottom: -1px !important;
-}
-
-.parentCid input[type="text"]:focus {
-  border: var(--reply-modal-field-input-border, revert) !important;
+.parentCid {
+  color: var(--post-form-field-input-color);
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  text-decoration: underline;
+  pointer-events: none;
 }
 
 @media (max-width: 640px) {
