@@ -72,6 +72,14 @@
   background-image: var(--settings-modal-close-button-background-image);
 }
 
+.languageSettings {
+  display: inline-block;
+}
+
+.setting {
+  margin-bottom: 8px;
+}
+
 @media (max-width: 640px) {
   .settingsModal {
     width: 350px !important;

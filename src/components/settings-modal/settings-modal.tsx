@@ -1,12 +1,72 @@
-import styles from './settings-modal.module.css';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useTheme from '../../hooks/use-theme';
 import { useTranslation } from 'react-i18next';
+import styles from './settings-modal.module.css';
+import useTheme from '../../hooks/use-theme';
 import packageJson from '../../../package.json';
-const commitRef = process.env.REACT_APP_COMMIT_REF;
 
-// TODO: remove theme and languages selectors for debugging
-const ThemeSettings = () => {
+const commitRef = process.env.REACT_APP_COMMIT_REF;
+const isElectron = window.isElectron === true;
+
+const CheckForUpdates = () => {
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+
+  const checkForUpdates = async () => {
+    try {
+      setLoading(true);
+      const packageRes = await fetch('https://raw.githubusercontent.com/plebbit/plebchan/master/package.json', { cache: 'no-cache' });
+      const packageData = await packageRes.json();
+      let updateAvailable = false;
+
+      if (packageJson.version !== packageData.version) {
+        const newVersionText = t('new_stable_version', { newVersion: packageData.version, oldVersion: packageJson.version });
+        const updateActionText = isElectron
+          ? t('download_latest_desktop', { link: 'https://github.com/plebbit/plebchan/releases/latest', interpolation: { escapeValue: false } })
+          : t('refresh_to_update');
+        alert(newVersionText + ' ' + updateActionText);
+        updateAvailable = true;
+      }
+
+      if (commitRef && commitRef.length > 0) {
+        const commitRes = await fetch('https://api.github.com/repos/plebbit/plebchan/commits?per_page=1&sha=development', { cache: 'no-cache' });
+        const commitData = await commitRes.json();
+
+        const latestCommitHash = commitData[0].sha;
+
+        if (latestCommitHash.trim() !== commitRef.trim()) {
+          const newVersionText =
+            t('new_development_version', { newCommit: latestCommitHash.slice(0, 7), oldCommit: commitRef.slice(0, 7) }) + ' ' + t('refresh_to_update');
+          alert(newVersionText);
+          updateAvailable = true;
+        }
+      }
+
+      if (!updateAvailable) {
+        alert(
+          commitRef
+            ? `${t('latest_development_version', { commit: commitRef.slice(0, 7), link: 'https://plebchan.eth.limo/#/', interpolation: { escapeValue: false } })}`
+            : `${t('latest_stable_version', { version: packageJson.version })}`,
+        );
+      }
+    } catch (error) {
+      alert('Failed to fetch latest version info: ' + error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={styles.checkForUpdates}>
+      {/* <Trans i18nKey='check_for_updates' components={{ 1: <button className={styles.checkForUpdatesButton} onClick={checkForUpdates} disabled={loading} /> }} /> */}
+      <button className={styles.checkForUpdatesButton} onClick={checkForUpdates} disabled={loading}>
+        {t('check_for_updates')}
+      </button>
+    </div>
+  );
+};
+
+const Style = () => {
   const [theme, setTheme] = useTheme();
 
   return (
@@ -24,7 +84,7 @@ const ThemeSettings = () => {
 // prettier-ignore
 const availableLanguages = ['ar', 'bn', 'cs', 'da', 'de', 'el', 'en', 'es', 'fa', 'fi', 'fil', 'fr', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'mr', 'nl', 'no', 'pl', 'pt', 'ro', 'ru', 'sq', 'sv', 'te', 'th', 'tr', 'uk', 'ur', 'vi', 'zh'];
 
-const LanguageSettings = () => {
+const InterfaceLanguage = () => {
   const { i18n } = useTranslation();
   const { changeLanguage, language } = i18n;
 
@@ -71,8 +131,15 @@ const SettingsModal = () => {
           <span className={styles.title}>{t('settings')}</span>
           <span className={styles.closeButton} title='close' onClick={closeModal} />
         </div>
-        <ThemeSettings />
-        <LanguageSettings />
+        <div className={styles.setting}>
+          <CheckForUpdates />
+        </div>
+        <div className={styles.setting}>
+          Style: <Style />
+        </div>
+        <div className={styles.setting}>
+          Interface Language: <InterfaceLanguage />
+        </div>
       </div>
     </>
   );
