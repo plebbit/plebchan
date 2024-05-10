@@ -254,13 +254,18 @@ const AccountSettings = () => {
 
   return (
     <div className={styles.accountSettings}>
-      <select value={account?.name} onChange={(e) => setActiveAccount(e.target.value)}>
-        {accountsOptions}
-      </select>
-      Account Data Preview:
+      <div>
+        <select value={account?.name} onChange={(e) => setActiveAccount(e.target.value)}>
+          {accountsOptions}
+        </select>
+        <button className={styles.createAccount} onClick={_createAccount}>
+          +
+        </button>
+      </div>
+      <div></div>
       <textarea value={text} onChange={(e) => setText(e.target.value)} autoCorrect='off' autoComplete='off' spellCheck='false' />
       <div>
-        <button onClick={_createAccount}>Create</button> a new account
+        <button onClick={saveAccount}>Save</button> <button onClick={() => setText(accountJson)}>Reset</button>
       </div>
       <div>
         <button onClick={_importAccount}>Import</button> full account data

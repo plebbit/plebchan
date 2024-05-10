@@ -144,6 +144,17 @@
 
 .accountSettings button {
   cursor: pointer;
+}
+
+.saveResetAccount {
+  margin-top: 15px;
+}
+
+.accountSettings textarea {
+  margin-bottom: 5px;
+}
+
+.accountSettings div {
   margin-top: 5px;
 }
 
@@ -151,9 +162,8 @@
   color: red;
 }
 
-.accountSettings select {
-  display: block;
-  margin-bottom: 10px;
+.accountSettings .createAccount {
+  margin-left: 5px;
 }
 
 @media (max-width: 640px) {
