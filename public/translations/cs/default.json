@@ -75,5 +75,16 @@
   "projects": "projekty",
   "challenge_counter": "{{index}} z {{total}}",
   "embed": "vložit",
-  "remove": "odstranit"
+  "remove": "odstranit",
+  "download_latest_desktop": "Stáhněte si nejnovější verzi pro stolní počítače zde: {{link}}",
+  "new_stable_version": "Nová stabilní verze k dispozici, plebchan v{{newVersion}}. Používáte plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Obnovte stránku pro aktualizaci",
+  "new_development_version": "Nová vývojová verze k dispozici, commit {{newCommit}}. Používáte commit {{oldCommit}}.",
+  "check_for_updates": "<1>Zkontrolujte</1> aktualizace",
+  "latest_development_version": "Jste na nejnovější vývojové verzi, commit {{commit}}. Chcete-li použít stabilní verzi, přejděte na {{link}}.",
+  "latest_stable_version": "Jste na nejnovější stabilní verzi, plebchan v{{version}}.",
+  "check": "zkontroluj",
+  "update": "Aktualizovat",
+  "style": "Styl",
+  "interface_language": "jazyk rozhraní"
 }

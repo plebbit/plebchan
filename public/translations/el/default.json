@@ -75,5 +75,16 @@
   "projects": "έργα",
   "challenge_counter": "{{index}} από {{total}}",
   "embed": "ενσωμάτωση",
-  "remove": "αφαίρεση"
+  "remove": "αφαίρεση",
+  "download_latest_desktop": "Κατεβάστε την πιο πρόσφατη έκδοση για επιτραπέζιο υπολογιστή εδώ: {{link}}",
+  "new_stable_version": "Νέα σταθερή έκδοση διαθέσιμη, plebchan v{{newVersion}}. Χρησιμοποιείτε plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Ανανεώστε τη σελίδα για να ενημερωθεί",
+  "new_development_version": "Νέα έκδοση ανάπτυξης διαθέσιμη, commit {{newCommit}}. Χρησιμοποιείτε commit {{oldCommit}}.",
+  "check_for_updates": "<1>Ελέγξτε</1> για ενημερώσεις",
+  "latest_development_version": "Βρίσκεστε στην πιο πρόσφατη έκδοση ανάπτυξης, commit {{commit}}. Για να χρησιμοποιήσετε την σταθερή έκδοση, πηγαίνετε στη διεύθυνση {{link}}.",
+  "latest_stable_version": "Βρίσκεστε στην πιο πρόσφατη σταθερή έκδοση, plebchan v{{version}}.",
+  "check": "έλεγχος",
+  "update": "Ενημέρωση",
+  "style": "Στυλ",
+  "interface_language": "γλώσσα διεπαφής"
 }

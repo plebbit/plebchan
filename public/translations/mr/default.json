@@ -75,5 +75,16 @@
   "projects": "प्रकल्प",
   "challenge_counter": "{{index}} पैकी {{total}}",
   "embed": "एम्बेड",
-  "remove": "काढा"
+  "remove": "काढा",
+  "download_latest_desktop": "येथे नवीन डेस्कटॉप संस्करण डाउनलोड करा: {{link}}",
+  "new_stable_version": "नवीन स्थिर संस्करण उपलब्ध आहे, plebchan v{{newVersion}}. आपण plebchan v{{oldVersion}} वापरत आहात.",
+  "refresh_to_update": "अपडेट करण्यासाठी पृष्ठ पुन्हा लोड करा",
+  "new_development_version": "नवीन विकास संस्करण उपलब्ध आहे, कमिट {{newCommit}}. आपण कमिट {{oldCommit}} वापरत आहात.",
+  "check_for_updates": "<1>चेक</1> अपडेट्ससाठी",
+  "latest_development_version": "तुम्ही आधुनिक विकास संस्करणावर आहात, कमिट {{commit}}. स्थिर संस्करण वापरण्यासाठी, {{link}} जा.",
+  "latest_stable_version": "तुम्ही आधुनिक स्थिर संस्करणावर आहात, plebchan v{{version}}.",
+  "check": "तपासा",
+  "update": "अद्यतनित करा",
+  "style": "शैली",
+  "interface_language": "इंटरफेस भाषा"
 }

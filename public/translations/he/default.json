@@ -75,5 +75,16 @@
   "projects": "פרויקטים",
   "challenge_counter": "{{index}} מתוך {{total}}",
   "embed": "הטמע",
-  "remove": "הסר"
+  "remove": "הסר",
+  "download_latest_desktop": "הורד את הגרסה האחרונה לשולחן העבודה כאן: {{link}}",
+  "new_stable_version": "גרסה יציבה חדשה זמינה, plebchan v{{newVersion}}. אתה משתמש plebchan v{{oldVersion}}.",
+  "refresh_to_update": "רענן את העמוד כדי לעדכן",
+  "new_development_version": "גרסת פיתוח חדשה זמינה, קומיט {{newCommit}}. אתה משתמש בקומיט {{oldCommit}}.",
+  "check_for_updates": "<1>בדוק</1> עבור עדכונים",
+  "latest_development_version": "אתה נמצא בגרסת הפיתוח האחרונה, קומיט {{commit}}. כדי להשתמש בגרסה יציבה, עבור אל {{link}}.",
+  "latest_stable_version": "אתה נמצא בגרסה היציבה האחרונה, plebchan v{{version}}.",
+  "check": "בדוק",
+  "update": "עדכן",
+  "style": "סגנון",
+  "interface_language": "שפת ממשק"
 }

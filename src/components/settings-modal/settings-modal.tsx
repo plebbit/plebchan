@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './settings-modal.module.css';
 import useTheme from '../../hooks/use-theme';
 import packageJson from '../../../package.json';
+import { useAccount } from '@plebbit/plebbit-react-hooks';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -57,12 +58,9 @@ const CheckForUpdates = () => {
   };
 
   return (
-    <div className={styles.checkForUpdates}>
-      {/* <Trans i18nKey='check_for_updates' components={{ 1: <button className={styles.checkForUpdatesButton} onClick={checkForUpdates} disabled={loading} /> }} /> */}
-      <button className={styles.checkForUpdatesButton} onClick={checkForUpdates} disabled={loading}>
-        {t('check_for_updates')}
-      </button>
-    </div>
+    <button className={styles.checkForUpdatesButton} onClick={checkForUpdates} disabled={loading}>
+      {t('check')}
+    </button>
   );
 };
 
@@ -105,6 +103,29 @@ const InterfaceLanguage = () => {
   );
 };
 
+const AccountSettings = () => {
+  const account = useAccount();
+
+  return (
+    <>
+      <div className={styles.setting}>{account ? account.username : 'Not logged in'}test</div>
+    </>
+  );
+};
+
+const PlebbitOptionsSettings = () => {
+  return (
+    <>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' />
+          Show NSFW content
+        </label>
+      </div>
+    </>
+  );
+};
+
 const SettingsModal = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -112,6 +133,9 @@ const SettingsModal = () => {
   const closeModal = () => {
     navigate(-1);
   };
+
+  const [showAccountSettings, setShowAccountSettings] = useState(false);
+  const [showPlebbitOptionsSettings, setShowPlebbitOptionsSettings] = useState(false);
 
   return (
     <>
@@ -132,14 +156,28 @@ const SettingsModal = () => {
           <span className={styles.closeButton} title='close' onClick={closeModal} />
         </div>
         <div className={styles.setting}>
-          <CheckForUpdates />
+          {t('update')}: <CheckForUpdates />
         </div>
         <div className={styles.setting}>
-          Style: <Style />
+          {t('style')}: <Style />
         </div>
         <div className={styles.setting}>
-          Interface Language: <InterfaceLanguage />
+          {t('interface_language')}: <InterfaceLanguage />
         </div>
+        <div className={`${styles.setting} ${styles.category}`}>
+          <label onClick={() => setShowAccountSettings(!showAccountSettings)}>
+            <span className={showAccountSettings ? styles.hideButton : styles.showButton} />
+            Account
+          </label>
+        </div>
+        {showAccountSettings && <AccountSettings />}
+        <div className={`${styles.setting} ${styles.category}`}>
+          <label onClick={() => setShowPlebbitOptionsSettings(!showPlebbitOptionsSettings)}>
+            <span className={showPlebbitOptionsSettings ? styles.hideButton : styles.showButton} />
+            Plebbit Options
+          </label>
+        </div>
+        {showPlebbitOptionsSettings && <PlebbitOptionsSettings />}
       </div>
     </>
   );

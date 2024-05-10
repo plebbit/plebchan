@@ -75,5 +75,16 @@
   "projects": "مشاريع",
   "challenge_counter": "{{index}} من {{total}}",
   "embed": "تضمين",
-  "remove": "إزالة"
+  "remove": "إزالة",
+  "download_latest_desktop": "حمل أحدث إصدار سطح المكتب هنا: {{link}}",
+  "new_stable_version": "إصدار مستقر جديد متاح، plebchan v{{newVersion}}. أنت تستخدم plebchan v{{oldVersion}}.",
+  "refresh_to_update": "قم بتحديث الصفحة للتحديث",
+  "new_development_version": "إصدار تطوير جديد متاح، كوميت {{newCommit}}. أنت تستخدم كوميت {{oldCommit}}.",
+  "check_for_updates": "<1>تحقق</1> من التحديثات",
+  "latest_development_version": "أنت على أحدث إصدار تطوير، النسخة {{commit}}. لاستخدام النسخة الثابتة، انتقل إلى {{link}}.",
+  "latest_stable_version": "أنت على أحدث نسخة ثابتة، plebchan v{{version}}.",
+  "check": "تحقق",
+  "update": "تحديث",
+  "style": "الأسلوب",
+  "interface_language": "لغة الواجهة"
 }

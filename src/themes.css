@@ -91,8 +91,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-red.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
+  --post-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/plus-red.png");
   --post-subject-text-color: #cc1105;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -100,7 +100,7 @@
   --post-menu-button-color: #000080;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
 
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
@@ -153,7 +153,13 @@
   /* settings modal */
   --settings-modal-background-color: #f0e0d6;
   --settings-modal-header-border-bottom: 1px solid #d9bfb7;
+  --settings-modal-border-top: none;
+  --settings-modal-border-right: 1px solid #d9bfb7;
+  --settings-modal-border-bottom: 1px solid #d9bfb7;
+  --settings-modal-border-left: none;
   --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-red.png");
+  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-red.png");
+  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
 
   /* stats */
   --stats-font-size: 11px;
@@ -253,8 +259,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-blue.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
+  --post-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/plus-blue.png");
   --post-subject-text-color: #0f0c5d;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -262,7 +268,7 @@
   --post-menu-button-color: #34345c;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -313,8 +319,14 @@
 
   /* settings modal */
   --settings-modal-background-color: #d6daf0;
+  --settings-modal-border-top: none;
+  --settings-modal-border-right: 1px solid #b7c5d9;
+  --settings-modal-border-bottom: 1px solid #b7c5d9;
+  --settings-modal-border-left: none;
   --settings-modal-header-border-bottom: 1px solid #b7c5d9;
   --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-blue.png");
+  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
 
   /* stats */
   --stats-font-size: 11px;
@@ -391,8 +403,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-red.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
+  --post-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/plus-red.png");
   --post-subject-text-color: #cc1105;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -400,7 +412,7 @@
   --post-menu-button-color: #000080;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-red.png");
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -441,8 +453,14 @@
 
   /* settings modal */
   --settings-modal-background-color: #f0e0d6;
+  --settings-modal-border-top: 1px solid rgba(0, 0, 0, 0.20);
+  --settings-modal-border-right: 1px solid rgba(0, 0, 0, 0.20);
+  --settings-modal-border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  --settings-modal-border-left: 1px solid rgba(0, 0, 0, 0.20);
   --settings-modal-header-border-bottom: 1px solid rgba(0,0,0,.2);
   --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-red.png");
+  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-red.png");
+  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
 
   /* stats */
   --stats-font-size: 10pt;
@@ -533,8 +551,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-blue.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
+  --post-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/plus-blue.png");
   --post-subject-text-color: #0f0c5d;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -542,7 +560,7 @@
   --post-menu-button-color: #34345c;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-blue.png");
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
   
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -583,8 +601,14 @@
 
   /* settings modal */
   --settings-modal-background-color: #d6daf0;
+  --settings-modal-border-top: 1px solid rgba(0, 0, 0, 0.20);
+  --settings-modal-border-right: 1px solid rgba(0, 0, 0, 0.20);
+  --settings-modal-border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+  --settings-modal-border-left: 1px solid rgba(0, 0, 0, 0.20);
   --settings-modal-header-border-bottom: 1px solid rgba(0,0,0,.2);
   --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-blue.png");
+  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
 
   /* stats */
   --stats-font-size: 10pt;
@@ -676,8 +700,8 @@
   --post-capcode-mod-text-color: #81a2be;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-dark.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-dark.png");
+  --post-hide-button-background-image: url("/public/assets/buttons/minus-dark.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/plus-dark.png");
   --post-subject-text-color: #b294bb;
   --post-subject-font-weight: 700;
   --post-name-text-color: #c5c8c6;
@@ -685,7 +709,7 @@
   --post-menu-button-color: #5F89AC;
   --post-menu-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-dark.png");
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-dark.png");
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -746,8 +770,14 @@
 
   /* settings modal */
   --settings-modal-background-color: #282a2e;
+  --settings-modal-border-top: 1px solid #111;
+  --settings-modal-border-right: 1px solid #111;
+  --settings-modal-border-bottom: 1px solid #111;
+  --settings-modal-border-left: 1px solid #111;
   --settings-modal-header-border-bottom: 1px solid #111;
   --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-dark.png");
+  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-dark.png");
+  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-dark.png");
 
   /* stats */
   --stats-font-size: 11px;
@@ -826,8 +856,8 @@
   --post-capcode-mod-text-color: #f60;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/post-expand-minus-photon.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/post-expand-plus-photon.png");
+  --post-hide-button-background-image: url("/public/assets/buttons/minus-photon.png");
+  --post-unhide-button-background-image: url("/public/assets/buttons/plus-photon.png");
   --post-subject-text-color: #111;
   --post-subject-font-weight: 700;
   --post-name-text-color: #004a99;
@@ -835,7 +865,7 @@
   --post-menu-button-color: #FF6600;
   --post-menu-button-color-hover: #FF3300;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/post-expand-plus-photon.png");
+  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-photon.png");
 
   /* post mobile */
   --post-mobile-background-color: #eee;
@@ -889,8 +919,14 @@
 
   /* settings modal */
   --settings-modal-background-color: #ddd;
+  --settings-modal-border-top: 1px solid #ccc;
+  --settings-modal-border-right: 1px solid #ccc;
+  --settings-modal-border-bottom: 1px solid #ccc;
+  --settings-modal-border-left: 1px solid #ccc;
   --settings-modal-header-border-bottom: 1px solid rgba(0, 0, 0, 0.20);
   --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-photon.png");
+  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-photon.png");
+  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-photon.png");
 
   /* stats */
   --stats-font-size: 11px;

@@ -75,5 +75,16 @@
   "projects": "проекти",
   "challenge_counter": "{{index}} з {{total}}",
   "embed": "вбудувати",
-  "remove": "видалити"
+  "remove": "видалити",
+  "download_latest_desktop": "Завантажте останню версію для робочого столу тут: {{link}}",
+  "new_stable_version": "Нова стабільна версія доступна, plebchan v{{newVersion}}. Ви використовуєте plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Оновіть сторінку, щоб оновити",
+  "new_development_version": "Нова версія розробки доступна, коміт {{newCommit}}. Ви використовуєте коміт {{oldCommit}}.",
+  "check_for_updates": "<1>Перевірити</1> оновлення",
+  "latest_development_version": "Ви використовуєте останню версію розробки, коміт {{commit}}. Щоб використовувати стабільну версію, перейдіть за посиланням {{link}}.",
+  "latest_stable_version": "Ви використовуєте останню стабільну версію, plebchan v{{version}}.",
+  "check": "перевірте",
+  "update": "Оновити",
+  "style": "Стиль",
+  "interface_language": "мова інтерфейсу"
 }

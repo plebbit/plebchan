@@ -75,5 +75,16 @@
   "projects": "mga proyekto",
   "challenge_counter": "{{index}} ng {{total}}",
   "embed": "i-embed",
-  "remove": "alisin"
+  "remove": "alisin",
+  "download_latest_desktop": "I-download ang pinakabagong bersyon ng desktop dito: {{link}}",
+  "new_stable_version": "Bagong stable na bersyon na magagamit, plebchan v{{newVersion}}. Ginagamit mo ang plebchan v{{oldVersion}}.",
+  "refresh_to_update": "I-refresh ang pahina upang i-update",
+  "new_development_version": "Bagong development version na magagamit, commit {{newCommit}}. Ginagamit mo ang commit {{oldCommit}}.",
+  "check_for_updates": "<1>Tingnan</1> para sa mga update",
+  "latest_development_version": "Nasa pinakabagong bersyon ng pag-unlad, commit {{commit}}. Upang gamitin ang stable na bersyon, pumunta sa {{link}}.",
+  "latest_stable_version": "Nasa pinakabagong stable na bersyon, plebchan v{{version}}.",
+  "check": "suriin",
+  "update": "I-update",
+  "style": "Estilo",
+  "interface_language": "wika ng interface"
 }

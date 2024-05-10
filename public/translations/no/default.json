@@ -75,5 +75,16 @@
   "projects": "prosjekter",
   "challenge_counter": "{{index}} av {{total}}",
   "embed": "bygg inn",
-  "remove": "fjern"
+  "remove": "fjern",
+  "download_latest_desktop": "Last ned den nyeste skrivebordsversjonen her: {{link}}",
+  "new_stable_version": "Ny stabil versjon tilgjengelig, plebchan v{{newVersion}}. Du bruker plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Oppdater siden for å oppdatere",
+  "new_development_version": "Ny utviklingsversjon tilgjengelig, commit {{newCommit}}. Du bruker commit {{oldCommit}}.",
+  "check_for_updates": "<1>Sjekk</1> for oppdateringer",
+  "latest_development_version": "Du bruker den nyeste utviklingsversjonen, commit {{commit}}. For å bruke den stabile versjonen, gå til {{link}}.",
+  "latest_stable_version": "Du bruker den nyeste stabile versjonen, plebchan v{{version}}.",
+  "check": "sjekk",
+  "update": "Oppdater",
+  "style": "Stil",
+  "interface_language": "grensesnittspråk"
 }

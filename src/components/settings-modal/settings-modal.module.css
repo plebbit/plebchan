@@ -4,24 +4,28 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.25);
   z-index: 900;
 }
 
 .settingsModal {
-  top: 60px;
-  width: 400px;
+  top: 25px;
+  width: 394px;
   height: auto;
   max-height: 80%;
-  left: calc(50% - 25px);
+  left: calc(50% - 22px);
   overflow-y: auto;
   margin-left: -178px;
   position: fixed;
   z-index: 1000;
-  padding: 2px 5px 5px;
+  padding: 2px;
   font-size: 14px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   background-color: var(--settings-modal-background-color);
+  border-top: var(--settings-modal-border-top);
+  border-right: var(--settings-modal-border-right);
+  border-bottom: var(--settings-modal-border-bottom);
+  border-left: var(--settings-modal-border-left);
 }
 
 .settingsModal select {
@@ -78,6 +82,44 @@
 
 .setting {
   margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.hideButton, .showButton {
+  vertical-align: text-bottom;
+  margin-right: 5px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  image-rendering: pixelated;
+}
+
+.hideButton {
+  background-image: var(--settings-modal-hide-button-background-image);
+}
+
+.showButton {
+  background-image: var(--settings-modal-show-button-background-image);
+}
+
+.category {
+  margin: 10px 0;
+}
+
+.category label {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.checkForUpdatesButton {
+  text-transform: capitalize;
+}
+
+.setting, .category {
+  margin-left: 5px;
 }
 
 @media (max-width: 640px) {
