@@ -28,7 +28,7 @@
   border-left: var(--settings-modal-border-left);
 }
 
-.settingsModal select {
+.settingsModal select, .settingsModal button, .settingsModal textarea {
   filter: var(--filter80);
 }
 
@@ -120,6 +120,40 @@
 
 .setting, .category {
   margin-left: 5px;
+}
+
+.accountSettings {
+  margin-left: 10px;
+}
+
+.accountSettings textarea {
+  display: block;
+  font-family: dejavu sans mono, consolas, andale mono, lucida console, monospace;
+  outline: none;
+  border: 1px solid #aaa;
+  font-size: 11px;
+  margin: 0 2px 0 0;
+  padding: 2px 4px 3px;
+  min-height: 150px;
+  width: 95%;
+}
+
+.accountSettings textarea:focus {
+  border-color: 1px solid #98e;
+}
+
+.accountSettings button {
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.deleteAccount, .deleteAccount button {
+  color: red;
+}
+
+.accountSettings select {
+  display: block;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 640px) {
