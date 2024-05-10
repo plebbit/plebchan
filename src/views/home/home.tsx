@@ -5,9 +5,11 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import usePopularPosts from '../../hooks/use-popular-posts';
+import { getCommentMediaInfo } from '../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
+import { shuffle } from 'lodash';
 
 // for temporary hook to fetch subplebbit stats
 import { useMemo } from 'react';
@@ -207,61 +209,7 @@ const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThrea
 
 const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
   const { t } = useTranslation();
-  const [popularPosts, setPopularPosts] = useState<any[]>([]);
-
-  useEffect(() => {
-    const subplebbitToPost: { [key: string]: any } = {};
-    const uniqueLinks: Set<string> = new Set();
-
-    subplebbits.forEach((subplebbit: any) => {
-      let maxTimestamp = -Infinity;
-      let mostRecentPost = null;
-
-      if (subplebbit?.posts?.pages?.hot?.comments) {
-        for (const post of Object.values(subplebbit.posts.pages.hot.comments as Comment)) {
-          const { deleted, link, locked, pinned, removed, replyCount, timestamp } = post;
-          const commentMediaInfo = getCommentMediaInfo(post);
-          const isMediaShowed = getHasThumbnail(commentMediaInfo, link);
-
-          if (
-            isMediaShowed &&
-            replyCount > 0 &&
-            !deleted &&
-            !removed &&
-            !locked &&
-            !pinned &&
-            timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 &&
-            timestamp > maxTimestamp &&
-            !uniqueLinks.has(link)
-          ) {
-            maxTimestamp = post.timestamp;
-            mostRecentPost = post;
-            uniqueLinks.add(link);
-          }
-        }
-
-        if (mostRecentPost) {
-          subplebbitToPost[subplebbit.address] = { post: mostRecentPost, timestamp: maxTimestamp };
-        }
-      }
-    });
-
-    const sortedPosts = Object.values(subplebbitToPost)
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .map((item) => item.post);
-
-    setPopularPosts((prevPosts) => {
-      const updatedPosts = [...prevPosts];
-      sortedPosts.forEach((post) => {
-        if (!updatedPosts.find((p) => p.cid === post.cid)) {
-          if (updatedPosts.length < 8) {
-            updatedPosts.push(post);
-          }
-        }
-      });
-      return updatedPosts;
-    });
-  }, [subplebbits]);
+  const popularPosts = usePopularPosts(subplebbits);
 
   return (
     <div className={styles.box}>
