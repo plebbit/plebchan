@@ -86,5 +86,7 @@
   "check": "kontrol et",
   "update": "Güncelle",
   "style": "Stil",
-  "interface_language": "arayüz dili"
+  "interface_language": "arayüz dili",
+  "delete_confirm": "{{value}}'yi silmek istediğinizden emin misiniz?",
+  "double_confirm": "Gerçekten emin misiniz? Bu eylem geri alınamaz."
 }

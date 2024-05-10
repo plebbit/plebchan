@@ -86,5 +86,7 @@
   "check": "ellenőriz",
   "update": "Frissítés",
   "style": "Stílus",
-  "interface_language": "felület nyelve"
+  "interface_language": "felület nyelve",
+  "delete_confirm": "Biztosan törölni szeretné {{value}}?",
+  "double_confirm": "Biztos vagy benne? Ez a művelet visszafordíthatatlan."
 }

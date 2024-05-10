@@ -86,5 +86,7 @@
   "check": "periksa",
   "update": "Perbarui",
   "style": "Gaya",
-  "interface_language": "bahasa antarmuka"
+  "interface_language": "bahasa antarmuka",
+  "delete_confirm": "Apakah Anda yakin ingin menghapus {{value}}?",
+  "double_confirm": "Apakah Anda benar-benar yakin? Tindakan ini tidak dapat diurungkan."
 }

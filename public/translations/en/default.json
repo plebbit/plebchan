@@ -86,5 +86,7 @@
   "check": "check",
   "update": "Update",
   "style": "Style",
-  "interface_language": "interface language"
+  "interface_language": "interface language",
+  "delete_confirm": "Are you sure you want to delete {{value}}?",
+  "double_confirm": "Are you really sure? This action is irreversible."
 }

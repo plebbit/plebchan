@@ -86,5 +86,7 @@
   "check": "controlla",
   "update": "Aggiorna",
   "style": "Stile",
-  "interface_language": "lingua interfaccia"
+  "interface_language": "lingua interfaccia",
+  "delete_confirm": "Confermi di voler cancellare {{value}}?",
+  "double_confirm": "Sei davvero sicuro? Questa azione è irreversibile."
 }

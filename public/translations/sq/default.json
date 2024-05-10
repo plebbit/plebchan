@@ -86,5 +86,7 @@
   "check": "kontrollo",
   "update": "Përditëso",
   "style": "Stil",
-  "interface_language": "gjuha e ndërfaqes"
+  "interface_language": "gjuha e ndërfaqes",
+  "delete_confirm": "A jeni të sigurt se dëshironi të fshini {{value}}?",
+  "double_confirm": "A jeni të sigurtë? Ky veprim është i papërkthyeshëm."
 }

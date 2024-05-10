@@ -86,5 +86,7 @@
   "check": "tarkista",
   "update": "Päivitä",
   "style": "Tyyli",
-  "interface_language": "käyttöliittymän kieli"
+  "interface_language": "käyttöliittymän kieli",
+  "delete_confirm": "Haluatko varmasti poistaa {{value}}?",
+  "double_confirm": "Oletko varma? Tämä toiminto on peruuttamaton."
 }

@@ -86,5 +86,7 @@
   "check": "verifică",
   "update": "Actualizează",
   "style": "Stil",
-  "interface_language": "limba interfeței"
+  "interface_language": "limba interfeței",
+  "delete_confirm": "Sunteți sigur că doriți să ștergeți {{value}}?",
+  "double_confirm": "Sunteți sigur? Această acțiune este ireversibilă."
 }
