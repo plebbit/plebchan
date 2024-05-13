@@ -75,5 +75,18 @@
   "projects": "projecten",
   "challenge_counter": "{{index}} van {{total}}",
   "embed": "insluiten",
-  "remove": "verwijderen"
+  "remove": "verwijderen",
+  "download_latest_desktop": "Download de nieuwste desktopversie hier: {{link}}",
+  "new_stable_version": "Nieuwe stabiele versie beschikbaar, plebchan v{{newVersion}}. Je gebruikt plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Vernieuw de pagina om bij te werken",
+  "new_development_version": "Nieuwe ontwikkelingsversie beschikbaar, commit {{newCommit}}. Je gebruikt commit {{oldCommit}}.",
+  "check_for_updates": "<1>Controleer</1> op updates",
+  "latest_development_version": "Je gebruikt de nieuwste ontwikkelingsversie, commit {{commit}}. Ga naar {{link}} om de stabiele versie te gebruiken.",
+  "latest_stable_version": "Je gebruikt de nieuwste stabiele versie, plebchan v{{version}}.",
+  "check": "controleren",
+  "update": "Bijwerken",
+  "style": "Stijl",
+  "interface_language": "interface taal",
+  "delete_confirm": "Weet je zeker dat je {{value}} wilt verwijderen?",
+  "double_confirm": "Weet u het zeker? Deze actie is onomkeerbaar."
 }

@@ -7,20 +7,24 @@ import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 import useReplyModal from '../../hooks/use-reply-modal';
 import Post from '../../components/post';
 import ReplyModal from '../../components/reply-modal';
+import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 
 const PostPage = () => {
   const { t } = useTranslation();
   const params = useParams();
+  const location = useLocation();
   const { commentCid, subplebbitAddress } = params;
+  const showSettings =
+    location.pathname === `/p/${subplebbitAddress}/c/${commentCid}/settings` ||
+    location.pathname === `/p/${subplebbitAddress}/description/settings` ||
+    location.pathname === `/p/${subplebbitAddress}/rules/settings`;
+  const isInDescriptionView = isDescriptionView(location.pathname, params);
+  const isInRulesView = isRulesView(location.pathname, params);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
-
-  const location = useLocation();
-  const isInDescriptionView = isDescriptionView(location.pathname, params);
-  const isInRulesView = isRulesView(location.pathname, params);
 
   const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
@@ -34,6 +38,7 @@ const PostPage = () => {
 
   return (
     <div className={styles.content}>
+      {showSettings && <SettingsModal />}
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
       {isInDescriptionView ? (
         <SubplebbitDescription

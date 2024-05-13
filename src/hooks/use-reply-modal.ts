@@ -27,7 +27,7 @@ const useReplyModal = () => {
         setShowReplyModal(true);
       }
     },
-    [activeCid, closeModal, isMobile],
+    [activeCid, isMobile],
   );
 
   return { activeCid, closeModal, openReplyModal, scrollY, showReplyModal };

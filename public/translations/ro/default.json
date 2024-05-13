@@ -75,5 +75,18 @@
   "projects": "proiecte",
   "challenge_counter": "{{index}} din {{total}}",
   "embed": "încorpora",
-  "remove": "elimina"
+  "remove": "elimina",
+  "download_latest_desktop": "Descărcați cea mai recentă versiune de desktop aici: {{link}}",
+  "new_stable_version": "Noua versiune stabilă disponibilă, plebchan v{{newVersion}}. Folosiți plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Actualizați pagina pentru a actualiza",
+  "new_development_version": "Noua versiune de dezvoltare disponibilă, commit {{newCommit}}. Folosiți commit {{oldCommit}}.",
+  "check_for_updates": "<1>Verifică</1> pentru actualizări",
+  "latest_development_version": "Ești pe cea mai recentă versiune de dezvoltare, commit {{commit}}. Pentru a folosi versiunea stabilă, mergi la {{link}}.",
+  "latest_stable_version": "Ești pe cea mai recentă versiune stabilă, plebchan v{{version}}.",
+  "check": "verifică",
+  "update": "Actualizează",
+  "style": "Stil",
+  "interface_language": "limba interfeței",
+  "delete_confirm": "Sunteți sigur că doriți să ștergeți {{value}}?",
+  "double_confirm": "Sunteți sigur? Această acțiune este ireversibilă."
 }

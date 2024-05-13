@@ -75,5 +75,18 @@
   "projects": "projekt",
   "challenge_counter": "{{index}} av {{total}}",
   "embed": "bädda in",
-  "remove": "ta bort"
+  "remove": "ta bort",
+  "download_latest_desktop": "Ladda ner den senaste skrivbordsversionen här: {{link}}",
+  "new_stable_version": "Ny stabil version tillgänglig, plebchan v{{newVersion}}. Du använder plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Uppdatera sidan för att uppdatera",
+  "new_development_version": "Ny utvecklingsversion tillgänglig, commit {{newCommit}}. Du använder commit {{oldCommit}}.",
+  "check_for_updates": "<1>Kontrollera</1> uppdateringar",
+  "latest_development_version": "Du är på den senaste utvecklingsversionen, commit {{commit}}. För att använda den stabila versionen, gå till {{link}}.",
+  "latest_stable_version": "Du är på den senaste stabila versionen, plebchan v{{version}}.",
+  "check": "kontrollera",
+  "update": "Uppdatera",
+  "style": "Stil",
+  "interface_language": "gränssnittsspråk",
+  "delete_confirm": "Är du säker på att du vill ta bort {{value}}?",
+  "double_confirm": "Är du verkligen säker? Denna åtgärd är oåterkallelig."
 }

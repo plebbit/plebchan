@@ -75,5 +75,18 @@
   "projects": "dự án",
   "challenge_counter": "{{index}} trong {{total}}",
   "embed": "nhúng",
-  "remove": "xóa"
+  "remove": "xóa",
+  "download_latest_desktop": "Tải xuống phiên bản máy tính để bàn mới nhất tại đây: {{link}}",
+  "new_stable_version": "Phiên bản ổn định mới có sẵn, plebchan v{{newVersion}}. Bạn đang sử dụng plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Làm mới trang để cập nhật",
+  "new_development_version": "Phiên bản phát triển mới có sẵn, commit {{newCommit}}. Bạn đang sử dụng commit {{oldCommit}}.",
+  "check_for_updates": "<1>Kiểm tra</1> cập nhật",
+  "latest_development_version": "Bạn đang sử dụng phiên bản phát triển mới nhất, commit {{commit}}. Để sử dụng phiên bản ổn định, hãy truy cập {{link}}.",
+  "latest_stable_version": "Bạn đang sử dụng phiên bản ổn định mới nhất, plebchan v{{version}}.",
+  "check": "kiểm tra",
+  "update": "Cập nhật",
+  "style": "Phong cách",
+  "interface_language": "ngôn ngữ giao diện",
+  "delete_confirm": "Bạn có chắc chắn muốn xóa {{value}} không?",
+  "double_confirm": "Bạn có chắc chắn không? Hành động này không thể hoàn tác."
 }

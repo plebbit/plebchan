@@ -75,5 +75,18 @@
   "projects": "projekter",
   "challenge_counter": "{{index}} af {{total}}",
   "embed": "integrer",
-  "remove": "fjern"
+  "remove": "fjern",
+  "download_latest_desktop": "Download den seneste version til skrivebordet her: {{link}}",
+  "new_stable_version": "Ny stabil version tilgængelig, plebchan v{{newVersion}}. Du bruger plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Opdater siden for at opdatere",
+  "new_development_version": "Ny udviklingsversion tilgængelig, commit {{newCommit}}. Du bruger commit {{oldCommit}}.",
+  "check_for_updates": "<1>Tjek</1> for opdateringer",
+  "latest_development_version": "Du er på den nyeste udviklingsversion, commit {{commit}}. For at bruge den stabile version, gå til {{link}}.",
+  "latest_stable_version": "Du er på den seneste stabile version, plebchan v{{version}}.",
+  "check": "tjek",
+  "update": "Opdater",
+  "style": "Stil",
+  "interface_language": "grænsefladesprog",
+  "delete_confirm": "Er du sikker på, at du vil slette {{value}}?",
+  "double_confirm": "Er du virkelig sikker? Denne handling er uigenkaldelig."
 }

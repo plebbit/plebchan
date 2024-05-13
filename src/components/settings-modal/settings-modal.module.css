@@ -1,0 +1,175 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 900;
+}
+
+.settingsModal {
+  top: 25px;
+  width: 394px;
+  height: auto;
+  max-height: 80%;
+  left: calc(50% - 22px);
+  overflow-y: auto;
+  margin-left: -178px;
+  position: fixed;
+  z-index: 1000;
+  padding: 2px;
+  font-size: 14px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  background-color: var(--settings-modal-background-color);
+  border-top: var(--settings-modal-border-top);
+  border-right: var(--settings-modal-border-right);
+  border-bottom: var(--settings-modal-border-bottom);
+  border-left: var(--settings-modal-border-left);
+}
+
+.settingsModal select, .settingsModal button, .settingsModal textarea {
+  filter: var(--filter80);
+}
+
+.header {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  line-height: 14px;
+  border-bottom: var(--settings-modal-header-border-bottom);
+}
+
+.title {
+  text-transform: capitalize;
+}
+
+.version {
+  font-size: 11px;
+  position: absolute;
+  display: block;
+  margin-left: 5px;
+}
+
+.version a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.version a:hover {
+  text-decoration: underline;
+}
+
+.closeButton {
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  display: block;
+  background-size: 100%;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  image-rendering: pixelated;
+  background-image: var(--settings-modal-close-button-background-image);
+}
+
+.languageSettings {
+  display: inline-block;
+}
+
+.setting {
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.hideButton, .showButton {
+  vertical-align: text-bottom;
+  margin-right: 5px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  image-rendering: pixelated;
+}
+
+.hideButton {
+  background-image: var(--settings-modal-hide-button-background-image);
+}
+
+.showButton {
+  background-image: var(--settings-modal-show-button-background-image);
+}
+
+.category {
+  margin: 10px 0;
+}
+
+.category label {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.checkForUpdatesButton {
+  text-transform: capitalize;
+}
+
+.setting, .category {
+  margin-left: 5px;
+}
+
+.accountSettings {
+  margin-left: 10px;
+}
+
+.accountSettings textarea {
+  display: block;
+  font-family: dejavu sans mono, consolas, andale mono, lucida console, monospace;
+  outline: none;
+  border: 1px solid #aaa;
+  font-size: 11px;
+  margin: 0 2px 0 0;
+  padding: 2px 4px 3px;
+  min-height: 150px;
+  width: 95%;
+}
+
+.accountSettings textarea:focus {
+  border-color: 1px solid #98e;
+}
+
+.accountSettings button {
+  cursor: pointer;
+}
+
+.saveResetAccount {
+  margin-top: 15px;
+}
+
+.accountSettings textarea {
+  margin-bottom: 5px;
+}
+
+.accountSettings div {
+  margin-top: 5px;
+}
+
+.deleteAccount, .deleteAccount button {
+  color: red;
+}
+
+.accountSettings .createAccount {
+  margin-left: 5px;
+}
+
+@media (max-width: 640px) {
+  .settingsModal {
+    width: 350px !important;
+    max-height: 60% !important;
+    left: calc(50% - 2px) !important;
+  }
+}

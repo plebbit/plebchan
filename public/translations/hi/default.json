@@ -75,5 +75,18 @@
   "projects": "परियोजनाएं",
   "challenge_counter": "{{index}} में से {{total}}",
   "embed": "एम्बेड",
-  "remove": "हटाएं"
+  "remove": "हटाएं",
+  "download_latest_desktop": "यहां सबसे नवीन डेस्कटॉप संस्करण डाउनलोड करें: {{link}}",
+  "new_stable_version": "नई स्थिर संस्करण उपलब्ध है, plebchan v{{newVersion}}। आप plebchan v{{oldVersion}} का उपयोग कर रहे हैं।",
+  "refresh_to_update": "अपडेट करने के लिए पृष्ठ को रिफ्रेश करें",
+  "new_development_version": "नई डेवलपमेंट संस्करण उपलब्ध है, कमिट {{newCommit}}। आप कमिट {{oldCommit}} का उपयोग कर रहे हैं।",
+  "check_for_updates": "<1>जाँचें</1> अपडेट के लिए",
+  "latest_development_version": "आप नवीनतम विकास संस्करण पर हैं, कमिट {{commit}}। स्थिर संस्करण का उपयोग करने के लिए, {{link}} पर जाएं।",
+  "latest_stable_version": "आप नवीनतम स्थिर संस्करण पर हैं, plebchan v{{version}}।",
+  "check": "जांचें",
+  "update": "अपडेट करें",
+  "style": "शैली",
+  "interface_language": "इंटरफ़ेस भाषा",
+  "delete_confirm": "क्या आप निश्चित हैं कि आप {{value}} को हटाना चाहते हैं?",
+  "double_confirm": "क्या आप वास्तव में सुनिश्चित हैं? यह क्रिया अपरिवर्तनीय है।"
 }

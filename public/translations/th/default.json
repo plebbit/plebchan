@@ -75,5 +75,18 @@
   "projects": "โครงการ",
   "challenge_counter": "{{index}} จาก {{total}}",
   "embed": "ฝัง",
-  "remove": "ลบ"
+  "remove": "ลบ",
+  "download_latest_desktop": "ดาวน์โหลดเวอร์ชันเดสก์ท็อปล่าสุดที่นี่: {{link}}",
+  "new_stable_version": "มีเวอร์ชันที่มีความเสถียรใหม่ที่ใช้ได้, plebchan v{{newVersion}} คุณกำลังใช้ plebchan v{{oldVersion}}",
+  "refresh_to_update": "รีเฟรชหน้าเพื่ออัปเดต",
+  "new_development_version": "มีเวอร์ชันการพัฒนาใหม่ที่ใช้ได้, คอมมิต {{newCommit}} คุณกำลังใช้คอมมิต {{oldCommit}}",
+  "check_for_updates": "<1>ตรวจสอบ</1> อัปเดต",
+  "latest_development_version": "คุณกำลังใช้รุ่นการพัฒนาล่าสุด, คอมมิต {{commit}} ในการใช้รุ่นเสถียร ไปที่ {{link}}.",
+  "latest_stable_version": "คุณกำลังใช้รุ่นเสถียรล่าสุด, plebchan v{{version}}.",
+  "check": "ตรวจสอบ",
+  "update": "อัปเดต",
+  "style": "สไตล์",
+  "interface_language": "ภาษาอินเทอร์เฟซ",
+  "delete_confirm": "คุณแน่ใจหรือไม่ว่าต้องการลบ {{value}}?",
+  "double_confirm": "คุณแน่ใจหรือไม่? การดำเนินการนี้ไม่สามารถย้อนกลับได้"
 }

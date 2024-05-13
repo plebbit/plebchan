@@ -75,5 +75,18 @@
   "projects": "projektit",
   "challenge_counter": "{{index}} / {{total}}",
   "embed": "upota",
-  "remove": "poista"
+  "remove": "poista",
+  "download_latest_desktop": "Lataa uusin työpöytäversio täältä: {{link}}",
+  "new_stable_version": "Uusi vakaa versio saatavilla, plebchan v{{newVersion}}. Käytät plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Päivitä sivu päivittääksesi",
+  "new_development_version": "Uusi kehitysversion saatavilla, commit {{newCommit}}. Käytät commit {{oldCommit}}.",
+  "check_for_updates": "<1>Tarkista</1> päivitykset",
+  "latest_development_version": "Olet uusimmassa kehitysversion, commit {{commit}}. Käyttääksesi vakaa versio, siirry osoitteeseen {{link}}.",
+  "latest_stable_version": "Olet viimeisimmässä vakaa versio, plebchan v{{version}}.",
+  "check": "tarkista",
+  "update": "Päivitä",
+  "style": "Tyyli",
+  "interface_language": "käyttöliittymän kieli",
+  "delete_confirm": "Haluatko varmasti poistaa {{value}}?",
+  "double_confirm": "Oletko varma? Tämä toiminto on peruuttamaton."
 }

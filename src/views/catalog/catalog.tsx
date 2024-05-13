@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Subplebbit, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
@@ -7,6 +7,7 @@ import useFeedStateString from '../../hooks/use-feed-state-string';
 import useWindowWidth from '../../hooks/use-window-width';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
+import SettingsModal from '../../components/settings-modal';
 import styles from './catalog.module.css';
 import _ from 'lodash';
 
@@ -69,6 +70,7 @@ const columnWidth = 180;
 
 const Catalog = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
   const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress]) as string[];
 
@@ -122,6 +124,7 @@ const Catalog = () => {
 
   return (
     <div className={styles.content}>
+      {location.pathname === `/p/${subplebbitAddress}/catalog/settings` && <SettingsModal />}
       <hr />
       <div className={styles.catalog}>
         <Virtuoso

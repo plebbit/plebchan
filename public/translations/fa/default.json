@@ -75,5 +75,18 @@
   "projects": "پروژه‌ها",
   "challenge_counter": "{{index}} از {{total}}",
   "embed": "جاسازی",
-  "remove": "حذف"
+  "remove": "حذف",
+  "download_latest_desktop": "نسخه‌ی جدید سطح میز کامپیوتر را از اینجا دانلود کنید: {{link}}",
+  "new_stable_version": "نسخه پایدار جدید موجود است، plebchan v{{newVersion}}. شما plebchan v{{oldVersion}} را استفاده می‌کنید.",
+  "refresh_to_update": "برای به‌روزرسانی صفحه را رفرش کنید",
+  "new_development_version": "نسخه توسعه جدید موجود است، کامیت {{newCommit}}. شما کامیت {{oldCommit}} را استفاده می‌کنید.",
+  "check_for_updates": "<1>بررسی</1> برای به‌روزرسانی‌ها",
+  "latest_development_version": "شما در نسخه توسعه‌ی جدیدتر هستید، کامیت {{commit}}. برای استفاده از نسخه پایدار، به {{link}} بروید.",
+  "latest_stable_version": "شما در آخرین نسخه پایدار، plebchan v{{version}} هستید.",
+  "check": "بررسی کنید",
+  "update": "به‌روزرسانی",
+  "style": "سبک",
+  "interface_language": "زبان رابط",
+  "delete_confirm": "آیا مطمئن هستید که می‌خواهید {{value}} را حذف کنید؟",
+  "double_confirm": "آیا مطمئن هستید؟ این عمل غیرقابل برگشت است."
 }

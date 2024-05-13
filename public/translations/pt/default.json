@@ -75,5 +75,18 @@
   "projects": "projetos",
   "challenge_counter": "{{index}} de {{total}}",
   "embed": "embutir",
-  "remove": "remover"
+  "remove": "remover",
+  "download_latest_desktop": "Baixe a versão mais recente para desktop aqui: {{link}}",
+  "new_stable_version": "Nova versão estável disponível, plebchan v{{newVersion}}. Você está usando plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Atualize a página para atualizar",
+  "new_development_version": "Nova versão de desenvolvimento disponível, commit {{newCommit}}. Você está usando o commit {{oldCommit}}.",
+  "check_for_updates": "<1>Verifique</1> as atualizações",
+  "latest_development_version": "Você está na última versão de desenvolvimento, commit {{commit}}. Para usar a versão estável, vá para {{link}}.",
+  "latest_stable_version": "Você está na versão estável mais recente, plebchan v{{version}}.",
+  "check": "verificar",
+  "update": "Atualizar",
+  "style": "Estilo",
+  "interface_language": "idioma da interface",
+  "delete_confirm": "Tem certeza de que deseja excluir {{value}}?",
+  "double_confirm": "Tem certeza? Esta ação é irreversível."
 }

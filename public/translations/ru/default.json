@@ -75,5 +75,18 @@
   "projects": "проекты",
   "challenge_counter": "{{index}} из {{total}}",
   "embed": "встроить",
-  "remove": "удалить"
+  "remove": "удалить",
+  "download_latest_desktop": "Скачать последнюю версию для рабочего стола здесь: {{link}}",
+  "new_stable_version": "Доступна новая стабильная версия, plebchan v{{newVersion}}. Вы используете plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Обновите страницу, чтобы обновить",
+  "new_development_version": "Доступна новая версия разработки, коммит {{newCommit}}. Вы используете коммит {{oldCommit}}.",
+  "check_for_updates": "<1>Проверить</1> наличие обновлений",
+  "latest_development_version": "Вы используете последнюю версию разработки, коммит {{commit}}. Чтобы использовать стабильную версию, перейдите по ссылке {{link}}.",
+  "latest_stable_version": "Вы используете последнюю стабильную версию, plebchan v{{version}}.",
+  "check": "проверить",
+  "update": "Обновить",
+  "style": "Стиль",
+  "interface_language": "язык интерфейса",
+  "delete_confirm": "Вы уверены, что хотите удалить {{value}}?",
+  "double_confirm": "Вы действительно уверены? Это действие необратимо."
 }

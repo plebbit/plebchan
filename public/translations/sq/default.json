@@ -75,5 +75,18 @@
   "projects": "projekte",
   "challenge_counter": "{{index}} nga {{total}}",
   "embed": "integro",
-  "remove": "hiq"
+  "remove": "hiq",
+  "download_latest_desktop": "Shkarko versionin më të ri të desktopit këtu: {{link}}",
+  "new_stable_version": "Version i ri i qëndrueshëm është në dispozicion, plebchan v{{newVersion}}. Ju po përdorni plebchan v{{oldVersion}}.",
+  "refresh_to_update": "Rifresko faqen për të rifreskuar",
+  "new_development_version": "Versioni i ri i zhvillimit është në dispozicion, komiti {{newCommit}}. Ju po përdorni komitin {{oldCommit}}.",
+  "check_for_updates": "<1>Kontrolloni</1> për përditësime",
+  "latest_development_version": "Jeni në versionin më të fundit të zhvillimit, komitimi {{commit}}. Për të përdorur versionin e qëndrueshëm, shkoni te {{link}}.",
+  "latest_stable_version": "Jeni në versionin më të fundit të qëndrueshëm, plebchan v{{version}}.",
+  "check": "kontrollo",
+  "update": "Përditëso",
+  "style": "Stil",
+  "interface_language": "gjuha e ndërfaqes",
+  "delete_confirm": "A jeni të sigurt se dëshironi të fshini {{value}}?",
+  "double_confirm": "A jeni të sigurtë? Ky veprim është i papërkthyeshëm."
 }

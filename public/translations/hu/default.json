@@ -75,5 +75,18 @@
   "projects": "projektek",
   "challenge_counter": "{{index}} a(z) {{total}}-ból/ből",
   "embed": "beágyaz",
-  "remove": "eltávolít"
+  "remove": "eltávolít",
+  "download_latest_desktop": "Töltsd le a legújabb asztali verziót itt: {{link}}",
+  "new_stable_version": "Új stabil verzió elérhető, plebchan v{{newVersion}}. A plebchan v{{oldVersion}}-t használod.",
+  "refresh_to_update": "Frissítse az oldalt az frissítéshez",
+  "new_development_version": "Új fejlesztési verzió elérhető, commit {{newCommit}}. A commit {{oldCommit}}-t használod.",
+  "check_for_updates": "<1>Ellenőrizd</1> a frissítéseket",
+  "latest_development_version": "A legújabb fejlesztői verziót használod, commit {{commit}}. A stabil verzió használatához látogass el ide: {{link}}.",
+  "latest_stable_version": "A legújabb stabil verziót használod, plebchan v{{version}}.",
+  "check": "ellenőriz",
+  "update": "Frissítés",
+  "style": "Stílus",
+  "interface_language": "felület nyelve",
+  "delete_confirm": "Biztosan törölni szeretné {{value}}?",
+  "double_confirm": "Biztos vagy benne? Ez a művelet visszafordíthatatlan."
 }
