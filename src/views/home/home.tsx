@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
@@ -6,14 +6,10 @@ import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits 
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import usePopularPosts from '../../hooks/use-popular-posts';
+import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
 import { getCommentMediaInfo } from '../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
-import { shuffle } from 'lodash';
-
-// for temporary hook to fetch subplebbit stats
-import { useMemo } from 'react';
-import { create } from 'zustand';
 
 const isValidAddress = (address: string): boolean => {
   if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
@@ -229,54 +225,6 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
     </div>
   );
 };
-
-// temporary hook to fetch subplebbit stats
-function useSubplebbitsStats(options: any) {
-  const { subplebbitAddresses, accountName } = options || {};
-  const account = useAccount({ accountName });
-  const { subplebbits } = useSubplebbits({ subplebbitAddresses });
-
-  const { setSubplebbitStats, subplebbitsStats } = useSubplebbitsStatsStore();
-
-  useEffect(() => {
-    if (!subplebbitAddresses || subplebbitAddresses.length === 0 || !account) {
-      return;
-    }
-
-    subplebbits.forEach((subplebbit) => {
-      if (subplebbit && subplebbit.statsCid && !subplebbitsStats[subplebbit.address]) {
-        account.plebbit
-          .fetchCid(subplebbit.statsCid)
-          .then((fetchedStats: any) => {
-            setSubplebbitStats(subplebbit.address, JSON.parse(fetchedStats));
-          })
-          .catch((error: any) => {
-            console.error('Fetching subplebbit stats failed', { subplebbitAddress: subplebbit.address, error });
-          });
-      }
-    });
-  }, [account, subplebbits, setSubplebbitStats, subplebbitsStats, subplebbitAddresses]);
-
-  return useMemo(() => {
-    return subplebbitAddresses.reduce((acc: any, address: any) => {
-      acc[address] = subplebbitsStats[address] || { loading: true };
-      return acc;
-    }, {});
-  }, [subplebbitsStats, subplebbitAddresses]);
-}
-
-export type SubplebbitsStatsState = {
-  subplebbitsStats: { [subplebbitAddress: string]: any };
-  setSubplebbitStats: Function;
-};
-
-const useSubplebbitsStatsStore = create<SubplebbitsStatsState>((set) => ({
-  subplebbitsStats: {},
-  setSubplebbitStats: (subplebbitAddress: string, subplebbitStats: any) =>
-    set((state) => ({
-      subplebbitsStats: { ...state.subplebbitsStats, [subplebbitAddress]: subplebbitStats },
-    })),
-}));
 
 const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAddresses: string[] }) => {
   const { t } = useTranslation();
