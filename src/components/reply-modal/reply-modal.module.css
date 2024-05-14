@@ -71,20 +71,14 @@
   cursor: pointer;
 }
 
-.parentCidWrapper {
-  position: absolute;
-  background-color: var(--post-form-field-input-background-color, white);
-  width: 105px;
-  height: 15px;
-  left: 1px;
-  top: 1px;
-  padding: 5px;
-}
-
 .parentCid {
   color: var(--post-form-field-input-color);
   position: absolute;
-  text-decoration: underline;
+  width: auto;
+  background-color: var(--post-form-field-input-background-color, white);
+  padding: 2px;
+  left: 1px;
+  top: 1px;
 }
 
 @media (max-width: 640px) {
