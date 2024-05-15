@@ -12,6 +12,16 @@
   cursor: pointer;
 }
 
+.settingsModal button {
+  text-transform: capitalize;
+}
+
+.settingsModal input[type='text'] {
+  outline: none;
+  border: 1px solid #aaa;
+  padding: 2px 4px 3px;
+}
+
 .settingsModal {
   top: 25px;
   width: 394px;

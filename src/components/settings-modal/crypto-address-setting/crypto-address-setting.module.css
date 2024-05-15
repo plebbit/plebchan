@@ -10,9 +10,6 @@
 .cryptoAddressInput input[type="text"] {
   padding: 2px 0;
   margin-bottom: 5px;
-  outline: none;
-  border: 1px solid #aaa;
-  padding: 2px 4px 3px;
 }
 
 .infoButton {

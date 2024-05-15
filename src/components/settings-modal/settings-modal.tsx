@@ -156,28 +156,28 @@ const SettingsModal = () => {
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowAccountSettings(!showAccountSettings)}>
             <span className={showAccountSettings ? styles.hideButton : styles.showButton} />
-            Account
+            {t('account')}
           </label>
         </div>
         {showAccountSettings && <AccountSettings />}
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowCryptoAddressSetting(!showCryptoAddressSetting)}>
             <span className={showCryptoAddressSetting ? styles.hideButton : styles.showButton} />
-            Crypto Address
+            {t('crypto_address')}
           </label>
         </div>
         {showCryptoAddressSetting && <CryptoAddressSetting />}
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowCryptoWalletSettings(!showCryptoWalletSettings)}>
             <span className={showCryptoWalletSettings ? styles.hideButton : styles.showButton} />
-            Crypto Wallets
+            {t('crypto_wallets')}
           </label>
         </div>
         {showCryptoWalletSettings && <CryptoWalletsSetting />}
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowPlebbitOptionsSettings(!showPlebbitOptionsSettings)}>
             <span className={showPlebbitOptionsSettings ? styles.hideButton : styles.showButton} />
-            Plebbit Options
+            {t('plebbit_options')}
           </label>
         </div>
         {showPlebbitOptionsSettings && <PlebbitOptionsSettings />}
