@@ -105,13 +105,13 @@ const InterfaceLanguage = () => {
   );
 };
 
-const PlebbitOptionsSettings = () => {
-  return (
-    <>
-      <div className={styles.setting}></div>
-    </>
-  );
-};
+// const PlebbitOptionsSettings = () => {
+//   return (
+//     <>
+//       <div className={styles.setting}></div>
+//     </>
+//   );
+// };
 
 const SettingsModal = () => {
   const { t } = useTranslation();
@@ -124,7 +124,7 @@ const SettingsModal = () => {
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [showCryptoAddressSetting, setShowCryptoAddressSetting] = useState(false);
   const [showCryptoWalletSettings, setShowCryptoWalletSettings] = useState(false);
-  const [showPlebbitOptionsSettings, setShowPlebbitOptionsSettings] = useState(false);
+  // const [showPlebbitOptionsSettings, setShowPlebbitOptionsSettings] = useState(false);
 
   return (
     <>
@@ -174,13 +174,13 @@ const SettingsModal = () => {
           </label>
         </div>
         {showCryptoWalletSettings && <CryptoWalletsSetting />}
-        <div className={`${styles.setting} ${styles.category}`}>
+        {/* <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowPlebbitOptionsSettings(!showPlebbitOptionsSettings)}>
             <span className={showPlebbitOptionsSettings ? styles.hideButton : styles.showButton} />
             {t('plebbit_options')}
           </label>
         </div>
-        {showPlebbitOptionsSettings && <PlebbitOptionsSettings />}
+        {showPlebbitOptionsSettings && <PlebbitOptionsSettings />} */}
       </div>
     </>
   );
