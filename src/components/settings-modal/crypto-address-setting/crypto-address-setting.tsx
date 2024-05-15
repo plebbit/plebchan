@@ -109,11 +109,11 @@ const CryptoAddressSetting = () => {
           defaultValue={cryptoState.cryptoAddress || (account?.author?.shortAddress.includes('.') ? account.author.shortAddress : '')}
           onChange={(e) => setCryptoState((prevState) => ({ ...prevState, cryptoAddress: e.target.value }))}
         />
+        <button className={styles.saveButton} onClick={saveCryptoAddress}>
+          {t('save')}
+        </button>
         <button className={styles.infoButton} onClick={() => setShowCryptoAddressInfo(!showCryptoAddressInfo)}>
           {showCryptoAddressInfo ? 'x' : '?'}
-        </button>
-        <button className={styles.button} onClick={saveCryptoAddress}>
-          {t('save')}
         </button>
         {showCryptoAddressInfo && (
           <div className={styles.cryptoAddressInfo}>

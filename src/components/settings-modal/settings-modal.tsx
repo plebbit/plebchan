@@ -6,6 +6,7 @@ import useTheme from '../../hooks/use-theme';
 import packageJson from '../../../package.json';
 import AccountSettings from './account-settings';
 import CryptoAddressSetting from './crypto-address-setting';
+import CryptoWalletsSetting from './crypto-wallets-setting';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -104,14 +105,6 @@ const InterfaceLanguage = () => {
   );
 };
 
-const CryptoWalletSettings = () => {
-  return (
-    <>
-      <div className={styles.setting}></div>
-    </>
-  );
-};
-
 const PlebbitOptionsSettings = () => {
   return (
     <>
@@ -180,7 +173,7 @@ const SettingsModal = () => {
             Crypto Wallets
           </label>
         </div>
-        {showCryptoWalletSettings && <CryptoWalletSettings />}
+        {showCryptoWalletSettings && <CryptoWalletsSetting />}
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowPlebbitOptionsSettings(!showPlebbitOptionsSettings)}>
             <span className={showPlebbitOptionsSettings ? styles.hideButton : styles.showButton} />

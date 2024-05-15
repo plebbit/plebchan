@@ -153,7 +153,7 @@ const AccountSettings = () => {
   ));
 
   return (
-    <div className={styles.accountSettings}>
+    <div className={styles.setting}>
       <div>
         <select value={account?.name} onChange={(e) => setActiveAccount(e.target.value)}>
           {accountsOptions}
