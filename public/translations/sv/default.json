@@ -107,5 +107,11 @@
   "account": "konto",
   "crypto_address": "kryptoadress",
   "crypto_wallets": "Crypto-plånböcker",
-  "plebbit_options": "plebbit-alternativ"
+  "plebbit_options": "plebbit-alternativ",
+  "reset": "återställ",
+  "import": "importera",
+  "export": "exportera",
+  "full_account_data": "fullständig kontodata",
+  "this_account": "detta konto",
+  "delete": "ta bort"
 }

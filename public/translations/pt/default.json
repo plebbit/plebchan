@@ -107,5 +107,11 @@
   "account": "conta",
   "crypto_address": "endereço de cripto",
   "crypto_wallets": "Carteiras cripto",
-  "plebbit_options": "opções plebbit"
+  "plebbit_options": "opções plebbit",
+  "reset": "redefinir",
+  "import": "importar",
+  "export": "exportar",
+  "full_account_data": "dados completos da conta",
+  "this_account": "esta conta",
+  "delete": "apagar"
 }

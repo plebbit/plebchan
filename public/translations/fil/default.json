@@ -107,5 +107,11 @@
   "account": "account",
   "crypto_address": "crypto address",
   "crypto_wallets": "Mga Wallet ng Crypto",
-  "plebbit_options": "mga pagpipilian ng plebbit"
+  "plebbit_options": "mga pagpipilian ng plebbit",
+  "reset": "i-reset",
+  "import": "i-import",
+  "export": "i-export",
+  "full_account_data": "buong account data",
+  "this_account": "ang account na ito",
+  "delete": "burahin"
 }

@@ -107,5 +107,11 @@
   "account": "konto",
   "crypto_address": "adres kryptowalutowy",
   "crypto_wallets": "Portfele kryptowalut",
-  "plebbit_options": "opcje plebbit"
+  "plebbit_options": "opcje plebbit",
+  "reset": "zresetuj",
+  "import": "importuj",
+  "export": "eksportuj",
+  "full_account_data": "pełne dane konta",
+  "this_account": "ten rachunek",
+  "delete": "usuń"
 }

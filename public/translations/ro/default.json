@@ -107,5 +107,11 @@
   "account": "cont",
   "crypto_address": "adresa cripto",
   "crypto_wallets": "Portofele crypto",
-  "plebbit_options": "opțiuni plebbit"
+  "plebbit_options": "opțiuni plebbit",
+  "reset": "resetează",
+  "import": "importați",
+  "export": "exportați",
+  "full_account_data": "date complete ale contului",
+  "this_account": "acest cont",
+  "delete": "ștergeți"
 }

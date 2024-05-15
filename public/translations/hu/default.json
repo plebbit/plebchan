@@ -107,5 +107,11 @@
   "account": "fiók",
   "crypto_address": "kriptovaluta cím",
   "crypto_wallets": "Kriptopénztárcák",
-  "plebbit_options": "plebbit lehetőségek"
+  "plebbit_options": "plebbit lehetőségek",
+  "reset": "alaphelyzetbe állít",
+  "import": "importálás",
+  "export": "exportálás",
+  "full_account_data": "teljes fiókadata",
+  "this_account": "ez a fiók",
+  "delete": "töröl"
 }

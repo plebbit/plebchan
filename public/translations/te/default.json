@@ -107,5 +107,11 @@
   "account": "ఖాతా",
   "crypto_address": "క్రిప్టో చిరునామా",
   "crypto_wallets": "క్రిప్టో వాలెట్‌లు",
-  "plebbit_options": "plebbit ఎంపికలు"
+  "plebbit_options": "plebbit ఎంపికలు",
+  "reset": "రీసెట్",
+  "import": "దిగుమతి",
+  "export": "ఎగుమతి",
+  "full_account_data": "పూర్తి ఖాతా డేటా",
+  "this_account": "ఈ ఖాతా",
+  "delete": "తొలగించండి"
 }

@@ -107,5 +107,11 @@
   "account": "account",
   "crypto_address": "crypto adres",
   "crypto_wallets": "Crypto-portefeuilles",
-  "plebbit_options": "plebbit-opties"
+  "plebbit_options": "plebbit-opties",
+  "reset": "resetten",
+  "import": "importeer",
+  "export": "exporteer",
+  "full_account_data": "volledige accountgegevens",
+  "this_account": "dit account",
+  "delete": "verwijderen"
 }

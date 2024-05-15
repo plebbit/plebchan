@@ -107,5 +107,11 @@
   "account": "계정",
   "crypto_address": "암호 화폐 주소",
   "crypto_wallets": "암호 화폐 지갑",
-  "plebbit_options": "plebbit 옵션"
+  "plebbit_options": "plebbit 옵션",
+  "reset": "재설정",
+  "import": "가져오기",
+  "export": "내보내기",
+  "full_account_data": "전체 계정 데이터",
+  "this_account": "이 계정",
+  "delete": "삭제"
 }

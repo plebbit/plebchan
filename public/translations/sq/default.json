@@ -107,5 +107,11 @@
   "account": "llogari",
   "crypto_address": "adresa e kripto",
   "crypto_wallets": "Portofolitë e cryptos",
-  "plebbit_options": "opsione plebbit"
+  "plebbit_options": "opsione plebbit",
+  "reset": "rithqas",
+  "import": "importo",
+  "export": "eksport",
+  "full_account_data": "të dhënat e plotë të llogarisë",
+  "this_account": "kjo llogaria",
+  "delete": "fshij"
 }

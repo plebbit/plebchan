@@ -107,5 +107,11 @@
   "account": "аккаунт",
   "crypto_address": "адрес криптовалюты",
   "crypto_wallets": "Криптокошельки",
-  "plebbit_options": "опции plebbit"
+  "plebbit_options": "опции plebbit",
+  "reset": "сбросить",
+  "import": "импортировать",
+  "export": "экспортировать",
+  "full_account_data": "полные данные аккаунта",
+  "this_account": "этот аккаунт",
+  "delete": "удалить"
 }

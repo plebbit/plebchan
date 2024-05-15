@@ -107,5 +107,11 @@
   "account": "tài khoản",
   "crypto_address": "địa chỉ tiền điện tử",
   "crypto_wallets": "Ví tiền điện tử",
-  "plebbit_options": "tùy chọn plebbit"
+  "plebbit_options": "tùy chọn plebbit",
+  "reset": "đặt lại",
+  "import": "nhập",
+  "export": "xuất",
+  "full_account_data": "dữ liệu tài khoản đầy đủ",
+  "this_account": "tài khoản này",
+  "delete": "xóa"
 }

@@ -107,5 +107,11 @@
   "account": "アカウント",
   "crypto_address": "暗号通貨アドレス",
   "crypto_wallets": "暗号通貨ウォレット",
-  "plebbit_options": "plebbitのオプション"
+  "plebbit_options": "plebbitのオプション",
+  "reset": "リセット",
+  "import": "インポート",
+  "export": "エクスポート",
+  "full_account_data": "フルアカウントデータ",
+  "this_account": "このアカウント",
+  "delete": "削除"
 }

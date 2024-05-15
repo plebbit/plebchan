@@ -107,5 +107,11 @@
   "account": "অ্যাকাউন্ট",
   "crypto_address": "ক্রিপ্টো ঠিকানা",
   "crypto_wallets": "ক্রিপ্টো ওয়ালেট",
-  "plebbit_options": "প্লেবিট বিকল্প"
+  "plebbit_options": "প্লেবিট বিকল্প",
+  "reset": "রিসেট",
+  "import": "আমদানি",
+  "export": "রপ্তানি",
+  "full_account_data": "সম্পূর্ণ অ্যাকাউন্ট ডেটা",
+  "this_account": "এই অ্যাকাউন্ট",
+  "delete": "মুছে ফেলা"
 }

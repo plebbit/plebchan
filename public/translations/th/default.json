@@ -107,5 +107,11 @@
   "account": "บัญชี",
   "crypto_address": "ที่อยู่คริปโต",
   "crypto_wallets": "กระเป๋าเงินดิจิทัล",
-  "plebbit_options": "ตัวเลือก plebbit"
+  "plebbit_options": "ตัวเลือก plebbit",
+  "reset": "รีเซ็ต",
+  "import": "นำเข้า",
+  "export": "ส่งออก",
+  "full_account_data": "ข้อมูลบัญชีเต็มรูปแบบ",
+  "this_account": "บัญชีนี้",
+  "delete": "ลบ"
 }

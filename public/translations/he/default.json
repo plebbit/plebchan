@@ -107,5 +107,11 @@
   "account": "חשבון",
   "crypto_address": "כתובת קריפטו",
   "crypto_wallets": "ארנק קריפטו",
-  "plebbit_options": "אפשרויות plebbit"
+  "plebbit_options": "אפשרויות plebbit",
+  "reset": "איפוס",
+  "import": "יבא",
+  "export": "יצוא",
+  "full_account_data": "נתוני החשבון המלאים",
+  "this_account": "החשבון הזה",
+  "delete": "מחק"
 }

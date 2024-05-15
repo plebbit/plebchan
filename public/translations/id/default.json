@@ -107,5 +107,11 @@
   "account": "akun",
   "crypto_address": "alamat kripto",
   "crypto_wallets": "Dompet Crypto",
-  "plebbit_options": "opsi plebbit"
+  "plebbit_options": "opsi plebbit",
+  "reset": "ulang",
+  "import": "impor",
+  "export": "ekspor",
+  "full_account_data": "data akun lengkap",
+  "this_account": "akun ini",
+  "delete": "hapus"
 }

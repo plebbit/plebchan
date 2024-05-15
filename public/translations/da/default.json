@@ -107,5 +107,11 @@
   "account": "konto",
   "crypto_address": "kryptoadresse",
   "crypto_wallets": "Crypto Wallets",
-  "plebbit_options": "plebbit indstillinger"
+  "plebbit_options": "plebbit indstillinger",
+  "reset": "nulstil",
+  "import": "importer",
+  "export": "eksportér",
+  "full_account_data": "fulde kontodata",
+  "this_account": "denne konto",
+  "delete": "slet"
 }

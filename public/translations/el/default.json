@@ -107,5 +107,11 @@
   "account": "λογαριασμός",
   "crypto_address": "διεύθυνση κρυπτονομίσματος",
   "crypto_wallets": "Πορτοφόλια κρυπτονομισμάτων",
-  "plebbit_options": "επιλογές plebbit"
+  "plebbit_options": "επιλογές plebbit",
+  "reset": "επαναφορά",
+  "import": "εισαγωγή",
+  "export": "εξαγωγή",
+  "full_account_data": "πλήρα δεδομένα λογαριασμού",
+  "this_account": "αυτός ο λογαριασμός",
+  "delete": "διαγραφή"
 }

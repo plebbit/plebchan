@@ -107,5 +107,11 @@
   "account": "حساب",
   "crypto_address": "آدرس رمزارز",
   "crypto_wallets": "کیف پول رمز ارز",
-  "plebbit_options": "گزینه های plebbit"
+  "plebbit_options": "گزینه های plebbit",
+  "reset": "بازنشانی",
+  "import": "وارد کردن",
+  "export": "صدور",
+  "full_account_data": "داده حساب کامل",
+  "this_account": "این حساب",
+  "delete": "حذف کنید"
 }

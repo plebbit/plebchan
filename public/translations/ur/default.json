@@ -107,5 +107,11 @@
   "account": "اکاؤنٹ",
   "crypto_address": "کرپٹو پتہ",
   "crypto_wallets": "کرپٹو والٹس",
-  "plebbit_options": "پلیبٹ اختیارات"
+  "plebbit_options": "پلیبٹ اختیارات",
+  "reset": "ری سیٹ کریں",
+  "import": "درآمد کریں",
+  "export": "برآمد کریں",
+  "full_account_data": "مکمل اکاؤنٹ ڈیٹا",
+  "this_account": "یہ اکاؤنٹ",
+  "delete": "حذف کریں"
 }

@@ -107,5 +107,11 @@
   "account": "hesap",
   "crypto_address": "kripto adres",
   "crypto_wallets": "Kripto Cüzdanlar",
-  "plebbit_options": "plebbit seçenekleri"
+  "plebbit_options": "plebbit seçenekleri",
+  "reset": "sıfırla",
+  "import": "ithal et",
+  "export": "dışa aktar",
+  "full_account_data": "tam hesap verisi",
+  "this_account": "bu hesap",
+  "delete": "sil"
 }

@@ -107,5 +107,11 @@
   "account": "खाता",
   "crypto_address": "क्रिप्टो पत्ता",
   "crypto_wallets": "क्रिप्टो बटव्या",
-  "plebbit_options": "प्लेबिट पर्याय"
+  "plebbit_options": "प्लेबिट पर्याय",
+  "reset": "रीसेट करा",
+  "import": "आयात करा",
+  "export": "निर्यात करा",
+  "full_account_data": "पूर्ण खाते डेटा",
+  "this_account": "हे खाते",
+  "delete": "काढा"
 }

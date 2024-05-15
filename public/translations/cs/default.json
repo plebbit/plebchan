@@ -107,5 +107,11 @@
   "account": "účet",
   "crypto_address": "adresa kryptoměny",
   "crypto_wallets": "Kryptoměny",
-  "plebbit_options": "plebbit možnosti"
+  "plebbit_options": "plebbit možnosti",
+  "reset": "obnovit",
+  "import": "import",
+  "export": "export",
+  "full_account_data": "plná účetní data",
+  "this_account": "tento účet",
+  "delete": "smazat"
 }

@@ -107,5 +107,11 @@
   "account": "konto",
   "crypto_address": "kryptoadresse",
   "crypto_wallets": "Crypto-lommebøker",
-  "plebbit_options": "plebbit alternativer"
+  "plebbit_options": "plebbit alternativer",
+  "reset": "nullstill",
+  "import": "importer",
+  "export": "eksporter",
+  "full_account_data": "full kontodata",
+  "this_account": "denne kontoen",
+  "delete": "slett"
 }

@@ -107,5 +107,11 @@
   "account": "tili",
   "crypto_address": "krypto-osoite",
   "crypto_wallets": "Krypto-lompakot",
-  "plebbit_options": "plebbit-vaihtoehdot"
+  "plebbit_options": "plebbit-vaihtoehdot",
+  "reset": "nollaa",
+  "import": "tuo",
+  "export": "vie",
+  "full_account_data": "täydelliset tilitiedot",
+  "this_account": "tämä tili",
+  "delete": "poista"
 }
