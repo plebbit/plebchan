@@ -98,6 +98,7 @@
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
   --post-menu-button-color: #000080;
+  --post-menu-btn-opacity: 0.8;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
@@ -266,6 +267,7 @@
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
   --post-menu-button-color: #34345c;
+  --post-menu-btn-opacity: 0.8;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
@@ -410,6 +412,7 @@
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
   --post-menu-button-color: #000080;
+  --post-menu-btn-opacity: 0.8;
   --post-menu-button-color-hover: red;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
@@ -558,6 +561,7 @@
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
   --post-menu-button-color: #34345c;
+  --post-menu-btn-opacity: 0.8;
   --post-menu-button-color-hover: #d00;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
@@ -707,6 +711,7 @@
   --post-name-text-color: #c5c8c6;
   --post-name-font-weight: 700;
   --post-menu-button-color: #5F89AC;
+  --post-menu-btn-opacity: 0.8;
   --post-menu-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-dark.png");
@@ -863,6 +868,7 @@
   --post-name-text-color: #004a99;
   --post-name-font-weight: 700;
   --post-menu-button-color: #FF6600;
+  --post-menu-btn-opacity: 0.8;
   --post-menu-button-color-hover: #FF3300;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-photon.png");

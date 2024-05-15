@@ -1,0 +1,42 @@
+.setting {
+  margin-left: 10px;
+}
+
+.setting button {
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.cryptoAddressInput input[type="text"] {
+  padding: 2px 0;
+  margin-bottom: 5px;
+}
+
+.infoButton {
+  padding: 0 5px;
+}
+
+.cryptoAddressInfo {
+  word-break: break-word;
+}
+
+.cryptoAddressInfo ol {
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+
+.saveButton {
+  margin: 0 5px;
+}
+
+.red {
+  color: red;
+}
+
+.yellow {
+  color: yellow;
+}
+
+.green {
+  color: green;
+}

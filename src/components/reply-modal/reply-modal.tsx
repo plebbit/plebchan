@@ -64,7 +64,6 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   }, [isMobile, scrollY]);
 
   const parentCidRef = useRef<HTMLSpanElement>(null);
-  const parentCidWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (parentCidRef.current && parentCidRef.current) {
@@ -99,17 +98,14 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
         </div>
         <div className={styles.content}>
-          <span className={styles.parentCidWrapper} ref={parentCidWrapperRef}>
-            <span className={styles.parentCid} ref={parentCidRef}>
-              {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-            </span>
+          <span className={styles.parentCid} ref={parentCidRef}>
+            {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
           </span>
           <textarea
             cols={48}
-            rows={4}
+            rows={3}
             wrap='soft'
             ref={textRef}
-            placeholder={_.capitalize(t('comment'))}
             onChange={(e) => {
               const content = e.target.value.replace(/\n/g, '\n\n');
               setContent.content(content);

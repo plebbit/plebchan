@@ -1,0 +1,58 @@
+.setting {
+  margin-left: 10px;
+}
+
+.addWallet select {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.save {
+  margin-left: 5px;
+}
+
+.walletTitle {
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.removeWallet {
+  color: red;
+  margin-top: 15px;
+}
+
+.walletFieldTitle {
+  margin-top: 5px;
+  font-style: italic;
+  text-transform: lowercase;
+}
+
+.walletField input {
+  width: 200px;
+  padding: 2px;
+  box-shadow: var(--box-shadow-input);
+}
+
+.copyMessage {
+  padding-top: 10px;
+}
+
+.copyMessage a {
+  color: var(--text-primary);
+}
+
+.copyMessage a:hover {
+  text-decoration: underline;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.toggleWallet {
+  margin-right: 7px;
+}
