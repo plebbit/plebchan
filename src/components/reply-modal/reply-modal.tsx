@@ -103,10 +103,9 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           </span>
           <textarea
             cols={48}
-            rows={4}
+            rows={3}
             wrap='soft'
             ref={textRef}
-            placeholder={_.capitalize(t('comment'))}
             onChange={(e) => {
               const content = e.target.value.replace(/\n/g, '\n\n');
               setContent.content(content);
