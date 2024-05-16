@@ -75,7 +75,7 @@
   "projects": "έργα",
   "challenge_counter": "{{index}} από {{total}}",
   "embed": "ενσωμάτωση",
-  "remove": "Αφαίρεση",
+  "remove": "αφαίρεση",
   "download_latest_desktop": "Κατεβάστε την πιο πρόσφατη έκδοση για επιτραπέζιο υπολογιστή εδώ: {{link}}",
   "new_stable_version": "Νέα σταθερή έκδοση διαθέσιμη, plebchan v{{newVersion}}. Χρησιμοποιείτε plebchan v{{oldVersion}}.",
   "refresh_to_update": "Ανανεώστε τη σελίδα για να ενημερωθεί",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Η διεύθυνση κρυπτονομίσματος ανήκει σε άλλο λογαριασμό.",
   "enter_crypto_address": "Παρακαλώ εισαγάγετε μια έγκυρη διεύθυνση κρυπτονομίσματος.",
   "crypto_address_not_resolved": "Η διεύθυνση κρυπτονομίσματος δεν έχει ακόμη επιλυθεί.",
-  "copy_message_etherscan": "<1>{{copy}}</1> μήνυμα για υπογραφή στο <2>etherscan</2>",
+  "copy_message_etherscan": "Αντιγράψτε το μήνυμα για υπογραφή στο <1>etherscan</1>",
   "account": "λογαριασμός",
   "crypto_address": "διεύθυνση κρυπτονομίσματος",
   "crypto_wallets": "Πορτοφόλια κρυπτονομισμάτων",
@@ -113,5 +113,6 @@
   "export": "εξαγωγή",
   "full_account_data": "πλήρα δεδομένα λογαριασμού",
   "this_account": "αυτός ο λογαριασμός",
-  "delete": "διαγραφή"
+  "delete": "διαγραφή",
+  "delete_account": "διαγραφή λογαριασμού"
 }

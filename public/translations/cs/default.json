@@ -75,7 +75,7 @@
   "projects": "projekty",
   "challenge_counter": "{{index}} z {{total}}",
   "embed": "vložit",
-  "remove": "Odebrat",
+  "remove": "odstranit",
   "download_latest_desktop": "Stáhněte si nejnovější verzi pro stolní počítače zde: {{link}}",
   "new_stable_version": "Nová stabilní verze k dispozici, plebchan v{{newVersion}}. Používáte plebchan v{{oldVersion}}.",
   "refresh_to_update": "Obnovte stránku pro aktualizaci",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Adresa kryptoměny patří k jinému účtu.",
   "enter_crypto_address": "Zadejte prosím platnou kryptoadresu.",
   "crypto_address_not_resolved": "Adresa kryptoměny ještě není vyřešena.",
-  "copy_message_etherscan": "<1>{{copy}}</1> zpráva k podpisu na <2>etherscan</2>",
+  "copy_message_etherscan": "Zkopírujte zprávu k podpisu na <1>etherscan</1>",
   "account": "účet",
   "crypto_address": "adresa kryptoměny",
   "crypto_wallets": "Kryptoměny",
@@ -113,5 +113,6 @@
   "export": "export",
   "full_account_data": "plná účetní data",
   "this_account": "tento účet",
-  "delete": "smazat"
+  "delete": "smazat",
+  "delete_account": "smazat účet"
 }

@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "क्रिप्टो पता दूसरे खाते से संबंधित है।",
   "enter_crypto_address": "कृपया एक मान्य क्रिप्टो पता दर्ज करें।",
   "crypto_address_not_resolved": "क्रिप्टो पता अभी तक हल नहीं किया गया है।",
-  "copy_message_etherscan": "<1>{{copy}}</1> संदेश को <2>etherscan</2> पर हस्ताक्षर करें",
+  "copy_message_etherscan": "<1>etherscan</1> पर साइन करने के लिए संदेश कॉपी करें",
   "account": "खाता",
   "crypto_address": "क्रिप्टो पता",
   "crypto_wallets": "क्रिप्टो वॉलेट्स",
@@ -113,5 +113,6 @@
   "export": "निर्यात",
   "full_account_data": "पूरे खाते का डेटा",
   "this_account": "इस खाता",
-  "delete": "हटाएँ"
+  "delete": "हटाएँ",
+  "delete_account": "खाता हटाएं"
 }

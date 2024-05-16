@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "כתובת המטבע הקריפטוגרפי שייכת לחשבון אחר.",
   "enter_crypto_address": "אנא הזן כתובת קריפטו תקף.",
   "crypto_address_not_resolved": "כתובת המטבע הקריפטוגרפית עדיין לא נפתרה.",
-  "copy_message_etherscan": "<1>{{copy}}</1> הודעה לחתימה ב-<2>etherscan</2>",
+  "copy_message_etherscan": "העתק הודעה לחתימה ב-<1>etherscan</1>",
   "account": "חשבון",
   "crypto_address": "כתובת קריפטו",
   "crypto_wallets": "ארנק קריפטו",
@@ -113,5 +113,6 @@
   "export": "יצוא",
   "full_account_data": "נתוני החשבון המלאים",
   "this_account": "החשבון הזה",
-  "delete": "מחק"
+  "delete": "מחק",
+  "delete_account": "מחק חשבון"
 }

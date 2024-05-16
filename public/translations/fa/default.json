@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "آدرس رمزارز به حساب دیگری تعلق دارد.",
   "enter_crypto_address": "لطفاً یک آدرس کریپتو صحیح وارد کنید.",
   "crypto_address_not_resolved": "آدرس رمزارز هنوز حل نشده است.",
-  "copy_message_etherscan": "<1>{{copy}}</1> پیامی برای امضا در <2>etherscan</2>",
+  "copy_message_etherscan": "پیام را برای امضا در <1>etherscan</1> کپی کنید",
   "account": "حساب",
   "crypto_address": "آدرس رمزارز",
   "crypto_wallets": "کیف پول رمز ارز",
@@ -113,5 +113,6 @@
   "export": "صدور",
   "full_account_data": "داده حساب کامل",
   "this_account": "این حساب",
-  "delete": "حذف کنید"
+  "delete": "حذف کنید",
+  "delete_account": "حذف حساب"
 }

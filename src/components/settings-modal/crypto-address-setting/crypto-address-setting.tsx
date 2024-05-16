@@ -11,7 +11,7 @@ const CryptoAddressSetting = () => {
     cryptoAddress: '',
     checkingCryptoAddress: false,
     showResolvingMessage: false,
-    resolveString: t('crypto_address_verification'),
+    resolveString: '',
     resolveClass: '',
   });
 

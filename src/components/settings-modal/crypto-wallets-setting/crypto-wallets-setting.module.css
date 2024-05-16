@@ -1,14 +1,11 @@
 .setting {
   margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .addWallet select {
   margin-right: 5px;
   margin-bottom: 5px;
-}
-
-.save {
-  margin-left: 5px;
 }
 
 .walletTitle {
@@ -18,19 +15,32 @@
 
 .removeWallet {
   color: red;
-  margin-top: 15px;
 }
 
-.walletFieldTitle {
+.save {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.walletField {
   margin-top: 5px;
-  font-style: italic;
-  text-transform: lowercase;
+  margin-left: 5px;
 }
 
 .walletField input {
   width: 200px;
   padding: 2px;
   box-shadow: var(--box-shadow-input);
+}
+
+.walletField a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.walletField a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
 .copyMessage {

@@ -75,7 +75,7 @@
   "projects": "проекты",
   "challenge_counter": "{{index}} из {{total}}",
   "embed": "встроить",
-  "remove": "Удалить",
+  "remove": "удалить",
   "download_latest_desktop": "Скачать последнюю версию для рабочего стола здесь: {{link}}",
   "new_stable_version": "Доступна новая стабильная версия, plebchan v{{newVersion}}. Вы используете plebchan v{{oldVersion}}.",
   "refresh_to_update": "Обновите страницу, чтобы обновить",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Адрес криптовалюты принадлежит другому аккаунту.",
   "enter_crypto_address": "Пожалуйста, введите действительный криптовалютный адрес.",
   "crypto_address_not_resolved": "Адрес криптовалюты еще не решен.",
-  "copy_message_etherscan": "<1>{{copy}}</1> сообщение для подписи на <2>etherscan</2>",
+  "copy_message_etherscan": "Скопируйте сообщение для подписи на <1>etherscan</1>",
   "account": "аккаунт",
   "crypto_address": "адрес криптовалюты",
   "crypto_wallets": "Криптокошельки",
@@ -113,5 +113,6 @@
   "export": "экспортировать",
   "full_account_data": "полные данные аккаунта",
   "this_account": "этот аккаунт",
-  "delete": "удалить"
+  "delete": "удалить",
+  "delete_account": "удалить аккаунт"
 }

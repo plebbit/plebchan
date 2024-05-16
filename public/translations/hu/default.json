@@ -75,7 +75,7 @@
   "projects": "projektek",
   "challenge_counter": "{{index}} a(z) {{total}}-ból/ből",
   "embed": "beágyaz",
-  "remove": "Eltávolítás",
+  "remove": "eltávolít",
   "download_latest_desktop": "Töltsd le a legújabb asztali verziót itt: {{link}}",
   "new_stable_version": "Új stabil verzió elérhető, plebchan v{{newVersion}}. A plebchan v{{oldVersion}}-t használod.",
   "refresh_to_update": "Frissítse az oldalt az frissítéshez",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "A kripto-cím egy másik fiókhoz tartozik.",
   "enter_crypto_address": "Kérjük, adjon meg egy érvényes kripto címet.",
   "crypto_address_not_resolved": "A kripto cím még nem oldódott meg.",
-  "copy_message_etherscan": "<1>{{copy}}</1> üzenet aláírásához az <2>etherscan</2>-en",
+  "copy_message_etherscan": "Üzenet másolása aláíráshoz a <1>etherscan</1>",
   "account": "fiók",
   "crypto_address": "kriptovaluta cím",
   "crypto_wallets": "Kriptopénztárcák",
@@ -113,5 +113,6 @@
   "export": "exportálás",
   "full_account_data": "teljes fiókadata",
   "this_account": "ez a fiók",
-  "delete": "töröl"
+  "delete": "töröl",
+  "delete_account": "fiók törlése"
 }

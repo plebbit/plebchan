@@ -75,7 +75,7 @@
   "projects": "proyek",
   "challenge_counter": "{{index}} dari {{total}}",
   "embed": "sematkan",
-  "remove": "Hapus",
+  "remove": "hapus",
   "download_latest_desktop": "Unduh versi desktop terbaru di sini: {{link}}",
   "new_stable_version": "Versi stabil baru tersedia, plebchan v{{newVersion}}. Anda menggunakan plebchan v{{oldVersion}}.",
   "refresh_to_update": "Segarkan halaman untuk memperbarui",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Alamat kripto milik akun lain.",
   "enter_crypto_address": "Harap masukkan alamat kripto yang valid.",
   "crypto_address_not_resolved": "Alamat kripto belum terpecahkan.",
-  "copy_message_etherscan": "<1>{{copy}}</1> pesan untuk ditandatangani di <2>etherscan</2>",
+  "copy_message_etherscan": "Salin pesan untuk ditandatangani di <1>etherscan</1>",
   "account": "akun",
   "crypto_address": "alamat kripto",
   "crypto_wallets": "Dompet Crypto",
@@ -113,5 +113,6 @@
   "export": "ekspor",
   "full_account_data": "data akun lengkap",
   "this_account": "akun ini",
-  "delete": "hapus"
+  "delete": "hapus",
+  "delete_account": "hapus akun"
 }

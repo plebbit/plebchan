@@ -75,7 +75,7 @@
   "projects": "projekt",
   "challenge_counter": "{{index}} av {{total}}",
   "embed": "bädda in",
-  "remove": "Ta bort",
+  "remove": "ta bort",
   "download_latest_desktop": "Ladda ner den senaste skrivbordsversionen här: {{link}}",
   "new_stable_version": "Ny stabil version tillgänglig, plebchan v{{newVersion}}. Du använder plebchan v{{oldVersion}}.",
   "refresh_to_update": "Uppdatera sidan för att uppdatera",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Crypto-adress tillhör ett annat konto.",
   "enter_crypto_address": "Ange en giltig kryptoadress.",
   "crypto_address_not_resolved": "Crypto-adressen är ännu inte löst.",
-  "copy_message_etherscan": "<1>{{copy}}</1> meddelande att signera på <2>etherscan</2>",
+  "copy_message_etherscan": "Kopiera meddelande för att signera på <1>etherscan</1>",
   "account": "konto",
   "crypto_address": "kryptoadress",
   "crypto_wallets": "Crypto-plånböcker",
@@ -113,5 +113,6 @@
   "export": "exportera",
   "full_account_data": "fullständig kontodata",
   "this_account": "detta konto",
-  "delete": "ta bort"
+  "delete": "ta bort",
+  "delete_account": "ta bort konto"
 }

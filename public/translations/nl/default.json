@@ -75,7 +75,7 @@
   "projects": "projecten",
   "challenge_counter": "{{index}} van {{total}}",
   "embed": "insluiten",
-  "remove": "Verwijderen",
+  "remove": "verwijderen",
   "download_latest_desktop": "Download de nieuwste desktopversie hier: {{link}}",
   "new_stable_version": "Nieuwe stabiele versie beschikbaar, plebchan v{{newVersion}}. Je gebruikt plebchan v{{oldVersion}}.",
   "refresh_to_update": "Vernieuw de pagina om bij te werken",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Crypto-adres behoort tot een andere account.",
   "enter_crypto_address": "Voer alstublieft een geldig crypto-adres in.",
   "crypto_address_not_resolved": "Crypto-adres is nog niet opgelost.",
-  "copy_message_etherscan": "<1>{{copy}}</1> bericht om te ondertekenen op <2>etherscan</2>",
+  "copy_message_etherscan": "Kopieer bericht om te ondertekenen op <1>etherscan</1>",
   "account": "account",
   "crypto_address": "crypto adres",
   "crypto_wallets": "Crypto-portefeuilles",
@@ -113,5 +113,6 @@
   "export": "exporteer",
   "full_account_data": "volledige accountgegevens",
   "this_account": "dit account",
-  "delete": "verwijderen"
+  "delete": "verwijderen",
+  "delete_account": "account verwijderen"
 }

@@ -75,7 +75,7 @@
   "projects": "প্রকল্পসমূহ",
   "challenge_counter": "{{index}} থেকে {{total}}",
   "embed": "এম্বেড",
-  "remove": "মুছে ফেলুন",
+  "remove": "অপসারণ",
   "download_latest_desktop": "সর্বশেষ ডেস্কটপ সংস্করণ এখানে ডাউনলোড করুন: {{link}}",
   "new_stable_version": "নতুন স্থিতিশীল সংস্করণ উপলব্ধ, plebchan v{{newVersion}}। আপনি plebchan v{{oldVersion}} ব্যবহার করছেন।",
   "refresh_to_update": "আপডেট করতে পৃষ্ঠাটি রিফ্রেশ করুন",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "ক্রিপ্টো ঠিকানা অন্য একটি অ্যাকাউন্টের অংশ।",
   "enter_crypto_address": "দয়া করে একটি বৈধ ক্রিপ্টো ঠিকানা দিন।",
   "crypto_address_not_resolved": "ক্রিপ্টো ঠিকানা এখনো সমাধান করা হয়নি।",
-  "copy_message_etherscan": "<1>{{copy}}</1> বার্তা সাইন করতে <2>etherscan</2> এ",
+  "copy_message_etherscan": "<1>etherscan</1> এ সাইন করার জন্য বার্তা অনুলিপি করুন",
   "account": "অ্যাকাউন্ট",
   "crypto_address": "ক্রিপ্টো ঠিকানা",
   "crypto_wallets": "ক্রিপ্টো ওয়ালেট",
@@ -113,5 +113,6 @@
   "export": "রপ্তানি",
   "full_account_data": "সম্পূর্ণ অ্যাকাউন্ট ডেটা",
   "this_account": "এই অ্যাকাউন্ট",
-  "delete": "মুছে ফেলা"
+  "delete": "মুছে ফেলা",
+  "delete_account": "অ্যাকাউন্ট মুছুন"
 }

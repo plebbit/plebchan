@@ -75,7 +75,7 @@
   "projects": "proiecte",
   "challenge_counter": "{{index}} din {{total}}",
   "embed": "încorpora",
-  "remove": "Elimină",
+  "remove": "elimina",
   "download_latest_desktop": "Descărcați cea mai recentă versiune de desktop aici: {{link}}",
   "new_stable_version": "Noua versiune stabilă disponibilă, plebchan v{{newVersion}}. Folosiți plebchan v{{oldVersion}}.",
   "refresh_to_update": "Actualizați pagina pentru a actualiza",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Adresa crypto aparține unui alt cont.",
   "enter_crypto_address": "Vă rugăm să introduceți o adresă crypto validă.",
   "crypto_address_not_resolved": "Adresa crypto nu este încă rezolvată.",
-  "copy_message_etherscan": "<1>{{copy}}</1> mesaj de semnat pe <2>etherscan</2>",
+  "copy_message_etherscan": "Copiați mesajul pentru a semna pe <1>etherscan</1>",
   "account": "cont",
   "crypto_address": "adresa cripto",
   "crypto_wallets": "Portofele crypto",
@@ -113,5 +113,6 @@
   "export": "exportați",
   "full_account_data": "date complete ale contului",
   "this_account": "acest cont",
-  "delete": "ștergeți"
+  "delete": "ștergeți",
+  "delete_account": "șterge contul"
 }

@@ -8,7 +8,7 @@
 }
 
 .cryptoAddressInput input[type="text"] {
-  padding: 2px 0;
+  padding: 2px;
   margin-bottom: 5px;
 }
 
@@ -16,13 +16,23 @@
   padding: 0 5px;
 }
 
-.cryptoAddressInfo {
+.cryptoAddressInfo {  
   word-break: break-word;
 }
 
 .cryptoAddressInfo ol {
   padding-bottom: 10px;
   padding-left: 15px;
+}
+
+.cryptoAddressInfo a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.cryptoAddressInfo a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
 .saveButton {

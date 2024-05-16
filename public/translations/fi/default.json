@@ -75,7 +75,7 @@
   "projects": "projektit",
   "challenge_counter": "{{index}} / {{total}}",
   "embed": "upota",
-  "remove": "Poista",
+  "remove": "poista",
   "download_latest_desktop": "Lataa uusin työpöytäversio täältä: {{link}}",
   "new_stable_version": "Uusi vakaa versio saatavilla, plebchan v{{newVersion}}. Käytät plebchan v{{oldVersion}}.",
   "refresh_to_update": "Päivitä sivu päivittääksesi",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Krypto-osoite kuuluu toiseen tiliin.",
   "enter_crypto_address": "Syötä voimassa oleva krypto-osoite.",
   "crypto_address_not_resolved": "Krypto-osoitetta ei ole vielä ratkaistu.",
-  "copy_message_etherscan": "<1>{{copy}}</1> viesti allekirjoitettavaksi <2>etherscan</2>:ssa",
+  "copy_message_etherscan": "Kopioi viesti allekirjoitettavaksi <1>etherscan</1>",
   "account": "tili",
   "crypto_address": "krypto-osoite",
   "crypto_wallets": "Krypto-lompakot",
@@ -113,5 +113,6 @@
   "export": "vie",
   "full_account_data": "täydelliset tilitiedot",
   "this_account": "tämä tili",
-  "delete": "poista"
+  "delete": "poista",
+  "delete_account": "poista tili"
 }

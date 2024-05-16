@@ -75,7 +75,7 @@
   "projects": "dự án",
   "challenge_counter": "{{index}} trong {{total}}",
   "embed": "nhúng",
-  "remove": "Xóa bỏ",
+  "remove": "xóa",
   "download_latest_desktop": "Tải xuống phiên bản máy tính để bàn mới nhất tại đây: {{link}}",
   "new_stable_version": "Phiên bản ổn định mới có sẵn, plebchan v{{newVersion}}. Bạn đang sử dụng plebchan v{{oldVersion}}.",
   "refresh_to_update": "Làm mới trang để cập nhật",
@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Địa chỉ tiền điện tử thuộc về một tài khoản khác.",
   "enter_crypto_address": "Vui lòng nhập địa chỉ tiền điện tử hợp lệ.",
   "crypto_address_not_resolved": "Địa chỉ tiền điện tử vẫn chưa được giải quyết.",
-  "copy_message_etherscan": "<1>{{copy}}</1> tin nhắn để ký trên <2>etherscan</2>",
+  "copy_message_etherscan": "Sao chép tin nhắn để ký trên <1>etherscan</1>",
   "account": "tài khoản",
   "crypto_address": "địa chỉ tiền điện tử",
   "crypto_wallets": "Ví tiền điện tử",
@@ -113,5 +113,6 @@
   "export": "xuất",
   "full_account_data": "dữ liệu tài khoản đầy đủ",
   "this_account": "tài khoản này",
-  "delete": "xóa"
+  "delete": "xóa",
+  "delete_account": "xóa tài khoản"
 }

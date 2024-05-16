@@ -165,16 +165,11 @@ const AccountSettings = () => {
       <div></div>
       <textarea value={text} onChange={(e) => setText(e.target.value)} autoCorrect='off' autoComplete='off' spellCheck='false' />
       <div>
-        <button onClick={saveAccount}>{t('save')}</button> <button onClick={() => setText(accountJson)}>{t('reset')}</button>
-      </div>
-      <div>
-        <button onClick={_importAccount}>{t('import')}</button> {t('full_account_data')}
-      </div>
-      <div>
-        <button onClick={_exportAccount}>{t('export')}</button> {t('full_account_data')}
-      </div>
-      <div className={styles.deleteAccount}>
-        <button onClick={() => _deleteAccount(account?.name)}>{t('delete')}</button> {t('this_account')}
+        <button onClick={saveAccount}>{t('save')}</button> <button onClick={() => setText(accountJson)}>{t('reset')}</button>{' '}
+        <button onClick={_importAccount}>{t('import')}</button> <button onClick={_exportAccount}>{t('export')}</button>{' '}
+        <button className={styles.deleteAccount} onClick={() => _deleteAccount(account?.name)}>
+          {t('delete_account')}
+        </button>
       </div>
     </div>
   );

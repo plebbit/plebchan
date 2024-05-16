@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "क्रिप्टो पत्ता इतर खात्याशी संबंधित आहे.",
   "enter_crypto_address": "कृपया मान्य क्रिप्टो पत्ता प्रविष्ट करा.",
   "crypto_address_not_resolved": "क्रिप्टो पत्ता अजून सोपवला नाही.",
-  "copy_message_etherscan": "<1>{{copy}}</1> संदेश <2>etherscan</2> वर हस्ताक्षर करण्यासाठी",
+  "copy_message_etherscan": "<1>etherscan</1> वर स्वाक्षरीसाठी संदेश कॉपी करा",
   "account": "खाता",
   "crypto_address": "क्रिप्टो पत्ता",
   "crypto_wallets": "क्रिप्टो बटव्या",
@@ -113,5 +113,6 @@
   "export": "निर्यात करा",
   "full_account_data": "पूर्ण खाते डेटा",
   "this_account": "हे खाते",
-  "delete": "काढा"
+  "delete": "काढा",
+  "delete_account": "खाते हटवा"
 }
