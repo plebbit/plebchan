@@ -124,6 +124,7 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
             <Trans
               i18nKey='copy_message_etherscan'
               components={{
+                // eslint-disable-next-line
                 1: <a href='https://etherscan.io/verifiedSignatures' target='_blank' rel='noopener noreferrer' />,
               }}
             />
