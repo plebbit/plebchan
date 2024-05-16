@@ -16,7 +16,7 @@ import { PostProps } from '../post';
 import styles from '../post.module.css';
 import _ from 'lodash';
 
-const PostInfoDesktop = ({ isInPostPage, openReplyModal, post, roles }: PostProps) => {
+const PostInfo = ({ isInPostPage, openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -115,7 +115,7 @@ const PostInfoDesktop = ({ isInPostPage, openReplyModal, post, roles }: PostProp
   );
 };
 
-const PostMediaDesktop = ({ post }: PostProps) => {
+const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
   const { link, linkHeight, linkWidth, parentCid } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -128,52 +128,50 @@ const PostMediaDesktop = ({ post }: PostProps) => {
   const isReply = parentCid;
 
   return (
-    url && (
-      <div className={styles.file}>
-        <div className={styles.fileText}>
-          {t('link')}:{' '}
-          <a href={url} target='_blank' rel='noopener noreferrer'>
-            {url.length > 30 ? url.slice(0, 30) + '...' : url}
-          </a>{' '}
-          ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
-          {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
-            <span>
-              {' '}
-              [
-              <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
-                {t('close')}
-              </span>
-              ]
+    <div className={styles.file}>
+      <div className={styles.fileText}>
+        {t('link')}:{' '}
+        <a href={url} target='_blank' rel='noopener noreferrer'>
+          {url && url.length > 30 ? url.slice(0, 30) + '...' : url}
+        </a>{' '}
+        ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
+        {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
+          <span>
+            {' '}
+            [
+            <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
+              {t('close')}
             </span>
-          )}
-          {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
-            <span>
-              {' '}
-              [
-              <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
-                {t('open')}
-              </span>
-              ]
+            ]
+          </span>
+        )}
+        {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
+          <span>
+            {' '}
+            [
+            <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
+              {t('open')}
             </span>
-          )}
-        </div>
-        {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
-          <CommentMedia
-            commentMediaInfo={commentMediaInfo}
-            isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
-            isReply={isReply}
-            linkHeight={linkHeight}
-            linkWidth={linkWidth}
-            showThumbnail={showThumbnail}
-            setShowThumbnail={setShowThumbnail}
-          />
+            ]
+          </span>
         )}
       </div>
-    )
+      {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
+        <CommentMedia
+          commentMediaInfo={commentMediaInfo}
+          isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
+          isReply={isReply}
+          linkHeight={linkHeight}
+          linkWidth={linkWidth}
+          showThumbnail={showThumbnail}
+          setShowThumbnail={setShowThumbnail}
+        />
+      )}
+    </div>
   );
 };
 
-const PostMessageDesktop = ({ isInPostPage, post }: PostProps) => {
+const PostMessage = ({ isInPostPage, post }: PostProps) => {
   const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
@@ -187,36 +185,34 @@ const PostMessageDesktop = ({ isInPostPage, post }: PostProps) => {
   );
 
   return (
-    content && (
-      <blockquote className={styles.postMessage}>
-        {isReply && isReplyingToReply && (
-          <>
-            <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-              {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-            </Link>
-            <br />
-          </>
-        )}
-        <Markdown content={displayContent} />
-        {!isReply && content.length > 1000 && !isInPostPage && (
-          <span className={styles.abbr}>
-            <br />
-            <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
-          </span>
-        )}
-        {!cid && state === 'pending' && stateString !== 'Failed' && (
-          <>
-            <br />
-            {loadingString}
-          </>
-        )}
-      </blockquote>
-    )
+    <blockquote className={styles.postMessage}>
+      {isReply && isReplyingToReply && (
+        <>
+          <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+            {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
+          </Link>
+          <br />
+        </>
+      )}
+      <Markdown content={displayContent} />
+      {!isReply && content.length > 1000 && !isInPostPage && (
+        <span className={styles.abbr}>
+          <br />
+          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
+        </span>
+      )}
+      {!cid && state === 'pending' && stateString !== 'Failed' && (
+        <>
+          <br />
+          {loadingString}
+        </>
+      )}
+    </blockquote>
   );
 };
 
 const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
-  const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
+  const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const replies = useReplies(post);
@@ -235,10 +231,10 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
           <span className={`${styles.hideButton} ${styles.hideThread}`} />
         </span>
       )}
-      <PostMediaDesktop post={post} />
-      <PostInfoDesktop isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={post} roles={roles} />
+      {link && <PostMedia post={post} />}
+      <PostInfo isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={post} roles={roles} />
       {!content && <div className={styles.spacer} />}
-      <PostMessageDesktop isInPostPage={isInPostPage} post={post} />
+      {content && <PostMessage isInPostPage={isInPostPage} post={post} />}
       {!isDescription && !isRules && !isPendingPostPage && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
         <span className={styles.summary}>
           <span className={styles.expandButtonWrapper}>
@@ -266,9 +262,9 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
             <div className={styles.replyDesktop}>
               <div className={styles.sideArrows}>{'>>'}</div>
               <div className={styles.reply}>
-                <PostInfoDesktop isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={reply} roles={roles} />
-                <PostMediaDesktop post={reply} />
-                <PostMessageDesktop isInPostPage={isInPostPage} post={reply} />
+                <PostInfo isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={reply} roles={roles} />
+                {reply.link && <PostMedia post={reply} />}
+                {reply.content && <PostMessage isInPostPage={isInPostPage} post={reply} />}
               </div>
             </div>
           </div>

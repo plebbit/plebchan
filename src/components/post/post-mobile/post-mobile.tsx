@@ -15,7 +15,7 @@ import { PostProps } from '../post';
 import styles from '../post.module.css';
 import _ from 'lodash';
 
-const PostInfoAndMediaMobile = ({ openReplyModal, post, roles }: PostProps) => {
+const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, link, linkHeight, linkWidth, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -143,7 +143,7 @@ const PostMessageMobile = ({ isInPostPage, post }: PostProps) => {
 
 const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, pinned, replyCount, subplebbitAddress } = post || {};
+  const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const linksCount = useCountLinksInReplies(post);
@@ -158,8 +158,8 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
       <div className={styles.thread}>
         <div className={styles.postContainer}>
           <div className={styles.postOp}>
-            <PostInfoAndMediaMobile openReplyModal={openReplyModal} post={post} roles={roles} />
-            <PostMessageMobile isInPostPage={isInPostPage} post={post} />
+            <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
+            {content && <PostMessageMobile isInPostPage={isInPostPage} post={post} />}
           </div>
           {!isInPostPage && !isPendingPostPage && (
             <div className={styles.postLink}>
@@ -183,8 +183,8 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
               <div className={styles.replyMobile}>
                 <div className={styles.reply}>
                   <div className={styles.replyContainer}>
-                    <PostInfoAndMediaMobile openReplyModal={openReplyModal} post={reply} roles={roles} />
-                    <PostMessageMobile isInPostPage={isInPostPage} post={reply} />
+                    <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
+                    {content && <PostMessageMobile isInPostPage={isInPostPage} post={reply} />}
                   </div>
                 </div>
               </div>

@@ -5,7 +5,6 @@ import useWindowWidth from '../../hooks/use-window-width';
 import styles from './post.module.css';
 import PostDesktop from './post-desktop';
 import PostMobile from './post-mobile';
-import _ from 'lodash';
 
 export interface PostProps {
   index?: number;
