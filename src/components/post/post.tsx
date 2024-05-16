@@ -276,22 +276,16 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
         replies &&
         (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
           <div key={index} className={styles.replyContainer}>
-            <ReplyDesktop index={index} reply={reply} roles={roles} openReplyModal={openReplyModal} />
+            <div className={styles.replyDesktop}>
+              <div className={styles.sideArrows}>{'>>'}</div>
+              <div className={styles.reply}>
+                <PostInfoDesktop isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={reply} roles={roles} />
+                <PostMediaDesktop post={reply} />
+                <PostMessageDesktop isInPostPage={isInPostPage} post={reply} />
+              </div>
+            </div>
           </div>
         ))}
-    </div>
-  );
-};
-
-const ReplyDesktop = ({ isInPostPage, isPendingPostPage, reply, roles, openReplyModal }: PostProps) => {
-  return (
-    <div className={styles.replyDesktop}>
-      <div className={styles.sideArrows}>{'>>'}</div>
-      <div className={styles.reply}>
-        <PostInfoDesktop isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={reply} roles={roles} />
-        <PostMediaDesktop post={reply} />
-        <PostMessageDesktop isInPostPage={isInPostPage} post={reply} />
-      </div>
     </div>
   );
 };
