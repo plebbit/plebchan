@@ -290,24 +290,21 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
   );
 };
 
-const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
+const PostInfoAndMediaMobile = ({ openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
-  const { address, displayName, shortAddress } = author || {};
-  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
-  const authorRole = roles?.[address]?.role;
-
+  const { author, cid, link, linkHeight, linkWidth, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
+  const { address, displayName, shortAddress } = author || {};
 
-  const linksCount = useCountLinksInReplies(post);
+  const authorRole = roles?.[address]?.role;
+  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
-  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
 
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
-  const replies = useReplies(post);
+  const isReply = parentCid;
 
   // pending reply by account is not yet published
   const account = useAccount();
@@ -315,9 +312,118 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
 
   const stateString = useStateString(post);
 
+  return (
+    <>
+      <div className={styles.postInfo}>
+        <span className={styles.postMenuBtn} title='Post menu'>
+          ...
+        </span>
+        <span className={styles.nameBlock}>
+          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
+            {shortDisplayName || _.capitalize(t('anonymous'))}
+            {authorRole && ` ## Board ${authorRole}`}{' '}
+          </span>
+          {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
+          {pinned && (
+            <span className={styles.stickyIconWrapper}>
+              <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+            </span>
+          )}
+          {locked && (
+            <span className={`${styles.closedIconWrapper} ${pinned && styles.addPaddingInBetween}`}>
+              <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+            </span>
+          )}
+          {title && (
+            <>
+              <br />
+              <span className={styles.subject}>{displayTitle}</span>
+            </>
+          )}
+        </span>
+        <span className={styles.dateTimePostNum}>
+          {getFormattedDate(timestamp)}{' '}
+          {!(isDescription || isRules) && (
+            <span className={styles.postNumLink}>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                c/
+              </Link>
+              {!cid ? (
+                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+              ) : (
+                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
+                  {shortCid}
+                </span>
+              )}
+            </span>
+          )}
+        </span>
+      </div>
+      {(hasThumbnail || link) && (
+        <CommentMedia
+          commentMediaInfo={commentMediaInfo}
+          isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
+          isReply={isReply}
+          linkHeight={linkHeight}
+          linkWidth={linkWidth}
+          showThumbnail={showThumbnail}
+          setShowThumbnail={setShowThumbnail}
+        />
+      )}
+    </>
+  );
+};
+
+const PostMessageMobile = ({ isInPostPage, post }: PostProps) => {
+  const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
+  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
+
+  const isReply = parentCid;
+  const isReplyingToReply = postCid !== parentCid;
+
+  const stateString = useStateString(post);
+
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
+
+  return (
+    content && (
+      <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
+        {isReplyingToReply && (
+          <>
+            <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+              {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
+            </Link>
+            <br />
+          </>
+        )}
+        <Markdown content={displayContent} />
+        {!isReply && content.length > 1000 && !isInPostPage && (
+          <span className={styles.abbr}>
+            <br />
+            <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
+          </span>
+        )}
+        {!cid && state === 'pending' && stateString !== 'Failed' && (
+          <>
+            <br />
+            {loadingString}
+          </>
+        )}
+      </blockquote>
+    )
+  );
+};
+
+const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
+  const { t } = useTranslation();
+  const { cid, pinned, replyCount, subplebbitAddress } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
+
+  const linksCount = useCountLinksInReplies(post);
+
+  const replies = useReplies(post);
 
   return (
     <div className={styles.postMobile}>
@@ -327,79 +433,8 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
       <div className={styles.thread}>
         <div className={styles.postContainer}>
           <div className={styles.postOp}>
-            <div className={styles.postInfo}>
-              <span className={styles.postMenuBtn} title='Post menu'>
-                ...
-              </span>
-              <span className={styles.nameBlock}>
-                <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-                  {shortDisplayName || _.capitalize(t('anonymous'))}
-                  {authorRole && ` ## Board ${authorRole}`}{' '}
-                </span>
-                {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
-                {pinned && (
-                  <span className={styles.stickyIconWrapper}>
-                    <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
-                  </span>
-                )}
-                {locked && (
-                  <span className={`${styles.closedIconWrapper} ${pinned && styles.addPaddingInBetween}`}>
-                    <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
-                  </span>
-                )}
-                {title && (
-                  <>
-                    <br />
-                    <span className={styles.subject}>{displayTitle}</span>
-                  </>
-                )}
-              </span>
-              <span className={styles.dateTimePostNum}>
-                {getFormattedDate(timestamp)}{' '}
-                {!(isDescription || isRules) && (
-                  <span className={styles.postNumLink}>
-                    <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-                      c/
-                    </Link>
-                    {!cid ? (
-                      <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
-                    ) : (
-                      <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
-                        {shortCid}
-                      </span>
-                    )}
-                  </span>
-                )}
-              </span>
-            </div>
-            {(hasThumbnail || link) && (
-              <CommentMedia
-                commentMediaInfo={commentMediaInfo}
-                isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
-                isReply={false}
-                linkHeight={linkHeight}
-                linkWidth={linkWidth}
-                showThumbnail={showThumbnail}
-                setShowThumbnail={setShowThumbnail}
-              />
-            )}
-            {content && (
-              <blockquote className={`${styles.postMessage} ${styles.clampLines}`}>
-                <Markdown content={displayContent} />
-                {content.length > 1000 && !isInPostPage && (
-                  <span className={styles.abbr}>
-                    <br />
-                    <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
-                  </span>
-                )}
-                {!cid && state === 'pending' && stateString !== 'Failed' && (
-                  <>
-                    <br />
-                    {loadingString}
-                  </>
-                )}
-              </blockquote>
-            )}
+            <PostInfoAndMediaMobile openReplyModal={openReplyModal} post={post} roles={roles} />
+            <PostMessageMobile isInPostPage={isInPostPage} post={post} />
           </div>
           {!isInPostPage && !isPendingPostPage && (
             <div className={styles.postLink}>
@@ -418,103 +453,18 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
           !isDescription &&
           !isRules &&
           replies &&
-          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+          (showAllReplies ? replies : replies.slice(-5)).map((reply) => (
             <div key={reply.cid} className={styles.replyContainer}>
-              <ReplyMobile index={index} reply={reply} roles={roles} openReplyModal={openReplyModal} />
+              <div className={styles.replyMobile}>
+                <div className={styles.reply}>
+                  <div className={styles.replyContainer}>
+                    <PostInfoAndMediaMobile openReplyModal={openReplyModal} post={reply} roles={roles} />
+                    <PostMessageMobile isInPostPage={isInPostPage} post={reply} />
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
-      </div>
-    </div>
-  );
-};
-
-const ReplyMobile = ({ openReplyModal, reply, roles }: PostProps) => {
-  const { t } = useTranslation();
-  const { author, content, cid, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
-  const { address, displayName, shortAddress } = author || {};
-  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
-  const authorRole = roles?.[address]?.role;
-
-  const commentMediaInfo = getCommentMediaInfo(reply);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  const [showThumbnail, setShowThumbnail] = useState(true);
-
-  const isReplyingToReply = postCid !== parentCid;
-
-  // pending reply by account is not yet published
-  const account = useAccount();
-  const accountShortAddress = account?.author?.shortAddress;
-
-  const stateString = useStateString(reply);
-
-  const loadingString = stateString && (
-    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
-  );
-
-  return (
-    <div className={styles.replyMobile}>
-      <div className={styles.reply}>
-        <div className={styles.replyContainer}>
-          <div className={styles.postInfo}>
-            <span className={styles.postMenuBtn}>...</span>
-            <span className={styles.nameBlock}>
-              <span className={`${styles.name} ${authorRole && styles.capcodeMod}`}>
-                {shortDisplayName || _.capitalize(t('anonymous'))}
-                {authorRole && ` ## Board ${authorRole}`}{' '}
-              </span>
-              <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>
-              {pinned && (
-                <span className={styles.stickyIconWrapper}>
-                  <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
-                </span>
-              )}
-            </span>
-            <span className={styles.dateTimePostNum}>
-              {getFormattedDate(timestamp)}{' '}
-              <span className={styles.postNumLink}>
-                <Link to={`/p/${subplebbitAddress}/c/${cid}`} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-                  c/
-                </Link>
-              </span>
-              {!cid ? (
-                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
-              ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
-                  {shortCid}
-                </span>
-              )}
-            </span>
-          </div>
-          {(hasThumbnail || link) && (
-            <CommentMedia
-              commentMediaInfo={commentMediaInfo}
-              isReply={false}
-              linkHeight={linkHeight}
-              linkWidth={linkWidth}
-              showThumbnail={showThumbnail}
-              setShowThumbnail={setShowThumbnail}
-            />
-          )}
-          {content && (
-            <blockquote className={styles.postMessage}>
-              {isReplyingToReply && (
-                <>
-                  <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-                    {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-                  </Link>
-                  <br />
-                </>
-              )}
-              <Markdown content={content} />
-              {!cid && state === 'pending' && stateString !== 'Failed' && (
-                <>
-                  <br />
-                  {loadingString}
-                </>
-              )}
-            </blockquote>
-          )}
-        </div>
       </div>
     </div>
   );
