@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Địa chỉ tiền điện tử thuộc về một tài khoản khác.",
   "enter_crypto_address": "Vui lòng nhập địa chỉ tiền điện tử hợp lệ.",
   "crypto_address_not_resolved": "Địa chỉ tiền điện tử vẫn chưa được giải quyết.",
-  "copy_message_etherscan": "<1>{{copy}}</1> tin nhắn để ký trên <2>etherscan</2>",
+  "copy_message_etherscan": "Sao chép tin nhắn để ký trên <1>etherscan</1>",
   "account": "tài khoản",
   "crypto_address": "địa chỉ tiền điện tử",
   "crypto_wallets": "Ví tiền điện tử",

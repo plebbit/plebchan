@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Account, setAccount, useAccount } from '@plebbit/plebbit-react-hooks';
 import styles from './crypto-wallets-setting.module.css';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import _ from 'lodash';
 
 interface Wallet {
@@ -123,10 +123,12 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
         </div>
         <div className={styles.walletField}>
           <span className={styles.walletFieldTitle}>
-            Copy message to sign on{' '}
-            <a href='https://etherscan.io/verifiedSignatures' target='_blank' rel='noopener noreferrer'>
-              etherscan
-            </a>
+            <Trans
+              i18nKey='copy_message_etherscan'
+              components={{
+                1: <a href='https://etherscan.io/verifiedSignatures' target='_blank' rel='noopener noreferrer' />,
+              }}
+            />
             :{' '}
           </span>
           <button onClick={() => copyMessageToSign(walletsArray[selectedWallet], selectedWallet)}>{hasCopied ? t('copied') : t('copy')}</button>

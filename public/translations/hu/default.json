@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "A kripto-cím egy másik fiókhoz tartozik.",
   "enter_crypto_address": "Kérjük, adjon meg egy érvényes kripto címet.",
   "crypto_address_not_resolved": "A kripto cím még nem oldódott meg.",
-  "copy_message_etherscan": "<1>{{copy}}</1> üzenet aláírásához az <2>etherscan</2>-en",
+  "copy_message_etherscan": "Üzenet másolása aláíráshoz a <1>etherscan</1>",
   "account": "fiók",
   "crypto_address": "kriptovaluta cím",
   "crypto_wallets": "Kriptopénztárcák",

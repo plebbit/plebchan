@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Adres kryptowaluty należy do innego konta.",
   "enter_crypto_address": "Proszę podać prawidłowy adres kryptowalutowy.",
   "crypto_address_not_resolved": "Adres kryptowaluty nie jest jeszcze rozwiązany.",
-  "copy_message_etherscan": "<1>{{copy}}</1> wiadomość do podpisania na <2>etherscan</2>",
+  "copy_message_etherscan": "Skopiuj wiadomość do podpisania na <1>etherscan</1>",
   "account": "konto",
   "crypto_address": "adres kryptowalutowy",
   "crypto_wallets": "Portfele kryptowalut",

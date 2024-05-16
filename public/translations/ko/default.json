@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "암호 주소는 다른 계정에 속합니다.",
   "enter_crypto_address": "유효한 암호 주소를 입력하세요.",
   "crypto_address_not_resolved": "암호 주소가 아직 해결되지 않았습니다.",
-  "copy_message_etherscan": "<1>{{copy}}</1> 메시지를 <2>etherscan</2>에서 서명",
+  "copy_message_etherscan": "<1>etherscan</1>에서 서명할 메시지 복사",
   "account": "계정",
   "crypto_address": "암호 화폐 주소",
   "crypto_wallets": "암호 화폐 지갑",

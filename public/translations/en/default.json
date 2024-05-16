@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Crypto address belongs to another account.",
   "enter_crypto_address": "Please enter a valid crypto address.",
   "crypto_address_not_resolved": "Crypto address is not resolved yet.",
-  "copy_message_etherscan": "<1>{{copy}}</1> message to sign on <2>etherscan</2>",
+  "copy_message_etherscan": "Copy message to sign on <1>etherscan</1>",
   "account": "account",
   "crypto_address": "crypto address",
   "crypto_wallets": "Crypto Wallets",

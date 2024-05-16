@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Ang crypto address ay nauugnay sa ibang account.",
   "enter_crypto_address": "Mangyaring magpasok ng wastong crypto address.",
   "crypto_address_not_resolved": "Hindi pa naresolba ang crypto address.",
-  "copy_message_etherscan": "<1>{{copy}}</1> mensahe na pipirmahan sa <2>etherscan</2>",
+  "copy_message_etherscan": "Kopyahin ang mensahe upang pirmahan sa <1>etherscan</1>",
   "account": "account",
   "crypto_address": "crypto address",
   "crypto_wallets": "Mga Wallet ng Crypto",

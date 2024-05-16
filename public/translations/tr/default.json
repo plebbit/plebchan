@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Kripto adres başka bir hesaba aittir.",
   "enter_crypto_address": "Lütfen geçerli bir kripto adresi girin.",
   "crypto_address_not_resolved": "Kripto adres henüz çözülmedi.",
-  "copy_message_etherscan": "<1>{{copy}}</1> <2>etherscan</2> üzerinde imzalanacak mesaj",
+  "copy_message_etherscan": "<1>etherscan</1> üzerinde imzalamak için mesajı kopyala",
   "account": "hesap",
   "crypto_address": "kripto adres",
   "crypto_wallets": "Kripto Cüzdanlar",

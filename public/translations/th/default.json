@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "ที่อยู่คริปโตเป็นของบัญชีอื่น",
   "enter_crypto_address": "โปรดป้อนที่อยู่คริปโตที่ถูกต้อง",
   "crypto_address_not_resolved": "ที่อยู่คริปโตยังไม่ได้รับการแก้ไข",
-  "copy_message_etherscan": "<1>{{copy}}</1> ข้อความเพื่อเซ็นบน <2>etherscan</2>",
+  "copy_message_etherscan": "คัดลอกข้อความเพื่อลงนามบน <1>etherscan</1>",
   "account": "บัญชี",
   "crypto_address": "ที่อยู่คริปโต",
   "crypto_wallets": "กระเป๋าเงินดิจิทัล",

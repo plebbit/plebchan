@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "کرپٹو پتا دوسرے اکاؤنٹ کا حصہ ہے۔",
   "enter_crypto_address": "براہ کرم ایک معتبر کرپٹو پتہ داخل کریں۔",
   "crypto_address_not_resolved": "کرپٹو پتا ابھی تک حل نہیں ہوا ہے۔",
-  "copy_message_etherscan": "<1>{{copy}}</1> پیغام <2>etherscan</2> پر دستخط کریں",
+  "copy_message_etherscan": "<1>etherscan</1> پر دستخط کرنے کے لیے پیغام کاپی کریں",
   "account": "اکاؤنٹ",
   "crypto_address": "کرپٹو پتہ",
   "crypto_wallets": "کرپٹو والٹس",

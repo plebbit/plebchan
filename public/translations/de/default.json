@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Krypto-Adresse gehört zu einem anderen Konto.",
   "enter_crypto_address": "Bitte geben Sie eine gültige Krypto-Adresse ein.",
   "crypto_address_not_resolved": "Krypto-Adresse ist noch nicht aufgelöst.",
-  "copy_message_etherscan": "<1>{{copy}}</1> Nachricht zum Signieren auf <2>etherscan</2>",
+  "copy_message_etherscan": "Nachricht zum Signieren auf <1>etherscan</1> kopieren",
   "account": "Konto",
   "crypto_address": "Krypto-Adresse",
   "crypto_wallets": "Krypto-Wallets",
