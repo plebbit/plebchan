@@ -12,10 +12,15 @@
 }
 
 .version a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
 }
 
 .version a:hover {
-  text-decoration: underline;
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
+.interfaceSettings {
+  margin-bottom: 10px;
 }
