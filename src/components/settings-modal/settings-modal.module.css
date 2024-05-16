@@ -89,6 +89,19 @@
   background-image: var(--settings-modal-close-button-background-image);
 }
 
+.expandAllSettings {
+  text-align: center;
+}
+
+.expandAllSettings span {
+  color: var(--button-desktop-text-color);
+}
+
+.expandAllSettings span:hover {
+  color: var(--button-desktop-text-color-hover);
+  cursor: pointer;
+}
+
 .languageSettings {
   display: inline-block;
 }

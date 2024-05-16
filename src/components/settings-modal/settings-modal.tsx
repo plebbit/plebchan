@@ -124,7 +124,15 @@ const SettingsModal = () => {
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [showCryptoAddressSetting, setShowCryptoAddressSetting] = useState(false);
   const [showCryptoWalletSettings, setShowCryptoWalletSettings] = useState(false);
-  // const [showPlebbitOptionsSettings, setShowPlebbitOptionsSettings] = useState(false);
+  const [expandAll, setExpandAll] = useState(false);
+
+  const handleExpandAll = () => {
+    const newExpandState = !expandAll;
+    setExpandAll(newExpandState);
+    setShowAccountSettings(newExpandState);
+    setShowCryptoAddressSetting(newExpandState);
+    setShowCryptoWalletSettings(newExpandState);
+  };
 
   return (
     <>
@@ -143,6 +151,9 @@ const SettingsModal = () => {
           </span>
           <span className={styles.title}>{t('settings')}</span>
           <span className={styles.closeButton} title='close' onClick={closeModal} />
+        </div>
+        <div className={styles.expandAllSettings}>
+          [<span onClick={handleExpandAll}>{expandAll ? 'Collapse All Settings' : 'Expand All Settings'}</span>]
         </div>
         <div className={styles.setting}>
           {t('update')}: <CheckForUpdates />
