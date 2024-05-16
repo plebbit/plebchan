@@ -31,13 +31,13 @@ interface PostProps {
 
 const PostInfoDesktop = ({ isInPostPage, openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, locked, pinned, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const stateString = useStateString(post);
 
-  const isReply = post?.parentCid;
+  const isReply = parentCid;
 
   const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const authorRole = roles?.[address]?.role;
@@ -130,7 +130,7 @@ const PostInfoDesktop = ({ isInPostPage, openReplyModal, post, roles }: PostProp
 
 const PostMediaDesktop = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { link, linkHeight, linkWidth } = post || {};
+  const { link, linkHeight, linkWidth, parentCid } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type, url } = commentMediaInfo || {};
@@ -138,7 +138,7 @@ const PostMediaDesktop = ({ post }: PostProps) => {
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
-  const isReply = post?.parentCid;
+  const isReply = parentCid;
 
   return (
     url && (
@@ -390,7 +390,7 @@ const PostMessageMobile = ({ isInPostPage, post }: PostProps) => {
   return (
     content && (
       <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
-        {isReplyingToReply && (
+        {isReply && isReplyingToReply && (
           <>
             <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
               {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
