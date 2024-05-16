@@ -90,11 +90,9 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
   const _removeWallet = (index: number) => {
     const wallet = walletsArray[index];
     if (window.confirm(t('delete_confirm', { value: wallet.chainTicker, interpolation: { escapeValue: false } }))) {
-      if (window.confirm(t('double_confirm'))) {
-        const newArray = [...walletsArray.slice(0, index), ...walletsArray.slice(index + 1)];
-        setWalletsArray(newArray);
-        setSelectedWallet(0);
-      }
+      const newArray = [...walletsArray.slice(0, index), ...walletsArray.slice(index + 1)];
+      setWalletsArray(newArray);
+      setSelectedWallet(0);
     } else {
       return;
     }
