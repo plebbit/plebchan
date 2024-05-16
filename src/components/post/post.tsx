@@ -26,15 +26,16 @@ interface PostProps {
   reply?: any;
   roles?: Role[];
   showAllReplies?: boolean;
-  stateString?: string;
   openReplyModal?: (cid: string) => void;
 }
 
-const PostInfoDesktop = ({ isInPostPage, openReplyModal, post, roles, stateString }: PostProps) => {
+const PostInfoDesktop = ({ isInPostPage, openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, locked, pinned, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
+
+  const stateString = useStateString(post);
 
   const isReply = post?.parentCid;
 
@@ -185,15 +186,51 @@ const PostMediaDesktop = ({ post }: PostProps) => {
   );
 };
 
-const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies, stateString }: PostProps) => {
-  const { cid, content, pinned, replyCount, state, subplebbitAddress } = post || {};
-  const { isDescription, isRules } = post || {}; // custom properties, not from api
-
+const PostMessageDesktop = ({ isInPostPage, post }: PostProps) => {
+  const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
+
+  const isReply = parentCid;
+  const isReplyingToReply = postCid !== parentCid;
+
+  const stateString = useStateString(post);
 
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
+
+  return (
+    content && (
+      <blockquote className={styles.postMessage}>
+        {isReply && isReplyingToReply && (
+          <>
+            <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
+              {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
+            </Link>
+            <br />
+          </>
+        )}
+        <Markdown content={displayContent} />
+        {!isReply && content.length > 1000 && !isInPostPage && (
+          <span className={styles.abbr}>
+            <br />
+            <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
+          </span>
+        )}
+        {!cid && state === 'pending' && stateString !== 'Failed' && (
+          <>
+            <br />
+            {loadingString}
+          </>
+        )}
+      </blockquote>
+    )
+  );
+};
+
+const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
+  const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -212,32 +249,9 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
         </span>
       )}
       <PostMediaDesktop post={post} />
-      <PostInfoDesktop
-        isInPostPage={isInPostPage}
-        isPendingPostPage={isPendingPostPage}
-        openReplyModal={openReplyModal}
-        post={post}
-        roles={roles}
-        stateString={stateString}
-      />
+      <PostInfoDesktop isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={post} roles={roles} />
       {!content && <div className={styles.spacer} />}
-      {content && (
-        <blockquote className={styles.postMessage}>
-          <Markdown content={displayContent} />
-          {content.length > 1000 && !isInPostPage && (
-            <span className={styles.abbr}>
-              <br />
-              <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
-            </span>
-          )}
-          {!cid && state === 'pending' && stateString !== 'Failed' && (
-            <>
-              <br />
-              {loadingString}
-            </>
-          )}
-        </blockquote>
-      )}
+      <PostMessageDesktop isInPostPage={isInPostPage} post={post} />
       {!isDescription && !isRules && !isPendingPostPage && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
         <span className={styles.summary}>
           <span className={styles.expandButtonWrapper}>
@@ -270,53 +284,19 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
 };
 
 const ReplyDesktop = ({ isInPostPage, isPendingPostPage, reply, roles, openReplyModal }: PostProps) => {
-  const { cid, content, parentCid, postCid, state, subplebbitAddress } = reply || {};
-
-  const isReplyingToReply = postCid !== parentCid;
-
-  const stateString = useStateString(reply);
-  const loadingString = stateString && (
-    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
-  );
-
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
       <div className={styles.reply}>
-        <PostInfoDesktop
-          isInPostPage={isInPostPage}
-          isPendingPostPage={isPendingPostPage}
-          openReplyModal={openReplyModal}
-          post={reply}
-          roles={roles}
-          stateString={stateString}
-        />
+        <PostInfoDesktop isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={reply} roles={roles} />
         <PostMediaDesktop post={reply} />
-        {content && (
-          <blockquote className={styles.postMessage}>
-            {isReplyingToReply && (
-              <>
-                <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-                  {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-                </Link>
-                <br />
-              </>
-            )}
-            <Markdown content={content} />
-            {!cid && state === 'pending' && stateString !== 'Failed' && (
-              <>
-                <br />
-                {loadingString}
-              </>
-            )}
-          </blockquote>
-        )}
+        <PostMessageDesktop isInPostPage={isInPostPage} post={reply} />
       </div>
     </div>
   );
 };
 
-const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies, stateString }: PostProps) => {
+const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, link, linkHeight, linkWidth, locked, pinned, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -338,6 +318,8 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
   // pending reply by account is not yet published
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
+
+  const stateString = useStateString(post);
 
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
@@ -452,7 +434,7 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
   );
 };
 
-const ReplyMobile = ({ openReplyModal, reply, roles, stateString }: PostProps) => {
+const ReplyMobile = ({ openReplyModal, reply, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, content, cid, link, linkHeight, linkWidth, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = reply || {};
   const { address, displayName, shortAddress } = author || {};
@@ -468,6 +450,8 @@ const ReplyMobile = ({ openReplyModal, reply, roles, stateString }: PostProps) =
   // pending reply by account is not yet published
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
+
+  const stateString = useStateString(reply);
 
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
@@ -551,8 +535,6 @@ const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
   const isInPostPage = isPostPageView(location.pathname, params);
   const isPendingPostPage = isPendingPostView(location.pathname, params);
 
-  const stateString = useStateString(post);
-
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
@@ -563,7 +545,6 @@ const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
             post={post}
             roles={subplebbit?.roles}
             showAllReplies={showAllReplies}
-            stateString={stateString}
             openReplyModal={openReplyModal}
           />
         ) : (
@@ -573,7 +554,6 @@ const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
             post={post}
             roles={subplebbit?.roles}
             showAllReplies={showAllReplies}
-            stateString={stateString}
             openReplyModal={openReplyModal}
           />
         )}
