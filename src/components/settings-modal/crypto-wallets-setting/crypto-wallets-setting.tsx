@@ -139,12 +139,14 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
             value={walletsArray[selectedWallet].signature}
             placeholder='0x...'
           />
-          <button className={styles.save} onClick={save}>
-            {t('save')}
-          </button>
-          <button className={styles.removeWallet} onClick={() => _removeWallet(selectedWallet)}>
-            {t('remove')}
-          </button>
+          <div className={styles.buttons}>
+            <button className={styles.save} onClick={save}>
+              {t('save')}
+            </button>
+            <button className={styles.removeWallet} onClick={() => _removeWallet(selectedWallet)}>
+              {t('remove')}
+            </button>
+          </div>
         </div>
       </div>
     ) : null;
