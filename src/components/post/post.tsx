@@ -127,9 +127,66 @@ const PostInfoDesktop = ({ isInPostPage, openReplyModal, post, roles, stateStrin
   );
 };
 
-const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies, stateString }: PostProps) => {
+const PostMediaDesktop = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, link, linkHeight, linkWidth, pinned, replyCount, state, subplebbitAddress } = post || {};
+  const { link, linkHeight, linkWidth } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
+  const commentMediaInfo = getCommentMediaInfo(post);
+  const { type, url } = commentMediaInfo || {};
+  const embedUrl = url && new URL(url);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  const [showThumbnail, setShowThumbnail] = useState(true);
+
+  const isReply = post?.parentCid;
+
+  return (
+    url && (
+      <div className={styles.file}>
+        <div className={styles.fileText}>
+          {t('link')}:{' '}
+          <a href={url} target='_blank' rel='noopener noreferrer'>
+            {url.length > 30 ? url.slice(0, 30) + '...' : url}
+          </a>{' '}
+          ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
+          {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
+            <span>
+              {' '}
+              [
+              <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
+                {t('close')}
+              </span>
+              ]
+            </span>
+          )}
+          {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
+            <span>
+              {' '}
+              [
+              <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
+                {t('open')}
+              </span>
+              ]
+            </span>
+          )}
+        </div>
+        {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
+          <CommentMedia
+            commentMediaInfo={commentMediaInfo}
+            isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
+            isReply={isReply}
+            linkHeight={linkHeight}
+            linkWidth={linkWidth}
+            showThumbnail={showThumbnail}
+            setShowThumbnail={setShowThumbnail}
+          />
+        )}
+      </div>
+    )
+  );
+};
+
+const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies, stateString }: PostProps) => {
+  const { cid, content, pinned, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
@@ -137,12 +194,6 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
-
-  const commentMediaInfo = getCommentMediaInfo(post);
-  const { type, url } = commentMediaInfo || {};
-  const embedUrl = url && new URL(url);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  const [showThumbnail, setShowThumbnail] = useState(true);
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -160,48 +211,7 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
           <span className={`${styles.hideButton} ${styles.hideThread}`} />
         </span>
       )}
-      {url && (
-        <div className={styles.file}>
-          <div className={styles.fileText}>
-            {t('link')}:{' '}
-            <a href={url} target='_blank' rel='noopener noreferrer'>
-              {url.length > 30 ? url.slice(0, 30) + '...' : url}
-            </a>{' '}
-            ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
-            {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
-              <span>
-                {' '}
-                [
-                <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
-                  {t('close')}
-                </span>
-                ]
-              </span>
-            )}
-            {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
-              <span>
-                {' '}
-                [
-                <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
-                  {t('open')}
-                </span>
-                ]
-              </span>
-            )}
-          </div>
-          {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
-            <CommentMedia
-              commentMediaInfo={commentMediaInfo}
-              isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
-              isReply={false}
-              linkHeight={linkHeight}
-              linkWidth={linkWidth}
-              showThumbnail={showThumbnail}
-              setShowThumbnail={setShowThumbnail}
-            />
-          )}
-        </div>
-      )}
+      <PostMediaDesktop post={post} />
       <PostInfoDesktop
         isInPostPage={isInPostPage}
         isPendingPostPage={isPendingPostPage}
@@ -260,14 +270,7 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
 };
 
 const ReplyDesktop = ({ isInPostPage, isPendingPostPage, reply, roles, openReplyModal }: PostProps) => {
-  const { t } = useTranslation();
-  const { cid, content, link, linkHeight, linkWidth, parentCid, postCid, state, subplebbitAddress } = reply || {};
-
-  const commentMediaInfo = getCommentMediaInfo(reply);
-  const { type, url } = commentMediaInfo || {};
-  const embedUrl = url && new URL(url);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  const [showThumbnail, setShowThumbnail] = useState(true);
+  const { cid, content, parentCid, postCid, state, subplebbitAddress } = reply || {};
 
   const isReplyingToReply = postCid !== parentCid;
 
@@ -288,47 +291,7 @@ const ReplyDesktop = ({ isInPostPage, isPendingPostPage, reply, roles, openReply
           roles={roles}
           stateString={stateString}
         />
-        {url && (
-          <div className={styles.file}>
-            <div className={styles.fileText}>
-              {t('link')}:{' '}
-              <a href={link} target='_blank' rel='noopener noreferrer'>
-                {link.length > 30 ? link?.slice(0, 30) + '...' : link}
-              </a>{' '}
-              ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
-              {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
-                <span>
-                  {' '}
-                  [
-                  <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
-                    {t('close')}
-                  </span>
-                  ]
-                </span>
-              )}
-              {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
-                <span>
-                  {' '}
-                  [
-                  <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
-                    {t('open')}
-                  </span>
-                  ]
-                </span>
-              )}
-            </div>
-            {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
-              <CommentMedia
-                commentMediaInfo={commentMediaInfo}
-                isReply={true}
-                linkHeight={linkHeight}
-                linkWidth={linkWidth}
-                showThumbnail={showThumbnail}
-                setShowThumbnail={setShowThumbnail}
-              />
-            )}
-          </div>
-        )}
+        <PostMediaDesktop post={reply} />
         {content && (
           <blockquote className={styles.postMessage}>
             {isReplyingToReply && (
