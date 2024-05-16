@@ -75,7 +75,7 @@
   "projects": "প্রকল্পসমূহ",
   "challenge_counter": "{{index}} থেকে {{total}}",
   "embed": "এম্বেড",
-  "remove": "মুছে ফেলুন",
+  "remove": "অপসারণ",
   "download_latest_desktop": "সর্বশেষ ডেস্কটপ সংস্করণ এখানে ডাউনলোড করুন: {{link}}",
   "new_stable_version": "নতুন স্থিতিশীল সংস্করণ উপলব্ধ, plebchan v{{newVersion}}। আপনি plebchan v{{oldVersion}} ব্যবহার করছেন।",
   "refresh_to_update": "আপডেট করতে পৃষ্ঠাটি রিফ্রেশ করুন",
@@ -113,5 +113,6 @@
   "export": "রপ্তানি",
   "full_account_data": "সম্পূর্ণ অ্যাকাউন্ট ডেটা",
   "this_account": "এই অ্যাকাউন্ট",
-  "delete": "মুছে ফেলা"
+  "delete": "মুছে ফেলা",
+  "delete_account": "অ্যাকাউন্ট মুছুন"
 }

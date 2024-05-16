@@ -113,5 +113,6 @@
   "export": "निर्यात",
   "full_account_data": "पूरे खाते का डेटा",
   "this_account": "इस खाता",
-  "delete": "हटाएँ"
+  "delete": "हटाएँ",
+  "delete_account": "खाता हटाएं"
 }

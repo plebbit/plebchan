@@ -75,7 +75,7 @@
   "projects": "proyectos",
   "challenge_counter": "{{index}} de {{total}}",
   "embed": "incrustar",
-  "remove": "Eliminar",
+  "remove": "eliminar",
   "download_latest_desktop": "Descarga la última versión de escritorio aquí: {{link}}",
   "new_stable_version": "Nueva versión estable disponible, plebchan v{{newVersion}}. Estás usando plebchan v{{oldVersion}}.",
   "refresh_to_update": "Actualiza la página para actualizar",
@@ -113,5 +113,6 @@
   "export": "exportar",
   "full_account_data": "datos completos de la cuenta",
   "this_account": "esta cuenta",
-  "delete": "eliminar"
+  "delete": "eliminar",
+  "delete_account": "eliminar cuenta"
 }

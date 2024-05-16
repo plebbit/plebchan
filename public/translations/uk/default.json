@@ -75,7 +75,7 @@
   "projects": "проекти",
   "challenge_counter": "{{index}} з {{total}}",
   "embed": "вбудувати",
-  "remove": "Видалити",
+  "remove": "видалити",
   "download_latest_desktop": "Завантажте останню версію для робочого столу тут: {{link}}",
   "new_stable_version": "Нова стабільна версія доступна, plebchan v{{newVersion}}. Ви використовуєте plebchan v{{oldVersion}}.",
   "refresh_to_update": "Оновіть сторінку, щоб оновити",
@@ -113,5 +113,6 @@
   "export": "експортувати",
   "full_account_data": "повні дані аккаунта",
   "this_account": "цей аккаунт",
-  "delete": "видалити"
+  "delete": "видалити",
+  "delete_account": "видалити обліковий запис"
 }

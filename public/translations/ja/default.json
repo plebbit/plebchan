@@ -113,5 +113,6 @@
   "export": "エクスポート",
   "full_account_data": "フルアカウントデータ",
   "this_account": "このアカウント",
-  "delete": "削除"
+  "delete": "削除",
+  "delete_account": "アカウントを削除"
 }

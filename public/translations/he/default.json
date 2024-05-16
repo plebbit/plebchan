@@ -113,5 +113,6 @@
   "export": "יצוא",
   "full_account_data": "נתוני החשבון המלאים",
   "this_account": "החשבון הזה",
-  "delete": "מחק"
+  "delete": "מחק",
+  "delete_account": "מחק חשבון"
 }

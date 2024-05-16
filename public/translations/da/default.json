@@ -75,7 +75,7 @@
   "projects": "projekter",
   "challenge_counter": "{{index}} af {{total}}",
   "embed": "integrer",
-  "remove": "Fjern",
+  "remove": "fjern",
   "download_latest_desktop": "Download den seneste version til skrivebordet her: {{link}}",
   "new_stable_version": "Ny stabil version tilgængelig, plebchan v{{newVersion}}. Du bruger plebchan v{{oldVersion}}.",
   "refresh_to_update": "Opdater siden for at opdatere",
@@ -113,5 +113,6 @@
   "export": "eksportér",
   "full_account_data": "fulde kontodata",
   "this_account": "denne konto",
-  "delete": "slet"
+  "delete": "slet",
+  "delete_account": "slet konto"
 }

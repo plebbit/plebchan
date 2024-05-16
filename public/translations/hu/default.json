@@ -75,7 +75,7 @@
   "projects": "projektek",
   "challenge_counter": "{{index}} a(z) {{total}}-ból/ből",
   "embed": "beágyaz",
-  "remove": "Eltávolítás",
+  "remove": "eltávolít",
   "download_latest_desktop": "Töltsd le a legújabb asztali verziót itt: {{link}}",
   "new_stable_version": "Új stabil verzió elérhető, plebchan v{{newVersion}}. A plebchan v{{oldVersion}}-t használod.",
   "refresh_to_update": "Frissítse az oldalt az frissítéshez",
@@ -113,5 +113,6 @@
   "export": "exportálás",
   "full_account_data": "teljes fiókadata",
   "this_account": "ez a fiók",
-  "delete": "töröl"
+  "delete": "töröl",
+  "delete_account": "fiók törlése"
 }

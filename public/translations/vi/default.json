@@ -75,7 +75,7 @@
   "projects": "dự án",
   "challenge_counter": "{{index}} trong {{total}}",
   "embed": "nhúng",
-  "remove": "Xóa bỏ",
+  "remove": "xóa",
   "download_latest_desktop": "Tải xuống phiên bản máy tính để bàn mới nhất tại đây: {{link}}",
   "new_stable_version": "Phiên bản ổn định mới có sẵn, plebchan v{{newVersion}}. Bạn đang sử dụng plebchan v{{oldVersion}}.",
   "refresh_to_update": "Làm mới trang để cập nhật",
@@ -113,5 +113,6 @@
   "export": "xuất",
   "full_account_data": "dữ liệu tài khoản đầy đủ",
   "this_account": "tài khoản này",
-  "delete": "xóa"
+  "delete": "xóa",
+  "delete_account": "xóa tài khoản"
 }

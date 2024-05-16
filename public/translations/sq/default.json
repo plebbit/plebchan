@@ -75,7 +75,7 @@
   "projects": "projekte",
   "challenge_counter": "{{index}} nga {{total}}",
   "embed": "integro",
-  "remove": "Hiqni",
+  "remove": "hiq",
   "download_latest_desktop": "Shkarko versionin më të ri të desktopit këtu: {{link}}",
   "new_stable_version": "Version i ri i qëndrueshëm është në dispozicion, plebchan v{{newVersion}}. Ju po përdorni plebchan v{{oldVersion}}.",
   "refresh_to_update": "Rifresko faqen për të rifreskuar",
@@ -113,5 +113,6 @@
   "export": "eksport",
   "full_account_data": "të dhënat e plotë të llogarisë",
   "this_account": "kjo llogaria",
-  "delete": "fshij"
+  "delete": "fshij",
+  "delete_account": "fshi llogarinë"
 }

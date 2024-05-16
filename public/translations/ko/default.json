@@ -75,7 +75,7 @@
   "projects": "프로젝트",
   "challenge_counter": "{{index}} 중 {{total}}",
   "embed": "임베드",
-  "remove": "삭제",
+  "remove": "제거",
   "download_latest_desktop": "최신 데스크톱 버전을 여기에서 다운로드하세요: {{link}}",
   "new_stable_version": "새로운 안정 버전이 사용 가능합니다, plebchan v{{newVersion}}. plebchan v{{oldVersion}}을(를) 사용 중입니다.",
   "refresh_to_update": "업데이트를 위해 페이지를 새로 고칩니다",
@@ -113,5 +113,6 @@
   "export": "내보내기",
   "full_account_data": "전체 계정 데이터",
   "this_account": "이 계정",
-  "delete": "삭제"
+  "delete": "삭제",
+  "delete_account": "계정 삭제"
 }

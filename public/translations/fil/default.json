@@ -75,7 +75,7 @@
   "projects": "mga proyekto",
   "challenge_counter": "{{index}} ng {{total}}",
   "embed": "i-embed",
-  "remove": "Alisin",
+  "remove": "alisin",
   "download_latest_desktop": "I-download ang pinakabagong bersyon ng desktop dito: {{link}}",
   "new_stable_version": "Bagong stable na bersyon na magagamit, plebchan v{{newVersion}}. Ginagamit mo ang plebchan v{{oldVersion}}.",
   "refresh_to_update": "I-refresh ang pahina upang i-update",
@@ -113,5 +113,6 @@
   "export": "i-export",
   "full_account_data": "buong account data",
   "this_account": "ang account na ito",
-  "delete": "burahin"
+  "delete": "burahin",
+  "delete_account": "tanggalin ang account"
 }

@@ -75,7 +75,7 @@
   "projects": "projeler",
   "challenge_counter": "{{index}} / {{total}}",
   "embed": "göm",
-  "remove": "Kaldır",
+  "remove": "kaldır",
   "download_latest_desktop": "Son masaüstü sürümünü buradan indirin: {{link}}",
   "new_stable_version": "Yeni stabil sürüm kullanılabilir, plebchan v{{newVersion}}. plebchan v{{oldVersion}} kullanıyorsunuz.",
   "refresh_to_update": "Güncellemek için sayfayı yenileyin",
@@ -113,5 +113,6 @@
   "export": "dışa aktar",
   "full_account_data": "tam hesap verisi",
   "this_account": "bu hesap",
-  "delete": "sil"
+  "delete": "sil",
+  "delete_account": "hesabı sil"
 }

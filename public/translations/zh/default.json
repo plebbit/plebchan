@@ -75,7 +75,7 @@
   "projects": "项目",
   "challenge_counter": "{{index}} / {{total}}",
   "embed": "嵌入",
-  "remove": "删除",
+  "remove": "移除",
   "download_latest_desktop": "在这里下载最新的桌面版本: {{link}}",
   "new_stable_version": "新的稳定版可用，plebchan v{{newVersion}}。您正在使用plebchan v{{oldVersion}}。",
   "refresh_to_update": "刷新页面以更新",
@@ -113,5 +113,6 @@
   "export": "导出",
   "full_account_data": "完整帐户数据",
   "this_account": "此帐户",
-  "delete": "删除"
+  "delete": "删除",
+  "delete_account": "删除账户"
 }

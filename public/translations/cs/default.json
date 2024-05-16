@@ -75,7 +75,7 @@
   "projects": "projekty",
   "challenge_counter": "{{index}} z {{total}}",
   "embed": "vložit",
-  "remove": "Odebrat",
+  "remove": "odstranit",
   "download_latest_desktop": "Stáhněte si nejnovější verzi pro stolní počítače zde: {{link}}",
   "new_stable_version": "Nová stabilní verze k dispozici, plebchan v{{newVersion}}. Používáte plebchan v{{oldVersion}}.",
   "refresh_to_update": "Obnovte stránku pro aktualizaci",
@@ -113,5 +113,6 @@
   "export": "export",
   "full_account_data": "plná účetní data",
   "this_account": "tento účet",
-  "delete": "smazat"
+  "delete": "smazat",
+  "delete_account": "smazat účet"
 }

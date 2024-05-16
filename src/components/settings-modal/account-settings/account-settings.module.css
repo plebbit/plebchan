@@ -34,8 +34,10 @@
   margin-top: 5px;
 }
 
-.deleteAccount, .deleteAccount button {
+.deleteAccount {
   color: red;
+  float: right;
+  margin-right: 10px;
 }
 
 .setting .createAccount {

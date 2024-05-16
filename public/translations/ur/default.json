@@ -75,7 +75,7 @@
   "projects": "منصوبے",
   "challenge_counter": "{{index}} میں سے {{total}}",
   "embed": "ایمبیڈ",
-  "remove": "ہٹا دو",
+  "remove": "ہٹائیں",
   "download_latest_desktop": "یہاں سب سے تازہ ڈیسک ٹاپ ورژن ڈاؤن لوڈ کریں: {{link}}",
   "new_stable_version": "نیو مستقر ورژن دستیاب ہے, plebchan v{{newVersion}}۔ آپ plebchan v{{oldVersion}} استعمال کر رہے ہیں۔",
   "refresh_to_update": "اپ ڈیٹ کرنے کے لئے صفحہ تازہ کریں",
@@ -113,5 +113,6 @@
   "export": "برآمد کریں",
   "full_account_data": "مکمل اکاؤنٹ ڈیٹا",
   "this_account": "یہ اکاؤنٹ",
-  "delete": "حذف کریں"
+  "delete": "حذف کریں",
+  "delete_account": "اکاؤنٹ حذف کریں"
 }

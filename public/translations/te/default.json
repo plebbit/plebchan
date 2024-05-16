@@ -113,5 +113,6 @@
   "export": "ఎగుమతి",
   "full_account_data": "పూర్తి ఖాతా డేటా",
   "this_account": "ఈ ఖాతా",
-  "delete": "తొలగించండి"
+  "delete": "తొలగించండి",
+  "delete_account": "ఖాతాను తొలగించు"
 }

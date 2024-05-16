@@ -75,7 +75,7 @@
   "projects": "proiecte",
   "challenge_counter": "{{index}} din {{total}}",
   "embed": "încorpora",
-  "remove": "Elimină",
+  "remove": "elimina",
   "download_latest_desktop": "Descărcați cea mai recentă versiune de desktop aici: {{link}}",
   "new_stable_version": "Noua versiune stabilă disponibilă, plebchan v{{newVersion}}. Folosiți plebchan v{{oldVersion}}.",
   "refresh_to_update": "Actualizați pagina pentru a actualiza",
@@ -113,5 +113,6 @@
   "export": "exportați",
   "full_account_data": "date complete ale contului",
   "this_account": "acest cont",
-  "delete": "ștergeți"
+  "delete": "ștergeți",
+  "delete_account": "șterge contul"
 }

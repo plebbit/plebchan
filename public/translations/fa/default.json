@@ -113,5 +113,6 @@
   "export": "صدور",
   "full_account_data": "داده حساب کامل",
   "this_account": "این حساب",
-  "delete": "حذف کنید"
+  "delete": "حذف کنید",
+  "delete_account": "حذف حساب"
 }

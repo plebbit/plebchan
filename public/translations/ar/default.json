@@ -113,5 +113,6 @@
   "export": "تصدير",
   "full_account_data": "بيانات الحساب الكاملة",
   "this_account": "هذا الحساب",
-  "delete": "حذف"
+  "delete": "حذف",
+  "delete_account": "حذف الحساب"
 }
