@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Account, setAccount, useAccount } from '@plebbit/plebbit-react-hooks';
 import styles from './crypto-wallets-setting.module.css';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 
 interface Wallet {
   chainTicker: string;
@@ -103,7 +104,7 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
     walletsArray.length > 0 ? (
       <div key={selectedWallet} className={styles.walletBox}>
         <div className={styles.walletField}>
-          <div className={styles.walletFieldTitle}>{t('chain_ticker')}</div>
+          <span className={styles.walletFieldTitle}>{_.capitalize(t('chain_ticker'))}: </span>
           <input
             type='text'
             onChange={(e) => setWalletsArrayProperty(selectedWallet, 'chainTicker', e.target.value)}
@@ -112,7 +113,7 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
           />
         </div>
         <div className={styles.walletField}>
-          <div className={styles.walletFieldTitle}>{t('wallet_address')}</div>
+          <span className={styles.walletFieldTitle}>{_.capitalize(t('wallet_address'))}: </span>
           <input
             type='text'
             onChange={(e) => setWalletsArrayProperty(selectedWallet, 'address', e.target.value)}
@@ -120,19 +121,18 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
             placeholder='0x...'
           />
         </div>
-        <div className={`${styles.walletField} ${styles.copyMessage}`}>
-          <Trans
-            i18nKey='copy_message_etherscan'
-            values={{ copy: hasCopied ? t('copied') : t('copy') }}
-            components={{
-              1: <button onClick={() => copyMessageToSign(walletsArray[selectedWallet], selectedWallet)} />,
-              // eslint-disable-next-line
-              2: <a href='https://etherscan.io/verifiedSignatures' target='_blank' rel='noopener noreferrer' />,
-            }}
-          />
+        <div className={styles.walletField}>
+          <span className={styles.walletFieldTitle}>
+            Copy message to sign on{' '}
+            <a href='https://etherscan.io/verifiedSignatures' target='_blank' rel='noopener noreferrer'>
+              etherscan
+            </a>
+            :{' '}
+          </span>
+          <button onClick={() => copyMessageToSign(walletsArray[selectedWallet], selectedWallet)}>{hasCopied ? t('copied') : t('copy')}</button>
         </div>
         <div className={styles.walletField}>
-          <div className={styles.walletFieldTitle}>{t('paste_signature')}</div>
+          <span className={styles.walletFieldTitle}>{_.capitalize(t('paste_signature'))}: </span>
           <input
             type='text'
             onChange={(e) => setWalletsArrayProperty(selectedWallet, 'signature', e.target.value)}
@@ -142,10 +142,10 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
           <button className={styles.save} onClick={save}>
             {t('save')}
           </button>
+          <button className={styles.removeWallet} onClick={() => _removeWallet(selectedWallet)}>
+            {t('remove')}
+          </button>
         </div>
-        <button className={styles.removeWallet} onClick={() => _removeWallet(selectedWallet)}>
-          {t('remove')}
-        </button>
       </div>
     ) : null;
 

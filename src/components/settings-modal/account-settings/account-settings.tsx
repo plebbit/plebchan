@@ -168,7 +168,7 @@ const AccountSettings = () => {
         <button onClick={saveAccount}>{t('save')}</button> <button onClick={() => setText(accountJson)}>{t('reset')}</button>{' '}
         <button onClick={_importAccount}>{t('import')}</button> <button onClick={_exportAccount}>{t('export')}</button>{' '}
         <button className={styles.deleteAccount} onClick={() => _deleteAccount(account?.name)}>
-          delete account
+          {t('delete_account')}
         </button>
       </div>
     </div>

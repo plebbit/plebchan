@@ -36,8 +36,8 @@
 
 .deleteAccount {
   color: red;
-  float: right;
-  margin-right: 10px;
+  display: block;
+  margin-top: 10px;
 }
 
 .setting .createAccount {

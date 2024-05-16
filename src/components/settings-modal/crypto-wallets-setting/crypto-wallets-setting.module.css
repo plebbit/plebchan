@@ -1,14 +1,11 @@
 .setting {
   margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .addWallet select {
   margin-right: 5px;
   margin-bottom: 5px;
-}
-
-.save {
-  margin-left: 5px;
 }
 
 .walletTitle {
@@ -18,13 +15,16 @@
 
 .removeWallet {
   color: red;
-  margin-top: 15px;
 }
 
-.walletFieldTitle {
+.save {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.walletField {
   margin-top: 5px;
-  font-style: italic;
-  text-transform: lowercase;
+  margin-left: 5px;
 }
 
 .walletField input {
