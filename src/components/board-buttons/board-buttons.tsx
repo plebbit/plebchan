@@ -57,13 +57,13 @@ export const MobileBoardButtons = () => {
   const location = useLocation();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
-  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
   const isInCatalogView = isCatalogView(location.pathname, params);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
 
   return (
     <div className={styles.mobileBoardButtons}>
-      {isInPostPage || isInPendingPostPage ? (
+      {isInPostView || isInPendingPostPage ? (
         <div className={styles.mobilePostPageButtons}>
           <ReturnButton address={subplebbitAddress} />
           <CatalogButton address={subplebbitAddress} />
@@ -92,13 +92,13 @@ export const DesktopBoardButtons = () => {
   const isInCatalogView = isCatalogView(location.pathname, params);
   const isInAllView = isAllView(location.pathname);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
-  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   return (
     <div className={styles.desktopBoardButtons}>
       <hr />
-      {isInPostPage || isInPendingPostPage ? (
+      {isInPostView || isInPendingPostPage ? (
         <>
           [<ReturnButton address={subplebbitAddress} />] [<CatalogButton address={subplebbitAddress} />] [<BottomButton />] [
           <OptionsButton />]

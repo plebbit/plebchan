@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAccount } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
+import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
 import useReplies from '../../../hooks/use-replies';
 import useStateString from '../../../hooks/use-state-string';
@@ -16,15 +18,19 @@ import { PostProps } from '../post';
 import styles from '../post.module.css';
 import _ from 'lodash';
 
-const PostInfo = ({ isInPostPage, openReplyModal, post, roles }: PostProps) => {
+const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-
   const stateString = useStateString(post);
-
   const isReply = parentCid;
+
+  const params = useParams();
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
+  const isInPostView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const authorRole = roles?.[address]?.role;
@@ -90,6 +96,12 @@ const PostInfo = ({ isInPostPage, openReplyModal, post, roles }: PostProps) => {
             )}
           </span>
         )}
+        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
+          <span className={styles.postNumLink}>
+            {' '}
+            <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
+          </span>
+        )}
         {pinned && (
           <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
             <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -100,7 +112,7 @@ const PostInfo = ({ isInPostPage, openReplyModal, post, roles }: PostProps) => {
             <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
           </span>
         )}
-        {!isInPostPage && !isReply && (
+        {!isInPostView && !isReply && (
           <span className={styles.replyButton}>
             [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{_.capitalize(t('reply'))}</Link>]
           </span>
@@ -171,9 +183,14 @@ const PostMedia = ({ post }: PostProps) => {
   );
 };
 
-const PostMessage = ({ isInPostPage, post }: PostProps) => {
+const PostMessage = ({ post }: PostProps) => {
   const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
-  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
+
+  const params = useParams();
+  const location = useLocation();
+  const isInPostView = isPostPageView(location.pathname, params);
+
+  const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
   const isReply = parentCid;
   const isReplyingToReply = postCid !== parentCid;
@@ -195,7 +212,7 @@ const PostMessage = ({ isInPostPage, post }: PostProps) => {
         </>
       )}
       <Markdown content={displayContent} />
-      {!isReply && content.length > 1000 && !isInPostPage && (
+      {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />
           <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
@@ -211,9 +228,14 @@ const PostMessage = ({ isInPostPage, post }: PostProps) => {
   );
 };
 
-const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
+const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
+
+  const params = useParams();
+  const location = useLocation();
+  const isInPendingPostView = isPendingPostView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -226,16 +248,16 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      {!isInPostPage && (
+      {!isInPostView && (
         <span className={styles.hideButtonWrapper}>
           <span className={`${styles.hideButton} ${styles.hideThread}`} />
         </span>
       )}
       {link && <PostMedia post={post} />}
-      <PostInfo isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={post} roles={roles} />
+      <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
       {!content && <div className={styles.spacer} />}
-      {content && <PostMessage isInPostPage={isInPostPage} post={post} />}
-      {!isDescription && !isRules && !isPendingPostPage && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPage && (
+      {content && <PostMessage post={post} />}
+      {!isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostView && (
         <span className={styles.summary}>
           <span className={styles.expandButtonWrapper}>
             <span className={styles.expandButton} />
@@ -252,8 +274,8 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
           )}
         </span>
       )}
-      {!(pinned && !isInPostPage) &&
-        !isPendingPostPage &&
+      {!(pinned && !isInPostView) &&
+        !isInPendingPostView &&
         !isDescription &&
         !isRules &&
         replies &&
@@ -262,9 +284,9 @@ const PostDesktop = ({ isInPostPage, isPendingPostPage, openReplyModal, post, ro
             <div className={styles.replyDesktop}>
               <div className={styles.sideArrows}>{'>>'}</div>
               <div className={styles.reply}>
-                <PostInfo isInPostPage={isInPostPage} isPendingPostPage={isPendingPostPage} openReplyModal={openReplyModal} post={reply} roles={roles} />
+                <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
                 {reply.link && <PostMedia post={reply} />}
-                {reply.content && <PostMessage isInPostPage={isInPostPage} post={reply} />}
+                {reply.content && <PostMessage post={reply} />}
               </div>
             </div>
           </div>

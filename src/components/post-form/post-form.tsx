@@ -122,7 +122,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
   }, [index, resetSubmitStore, navigate]);
 
   // in post page, publish a reply to the post
-  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
   const cid = params?.commentCid as string;
   const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid, subplebbitAddress });
 
@@ -164,10 +164,10 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
               defaultValue={displayName || undefined}
               onChange={(e) => setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } })}
             />
-            {isInPostPage && <button onClick={onPublishReply}>{t('post')}</button>}
+            {isInPostView && <button onClick={onPublishReply}>{t('post')}</button>}
           </td>
         </tr>
-        {!isInPostPage && (
+        {!isInPostView && (
           <tr>
             <td>{t('subject')}</td>
             <td>
@@ -192,7 +192,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
               ref={textRef}
               onChange={(e) => {
                 const content = e.target.value.replace(/\n/g, '\n\n');
-                isInPostPage ? setContent.content(content) : setSubmitStore({ content });
+                isInPostView ? setContent.content(content) : setSubmitStore({ content });
               }}
             />
           </td>
@@ -208,7 +208,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
               ref={urlRef}
               onChange={(e) => {
                 setUrl(e.target.value);
-                isInPostPage ? setContent.link(e.target.value) : setSubmitStore({ link: e.target.value });
+                isInPostView ? setContent.link(e.target.value) : setSubmitStore({ link: e.target.value });
               }}
             />
             <span className={styles.linkType}>
@@ -252,7 +252,7 @@ const PostForm = () => {
   const location = useLocation();
   const params = useParams();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
-  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
   const comment = useComment({ commentCid: useParams().commentCid });
@@ -274,7 +274,7 @@ const PostForm = () => {
           <div>
             [
             <button className='button' onClick={() => setShowForm(true)}>
-              {isInPostPage ? t('post_a_reply') : t('start_new_thread')}
+              {isInPostView ? t('post_a_reply') : t('start_new_thread')}
             </button>
             ]
           </div>
@@ -292,7 +292,7 @@ const PostForm = () => {
         ) : (
           <>
             <button className={`${styles.showFormButton} button`} onClick={() => setShowForm(showForm ? false : true)}>
-              {showForm ? t('close_post_form') : isInPostPage ? t('post_a_reply') : t('start_new_thread')}
+              {showForm ? t('close_post_form') : isInPostView ? t('post_a_reply') : t('start_new_thread')}
             </button>
             {showForm && <PostFormTable closeForm={() => setShowForm(false)} />}
           </>

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccount } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
+import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
 import useReplies from '../../../hooks/use-replies';
 import useStateString from '../../../hooks/use-state-string';
@@ -20,6 +21,10 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const { author, cid, link, linkHeight, linkWidth, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, displayName, shortAddress } = author || {};
+
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   const authorRole = roles?.[address]?.role;
   const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
@@ -67,6 +72,12 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
           )}
         </span>
         <span className={styles.dateTimePostNum}>
+          {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
+            <div className={styles.postNumLink}>
+              {' '}
+              <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
+            </div>
+          )}
           {getFormattedDate(timestamp)}{' '}
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
@@ -99,9 +110,14 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   );
 };
 
-const PostMessageMobile = ({ isInPostPage, post }: PostProps) => {
+const PostMessageMobile = ({ post }: PostProps) => {
   const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
-  const displayContent = content && !isInPostPage && content.length > 1000 ? content?.slice(0, 1000) : content;
+
+  const params = useParams();
+  const location = useLocation();
+  const isInPostView = isPostPageView(location.pathname, params);
+
+  const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) : content;
 
   const isReply = parentCid;
   const isReplyingToReply = postCid !== parentCid;
@@ -124,7 +140,7 @@ const PostMessageMobile = ({ isInPostPage, post }: PostProps) => {
           </>
         )}
         <Markdown content={displayContent} />
-        {!isReply && content.length > 1000 && !isInPostPage && (
+        {!isReply && content.length > 1000 && !isInPostView && (
           <span className={styles.abbr}>
             <br />
             <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
@@ -141,10 +157,15 @@ const PostMessageMobile = ({ isInPostPage, post }: PostProps) => {
   );
 };
 
-const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, roles, showAllReplies }: PostProps) => {
+const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
   const { t } = useTranslation();
   const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
+
+  const params = useParams();
+  const location = useLocation();
+  const isInPendingPostView = isPendingPostView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
 
   const linksCount = useCountLinksInReplies(post);
 
@@ -159,9 +180,9 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
         <div className={styles.postContainer}>
           <div className={styles.postOp}>
             <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
-            {content && <PostMessageMobile isInPostPage={isInPostPage} post={post} />}
+            {content && <PostMessageMobile post={post} />}
           </div>
-          {!isInPostPage && !isPendingPostPage && (
+          {!isInPostView && !isInPendingPostView && (
             <div className={styles.postLink}>
               <span className={styles.info}>
                 {replyCount > 0 && `${replyCount} Replies`}
@@ -173,8 +194,8 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
             </div>
           )}
         </div>
-        {!(pinned && !isInPostPage) &&
-          !isPendingPostPage &&
+        {!(pinned && !isInPostView) &&
+          !isInPendingPostView &&
           !isDescription &&
           !isRules &&
           replies &&
@@ -184,7 +205,7 @@ const PostMobile = ({ isInPostPage, isPendingPostPage, openReplyModal, post, rol
                 <div className={styles.reply}>
                   <div className={styles.replyContainer}>
                     <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
-                    {content && <PostMessageMobile isInPostPage={isInPostPage} post={reply} />}
+                    {content && <PostMessageMobile post={reply} />}
                   </div>
                 </div>
               </div>
