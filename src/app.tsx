@@ -37,7 +37,7 @@ const BoardLayout = () => {
       <BoardBanner />
       <MobileBoardButtons />
       <PostForm key={key} />
-      <SubplebbitStats />
+      {subplebbitAddress && isValidSubplebbitAddress && <SubplebbitStats />}
       <DesktopBoardButtons />
       <Outlet />
     </div>
@@ -70,6 +70,12 @@ const App = () => {
           <Route element={<BoardLayout />}>
             <Route path='/p/:subplebbitAddress' element={<Board />} />
             <Route path='/p/:subplebbitAddress/settings' element={<Board />} />
+
+            <Route path='/p/subscriptions' element={<Board />} />
+            <Route path='/p/subscriptions/settings' element={<Board />} />
+
+            <Route path='/p/all' element={<Board />} />
+            <Route path='/p/all/settings' element={<Board />} />
 
             <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
             <Route path='/p/:subplebbitAddress/catalog/settings' element={<Catalog />} />

@@ -115,6 +115,15 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
       </div>
       <div className={styles.boardsBoxContent}>
         <div className={styles.column}>
+          <h3>Multiboards</h3>
+          <div className={styles.list}>
+            <div className={styles.subplebbit}>
+              <Link to='/p/all'>All</Link>
+            </div>
+            <div className={styles.subplebbit}>
+              <Link to='/p/subscriptions'>Subscriptions</Link>
+            </div>
+          </div>
           <h3>Plebbit</h3>
           <div className={styles.list}>
             {plebbitSubs.map((sub) => (
