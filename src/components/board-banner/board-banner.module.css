@@ -19,7 +19,7 @@
   color: var(--board-title-text-color);
 }
 
-.boardAddress {
+.boardSubtitle {
   font-size: var(--board-address-font-size);
   color: var(--board-address-text-color);
 }

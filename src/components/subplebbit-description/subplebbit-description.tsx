@@ -1,5 +1,8 @@
 import Post from '../post';
 import { useTranslation } from 'react-i18next';
+import { isAllView } from '../../lib/utils/view-utils';
+import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
+import { useLocation } from 'react-router-dom';
 
 interface DescriptionPostProps {
   avatarUrl?: string;
@@ -12,14 +15,21 @@ interface DescriptionPostProps {
 
 const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress, subplebbitAddress, title }: DescriptionPostProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
+  const multisubMetadata = useMultisubMetadata();
+
   const post = {
     isDescription: true,
     subplebbitAddress,
-    timestamp: createdAt,
+    timestamp: isInAllView ? multisubMetadata?.createdAt : createdAt,
     author: { displayName: '## Board Mods' },
-    content: description,
+    content: isInAllView ? multisubMetadata?.description : description,
     link: avatarUrl,
-    title: t('welcome_to_board', { board: title || `p/${shortAddress}`, interpolation: { escapeValue: false } }),
+    title: t('welcome_to_board', {
+      board: isInAllView ? multisubMetadata?.title : title || `p/${shortAddress}`,
+      interpolation: { escapeValue: false },
+    }),
     pinned: true,
     locked: true,
   };
