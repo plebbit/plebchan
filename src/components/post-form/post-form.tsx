@@ -150,8 +150,6 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
     }
   }, [replyIndex, resetContent]);
 
-  console.log(publishCommentOptions.subplebbitAddress);
-
   return (
     <table className={styles.postFormTable}>
       <tbody>
