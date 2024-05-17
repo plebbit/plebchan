@@ -89,17 +89,16 @@ const Board = () => {
       {feed.length > 0 && (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-          {(description && description.length > 0) ||
-            (isInAllView && (
-              <SubplebbitDescription
-                avatarUrl={suggested?.avatarUrl}
-                subplebbitAddress={subplebbitAddress}
-                createdAt={createdAt}
-                description={description}
-                shortAddress={shortAddress}
-                title={title}
-              />
-            ))}
+          {((description && description.length > 0) || isInAllView) && (
+            <SubplebbitDescription
+              avatarUrl={suggested?.avatarUrl}
+              subplebbitAddress={subplebbitAddress}
+              createdAt={createdAt}
+              description={description}
+              shortAddress={shortAddress}
+              title={title}
+            />
+          )}
         </>
       )}
       <Virtuoso

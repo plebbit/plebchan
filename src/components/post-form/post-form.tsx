@@ -148,7 +148,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
       resetFields();
       closeForm();
     }
-  }, [replyIndex, resetContent]);
+  }, [replyIndex, resetContent, closeForm]);
 
   return (
     <table className={styles.postFormTable}>
