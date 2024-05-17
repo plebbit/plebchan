@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
-import { isCatalogView, isPendingPostView, isPostPageView } from '../../lib/utils/view-utils';
+import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 
 interface BoardButtonsProps {
   address: string | undefined;
@@ -89,9 +89,11 @@ export const DesktopBoardButtons = () => {
   const location = useLocation();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
-  const isInPostPage = isPostPageView(location.pathname, params);
   const isInCatalogView = isCatalogView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
+  const isInPostPage = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   return (
     <div className={styles.desktopBoardButtons}>
@@ -107,9 +109,11 @@ export const DesktopBoardButtons = () => {
       ) : (
         <>
           [<OptionsButton />] [<CatalogButton address={subplebbitAddress} isInCatalogView={isInCatalogView} />]
-          <span className={styles.subscribeButton}>
-            [<SubscribeButton address={subplebbitAddress} />]
-          </span>
+          {!(isInAllView || isInSubscriptionsView) && (
+            <span className={styles.subscribeButton}>
+              [<SubscribeButton address={subplebbitAddress} />]
+            </span>
+          )}
         </>
       )}
     </div>
