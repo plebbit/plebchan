@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './board.module.css';
+import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
 import LoadingEllipsis from '../../components/loading-ellipsis';
@@ -19,17 +21,45 @@ const Board = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
-  const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress]) as string[];
+
+  const isInAllView = isAllView(location.pathname);
+  const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
+
+  const account = useAccount();
+  const subscriptions = account?.subscriptions;
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+
+  const subplebbitAddresses = useMemo(() => {
+    if (isInAllView) {
+      return defaultSubplebbitAddresses;
+    }
+    if (isInSubscriptionsView) {
+      return subscriptions || [];
+    }
+    return [subplebbitAddress];
+  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
+
   const sortType = 'active';
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType });
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { createdAt, description, rules, shortAddress, state, suggested, title } = subplebbit || {};
+  const { createdAt, description, rules, shortAddress, state, suggested } = subplebbit || {};
+  const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
 
   const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
-  const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
+  const loadingString = (
+    <div className={styles.stateString}>
+      {state === 'failed' ? (
+        state
+      ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
+        `You haven't subscribed to any board yet.`
+      ) : (
+        <LoadingEllipsis string={loadingStateString} />
+      )}
+    </div>
+  );
 
   const Footer = () => {
     let footerContent;
@@ -64,12 +94,12 @@ const Board = () => {
 
   return (
     <div className={styles.content}>
-      {location.pathname === `/p/${subplebbitAddress}/settings` && <SettingsModal />}
+      {location.pathname.endsWith('/settings') && <SettingsModal />}
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
       {feed.length > 0 && (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-          {description && description.length > 0 && (
+          {((description && description.length > 0) || isInAllView) && (
             <SubplebbitDescription
               avatarUrl={suggested?.avatarUrl}
               subplebbitAddress={subplebbitAddress}

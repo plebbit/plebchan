@@ -4,8 +4,12 @@ export type ParamsType = {
   subplebbitAddress?: string;
 };
 
-export const isHomeView = (pathname: string): boolean => {
-  return pathname === '/';
+export const isAllView = (pathname: string): boolean => {
+  return pathname.startsWith('/p/all');
+};
+
+export const isCatalogView = (pathname: string): boolean => {
+  return pathname.endsWith('/catalog') || pathname.endsWith('/catalog/settings');
 };
 
 export const isDescriptionView = (pathname: string, params: ParamsType): boolean => {
@@ -13,9 +17,12 @@ export const isDescriptionView = (pathname: string, params: ParamsType): boolean
   return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/description`) : false;
 };
 
-export const isRulesView = (pathname: string, params: ParamsType): boolean => {
-  const decodedPathname = decodeURIComponent(pathname);
-  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/rules`) : false;
+export const isHomeView = (pathname: string): boolean => {
+  return pathname === '/';
+};
+
+export const isPendingPostView = (pathname: string, params: ParamsType): boolean => {
+  return pathname === `/profile/${params.accountCommentIndex}`;
 };
 
 export const isPostPageView = (pathname: string, params: ParamsType): boolean => {
@@ -26,22 +33,22 @@ export const isPostPageView = (pathname: string, params: ParamsType): boolean =>
   return params.subplebbitAddress && params.commentCid ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/c/${params.commentCid}`) : false;
 };
 
-export const isCatalogView = (pathname: string, params: ParamsType): boolean => {
+export const isRulesView = (pathname: string, params: ParamsType): boolean => {
   const decodedPathname = decodeURIComponent(pathname);
-  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/catalog`) : false;
+  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/rules`) : false;
 };
 
-export const isPendingPostView = (pathname: string, params: ParamsType): boolean => {
-  return pathname === `/profile/${params.accountCommentIndex}`;
+export const isSubscriptionsView = (pathname: string): boolean => {
+  return pathname.startsWith('/p/subscriptions');
 };
 
 export const isNotFoundView = (pathname: string, params: ParamsType): boolean => {
   return (
-    !isHomeView(pathname) &&
+    !isCatalogView(pathname) &&
     !isDescriptionView(pathname, params) &&
-    !isRulesView(pathname, params) &&
+    !isHomeView(pathname) &&
+    !isPendingPostView(pathname, params) &&
     !isPostPageView(pathname, params) &&
-    !isCatalogView(pathname, params) &&
-    !isPendingPostView(pathname, params)
+    !isRulesView(pathname, params)
   );
 };

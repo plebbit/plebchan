@@ -61,22 +61,6 @@
   text-transform: capitalize;
 }
 
-.version {
-  font-size: 11px;
-  position: absolute;
-  display: block;
-  margin-left: 5px;
-}
-
-.version a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.version a:hover {
-  text-decoration: underline;
-}
-
 .closeButton {
   right: 5px;
   width: 18px;
@@ -89,8 +73,17 @@
   background-image: var(--settings-modal-close-button-background-image);
 }
 
-.languageSettings {
-  display: inline-block;
+.expandAllSettings {
+  text-align: center;
+}
+
+.expandAllSettings span {
+  color: var(--button-desktop-text-color);
+}
+
+.expandAllSettings span:hover {
+  color: var(--button-desktop-text-color-hover);
+  cursor: pointer;
 }
 
 .setting {
@@ -118,7 +111,7 @@
 }
 
 .category {
-  margin: 10px 0;
+  margin-bottom: 10px;
 }
 
 .category label {

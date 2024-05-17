@@ -1,0 +1,26 @@
+.languageSettings {
+  display: inline-block;
+}
+
+.setting {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.version {
+  margin-left: 10px;
+}
+
+.version a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.version a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
+.interfaceSettings {
+  margin-bottom: 10px;
+}

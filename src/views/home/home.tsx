@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import packageJson from '../../../package.json';
-import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import useDefaultSubplebbits, { useMultisubMetadata, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import usePopularPosts from '../../hooks/use-popular-posts';
 import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
 import { getCommentMediaInfo } from '../../lib/utils/media-utils';
@@ -106,6 +106,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
     const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
     return isOffline;
   };
+  const multisubMetadata = useMultisubMetadata();
 
   return (
     <div className={`${styles.box} ${styles.boardsBox}`}>
@@ -115,6 +116,15 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
       </div>
       <div className={styles.boardsBoxContent}>
         <div className={styles.column}>
+          <h3>Multiboards</h3>
+          <div className={styles.list}>
+            <div className={styles.subplebbit}>
+              <Link to='/p/all'>{multisubMetadata?.title || 'All'}</Link>
+            </div>
+            <div className={styles.subplebbit}>
+              <Link to='/p/subscriptions'>Subscriptions</Link>
+            </div>
+          </div>
           <h3>Plebbit</h3>
           <div className={styles.list}>
             {plebbitSubs.map((sub) => (
