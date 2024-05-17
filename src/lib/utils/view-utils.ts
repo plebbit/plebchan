@@ -8,9 +8,8 @@ export const isAllView = (pathname: string): boolean => {
   return pathname.startsWith('/p/all');
 };
 
-export const isCatalogView = (pathname: string, params: ParamsType): boolean => {
-  const decodedPathname = decodeURIComponent(pathname);
-  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/catalog`) : false;
+export const isCatalogView = (pathname: string): boolean => {
+  return pathname.endsWith('/catalog') || pathname.endsWith('/catalog/settings');
 };
 
 export const isDescriptionView = (pathname: string, params: ParamsType): boolean => {
@@ -45,7 +44,7 @@ export const isSubscriptionsView = (pathname: string): boolean => {
 
 export const isNotFoundView = (pathname: string, params: ParamsType): boolean => {
   return (
-    !isCatalogView(pathname, params) &&
+    !isCatalogView(pathname) &&
     !isDescriptionView(pathname, params) &&
     !isHomeView(pathname) &&
     !isPendingPostView(pathname, params) &&

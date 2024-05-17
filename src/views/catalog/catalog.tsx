@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Subplebbit, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, Subplebbit, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
+import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useWindowWidth from '../../hooks/use-window-width';
 import CatalogRow from '../../components/catalog-row';
@@ -72,7 +74,23 @@ const Catalog = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
-  const subplebbitAddresses = useMemo(() => [subplebbitAddress], [subplebbitAddress]) as string[];
+
+  const isInAllView = isAllView(location.pathname);
+  const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
+
+  const account = useAccount();
+  const subscriptions = account?.subscriptions;
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+
+  const subplebbitAddresses = useMemo(() => {
+    if (isInAllView) {
+      return defaultSubplebbitAddresses;
+    }
+    if (isInSubscriptionsView) {
+      return subscriptions || [];
+    }
+    return [subplebbitAddress];
+  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
 
   const columnCount = Math.floor(useWindowWidth() / columnWidth);
   // postPerPage based on columnCount for optimized feed, dont change value after first render

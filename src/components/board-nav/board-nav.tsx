@@ -9,7 +9,7 @@ const BoardNavDesktop = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const params = useParams();
-  const isInCatalogView = isCatalogView(location.pathname, params);
+  const isInCatalogView = isCatalogView(location.pathname);
   const subplebbits = useDefaultSubplebbits();
 
   const { plebbitSubs, interestsSubs, randomSubs, internationalSubs, projectsSubs } = categorizeSubplebbits(subplebbits);
@@ -49,7 +49,7 @@ const BoardNavMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) =>
   const location = useLocation();
   const params = useParams();
   const isInAllView = isAllView(location.pathname);
-  const isInCatalogView = isCatalogView(location.pathname, params);
+  const isInCatalogView = isCatalogView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
   const selectValue = isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress;
 
