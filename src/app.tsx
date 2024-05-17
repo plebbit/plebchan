@@ -70,17 +70,8 @@ const App = () => {
           <Route element={<BoardLayout />}>
             <Route path='/p/:subplebbitAddress' element={<Board />} />
             <Route path='/p/:subplebbitAddress/settings' element={<Board />} />
-            <Route path='/p/all' element={<Board />} />
-            <Route path='/p/all/settings' element={<Board />} />
-            <Route path='/p/subscriptions' element={<Board />} />
-            <Route path='/p/subscriptions/settings' element={<Board />} />
-
             <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
             <Route path='/p/:subplebbitAddress/catalog/settings' element={<Catalog />} />
-            <Route path='/p/all/catalog' element={<Catalog />} />
-            <Route path='/p/all/catalog/settings' element={<Catalog />} />
-            <Route path='/p/subscriptions/catalog' element={<Catalog />} />
-            <Route path='/p/subscriptions/catalog/settings' element={<Catalog />} />
 
             <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
             <Route path='/p/:subplebbitAddress/c/:commentCid/settings' element={<PostPage />} />
@@ -88,6 +79,17 @@ const App = () => {
             <Route path='/p/:subplebbitAddress/description/settings' element={<PostPage />} />
             <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
             <Route path='/p/:subplebbitAddress/rules/settings' element={<PostPage />} />
+
+            <Route path='/p/all' element={<Board />} />
+            <Route path='/p/all/description' element={<PostPage />} />
+            <Route path='/p/all/settings' element={<Board />} />
+            <Route path='/p/all/catalog' element={<Catalog />} />
+            <Route path='/p/all/catalog/settings' element={<Catalog />} />
+
+            <Route path='/p/subscriptions' element={<Board />} />
+            <Route path='/p/subscriptions/settings' element={<Board />} />
+            <Route path='/p/subscriptions/catalog' element={<Catalog />} />
+            <Route path='/p/subscriptions/catalog/settings' element={<Catalog />} />
 
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
             <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />

@@ -56,11 +56,14 @@ const BottomButton = () => {
 export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
-  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
-  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
-  const isInPostView = isPostPageView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInCatalogView = isCatalogView(location.pathname);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
     <div className={styles.mobileBoardButtons}>
@@ -77,7 +80,7 @@ export const MobileBoardButtons = () => {
       ) : (
         <>
           <OptionsButton />
-          <CatalogButton address={subplebbitAddress} isInCatalogView={isInCatalogView} />
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
           <SubscribeButton address={subplebbitAddress} />
         </>
       )}

@@ -6,6 +6,7 @@ import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
+import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useWindowWidth from '../../hooks/use-window-width';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
@@ -20,23 +21,27 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
   const { address, createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
   const { avatarUrl } = suggested || {};
 
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
+  const multisub = useMultisubMetadata();
+
   const feedWithDescriptionAndRules = useMemo(() => {
     if (!isFeedLoaded) {
       return []; // prevent rules and description from appearing while feed is loading
     }
-    if (!description && !rules) {
+    if (!description && !rules && !isInAllView) {
       return feed;
     }
     const _feed = [...feed];
-    if (description && description.length > 0) {
+    if ((description && description.length > 0) || isInAllView) {
       _feed.unshift({
         isDescription: true,
         subplebbitAddress: address,
         timestamp: createdAt,
         author: { displayName: '## Board Mods' },
-        content: description,
+        content: isInAllView ? multisub?.description : description,
         link: avatarUrl,
-        title: t('welcome_to_board', { board: title || `p/${shortAddress}` }),
+        title: t('welcome_to_board', { board: isInAllView ? multisub?.title : title || `p/${shortAddress}` }),
         pinned: true,
         locked: true,
       });
@@ -54,7 +59,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
       });
     }
     return _feed;
-  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t]);
+  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub]);
 
   // Memoize rows calculation, ensuring it updates on changes to the modified feed or column count
   const rows = useMemo(() => {
@@ -102,7 +107,17 @@ const Catalog = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { shortAddress, state, title } = subplebbit || {};
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
-  const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
+  const loadingString = (
+    <div className={styles.stateString}>
+      {state === 'failed' ? (
+        state
+      ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
+        `You haven't subscribed to any board yet.`
+      ) : (
+        <LoadingEllipsis string={loadingStateString} />
+      )}
+    </div>
+  );
 
   const Footer = () => {
     let footerContent;
@@ -126,14 +141,14 @@ const Catalog = () => {
     const setLastVirtuosoState = () =>
       virtuosoRef.current?.getState((snapshot: StateSnapshot) => {
         if (snapshot?.ranges?.length) {
-          lastVirtuosoStates[subplebbitAddress + 'catalog'] = snapshot;
+          lastVirtuosoStates[location.pathname] = snapshot;
         }
       });
     window.addEventListener('scroll', setLastVirtuosoState);
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [subplebbitAddress]);
+  }, [location.pathname]);
 
-  const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress + 'catalog'];
+  const lastVirtuosoState = lastVirtuosoStates?.[location.pathname];
 
   useEffect(() => {
     let documentTitle = title ? title : shortAddress;

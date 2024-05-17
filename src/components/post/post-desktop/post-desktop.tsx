@@ -114,7 +114,13 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
         )}
         {!isInPostView && !isReply && (
           <span className={styles.replyButton}>
-            [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{_.capitalize(t('reply'))}</Link>]
+            [
+            <Link
+              to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}
+            >
+              {_.capitalize(t('reply'))}
+            </Link>
+            ]
           </span>
         )}
       </span>
