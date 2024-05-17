@@ -49,7 +49,17 @@ const Board = () => {
   const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
-  const loadingString = <div className={styles.stateString}>{state === 'failed' ? state : <LoadingEllipsis string={loadingStateString} />}</div>;
+  const loadingString = (
+    <div className={styles.stateString}>
+      {state === 'failed' ? (
+        state
+      ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
+        `You haven't subscribed to any board yet.`
+      ) : (
+        <LoadingEllipsis string={loadingStateString} />
+      )}
+    </div>
+  );
 
   const Footer = () => {
     let footerContent;
