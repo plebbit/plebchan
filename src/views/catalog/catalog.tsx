@@ -124,7 +124,7 @@ const Catalog = () => {
 
   return (
     <div className={styles.content}>
-      {location.pathname === `/p/${subplebbitAddress}/catalog/settings` && <SettingsModal />}
+      {location.pathname.endsWith('/settings') && <SettingsModal />}
       <hr />
       <div className={styles.catalog}>
         <Virtuoso

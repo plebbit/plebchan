@@ -5,7 +5,7 @@ export type ParamsType = {
 };
 
 export const isAllView = (pathname: string): boolean => {
-  return pathname === '/p/all';
+  return pathname.startsWith('/p/all');
 };
 
 export const isCatalogView = (pathname: string, params: ParamsType): boolean => {
@@ -40,7 +40,7 @@ export const isRulesView = (pathname: string, params: ParamsType): boolean => {
 };
 
 export const isSubscriptionsView = (pathname: string): boolean => {
-  return pathname === '/p/subscriptions';
+  return pathname.startsWith('/p/subscriptions');
 };
 
 export const isNotFoundView = (pathname: string, params: ParamsType): boolean => {

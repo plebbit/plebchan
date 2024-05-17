@@ -84,7 +84,7 @@ const Board = () => {
 
   return (
     <div className={styles.content}>
-      {location.pathname === `/p/${subplebbitAddress}/settings` && <SettingsModal />}
+      {location.pathname.endsWith('/settings') && <SettingsModal />}
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
       {feed.length > 0 && (
         <>
