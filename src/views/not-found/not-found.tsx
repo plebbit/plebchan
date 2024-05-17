@@ -19,6 +19,7 @@ const NotFoundImage = () => {
 
 const NotFound = () => {
   const { subplebbitAddress } = useParams();
+  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3K[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
 
   const [theme, setTheme] = useTheme();
   const previousThemeRef = useRef(theme);
@@ -47,7 +48,7 @@ const NotFound = () => {
             </div>
             <div className={styles.boxContent}>
               <NotFoundImage />
-              {subplebbitAddress && (
+              {subplebbitAddress && isValidSubplebbitAddress && (
                 <>
                   <br />
                   <div className={styles.backToBoard}>
