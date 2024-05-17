@@ -164,6 +164,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
 
   const params = useParams();
   const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
 
@@ -188,7 +189,10 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                 {replyCount > 0 && `${replyCount} Replies`}
                 {linksCount > 0 && ` / ${linksCount} Links`}
               </span>
-              <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} className='button'>
+              <Link
+                to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`}
+                className='button'
+              >
                 {t('view_thread')}
               </Link>
             </div>

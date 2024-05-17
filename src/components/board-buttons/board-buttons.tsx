@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -16,12 +16,18 @@ const OptionsButton = () => {
   return <button className='button'>{t('options')}</button>;
 };
 
-const CatalogButton = ({ address, isInAllView, isInCatalogView, isInSubscriptionsView }: BoardButtonsProps) => {
+const CatalogButton = ({ address, isInAllView, isInCatalogView }: BoardButtonsProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const link = isInAllView ? `/p/all/catalog` : isInSubscriptionsView ? `/p/subscriptions/catalog` : isInCatalogView ? `/p/${address}` : `/p/${address}/catalog`;
 
-  return <button className='button'>{isInCatalogView ? <span onClick={() => navigate(-1)}>{t('return')}</span> : <Link to={link}>{t('catalog')}</Link>}</button>;
+  return (
+    <button className='button'>
+      {isInCatalogView ? (
+        <Link to={isInAllView ? '/p/all' : `/p/${address}`}>{t('return')}</Link>
+      ) : (
+        <Link to={isInAllView ? `/p/all/catalog` : `/p/${address}/catalog`}>{t('catalog')}</Link>
+      )}
+    </button>
+  );
 };
 
 const SubscribeButton = ({ address }: BoardButtonsProps) => {
@@ -70,7 +76,7 @@ export const MobileBoardButtons = () => {
       {isInPostView || isInPendingPostPage ? (
         <div className={styles.mobilePostPageButtons}>
           <ReturnButton address={subplebbitAddress} />
-          <CatalogButton address={subplebbitAddress} />
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} />
           <BottomButton />
           <div className={styles.mobilePostPageButtonsSecondRow}>
             <OptionsButton />

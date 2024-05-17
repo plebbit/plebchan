@@ -8,7 +8,6 @@ import useDefaultSubplebbits, { categorizeSubplebbits, useDefaultSubplebbitAddre
 const BoardNavDesktop = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const params = useParams();
   const isInCatalogView = isCatalogView(location.pathname);
   const subplebbits = useDefaultSubplebbits();
 
@@ -47,7 +46,6 @@ const BoardNavMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) =>
   const currentSubplebbitIsInList = subplebbitAddresses.some((address: string) => address === subplebbitAddress);
 
   const location = useLocation();
-  const params = useParams();
   const isInAllView = isAllView(location.pathname);
   const isInCatalogView = isCatalogView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
