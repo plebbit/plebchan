@@ -22,7 +22,7 @@ const BoardLayout = () => {
 
   const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
   const isValidCommentCid = !commentCid || /^Qm[a-zA-Z0-9]{44}$/.test(commentCid);
-  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3K[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
+  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3KooW[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
 
   if (!isValidAccountCommentIndex || !isValidCommentCid || !isValidSubplebbitAddress) {
     return <NotFound />;
