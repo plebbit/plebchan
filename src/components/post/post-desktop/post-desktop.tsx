@@ -82,7 +82,7 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
         {isDescription || isRules ? '' : ' '}
       </span>
       <span className={styles.postNum}>
-        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
+        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
           <span className={styles.postNumLink}>
             {' '}
             <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>{' '}

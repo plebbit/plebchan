@@ -72,7 +72,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
           )}
         </span>
         <span className={styles.dateTimePostNum}>
-          {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
+          {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
             <div className={styles.postNumLink}>
               {' '}
               <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
