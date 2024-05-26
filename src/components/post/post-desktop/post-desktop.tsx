@@ -82,6 +82,12 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
         {isDescription || isRules ? '' : ' '}
       </span>
       <span className={styles.postNum}>
+        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
+          <span className={styles.postNumLink}>
+            {' '}
+            <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>{' '}
+          </span>
+        )}
         {!(isDescription || isRules) && (
           <span className={styles.postNumLink}>
             <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
@@ -94,12 +100,6 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
                 {shortCid}
               </span>
             )}
-          </span>
-        )}
-        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
-          <span className={styles.postNumLink}>
-            {' '}
-            <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
           </span>
         )}
         {pinned && (
