@@ -6,6 +6,7 @@ import { useAccount } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
+import { isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
 import useReplies from '../../../hooks/use-replies';
@@ -259,7 +260,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           <span className={`${styles.hideButton} ${styles.hideThread}`} />
         </span>
       )}
-      {link && <PostMedia post={post} />}
+      {link && isValidURL(link) && <PostMedia post={post} />}
       <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
       {!content && <div className={styles.spacer} />}
       {content && <PostMessage post={post} />}
@@ -291,7 +292,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
               <div className={styles.sideArrows}>{'>>'}</div>
               <div className={styles.reply}>
                 <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-                {reply.link && <PostMedia post={reply} />}
+                {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
                 {reply.content && <PostMessage post={reply} />}
               </div>
             </div>

@@ -209,7 +209,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                 <div className={styles.reply}>
                   <div className={styles.replyContainer}>
                     <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
-                    {content && <PostMessageMobile post={reply} />}
+                    {reply.content && <PostMessageMobile post={reply} />}
                   </div>
                 </div>
               </div>
