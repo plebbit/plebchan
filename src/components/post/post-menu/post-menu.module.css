@@ -4,6 +4,7 @@
   border-bottom: var(--post-menu-border-bottom);
   border-right: var(--post-menu-border-right);
   outline: none;
+  z-index: 2;
 }
 
 .postMenuBtnWrapper {
