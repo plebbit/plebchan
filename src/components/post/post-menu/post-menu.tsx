@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import styles from './post-menu.module.css';
+import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
+import { isValidURL } from '../../../lib/utils/url-utils';
 
 const PostMenu = ({ post }: Comment) => {
   const { cid, isDescription, isRules, link, subplebbitAddress } = post;
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
+  const [isImageSearchMenuOpen, setIsImageSearchMenuOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
@@ -26,6 +29,9 @@ const PostMenu = ({ post }: Comment) => {
 
   const viewOnOtherClientLink = `p/${subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
 
+  const commentMediaInfo = getCommentMediaInfo(post);
+  const { thumbnail, type, url } = commentMediaInfo || {};
+
   return (
     <>
       <span className={styles.postMenuBtnWrapper} ref={refs.setReference} {...getReferenceProps()}>
@@ -41,6 +47,34 @@ const PostMenu = ({ post }: Comment) => {
       {menuBtnRotated && (
         <FloatingFocusManager context={context} modal={false}>
           <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
+            {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && (
+              <div
+                className={`${styles.postMenuItem} ${styles.dropdown}`}
+                onMouseOver={() => setIsImageSearchMenuOpen(true)}
+                onMouseLeave={() => setIsImageSearchMenuOpen(false)}
+              >
+                Image search »
+                {isImageSearchMenuOpen && (
+                  <div className={styles.dropdownMenu}>
+                    <div className={styles.postMenuItem}>
+                      <a href={`https://lens.google.com/uploadbyurl?url=${url}`} target='_blank' rel='noreferrer'>
+                        Google
+                      </a>
+                    </div>
+                    <div className={styles.postMenuItem}>
+                      <a href={`https://www.yandex.com/images/search?img_url=${url}&rpt=imageview`} target='_blank' rel='noreferrer'>
+                        Yandex
+                      </a>
+                    </div>
+                    <div className={styles.postMenuItem}>
+                      <a href={`https://saucenao.com/search.php?url=${url}`} target='_blank' rel='noreferrer'>
+                        SauceNAO
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
             <div
               className={`${styles.postMenuItem} ${styles.dropdown}`}
               onMouseOver={() => setIsClientRedirectMenuOpen(true)}
