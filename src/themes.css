@@ -120,7 +120,8 @@
   --post-form-field-input-color: #000;
 
   /* post menu */
-  --post-menu-border-color: #d9bfb7;
+  --post-menu-border-bottom: 2px solid #d9bfb7;
+  --post-menu-border-right: 1px solid #d9bfb7;
   --post-menu-background-color: #f0e0d6;
   --post-menu-item-border-color: #d9bfb7;
   --post-menu-item-background-color: #f0e0d6;
@@ -296,7 +297,8 @@
   --post-form-field-input-color: #000;
 
   /* post menu */
-  --post-menu-border-color: #b7c5d9;
+  --post-menu-border-bottom: 2px solid #b7c5d9;
+  --post-menu-border-right: 1px solid #b7c5d9;
   --post-menu-background-color: #d6daf0;
   --post-menu-item-border-color: #b7c5d9;
   --post-menu-item-background-color: #d6daf0;
@@ -442,7 +444,8 @@
   --post-form-field-input-color: #000;
 
   /* post menu */
-  --post-menu-border-color: #d9bfb7;
+  --post-menu-border-bottom: 1px solid #d9bfb7;
+  --post-menu-border-right: unset;
   --post-menu-background-color: #f0e0d6;
   --post-menu-item-border-color: #d9bfb7;
   --post-menu-item-background-color: #f0e0d6;
@@ -598,7 +601,8 @@
   --post-form-field-input-color: #000;
 
   /* post menu */
-  --post-menu-border-color: #b7c5d9;
+  --post-menu-border-bottom: 1px solid #b7c5d9;
+  --post-menu-border-right: unset;
   --post-menu-background-color: #d6daf0;
   --post-menu-item-border-color: #b7c5d9;
   --post-menu-item-background-color: #d6daf0;
@@ -762,7 +766,8 @@
   --post-form-field-input-outline: none;
 
   /* post menu */
-  --post-menu-border-color: #000;
+  --post-menu-border-bottom: 1px solid #000;
+  --post-menu-border-right: unset;
   --post-menu-background-color: #282a2e;
   --post-menu-item-border-color: #000;
   --post-menu-item-background-color: #282a2e;
@@ -944,7 +949,8 @@
   --post-form-field-input-color: #000;
 
   /* post menu */
-  --post-menu-border-color: #ccc;
+  --post-menu-border-bottom: 1px solid #ccc;
+  --post-menu-border-right: unset;
   --post-menu-background-color: #ddd;
   --post-menu-item-border-color: #ccc;
   --post-menu-item-background-color: #ddd;

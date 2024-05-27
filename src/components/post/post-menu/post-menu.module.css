@@ -1,8 +1,8 @@
 .postMenu {
   position: absolute;
   background-color: var(--post-menu-background-color);
-  border-bottom: 2px solid var(--post-menu-border-color);
-  border-right: 1px solid var(--post-menu-border-color);
+  border-bottom: var(--post-menu-border-bottom);
+  border-right: var(--post-menu-border-right);
   outline: none;
 }
 
@@ -46,8 +46,8 @@
   left: 100%;
   top: -1px;
   display: none;
-  border-bottom: 2px solid var(--post-menu-border-color);
-  border-right: 1px solid var(--post-menu-border-color);
+  border-bottom: var(--post-menu-border-bottom);
+  border-right: var(--post-menu-border-right);
 }
 
 .dropdown a {
