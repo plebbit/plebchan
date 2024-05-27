@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,7 @@ import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
 import { PostProps } from '../post';
 import styles from '../post.module.css';
+import PostMenu from '../post-menu';
 import _ from 'lodash';
 
 const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
@@ -40,30 +41,6 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
   // pending reply by account is not yet published
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
-
-  const [menuBtnRotated, setMenuBtnRotated] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const handleMenuButtonClick = () => {
-    setMenuBtnRotated((prev) => !prev);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setMenuBtnRotated(false);
-    }
-  };
-
-  useEffect(() => {
-    if (menuBtnRotated) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuBtnRotated]);
 
   return (
     <div className={styles.postInfo}>
@@ -125,11 +102,7 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
           </span>
         )}
       </span>
-      <span className={styles.postMenuBtnWrapper} ref={menuRef}>
-        <span className={styles.postMenuBtn} title='Post menu' onClick={handleMenuButtonClick} style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}>
-          ▶
-        </span>
-      </span>
+      <PostMenu post={post} />
     </div>
   );
 };
