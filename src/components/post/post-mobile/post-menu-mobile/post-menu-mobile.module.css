@@ -24,6 +24,11 @@
   white-space: nowrap;
 }
 
+.postMenu a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .postMenuItem {
   cursor: pointer;
   position: relative;
