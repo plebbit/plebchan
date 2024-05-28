@@ -160,6 +160,7 @@
   --reply-modal-field-input-border-focus: 1px solid #ea8;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #f0e0d6;
   --settings-modal-header-border-bottom: 1px solid #d9bfb7;
   --settings-modal-border-top: none;
@@ -336,6 +337,7 @@
   --reply-modal-field-input-border-focus: 1px solid #98e;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #d6daf0;
   --settings-modal-border-top: none;
   --settings-modal-border-right: 1px solid #b7c5d9;
@@ -814,6 +816,7 @@
   --select-color: #c5c8c6;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #282a2e;
   --settings-modal-border-top: 1px solid #111;
   --settings-modal-border-right: 1px solid #111;
@@ -972,6 +975,7 @@
   --reply-modal-field-input-border-focus: 1px solid #ea8;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #ddd;
   --settings-modal-border-top: 1px solid #ccc;
   --settings-modal-border-right: 1px solid #ccc;
