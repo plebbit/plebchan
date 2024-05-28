@@ -1,8 +1,8 @@
 .postMenu {
   position: absolute;
-  background-color: var(--post-menu-background-color);
-  border-bottom: var(--post-menu-border-bottom);
-  border-right: var(--post-menu-border-right);
+  background-color: var(--post-menu-desktop-background-color);
+  border-bottom: var(--post-menu-desktop-border-bottom);
+  border-right: var(--post-menu-desktop-border-right);
   outline: none;
   z-index: 2;
 }
@@ -14,7 +14,7 @@
 }
 
 .postMenuBtn {
-  color: var(--post-menu-button-color);
+  color: var(--post-menu-desktop-button-color);
   transition: transform 0.1s;
   transform: rotate(90deg);
   position: absolute;
@@ -23,19 +23,19 @@
 
 .postMenuBtn:hover {
   cursor: pointer;
-  color: var(--post-menu-button-color-hover);
+  color: var(--post-menu-desktop-button-color-hover);
 }
 
 .postMenuItem {
   cursor: pointer;
   padding: 2px 4px;
-  border: 1px solid var(--post-menu-item-border-color);
-  background-color: var(--post-menu-item-background-color);
+  border: 1px solid var(--post-menu-desktop-item-border-color);
+  background-color: var(--post-menu-desktop-item-background-color);
   border-bottom: none;
 }
 
 .postMenuItem:hover {
-  background-color: var(--post-menu-item-hover-background-color);
+  background-color: var(--post-menu-desktop-item-hover-background-color);
 }
 
 .dropdown {
@@ -47,8 +47,8 @@
   left: 100%;
   top: -1px;
   display: none;
-  border-bottom: var(--post-menu-border-bottom);
-  border-right: var(--post-menu-border-right);
+  border-bottom: var(--post-menu-desktop-border-bottom);
+  border-right: var(--post-menu-desktop-border-right);
 }
 
 .dropdown a {
@@ -107,7 +107,7 @@
 @media (min-width: 640px) {
   .postMenuBtn {
     right: -2px;
-    opacity: var(--post-menu-btn-opacity);
+    opacity: var(--post-menu-desktop-btn-opacity);
   }
 
   .stickyIconWrapper {

@@ -3,12 +3,12 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { Comment } from '@plebbit/plebbit-react-hooks';
-import styles from './post-menu.module.css';
-import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
-import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-utils';
-import { isCatalogView } from '../../../lib/utils/view-utils';
+import styles from './post-menu-desktop.module.css';
+import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
+import { copyShareLinkToClipboard, isValidURL } from '../../../../lib/utils/url-utils';
+import { isCatalogView } from '../../../../lib/utils/view-utils';
 
-interface PostMenuProps {
+interface PostMenuDesktopProps {
   cid: string;
   isDescription?: boolean;
   isRules?: boolean;
@@ -16,7 +16,7 @@ interface PostMenuProps {
   onClose: () => void;
 }
 
-const CopyLinkButton = ({ cid, subplebbitAddress, onClose }: PostMenuProps) => {
+const CopyLinkButton = ({ cid, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
   return (
     <div
       onClick={() => {
@@ -63,7 +63,7 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
   );
 };
 
-const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuProps) => {
+const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
   const viewOnOtherClientLink = `p/${subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
 
@@ -95,7 +95,7 @@ const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose 
   );
 };
 
-const PostMenu = ({ post }: { post: Comment }) => {
+const PostMenuDesktop = ({ post }: { post: Comment }) => {
   const { cid, isDescription, isRules, link, subplebbitAddress } = post;
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
@@ -145,4 +145,4 @@ const PostMenu = ({ post }: { post: Comment }) => {
   );
 };
 
-export default PostMenu;
+export default PostMenuDesktop;

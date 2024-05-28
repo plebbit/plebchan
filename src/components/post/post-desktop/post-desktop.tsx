@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAccount } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isValidURL } from '../../../lib/utils/url-utils';
@@ -15,9 +16,8 @@ import CommentMedia from '../../comment-media';
 import { canEmbed } from '../../embed';
 import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
+import PostMenuDesktop from './post-menu-desktop/';
 import { PostProps } from '../post';
-import styles from '../post.module.css';
-import PostMenu from '../post-menu';
 import _ from 'lodash';
 
 const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
@@ -102,7 +102,7 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
           </span>
         )}
       </span>
-      <PostMenu post={post} />
+      <PostMenuDesktop post={post} />
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
+import styles from './catalog-row.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView } from '../../lib/utils/view-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
-import styles from './catalog-row.module.css';
-import PostMenu from '../post/post-menu/post-menu';
+import PostMenuDesktop from '../post/post-desktop/post-menu-desktop/';
 
 export const CatalogPostMedia = ({ commentMediaInfo }: { commentMediaInfo: any }) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
@@ -93,7 +93,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
           </span>
         )}
         <span className={styles.postMenu}>
-          <PostMenu post={post} />
+          <PostMenuDesktop post={post} />
         </span>
       </div>
       <Link to={postLink}>
