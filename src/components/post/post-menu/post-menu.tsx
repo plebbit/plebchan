@@ -31,16 +31,23 @@ const CopyLinkButton = ({ cid, subplebbitAddress, onClose }: PostMenuProps) => {
 
 const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void }) => {
   const [isImageSearchMenuOpen, setIsImageSearchMenuOpen] = useState(false);
+
+  const { refs, floatingStyles } = useFloating({
+    placement: 'right-start',
+    middleware: [flip(), shift({ padding: 10 })],
+  });
+
   return (
     <div
       className={`${styles.postMenuItem} ${styles.dropdown}`}
       onMouseOver={() => setIsImageSearchMenuOpen(true)}
       onMouseLeave={() => setIsImageSearchMenuOpen(false)}
+      ref={refs.setReference}
       onClick={onClose}
     >
       Image search »
       {isImageSearchMenuOpen && (
-        <div className={styles.dropdownMenu}>
+        <div ref={refs.setFloating} style={floatingStyles} className={styles.dropdownMenu}>
           <a href={`https://lens.google.com/uploadbyurl?url=${url}`} target='_blank' rel='noreferrer'>
             <div className={styles.postMenuItem}>Google</div>
           </a>
@@ -59,16 +66,23 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
 const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuProps) => {
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
   const viewOnOtherClientLink = `p/${subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
+
+  const { refs, floatingStyles } = useFloating({
+    placement: 'right-start',
+    middleware: [flip(), shift({ padding: 10 })],
+  });
+
   return (
     <div
       className={`${styles.postMenuItem} ${styles.dropdown}`}
       onMouseOver={() => setIsClientRedirectMenuOpen(true)}
       onMouseLeave={() => setIsClientRedirectMenuOpen(false)}
+      ref={refs.setReference}
       onClick={onClose}
     >
       View on »
       {isClientRedirectMenuOpen && (
-        <div className={styles.dropdownMenu}>
+        <div ref={refs.setFloating} style={floatingStyles} className={styles.dropdownMenu}>
           <a href={`https://seedit.app/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
             <div className={styles.postMenuItem}>Seedit</div>
           </a>
