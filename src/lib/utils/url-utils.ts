@@ -16,7 +16,7 @@ export const isValidURL = (url: string) => {
 };
 
 export const copyShareLinkToClipboard = (subplebbitAddress: string, cid: string) => {
-  const shareLink = `https://pleb.bz/p/${subplebbitAddress}/c/${cid}`;
+  const shareLink = `https://pleb.bz/p/${subplebbitAddress}/c/${cid}?redirect=plebchan.eth.limo`;
 
   if (navigator.clipboard) {
     navigator.clipboard.writeText(shareLink);

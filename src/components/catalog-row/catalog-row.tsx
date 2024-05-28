@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { isAllView } from '../../lib/utils/view-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import styles from './catalog-row.module.css';
@@ -60,7 +61,11 @@ const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
   }
 
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
-  const postLink = `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`;
+
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
+
+  const postLink = isInAllView && isDescription ? `/p/all/description` : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`;
 
   const linkCount = useCountLinksInReplies(post);
 

@@ -14,7 +14,7 @@ export const isCatalogView = (pathname: string): boolean => {
 
 export const isDescriptionView = (pathname: string, params: ParamsType): boolean => {
   const decodedPathname = decodeURIComponent(pathname);
-  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/description`) : false;
+  return pathname === '/p/all/description' ? true : params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/description`) : false;
 };
 
 export const isHomeView = (pathname: string): boolean => {

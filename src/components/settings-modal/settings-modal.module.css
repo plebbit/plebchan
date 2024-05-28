@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.25);
-  z-index: 900;
+  z-index: 4;
 }
 
 .settingsModal label, .settingsModal button, .settingsModal select {
@@ -31,9 +31,9 @@
   overflow-y: auto;
   margin-left: -178px;
   position: fixed;
-  z-index: 1000;
+  z-index: 5;
   padding: 2px;
-  font-size: 14px;
+  font-size: var(--settings-modal-font-size);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   background-color: var(--settings-modal-background-color);
   border-top: var(--settings-modal-border-top);

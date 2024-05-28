@@ -22,7 +22,7 @@ const BoardLayout = () => {
 
   const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
   const isValidCommentCid = !commentCid || /^Qm[a-zA-Z0-9]{44}$/.test(commentCid);
-  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3K[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
+  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3KooW[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
 
   if (!isValidAccountCommentIndex || !isValidCommentCid || !isValidSubplebbitAddress) {
     return <NotFound />;
@@ -70,17 +70,8 @@ const App = () => {
           <Route element={<BoardLayout />}>
             <Route path='/p/:subplebbitAddress' element={<Board />} />
             <Route path='/p/:subplebbitAddress/settings' element={<Board />} />
-            <Route path='/p/all' element={<Board />} />
-            <Route path='/p/all/settings' element={<Board />} />
-            <Route path='/p/subscriptions' element={<Board />} />
-            <Route path='/p/subscriptions/settings' element={<Board />} />
-
             <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
             <Route path='/p/:subplebbitAddress/catalog/settings' element={<Catalog />} />
-            <Route path='/p/all/catalog' element={<Catalog />} />
-            <Route path='/p/all/catalog/settings' element={<Catalog />} />
-            <Route path='/p/subscriptions/catalog' element={<Catalog />} />
-            <Route path='/p/subscriptions/catalog/settings' element={<Catalog />} />
 
             <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
             <Route path='/p/:subplebbitAddress/c/:commentCid/settings' element={<PostPage />} />
@@ -88,6 +79,17 @@ const App = () => {
             <Route path='/p/:subplebbitAddress/description/settings' element={<PostPage />} />
             <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
             <Route path='/p/:subplebbitAddress/rules/settings' element={<PostPage />} />
+
+            <Route path='/p/all' element={<Board />} />
+            <Route path='/p/all/description' element={<PostPage />} />
+            <Route path='/p/all/settings' element={<Board />} />
+            <Route path='/p/all/catalog' element={<Catalog />} />
+            <Route path='/p/all/catalog/settings' element={<Catalog />} />
+
+            <Route path='/p/subscriptions' element={<Board />} />
+            <Route path='/p/subscriptions/settings' element={<Board />} />
+            <Route path='/p/subscriptions/catalog' element={<Catalog />} />
+            <Route path='/p/subscriptions/catalog/settings' element={<Catalog />} />
 
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
             <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { useAccount } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
+import { isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
 import useReplies from '../../../hooks/use-replies';
@@ -16,6 +17,7 @@ import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
 import { PostProps } from '../post';
 import styles from '../post.module.css';
+import PostMenu from '../post-menu';
 import _ from 'lodash';
 
 const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
@@ -40,30 +42,6 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress;
 
-  const [menuBtnRotated, setMenuBtnRotated] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const handleMenuButtonClick = () => {
-    setMenuBtnRotated((prev) => !prev);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setMenuBtnRotated(false);
-    }
-  };
-
-  useEffect(() => {
-    if (menuBtnRotated) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuBtnRotated]);
-
   return (
     <div className={styles.postInfo}>
       <span className={styles.checkbox}>
@@ -82,6 +60,12 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
         {isDescription || isRules ? '' : ' '}
       </span>
       <span className={styles.postNum}>
+        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
+          <span className={styles.postNumLink}>
+            {' '}
+            <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>{' '}
+          </span>
+        )}
         {!(isDescription || isRules) && (
           <span className={styles.postNumLink}>
             <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
@@ -96,12 +80,6 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
             )}
           </span>
         )}
-        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
-          <span className={styles.postNumLink}>
-            {' '}
-            <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
-          </span>
-        )}
         {pinned && (
           <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
             <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -114,15 +92,17 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
         )}
         {!isInPostView && !isReply && (
           <span className={styles.replyButton}>
-            [<Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}>{_.capitalize(t('reply'))}</Link>]
+            [
+            <Link
+              to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}
+            >
+              {_.capitalize(t('reply'))}
+            </Link>
+            ]
           </span>
         )}
       </span>
-      <span className={styles.postMenuBtnWrapper} ref={menuRef}>
-        <span className={styles.postMenuBtn} title='Post menu' onClick={handleMenuButtonClick} style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}>
-          ▶
-        </span>
-      </span>
+      <PostMenu post={post} />
     </div>
   );
 };
@@ -253,7 +233,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           <span className={`${styles.hideButton} ${styles.hideThread}`} />
         </span>
       )}
-      {link && <PostMedia post={post} />}
+      {link && isValidURL(link) && <PostMedia post={post} />}
       <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
       {!content && <div className={styles.spacer} />}
       {content && <PostMessage post={post} />}
@@ -285,7 +265,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
               <div className={styles.sideArrows}>{'>>'}</div>
               <div className={styles.reply}>
                 <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-                {reply.link && <PostMedia post={reply} />}
+                {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
                 {reply.content && <PostMessage post={reply} />}
               </div>
             </div>

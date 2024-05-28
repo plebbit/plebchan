@@ -72,7 +72,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
           )}
         </span>
         <span className={styles.dateTimePostNum}>
-          {subplebbitAddress && (isInAllView || isInSubscriptionsView) && (
+          {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
             <div className={styles.postNumLink}>
               {' '}
               <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
@@ -164,6 +164,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
 
   const params = useParams();
   const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
 
@@ -188,7 +189,10 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                 {replyCount > 0 && `${replyCount} Replies`}
                 {linksCount > 0 && ` / ${linksCount} Links`}
               </span>
-              <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} className='button'>
+              <Link
+                to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`}
+                className='button'
+              >
                 {t('view_thread')}
               </Link>
             </div>
@@ -205,7 +209,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                 <div className={styles.reply}>
                   <div className={styles.replyContainer}>
                     <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
-                    {content && <PostMessageMobile post={reply} />}
+                    {reply.content && <PostMessageMobile post={reply} />}
                   </div>
                 </div>
               </div>

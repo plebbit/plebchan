@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -16,12 +16,18 @@ const OptionsButton = () => {
   return <button className='button'>{t('options')}</button>;
 };
 
-const CatalogButton = ({ address, isInAllView, isInCatalogView, isInSubscriptionsView }: BoardButtonsProps) => {
+const CatalogButton = ({ address, isInAllView, isInCatalogView }: BoardButtonsProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const link = isInAllView ? `/p/all/catalog` : isInSubscriptionsView ? `/p/subscriptions/catalog` : isInCatalogView ? `/p/${address}` : `/p/${address}/catalog`;
 
-  return <button className='button'>{isInCatalogView ? <span onClick={() => navigate(-1)}>{t('return')}</span> : <Link to={link}>{t('catalog')}</Link>}</button>;
+  return (
+    <button className='button'>
+      {isInCatalogView ? (
+        <Link to={isInAllView ? '/p/all' : `/p/${address}`}>{t('return')}</Link>
+      ) : (
+        <Link to={isInAllView ? `/p/all/catalog` : `/p/${address}/catalog`}>{t('catalog')}</Link>
+      )}
+    </button>
+  );
 };
 
 const SubscribeButton = ({ address }: BoardButtonsProps) => {
@@ -56,18 +62,21 @@ const BottomButton = () => {
 export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
-  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
-  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
-  const isInPostView = isPostPageView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInCatalogView = isCatalogView(location.pathname);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
+  const isInPostView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
     <div className={styles.mobileBoardButtons}>
       {isInPostView || isInPendingPostPage ? (
         <div className={styles.mobilePostPageButtons}>
           <ReturnButton address={subplebbitAddress} />
-          <CatalogButton address={subplebbitAddress} />
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} />
           <BottomButton />
           <div className={styles.mobilePostPageButtonsSecondRow}>
             <OptionsButton />
@@ -77,7 +86,7 @@ export const MobileBoardButtons = () => {
       ) : (
         <>
           <OptionsButton />
-          <CatalogButton address={subplebbitAddress} isInCatalogView={isInCatalogView} />
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
           <SubscribeButton address={subplebbitAddress} />
         </>
       )}

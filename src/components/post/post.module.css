@@ -131,37 +131,6 @@
   color: var(--button-desktop-text-color-hover);
 }
 
-.postMenuBtnWrapper {
-  position: relative;
-  display: inline-block;
-  padding-left: 5px;
-}
-
-.replyDesktop .postMenuBtnWrapper {
-  padding-right: 12px;
-}
-
-.replyDesktop .stickyIconWrapper {
-  padding-right: 18px;
-}
-
-.postDesktop .postMenuBtn, .replyDesktop .postMenuBtn {
-  color: var(--post-menu-button-color);
-  transition: transform 0.1s;
-  position: absolute;
-  opacity: var(--post-menu-btn-opacity);
-  bottom: -4px;
-}
-
-.replyDesktop .postMenuBtn {
-  right: -2px;
-}
-
-.postDesktop .postMenuBtn:hover, .replyDesktop .postMenuBtn:hover {
-  cursor: pointer;
-  color: var(--post-menu-button-color-hover);
-}
-
 .postDesktop .spacer {
   width: 100%;
   padding: 5px;
@@ -258,20 +227,6 @@
   color: var(--post-mobile-info-text-color);
   padding: 5px;
   clear: left;
-}
-
-.postMobile .postMenuBtn {
-  color: var(--post-mobile-menu-button-color);
-  line-height: 1em;
-  width: 1em;
-  text-align: center;
-  transition: transform 0.1s;
-  transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  float: left;
-  font-weight: 700;
-  font-size: 16px;
-  height: 100%;
 }
 
 .postMobile .nameBlock {
@@ -406,10 +361,6 @@
   border-bottom: var(--post-mobile-info-border-bottom);
   background-color: var(--post-mobile-info-background-color);
   color: var(--post-mobile-info-text-color);
-}
-
-.replyMobile .postInfo .postMenuBtn {
-  width: 1em;
 }
 
 .replyMobile .nameBlock {

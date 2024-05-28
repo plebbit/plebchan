@@ -57,11 +57,6 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
     displayHeight = '100%';
   }
 
-  if (isOutOfFeed) {
-    displayWidth = 'unset';
-    displayHeight = 'unset';
-  }
-
   let thumbnailComponent: React.ReactNode = null;
   const iframeThumbnail = patternThumbnailUrl || thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
@@ -86,7 +81,9 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
 
   const linkWithoutThumbnail = url && new URL(url);
 
-  return isMobile || isReply ? (
+  return isOutOfFeed ? (
+    <span className={styles.subplebbitAvatar}>{thumbnailComponent}</span>
+  ) : isMobile || isReply ? (
     <ThumbnailSmall style={thumbnailDimensions} thumbnailSmallPadding={thumbnailSmallPadding}>
       {thumbnailComponent}
       {isMobile &&

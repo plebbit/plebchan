@@ -103,6 +103,30 @@
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
 
+  /* post form */
+  --post-form-toggle-font-size: 22px;
+  --post-form-toggle-font-weight: 700;
+  --post-form-field-title-background-color: #ea8;
+  --post-form-field-title-color: #800;
+  --post-form-field-border: 1px solid #800;
+  --post-form-field-title-font-weight: 700;
+  --post-form-field-title-padding: 0 5px;
+  --post-form-field-title-font-size: 10pt;
+  --post-form-field-input-border: 1px solid #aaa;
+  --post-form-field-font-family: arial, helvetica, sans-serif;
+  --post-form-field-input-appearance: none;
+  --post-form-field-input-outline: none;
+  --post-form-field-input-focus-border: 1px solid #ea8;
+  --post-form-field-input-color: #000;
+
+  /* post menu */
+  --post-menu-border-bottom: 2px solid #d9bfb7;
+  --post-menu-border-right: 1px solid #d9bfb7;
+  --post-menu-background-color: #f0e0d6;
+  --post-menu-item-border-color: #d9bfb7;
+  --post-menu-item-background-color: #f0e0d6;
+  --post-menu-item-hover-background-color: #ffe;
+
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
   --post-mobile-info-border-bottom: 1px solid #d9bfb7;
@@ -120,22 +144,6 @@
   --post-mobile-file-info-text-color: #707070;
   --post-mobile-content-font-size: 11pt;
 
-  /* post form */
-  --post-form-toggle-font-size: 22px;
-  --post-form-toggle-font-weight: 700;
-  --post-form-field-title-background-color: #ea8;
-  --post-form-field-title-color: #800;
-  --post-form-field-border: 1px solid #800;
-  --post-form-field-title-font-weight: 700;
-  --post-form-field-title-padding: 0 5px;
-  --post-form-field-title-font-size: 10pt;
-  --post-form-field-input-border: 1px solid #aaa;
-  --post-form-field-font-family: arial, helvetica, sans-serif;
-  --post-form-field-input-appearance: none;
-  --post-form-field-input-outline: none;
-  --post-form-field-input-focus-border: 1px solid #ea8;
-  --post-form-field-input-color: #000;
-
   /* quotelink */
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
@@ -152,6 +160,7 @@
   --reply-modal-field-input-border-focus: 1px solid #ea8;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #f0e0d6;
   --settings-modal-header-border-bottom: 1px solid #d9bfb7;
   --settings-modal-border-top: none;
@@ -288,6 +297,14 @@
   --post-form-field-input-focus-border: 1px solid #98e;
   --post-form-field-input-color: #000;
 
+  /* post menu */
+  --post-menu-border-bottom: 2px solid #b7c5d9;
+  --post-menu-border-right: 1px solid #b7c5d9;
+  --post-menu-background-color: #d6daf0;
+  --post-menu-item-border-color: #b7c5d9;
+  --post-menu-item-background-color: #d6daf0;
+  --post-menu-item-hover-background-color: #eef2ff;
+
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
   --post-mobile-info-border-bottom: 1px solid #b7c5d9;
@@ -320,6 +337,7 @@
   --reply-modal-field-input-border-focus: 1px solid #98e;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #d6daf0;
   --settings-modal-border-top: none;
   --settings-modal-border-right: 1px solid #b7c5d9;
@@ -426,6 +444,14 @@
   --post-form-field-title-font-weight: 700;
   --post-form-field-title-font-size: 16px;
   --post-form-field-input-color: #000;
+
+  /* post menu */
+  --post-menu-border-bottom: 1px solid #d9bfb7;
+  --post-menu-border-right: unset;
+  --post-menu-background-color: #f0e0d6;
+  --post-menu-item-border-color: #d9bfb7;
+  --post-menu-item-background-color: #f0e0d6;
+  --post-menu-item-hover-background-color: #ffe;
 
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
@@ -575,6 +601,14 @@
   --post-form-field-title-font-weight: 700;
   --post-form-field-title-font-size: 16px;
   --post-form-field-input-color: #000;
+
+  /* post menu */
+  --post-menu-border-bottom: 1px solid #b7c5d9;
+  --post-menu-border-right: unset;
+  --post-menu-background-color: #d6daf0;
+  --post-menu-item-border-color: #b7c5d9;
+  --post-menu-item-background-color: #d6daf0;
+  --post-menu-item-hover-background-color: #eef2ff;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
@@ -733,6 +767,14 @@
   --post-form-field-input-appearance: none;
   --post-form-field-input-outline: none;
 
+  /* post menu */
+  --post-menu-border-bottom: 1px solid #000;
+  --post-menu-border-right: unset;
+  --post-menu-background-color: #282a2e;
+  --post-menu-item-border-color: #000;
+  --post-menu-item-background-color: #282a2e;
+  --post-menu-item-hover-background-color: #1d1f21;
+
   /* post mobile */
   --post-mobile-background-color: #282A2E;
   --post-mobile-info-border-top: 1px solid #2D2F33;
@@ -774,6 +816,7 @@
   --select-color: #c5c8c6;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #282a2e;
   --settings-modal-border-top: 1px solid #111;
   --settings-modal-border-right: 1px solid #111;
@@ -908,6 +951,14 @@
   --post-form-field-input-focus-border: 1px solid #ea8;
   --post-form-field-input-color: #000;
 
+  /* post menu */
+  --post-menu-border-bottom: 1px solid #ccc;
+  --post-menu-border-right: unset;
+  --post-menu-background-color: #ddd;
+  --post-menu-item-border-color: #ccc;
+  --post-menu-item-background-color: #ddd;
+  --post-menu-item-hover-background-color: #eee;
+
   /* quotelink */
   --post-quotelink-text-color: #f60;
   --post-quotelink-text-color-hover: #f30;
@@ -924,6 +975,7 @@
   --reply-modal-field-input-border-focus: 1px solid #ea8;
 
   /* settings modal */
+  --settings-modal-font-size: 14px;
   --settings-modal-background-color: #ddd;
   --settings-modal-border-top: 1px solid #ccc;
   --settings-modal-border-right: 1px solid #ccc;

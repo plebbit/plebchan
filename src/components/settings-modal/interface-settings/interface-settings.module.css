@@ -3,6 +3,7 @@
 }
 
 .setting {
+  text-transform: capitalize;
   margin-left: 10px;
   margin-top: 10px;
 }

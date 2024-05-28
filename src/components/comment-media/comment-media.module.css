@@ -5,9 +5,17 @@
   max-width: 250px;
   max-height: 250px;
   margin: 3px 20px 5px 0;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+}
+
+.subplebbitAvatar {
+  max-width: 250px;
+  max-height: 250px;
+  margin: 3px 20px 5px 0;
+  display: inline-block;
 }
 
 .thumbnailSmall {
@@ -17,9 +25,10 @@
   max-width: 125px;
   max-height: 125px;
   margin: 3px 10px 5px 5px;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .thumbnailSmall span, .thumbnailSmall a {
@@ -43,7 +52,6 @@
 }
 
 .content img, .content video, .content iframe, .content audio {
-  box-sizing: border-box;
   max-width: 100%;
   max-height: 100%;
 }

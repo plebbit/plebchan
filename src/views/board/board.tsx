@@ -54,7 +54,7 @@ const Board = () => {
       {state === 'failed' ? (
         state
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-        `You haven't subscribed to any board yet.`
+        `You have not subscribed to any board yet.`
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}
@@ -78,15 +78,15 @@ const Board = () => {
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot: StateSnapshot) => {
         if (snapshot?.ranges?.length) {
-          lastVirtuosoStates[subplebbitAddress + sortType] = snapshot;
+          lastVirtuosoStates[location.pathname] = snapshot;
         }
       });
     };
     window.addEventListener('scroll', setLastVirtuosoState);
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [subplebbitAddress, sortType]);
+  }, [location.pathname]);
 
-  const lastVirtuosoState = lastVirtuosoStates?.[subplebbitAddress + sortType];
+  const lastVirtuosoState = lastVirtuosoStates?.[location.pathname];
 
   useEffect(() => {
     document.title = title ? title : shortAddress;
