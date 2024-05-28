@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useLocation } from 'react-router-dom';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import styles from './post-menu.module.css';
 import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-utils';
+import { isCatalogView } from '../../../lib/utils/view-utils';
 
 interface PostMenuProps {
   cid: string;
@@ -84,11 +87,13 @@ const PostMenu = ({ post }: { post: Comment }) => {
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
 
+  const isInCatalogView = isCatalogView(useLocation().pathname);
+
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
     open: menuBtnRotated,
     onOpenChange: setMenuBtnRotated,
-    middleware: [offset({ mainAxis: 10, crossAxis: 5 }), flip({ fallbackAxisSideDirection: 'end' }), shift({ padding: 10 })],
+    middleware: [offset({ mainAxis: isInCatalogView ? -2 : 6, crossAxis: isInCatalogView ? -1 : 5 }), flip({ fallbackAxisSideDirection: 'end' }), shift({ padding: 10 })],
     whileElementsMounted: autoUpdate,
   });
   const click = useClick(context);
@@ -101,9 +106,9 @@ const PostMenu = ({ post }: { post: Comment }) => {
 
   return (
     <>
-      <span className={styles.postMenuBtnWrapper} ref={refs.setReference} {...getReferenceProps()}>
+      <span className={isInCatalogView ? styles.postMenuBtnCatalogWrapper : styles.postMenuBtnWrapper} ref={refs.setReference} {...getReferenceProps()}>
         <span
-          className={styles.postMenuBtn}
+          className={isInCatalogView ? styles.postMenuBtnCatalog : styles.postMenuBtn}
           title='Post menu'
           onClick={() => setMenuBtnRotated((prev) => !prev)}
           style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}
@@ -111,15 +116,17 @@ const PostMenu = ({ post }: { post: Comment }) => {
           ▶
         </span>
       </span>
-      {menuBtnRotated && (
-        <FloatingFocusManager context={context} modal={false}>
-          <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
-            {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
-            {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButton url={url} onClose={handleClose} />}
-            <ViewOnButton cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
-          </div>
-        </FloatingFocusManager>
-      )}
+      {menuBtnRotated &&
+        createPortal(
+          <FloatingFocusManager context={context} modal={false}>
+            <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
+              {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
+              {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButton url={url} onClose={handleClose} />}
+              <ViewOnButton cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
+            </div>
+          </FloatingFocusManager>,
+          document.body,
+        )}
     </>
   );
 };

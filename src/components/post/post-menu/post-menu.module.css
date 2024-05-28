@@ -60,6 +60,36 @@
   display: block;
 }
 
+.postMenuBtnCatalogWrapper {
+  left: 5px;
+  top: 5px;
+  position: relative;
+}
+
+.postMenuBtnCatalog {
+  position: absolute;
+  bottom: 5px;
+  line-height: 1em;
+  color: var(--catalog-post-menu-btn-color);
+  opacity: var(--catalog-post-menu-btn-opacity);
+  transition: transform 0.1s;
+}
+
+.postMenuBtnCatalog:hover {
+  cursor: pointer;
+  color: var(--catalog-post-menu-btn-hover-color);
+  opacity: var(--catalog-post-menu-btn-hover-opacity);
+}
+
+.postMenuBtnCatalog {
+  /* preserve unicode triangle for button, some browsers will use an emoji */
+  font-variant: normal;
+  font-feature-settings: "tnum";
+  -webkit-font-feature-settings: "tnum"; /* Chrome, Opera, and Safari */
+  -moz-font-feature-settings: "tnum";    /* Firefox */
+  font-variant-numeric: tabular-nums;
+}
+
 @media (max-width: 640px) {
   .postMenuBtn {
     width: 1em;

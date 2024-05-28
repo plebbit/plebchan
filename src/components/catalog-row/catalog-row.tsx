@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
@@ -7,6 +6,7 @@ import { isAllView } from '../../lib/utils/view-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import styles from './catalog-row.module.css';
+import PostMenu from '../post/post-menu/post-menu';
 
 export const CatalogPostMedia = ({ commentMediaInfo }: { commentMediaInfo: any }) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
@@ -30,13 +30,7 @@ export const CatalogPostMedia = ({ commentMediaInfo }: { commentMediaInfo: any }
   return thumbnailComponent;
 };
 
-interface CatalogPostProps {
-  post: Comment;
-  openMenu: boolean;
-  toggleMenu: () => void;
-}
-
-const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
+const CatalogPost = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
   const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
@@ -76,19 +70,6 @@ const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
     </div>
   );
 
-  useEffect(() => {
-    const handlePageClick = () => {
-      if (openMenu) {
-        toggleMenu();
-      }
-    };
-    document.addEventListener('click', handlePageClick);
-
-    return () => {
-      document.removeEventListener('click', handlePageClick);
-    };
-  }, [openMenu, toggleMenu]);
-
   return (
     <div className={styles.post}>
       {hasThumbnail ? (
@@ -111,18 +92,8 @@ const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
             / L: <b>{linkCount}</b>
           </span>
         )}
-        <span className={styles.postMenuBtnPadding}>
-          <span
-            className={styles.postMenuBtn}
-            title='Thread Menu'
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleMenu();
-            }}
-            style={{ transform: openMenu ? 'rotate(90deg)' : 'rotate(0deg)' }}
-          >
-            ▶
-          </span>
+        <span className={styles.postMenu}>
+          <PostMenu post={post} />
         </span>
       </div>
       <Link to={postLink}>
@@ -141,16 +112,10 @@ interface CatalogRowProps {
 }
 
 const CatalogRow = ({ row }: CatalogRowProps) => {
-  const [postWithMenuOpen, setPostWithMenuOpen] = useState<number | null>(null);
-
-  const handleToggleMenu = (index: number) => {
-    setPostWithMenuOpen(postWithMenuOpen === index ? null : index);
-  };
-
   return (
     <div className={styles.row}>
       {row.map((post, index) => (
-        <CatalogPost key={index} post={post} openMenu={postWithMenuOpen === index} toggleMenu={() => handleToggleMenu(index)} />
+        <CatalogPost key={index} post={post} />
       ))}
     </div>
   );
