@@ -3,11 +3,11 @@ import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import styles from './board-nav.module.css';
+import styles from './topbar.module.css';
 import useDefaultSubplebbits, { categorizeSubplebbits, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { debounce } from 'lodash';
 
-const BoardNavDesktop = () => {
+const TopBarDesktop = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const isInCatalogView = isCatalogView(location.pathname);
@@ -39,7 +39,7 @@ const BoardNavDesktop = () => {
   );
 };
 
-const BoardNavMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
+const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
@@ -101,17 +101,17 @@ const BoardNavMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) =>
   );
 };
 
-const BoardNav = () => {
+const TopBar = () => {
   const params = useParams();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
     <>
-      <BoardNavDesktop />
-      <BoardNavMobile subplebbitAddress={subplebbitAddress} />
+      <TopBarDesktop />
+      <TopBarMobile subplebbitAddress={subplebbitAddress} />
     </>
   );
 };
 
-export default BoardNav;
+export default TopBar;

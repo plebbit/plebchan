@@ -1,17 +1,17 @@
 
 .boardNavDesktop {
-  font-size: var(--boardnav-font-size);
-  color: var(--boardnav-separator-color);
+  font-size: var(--topbar-font-size);
+  color: var(--topbar-separator-color);
 }
 
 .boardNavDesktop a {
-  color: var(--boardnav-desktop-link-text-color);
-  text-decoration: var(--boardnav-desktop-link-text-decoration);
+  color: var(--topbar-desktop-link-text-color);
+  text-decoration: var(--topbar-desktop-link-text-decoration);
 }
 
 .boardNavDesktop a:hover {
-  color: var(--boardnav-desktop-link-text-color-hover);
-  text-decoration: var(--boardnav-desktop-link-text-decoration-hover);
+  color: var(--topbar-desktop-link-text-color-hover);
+  text-decoration: var(--topbar-desktop-link-text-decoration-hover);
 }
 
 .navTopRight {
@@ -21,9 +21,9 @@
 
 .boardNavMobile {
   padding: 2px 4px;
-  background-color: var(--boardnav-mobile-background-color);
-  border-bottom: var(--boardnav-mobile-border-bottom);
-  font-size: var(--boardnav-mobile-font-size);
+  background-color: var(--topbar-mobile-background-color);
+  border-bottom: var(--topbar-mobile-border-bottom);
+  font-size: var(--topbar-mobile-font-size);
   position: fixed;
   width: 100%;
   z-index: 3;
@@ -43,7 +43,7 @@
 }
 
 .boardNavMobile select {
-  font-size: var(--boardnav-mobile-font-size);
+  font-size: var(--topbar-mobile-font-size);
   border: var(--select-border, revert);
   background-color: var(--select-background-color, revert);
   color: var(--select-color, revert);

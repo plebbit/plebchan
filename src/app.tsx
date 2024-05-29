@@ -9,9 +9,9 @@ import Home from './views/home';
 import NotFound from './views/not-found';
 import PendingPost from './views/pending-post';
 import PostPage from './views/post-page';
-import BoardBanner from './components/board-banner';
+import BoardHeader from './components/board-header';
 import { DesktopBoardButtons, MobileBoardButtons } from './components/board-buttons';
-import BoardNav from './components/board-nav';
+import TopBar from './components/topbar';
 import ChallengeModal from './components/challenge-modal';
 import SubplebbitStats from './components/subplebbit-stats';
 import PostForm from './components/post-form';
@@ -33,8 +33,8 @@ const BoardLayout = () => {
 
   return (
     <div className={styles.boardLayout}>
-      <BoardNav />
-      <BoardBanner />
+      <TopBar />
+      <BoardHeader />
       <MobileBoardButtons />
       <PostForm key={key} />
       {subplebbitAddress && isValidSubplebbitAddress && <SubplebbitStats />}

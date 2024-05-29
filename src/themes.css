@@ -6,16 +6,16 @@
   --board-address-font-size: x-small;
   
   /* board nav */
-  --boardnav-font-size: 9pt;
-  --boardnav-separator-color: #b86;
-  --boardnav-desktop-link-text-color: #800;
-  --boardnav-desktop-link-text-color-hover: #e00;
-  --boardnav-desktop-link-text-decoration: none;
-  --boardnav-desktop-link-text-decoration-hover: underline;
-  --boardnav-mobile-background-color: #f0e0d6;
-  --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
-  --boardnav-mobile-font-size: 10px;
-  --boardnav-mobile-button-text-color: navy;
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #b86;
+  --topbar-desktop-link-text-color: #800;
+  --topbar-desktop-link-text-color-hover: #e00;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: underline;
+  --topbar-mobile-background-color: #f0e0d6;
+  --topbar-mobile-border-bottom: 2px solid #d9c5b7;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: navy;
 
   /* body */
   --body-background-base-color: #ffe;
@@ -192,16 +192,16 @@
   --board-address-text-color: #af0a0f;
 
   /* board nav */
-  --boardnav-font-size: 9pt;
-  --boardnav-separator-color: #89a;
-  --boardnav-desktop-link-text-color: #34345c;
-  --boardnav-desktop-link-text-color-hover: #d00;
-  --boardnav-desktop-link-text-decoration: none;
-  --boardnav-desktop-link-text-decoration-hover: none;
-  --boardnav-mobile-background-color: #d6daf0;
-  --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
-  --boardnav-mobile-font-size: 10px;
-  --boardnav-mobile-button-text-color: #34345c;
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #89a;
+  --topbar-desktop-link-text-color: #34345c;
+  --topbar-desktop-link-text-color-hover: #d00;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: none;
+  --topbar-mobile-background-color: #d6daf0;
+  --topbar-mobile-border-bottom: 2px solid #b7c5d9;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: #34345c;
 
   /* body */
   --body-background-base-color: #eef2ff;
@@ -375,16 +375,16 @@
   --body-font-size: 16px;
 
   /* board nav */
-  --boardnav-font-size: 11pt;
-  --boardnav-separator-color: none;
-  --boardnav-desktop-link-text-color: #00e;
-  --boardnav-desktop-link-text-color-hover: red;
-  --boardnav-desktop-link-text-decoration: underline;
-  --boardnav-desktop-link-text-decoration-hover: underline;
-  --boardnav-mobile-background-color: #f0e0d6;
-  --boardnav-mobile-border-bottom: 2px solid #d9c5b7;
-  --boardnav-mobile-font-size: 9pt;
-  --boardnav-mobile-button-text-color: #00f;
+  --topbar-font-size: 11pt;
+  --topbar-separator-color: none;
+  --topbar-desktop-link-text-color: #00e;
+  --topbar-desktop-link-text-color-hover: red;
+  --topbar-desktop-link-text-decoration: underline;
+  --topbar-desktop-link-text-decoration-hover: underline;
+  --topbar-mobile-background-color: #f0e0d6;
+  --topbar-mobile-border-bottom: 2px solid #d9c5b7;
+  --topbar-mobile-font-size: 9pt;
+  --topbar-mobile-button-text-color: #00f;
 
   /* board title */
   --board-title-font-size: 32px;
@@ -526,16 +526,16 @@
   --board-address-text-color: #af0a0f;
 
   /* board nav */
-  --boardnav-font-size: 11pt;
-  --boardnav-separator-color: none;
-  --boardnav-desktop-link-text-color: #34345c;
-  --boardnav-desktop-link-text-color-hover: #d00;
-  --boardnav-desktop-link-text-decoration: underline;
-  --boardnav-desktop-link-text-decoration-hover: underline;
-  --boardnav-mobile-background-color: #d6daf0;
-  --boardnav-mobile-border-bottom: 2px solid #b7c5d9;
-  --boardnav-mobile-font-size: 9pt;
-  --boardnav-mobile-button-text-color: #34345c;
+  --topbar-font-size: 11pt;
+  --topbar-separator-color: none;
+  --topbar-desktop-link-text-color: #34345c;
+  --topbar-desktop-link-text-color-hover: #d00;
+  --topbar-desktop-link-text-decoration: underline;
+  --topbar-desktop-link-text-decoration-hover: underline;
+  --topbar-mobile-background-color: #d6daf0;
+  --topbar-mobile-border-bottom: 2px solid #b7c5d9;
+  --topbar-mobile-font-size: 9pt;
+  --topbar-mobile-button-text-color: #34345c;
 
   /* body */
   --body-background-base-color: #eef2ff;
@@ -689,16 +689,16 @@
   --body-font-size: 13px;
 
   /* board nav */
-  --boardnav-font-size: 9pt;
-  --boardnav-separator-color: #c5c8c6;
-  --boardnav-desktop-link-text-color: #81a2be;
-  --boardnav-desktop-link-text-color-hover: #5f89ac;
-  --boardnav-desktop-link-text-decoration: none;
-  --boardnav-desktop-link-text-decoration-hover: none;
-  --boardnav-mobile-background-color: #1d1f21;
-  --boardnav-mobile-border-bottom: 2px solid #282a2e;
-  --boardnav-mobile-font-size: 10px;
-  --boardnav-mobile-button-text-color: #81a2be;
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #c5c8c6;
+  --topbar-desktop-link-text-color: #81a2be;
+  --topbar-desktop-link-text-color-hover: #5f89ac;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: none;
+  --topbar-mobile-background-color: #1d1f21;
+  --topbar-mobile-border-bottom: 2px solid #282a2e;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: #81a2be;
 
   /* board title */
   --board-title-font-size: 28px;
@@ -875,16 +875,16 @@
   --body-font-size: 13px;
 
   /* board nav */
-  --boardnav-font-size: 9pt;
-  --boardnav-separator-color: #333;
-  --boardnav-desktop-link-text-color: #f60;
-  --boardnav-desktop-link-text-color-hover: #f30;
-  --boardnav-desktop-link-text-decoration: none;
-  --boardnav-desktop-link-text-decoration-hover: none;
-  --boardnav-mobile-background-color: #ddd;
-  --boardnav-mobile-border-bottom: 2px solid #ccc;
-  --boardnav-mobile-font-size: 10px;
-  --boardnav-mobile-button-text-color: #f60;
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #333;
+  --topbar-desktop-link-text-color: #f60;
+  --topbar-desktop-link-text-color-hover: #f30;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: none;
+  --topbar-mobile-background-color: #ddd;
+  --topbar-mobile-border-bottom: 2px solid #ccc;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: #f60;
 
   /* board title */
   --board-title-font-size: 28px;
