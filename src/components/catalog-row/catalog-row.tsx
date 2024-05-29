@@ -8,34 +8,24 @@ import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import PostMenuDesktop from '../post/post-desktop/post-menu-desktop/';
 
-export const CatalogPostMedia = ({ commentMediaInfo }: { commentMediaInfo: any }) => {
+import React, { useState } from 'react';
+
+interface CatalogPostMediaProps {
+  commentMediaInfo: any;
+  isOutOfFeed?: boolean;
+  linkWidth?: number;
+  linkHeight?: number;
+}
+
+export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, linkHeight }: CatalogPostMediaProps) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
   const iframeThumbnail = patternThumbnailUrl || thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
-  let thumbnailComponent: React.ReactNode = null;
-
-  if (type === 'image') {
-    thumbnailComponent = <img src={url} alt='' />;
-  } else if (type === 'video') {
-    thumbnailComponent = thumbnail ? <img src={thumbnail} alt='' /> : <video src={`${url}#t=0.001`} />;
-  } else if (type === 'webpage') {
-    thumbnailComponent = <img src={thumbnail} alt='' />;
-  } else if (type === 'iframe') {
-    thumbnailComponent = iframeThumbnail ? <img src={iframeThumbnail} alt='' /> : null;
-  } else if (type === 'gif' && gifFrameUrl) {
-    thumbnailComponent = <img src={gifFrameUrl} alt='' />;
-  } else if (type === 'audio') {
-    thumbnailComponent = <audio src={url} controls />;
-  }
-  return thumbnailComponent;
-};
-
-const CatalogPost = ({ post }: { post: Comment }) => {
-  const { t } = useTranslation();
-  const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
-  const commentMediaInfo = getCommentMediaInfo(post);
-  const { type } = commentMediaInfo || {};
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const handleLoad = () => setIsLoaded(true);
+  const handleError = () => setHasError(true);
+  const loadingStyle = { display: isLoaded ? 'block' : 'none' };
 
   let displayWidth, displayHeight;
   const maxThumbnailSize = 150;
@@ -49,12 +39,46 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     displayHeight = `${maxThumbnailSize}px`;
   }
 
-  if (type === 'audio' || isDescription || isRules) {
+  if (type === 'audio' || isOutOfFeed) {
     displayWidth = 'unset';
     displayHeight = 'unset';
   }
 
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
+
+  let thumbnailComponent: React.ReactNode = null;
+
+  if (type === 'image' && !hasError) {
+    thumbnailComponent = <img src={url} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'video' && !hasError) {
+    thumbnailComponent = thumbnail ? (
+      <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />
+    ) : (
+      <video src={`${url}#t=0.001`} onLoad={handleLoad} onError={handleError} style={loadingStyle} />
+    );
+  } else if (type === 'webpage' && !hasError) {
+    thumbnailComponent = <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'iframe' && iframeThumbnail && !hasError) {
+    thumbnailComponent = <img src={iframeThumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'gif' && gifFrameUrl && !hasError) {
+    thumbnailComponent = <img src={gifFrameUrl} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'audio') {
+    thumbnailComponent = <audio src={url} controls />;
+  }
+
+  return (
+    <div className={hasError ? '' : styles.mediaWrapper} style={thumbnailDimensions}>
+      {!isLoaded && !hasError && <span className={styles.loadingSkeleton} />}
+      {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' /> : thumbnailComponent}
+    </div>
+  );
+};
+
+const CatalogPost = ({ post }: { post: Comment }) => {
+  const { t } = useTranslation();
+  const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
+  const commentMediaInfo = getCommentMediaInfo(post);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   const location = useLocation();
   const isInAllView = isAllView(location.pathname);
@@ -76,9 +100,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
         <Link to={postLink}>
           <div className={styles.mediaPaddingWrapper}>
             {threadIcons}
-            <div className={styles.mediaWrapper} style={thumbnailDimensions}>
-              <CatalogPostMedia commentMediaInfo={commentMediaInfo} />
-            </div>
+            <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
           </div>
         </Link>
       ) : (

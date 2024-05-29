@@ -70,15 +70,15 @@
   position: absolute;
   bottom: 5px;
   line-height: 1em;
-  color: var(--catalog-post-menu-btn-color);
-  opacity: var(--catalog-post-menu-btn-opacity);
+  color: var(--catalog-post-menu-desktop-btn-color);
+  opacity: var(--catalog-post-menu-desktop-btn-opacity);
   transition: transform 0.1s;
 }
 
 .postMenuBtnCatalog:hover {
   cursor: pointer;
-  color: var(--catalog-post-menu-btn-hover-color);
-  opacity: var(--catalog-post-menu-btn-hover-opacity);
+  color: var(--catalog-post-menu-desktop-btn-hover-color);
+  opacity: var(--catalog-post-menu-desktop-btn-hover-opacity);
 }
 
 .postMenuBtnCatalog {

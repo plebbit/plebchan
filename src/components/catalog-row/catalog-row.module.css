@@ -86,3 +86,13 @@
 .post:hover .postMenu {
   visibility: visible;
 }
+
+.loadingSkeleton {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+}
+
+.fileDeleted {
+  image-rendering: pixelated;
+}
