@@ -49,7 +49,12 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   if (type === 'image') {
     thumbnailComponent = <img src={url} alt='' onError={handleError} onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'video') {
-    thumbnailComponent = thumbnail ? <img src={thumbnail} alt='' /> : <video src={`${url}#t=0.001`} onClick={() => setShowThumbnail(false)} />;
+    thumbnailComponent = thumbnail ? (
+      <img src={thumbnail} alt='' />
+    ) : (
+      // show first frame of the video, as a workaround for Safari not loading thumbnails
+      <video src={`${url}#t=0.001`} onClick={() => setShowThumbnail(false)} />
+    );
   } else if (type === 'webpage') {
     thumbnailComponent = <img src={thumbnail} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'iframe') {
