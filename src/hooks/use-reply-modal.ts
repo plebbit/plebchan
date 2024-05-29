@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react';
-import useWindowWidth from './use-window-width';
+import useIsMobile from './use-is-mobile';
 
 const useReplyModal = () => {
   const [showReplyModal, setShowReplyModal] = useState(false);
   const [activeCid, setActiveCid] = useState<string | null>(null);
 
   // on mobile, the position is absolute instead of fixed, so we need to calculate the top position
-  const isMobile = useWindowWidth() < 640;
+  const isMobile = useIsMobile();
   const [scrollY, setScrollY] = useState<number>(0);
 
   const closeModal = useCallback(() => {

@@ -25,10 +25,10 @@
   --body-font-size: 13px;
 
   /* catalog post */
-  --catalog-post-menu-btn-color: navy;
-  --catalog-post-menu-btn-hover-color: red;
-  --catalog-post-menu-btn-opacity: 0.5;
-  --catalog-post-menu-btn-hover-opacity: 1;
+  --catalog-post-menu-desktop-btn-color: navy;
+  --catalog-post-menu-desktop-btn-hover-color: red;
+  --catalog-post-menu-desktop-btn-opacity: 0.5;
+  --catalog-post-menu-desktop-btn-hover-opacity: 1;
 
   /* challenge modal */
   --challenge-modal-background-color: #f0e0d6;
@@ -97,9 +97,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
-  --post-menu-button-color: #000080;
-  --post-menu-btn-opacity: 0.8;
-  --post-menu-button-color-hover: red;
+  --post-menu-desktop-button-color: #000080;
+  --post-menu-desktop-btn-opacity: 0.8;
+  --post-menu-desktop-button-color-hover: red;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
 
@@ -119,13 +119,20 @@
   --post-form-field-input-focus-border: 1px solid #ea8;
   --post-form-field-input-color: #000;
 
-  /* post menu */
-  --post-menu-border-bottom: 2px solid #d9bfb7;
-  --post-menu-border-right: 1px solid #d9bfb7;
-  --post-menu-background-color: #f0e0d6;
-  --post-menu-item-border-color: #d9bfb7;
-  --post-menu-item-background-color: #f0e0d6;
-  --post-menu-item-hover-background-color: #ffe;
+  /* post menu desktop */
+  --post-menu-desktop-border-bottom: 2px solid #d9bfb7;
+  --post-menu-desktop-border-right: 1px solid #d9bfb7;
+  --post-menu-desktop-background-color: #f0e0d6;
+  --post-menu-desktop-item-border-color: #d9bfb7;
+  --post-menu-desktop-item-background-color: #f0e0d6;
+  --post-menu-desktop-item-hover-background-color: #ffe;
+
+  /* post menu mobile */
+  --post-menu-mobile-background-color: #f0e0d6;
+  --post-menu-mobile-border: 1px solid #d9bfb7;
+  --post-menu-mobile-border-right-width: 2px;
+  --post-menu-mobile-item-border-bottom: 1px solid #d9bfb7;
+  --post-menu-mobile-item-hover-background-color: #ffe;
 
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
@@ -204,10 +211,10 @@
   --body-font-size: 13px;
 
   /* catalog post */
-  --catalog-post-menu-btn-color: navy;
-  --catalog-post-menu-btn-hover-color: #d00;
-  --catalog-post-menu-btn-opacity: 0.5;
-  --catalog-post-menu-btn-hover-opacity: 1;
+  --catalog-post-menu-desktop-btn-color: navy;
+  --catalog-post-menu-desktop-btn-hover-color: #d00;
+  --catalog-post-menu-desktop-btn-opacity: 0.5;
+  --catalog-post-menu-desktop-btn-hover-opacity: 1;
 
   /* challenge modal */
   --challenge-modal-background-color: #d6daf0;
@@ -275,9 +282,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
-  --post-menu-button-color: #34345c;
-  --post-menu-btn-opacity: 0.8;
-  --post-menu-button-color-hover: #d00;
+  --post-menu-desktop-button-color: #34345c;
+  --post-menu-desktop-btn-opacity: 0.8;
+  --post-menu-desktop-button-color-hover: #d00;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
 
@@ -297,13 +304,20 @@
   --post-form-field-input-focus-border: 1px solid #98e;
   --post-form-field-input-color: #000;
 
-  /* post menu */
-  --post-menu-border-bottom: 2px solid #b7c5d9;
-  --post-menu-border-right: 1px solid #b7c5d9;
-  --post-menu-background-color: #d6daf0;
-  --post-menu-item-border-color: #b7c5d9;
-  --post-menu-item-background-color: #d6daf0;
-  --post-menu-item-hover-background-color: #eef2ff;
+  /* post menu desktop */
+  --post-menu-desktop-border-bottom: 2px solid #b7c5d9;
+  --post-menu-desktop-border-right: 1px solid #b7c5d9;
+  --post-menu-desktop-background-color: #d6daf0;
+  --post-menu-desktop-item-border-color: #b7c5d9;
+  --post-menu-desktop-item-background-color: #d6daf0;
+  --post-menu-desktop-item-hover-background-color: #eef2ff;
+
+  /* post menu mobile */
+  --post-menu-mobile-background-color: #d6daf0;
+  --post-menu-mobile-border: 1px solid #b7c5d9;
+  --post-menu-mobile-border-right-width: 2px;
+  --post-menu-mobile-item-border-bottom: 1px solid #b7c5d9;
+  --post-menu-mobile-item-hover-background-color: #eef2ff;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
@@ -377,10 +391,10 @@
   --board-address-font-size: 10pt;
 
   /* catalog post */
-  --catalog-post-menu-btn-color: navy;
-  --catalog-post-menu-btn-hover-color: red;
-  --catalog-post-menu-btn-opacity: 0.5;
-  --catalog-post-menu-btn-hover-opacity: 1;
+  --catalog-post-menu-desktop-btn-color: navy;
+  --catalog-post-menu-desktop-btn-hover-color: red;
+  --catalog-post-menu-desktop-btn-opacity: 0.5;
+  --catalog-post-menu-desktop-btn-hover-opacity: 1;
 
   /* challenge modal */
   --challenge-modal-background-color: #f0e0d6;
@@ -429,9 +443,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
-  --post-menu-button-color: #000080;
-  --post-menu-btn-opacity: 0.8;
-  --post-menu-button-color-hover: red;
+  --post-menu-desktop-button-color: #000080;
+  --post-menu-desktop-btn-opacity: 0.8;
+  --post-menu-desktop-button-color-hover: red;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
 
@@ -445,13 +459,20 @@
   --post-form-field-title-font-size: 16px;
   --post-form-field-input-color: #000;
 
-  /* post menu */
-  --post-menu-border-bottom: 1px solid #d9bfb7;
-  --post-menu-border-right: unset;
-  --post-menu-background-color: #f0e0d6;
-  --post-menu-item-border-color: #d9bfb7;
-  --post-menu-item-background-color: #f0e0d6;
-  --post-menu-item-hover-background-color: #ffe;
+  /* post menu desktop */
+  --post-menu-desktop-border-bottom: 1px solid #d9bfb7;
+  --post-menu-desktop-border-right: unset;
+  --post-menu-desktop-background-color: #f0e0d6;
+  --post-menu-desktop-item-border-color: #d9bfb7;
+  --post-menu-desktop-item-background-color: #f0e0d6;
+  --post-menu-desktop-item-hover-background-color: #ffe;
+
+  /* post menu mobile */
+  --post-menu-mobile-background-color: #f0e0d6;
+  --post-menu-mobile-border: 1px solid #d9bfb7;
+  --post-menu-mobile-border-right-width: 2px;
+  --post-menu-mobile-item-border-bottom: 1px solid #d9bfb7;
+  --post-menu-mobile-item-hover-background-color: #ffe;
 
   /* post mobile */
   --post-mobile-background-color: #f5e9e1;
@@ -524,10 +545,10 @@
   --body-font-size: 16px;
 
   /* catalog post */
-  --catalog-post-menu-btn-color: navy;
-  --catalog-post-menu-btn-hover-color: red;
-  --catalog-post-menu-btn-opacity: 0.5;
-  --catalog-post-menu-btn-hover-opacity: 1;
+  --catalog-post-menu-desktop-btn-color: navy;
+  --catalog-post-menu-desktop-btn-hover-color: red;
+  --catalog-post-menu-desktop-btn-opacity: 0.5;
+  --catalog-post-menu-desktop-btn-hover-opacity: 1;
 
   /* challenge modal */
   --challenge-modal-background-color: #d6daf0;
@@ -586,9 +607,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
   --post-name-font-weight: 700;
-  --post-menu-button-color: #34345c;
-  --post-menu-btn-opacity: 0.8;
-  --post-menu-button-color-hover: #d00;
+  --post-menu-desktop-button-color: #34345c;
+  --post-menu-desktop-btn-opacity: 0.8;
+  --post-menu-desktop-button-color-hover: #d00;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
   
@@ -602,13 +623,20 @@
   --post-form-field-title-font-size: 16px;
   --post-form-field-input-color: #000;
 
-  /* post menu */
-  --post-menu-border-bottom: 1px solid #b7c5d9;
-  --post-menu-border-right: unset;
-  --post-menu-background-color: #d6daf0;
-  --post-menu-item-border-color: #b7c5d9;
-  --post-menu-item-background-color: #d6daf0;
-  --post-menu-item-hover-background-color: #eef2ff;
+  /* post menu desktop */
+  --post-menu-desktop-border-bottom: 1px solid #b7c5d9;
+  --post-menu-desktop-border-right: unset;
+  --post-menu-desktop-background-color: #d6daf0;
+  --post-menu-desktop-item-border-color: #b7c5d9;
+  --post-menu-desktop-item-background-color: #d6daf0;
+  --post-menu-desktop-item-hover-background-color: #eef2ff;
+
+  /* post menu mobile */
+  --post-menu-mobile-background-color: #d6daf0;
+  --post-menu-mobile-border: 1px solid #b7c5d9;
+  --post-menu-mobile-border-right-width: 2px;
+  --post-menu-mobile-item-border-bottom: 1px solid #b7c5d9;
+  --post-menu-mobile-item-hover-background-color: #eef2ff;
 
   /* post mobile */
   --post-mobile-background-color: #d6daf0;
@@ -678,10 +706,10 @@
   --board-address-font-size: x-small;
 
   /* catalog post */
-  --catalog-post-menu-btn-color: #5f89ac;
-  --catalog-post-menu-btn-hover-color: #5f89ac;
-  --catalog-post-menu-btn-opacity: 0.5;
-  --catalog-post-menu-btn-hover-opacity: 1;
+  --catalog-post-menu-desktop-btn-color: #5f89ac;
+  --catalog-post-menu-desktop-btn-hover-color: #5f89ac;
+  --catalog-post-menu-desktop-btn-opacity: 0.5;
+  --catalog-post-menu-desktop-btn-hover-opacity: 1;
 
   /* challenge modal */
   --challenge-modal-background-color: #282a2e;
@@ -744,9 +772,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #c5c8c6;
   --post-name-font-weight: 700;
-  --post-menu-button-color: #5F89AC;
-  --post-menu-btn-opacity: 0.8;
-  --post-menu-button-color-hover: #81a2be;
+  --post-menu-desktop-button-color: #5F89AC;
+  --post-menu-desktop-btn-opacity: 0.8;
+  --post-menu-desktop-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-dark.png");
 
@@ -767,13 +795,20 @@
   --post-form-field-input-appearance: none;
   --post-form-field-input-outline: none;
 
-  /* post menu */
-  --post-menu-border-bottom: 1px solid #000;
-  --post-menu-border-right: unset;
-  --post-menu-background-color: #282a2e;
-  --post-menu-item-border-color: #000;
-  --post-menu-item-background-color: #282a2e;
-  --post-menu-item-hover-background-color: #1d1f21;
+  /* post menu desktop */
+  --post-menu-desktop-border-bottom: 1px solid #000;
+  --post-menu-desktop-border-right: unset;
+  --post-menu-desktop-background-color: #282a2e;
+  --post-menu-desktop-item-border-color: #000;
+  --post-menu-desktop-item-background-color: #282a2e;
+  --post-menu-desktop-item-hover-background-color: #1d1f21;
+
+  /* post menu mobile */
+  --post-menu-mobile-background-color: #282a2e;
+  --post-menu-mobile-border: 1px solid #000;
+  --post-menu-mobile-border-right-width: 2px;
+  --post-menu-mobile-item-border-bottom: 1px solid #000;
+  --post-menu-mobile-item-hover-background-color: #1d1f21;
 
   /* post mobile */
   --post-mobile-background-color: #282A2E;
@@ -858,10 +893,10 @@
   --board-address-font-size: x-small;
 
   /* catalog post */
-  --catalog-post-menu-btn-color: #f60;
-  --catalog-post-menu-btn-hover-color: #f30;
-  --catalog-post-menu-btn-opacity: 0.5;
-  --catalog-post-menu-btn-hover-opacity: 1;
+  --catalog-post-menu-desktop-btn-color: #f60;
+  --catalog-post-menu-desktop-btn-hover-color: #f30;
+  --catalog-post-menu-desktop-btn-opacity: 0.5;
+  --catalog-post-menu-desktop-btn-hover-opacity: 1;
 
   /* challenge modal */
   --challenge-modal-background-color: #ddd;
@@ -910,9 +945,9 @@
   --post-subject-font-weight: 700;
   --post-name-text-color: #004a99;
   --post-name-font-weight: 700;
-  --post-menu-button-color: #FF6600;
-  --post-menu-btn-opacity: 0.8;
-  --post-menu-button-color-hover: #FF3300;
+  --post-menu-desktop-button-color: #FF6600;
+  --post-menu-desktop-btn-opacity: 0.8;
+  --post-menu-desktop-button-color-hover: #FF3300;
   --post-greentext-color: #789922;
   --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-photon.png");
 
@@ -951,13 +986,20 @@
   --post-form-field-input-focus-border: 1px solid #ea8;
   --post-form-field-input-color: #000;
 
-  /* post menu */
-  --post-menu-border-bottom: 1px solid #ccc;
-  --post-menu-border-right: unset;
-  --post-menu-background-color: #ddd;
-  --post-menu-item-border-color: #ccc;
-  --post-menu-item-background-color: #ddd;
-  --post-menu-item-hover-background-color: #eee;
+  /* post menu desktop */
+  --post-menu-desktop-border-bottom: 1px solid #ccc;
+  --post-menu-desktop-border-right: unset;
+  --post-menu-desktop-background-color: #ddd;
+  --post-menu-desktop-item-border-color: #ccc;
+  --post-menu-desktop-item-background-color: #ddd;
+  --post-menu-desktop-item-hover-background-color: #eee;
+
+  /* post menu mobile */
+  --post-menu-mobile-background-color: #ddd;
+  --post-menu-mobile-border: 1px solid #ccc;
+  --post-menu-mobile-border-right-width: 2px;
+  --post-menu-mobile-item-border-bottom: 1px solid #ccc;
+  --post-menu-mobile-item-hover-background-color: #eee;
 
   /* quotelink */
   --post-quotelink-text-color: #f60;

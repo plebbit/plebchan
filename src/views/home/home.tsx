@@ -202,7 +202,7 @@ const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThrea
       <div className={styles.title}>{boardTitle || boardShortAddress}</div>
       <div className={styles.mediaContainer}>
         <Link to={`/p/${subplebbitAddress}/c/${cid}`}>
-          <CatalogPostMedia commentMediaInfo={commentMediaInfo} />
+          <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={true} />
         </Link>
       </div>
       <div className={styles.threadContent}>

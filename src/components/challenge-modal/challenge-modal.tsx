@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Challenge as ChallengeType } from '@plebbit/plebbit-react-hooks';
 import { getPublicationType } from '../../lib/utils/challenge-utils';
 import useChallenges from '../../hooks/use-challenges';
-import useWindowWidth from '../../hooks/use-window-width';
+import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './challenge-modal.module.css';
 import _ from 'lodash';
 
@@ -54,7 +54,7 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
 
   // react-draggable requires a ref to the modal node
   const nodeRef = useRef(null);
-  const isMobile = useWindowWidth() < 640;
+  const isMobile = useIsMobile();
 
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>

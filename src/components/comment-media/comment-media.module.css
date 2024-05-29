@@ -18,6 +18,15 @@
   display: inline-block;
 }
 
+@media (max-width: 640px) {
+  .subplebbitAvatar {
+    max-width: 125px;
+    max-height: 125px;
+    margin: 3px 10px 5px 5px;
+    display: inline-block;
+  }
+}
+
 .thumbnailSmall {
   background-color: var(--media-thumbnail-background-color);
   width: var(--width);
@@ -103,4 +112,8 @@
 
 .mediaDesktopOp img, .mediaDesktopOp video, .mediaDesktopOp iframe, .mediaDesktopOp audio {
   padding: 3px 20px 5px 0;
+}
+
+.fileDeleted {
+  image-rendering: pixelated;
 }

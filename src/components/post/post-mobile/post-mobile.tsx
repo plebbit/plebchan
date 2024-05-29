@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccount } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import styles from '../post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
@@ -12,8 +13,8 @@ import useStateString from '../../../hooks/use-state-string';
 import CommentMedia from '../../comment-media';
 import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
+import PostMenuMobile from './post-menu-mobile';
 import { PostProps } from '../post';
-import styles from '../post.module.css';
 import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
@@ -45,9 +46,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   return (
     <>
       <div className={styles.postInfo}>
-        <span className={styles.postMenuBtn} title='Post menu'>
-          ...
-        </span>
+        <PostMenuMobile post={post} />
         <span className={styles.nameBlock}>
           <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
             {shortDisplayName || _.capitalize(t('anonymous'))}
@@ -56,12 +55,12 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
           {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
           {pinned && (
             <span className={styles.stickyIconWrapper}>
-              <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+              <img src='/assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
             </span>
           )}
           {locked && (
             <span className={`${styles.closedIconWrapper} ${pinned && styles.addPaddingInBetween}`}>
-              <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+              <img src='/assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
           {title && (

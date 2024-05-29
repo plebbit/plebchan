@@ -2,6 +2,8 @@ import { useEffect, useMemo } from 'react';
 import { useAccount, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 
+const pendingFetchCid: { [cid: string]: boolean } = {};
+
 const useSubplebbitsStats = (options: any) => {
   const { subplebbitAddresses, accountName } = options || {};
   const account = useAccount({ accountName });
@@ -15,13 +17,15 @@ const useSubplebbitsStats = (options: any) => {
     }
 
     subplebbits.forEach((subplebbit) => {
-      if (subplebbit && subplebbit.statsCid && !subplebbitsStats[subplebbit.address]) {
+      if (subplebbit && subplebbit.statsCid && !subplebbitsStats[subplebbit.address] && !pendingFetchCid[subplebbit.statsCid]) {
+        pendingFetchCid[subplebbit.statsCid] = true;
         account.plebbit
           .fetchCid(subplebbit.statsCid)
           .then((fetchedStats: any) => {
             setSubplebbitStats(subplebbit.address, JSON.parse(fetchedStats));
           })
           .catch((error: any) => {
+            pendingFetchCid[subplebbit.statsCid] = false;
             console.error('Fetching subplebbit stats failed', { subplebbitAddress: subplebbit.address, error });
           });
       }

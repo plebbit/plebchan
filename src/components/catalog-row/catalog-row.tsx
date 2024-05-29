@@ -1,47 +1,31 @@
-import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
+import styles from './catalog-row.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView } from '../../lib/utils/view-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
-import styles from './catalog-row.module.css';
+import PostMenuDesktop from '../post/post-desktop/post-menu-desktop/';
 
-export const CatalogPostMedia = ({ commentMediaInfo }: { commentMediaInfo: any }) => {
+import React, { useState } from 'react';
+
+interface CatalogPostMediaProps {
+  commentMediaInfo: any;
+  isOutOfFeed?: boolean;
+  linkWidth?: number;
+  linkHeight?: number;
+}
+
+export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, linkHeight }: CatalogPostMediaProps) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
   const iframeThumbnail = patternThumbnailUrl || thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
-  let thumbnailComponent: React.ReactNode = null;
-
-  if (type === 'image') {
-    thumbnailComponent = <img src={url} alt='' />;
-  } else if (type === 'video') {
-    thumbnailComponent = thumbnail ? <img src={thumbnail} alt='' /> : <video src={`${url}#t=0.001`} />;
-  } else if (type === 'webpage') {
-    thumbnailComponent = <img src={thumbnail} alt='' />;
-  } else if (type === 'iframe') {
-    thumbnailComponent = iframeThumbnail ? <img src={iframeThumbnail} alt='' /> : null;
-  } else if (type === 'gif' && gifFrameUrl) {
-    thumbnailComponent = <img src={gifFrameUrl} alt='' />;
-  } else if (type === 'audio') {
-    thumbnailComponent = <audio src={url} controls />;
-  }
-  return thumbnailComponent;
-};
-
-interface CatalogPostProps {
-  post: Comment;
-  openMenu: boolean;
-  toggleMenu: () => void;
-}
-
-const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
-  const { t } = useTranslation();
-  const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
-  const commentMediaInfo = getCommentMediaInfo(post);
-  const { type } = commentMediaInfo || {};
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const handleLoad = () => setIsLoaded(true);
+  const handleError = () => setHasError(true);
+  const loadingStyle = { display: isLoaded ? 'block' : 'none' };
 
   let displayWidth, displayHeight;
   const maxThumbnailSize = 150;
@@ -55,12 +39,46 @@ const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
     displayHeight = `${maxThumbnailSize}px`;
   }
 
-  if (type === 'audio' || isDescription || isRules) {
+  if (type === 'audio' || isOutOfFeed) {
     displayWidth = 'unset';
     displayHeight = 'unset';
   }
 
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
+
+  let thumbnailComponent: React.ReactNode = null;
+
+  if (type === 'image' && !hasError) {
+    thumbnailComponent = <img src={url} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'video' && !hasError) {
+    thumbnailComponent = thumbnail ? (
+      <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />
+    ) : (
+      <video src={`${url}#t=0.001`} onLoad={handleLoad} onError={handleError} style={loadingStyle} />
+    );
+  } else if (type === 'webpage' && !hasError) {
+    thumbnailComponent = <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'iframe' && iframeThumbnail && !hasError) {
+    thumbnailComponent = <img src={iframeThumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'gif' && gifFrameUrl && !hasError) {
+    thumbnailComponent = <img src={gifFrameUrl} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'audio') {
+    thumbnailComponent = <audio src={url} controls />;
+  }
+
+  return (
+    <div className={hasError ? '' : styles.mediaWrapper} style={thumbnailDimensions}>
+      {!isLoaded && !hasError && <span className={styles.loadingSkeleton} />}
+      {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' /> : thumbnailComponent}
+    </div>
+  );
+};
+
+const CatalogPost = ({ post }: { post: Comment }) => {
+  const { t } = useTranslation();
+  const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
+  const commentMediaInfo = getCommentMediaInfo(post);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   const location = useLocation();
   const isInAllView = isAllView(location.pathname);
@@ -76,28 +94,13 @@ const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
     </div>
   );
 
-  useEffect(() => {
-    const handlePageClick = () => {
-      if (openMenu) {
-        toggleMenu();
-      }
-    };
-    document.addEventListener('click', handlePageClick);
-
-    return () => {
-      document.removeEventListener('click', handlePageClick);
-    };
-  }, [openMenu, toggleMenu]);
-
   return (
     <div className={styles.post}>
       {hasThumbnail ? (
         <Link to={postLink}>
           <div className={styles.mediaPaddingWrapper}>
             {threadIcons}
-            <div className={styles.mediaWrapper} style={thumbnailDimensions}>
-              <CatalogPostMedia commentMediaInfo={commentMediaInfo} />
-            </div>
+            <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
           </div>
         </Link>
       ) : (
@@ -111,18 +114,8 @@ const CatalogPost = ({ openMenu, post, toggleMenu }: CatalogPostProps) => {
             / L: <b>{linkCount}</b>
           </span>
         )}
-        <span className={styles.postMenuBtnPadding}>
-          <span
-            className={styles.postMenuBtn}
-            title='Thread Menu'
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleMenu();
-            }}
-            style={{ transform: openMenu ? 'rotate(90deg)' : 'rotate(0deg)' }}
-          >
-            ▶
-          </span>
+        <span className={styles.postMenu}>
+          <PostMenuDesktop post={post} />
         </span>
       </div>
       <Link to={postLink}>
@@ -141,16 +134,10 @@ interface CatalogRowProps {
 }
 
 const CatalogRow = ({ row }: CatalogRowProps) => {
-  const [postWithMenuOpen, setPostWithMenuOpen] = useState<number | null>(null);
-
-  const handleToggleMenu = (index: number) => {
-    setPostWithMenuOpen(postWithMenuOpen === index ? null : index);
-  };
-
   return (
     <div className={styles.row}>
       {row.map((post, index) => (
-        <CatalogPost key={index} post={post} openMenu={postWithMenuOpen === index} toggleMenu={() => handleToggleMenu(index)} />
+        <CatalogPost key={index} post={post} />
       ))}
     </div>
   );
