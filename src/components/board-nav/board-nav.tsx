@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './board-nav.module.css';
 import useDefaultSubplebbits, { categorizeSubplebbits, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import { debounce } from 'lodash';
 
 const BoardNavDesktop = () => {
   const { t } = useTranslation();
@@ -67,8 +69,23 @@ const BoardNavMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) =>
     </select>
   );
 
+  // navbar animation on scroll
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    const debouncedHandleScroll = debounce(() => {
+      const currentScrollPos = window.scrollY;
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
+    }, 50);
+
+    window.addEventListener('scroll', debouncedHandleScroll);
+
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
+  }, [prevScrollPos, visible]);
+
   return (
-    <div className={styles.boardNavMobile} id='sticky-menu'>
+    <div className={styles.boardNavMobile} id='sticky-menu' style={{ top: visible ? 0 : '-23px' }}>
       <div className={styles.boardSelect}>
         <strong>{t('board')}</strong>
         {boardSelect}
@@ -80,52 +97,6 @@ const BoardNavMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) =>
     </div>
   );
 };
-
-// sticky menu animation
-// will trigger more than once with hot reloading during development
-if (!window.STICKY_MENU_SCROLL_LISTENER) {
-  window.STICKY_MENU_SCROLL_LISTENER = true;
-
-  const scrollRange = 50; // the animation css px range in stickyMenuAnimation, must also edit css animation 100%: {top}
-  let currentScrollInRange = 0,
-    previousScroll = 0;
-
-  window.addEventListener('scroll', () => {
-    // find difference between current and last scroll position
-    const currentScroll = window.scrollY;
-    const scrollDifference = currentScroll - previousScroll;
-    previousScroll = currentScroll;
-
-    // find new current scroll in range
-    const previousScrollInRange = currentScrollInRange;
-    currentScrollInRange += scrollDifference;
-    if (currentScrollInRange > scrollRange) {
-      currentScrollInRange = 0;
-    } else if (currentScrollInRange < 0) {
-      currentScrollInRange = 0;
-    }
-
-    // fix mobile overflow scroll bug
-    if (currentScroll <= 0) {
-      currentScrollInRange = 0;
-    }
-
-    // no changes
-    if (currentScrollInRange === previousScrollInRange) {
-      return;
-    }
-
-    // Get the menu element
-    const menuElement = document.getElementById('sticky-menu');
-    if (!menuElement) {
-      return;
-    }
-
-    // control progress of the animation using negative animation-delay (0 to -1s)
-    const animationPercent = currentScrollInRange / scrollRange;
-    menuElement.style.animationDelay = animationPercent * -1 + 's';
-  });
-}
 
 const BoardNav = () => {
   const params = useParams();

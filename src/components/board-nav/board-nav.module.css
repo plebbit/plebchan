@@ -27,23 +27,9 @@
   position: fixed;
   width: 100%;
   z-index: 3;
-  animation-name: stickyMenuAnimation;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-play-state: paused;
+  transition: top 0.3s ease-in-out;
   align-items: center;
   justify-content: space-around;
-}
-
-@keyframes stickyMenuAnimation {
-  0% {
-    top: 0px;
-  }
-  100% {
-    top: -50px;
-  }
 }
 
 .boardNavMobile .pageJump a {
