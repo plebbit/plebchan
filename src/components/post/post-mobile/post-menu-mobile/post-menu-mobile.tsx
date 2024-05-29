@@ -59,7 +59,7 @@ const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose
 };
 
 const PostMenuMobile = ({ post }: { post: Comment }) => {
-  const { cid, isDescription, isRules, link, subplebbitAddress } = post;
+  const { cid, isDescription, isRules, link, subplebbitAddress } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [isMenuOpen, setIsMenuOpen] = useState(false);

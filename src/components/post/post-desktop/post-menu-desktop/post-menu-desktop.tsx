@@ -96,7 +96,7 @@ const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose 
 };
 
 const PostMenuDesktop = ({ post }: { post: Comment }) => {
-  const { cid, isDescription, isRules, link, subplebbitAddress } = post;
+  const { cid, isDescription, isRules, link, postCid, subplebbitAddress } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
