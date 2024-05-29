@@ -1,5 +1,5 @@
 import { Role, useSubplebbit } from '@plebbit/plebbit-react-hooks';
-import useWindowWidth from '../../hooks/use-window-width';
+import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './post.module.css';
 import PostDesktop from './post-desktop';
 import PostMobile from './post-mobile';
@@ -15,7 +15,7 @@ export interface PostProps {
 
 const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
-  const isMobile = useWindowWidth() < 640;
+  const isMobile = useIsMobile();
 
   return (
     <div className={styles.thread}>

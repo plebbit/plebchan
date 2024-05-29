@@ -4,7 +4,7 @@ import styles from './comment-media.module.css';
 import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getHostname } from '../../lib/utils/url-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
-import useWindowWidth from '../../hooks/use-window-width';
+import useIsMobile from '../../hooks/use-is-mobile';
 import Embed, { canEmbed } from '../embed';
 
 interface MediaProps {
@@ -24,7 +24,7 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   const handleError = () => setHasError(true);
 
   let displayWidth, displayHeight;
-  const isMobile = useWindowWidth() < 640;
+  const isMobile = useIsMobile();
   const maxThumbnailSize = isMobile || isReply ? 125 : 250;
 
   if (linkWidth && linkHeight) {
@@ -97,7 +97,7 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
 const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const { thumbnail, type, url } = commentMediaInfo || {};
-  const isMobile = useWindowWidth() < 640;
+  const isMobile = useIsMobile();
   const mediaClass = isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp;
 
   return (
@@ -134,7 +134,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
 
 const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
-  const isMobile = useWindowWidth() < 640;
+  const isMobile = useIsMobile();
   const { type, url } = commentMediaInfo || {};
 
   return (

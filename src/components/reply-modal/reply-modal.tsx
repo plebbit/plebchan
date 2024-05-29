@@ -6,7 +6,7 @@ import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { setAccount, useAccount } from '@plebbit/plebbit-react-hooks';
 import { isValidURL } from '../../lib/utils/url-utils';
 import useReply from '../../hooks/use-reply';
-import useWindowWidth from '../../hooks/use-window-width';
+import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './reply-modal.module.css';
 import _ from 'lodash';
 
@@ -51,7 +51,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   }, [replyIndex, resetContent, closeModal]);
 
   const nodeRef = useRef<HTMLDivElement>(null);
-  const isMobile = useWindowWidth() < 640;
+  const isMobile = useIsMobile();
 
   // on mobile, the position is absolute instead of fixed, so we need to calculate the top position
   useEffect(() => {
