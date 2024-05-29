@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -70,19 +70,22 @@ const BoardNavMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) =>
   );
 
   // navbar animation on scroll
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const prevScrollPosRef = useRef(0);
+
   useEffect(() => {
     const debouncedHandleScroll = debounce(() => {
       const currentScrollPos = window.scrollY;
+      const prevScrollPos = prevScrollPosRef.current;
+
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-      setPrevScrollPos(currentScrollPos);
+      prevScrollPosRef.current = currentScrollPos;
     }, 50);
 
     window.addEventListener('scroll', debouncedHandleScroll);
 
     return () => window.removeEventListener('scroll', debouncedHandleScroll);
-  }, [prevScrollPos, visible]);
+  }, []);
 
   return (
     <div className={styles.boardNavMobile} id='sticky-menu' style={{ top: visible ? 0 : '-23px' }}>
