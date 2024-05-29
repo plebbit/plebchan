@@ -55,12 +55,12 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
           {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
           {pinned && (
             <span className={styles.stickyIconWrapper}>
-              <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+              <img src='/assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
             </span>
           )}
           {locked && (
             <span className={`${styles.closedIconWrapper} ${pinned && styles.addPaddingInBetween}`}>
-              <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+              <img src='/assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
           {title && (

@@ -10,8 +10,7 @@ const totalBanners = 57;
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
     const randomBannerIndex = Math.floor(Math.random() * totalBanners) + 1;
-    const cacheBuster = new Date().getTime();
-    return `assets/banners/banner-${randomBannerIndex}.jpg?cacheBuster=${cacheBuster}`;
+    return `/assets/banners/banner-${randomBannerIndex}.jpg`;
   });
 
   return <img src={imagePath} alt='' />;
