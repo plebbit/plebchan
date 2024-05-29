@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './comment-media.module.css';
 import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -18,26 +18,10 @@ interface MediaProps {
   toggleExpanded?: () => void;
 }
 
-interface ThumbnailProps {
-  style: React.CSSProperties;
-  children: React.ReactNode;
-  thumbnailSmallPadding?: string;
-}
-
-const ThumbnailBig = ({ style, children }: ThumbnailProps) => (
-  <span className={styles.thumbnailBig} style={style}>
-    {children}
-  </span>
-);
-
-const ThumbnailSmall = ({ style, children, thumbnailSmallPadding }: ThumbnailProps) => (
-  <span className={`${styles.thumbnailSmall} ${thumbnailSmallPadding}`} style={style}>
-    {children}
-  </span>
-);
-
 const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
+  const [hasError, setHasError] = useState(false);
+  const handleError = () => setHasError(true);
 
   let displayWidth, displayHeight;
   const isMobile = useWindowWidth() < 640;
@@ -63,7 +47,7 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   const hasThumbnail = getHasThumbnail(commentMediaInfo, url);
 
   if (type === 'image') {
-    thumbnailComponent = <img src={url} alt='' onClick={() => setShowThumbnail(false)} />;
+    thumbnailComponent = <img src={url} alt='' onError={handleError} onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'video') {
     thumbnailComponent = thumbnail ? <img src={thumbnail} alt='' /> : <video src={`${url}#t=0.001`} onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'webpage') {
@@ -76,15 +60,21 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
     thumbnailComponent = <audio src={url} controls />;
   }
 
+  if (hasError) {
+    thumbnailComponent = <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />;
+  }
+
   const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
 
   const linkWithoutThumbnail = url && new URL(url);
 
-  return isOutOfFeed ? (
+  return hasError ? (
+    <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />
+  ) : isOutOfFeed ? (
     <span className={styles.subplebbitAvatar}>{thumbnailComponent}</span>
   ) : isMobile || isReply ? (
-    <ThumbnailSmall style={thumbnailDimensions} thumbnailSmallPadding={thumbnailSmallPadding}>
+    <span className={`${styles.thumbnailSmall} ${thumbnailSmallPadding}`} style={thumbnailDimensions}>
       {thumbnailComponent}
       {isMobile &&
         !hasThumbnail &&
@@ -96,9 +86,11 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
             {getHostname(url) || (url.length > 30 ? url.slice(0, 30) + '...' : url)}
           </a>
         ))}
-    </ThumbnailSmall>
+    </span>
   ) : (
-    <ThumbnailBig style={thumbnailDimensions}>{thumbnailComponent}</ThumbnailBig>
+    <span className={styles.thumbnailBig} style={thumbnailDimensions}>
+      {thumbnailComponent}
+    </span>
   );
 };
 
