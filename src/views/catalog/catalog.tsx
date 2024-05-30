@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useAccount, Subplebbit, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useBlockedCommentsStore from '../../stores/useBlockedCommentsStore';
+import useBlockedComments from '../../hooks/use-blocked-comments';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
@@ -16,7 +18,7 @@ import _ from 'lodash';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit) => {
+const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit, includeDescriptionAndRules: boolean) => {
   const { t } = useTranslation();
   const { address, createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
   const { avatarUrl } = suggested || {};
@@ -29,7 +31,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
     if (!isFeedLoaded) {
       return []; // prevent rules and description from appearing while feed is loading
     }
-    if (!description && !rules && !isInAllView) {
+    if (!includeDescriptionAndRules || (!description && !rules && !isInAllView)) {
       return feed;
     }
     const _feed = [...feed];
@@ -59,7 +61,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
       });
     }
     return _feed;
-  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub]);
+  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub, includeDescriptionAndRules]);
 
   // Memoize rows calculation, ensuring it updates on changes to the modified feed or column count
   const rows = useMemo(() => {
@@ -102,7 +104,24 @@ const Catalog = () => {
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
+  const blockedComments = useBlockedComments(subplebbitAddress);
+  const blockedCommentsAddresses = useMemo(() => blockedComments.map((comment) => comment.cid), [blockedComments]);
+
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
+
+  const filteredFeed = useMemo(() => feed.filter((comment) => !blockedCommentsAddresses.includes(comment.cid)), [feed, blockedCommentsAddresses]);
+
+  const { resetShowBlockedComments, showBlockedComments, setShowBlockedComments } = useBlockedCommentsStore();
+
+  useEffect(() => {
+    resetShowBlockedComments();
+  }, [subplebbitAddress, resetShowBlockedComments]);
+
+  useEffect(() => {
+    if (blockedComments.length === 0) {
+      setShowBlockedComments(false);
+    }
+  }, [blockedComments, setShowBlockedComments]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { shortAddress, state, title } = subplebbit || {};
@@ -121,7 +140,7 @@ const Catalog = () => {
 
   const Footer = () => {
     let footerContent;
-    if (feed.length === 0) {
+    if ((showBlockedComments ? blockedComments : filteredFeed).length === 0) {
       footerContent = t('no_posts');
     }
     if (hasMore || subplebbitAddresses.length === 0) {
@@ -130,10 +149,9 @@ const Catalog = () => {
     return <div className={styles.footer}>{footerContent}</div>;
   };
 
-  const isFeedloaded = feed.length > 0 || state === 'failed';
+  const isFeedLoaded = (showBlockedComments ? blockedComments : filteredFeed).length > 0 || state === 'failed';
 
-  // split feed into rows
-  const rows = useFeedRows(columnCount, feed, isFeedloaded, subplebbit);
+  const rows = useFeedRows(columnCount, showBlockedComments ? blockedComments : filteredFeed, isFeedLoaded, subplebbit, !showBlockedComments);
 
   // save the last Virtuoso state to restore it when navigating back
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);

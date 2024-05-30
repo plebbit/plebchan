@@ -141,7 +141,13 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
               {!isInPostPageView && !isDescription && !isRules && (
-                <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+                <div
+                  className={styles.postMenuItem}
+                  onClick={() => {
+                    blocked ? unblock() : block();
+                    handleClose();
+                  }}
+                >
                   {blocked ? 'Unhide' : 'Hide'} {postCid === cid ? 'thread' : 'post'}
                 </div>
               )}

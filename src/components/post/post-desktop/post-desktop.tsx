@@ -20,7 +20,7 @@ import PostMenuDesktop from './post-menu-desktop/';
 import { PostProps } from '../post';
 import _ from 'lodash';
 
-const PostInfo = ({ openReplyModal, post, roles, isBlocked }: PostProps) => {
+const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -44,7 +44,7 @@ const PostInfo = ({ openReplyModal, post, roles, isBlocked }: PostProps) => {
 
   return (
     <div className={styles.postInfo}>
-      {!isBlocked && (
+      {!isHidden && (
         <span className={styles.checkbox}>
           <input type='checkbox' />
         </span>
@@ -92,7 +92,7 @@ const PostInfo = ({ openReplyModal, post, roles, isBlocked }: PostProps) => {
             <img src='/assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
           </span>
         )}
-        {!isInPostView && !isReply && !isBlocked && (
+        {!isInPostView && !isReply && !isHidden && (
           <span className={styles.replyButton}>
             [
             <Link
@@ -216,12 +216,13 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
-  const { blocked, unblock, block } = useBlock({ address: cid });
-
   const params = useParams();
   const location = useLocation();
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostPageView = isPostPageView(location.pathname, params);
+
+  const { blocked, unblock, block } = useBlock({ address: cid });
+  const isHidden = blocked && !isInPostPageView;
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -234,17 +235,17 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      <div className={blocked ? styles.postDesktopBlocked : ''}>
+      <div className={isHidden ? styles.postDesktopBlocked : ''}>
         {!isInPostPageView && !isDescription && !isRules && (
           <span className={styles.hideButtonWrapper}>
             <span className={`${styles.hideButton} ${blocked ? styles.unhideThread : styles.hideThread}`} onClick={blocked ? unblock : block} />
           </span>
         )}
-        {link && !blocked && isValidURL(link) && <PostMedia post={post} />}
-        <PostInfo isBlocked={blocked} openReplyModal={openReplyModal} post={post} roles={roles} />
-        {!blocked && !content && <div className={styles.spacer} />}
-        {!blocked && content && <PostMessage post={post} />}
-        {!blocked && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
+        {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
+        <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
+        {!isHidden && !content && <div className={styles.spacer} />}
+        {!isHidden && content && <PostMessage post={post} />}
+        {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
             <span className={styles.expandButtonWrapper}>
               <span className={styles.expandButton} />
@@ -261,7 +262,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
             )}
           </span>
         )}
-        {!blocked &&
+        {!isHidden &&
           !(pinned && !isInPostPageView) &&
           !isInPendingPostView &&
           !isDescription &&

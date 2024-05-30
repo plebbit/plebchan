@@ -3,10 +3,12 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import styles from './board-buttons.module.css';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useBlockedComments from '../../hooks/use-blocked-comments';
+import useBlockedCommentsStore from '../../stores/useBlockedCommentsStore';
 
 interface BoardButtonsProps {
   isInAllView?: boolean;
-  address: string | undefined;
+  address?: string | undefined;
   isInCatalogView?: boolean;
   isInSubscriptionsView?: boolean;
 }
@@ -105,6 +107,9 @@ export const DesktopBoardButtons = () => {
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
+  const { showBlockedComments, setShowBlockedComments } = useBlockedCommentsStore();
+  const blockedComments = useBlockedComments(params?.subplebbitAddress);
+
   return (
     <div className={styles.desktopBoardButtons}>
       <hr />
@@ -120,6 +125,16 @@ export const DesktopBoardButtons = () => {
         <>
           [<OptionsButton />] [
           <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />]
+          {blockedComments?.length > 0 && (
+            <span className={styles.blockedAddresses}>
+              {' '}
+              — Hidden threads: <strong>{blockedComments.length}</strong> [
+              <span className={styles.showBlockedButton} onClick={() => setShowBlockedComments(!showBlockedComments)}>
+                {showBlockedComments ? 'Back' : 'Show'}
+              </span>
+              ]
+            </span>
+          )}
           {!(isInAllView || isInSubscriptionsView) && (
             <span className={styles.subscribeButton}>
               [<SubscribeButton address={subplebbitAddress} />]

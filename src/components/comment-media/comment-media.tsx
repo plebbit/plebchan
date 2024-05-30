@@ -15,7 +15,6 @@ interface MediaProps {
   linkWidth?: number;
   showThumbnail?: boolean;
   setShowThumbnail: (showThumbnail: boolean) => void;
-  toggleExpanded?: () => void;
 }
 
 const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {

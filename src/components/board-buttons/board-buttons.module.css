@@ -17,6 +17,15 @@
   padding-bottom: 20px;
 }
 
+.showBlockedButton {
+  color: var(--button-desktop-text-color);
+}
+
+.showBlockedButton:hover {
+  color: var(--button-desktop-text-color-hover);
+  cursor: pointer;
+}
+
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;
