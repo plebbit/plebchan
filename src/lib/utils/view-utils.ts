@@ -8,6 +8,12 @@ export const isAllView = (pathname: string): boolean => {
   return pathname.startsWith('/p/all');
 };
 
+export const isBoardView = (pathname: string, params: ParamsType): boolean => {
+  // some subs might use emojis in their address, so we need to decode the pathname
+  const decodedPathname = decodeURIComponent(pathname);
+  return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}`) : false;
+};
+
 export const isCatalogView = (pathname: string): boolean => {
   return pathname.endsWith('/catalog') || pathname.endsWith('/catalog/settings');
 };
@@ -44,6 +50,8 @@ export const isSubscriptionsView = (pathname: string): boolean => {
 
 export const isNotFoundView = (pathname: string, params: ParamsType): boolean => {
   return (
+    !isAllView(pathname) &&
+    !isBoardView(pathname, params) &&
     !isCatalogView(pathname) &&
     !isDescriptionView(pathname, params) &&
     !isHomeView(pathname) &&

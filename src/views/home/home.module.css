@@ -119,7 +119,6 @@
 }
 
 .list a {
-
   color: var(--homepage-box-link-text-color);
   text-decoration: var(--homepage-box-link-text-decoration);
 }

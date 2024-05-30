@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useAccount } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBlock } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -20,7 +20,7 @@ import PostMenuDesktop from './post-menu-desktop/';
 import { PostProps } from '../post';
 import _ from 'lodash';
 
-const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
+const PostInfo = ({ openReplyModal, post, roles, isBlocked }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -44,9 +44,11 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
 
   return (
     <div className={styles.postInfo}>
-      <span className={styles.checkbox}>
-        <input type='checkbox' />
-      </span>
+      {!isBlocked && (
+        <span className={styles.checkbox}>
+          <input type='checkbox' />
+        </span>
+      )}
       {title && <span className={styles.subject}>{displayTitle} </span>}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
@@ -90,7 +92,7 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
             <img src='/assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
           </span>
         )}
-        {!isInPostView && !isReply && (
+        {!isInPostView && !isReply && !isBlocked && (
           <span className={styles.replyButton}>
             [
             <Link
@@ -149,15 +151,17 @@ const PostMedia = ({ post }: PostProps) => {
         )}
       </div>
       {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
-        <CommentMedia
-          commentMediaInfo={commentMediaInfo}
-          isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
-          isReply={isReply}
-          linkHeight={linkHeight}
-          linkWidth={linkWidth}
-          showThumbnail={showThumbnail}
-          setShowThumbnail={setShowThumbnail}
-        />
+        <div className={styles.fileThumbnail}>
+          <CommentMedia
+            commentMediaInfo={commentMediaInfo}
+            isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
+            isReply={isReply}
+            linkHeight={linkHeight}
+            linkWidth={linkWidth}
+            showThumbnail={showThumbnail}
+            setShowThumbnail={setShowThumbnail}
+          />
+        </div>
       )}
     </div>
   );
@@ -212,10 +216,12 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
+  const { blocked, unblock, block } = useBlock({ address: cid });
+
   const params = useParams();
   const location = useLocation();
   const isInPendingPostView = isPendingPostView(location.pathname, params);
-  const isInPostView = isPostPageView(location.pathname, params);
+  const isInPostPageView = isPostPageView(location.pathname, params);
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -228,49 +234,52 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      {!isInPostView && (
-        <span className={styles.hideButtonWrapper}>
-          <span className={`${styles.hideButton} ${styles.hideThread}`} />
-        </span>
-      )}
-      {link && isValidURL(link) && <PostMedia post={post} />}
-      <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
-      {!content && <div className={styles.spacer} />}
-      {content && <PostMessage post={post} />}
-      {!isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostView && (
-        <span className={styles.summary}>
-          <span className={styles.expandButtonWrapper}>
-            <span className={styles.expandButton} />
+      <div className={blocked ? styles.postDesktopBlocked : ''}>
+        {!isInPostPageView && !isDescription && !isRules && (
+          <span className={styles.hideButtonWrapper}>
+            <span className={`${styles.hideButton} ${blocked ? styles.unhideThread : styles.hideThread}`} onClick={blocked ? unblock : block} />
           </span>
-          {linksCount > 0 ? (
-            <Trans
-              i18nKey={'replies_and_links_omitted'}
-              shouldUnescape={true}
-              components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
-              values={{ repliesCount, linksCount }}
-            />
-          ) : (
-            <Trans i18nKey={'replies_omitted'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} values={{ repliesCount }} />
-          )}
-        </span>
-      )}
-      {!(pinned && !isInPostView) &&
-        !isInPendingPostView &&
-        !isDescription &&
-        !isRules &&
-        replies &&
-        (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-          <div key={index} className={styles.replyContainer}>
-            <div className={styles.replyDesktop}>
-              <div className={styles.sideArrows}>{'>>'}</div>
-              <div className={styles.reply}>
-                <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-                {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
-                {reply.content && <PostMessage post={reply} />}
+        )}
+        {link && !blocked && isValidURL(link) && <PostMedia post={post} />}
+        <PostInfo isBlocked={blocked} openReplyModal={openReplyModal} post={post} roles={roles} />
+        {!blocked && !content && <div className={styles.spacer} />}
+        {!blocked && content && <PostMessage post={post} />}
+        {!blocked && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
+          <span className={styles.summary}>
+            <span className={styles.expandButtonWrapper}>
+              <span className={styles.expandButton} />
+            </span>
+            {linksCount > 0 ? (
+              <Trans
+                i18nKey={'replies_and_links_omitted'}
+                shouldUnescape={true}
+                components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
+                values={{ repliesCount, linksCount }}
+              />
+            ) : (
+              <Trans i18nKey={'replies_omitted'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} values={{ repliesCount }} />
+            )}
+          </span>
+        )}
+        {!blocked &&
+          !(pinned && !isInPostPageView) &&
+          !isInPendingPostView &&
+          !isDescription &&
+          !isRules &&
+          replies &&
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+            <div key={index} className={styles.replyContainer}>
+              <div className={styles.replyDesktop}>
+                <div className={styles.sideArrows}>{'>>'}</div>
+                <div className={styles.reply}>
+                  <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
+                  {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
+                  {reply.content && <PostMessage post={reply} />}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 };

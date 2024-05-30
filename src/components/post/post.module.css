@@ -11,6 +11,8 @@
 }
 
 .hideButtonWrapper {
+  height: 15px;
+  width: 18px;
   padding-right: 5px;
   float: left;
 }
@@ -24,6 +26,10 @@
   image-rendering: pixelated;
   cursor: pointer;
   transform: translateY(-1px);
+}
+
+.postDesktopBlocked {
+  opacity: 0.5;
 }
 
 /* clearfix to contain float elements */
@@ -52,7 +58,6 @@
 }
 
 .postDesktop .postInfo {
-  padding-top: 3px;
   width: 100%;
 }
 
@@ -307,7 +312,7 @@
 }
 
 .replyDesktop {
-  padding-bottom: 4px;
+  padding-top: 4px;
 }
 
 .replyDesktop .sideArrows {

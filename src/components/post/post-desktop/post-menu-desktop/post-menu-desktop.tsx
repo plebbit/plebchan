@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
-import { Comment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useBlock } from '@plebbit/plebbit-react-hooks';
 import styles from './post-menu-desktop.module.css';
 import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../../lib/utils/url-utils';
-import { isCatalogView } from '../../../../lib/utils/view-utils';
+import { isCatalogView, isPostPageView } from '../../../../lib/utils/view-utils';
 
 interface PostMenuDesktopProps {
   cid: string;
@@ -101,7 +101,12 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
 
-  const isInCatalogView = isCatalogView(useLocation().pathname);
+  const { blocked, unblock, block } = useBlock({ address: cid });
+
+  const location = useLocation();
+  const params = useParams();
+  const isInCatalogView = isCatalogView(location.pathname);
+  const isInPostPageView = isPostPageView(location.pathname, params);
 
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
@@ -135,6 +140,11 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
+              {!isInPostPageView && !isDescription && !isRules && (
+                <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+                  {blocked ? 'Unhide' : 'Hide'} {postCid === cid ? 'thread' : 'post'}
+                </div>
+              )}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButton url={url} onClose={handleClose} />}
               <ViewOnButton cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
             </div>
