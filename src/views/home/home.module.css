@@ -119,7 +119,7 @@
 }
 
 .list a {
-  display: inline-block;
+
   color: var(--homepage-box-link-text-color);
   text-decoration: var(--homepage-box-link-text-decoration);
 }
@@ -140,7 +140,7 @@
   background-image: url('/public/assets/icons/offline.png');
   display: inline-block;
   vertical-align: text-top;
-  margin-left: 2px;
+  margin-right: 2px;
   width: 13px;
   height: 13px;
   background-repeat: no-repeat;
@@ -161,7 +161,7 @@
   float: left;
   width: 168px;
   margin-right: 15px;
-  overflow: hidden;
+  word-break: break-word;
 }
 
 .boardsBoxContent h3 {

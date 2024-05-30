@@ -3,6 +3,7 @@ import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useMultisubMetadata, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import usePopularPosts from '../../hooks/use-popular-posts';
@@ -79,9 +80,9 @@ const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subp
 
   return (
     <div className={styles.subplebbit} key={address}>
+      {isOffline && <span className={styles.offlineIcon} />}
       <Link to={`/p/${address}`}>{title || address}</Link>
       {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
-      {isOffline && <span className={styles.offlineIcon} />}
     </div>
   );
 };
@@ -166,7 +167,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
             {subscriptions.length > 0
               ? subscriptions.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>{address}</Link>
+                    <Link to={`/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
                   </div>
                 ))
               : t('not_subscribed')}
@@ -176,7 +177,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
             {accountSubplebbitAddresses.length > 0
               ? accountSubplebbitAddresses.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>p/{address}</Link>
+                    <Link to={`/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
                   </div>
                 ))
               : t('not_moderating')}
