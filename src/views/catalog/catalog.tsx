@@ -63,7 +63,6 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
     return _feed;
   }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub, includeDescriptionAndRules]);
 
-  // Memoize rows calculation, ensuring it updates on changes to the modified feed or column count
   const rows = useMemo(() => {
     const rows = [];
     for (let i = 0; i < feedWithDescriptionAndRules.length; i += columnCount) {
@@ -178,18 +177,22 @@ const Catalog = () => {
       {location.pathname.endsWith('/settings') && <SettingsModal />}
       <hr />
       <div className={styles.catalog}>
-        <Virtuoso
-          increaseViewportBy={{ bottom: 1200, top: 1200 }}
-          totalCount={rows?.length || 0}
-          data={rows}
-          itemContent={(index, row) => <CatalogRow index={index} row={row} />}
-          useWindowScroll={true}
-          components={{ Footer }}
-          endReached={loadMore}
-          ref={virtuosoRef}
-          restoreStateFrom={lastVirtuosoState}
-          initialScrollTop={lastVirtuosoState?.scrollTop}
-        />
+        {showBlockedComments ? (
+          rows.map((row, index) => <CatalogRow key={index} index={index} row={row} />)
+        ) : (
+          <Virtuoso
+            increaseViewportBy={{ bottom: 1200, top: 1200 }}
+            totalCount={rows?.length || 0}
+            data={rows}
+            itemContent={(index, row) => <CatalogRow index={index} row={row} />}
+            useWindowScroll={true}
+            components={{ Footer }}
+            endReached={loadMore}
+            ref={virtuosoRef}
+            restoreStateFrom={lastVirtuosoState}
+            initialScrollTop={lastVirtuosoState?.scrollTop}
+          />
+        )}
       </div>
     </div>
   );
