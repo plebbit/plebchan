@@ -7,9 +7,9 @@ import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-util
 import { getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import challengesStore from '../../hooks/use-challenges';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useReply from '../../hooks/use-reply';
+import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './post-form.module.css';
 import _ from 'lodash';
 
@@ -23,7 +23,7 @@ type SubmitState = {
   resetSubmitStore: () => void;
 };
 
-const { addChallenge } = challengesStore.getState();
+const { addChallenge } = useChallengesStore.getState();
 
 const useSubmitStore = create<SubmitState>((set) => ({
   subplebbitAddress: undefined,

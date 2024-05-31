@@ -3,8 +3,8 @@ import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { Challenge as ChallengeType } from '@plebbit/plebbit-react-hooks';
 import { getPublicationType } from '../../lib/utils/challenge-utils';
-import useChallenges from '../../hooks/use-challenges';
 import useIsMobile from '../../hooks/use-is-mobile';
+import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './challenge-modal.module.css';
 import _ from 'lodash';
 
@@ -125,7 +125,7 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
 };
 
 const ChallengeModal = () => {
-  const { challenges, removeChallenge } = useChallenges();
+  const { challenges, removeChallenge } = useChallengesStore();
   const isOpen = !!challenges.length;
   const closeModal = () => removeChallenge();
 
