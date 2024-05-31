@@ -15,12 +15,7 @@
 
 .postFormMobile {
   text-align: center;
-  padding-top: 9px;
-  padding-bottom: 0.5em;
-}
-
-.postFormMobile .showFormButton {
-  margin-bottom: 5px;
+  margin-top: -2px;
 }
 
 .closed {
@@ -96,6 +91,23 @@
 @media (max-width: 640px) {
   .postFormDesktop {
     display: none;
+  }
+
+  .postFormTable {
+    padding-top: 5px;
+    max-width: 80%;
+  }
+
+  .postFormTable td input {
+    height: 20px;
+  }
+
+  .postFormTable td textarea {
+    height: 80px;
+  }
+
+  .postFormTable button {
+    padding: 4px 8px;
   }
 }
 

@@ -293,6 +293,7 @@ const PostForm = () => {
               {showForm ? t('close_post_form') : isInPostView ? t('post_a_reply') : t('start_new_thread')}
             </button>
             {showForm && <PostFormTable closeForm={() => setShowForm(false)} />}
+            <hr />
           </>
         )}
       </div>
