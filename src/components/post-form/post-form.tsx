@@ -7,9 +7,9 @@ import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-util
 import { getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import challengesStore from '../../hooks/use-challenges';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useReply from '../../hooks/use-reply';
+import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './post-form.module.css';
 import _ from 'lodash';
 
@@ -18,26 +18,29 @@ type SubmitState = {
   title: string | undefined;
   content: string | undefined;
   link: string | undefined;
+  spoiler: boolean | undefined;
   publishCommentOptions: PublishCommentOptions;
   setSubmitStore: (data: Partial<SubmitState>) => void;
   resetSubmitStore: () => void;
 };
 
-const { addChallenge } = challengesStore.getState();
+const { addChallenge } = useChallengesStore.getState();
 
 const useSubmitStore = create<SubmitState>((set) => ({
   subplebbitAddress: undefined,
   title: undefined,
   content: undefined,
   link: undefined,
+  spoiler: undefined,
   publishCommentOptions: {},
-  setSubmitStore: ({ subplebbitAddress, title, content, link }) =>
+  setSubmitStore: ({ subplebbitAddress, title, content, link, spoiler }) =>
     set((state) => {
       const nextState = { ...state };
       if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
       if (title !== undefined) nextState.title = title || undefined;
       if (content !== undefined) nextState.content = content || undefined;
       if (link !== undefined) nextState.link = link || undefined;
+      if (spoiler !== undefined) nextState.spoiler = spoiler || undefined;
 
       nextState.publishCommentOptions = {
         ...nextState,
@@ -51,12 +54,13 @@ const useSubmitStore = create<SubmitState>((set) => ({
       };
       return nextState;
     }),
-  resetSubmitStore: () => set({ subplebbitAddress: undefined, title: undefined, content: undefined, link: undefined, publishCommentOptions: {} }),
+  resetSubmitStore: () => set({ subplebbitAddress: undefined, title: undefined, content: undefined, link: undefined, spoiler: undefined, publishCommentOptions: {} }),
 }));
 
-const LinkTypePreviewer = ({ link }: { link: string }) => {
+export const LinkTypePreviewer = ({ link }: { link: string }) => {
+  const { t } = useTranslation();
   const mediaInfo = getLinkMediaInfo(link);
-  return isValidURL(link) ? mediaInfo?.type : 'Invalid URL';
+  return isValidURL(link) ? mediaInfo?.type : t('invalid_url');
 };
 
 const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
@@ -209,13 +213,21 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
                 isInPostView ? setContent.link(e.target.value) : setSubmitStore({ link: e.target.value });
               }}
             />
-            <span className={styles.linkType}>
-              {url && (
-                <>
-                  (<LinkTypePreviewer link={url} />)
-                </>
-              )}
-            </span>
+          </td>
+        </tr>
+        <tr className={styles.linkType}>
+          <td>{t('file_type')}</td>
+          <td>{url ? <LinkTypePreviewer link={url} /> : t('no_link_provided')}</td>
+        </tr>
+        <tr className={styles.spoilerButton}>
+          <td>{t('options')}</td>
+          <td>
+            [
+            <label>
+              <input type='checkbox' onChange={(e) => (isInPostView ? setContent.spoiler(e.target.checked) : setSubmitStore({ spoiler: e.target.checked }))} />
+              {t('spoiler')}?
+            </label>
+            ]
           </td>
         </tr>
         {(isInAllView || isInSubscriptionsView) && (
@@ -293,6 +305,7 @@ const PostForm = () => {
               {showForm ? t('close_post_form') : isInPostView ? t('post_a_reply') : t('start_new_thread')}
             </button>
             {showForm && <PostFormTable closeForm={() => setShowForm(false)} />}
+            <hr />
           </>
         )}
       </div>

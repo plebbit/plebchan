@@ -114,5 +114,22 @@
   "full_account_data": "pełne dane konta",
   "this_account": "ten rachunek",
   "delete": "usuń",
-  "delete_account": "usuń konto"
+  "delete_account": "usuń konto",
+  "file_type": "Typ pliku",
+  "version": "Wersja",
+  "spoiler": "spoiler",
+  "interface": "interfejs",
+  "invalid_url": "Nieprawidłowy adres URL",
+  "no_link_provided": "Nie podano linku",
+  "image_search": "wyszukiwanie obrazów",
+  "view_on": "zobacz na",
+  "copy_link": "skopiuj link",
+  "hide_post": "ukryj post",
+  "hide_thread": "ukryj wątek",
+  "unhide_post": "pokaż post",
+  "unhide_thread": "pokaż wątek",
+  "search_image_on_google": "szukaj obrazu w Google",
+  "search_image_on_yandex": "szukaj obrazu w Yandex",
+  "search_image_on_saucenao": "szukaj obrazu w SauceNAO",
+  "view_on_client": "Zobacz na {{client}}"
 }

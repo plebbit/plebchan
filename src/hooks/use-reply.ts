@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { ChallengeVerification, Comment, PublishCommentOptions, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
-import useChallengesStore from './use-challenges';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
+import useChallengesStore from '../stores/use-challenges-store';
 
 type SetReplyStoreData = {
   subplebbitAddress: string;

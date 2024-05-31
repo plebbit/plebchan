@@ -6,6 +6,7 @@ import PostMobile from './post-mobile';
 
 export interface PostProps {
   index?: number;
+  isHidden?: boolean;
   post?: any;
   reply?: any;
   roles?: Role[];

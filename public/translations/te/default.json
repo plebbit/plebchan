@@ -114,5 +114,22 @@
   "full_account_data": "పూర్తి ఖాతా డేటా",
   "this_account": "ఈ ఖాతా",
   "delete": "తొలగించండి",
-  "delete_account": "ఖాతాను తొలగించు"
+  "delete_account": "ఖాతాను తొలగించు",
+  "file_type": "ఫైల్ రకం",
+  "version": "వెర్షన్",
+  "spoiler": "స్పోయ్లర్",
+  "interface": "అంతరాఫ్సు",
+  "invalid_url": "చెల్లని URL",
+  "no_link_provided": "లింక్ ఇవ్వబడలేదు",
+  "image_search": "చిత్రాల శోధన",
+  "view_on": "వీక్షించు",
+  "copy_link": "లింక్ ను కాపీ చేయండి",
+  "hide_post": "పోస్ట్ దాచు",
+  "hide_thread": "థ్రెడ్ దాచు",
+  "unhide_post": "పోస్ట్ చూపించు",
+  "unhide_thread": "థ్రెడ్ చూపించు",
+  "search_image_on_google": "గూగుల్‌లో చిత్రాన్ని వెతుకోండి",
+  "search_image_on_yandex": "యాండెక్స్‌లో చిత్రాన్ని వెతుకోండి",
+  "search_image_on_saucenao": "SauceNAOలో చిత్రాన్ని వెతుకోండి",
+  "view_on_client": "{{client}} లో చూడండి"
 }

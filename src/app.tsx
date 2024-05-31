@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { isHomeView } from './lib/utils/view-utils';
+import useIsMobile from './hooks/use-is-mobile';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
 import Board from './views/board';
@@ -9,16 +10,17 @@ import Home from './views/home';
 import NotFound from './views/not-found';
 import PendingPost from './views/pending-post';
 import PostPage from './views/post-page';
-import BoardBanner from './components/board-banner';
 import { DesktopBoardButtons, MobileBoardButtons } from './components/board-buttons';
-import BoardNav from './components/board-nav';
+import BoardHeader from './components/board-header';
 import ChallengeModal from './components/challenge-modal';
-import SubplebbitStats from './components/subplebbit-stats';
 import PostForm from './components/post-form';
+import SubplebbitStats from './components/subplebbit-stats';
+import TopBar from './components/topbar';
 
 const BoardLayout = () => {
   const { accountCommentIndex, commentCid, subplebbitAddress } = useParams();
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
   const isValidCommentCid = !commentCid || /^Qm[a-zA-Z0-9]{44}$/.test(commentCid);
@@ -33,12 +35,20 @@ const BoardLayout = () => {
 
   return (
     <div className={styles.boardLayout}>
-      <BoardNav />
-      <BoardBanner />
-      <MobileBoardButtons />
-      <PostForm key={key} />
-      {subplebbitAddress && isValidSubplebbitAddress && <SubplebbitStats />}
-      <DesktopBoardButtons />
+      <TopBar />
+      <BoardHeader />
+      {isMobile ? (
+        <>
+          <PostForm key={key} />
+          <MobileBoardButtons />
+        </>
+      ) : (
+        <>
+          <PostForm key={key} />
+          {subplebbitAddress && isValidSubplebbitAddress && <SubplebbitStats />}
+          <DesktopBoardButtons />
+        </>
+      )}
       <Outlet />
     </div>
   );

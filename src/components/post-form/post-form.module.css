@@ -15,12 +15,7 @@
 
 .postFormMobile {
   text-align: center;
-  padding-top: 9px;
-  padding-bottom: 0.5em;
-}
-
-.postFormMobile .showFormButton {
-  margin-bottom: 5px;
+  margin-top: -2px;
 }
 
 .closed {
@@ -87,15 +82,48 @@
 
 .linkType {
   font-weight: normal;
-  position: absolute;
-  white-space: nowrap;
-  bottom: 3px;
-  padding-left: 3px;
+}
+
+.linkType td {
+  height: 20px;
+  padding-left: 2px;
+}
+
+.spoilerButton input[type="checkbox"] {
+  margin: 0 3px;
+  vertical-align: middle;
+  transform: translateY(-2px);
+}
+
+.spoilerButton td {
+  padding-top: 2px;
+  height: 20px;
+  padding-left: 2px;
+}
+
+.spoilerButton {
+  font-weight: normal;
 }
 
 @media (max-width: 640px) {
   .postFormDesktop {
     display: none;
+  }
+
+  .postFormTable {
+    padding-top: 5px;
+  }
+
+  .postFormTable td input {
+    height: 20px;
+  }
+
+  .postFormTable td textarea {
+    height: 80px;
+  }
+
+  .postFormTable button {
+    padding: 4px 8px;
   }
 }
 

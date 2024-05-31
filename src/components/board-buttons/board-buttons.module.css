@@ -1,6 +1,6 @@
 .mobileBoardButtons {
   text-align: center;
-  margin-top: 9px;
+  margin: 10px 0;
 }
 
 .mobileBoardButtons button {
@@ -12,9 +12,13 @@
   all: unset;
 }
 
-.mobilePostPageButtonsSecondRow {
-  padding-top: 5px;
-  padding-bottom: 20px;
+.showBlockedButton {
+  color: var(--button-desktop-text-color);
+}
+
+.showBlockedButton:hover {
+  color: var(--button-desktop-text-color-hover);
+  cursor: pointer;
 }
 
 @media (max-width: 640px) {

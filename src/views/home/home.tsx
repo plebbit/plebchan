@@ -3,6 +3,7 @@ import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useMultisubMetadata, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import usePopularPosts from '../../hooks/use-popular-posts';
@@ -73,15 +74,15 @@ const InfoBox = () => {
 
 const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
   const { t } = useTranslation();
-  const { address, title, tags } = subplebbit;
+  const { address, title, tags } = subplebbit || {};
   const nsfwTags = ['adult', 'gore'];
   const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
 
   return (
     <div className={styles.subplebbit} key={address}>
+      {isOffline && <span className={styles.offlineIcon} />}
       <Link to={`/p/${address}`}>{title || address}</Link>
       {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
-      {isOffline && <span className={styles.offlineIcon} />}
     </div>
   );
 };
@@ -93,13 +94,13 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
   const { accountSubplebbits } = useAccountSubplebbits();
   const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
 
-  const plebbitSubs = multisub.filter((sub) => sub.tags.includes('plebbit'));
+  const plebbitSubs = multisub.filter((sub) => sub.tags?.includes('plebbit'));
   const interestsSubs = multisub.filter(
-    (sub) => sub.tags.includes('topic') && !sub.tags.includes('plebbit') && !sub.tags.includes('country') && !sub.tags.includes('international'),
+    (sub) => sub.tags?.includes('topic') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('country') && !sub.tags?.includes('international'),
   );
-  const randomSubs = multisub.filter((sub) => sub.tags.includes('random') && !sub.tags.includes('plebbit'));
-  const internationalSubs = multisub.filter((sub) => sub.tags.includes('international') || sub.tags.includes('country'));
-  const projectsSubs = multisub.filter((sub) => sub.tags.includes('project') && !sub.tags.includes('plebbit') && !sub.tags.includes('topic'));
+  const randomSubs = multisub.filter((sub) => sub.tags?.includes('random') && !sub.tags?.includes('plebbit'));
+  const internationalSubs = multisub.filter((sub) => sub.tags?.includes('international') || sub.tags?.includes('country'));
+  const projectsSubs = multisub.filter((sub) => sub.tags?.includes('project') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('topic'));
 
   const isSubOffline = (address: string) => {
     const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
@@ -166,7 +167,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
             {subscriptions.length > 0
               ? subscriptions.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>{address}</Link>
+                    <Link to={`/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
                   </div>
                 ))
               : t('not_subscribed')}
@@ -176,7 +177,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
             {accountSubplebbitAddresses.length > 0
               ? accountSubplebbitAddresses.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>p/{address}</Link>
+                    <Link to={`/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
                   </div>
                 ))
               : t('not_moderating')}

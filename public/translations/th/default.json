@@ -114,5 +114,22 @@
   "full_account_data": "ข้อมูลบัญชีเต็มรูปแบบ",
   "this_account": "บัญชีนี้",
   "delete": "ลบ",
-  "delete_account": "ลบบัญชี"
+  "delete_account": "ลบบัญชี",
+  "file_type": "ประเภทไฟล์",
+  "version": "รุ่น",
+  "spoiler": "สปอยล์เลอร์",
+  "interface": "อินเทอร์เฟซ",
+  "invalid_url": "URL ไม่ถูกต้อง",
+  "no_link_provided": "ไม่มีการให้ลิงก์",
+  "image_search": "ค้นหารูปภาพ",
+  "view_on": "ดูที่",
+  "copy_link": "คัดลอกลิงก์",
+  "hide_post": "ซ่อนโพสต์",
+  "hide_thread": "ซ่อนเธรด",
+  "unhide_post": "แสดงโพสต์",
+  "unhide_thread": "แสดงเธรด",
+  "search_image_on_google": "ค้นหารูปภาพใน Google",
+  "search_image_on_yandex": "ค้นหารูปภาพใน Yandex",
+  "search_image_on_saucenao": "ค้นหารูปภาพใน SauceNAO",
+  "view_on_client": "ดูบน {{client}}"
 }

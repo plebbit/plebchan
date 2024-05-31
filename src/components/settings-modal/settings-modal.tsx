@@ -44,7 +44,7 @@ const SettingsModal = () => {
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowInterfaceSettings(!showInterfaceSettings)}>
             <span className={showInterfaceSettings ? styles.hideButton : styles.showButton} />
-            Interface
+            {t('interface')}
           </label>
         </div>
         {showInterfaceSettings && <InterfaceSettings />}

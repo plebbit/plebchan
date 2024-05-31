@@ -114,5 +114,22 @@
   "full_account_data": "полные данные аккаунта",
   "this_account": "этот аккаунт",
   "delete": "удалить",
-  "delete_account": "удалить аккаунт"
+  "delete_account": "удалить аккаунт",
+  "file_type": "Тип файла",
+  "version": "Версия",
+  "spoiler": "спойлер",
+  "interface": "интерфейс",
+  "invalid_url": "Недействительный URL",
+  "no_link_provided": "Ссылка не предоставлена",
+  "image_search": "поиск изображений",
+  "view_on": "просмотр на",
+  "copy_link": "копировать ссылку",
+  "hide_post": "скрыть пост",
+  "hide_thread": "скрыть ветку",
+  "unhide_post": "показать пост",
+  "unhide_thread": "показать ветку",
+  "search_image_on_google": "поиск изображения в Google",
+  "search_image_on_yandex": "поиск изображения в Yandex",
+  "search_image_on_saucenao": "поиск изображения на SauceNAO",
+  "view_on_client": "Посмотреть на {{client}}"
 }

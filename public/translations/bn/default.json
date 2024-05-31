@@ -114,5 +114,22 @@
   "full_account_data": "সম্পূর্ণ অ্যাকাউন্ট ডেটা",
   "this_account": "এই অ্যাকাউন্ট",
   "delete": "মুছে ফেলা",
-  "delete_account": "অ্যাকাউন্ট মুছুন"
+  "delete_account": "অ্যাকাউন্ট মুছুন",
+  "file_type": "ফাইলের ধরন",
+  "version": "সংস্করণ",
+  "spoiler": "স্পোয়েলার",
+  "interface": "ইন্টারফেস",
+  "invalid_url": "অবৈধ ইউআরএল",
+  "no_link_provided": "কোনো লিঙ্ক উপস্থিত নেই",
+  "image_search": "চিত্র অনুসন্ধান",
+  "view_on": "উপর দেখুন",
+  "copy_link": "লিংক অনুলিপি করুন",
+  "hide_post": "পোস্ট লুকাও",
+  "hide_thread": "থ্রেড লুকাও",
+  "unhide_post": "পোস্ট প্রদর্শন করুন",
+  "unhide_thread": "থ্রেড প্রদর্শন করুন",
+  "search_image_on_google": "গুগলে চিত্র অনুসন্ধান করুন",
+  "search_image_on_yandex": "Yandexে চিত্র অনুসন্ধান করুন",
+  "search_image_on_saucenao": "SauceNAO এ চিত্র অনুসন্ধান করুন",
+  "view_on_client": "{{client}} উপর দেখুন"
 }

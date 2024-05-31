@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import styles from './board-banner.module.css';
+import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 
 const totalBanners = 57;
@@ -16,7 +16,7 @@ const ImageBanner = () => {
   return <img src={imagePath} alt='' />;
 };
 
-const BoardBanner = () => {
+const BoardHeader = () => {
   const location = useLocation();
   const params = useParams();
 
@@ -46,4 +46,4 @@ const BoardBanner = () => {
   );
 };
 
-export default BoardBanner;
+export default BoardHeader;

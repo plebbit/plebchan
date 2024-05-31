@@ -114,5 +114,22 @@
   "full_account_data": "完整帐户数据",
   "this_account": "此帐户",
   "delete": "删除",
-  "delete_account": "删除账户"
+  "delete_account": "删除账户",
+  "file_type": "文件类型",
+  "version": "版本",
+  "spoiler": "spoiler",
+  "interface": "界面",
+  "invalid_url": "无效的网址",
+  "no_link_provided": "未提供链接",
+  "image_search": "图像搜索",
+  "view_on": "查看",
+  "copy_link": "复制链接",
+  "hide_post": "隐藏帖子",
+  "hide_thread": "隐藏主题",
+  "unhide_post": "显示帖子",
+  "unhide_thread": "显示主题",
+  "search_image_on_google": "在Google上搜索图像",
+  "search_image_on_yandex": "在Yandex上搜索图像",
+  "search_image_on_saucenao": "在SauceNAO上搜索图像",
+  "view_on_client": "在{{client}}上查看"
 }

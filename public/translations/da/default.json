@@ -114,5 +114,22 @@
   "full_account_data": "fulde kontodata",
   "this_account": "denne konto",
   "delete": "slet",
-  "delete_account": "slet konto"
+  "delete_account": "slet konto",
+  "file_type": "Filtype",
+  "version": "Version",
+  "spoiler": "spoiler",
+  "interface": "interface",
+  "invalid_url": "Ugyldig webadresse",
+  "no_link_provided": "Ingen link angivet",
+  "image_search": "billedsøgning",
+  "view_on": "se på",
+  "copy_link": "kopier link",
+  "hide_post": "skjul post",
+  "hide_thread": "skjul tråd",
+  "unhide_post": "vis indlæg",
+  "unhide_thread": "vis tråd",
+  "search_image_on_google": "søg billede på Google",
+  "search_image_on_yandex": "søg billede på Yandex",
+  "search_image_on_saucenao": "søg billede på SauceNAO",
+  "view_on_client": "Se på {{client}}"
 }

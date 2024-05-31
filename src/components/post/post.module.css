@@ -11,6 +11,8 @@
 }
 
 .hideButtonWrapper {
+  height: 15px;
+  width: 18px;
   padding-right: 5px;
   float: left;
 }
@@ -24,6 +26,10 @@
   image-rendering: pixelated;
   cursor: pointer;
   transform: translateY(-1px);
+}
+
+.postDesktopBlocked {
+  opacity: 0.5;
 }
 
 /* clearfix to contain float elements */
@@ -52,11 +58,11 @@
 }
 
 .postDesktop .postInfo {
-  padding-top: 3px;
   width: 100%;
 }
 
 .postDesktop .checkbox, .replyDesktop .checkbox {
+  display: inline-block;
   padding: 3px 7px 3px 4px;
   filter: var(--filter80);
 }
@@ -272,6 +278,7 @@
 .postMobile .postMessage {
   padding: 10px;
   font-size: var(--post-mobile-content-font-size);
+  word-break: break-all;
 }
 
 .postMobile .postLink {
@@ -307,7 +314,7 @@
 }
 
 .replyDesktop {
-  padding-bottom: 4px;
+  padding-top: 4px;
 }
 
 .replyDesktop .sideArrows {
@@ -322,7 +329,7 @@
   border-left: none;
   border-top: none;
   display: table;
-  padding: 2px;
+  padding: 0 2px 2px 2px;
 }
 
 .replyDesktop .postInfo {
@@ -385,6 +392,11 @@
 
 .replyToPost {
   cursor: pointer;
+}
+
+.removedContent {
+  font-weight: 700;
+  color: red;
 }
 
 @media (max-width: 640px) {

@@ -8,6 +8,7 @@ import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
+import useFeedResetStore from '../../stores/use-feed-reset-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import Post from '../../components/post';
 import ReplyModal from '../../components/reply-modal';
@@ -40,7 +41,12 @@ const Board = () => {
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
 
   const sortType = 'active';
-  const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType });
+  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType });
+
+  const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
+  useEffect(() => {
+    setResetFunction(reset);
+  }, [reset, setResetFunction]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, state, suggested } = subplebbit || {};

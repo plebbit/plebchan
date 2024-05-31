@@ -54,6 +54,7 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
     thumbnailComponent = thumbnail ? (
       <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />
     ) : (
+      // show first frame of the video, as a workaround for Safari not loading thumbnails
       <video src={`${url}#t=0.001`} onLoad={handleLoad} onError={handleError} style={loadingStyle} />
     );
   } else if (type === 'webpage' && !hasError) {

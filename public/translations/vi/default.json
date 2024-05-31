@@ -114,5 +114,22 @@
   "full_account_data": "dữ liệu tài khoản đầy đủ",
   "this_account": "tài khoản này",
   "delete": "xóa",
-  "delete_account": "xóa tài khoản"
+  "delete_account": "xóa tài khoản",
+  "file_type": "Loại tệp",
+  "version": "Phiên bản",
+  "spoiler": "spoiler",
+  "interface": "giao diện",
+  "invalid_url": "URL không hợp lệ",
+  "no_link_provided": "Không có liên kết được cung cấp",
+  "image_search": "tìm kiếm hình ảnh",
+  "view_on": "xem trên",
+  "copy_link": "sao chép liên kết",
+  "hide_post": "Ẩn bài viết",
+  "hide_thread": "Ẩn chủ đề",
+  "unhide_post": "Hiện bài viết",
+  "unhide_thread": "Hiện chủ đề",
+  "search_image_on_google": "Tìm kiếm hình ảnh trên Google",
+  "search_image_on_yandex": "Tìm kiếm hình ảnh trên Yandex",
+  "search_image_on_saucenao": "Tìm kiếm hình ảnh trên SauceNAO",
+  "view_on_client": "Xem trên {{client}}"
 }

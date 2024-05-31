@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
-import styles from './board-buttons.module.css';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useFeedResetStore from '../../stores/use-feed-reset-store';
+import styles from './board-buttons.module.css';
 
 interface BoardButtonsProps {
   isInAllView?: boolean;
-  address: string | undefined;
+  address?: string | undefined;
   isInCatalogView?: boolean;
   isInSubscriptionsView?: boolean;
 }
@@ -16,16 +17,11 @@ const OptionsButton = () => {
   return <button className='button'>{t('options')}</button>;
 };
 
-const CatalogButton = ({ address, isInAllView, isInCatalogView }: BoardButtonsProps) => {
+const CatalogButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
   const { t } = useTranslation();
-
   return (
     <button className='button'>
-      {isInCatalogView ? (
-        <Link to={isInAllView ? '/p/all' : `/p/${address}`}>{t('return')}</Link>
-      ) : (
-        <Link to={isInAllView ? `/p/all/catalog` : `/p/${address}/catalog`}>{t('catalog')}</Link>
-      )}
+      <Link to={isInAllView ? `/p/all/catalog` : isInSubscriptionsView ? `/p/subscriptions/catalog` : `/p/${address}/catalog`}>{t('catalog')}</Link>
     </button>
   );
 };
@@ -50,11 +46,12 @@ const ReturnButton = ({ address }: BoardButtonsProps) => {
   );
 };
 
-const BottomButton = () => {
-  const { t } = useTranslation();
+const RefreshButton = () => {
+  const reset = useFeedResetStore((state) => state.reset);
+
   return (
-    <button className='button' onClick={() => window.scrollTo(0, document.body.scrollHeight)}>
-      {t('bottom')}
+    <button className='button' onClick={() => reset && reset()}>
+      Refresh
     </button>
   );
 };
@@ -74,20 +71,22 @@ export const MobileBoardButtons = () => {
   return (
     <div className={styles.mobileBoardButtons}>
       {isInPostView || isInPendingPostPage ? (
-        <div className={styles.mobilePostPageButtons}>
+        <>
           <ReturnButton address={subplebbitAddress} />
-          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} />
-          <BottomButton />
-          <div className={styles.mobilePostPageButtonsSecondRow}>
-            <OptionsButton />
-            <SubscribeButton address={subplebbitAddress} />
-          </div>
-        </div>
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          <OptionsButton />
+          <SubscribeButton address={subplebbitAddress} />
+        </>
       ) : (
         <>
+          {isInCatalogView ? (
+            <ReturnButton address={subplebbitAddress} />
+          ) : (
+            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          )}
           <OptionsButton />
-          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
           <SubscribeButton address={subplebbitAddress} />
+          <RefreshButton />
         </>
       )}
     </div>
@@ -110,19 +109,40 @@ export const DesktopBoardButtons = () => {
       <hr />
       {isInPostView || isInPendingPostPage ? (
         <>
-          [<ReturnButton address={subplebbitAddress} />] [<CatalogButton address={subplebbitAddress} />] [<BottomButton />] [
-          <OptionsButton />]
+          [
+          <ReturnButton address={subplebbitAddress} />
+          ] [
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          ] [
+          <OptionsButton />]{' '}
+          <span className={styles.subscribeButton}>
+            [<SubscribeButton address={subplebbitAddress} />]
+          </span>
+        </>
+      ) : isInCatalogView ? (
+        <>
+          [
+          <ReturnButton address={subplebbitAddress} />
+          ] [
+          <OptionsButton />
+          ] [
+          <RefreshButton />]{' '}
           <span className={styles.subscribeButton}>
             [<SubscribeButton address={subplebbitAddress} />]
           </span>
         </>
       ) : (
         <>
-          [<OptionsButton />] [
-          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />]
+          [
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          ] [
+          <OptionsButton />
+          ] [
+          <RefreshButton />]{' '}
           {!(isInAllView || isInSubscriptionsView) && (
             <span className={styles.subscribeButton}>
-              [<SubscribeButton address={subplebbitAddress} />]
+              [
+              <SubscribeButton address={subplebbitAddress} />]
             </span>
           )}
         </>

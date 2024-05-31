@@ -114,5 +114,22 @@
   "full_account_data": "vollständige Kontodaten",
   "this_account": "dieses Konto",
   "delete": "löschen",
-  "delete_account": "Konto löschen"
+  "delete_account": "Konto löschen",
+  "file_type": "Dateityp",
+  "version": "Version",
+  "spoiler": "Spoiler",
+  "interface": "Schnittstelle",
+  "invalid_url": "Ungültige URL",
+  "no_link_provided": "Kein Link angegeben",
+  "image_search": "Bildersuche",
+  "view_on": "anzeigen auf",
+  "copy_link": "Link kopieren",
+  "hide_post": "Beitrag ausblenden",
+  "hide_thread": "Thread ausblenden",
+  "unhide_post": "Beitrag anzeigen",
+  "unhide_thread": "Thread anzeigen",
+  "search_image_on_google": "Bild auf Google suchen",
+  "search_image_on_yandex": "Bild auf Yandex suchen",
+  "search_image_on_saucenao": "Bild auf SauceNAO suchen",
+  "view_on_client": "Anzeigen auf {{client}}"
 }

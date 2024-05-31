@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useAccount } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -20,7 +20,7 @@ import PostMenuDesktop from './post-menu-desktop/';
 import { PostProps } from '../post';
 import _ from 'lodash';
 
-const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
+const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { address, displayName, shortAddress } = author || {};
@@ -44,9 +44,11 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
 
   return (
     <div className={styles.postInfo}>
-      <span className={styles.checkbox}>
-        <input type='checkbox' />
-      </span>
+      {!isHidden && (
+        <span className={styles.checkbox}>
+          <input type='checkbox' />
+        </span>
+      )}
       {title && <span className={styles.subject}>{displayTitle} </span>}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
@@ -90,7 +92,7 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
             <img src='/assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
           </span>
         )}
-        {!isInPostView && !isReply && (
+        {!isInPostView && !isReply && !isHidden && (
           <span className={styles.replyButton}>
             [
             <Link
@@ -109,7 +111,7 @@ const PostInfo = ({ openReplyModal, post, roles }: PostProps) => {
 
 const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { link, linkHeight, linkWidth, parentCid } = post || {};
+  const { deleted, link, linkHeight, linkWidth, parentCid, removed } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type, url } = commentMediaInfo || {};
@@ -149,22 +151,25 @@ const PostMedia = ({ post }: PostProps) => {
         )}
       </div>
       {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
-        <CommentMedia
-          commentMediaInfo={commentMediaInfo}
-          isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
-          isReply={isReply}
-          linkHeight={linkHeight}
-          linkWidth={linkWidth}
-          showThumbnail={showThumbnail}
-          setShowThumbnail={setShowThumbnail}
-        />
+        <div className={styles.fileThumbnail}>
+          <CommentMedia
+            commentMediaInfo={commentMediaInfo}
+            isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
+            isDeleted={removed || deleted}
+            isReply={isReply}
+            linkHeight={linkHeight}
+            linkWidth={linkWidth}
+            showThumbnail={showThumbnail}
+            setShowThumbnail={setShowThumbnail}
+          />
+        </div>
       )}
     </div>
   );
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
 
   const params = useParams();
   const location = useLocation();
@@ -191,7 +196,20 @@ const PostMessage = ({ post }: PostProps) => {
           <br />
         </>
       )}
-      <Markdown content={displayContent} />
+      {removed ? (
+        <span className={styles.removedContent}>(THIS POST WAS REMOVED)</span>
+      ) : deleted ? (
+        <span className={styles.removedContent}>User deleted this post.</span>
+      ) : (
+        <Markdown content={displayContent} />
+      )}
+      {(removed || deleted) && reason && (
+        <span>
+          <br />
+          <br />
+          reason: {reason}
+        </span>
+      )}
       {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />
@@ -209,13 +227,21 @@ const PostMessage = ({ post }: PostProps) => {
 };
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
+  // handle pending mod or author edit
+  const { editedComment } = useEditedComment({ comment: post });
+  if (editedComment) {
+    post = editedComment;
+  }
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   const params = useParams();
   const location = useLocation();
   const isInPendingPostView = isPendingPostView(location.pathname, params);
-  const isInPostView = isPostPageView(location.pathname, params);
+  const isInPostPageView = isPostPageView(location.pathname, params);
+
+  const { blocked, unblock, block } = useBlock({ cid });
+  const isHidden = blocked && !isInPostPageView;
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -228,49 +254,52 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
       <div className={styles.hrWrapper}>
         <hr />
       </div>
-      {!isInPostView && (
-        <span className={styles.hideButtonWrapper}>
-          <span className={`${styles.hideButton} ${styles.hideThread}`} />
-        </span>
-      )}
-      {link && isValidURL(link) && <PostMedia post={post} />}
-      <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
-      {!content && <div className={styles.spacer} />}
-      {content && <PostMessage post={post} />}
-      {!isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostView && (
-        <span className={styles.summary}>
-          <span className={styles.expandButtonWrapper}>
-            <span className={styles.expandButton} />
+      <div className={isHidden ? styles.postDesktopBlocked : ''}>
+        {!isInPostPageView && !isDescription && !isRules && (
+          <span className={styles.hideButtonWrapper}>
+            <span className={`${styles.hideButton} ${blocked ? styles.unhideThread : styles.hideThread}`} onClick={blocked ? unblock : block} />
           </span>
-          {linksCount > 0 ? (
-            <Trans
-              i18nKey={'replies_and_links_omitted'}
-              shouldUnescape={true}
-              components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
-              values={{ repliesCount, linksCount }}
-            />
-          ) : (
-            <Trans i18nKey={'replies_omitted'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} values={{ repliesCount }} />
-          )}
-        </span>
-      )}
-      {!(pinned && !isInPostView) &&
-        !isInPendingPostView &&
-        !isDescription &&
-        !isRules &&
-        replies &&
-        (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-          <div key={index} className={styles.replyContainer}>
-            <div className={styles.replyDesktop}>
-              <div className={styles.sideArrows}>{'>>'}</div>
-              <div className={styles.reply}>
-                <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-                {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
-                {reply.content && <PostMessage post={reply} />}
+        )}
+        {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
+        <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
+        {!isHidden && !content && <div className={styles.spacer} />}
+        {!isHidden && content && <PostMessage post={post} />}
+        {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
+          <span className={styles.summary}>
+            <span className={styles.expandButtonWrapper}>
+              <span className={styles.expandButton} />
+            </span>
+            {linksCount > 0 ? (
+              <Trans
+                i18nKey={'replies_and_links_omitted'}
+                shouldUnescape={true}
+                components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
+                values={{ repliesCount, linksCount }}
+              />
+            ) : (
+              <Trans i18nKey={'replies_omitted'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} values={{ repliesCount }} />
+            )}
+          </span>
+        )}
+        {!isHidden &&
+          !(pinned && !isInPostPageView) &&
+          !isInPendingPostView &&
+          !isDescription &&
+          !isRules &&
+          replies &&
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+            <div key={index} className={styles.replyContainer}>
+              <div className={styles.replyDesktop}>
+                <div className={styles.sideArrows}>{'>>'}</div>
+                <div className={styles.reply}>
+                  <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
+                  {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
+                  {reply.content && <PostMessage post={reply} />}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 };

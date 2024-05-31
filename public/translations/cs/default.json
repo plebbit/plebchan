@@ -114,5 +114,22 @@
   "full_account_data": "plná účetní data",
   "this_account": "tento účet",
   "delete": "smazat",
-  "delete_account": "smazat účet"
+  "delete_account": "smazat účet",
+  "file_type": "Typ souboru",
+  "version": "Verze",
+  "spoiler": "spoiler",
+  "interface": "rozhraní",
+  "invalid_url": "Neplatná adresa URL",
+  "no_link_provided": "Není poskytnut žádný odkaz",
+  "image_search": "hledání obrázku",
+  "view_on": "zobrazit na",
+  "copy_link": "kopírovat odkaz",
+  "hide_post": "skrýt příspěvek",
+  "hide_thread": "skrýt vlákno",
+  "unhide_post": "zobrazit příspěvek",
+  "unhide_thread": "zobrazit vlákno",
+  "search_image_on_google": "hledat obrázek na Googlu",
+  "search_image_on_yandex": "hledat obrázek na Yandexu",
+  "search_image_on_saucenao": "hledat obrázek na SauceNAO",
+  "view_on_client": "Zobrazit na {{client}}"
 }

@@ -114,5 +114,22 @@
   "full_account_data": "teljes fiókadata",
   "this_account": "ez a fiók",
   "delete": "töröl",
-  "delete_account": "fiók törlése"
+  "delete_account": "fiók törlése",
+  "file_type": "Fájltípus",
+  "version": "Verzió",
+  "spoiler": "spoiler",
+  "interface": "felület",
+  "invalid_url": "Érvénytelen URL-cím",
+  "no_link_provided": "Nincs megadva link",
+  "image_search": "képkeresés",
+  "view_on": "nézet",
+  "copy_link": "link másolása",
+  "hide_post": "bejegyzés elrejtése",
+  "hide_thread": "szál elrejtése",
+  "unhide_post": "bejegyzés megjelenítése",
+  "unhide_thread": "szál megjelenítése",
+  "search_image_on_google": "keresés kép a Google-ben",
+  "search_image_on_yandex": "keresés kép a Yandex-ben",
+  "search_image_on_saucenao": "keresés kép a SauceNAO-n",
+  "view_on_client": "Megtekintés itt: {{client}}"
 }

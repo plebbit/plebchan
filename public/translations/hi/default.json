@@ -114,5 +114,22 @@
   "full_account_data": "पूरे खाते का डेटा",
   "this_account": "इस खाता",
   "delete": "हटाएँ",
-  "delete_account": "खाता हटाएं"
+  "delete_account": "खाता हटाएं",
+  "file_type": "फ़ाइल का प्रकार",
+  "version": "संस्करण",
+  "spoiler": "स्पॉइलर",
+  "interface": "इंटरफेस",
+  "invalid_url": "अमान्य URL",
+  "no_link_provided": "कोई लिंक नहीं दिया गया है",
+  "image_search": "चित्र खोज",
+  "view_on": "पर देखें",
+  "copy_link": "लिंक कॉपी करें",
+  "hide_post": "पोस्ट छुपाएं",
+  "hide_thread": "धागा छुपाएं",
+  "unhide_post": "पोस्ट प्रदर्शित करें",
+  "unhide_thread": "धागा प्रदर्शित करें",
+  "search_image_on_google": "गूगल पर छवि खोजें",
+  "search_image_on_yandex": "Yandex पर छवि खोजें",
+  "search_image_on_saucenao": "SauceNAO पर छवि खोजें",
+  "view_on_client": "{{client}} पर देखें"
 }

@@ -9,16 +9,16 @@ import Embed, { canEmbed } from '../embed';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
+  isDeleted?: boolean;
   isOutOfFeed?: boolean; // virtuoso wrapper unneeded
   isReply: boolean;
   linkHeight?: number;
   linkWidth?: number;
   showThumbnail?: boolean;
   setShowThumbnail: (showThumbnail: boolean) => void;
-  toggleExpanded?: () => void;
 }
 
-const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
+const Thumbnail = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
   const [hasError, setHasError] = useState(false);
   const handleError = () => setHasError(true);
@@ -49,7 +49,12 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
   if (type === 'image') {
     thumbnailComponent = <img src={url} alt='' onError={handleError} onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'video') {
-    thumbnailComponent = thumbnail ? <img src={thumbnail} alt='' /> : <video src={`${url}#t=0.001`} onClick={() => setShowThumbnail(false)} />;
+    thumbnailComponent = thumbnail ? (
+      <img src={thumbnail} alt='' />
+    ) : (
+      // show first frame of the video, as a workaround for Safari not loading thumbnails
+      <video src={`${url}#t=0.001`} onClick={() => setShowThumbnail(false)} />
+    );
   } else if (type === 'webpage') {
     thumbnailComponent = <img src={thumbnail} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'iframe') {
@@ -60,16 +65,12 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
     thumbnailComponent = <audio src={url} controls />;
   }
 
-  if (hasError) {
-    thumbnailComponent = <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />;
-  }
-
   const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
 
   const linkWithoutThumbnail = url && new URL(url);
 
-  return hasError ? (
+  return hasError || isDeleted ? (
     <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />
   ) : isOutOfFeed ? (
     <span className={styles.subplebbitAvatar}>{thumbnailComponent}</span>
@@ -132,7 +133,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   );
 };
 
-const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
+const CommentMedia = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const { type, url } = commentMediaInfo || {};
@@ -143,6 +144,7 @@ const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, link
         {url && (
           <Thumbnail
             commentMediaInfo={commentMediaInfo}
+            isDeleted={isDeleted}
             isOutOfFeed={isOutOfFeed}
             isReply={isReply}
             linkHeight={linkHeight}

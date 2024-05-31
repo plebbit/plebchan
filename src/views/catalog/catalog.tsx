@@ -8,6 +8,7 @@ import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbi
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useWindowWidth from '../../hooks/use-window-width';
+import useFeedResetStore from '../../stores/use-feed-reset-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
@@ -61,7 +62,6 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
     return _feed;
   }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub]);
 
-  // Memoize rows calculation, ensuring it updates on changes to the modified feed or column count
   const rows = useMemo(() => {
     const rows = [];
     for (let i = 0; i < feedWithDescriptionAndRules.length; i += columnCount) {
@@ -102,7 +102,12 @@ const Catalog = () => {
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
-  const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
+  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
+
+  const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
+  useEffect(() => {
+    setResetFunction(reset);
+  }, [reset, setResetFunction]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { shortAddress, state, title } = subplebbit || {};
@@ -130,10 +135,9 @@ const Catalog = () => {
     return <div className={styles.footer}>{footerContent}</div>;
   };
 
-  const isFeedloaded = feed.length > 0 || state === 'failed';
+  const isFeedLoaded = feed.length > 0 || state === 'failed';
 
-  // split feed into rows
-  const rows = useFeedRows(columnCount, feed, isFeedloaded, subplebbit);
+  const rows = useFeedRows(columnCount, feed, isFeedLoaded, subplebbit);
 
   // save the last Virtuoso state to restore it when navigating back
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);

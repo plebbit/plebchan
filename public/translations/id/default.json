@@ -114,5 +114,22 @@
   "full_account_data": "data akun lengkap",
   "this_account": "akun ini",
   "delete": "hapus",
-  "delete_account": "hapus akun"
+  "delete_account": "hapus akun",
+  "file_type": "Tipe file",
+  "version": "Versi",
+  "spoiler": "spoiler",
+  "interface": "antarmuka",
+  "invalid_url": "URL tidak valid",
+  "no_link_provided": "Tidak ada tautan yang diberikan",
+  "image_search": "pencarian gambar",
+  "view_on": "lihat di",
+  "copy_link": "salin tautan",
+  "hide_post": "sembunyikan pos",
+  "hide_thread": "sembunyikan utas",
+  "unhide_post": "tampilkan pos",
+  "unhide_thread": "tampilkan utas",
+  "search_image_on_google": "cari gambar di Google",
+  "search_image_on_yandex": "cari gambar di Yandex",
+  "search_image_on_saucenao": "cari gambar di SauceNAO",
+  "view_on_client": "Lihat di {{client}}"
 }
