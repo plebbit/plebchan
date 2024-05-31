@@ -62,6 +62,7 @@
 }
 
 .postDesktop .checkbox, .replyDesktop .checkbox {
+  display: inline-block;
   padding: 3px 7px 3px 4px;
   filter: var(--filter80);
 }
@@ -327,7 +328,7 @@
   border-left: none;
   border-top: none;
   display: table;
-  padding: 2px;
+  padding: 0 2px 2px 2px;
 }
 
 .replyDesktop .postInfo {
