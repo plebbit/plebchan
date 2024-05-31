@@ -117,9 +117,11 @@ export const DesktopBoardButtons = () => {
           <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           ] [
           <OptionsButton />]{' '}
-          <span className={styles.subscribeButton}>
-            [<SubscribeButton address={subplebbitAddress} />]
-          </span>
+          {isInPostView && (
+            <span className={styles.subscribeButton}>
+              [<SubscribeButton address={subplebbitAddress} />]
+            </span>
+          )}
         </>
       ) : isInCatalogView ? (
         <>
@@ -129,9 +131,11 @@ export const DesktopBoardButtons = () => {
           <OptionsButton />
           ] [
           <RefreshButton />]{' '}
-          <span className={styles.subscribeButton}>
-            [<SubscribeButton address={subplebbitAddress} />]
-          </span>
+          {!(isInAllView || isInSubscriptionsView) && (
+            <span className={styles.subscribeButton}>
+              [<SubscribeButton address={subplebbitAddress} />]
+            </span>
+          )}
         </>
       ) : (
         <>
