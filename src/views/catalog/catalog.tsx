@@ -43,7 +43,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         author: { displayName: `## ${t('board_mods')}` },
         content: isInAllView ? multisub?.description : description,
         link: avatarUrl,
-        title: t('welcome_to_board', { board: isInAllView ? multisub?.title : title || `p/${shortAddress}` }),
+        title: t('welcome_to_board', { board: isInAllView ? multisub?.title : title || `p/${shortAddress}`, interpolation: { escapeValue: false } }),
         pinned: true,
         locked: true,
       });
