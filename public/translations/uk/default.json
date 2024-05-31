@@ -136,5 +136,7 @@
   "collapse_all_settings": "Згорнути всі налаштування",
   "refresh": "Оновити",
   "no_board_selected": "не обрано жодного форуму",
-  "none": "немає"
+  "none": "немає",
+  "not_subscribed_to_any_board": "Ви ще не підписалися на жоден форум.",
+  "board_mods": "Дошка Моди"
 }

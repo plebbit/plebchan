@@ -136,5 +136,7 @@
   "collapse_all_settings": "Comprimi tutte le impostazioni",
   "refresh": "Aggiorna",
   "no_board_selected": "nessun forum selezionato",
-  "none": "nessuno"
+  "none": "nessuno",
+  "not_subscribed_to_any_board": "Non sei ancora iscritto a nessun forum.",
+  "board_mods": "Moderatori del Forum"
 }

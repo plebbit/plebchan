@@ -23,7 +23,7 @@ const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress
     isDescription: true,
     subplebbitAddress,
     timestamp: isInAllView ? multisubMetadata?.createdAt : createdAt,
-    author: { displayName: '## Board Mods' },
+    author: { displayName: `'## ${t('board_mods')}` },
     content: isInAllView ? multisubMetadata?.description : description,
     link: avatarUrl,
     title: t('welcome_to_board', {

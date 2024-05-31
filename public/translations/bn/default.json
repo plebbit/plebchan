@@ -136,5 +136,7 @@
   "collapse_all_settings": "সমস্ত সেটিংস সঙ্কুচিত করুন",
   "refresh": "পুনরায় লোড করুন",
   "no_board_selected": "কোনো ফোরাম নির্বাচিত হয়নি",
-  "none": "নাই"
+  "none": "নাই",
+  "not_subscribed_to_any_board": "আপনি এখনো কোনো ফোরামে সদস্য হননি।",
+  "board_mods": "বোর্ড মডস"
 }

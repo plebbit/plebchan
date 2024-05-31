@@ -136,5 +136,7 @@
   "collapse_all_settings": "ยุบการตั้งค่าทั้งหมด",
   "refresh": "รีเฟรช",
   "no_board_selected": "ไม่มีกระดานข่าวที่เลือก",
-  "none": "ไม่มี"
+  "none": "ไม่มี",
+  "not_subscribed_to_any_board": "คุณยังไม่ได้สมัครสมาชิกในกระดานข่าวใดๆ ยัง",
+  "board_mods": "บอร์ด Mods"
 }

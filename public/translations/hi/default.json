@@ -136,5 +136,7 @@
   "collapse_all_settings": "सभी सेटिंग्स को संक्षेपित करें",
   "refresh": "ताज़ा करें",
   "no_board_selected": "कोई मंच चयनित नहीं हुआ",
-  "none": "कोई नहीं"
+  "none": "कोई नहीं",
+  "not_subscribed_to_any_board": "आपने अभी तक किसी भी मंच में सदस्यता नहीं ली है।",
+  "board_mods": "बोर्ड मॉड्स"
 }

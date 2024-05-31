@@ -136,5 +136,7 @@
   "collapse_all_settings": "קפל את כל ההגדרות",
   "refresh": "רענן",
   "no_board_selected": "לא נבחרו שום פורומים",
-  "none": "אף אחד"
+  "none": "אף אחד",
+  "not_subscribed_to_any_board": "עדיין לא הרשמת לאף פורום.",
+  "board_mods": "מנהלי הפורום"
 }

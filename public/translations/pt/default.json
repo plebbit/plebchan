@@ -136,5 +136,7 @@
   "collapse_all_settings": "Recolher todas as configurações",
   "refresh": "Atualizar",
   "no_board_selected": "nenhum fórum selecionado",
-  "none": "nenhum"
+  "none": "nenhum",
+  "not_subscribed_to_any_board": "Você ainda não se inscreveu em nenhum fórum.",
+  "board_mods": "Mods do fórum"
 }

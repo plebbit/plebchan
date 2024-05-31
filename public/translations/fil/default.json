@@ -136,5 +136,7 @@
   "collapse_all_settings": "I-collapse ang lahat ng mga setting",
   "refresh": "I-refresh",
   "no_board_selected": "walang mga board na napiling",
-  "none": "wala"
+  "none": "wala",
+  "not_subscribed_to_any_board": "Hindi ka pa naka-subscribe sa anumang mga board.",
+  "board_mods": "Board Mods"
 }

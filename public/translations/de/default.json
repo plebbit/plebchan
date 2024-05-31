@@ -136,5 +136,7 @@
   "collapse_all_settings": "Alle Einstellungen reduzieren",
   "refresh": "Aktualisieren",
   "no_board_selected": "keine Foren ausgewählt",
-  "none": "keiner"
+  "none": "keiner",
+  "not_subscribed_to_any_board": "Du hast dich noch nicht für Foren angemeldet.",
+  "board_mods": "Board-Moderatoren"
 }

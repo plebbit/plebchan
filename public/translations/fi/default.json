@@ -136,5 +136,7 @@
   "collapse_all_settings": "Sulje kaikki asetukset",
   "refresh": "Päivitä",
   "no_board_selected": "ei foorumeja valittu",
-  "none": "ei mikään"
+  "none": "ei mikään",
+  "not_subscribed_to_any_board": "Et ole vielä tilannut mitään foorumeita.",
+  "board_mods": "Hallituksen Mods"
 }

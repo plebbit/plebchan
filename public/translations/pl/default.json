@@ -136,5 +136,7 @@
   "collapse_all_settings": "Zwiń wszystkie ustawienia",
   "refresh": "Odśwież",
   "no_board_selected": "nie wybrano żadnych forów",
-  "none": "żaden"
+  "none": "żaden",
+  "not_subscribed_to_any_board": "Nie zapisałeś się jeszcze na żadne fora.",
+  "board_mods": "Tablica Mods"
 }

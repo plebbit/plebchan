@@ -60,7 +60,7 @@ const Board = () => {
       {state === 'failed' ? (
         state
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-        `You have not subscribed to any board yet.`
+        t('not_subscribed_to_any_board')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}

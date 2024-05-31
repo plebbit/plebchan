@@ -136,5 +136,7 @@
   "collapse_all_settings": "Sammenklap alle indstillinger",
   "refresh": "Opdater",
   "no_board_selected": "ingen opslagstavler valgt",
-  "none": "ingen"
+  "none": "ingen",
+  "not_subscribed_to_any_board": "Du er endnu ikke tilmeldt nogen opslagstavler.",
+  "board_mods": "Board Mods"
 }

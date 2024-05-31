@@ -39,7 +39,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         isDescription: true,
         subplebbitAddress: address,
         timestamp: createdAt,
-        author: { displayName: '## Board Mods' },
+        author: { displayName: `## ${t('board_mods')}` },
         content: isInAllView ? multisub?.description : description,
         link: avatarUrl,
         title: t('welcome_to_board', { board: isInAllView ? multisub?.title : title || `p/${shortAddress}` }),
@@ -52,7 +52,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         isRules: true,
         subplebbitAddress: address,
         timestamp: createdAt,
-        author: { displayName: '## Board Mods' },
+        author: { displayName: `## ${t('board_mods')}` },
         content: rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
         title: _.capitalize(t('rules')),
         pinned: true,
@@ -117,7 +117,7 @@ const Catalog = () => {
       {state === 'failed' ? (
         state
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-        `You haven't subscribed to any board yet.`
+        t('not_subscribed_to_any_board')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}

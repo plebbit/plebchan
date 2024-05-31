@@ -136,5 +136,7 @@
   "collapse_all_settings": "すべての設定を折りたたむ",
   "refresh": "更新",
   "no_board_selected": "掲示板が選択されていません",
-  "none": "なし"
+  "none": "なし",
+  "not_subscribed_to_any_board": "まだどの掲示板にも購読していません。",
+  "board_mods": "ボードの管理者"
 }

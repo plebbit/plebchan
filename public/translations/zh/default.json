@@ -136,5 +136,7 @@
   "collapse_all_settings": "折叠所有设置",
   "refresh": "刷新",
   "no_board_selected": "没有选择任何论坛",
-  "none": "无"
+  "none": "无",
+  "not_subscribed_to_any_board": "您尚未订阅任何论坛。",
+  "board_mods": "董事會版主"
 }

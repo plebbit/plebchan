@@ -136,5 +136,7 @@
   "collapse_all_settings": "Zvogëlo të gjitha cilësimet",
   "refresh": "Rifresko",
   "no_board_selected": "asnjë forume të zgjedhura",
-  "none": "asnjë"
+  "none": "asnjë",
+  "not_subscribed_to_any_board": "Nuk jeni ende i abonuar në asnjë forum.",
+  "board_mods": "Tabela Mods"
 }

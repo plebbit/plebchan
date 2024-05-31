@@ -136,5 +136,7 @@
   "collapse_all_settings": "Collapse All Settings",
   "refresh": "Refresh",
   "no_board_selected": "no boards selected",
-  "none": "none"
+  "none": "none",
+  "not_subscribed_to_any_board": "You have not subscribed to any boards yet.",
+  "board_mods": "Board Mods"
 }

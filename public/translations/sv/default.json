@@ -136,5 +136,7 @@
   "collapse_all_settings": "Kollapsa alla inställningar",
   "refresh": "Uppdatera",
   "no_board_selected": "inga forum valda",
-  "none": "ingen"
+  "none": "ingen",
+  "not_subscribed_to_any_board": "Du har ännu inte prenumererat på några forum.",
+  "board_mods": "Styrelse Mods"
 }

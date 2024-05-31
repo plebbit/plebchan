@@ -136,5 +136,7 @@
   "collapse_all_settings": "Réduire toutes les configurations",
   "refresh": "Actualiser",
   "no_board_selected": "aucun forum sélectionné",
-  "none": "aucun"
+  "none": "aucun",
+  "not_subscribed_to_any_board": "Vous n'avez encore souscrit à aucun forum.",
+  "board_mods": "Mods de la table"
 }

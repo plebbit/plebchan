@@ -136,5 +136,7 @@
   "collapse_all_settings": "Recoltați toate setările",
   "refresh": "Reîmprospătați",
   "no_board_selected": "nu s-au selectat niciun forum",
-  "none": "nici unul"
+  "none": "nici unul",
+  "not_subscribed_to_any_board": "Nu v-ați abonat încă la niciun forum.",
+  "board_mods": "Mods de la bord"
 }
