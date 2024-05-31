@@ -161,7 +161,7 @@ const Catalog = () => {
     if (isInAllView) documentTitle = t('all');
     else if (isInSubscriptionsView) documentTitle = t('subscriptions');
     document.title = documentTitle + ` - ${t('catalog')}`;
-  }, [title, shortAddress]);
+  }, [title, shortAddress, isInAllView, isInSubscriptionsView, t]);
 
   return (
     <div className={styles.content}>
