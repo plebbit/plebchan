@@ -101,7 +101,7 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
 
-  const { blocked, unblock, block } = useBlock({ address: cid });
+  const { blocked, unblock, block } = useBlock({ cid });
 
   const location = useLocation();
   const params = useParams();

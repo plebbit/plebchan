@@ -221,7 +221,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostPageView = isPostPageView(location.pathname, params);
 
-  const { blocked, unblock, block } = useBlock({ address: cid });
+  const { blocked, unblock, block } = useBlock({ cid });
   const isHidden = blocked && !isInPostPageView;
 
   const replies = useReplies(post);
