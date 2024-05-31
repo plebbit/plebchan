@@ -58,8 +58,9 @@ const useSubmitStore = create<SubmitState>((set) => ({
 }));
 
 export const LinkTypePreviewer = ({ link }: { link: string }) => {
+  const { t } = useTranslation();
   const mediaInfo = getLinkMediaInfo(link);
-  return isValidURL(link) ? mediaInfo?.type : 'Invalid URL';
+  return isValidURL(link) ? mediaInfo?.type : t('invalid_url');
 };
 
 const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
@@ -215,8 +216,8 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
           </td>
         </tr>
         <tr className={styles.linkType}>
-          <td>file type</td>
-          <td>{url ? <LinkTypePreviewer link={url} /> : 'No link provided'}</td>
+          <td>{t('file_type')}</td>
+          <td>{url ? <LinkTypePreviewer link={url} /> : t('no_link_provided')}</td>
         </tr>
         <tr className={styles.spoilerButton}>
           <td>{t('options')}</td>
@@ -224,7 +225,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
             [
             <label>
               <input type='checkbox' onChange={(e) => (isInPostView ? setContent.spoiler(e.target.checked) : setSubmitStore({ spoiler: e.target.checked }))} />
-              Spoiler?
+              {t('spoiler')}?
             </label>
             ]
           </td>

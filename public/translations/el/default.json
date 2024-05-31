@@ -114,5 +114,22 @@
   "full_account_data": "πλήρα δεδομένα λογαριασμού",
   "this_account": "αυτός ο λογαριασμός",
   "delete": "διαγραφή",
-  "delete_account": "διαγραφή λογαριασμού"
+  "delete_account": "διαγραφή λογαριασμού",
+  "file_type": "Τύπος αρχείου",
+  "version": "Έκδοση",
+  "spoiler": "spoiler",
+  "interface": "διεπαφή",
+  "invalid_url": "Μη έγκυρη διεύθυνση URL",
+  "no_link_provided": "Δεν παρέχεται σύνδεσμος",
+  "image_search": "αναζήτηση εικόνων",
+  "view_on": "προβολή σε",
+  "copy_link": "αντιγραφή συνδέσμου",
+  "hide_post": "απόκρυψη ανάρτησης",
+  "hide_thread": "απόκρυψη νήματος",
+  "unhide_post": "εμφάνιση ανάρτησης",
+  "unhide_thread": "εμφάνιση νήματος",
+  "search_image_on_google": "αναζήτηση εικόνας στο Google",
+  "search_image_on_yandex": "αναζήτηση εικόνας στο Yandex",
+  "search_image_on_saucenao": "αναζήτηση εικόνας στο SauceNAO",
+  "view_on_client": "Προβολή στο {{client}}"
 }

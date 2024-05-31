@@ -114,5 +114,22 @@
   "full_account_data": "전체 계정 데이터",
   "this_account": "이 계정",
   "delete": "삭제",
-  "delete_account": "계정 삭제"
+  "delete_account": "계정 삭제",
+  "file_type": "파일 유형",
+  "version": "버전",
+  "spoiler": "스포일러",
+  "interface": "인터페이스",
+  "invalid_url": "잘못된 URL",
+  "no_link_provided": "링크가 제공되지 않았습니다",
+  "image_search": "이미지 검색",
+  "view_on": "보기",
+  "copy_link": "링크 복사",
+  "hide_post": "게시물 숨기기",
+  "hide_thread": "스레드 숨기기",
+  "unhide_post": "게시물 숨기기 해제",
+  "unhide_thread": "스레드 숨기기 해제",
+  "search_image_on_google": "Google 이미지 검색",
+  "search_image_on_yandex": "Yandex 이미지 검색",
+  "search_image_on_saucenao": "SauceNAO 이미지 검색",
+  "view_on_client": "{{client}}에서 보기"
 }

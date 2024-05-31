@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
+import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import styles from './post-menu-mobile.module.css';
 import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
@@ -15,6 +16,7 @@ interface PostMenuMobileProps {
 }
 
 const CopyLinkButton = ({ cid, subplebbitAddress, onClose }: PostMenuMobileProps) => {
+  const { t } = useTranslation();
   return (
     <div
       onClick={() => {
@@ -22,37 +24,38 @@ const CopyLinkButton = ({ cid, subplebbitAddress, onClose }: PostMenuMobileProps
         onClose();
       }}
     >
-      <div className={styles.postMenuItem}>Copy link</div>
+      <div className={styles.postMenuItem}>{t('copy_link')}</div>
     </div>
   );
 };
 
 const ImageSearchButtons = ({ url, onClose }: { url: string; onClose: () => void }) => {
+  const { t } = useTranslation();
   return (
     <div onClick={onClose}>
       <a href={`https://lens.google.com/uploadbyurl?url=${url}`} target='_blank' rel='noreferrer'>
-        <div className={styles.postMenuItem}>Search image on Google</div>
+        <div className={styles.postMenuItem}>{t('search_image_on_google')}</div>
       </a>
       <a href={`https://www.yandex.com/images/search?img_url=${url}&rpt=imageview`} target='_blank' rel='noreferrer'>
-        <div className={styles.postMenuItem}>Search image on Yandex</div>
+        <div className={styles.postMenuItem}>{t('search_image_on_yandex')}</div>
       </a>
       <a href={`https://saucenao.com/search.php?url=${url}`} target='_blank' rel='noreferrer'>
-        <div className={styles.postMenuItem}>Search image on SauceNAO</div>
+        <div className={styles.postMenuItem}>{t('search_image_on_saucenao')}</div>
       </a>
     </div>
   );
 };
 
 const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuMobileProps) => {
+  const { t } = useTranslation();
   const viewOnOtherClientLink = `p/${subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
-
   return (
     <div onClick={onClose}>
       <a href={`https://seedit.app/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
-        <div className={styles.postMenuItem}>View on Seedit</div>
+        <div className={styles.postMenuItem}>{t('view_on_client', { client: 'Seedit' })}</div>
       </a>
       <a href={`https://plebones.netlify.app/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
-        <div className={styles.postMenuItem}>View on Plebones</div>
+        <div className={styles.postMenuItem}>{t('view_on_client', { client: 'Plebones' })}</div>
       </a>
     </div>
   );

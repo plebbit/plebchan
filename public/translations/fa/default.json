@@ -114,5 +114,22 @@
   "full_account_data": "داده حساب کامل",
   "this_account": "این حساب",
   "delete": "حذف کنید",
-  "delete_account": "حذف حساب"
+  "delete_account": "حذف حساب",
+  "file_type": "نوع فایل",
+  "version": "نسخه",
+  "spoiler": "اسپویلر",
+  "interface": "رابط",
+  "invalid_url": "آدرس اینترنتی نامعتبر است",
+  "no_link_provided": "لینکی ارائه نشده است",
+  "image_search": "جستجوی تصویر",
+  "view_on": "نمایش در",
+  "copy_link": "رونوشت لینک",
+  "hide_post": "پنهان کردن پست",
+  "hide_thread": "پنهان کردن موضوع",
+  "unhide_post": "نمایش پست",
+  "unhide_thread": "نمایش موضوع",
+  "search_image_on_google": "جستجوی تصویر در گوگل",
+  "search_image_on_yandex": "جستجوی تصویر در Yandex",
+  "search_image_on_saucenao": "جستجوی تصویر در SauceNAO",
+  "view_on_client": "مشاهده در {{client}}"
 }

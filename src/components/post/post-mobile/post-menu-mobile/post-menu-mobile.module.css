@@ -22,12 +22,12 @@
   padding: 0;
   margin: 0;
   white-space: nowrap;
-  outline: none;
 }
 
 .postMenu a {
   text-decoration: none;
   color: inherit;
+  outline: none;
 }
 
 .postMenuItem {

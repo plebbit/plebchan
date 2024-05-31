@@ -114,5 +114,22 @@
   "full_account_data": "tam hesap verisi",
   "this_account": "bu hesap",
   "delete": "sil",
-  "delete_account": "hesabı sil"
+  "delete_account": "hesabı sil",
+  "file_type": "Dosya türü",
+  "version": "Sürüm",
+  "spoiler": "spoiler",
+  "interface": "arayüz",
+  "invalid_url": "Geçersiz URL",
+  "no_link_provided": "Hiçbir bağlantı sağlanmadı",
+  "image_search": "resim arama",
+  "view_on": "üzerinde görüntüle",
+  "copy_link": "bağlantıyı kopyala",
+  "hide_post": "gönderiyi gizle",
+  "hide_thread": "konuyu gizle",
+  "unhide_post": "gönderiyi göster",
+  "unhide_thread": "konuyu göster",
+  "search_image_on_google": "Google'da resim ara",
+  "search_image_on_yandex": "Yandex'da resim ara",
+  "search_image_on_saucenao": "SauceNAO'da resim ara",
+  "view_on_client": "{{client}}'de görüntüle"
 }

@@ -114,5 +114,22 @@
   "full_account_data": "täydelliset tilitiedot",
   "this_account": "tämä tili",
   "delete": "poista",
-  "delete_account": "poista tili"
+  "delete_account": "poista tili",
+  "file_type": "Tiedostotyyppi",
+  "version": "Versio",
+  "spoiler": "spoiler",
+  "interface": "liitäntä",
+  "invalid_url": "Virheellinen URL-osoite",
+  "no_link_provided": "Ei linkkiä annettu",
+  "image_search": "kuvahaku",
+  "view_on": "näytä",
+  "copy_link": "kopioi linkki",
+  "hide_post": "piilota viesti",
+  "hide_thread": "piilota keskustelu",
+  "unhide_post": "näytä viesti",
+  "unhide_thread": "näytä keskustelu",
+  "search_image_on_google": "etsi kuva Googlesta",
+  "search_image_on_yandex": "etsi kuva Yandexistä",
+  "search_image_on_saucenao": "etsi kuva SauceNAO: sta",
+  "view_on_client": "Näytä {{client}}: ssä"
 }

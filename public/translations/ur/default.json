@@ -114,5 +114,22 @@
   "full_account_data": "مکمل اکاؤنٹ ڈیٹا",
   "this_account": "یہ اکاؤنٹ",
   "delete": "حذف کریں",
-  "delete_account": "اکاؤنٹ حذف کریں"
+  "delete_account": "اکاؤنٹ حذف کریں",
+  "file_type": "فائل کی قسم",
+  "version": "ورژن",
+  "spoiler": "سپوائلر",
+  "interface": "انٹرفیس",
+  "invalid_url": "غیر درست یو آر ایل",
+  "no_link_provided": "کوئی لنک فراہم نہیں کیا گیا",
+  "image_search": "تصویر کی تلاش",
+  "view_on": "پر دیکھیں",
+  "copy_link": "لنک کاپی کریں",
+  "hide_post": "پوسٹ چھپائیں",
+  "hide_thread": "دھاگہ چھپائیں",
+  "unhide_post": "پوسٹ دکھائیں",
+  "unhide_thread": "دھاگہ دکھائیں",
+  "search_image_on_google": "گوگل پر تصویر کا مطالعہ کریں",
+  "search_image_on_yandex": "یانڈیکس پر تصویر کا مطالعہ کریں",
+  "search_image_on_saucenao": "SauceNAO پر تصویر کا مطالعہ کریں",
+  "view_on_client": "{{client}} پر دیکھیں"
 }

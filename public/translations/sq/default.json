@@ -114,5 +114,22 @@
   "full_account_data": "të dhënat e plotë të llogarisë",
   "this_account": "kjo llogaria",
   "delete": "fshij",
-  "delete_account": "fshi llogarinë"
+  "delete_account": "fshi llogarinë",
+  "file_type": "Lloji i skedarit",
+  "version": "Version",
+  "spoiler": "spoiler",
+  "interface": "ndërfaqe",
+  "invalid_url": "URL jo e vlefshëm",
+  "no_link_provided": "Nuk është dhënë asnjë lidhje",
+  "image_search": "kërkim imazhesh",
+  "view_on": "shiko në",
+  "copy_link": "kopjo linkun",
+  "hide_post": "fsheh postën",
+  "hide_thread": "fsheh fijen",
+  "unhide_post": "shfaq postën",
+  "unhide_thread": "shfaq fijen",
+  "search_image_on_google": "kërko imazhin në Google",
+  "search_image_on_yandex": "kërko imazhin në Yandex",
+  "search_image_on_saucenao": "kërko imazhin në SauceNAO",
+  "view_on_client": "Shiko në {{client}}"
 }

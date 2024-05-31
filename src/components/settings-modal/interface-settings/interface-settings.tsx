@@ -107,7 +107,7 @@ const InterfaceSettings = () => {
   return (
     <div className={styles.interfaceSettings}>
       <div className={styles.version}>
-        Version:{' '}
+        {t('version')}:{' '}
         <a href={`https://github.com/plebbit/plebchan/releases/tag/v${packageJson.version}`} target='_blank' rel='noopener noreferrer'>
           {packageJson.version}
         </a>

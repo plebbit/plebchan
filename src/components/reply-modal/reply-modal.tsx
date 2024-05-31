@@ -127,14 +127,14 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
         <div className={styles.footer}>
           {url && (
             <>
-              Embed: <LinkTypePreviewer link={url} />{' '}
+              {t('file_type')}: <LinkTypePreviewer link={url} />{' '}
             </>
           )}
           <span className={styles.spoilerButton}>
             [
             <label>
               <input type='checkbox' onChange={(e) => setContent.spoiler(e.target.checked)} />
-              Spoiler?
+              {t('spoiler')}?
             </label>
             ]
           </span>

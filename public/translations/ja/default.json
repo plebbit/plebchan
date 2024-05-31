@@ -114,5 +114,22 @@
   "full_account_data": "フルアカウントデータ",
   "this_account": "このアカウント",
   "delete": "削除",
-  "delete_account": "アカウントを削除"
+  "delete_account": "アカウントを削除",
+  "file_type": "ファイルタイプ",
+  "version": "バージョン",
+  "spoiler": "ネタバレ",
+  "interface": "インターフェース",
+  "invalid_url": "無効なURL",
+  "no_link_provided": "リンクが指定されていません",
+  "image_search": "画像検索",
+  "view_on": "で表示",
+  "copy_link": "リンクをコピー",
+  "hide_post": "投稿を非表示",
+  "hide_thread": "スレッドを非表示",
+  "unhide_post": "投稿を表示",
+  "unhide_thread": "スレッドを表示",
+  "search_image_on_google": "Google で画像を検索",
+  "search_image_on_yandex": "Yandex で画像を検索",
+  "search_image_on_saucenao": "SauceNAO で画像を検索",
+  "view_on_client": "{{client}} で表示"
 }

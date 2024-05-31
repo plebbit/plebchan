@@ -114,5 +114,22 @@
   "full_account_data": "fullständig kontodata",
   "this_account": "detta konto",
   "delete": "ta bort",
-  "delete_account": "ta bort konto"
+  "delete_account": "ta bort konto",
+  "file_type": "Filtyp",
+  "version": "Version",
+  "spoiler": "spoiler",
+  "interface": "gränssnitt",
+  "invalid_url": "Ogiltig URL",
+  "no_link_provided": "Ingen länk angiven",
+  "image_search": "bildsökning",
+  "view_on": "se på",
+  "copy_link": "kopiera länk",
+  "hide_post": "dölj inlägg",
+  "hide_thread": "dölj tråd",
+  "unhide_post": "visa inlägg",
+  "unhide_thread": "visa tråd",
+  "search_image_on_google": "sök bild på Google",
+  "search_image_on_yandex": "sök bild på Yandex",
+  "search_image_on_saucenao": "sök bild på SauceNAO",
+  "view_on_client": "Visa på {{client}}"
 }
