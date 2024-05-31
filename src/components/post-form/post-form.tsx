@@ -18,6 +18,7 @@ type SubmitState = {
   title: string | undefined;
   content: string | undefined;
   link: string | undefined;
+  spoiler: boolean | undefined;
   publishCommentOptions: PublishCommentOptions;
   setSubmitStore: (data: Partial<SubmitState>) => void;
   resetSubmitStore: () => void;
@@ -30,14 +31,16 @@ const useSubmitStore = create<SubmitState>((set) => ({
   title: undefined,
   content: undefined,
   link: undefined,
+  spoiler: undefined,
   publishCommentOptions: {},
-  setSubmitStore: ({ subplebbitAddress, title, content, link }) =>
+  setSubmitStore: ({ subplebbitAddress, title, content, link, spoiler }) =>
     set((state) => {
       const nextState = { ...state };
       if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
       if (title !== undefined) nextState.title = title || undefined;
       if (content !== undefined) nextState.content = content || undefined;
       if (link !== undefined) nextState.link = link || undefined;
+      if (spoiler !== undefined) nextState.spoiler = spoiler || undefined;
 
       nextState.publishCommentOptions = {
         ...nextState,
@@ -51,7 +54,7 @@ const useSubmitStore = create<SubmitState>((set) => ({
       };
       return nextState;
     }),
-  resetSubmitStore: () => set({ subplebbitAddress: undefined, title: undefined, content: undefined, link: undefined, publishCommentOptions: {} }),
+  resetSubmitStore: () => set({ subplebbitAddress: undefined, title: undefined, content: undefined, link: undefined, spoiler: undefined, publishCommentOptions: {} }),
 }));
 
 export const LinkTypePreviewer = ({ link }: { link: string }) => {
@@ -209,13 +212,21 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
                 isInPostView ? setContent.link(e.target.value) : setSubmitStore({ link: e.target.value });
               }}
             />
-            <span className={styles.linkType}>
-              {url && (
-                <>
-                  (<LinkTypePreviewer link={url} />)
-                </>
-              )}
-            </span>
+          </td>
+        </tr>
+        <tr className={styles.linkType}>
+          <td>file type</td>
+          <td>{url ? <LinkTypePreviewer link={url} /> : 'No link provided'}</td>
+        </tr>
+        <tr className={styles.spoilerButton}>
+          <td>{t('options')}</td>
+          <td>
+            [
+            <label>
+              <input type='checkbox' onChange={(e) => (isInPostView ? setContent.spoiler(e.target.checked) : setSubmitStore({ spoiler: e.target.checked }))} />
+              Spoiler?
+            </label>
+            ]
           </td>
         </tr>
         {(isInAllView || isInSubscriptionsView) && (
