@@ -74,7 +74,7 @@ const InfoBox = () => {
 
 const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
   const { t } = useTranslation();
-  const { address, title, tags } = subplebbit;
+  const { address, title, tags } = subplebbit || {};
   const nsfwTags = ['adult', 'gore'];
   const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
 
@@ -94,13 +94,13 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
   const { accountSubplebbits } = useAccountSubplebbits();
   const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
 
-  const plebbitSubs = multisub.filter((sub) => sub.tags.includes('plebbit'));
+  const plebbitSubs = multisub.filter((sub) => sub.tags?.includes('plebbit'));
   const interestsSubs = multisub.filter(
-    (sub) => sub.tags.includes('topic') && !sub.tags.includes('plebbit') && !sub.tags.includes('country') && !sub.tags.includes('international'),
+    (sub) => sub.tags?.includes('topic') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('country') && !sub.tags?.includes('international'),
   );
-  const randomSubs = multisub.filter((sub) => sub.tags.includes('random') && !sub.tags.includes('plebbit'));
-  const internationalSubs = multisub.filter((sub) => sub.tags.includes('international') || sub.tags.includes('country'));
-  const projectsSubs = multisub.filter((sub) => sub.tags.includes('project') && !sub.tags.includes('plebbit') && !sub.tags.includes('topic'));
+  const randomSubs = multisub.filter((sub) => sub.tags?.includes('random') && !sub.tags?.includes('plebbit'));
+  const internationalSubs = multisub.filter((sub) => sub.tags?.includes('international') || sub.tags?.includes('country'));
+  const projectsSubs = multisub.filter((sub) => sub.tags?.includes('project') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('topic'));
 
   const isSubOffline = (address: string) => {
     const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
