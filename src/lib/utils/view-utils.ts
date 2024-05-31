@@ -44,6 +44,16 @@ export const isRulesView = (pathname: string, params: ParamsType): boolean => {
   return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}/rules`) : false;
 };
 
+export const isSettingsView = (pathname: string, params: ParamsType): boolean => {
+  const { subplebbitAddress, commentCid } = params;
+  const decodedPathname = decodeURIComponent(pathname);
+  return (
+    decodedPathname === `/p/${subplebbitAddress}/c/${commentCid}/settings` ||
+    decodedPathname === `/p/${subplebbitAddress}/description/settings` ||
+    decodedPathname === `/p/${subplebbitAddress}/rules/settings`
+  );
+};
+
 export const isSubscriptionsView = (pathname: string): boolean => {
   return pathname.startsWith('/p/subscriptions');
 };
