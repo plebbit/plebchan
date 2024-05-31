@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useAccount, useBlock } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -111,7 +111,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
 const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { link, linkHeight, linkWidth, parentCid } = post || {};
+  const { deleted, link, linkHeight, linkWidth, parentCid, removed } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type, url } = commentMediaInfo || {};
@@ -155,6 +155,7 @@ const PostMedia = ({ post }: PostProps) => {
           <CommentMedia
             commentMediaInfo={commentMediaInfo}
             isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
+            isDeleted={removed || deleted}
             isReply={isReply}
             linkHeight={linkHeight}
             linkWidth={linkWidth}
@@ -168,7 +169,7 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
 
   const params = useParams();
   const location = useLocation();
@@ -195,7 +196,20 @@ const PostMessage = ({ post }: PostProps) => {
           <br />
         </>
       )}
-      <Markdown content={displayContent} />
+      {removed ? (
+        <span className={styles.removedContent}>(THIS POST WAS REMOVED)</span>
+      ) : deleted ? (
+        <span className={styles.removedContent}>User deleted this post.</span>
+      ) : (
+        <Markdown content={displayContent} />
+      )}
+      {(removed || deleted) && reason && (
+        <span>
+          <br />
+          <br />
+          reason: {reason}
+        </span>
+      )}
       {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />
@@ -213,6 +227,11 @@ const PostMessage = ({ post }: PostProps) => {
 };
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
+  // handle pending mod or author edit
+  const { editedComment } = useEditedComment({ comment: post });
+  if (editedComment) {
+    post = editedComment;
+  }
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
 

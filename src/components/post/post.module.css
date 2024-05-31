@@ -392,6 +392,11 @@
   cursor: pointer;
 }
 
+.removedContent {
+  font-weight: 700;
+  color: red;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
     display: none;

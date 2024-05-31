@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useAccount } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -19,7 +19,7 @@ import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, link, linkHeight, linkWidth, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, deleted, link, linkHeight, linkWidth, locked, parentCid, pinned, removed, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, displayName, shortAddress } = author || {};
 
@@ -98,6 +98,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
         <CommentMedia
           commentMediaInfo={commentMediaInfo}
           isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
+          isDeleted={removed || deleted}
           isReply={isReply}
           linkHeight={linkHeight}
           linkWidth={linkWidth}
@@ -110,7 +111,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
 };
 
 const PostMessageMobile = ({ post }: PostProps) => {
-  const { cid, content, parentCid, postCid, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
 
   const params = useParams();
   const location = useLocation();
@@ -138,7 +139,20 @@ const PostMessageMobile = ({ post }: PostProps) => {
             <br />
           </>
         )}
-        <Markdown content={displayContent} />
+        {removed ? (
+          <span className={styles.removedContent}>(THIS POST WAS REMOVED)</span>
+        ) : deleted ? (
+          <span className={styles.removedContent}>User deleted this post.</span>
+        ) : (
+          <Markdown content={displayContent} />
+        )}
+        {(removed || deleted) && reason && (
+          <span>
+            <br />
+            <br />
+            reason: {reason}
+          </span>
+        )}
         {!isReply && content.length > 1000 && !isInPostView && (
           <span className={styles.abbr}>
             <br />
@@ -157,6 +171,11 @@ const PostMessageMobile = ({ post }: PostProps) => {
 };
 
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
+  // handle pending mod or author edit
+  const { editedComment } = useEditedComment({ comment: post });
+  if (editedComment) {
+    post = editedComment;
+  }
   const { t } = useTranslation();
   const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api

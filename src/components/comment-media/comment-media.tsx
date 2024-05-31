@@ -9,6 +9,7 @@ import Embed, { canEmbed } from '../embed';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
+  isDeleted?: boolean;
   isOutOfFeed?: boolean; // virtuoso wrapper unneeded
   isReply: boolean;
   linkHeight?: number;
@@ -17,7 +18,7 @@ interface MediaProps {
   setShowThumbnail: (showThumbnail: boolean) => void;
 }
 
-const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
+const Thumbnail = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
   const [hasError, setHasError] = useState(false);
   const handleError = () => setHasError(true);
@@ -64,16 +65,12 @@ const Thumbnail = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWid
     thumbnailComponent = <audio src={url} controls />;
   }
 
-  if (hasError) {
-    thumbnailComponent = <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />;
-  }
-
   const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
   const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
 
   const linkWithoutThumbnail = url && new URL(url);
 
-  return hasError ? (
+  return hasError || isDeleted ? (
     <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />
   ) : isOutOfFeed ? (
     <span className={styles.subplebbitAvatar}>{thumbnailComponent}</span>
@@ -136,7 +133,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   );
 };
 
-const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
+const CommentMedia = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const { type, url } = commentMediaInfo || {};
@@ -147,6 +144,7 @@ const CommentMedia = ({ commentMediaInfo, isOutOfFeed, isReply, linkHeight, link
         {url && (
           <Thumbnail
             commentMediaInfo={commentMediaInfo}
+            isDeleted={isDeleted}
             isOutOfFeed={isOutOfFeed}
             isReply={isReply}
             linkHeight={linkHeight}
