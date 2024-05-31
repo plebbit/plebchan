@@ -32,8 +32,8 @@ const TopBarDesktop = () => {
         {renderSubplebbits(interestsSubs)}] [{renderSubplebbits(randomSubs)}] [{renderSubplebbits(internationalSubs)}]
       </span>
       <span className={styles.navTopRight}>
-        [<Link to={!location.pathname.endsWith('settings') ? location.pathname + '/settings' : location.pathname}>{t('settings')}</Link>] [<Link to='/'>{t('home')}</Link>
-        ]
+        [<Link to={!location.pathname.endsWith('settings') ? location.pathname.replace(/\/$/, '') + '/settings' : location.pathname}>{t('settings')}</Link>] [
+        <Link to='/'>{t('home')}</Link>]
       </span>
     </div>
   );
@@ -94,7 +94,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
         {boardSelect}
       </div>
       <div className={styles.pageJump}>
-        <Link to={useLocation().pathname + '/settings'}>{t('settings')}</Link>
+        <Link to={useLocation().pathname.replace(/\/$/, '') + '/settings'}>{t('settings')}</Link>
         <Link to='/'>{t('home')}</Link>
       </div>
     </div>
