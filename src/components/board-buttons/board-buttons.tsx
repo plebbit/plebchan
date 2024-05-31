@@ -19,9 +19,10 @@ const OptionsButton = () => {
 
 const CatalogButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
   const { t } = useTranslation();
+  const link = isInAllView ? `/p/all/catalog` : isInSubscriptionsView ? `/p/subscriptions/catalog` : `/p/${address}/catalog`;
   return (
     <button className='button'>
-      <Link to={isInAllView ? `/p/all/catalog` : isInSubscriptionsView ? `/p/subscriptions/catalog` : `/p/${address}/catalog`}>{t('catalog')}</Link>
+      <Link to={link}>{t('catalog')}</Link>
     </button>
   );
 };
@@ -37,11 +38,12 @@ const SubscribeButton = ({ address }: BoardButtonsProps) => {
   );
 };
 
-const ReturnButton = ({ address }: BoardButtonsProps) => {
+const ReturnButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
   const { t } = useTranslation();
+  const link = isInAllView ? `/p/all` : isInSubscriptionsView ? `/p/subscriptions` : `/p/${address}`;
   return (
     <button className='button'>
-      <Link to={`/p/${address}`}>{t('return')}</Link>
+      <Link to={link}>{t('return')}</Link>
     </button>
   );
 };
@@ -110,7 +112,7 @@ export const DesktopBoardButtons = () => {
       {isInPostView || isInPendingPostPage ? (
         <>
           [
-          <ReturnButton address={subplebbitAddress} />
+          <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           ] [
           <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           ] [
@@ -122,7 +124,7 @@ export const DesktopBoardButtons = () => {
       ) : isInCatalogView ? (
         <>
           [
-          <ReturnButton address={subplebbitAddress} />
+          <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           ] [
           <OptionsButton />
           ] [
