@@ -156,7 +156,9 @@ const Catalog = () => {
 
   useEffect(() => {
     let documentTitle = title ? title : shortAddress;
-    document.title = documentTitle + ' - Catalog';
+    if (isInAllView) documentTitle = t('all');
+    else if (isInSubscriptionsView) documentTitle = t('subscriptions');
+    document.title = documentTitle + ` - ${t('catalog')}`;
   }, [title, shortAddress]);
 
   return (
