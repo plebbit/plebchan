@@ -71,6 +71,16 @@
   cursor: pointer;
 }
 
+.footer input[type="checkbox"] {
+  margin: 0 3px;
+  vertical-align: text-top;
+}
+
+.spoilerButton {
+  display: inline-block;
+  padding-top: 2px;
+}
+
 .parentCid {
   color: var(--post-form-field-input-color);
   position: absolute;

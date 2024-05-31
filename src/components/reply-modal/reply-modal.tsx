@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
@@ -8,6 +8,7 @@ import { isValidURL } from '../../lib/utils/url-utils';
 import useReply from '../../hooks/use-reply';
 import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './reply-modal.module.css';
+import { LinkTypePreviewer } from '../post-form';
 import _ from 'lodash';
 
 interface ReplyModalProps {
@@ -23,6 +24,8 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
 
   const account = useAccount();
   const { displayName } = account?.author || {};
+
+  const [url, setUrl] = useState('');
 
   const textRef = useRef<HTMLTextAreaElement>(null);
   const urlRef = useRef<HTMLInputElement>(null);
@@ -95,7 +98,15 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           />
         </div>
         <div className={styles.link}>
-          <input type='text' ref={urlRef} placeholder={_.capitalize(t('link'))} onChange={(e) => setContent.link(e.target.value)} />
+          <input
+            type='text'
+            ref={urlRef}
+            placeholder={_.capitalize(t('link'))}
+            onChange={(e) => {
+              setUrl(e.target.value);
+              setContent.link(e.target.value);
+            }}
+          />
         </div>
         <div className={styles.content}>
           <span className={styles.parentCid} ref={parentCidRef}>
@@ -114,6 +125,19 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           />
         </div>
         <div className={styles.footer}>
+          {url && (
+            <>
+              Embed: <LinkTypePreviewer link={url} />{' '}
+            </>
+          )}
+          <span className={styles.spoilerButton}>
+            [
+            <label>
+              <input type='checkbox' onChange={(e) => setContent.spoiler(e.target.checked)} />
+              Spoiler?
+            </label>
+            ]
+          </span>
           <button onClick={onPublishReply}>{t('reply')}</button>
         </div>
       </div>

@@ -54,7 +54,7 @@ const useSubmitStore = create<SubmitState>((set) => ({
   resetSubmitStore: () => set({ subplebbitAddress: undefined, title: undefined, content: undefined, link: undefined, publishCommentOptions: {} }),
 }));
 
-const LinkTypePreviewer = ({ link }: { link: string }) => {
+export const LinkTypePreviewer = ({ link }: { link: string }) => {
   const mediaInfo = getLinkMediaInfo(link);
   return isValidURL(link) ? mediaInfo?.type : 'Invalid URL';
 };
