@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
+import useSortingStore from '../../stores/use-sorting-store';
 import styles from './board-buttons.module.css';
 
 interface BoardButtonsProps {
@@ -58,6 +59,24 @@ const RefreshButton = () => {
   );
 };
 
+const SortOptions = () => {
+  const { sortType, setSortType } = useSortingStore();
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const type = event.target.value as 'active' | 'new';
+    setSortType(type);
+  };
+  return (
+    <>
+      Sort by:{' '}
+      <select value={sortType} onChange={handleSortChange}>
+        <option value='active'>Bump order</option>
+        <option value='new'>Creation date</option>
+      </select>{' '}
+    </>
+  );
+};
+
 export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -89,6 +108,14 @@ export const MobileBoardButtons = () => {
           <OptionsButton />
           <SubscribeButton address={subplebbitAddress} />
           <RefreshButton />
+          {isInCatalogView && (
+            <>
+              <hr />
+              <div className={styles.options}>
+                <SortOptions />
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
@@ -118,21 +145,7 @@ export const DesktopBoardButtons = () => {
           ] [
           <OptionsButton />]{' '}
           {isInPostView && (
-            <span className={styles.subscribeButton}>
-              [<SubscribeButton address={subplebbitAddress} />]
-            </span>
-          )}
-        </>
-      ) : isInCatalogView ? (
-        <>
-          [
-          <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
-          ] [
-          <OptionsButton />
-          ] [
-          <RefreshButton />]{' '}
-          {!(isInAllView || isInSubscriptionsView) && (
-            <span className={styles.subscribeButton}>
+            <span className={styles.rightSideButtons}>
               [<SubscribeButton address={subplebbitAddress} />]
             </span>
           )}
@@ -140,17 +153,24 @@ export const DesktopBoardButtons = () => {
       ) : (
         <>
           [
-          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          {isInCatalogView ? (
+            <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          ) : (
+            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          )}
           ] [
           <OptionsButton />
           ] [
           <RefreshButton />]{' '}
-          {!(isInAllView || isInSubscriptionsView) && (
-            <span className={styles.subscribeButton}>
-              [
-              <SubscribeButton address={subplebbitAddress} />]
-            </span>
-          )}
+          <span className={styles.rightSideButtons}>
+            {isInCatalogView && <SortOptions />}
+            {!(isInAllView || isInSubscriptionsView) && (
+              <>
+                [
+                <SubscribeButton address={subplebbitAddress} />]
+              </>
+            )}
+          </span>
         </>
       )}
     </div>

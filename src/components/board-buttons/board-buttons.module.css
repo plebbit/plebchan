@@ -21,6 +21,10 @@
   cursor: pointer;
 }
 
+.mobileBoardButtons .options {
+  padding: 10px 0;
+}
+
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;
@@ -32,7 +36,7 @@
     display: none;
   }
 
-  .subscribeButton {
+  .rightSideButtons {
     float: right;
   }
 }

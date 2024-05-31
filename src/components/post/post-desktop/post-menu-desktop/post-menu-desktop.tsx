@@ -8,6 +8,7 @@ import styles from './post-menu-desktop.module.css';
 import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../../lib/utils/url-utils';
 import { isCatalogView, isPostPageView } from '../../../../lib/utils/view-utils';
+import _ from 'lodash';
 
 interface PostMenuDesktopProps {
   cid: string;
@@ -48,7 +49,7 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
       ref={refs.setReference}
       onClick={onClose}
     >
-      {t('image_search')} »
+      {_.capitalize(t('image_search'))} »
       {isImageSearchMenuOpen && (
         <div ref={refs.setFloating} style={floatingStyles} className={styles.dropdownMenu}>
           <a href={`https://lens.google.com/uploadbyurl?url=${url}`} target='_blank' rel='noreferrer'>
