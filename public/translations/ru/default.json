@@ -138,5 +138,8 @@
   "no_board_selected": "не выбрано ни одного форума",
   "none": "нет",
   "not_subscribed_to_any_board": "Вы еще не подписаны ни на один форум.",
-  "board_mods": "Модераторы форума"
+  "board_mods": "Модераторы форума",
+  "this_post_was_removed": "этот пост был удален",
+  "user_deleted_this_post": "Пользователь удалил этот пост.",
+  "reason": "причина"
 }

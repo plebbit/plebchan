@@ -138,5 +138,8 @@
   "no_board_selected": "nie wybrano żadnych forów",
   "none": "żaden",
   "not_subscribed_to_any_board": "Nie zapisałeś się jeszcze na żadne fora.",
-  "board_mods": "Tablica Mods"
+  "board_mods": "Tablica Mods",
+  "this_post_was_removed": "ten post został usunięty",
+  "user_deleted_this_post": "Użytkownik usunął ten post.",
+  "reason": "powód"
 }

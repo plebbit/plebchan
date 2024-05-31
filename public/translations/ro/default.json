@@ -138,5 +138,8 @@
   "no_board_selected": "nu s-au selectat niciun forum",
   "none": "nici unul",
   "not_subscribed_to_any_board": "Nu v-ați abonat încă la niciun forum.",
-  "board_mods": "Mods de la bord"
+  "board_mods": "Mods de la bord",
+  "this_post_was_removed": "acest mesaj a fost eliminat",
+  "user_deleted_this_post": "Utilizatorul a șters acest mesaj.",
+  "reason": "motiv"
 }

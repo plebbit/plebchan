@@ -138,5 +138,8 @@
   "no_board_selected": "ei foorumeja valittu",
   "none": "ei mikään",
   "not_subscribed_to_any_board": "Et ole vielä tilannut mitään foorumeita.",
-  "board_mods": "Hallituksen Mods"
+  "board_mods": "Hallituksen Mods",
+  "this_post_was_removed": "tämä viesti on poistettu",
+  "user_deleted_this_post": "Käyttäjä poisti tämän viestin.",
+  "reason": "syy"
 }

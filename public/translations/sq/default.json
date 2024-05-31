@@ -138,5 +138,8 @@
   "no_board_selected": "asnjë forume të zgjedhura",
   "none": "asnjë",
   "not_subscribed_to_any_board": "Nuk jeni ende i abonuar në asnjë forum.",
-  "board_mods": "Tabela Mods"
+  "board_mods": "Tabela Mods",
+  "this_post_was_removed": "kjo postim u hoq",
+  "user_deleted_this_post": "Përdoruesi fshiu këtë post.",
+  "reason": "arsye"
 }

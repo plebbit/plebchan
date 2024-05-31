@@ -138,5 +138,8 @@
   "no_board_selected": "ingen fora valgt",
   "none": "ingen",
   "not_subscribed_to_any_board": "Du har ikke abonnert på noen fora ennå.",
-  "board_mods": "Board Mods"
+  "board_mods": "Board Mods",
+  "this_post_was_removed": "dette innlegget ble fjernet",
+  "user_deleted_this_post": "Brukeren slettet dette innlegget.",
+  "reason": "grunn"
 }

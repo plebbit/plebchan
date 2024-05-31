@@ -138,5 +138,8 @@
   "no_board_selected": "keine Foren ausgewählt",
   "none": "keiner",
   "not_subscribed_to_any_board": "Du hast dich noch nicht für Foren angemeldet.",
-  "board_mods": "Board-Moderatoren"
+  "board_mods": "Board-Moderatoren",
+  "this_post_was_removed": "Dieser Beitrag wurde entfernt",
+  "user_deleted_this_post": "Benutzer hat diesen Beitrag gelöscht.",
+  "reason": "Grund"
 }

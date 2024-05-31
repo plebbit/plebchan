@@ -138,5 +138,8 @@
   "no_board_selected": "কোনো ফোরাম নির্বাচিত হয়নি",
   "none": "নাই",
   "not_subscribed_to_any_board": "আপনি এখনো কোনো ফোরামে সদস্য হননি।",
-  "board_mods": "বোর্ড মডস"
+  "board_mods": "বোর্ড মডস",
+  "this_post_was_removed": "এই পোস্টটি সরানো হয়েছে",
+  "user_deleted_this_post": "ব্যবহারকারী এই পোস্টটি মুছে ফেলেছে।",
+  "reason": "কারণ"
 }

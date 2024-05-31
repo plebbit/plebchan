@@ -138,5 +138,8 @@
   "no_board_selected": "tidak ada papan pesan yang dipilih",
   "none": "tak ada",
   "not_subscribed_to_any_board": "Anda belum berlangganan ke papan pesan mana pun.",
-  "board_mods": "Papan Pesan Mods"
+  "board_mods": "Papan Pesan Mods",
+  "this_post_was_removed": "posting ini telah dihapus",
+  "user_deleted_this_post": "Pengguna menghapus posting ini.",
+  "reason": "alasan"
 }

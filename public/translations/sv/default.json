@@ -138,5 +138,8 @@
   "no_board_selected": "inga forum valda",
   "none": "ingen",
   "not_subscribed_to_any_board": "Du har ännu inte prenumererat på några forum.",
-  "board_mods": "Styrelse Mods"
+  "board_mods": "Styrelse Mods",
+  "this_post_was_removed": "detta inlägg togs bort",
+  "user_deleted_this_post": "Användaren tog bort detta inlägg.",
+  "reason": "anledning"
 }

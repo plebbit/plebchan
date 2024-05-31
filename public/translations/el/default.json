@@ -138,5 +138,8 @@
   "no_board_selected": "δεν έχουν επιλεγεί διαδικτυακές πινακίδες",
   "none": "κανένας",
   "not_subscribed_to_any_board": "Δεν έχετε εγγραφεί ακόμη σε καμία διαδικτυακή πινακίδα.",
-  "board_mods": "Mods του φόρουμ"
+  "board_mods": "Mods του φόρουμ",
+  "this_post_was_removed": "αυτή η ανάρτηση αφαιρέθηκε",
+  "user_deleted_this_post": "Ο χρήστης διέγραψε αυτή την ανάρτηση.",
+  "reason": "λόγος"
 }

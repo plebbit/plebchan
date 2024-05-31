@@ -138,5 +138,8 @@
   "no_board_selected": "không có diễn đàn nào được chọn",
   "none": "không ai",
   "not_subscribed_to_any_board": "Bạn chưa đăng ký vào bất kỳ diễn đàn nào.",
-  "board_mods": "Bảng Mods"
+  "board_mods": "Bảng Mods",
+  "this_post_was_removed": "bài đăng này đã bị xóa",
+  "user_deleted_this_post": "Người dùng đã xóa bài đăng này.",
+  "reason": "lý do"
 }

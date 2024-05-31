@@ -138,5 +138,8 @@
   "no_board_selected": "没有选择任何论坛",
   "none": "无",
   "not_subscribed_to_any_board": "您尚未订阅任何论坛。",
-  "board_mods": "董事會版主"
+  "board_mods": "董事會版主",
+  "this_post_was_removed": "此帖已被删除",
+  "user_deleted_this_post": "用户删除了这个帖子。",
+  "reason": "原因"
 }

@@ -138,5 +138,8 @@
   "no_board_selected": "ningún foro seleccionado",
   "none": "ninguno",
   "not_subscribed_to_any_board": "Todavía no te has suscrito a ningún foro.",
-  "board_mods": "Mods del foro"
+  "board_mods": "Mods del foro",
+  "this_post_was_removed": "este mensaje fue eliminado",
+  "user_deleted_this_post": "El usuario eliminó este mensaje.",
+  "reason": "razón"
 }

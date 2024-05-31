@@ -138,5 +138,8 @@
   "no_board_selected": "לא נבחרו שום פורומים",
   "none": "אף אחד",
   "not_subscribed_to_any_board": "עדיין לא הרשמת לאף פורום.",
-  "board_mods": "מנהלי הפורום"
+  "board_mods": "מנהלי הפורום",
+  "this_post_was_removed": "הודעה זו הוסרה",
+  "user_deleted_this_post": "המשתמש מחק את הפוסט הזה.",
+  "reason": "סיבה"
 }

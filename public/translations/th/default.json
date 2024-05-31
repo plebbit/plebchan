@@ -138,5 +138,8 @@
   "no_board_selected": "ไม่มีกระดานข่าวที่เลือก",
   "none": "ไม่มี",
   "not_subscribed_to_any_board": "คุณยังไม่ได้สมัครสมาชิกในกระดานข่าวใดๆ ยัง",
-  "board_mods": "บอร์ด Mods"
+  "board_mods": "บอร์ด Mods",
+  "this_post_was_removed": "โพสต์นี้ถูกลบ",
+  "user_deleted_this_post": "ผู้ใช้ได้ลบโพสต์นี้",
+  "reason": "เหตุผล"
 }

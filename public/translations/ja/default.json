@@ -138,5 +138,8 @@
   "no_board_selected": "掲示板が選択されていません",
   "none": "なし",
   "not_subscribed_to_any_board": "まだどの掲示板にも購読していません。",
-  "board_mods": "ボードの管理者"
+  "board_mods": "ボードの管理者",
+  "this_post_was_removed": "この投稿は削除されました",
+  "user_deleted_this_post": "ユーザーがこの投稿を削除しました。",
+  "reason": "理由"
 }

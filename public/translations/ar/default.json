@@ -138,5 +138,8 @@
   "no_board_selected": "لم يتم تحديد أية منتديات",
   "none": "بلا",
   "not_subscribed_to_any_board": "لم تشترك في أي منتديات بعد.",
-  "board_mods": "مشرفو المنتدى"
+  "board_mods": "مشرفو المنتدى",
+  "this_post_was_removed": "تمت إزالة هذا المنشور",
+  "user_deleted_this_post": "حذف المستخدم هذا المنشور.",
+  "reason": "السبب"
 }

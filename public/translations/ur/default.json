@@ -138,5 +138,8 @@
   "no_board_selected": "کوئی پیغام بورڈز منتخب نہیں کیا گیا",
   "none": "کوئی نہیں",
   "not_subscribed_to_any_board": "آپ نے ابھی تک کسی بورڈز میں سبسکرائب نہیں کیا۔",
-  "board_mods": "بورڈ موڈس"
+  "board_mods": "بورڈ موڈس",
+  "this_post_was_removed": "یہ پوسٹ ہٹا دی گئی ہے",
+  "user_deleted_this_post": "صارف نے یہ پوسٹ حذف کردی.",
+  "reason": "وجہ"
 }

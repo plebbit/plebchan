@@ -138,5 +138,8 @@
   "no_board_selected": "هیچ تالاری انتخاب نشده است",
   "none": "هیچ‌کدام",
   "not_subscribed_to_any_board": "هنوز به هیچ تالاری مشترک نشده‌اید.",
-  "board_mods": "مدیران تالار"
+  "board_mods": "مدیران تالار",
+  "this_post_was_removed": "این پست حذف شد",
+  "user_deleted_this_post": "کاربر این پست را حذف کرده است.",
+  "reason": "دلیل"
 }

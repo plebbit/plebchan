@@ -138,5 +138,8 @@
   "no_board_selected": "कोई मंच चयनित नहीं हुआ",
   "none": "कोई नहीं",
   "not_subscribed_to_any_board": "आपने अभी तक किसी भी मंच में सदस्यता नहीं ली है।",
-  "board_mods": "बोर्ड मॉड्स"
+  "board_mods": "बोर्ड मॉड्स",
+  "this_post_was_removed": "यह पोस्ट हटा दी गई है",
+  "user_deleted_this_post": "उपयोगकर्ता ने इस पोस्ट को हटा दिया।",
+  "reason": "कारण"
 }

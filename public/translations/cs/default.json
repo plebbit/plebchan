@@ -138,5 +138,8 @@
   "no_board_selected": "žádné nástěnky nevybrány",
   "none": "žádný",
   "not_subscribed_to_any_board": "Zatím jste se nepřihlásili k žádným nástěnkám.",
-  "board_mods": "Nástěnka Mods"
+  "board_mods": "Nástěnka Mods",
+  "this_post_was_removed": "tento příspěvek byl odstraněn",
+  "user_deleted_this_post": "Uživatel smazal tento příspěvek.",
+  "reason": "důvod"
 }

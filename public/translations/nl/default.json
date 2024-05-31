@@ -138,5 +138,8 @@
   "no_board_selected": "geen forums geselecteerd",
   "none": "geen",
   "not_subscribed_to_any_board": "Je hebt je nog niet geabonneerd op geen enkel forum.",
-  "board_mods": "Board Mods"
+  "board_mods": "Board Mods",
+  "this_post_was_removed": "deze post is verwijderd",
+  "user_deleted_this_post": "Gebruiker heeft deze post verwijderd.",
+  "reason": "reden"
 }

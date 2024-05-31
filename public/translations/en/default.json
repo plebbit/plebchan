@@ -138,5 +138,8 @@
   "no_board_selected": "no boards selected",
   "none": "none",
   "not_subscribed_to_any_board": "You have not subscribed to any boards yet.",
-  "board_mods": "Board Mods"
+  "board_mods": "Board Mods",
+  "this_post_was_removed": "this post was removed",
+  "user_deleted_this_post": "User deleted this post.",
+  "reason": "reason"
 }
