@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
-import styles from './board-buttons.module.css';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useFeedResetStore from '../../stores/use-feed-reset-store';
+import styles from './board-buttons.module.css';
 
 interface BoardButtonsProps {
   isInAllView?: boolean;
@@ -94,6 +95,16 @@ export const MobileBoardButtons = () => {
   );
 };
 
+const RefreshButton = () => {
+  const reset = useFeedResetStore((state) => state.reset);
+
+  return (
+    <button className='button' onClick={() => reset && reset()}>
+      Refresh
+    </button>
+  );
+};
+
 export const DesktopBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -118,12 +129,21 @@ export const DesktopBoardButtons = () => {
         </>
       ) : (
         <>
-          [<OptionsButton />] [
-          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />]
+          [
+          <OptionsButton />
+          ] [
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />]{' '}
           {!(isInAllView || isInSubscriptionsView) && (
             <span className={styles.subscribeButton}>
-              [<SubscribeButton address={subplebbitAddress} />]
+              [
+              <SubscribeButton address={subplebbitAddress} />]
             </span>
+          )}
+          {isInCatalogView && (
+            <>
+              [
+              <RefreshButton />]
+            </>
           )}
         </>
       )}

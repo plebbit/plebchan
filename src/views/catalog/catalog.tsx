@@ -8,6 +8,7 @@ import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbi
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useWindowWidth from '../../hooks/use-window-width';
+import useFeedResetStore from '../../stores/use-feed-reset-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
@@ -101,7 +102,12 @@ const Catalog = () => {
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
-  const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
+  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
+
+  const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
+  useEffect(() => {
+    setResetFunction(reset);
+  }, [reset, setResetFunction]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { shortAddress, state, title } = subplebbit || {};
