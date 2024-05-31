@@ -47,11 +47,11 @@ const ReturnButton = ({ address }: BoardButtonsProps) => {
 };
 
 const RefreshButton = () => {
+  const { t } = useTranslation();
   const reset = useFeedResetStore((state) => state.reset);
-
   return (
     <button className='button' onClick={() => reset && reset()}>
-      Refresh
+      {t('refresh')}
     </button>
   );
 };

@@ -131,5 +131,10 @@
   "search_image_on_google": "αναζήτηση εικόνας στο Google",
   "search_image_on_yandex": "αναζήτηση εικόνας στο Yandex",
   "search_image_on_saucenao": "αναζήτηση εικόνας στο SauceNAO",
-  "view_on_client": "Προβολή στο {{client}}"
+  "view_on_client": "Προβολή στο {{client}}",
+  "expand_all_settings": "Ανάπτυξη όλων των ρυθμίσεων",
+  "collapse_all_settings": "Σύμπτυξη όλων των ρυθμίσεων",
+  "refresh": "Ανανέωση",
+  "no_board_selected": "δεν έχουν επιλεγεί διαδικτυακές πινακίδες",
+  "none": "κανένας"
 }

@@ -131,5 +131,10 @@
   "search_image_on_google": "sök bild på Google",
   "search_image_on_yandex": "sök bild på Yandex",
   "search_image_on_saucenao": "sök bild på SauceNAO",
-  "view_on_client": "Visa på {{client}}"
+  "view_on_client": "Visa på {{client}}",
+  "expand_all_settings": "Expandera alla inställningar",
+  "collapse_all_settings": "Kollapsa alla inställningar",
+  "refresh": "Uppdatera",
+  "no_board_selected": "inga forum valda",
+  "none": "ingen"
 }

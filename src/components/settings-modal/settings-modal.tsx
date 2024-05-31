@@ -39,7 +39,7 @@ const SettingsModal = () => {
           <span className={styles.closeButton} title='close' onClick={closeModal} />
         </div>
         <div className={styles.expandAllSettings}>
-          [<span onClick={handleExpandAll}>{expandAll ? 'Collapse All Settings' : 'Expand All Settings'}</span>]
+          [<span onClick={handleExpandAll}>{expandAll ? t('collapse_all_settings') : t('expand_all_settings')}</span>]
         </div>
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowInterfaceSettings(!showInterfaceSettings)}>

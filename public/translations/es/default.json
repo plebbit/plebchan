@@ -131,5 +131,10 @@
   "search_image_on_google": "Buscar imagen en Google",
   "search_image_on_yandex": "Buscar imagen en Yandex",
   "search_image_on_saucenao": "Buscar imagen en SauceNAO",
-  "view_on_client": "Ver en {{client}}"
+  "view_on_client": "Ver en {{client}}",
+  "expand_all_settings": "Expandir todas las configuraciones",
+  "collapse_all_settings": "Contraer todas las configuraciones",
+  "refresh": "Actualizar",
+  "no_board_selected": "ningún foro seleccionado",
+  "none": "ninguno"
 }

@@ -131,5 +131,10 @@
   "search_image_on_google": "kërko imazhin në Google",
   "search_image_on_yandex": "kërko imazhin në Yandex",
   "search_image_on_saucenao": "kërko imazhin në SauceNAO",
-  "view_on_client": "Shiko në {{client}}"
+  "view_on_client": "Shiko në {{client}}",
+  "expand_all_settings": "Zgjeroni të gjitha cilësimet",
+  "collapse_all_settings": "Zvogëlo të gjitha cilësimet",
+  "refresh": "Rifresko",
+  "no_board_selected": "asnjë forume të zgjedhura",
+  "none": "asnjë"
 }

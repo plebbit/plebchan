@@ -131,5 +131,10 @@
   "search_image_on_google": "Google वर छायाचित्र शोधा",
   "search_image_on_yandex": "Yandex वर छायाचित्र शोधा",
   "search_image_on_saucenao": "SauceNAO वर छायाचित्र शोधा",
-  "view_on_client": "{{client}} वर पहा"
+  "view_on_client": "{{client}} वर पहा",
+  "expand_all_settings": "सर्व सेटिंग्ज विस्तार",
+  "collapse_all_settings": "सर्व सेटिंग्ज संक्षेपित",
+  "refresh": "ताजेतर करा",
+  "no_board_selected": "कोणतेही संदेश फलक निवडले नाहीत",
+  "none": "काहीही नाही"
 }

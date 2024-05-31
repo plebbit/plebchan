@@ -131,5 +131,10 @@
   "search_image_on_google": "गूगल पर छवि खोजें",
   "search_image_on_yandex": "Yandex पर छवि खोजें",
   "search_image_on_saucenao": "SauceNAO पर छवि खोजें",
-  "view_on_client": "{{client}} पर देखें"
+  "view_on_client": "{{client}} पर देखें",
+  "expand_all_settings": "सभी सेटिंग्स का विस्तार करें",
+  "collapse_all_settings": "सभी सेटिंग्स को संक्षेपित करें",
+  "refresh": "ताज़ा करें",
+  "no_board_selected": "कोई मंच चयनित नहीं हुआ",
+  "none": "कोई नहीं"
 }

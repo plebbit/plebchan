@@ -131,5 +131,10 @@
   "search_image_on_google": "maghanap ng larawan sa Google",
   "search_image_on_yandex": "maghanap ng larawan sa Yandex",
   "search_image_on_saucenao": "maghanap ng larawan sa SauceNAO",
-  "view_on_client": "Tingnan sa {{client}}"
+  "view_on_client": "Tingnan sa {{client}}",
+  "expand_all_settings": "I-expand ang lahat ng mga setting",
+  "collapse_all_settings": "I-collapse ang lahat ng mga setting",
+  "refresh": "I-refresh",
+  "no_board_selected": "walang mga board na napiling",
+  "none": "wala"
 }

@@ -131,5 +131,10 @@
   "search_image_on_google": "Google で画像を検索",
   "search_image_on_yandex": "Yandex で画像を検索",
   "search_image_on_saucenao": "SauceNAO で画像を検索",
-  "view_on_client": "{{client}} で表示"
+  "view_on_client": "{{client}} で表示",
+  "expand_all_settings": "すべての設定を展開",
+  "collapse_all_settings": "すべての設定を折りたたむ",
+  "refresh": "更新",
+  "no_board_selected": "掲示板が選択されていません",
+  "none": "なし"
 }

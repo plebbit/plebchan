@@ -131,5 +131,10 @@
   "search_image_on_google": "جستجوی تصویر در گوگل",
   "search_image_on_yandex": "جستجوی تصویر در Yandex",
   "search_image_on_saucenao": "جستجوی تصویر در SauceNAO",
-  "view_on_client": "مشاهده در {{client}}"
+  "view_on_client": "مشاهده در {{client}}",
+  "expand_all_settings": "گسترش همه تنظیمات",
+  "collapse_all_settings": "تايید همه تنظیمات",
+  "refresh": "تازه‌سازی",
+  "no_board_selected": "هیچ تالاری انتخاب نشده است",
+  "none": "هیچ‌کدام"
 }

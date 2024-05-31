@@ -225,7 +225,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
             [
             <label>
               <input type='checkbox' onChange={(e) => (isInPostView ? setContent.spoiler(e.target.checked) : setSubmitStore({ spoiler: e.target.checked }))} />
-              {t('spoiler')}?
+              {_.capitalize(t('spoiler'))}?
             </label>
             ]
           </td>
@@ -235,7 +235,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
             <td>{t('board')}</td>
             <td>
               <select onChange={(e) => setSubmitStore({ subplebbitAddress: e.target.value })} value={subplebbitAddress}>
-                <option value=''>--no board selected--</option>
+                <option value=''>--{t('no_board_selected')}--</option>
                 {isInAllView &&
                   defaultSubplebbitAddresses.map((address: string) => (
                     <option key={address} value={address}>

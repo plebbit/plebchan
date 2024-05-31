@@ -131,5 +131,10 @@
   "search_image_on_google": "البحث عن صورة على جوجل",
   "search_image_on_yandex": "البحث عن صورة على Yandex",
   "search_image_on_saucenao": "البحث عن صورة على SauceNAO",
-  "view_on_client": "عرض على {{client}}"
+  "view_on_client": "عرض على {{client}}",
+  "expand_all_settings": "توسيع جميع الإعدادات",
+  "collapse_all_settings": "طي جميع الإعدادات",
+  "refresh": "تحديث",
+  "no_board_selected": "لم يتم تحديد أية منتديات",
+  "none": "بلا"
 }

@@ -75,6 +75,7 @@
 
 .expandAllSettings {
   text-align: center;
+  text-transform: capitalize;
 }
 
 .expandAllSettings span {

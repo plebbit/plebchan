@@ -131,5 +131,10 @@
   "search_image_on_google": "গুগলে চিত্র অনুসন্ধান করুন",
   "search_image_on_yandex": "Yandexে চিত্র অনুসন্ধান করুন",
   "search_image_on_saucenao": "SauceNAO এ চিত্র অনুসন্ধান করুন",
-  "view_on_client": "{{client}} উপর দেখুন"
+  "view_on_client": "{{client}} উপর দেখুন",
+  "expand_all_settings": "সমস্ত সেটিংস প্রসারিত করুন",
+  "collapse_all_settings": "সমস্ত সেটিংস সঙ্কুচিত করুন",
+  "refresh": "পুনরায় লোড করুন",
+  "no_board_selected": "কোনো ফোরাম নির্বাচিত হয়নি",
+  "none": "নাই"
 }

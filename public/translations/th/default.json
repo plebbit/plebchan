@@ -131,5 +131,10 @@
   "search_image_on_google": "ค้นหารูปภาพใน Google",
   "search_image_on_yandex": "ค้นหารูปภาพใน Yandex",
   "search_image_on_saucenao": "ค้นหารูปภาพใน SauceNAO",
-  "view_on_client": "ดูบน {{client}}"
+  "view_on_client": "ดูบน {{client}}",
+  "expand_all_settings": "ขยายการตั้งค่าทั้งหมด",
+  "collapse_all_settings": "ยุบการตั้งค่าทั้งหมด",
+  "refresh": "รีเฟรช",
+  "no_board_selected": "ไม่มีกระดานข่าวที่เลือก",
+  "none": "ไม่มี"
 }

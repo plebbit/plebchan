@@ -131,5 +131,10 @@
   "search_image_on_google": "hledat obrázek na Googlu",
   "search_image_on_yandex": "hledat obrázek na Yandexu",
   "search_image_on_saucenao": "hledat obrázek na SauceNAO",
-  "view_on_client": "Zobrazit na {{client}}"
+  "view_on_client": "Zobrazit na {{client}}",
+  "expand_all_settings": "Rozbalit všechna nastavení",
+  "collapse_all_settings": "Sbalit všechna nastavení",
+  "refresh": "Obnovit",
+  "no_board_selected": "žádné nástěnky nevybrány",
+  "none": "žádný"
 }
