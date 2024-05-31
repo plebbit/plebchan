@@ -5,8 +5,6 @@ import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './board.module.css';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useBlockedCommentsStore from '../../stores/useBlockedCommentsStore';
-import useBlockedComments from '../../hooks/use-blocked-comments';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
@@ -43,19 +41,6 @@ const Board = () => {
 
   const sortType = 'active';
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType });
-
-  const { resetShowBlockedComments, showBlockedComments, setShowBlockedComments } = useBlockedCommentsStore();
-  const blockedComments = useBlockedComments(subplebbitAddress);
-
-  useEffect(() => {
-    resetShowBlockedComments();
-  }, [subplebbitAddress, resetShowBlockedComments]);
-
-  useEffect(() => {
-    if (blockedComments.length === 0) {
-      setShowBlockedComments(false);
-    }
-  }, [blockedComments, setShowBlockedComments]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, state, suggested } = subplebbit || {};
@@ -111,7 +96,7 @@ const Board = () => {
     <div className={styles.content}>
       {location.pathname.endsWith('/settings') && <SettingsModal />}
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
-      {feed.length > 0 && !showBlockedComments && (
+      {feed.length > 0 && (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
           {((description && description.length > 0) || isInAllView) && (
@@ -126,27 +111,23 @@ const Board = () => {
           )}
         </>
       )}
-      {showBlockedComments ? (
-        blockedComments.map((comment) => <Post key={comment.cid} post={comment} />)
-      ) : (
-        <Virtuoso
-          increaseViewportBy={{ bottom: 1200, top: 1200 }}
-          totalCount={feed?.length || 0}
-          data={feed}
-          itemContent={(index, post) => {
-            const { deleted, locked, removed } = post || {};
-            const isThreadClosed = deleted || locked || removed;
+      <Virtuoso
+        increaseViewportBy={{ bottom: 1200, top: 1200 }}
+        totalCount={feed?.length || 0}
+        data={feed}
+        itemContent={(index, post) => {
+          const { deleted, locked, removed } = post || {};
+          const isThreadClosed = deleted || locked || removed;
 
-            return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
-          }}
-          useWindowScroll={true}
-          components={{ Footer }}
-          endReached={loadMore}
-          ref={virtuosoRef}
-          restoreStateFrom={lastVirtuosoState}
-          initialScrollTop={lastVirtuosoState?.scrollTop}
-        />
-      )}
+          return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
+        }}
+        useWindowScroll={true}
+        components={{ Footer }}
+        endReached={loadMore}
+        ref={virtuosoRef}
+        restoreStateFrom={lastVirtuosoState}
+        initialScrollTop={lastVirtuosoState?.scrollTop}
+      />
     </div>
   );
 };

@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useAccount, Subplebbit, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useBlockedCommentsStore from '../../stores/useBlockedCommentsStore';
-import useBlockedComments from '../../hooks/use-blocked-comments';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
@@ -18,7 +16,7 @@ import _ from 'lodash';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit, includeDescriptionAndRules: boolean) => {
+const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit) => {
   const { t } = useTranslation();
   const { address, createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
   const { avatarUrl } = suggested || {};
@@ -31,7 +29,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
     if (!isFeedLoaded) {
       return []; // prevent rules and description from appearing while feed is loading
     }
-    if (!includeDescriptionAndRules || (!description && !rules && !isInAllView)) {
+    if (!description && !rules && !isInAllView) {
       return feed;
     }
     const _feed = [...feed];
@@ -61,7 +59,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
       });
     }
     return _feed;
-  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub, includeDescriptionAndRules]);
+  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub]);
 
   const rows = useMemo(() => {
     const rows = [];
@@ -103,24 +101,7 @@ const Catalog = () => {
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
-  const blockedComments = useBlockedComments(subplebbitAddress);
-  const blockedCommentsAddresses = useMemo(() => blockedComments.map((comment) => comment.cid), [blockedComments]);
-
   const { feed, hasMore, loadMore } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
-
-  const filteredFeed = useMemo(() => feed.filter((comment) => !blockedCommentsAddresses.includes(comment.cid)), [feed, blockedCommentsAddresses]);
-
-  const { resetShowBlockedComments, showBlockedComments, setShowBlockedComments } = useBlockedCommentsStore();
-
-  useEffect(() => {
-    resetShowBlockedComments();
-  }, [subplebbitAddress, resetShowBlockedComments]);
-
-  useEffect(() => {
-    if (blockedComments.length === 0) {
-      setShowBlockedComments(false);
-    }
-  }, [blockedComments, setShowBlockedComments]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { shortAddress, state, title } = subplebbit || {};
@@ -139,7 +120,7 @@ const Catalog = () => {
 
   const Footer = () => {
     let footerContent;
-    if ((showBlockedComments ? blockedComments : filteredFeed).length === 0) {
+    if (feed.length === 0) {
       footerContent = t('no_posts');
     }
     if (hasMore || subplebbitAddresses.length === 0) {
@@ -148,9 +129,9 @@ const Catalog = () => {
     return <div className={styles.footer}>{footerContent}</div>;
   };
 
-  const isFeedLoaded = (showBlockedComments ? blockedComments : filteredFeed).length > 0 || state === 'failed';
+  const isFeedLoaded = feed.length > 0 || state === 'failed';
 
-  const rows = useFeedRows(columnCount, showBlockedComments ? blockedComments : filteredFeed, isFeedLoaded, subplebbit, !showBlockedComments);
+  const rows = useFeedRows(columnCount, feed, isFeedLoaded, subplebbit);
 
   // save the last Virtuoso state to restore it when navigating back
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
@@ -177,22 +158,18 @@ const Catalog = () => {
       {location.pathname.endsWith('/settings') && <SettingsModal />}
       <hr />
       <div className={styles.catalog}>
-        {showBlockedComments ? (
-          rows.map((row, index) => <CatalogRow key={index} index={index} row={row} />)
-        ) : (
-          <Virtuoso
-            increaseViewportBy={{ bottom: 1200, top: 1200 }}
-            totalCount={rows?.length || 0}
-            data={rows}
-            itemContent={(index, row) => <CatalogRow index={index} row={row} />}
-            useWindowScroll={true}
-            components={{ Footer }}
-            endReached={loadMore}
-            ref={virtuosoRef}
-            restoreStateFrom={lastVirtuosoState}
-            initialScrollTop={lastVirtuosoState?.scrollTop}
-          />
-        )}
+        <Virtuoso
+          increaseViewportBy={{ bottom: 1200, top: 1200 }}
+          totalCount={rows?.length || 0}
+          data={rows}
+          itemContent={(index, row) => <CatalogRow index={index} row={row} />}
+          useWindowScroll={true}
+          components={{ Footer }}
+          endReached={loadMore}
+          ref={virtuosoRef}
+          restoreStateFrom={lastVirtuosoState}
+          initialScrollTop={lastVirtuosoState?.scrollTop}
+        />
       </div>
     </div>
   );
