@@ -25,6 +25,24 @@
   padding: 10px 0;
 }
 
+.desktopBoardButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure elements are spaced out properly */
+}
+
+.desktopBoardButtons::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.desktopBoardButtons .rightSideButtons {
+  margin-left: auto; /* Push the right-side buttons to the right */
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;
@@ -34,9 +52,5 @@
 @media (min-width: 640px) {
   .mobileBoardButtons {
     display: none;
-  }
-
-  .rightSideButtons {
-    float: right;
   }
 }

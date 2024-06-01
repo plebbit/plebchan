@@ -68,11 +68,12 @@ const SortOptions = () => {
   };
   return (
     <>
-      Sort by:{' '}
+      Sort by:&nbsp;
       <select value={sortType} onChange={handleSortChange}>
         <option value='active'>Bump order</option>
         <option value='new'>Creation date</option>
-      </select>{' '}
+      </select>
+      &nbsp;
     </>
   );
 };
@@ -134,45 +135,52 @@ export const DesktopBoardButtons = () => {
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   return (
-    <div className={styles.desktopBoardButtons}>
+    <>
       <hr />
-      {isInPostView || isInPendingPostPage ? (
-        <>
-          [
-          <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
-          ] [
-          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
-          ] [
-          <OptionsButton />]{' '}
-          {isInPostView && (
-            <span className={styles.rightSideButtons}>
-              [<SubscribeButton address={subplebbitAddress} />]
-            </span>
-          )}
-        </>
-      ) : (
-        <>
-          [
-          {isInCatalogView ? (
+      <div className={styles.desktopBoardButtons}>
+        {isInPostView || isInPendingPostPage ? (
+          <>
+            [
             <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
-          ) : (
+            ] [
             <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
-          )}
-          ] [
-          <OptionsButton />
-          ] [
-          <RefreshButton />]{' '}
-          <span className={styles.rightSideButtons}>
-            {isInCatalogView && <SortOptions />}
-            {!(isInAllView || isInSubscriptionsView) && (
-              <>
+            ] [
+            <OptionsButton />]
+            {isInPostView && (
+              <span className={styles.rightSideButtons}>
                 [
                 <SubscribeButton address={subplebbitAddress} />]
+              </span>
+            )}
+          </>
+        ) : (
+          <>
+            {isInCatalogView ? (
+              <>
+                [
+                <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />]{' '}
+              </>
+            ) : (
+              <>
+                [
+                <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />]{' '}
               </>
             )}
-          </span>
-        </>
-      )}
-    </div>
+            [
+            <OptionsButton />] [
+            <RefreshButton />]
+            <span className={styles.rightSideButtons}>
+              {isInCatalogView && <SortOptions />}
+              {!(isInAllView || isInSubscriptionsView) && (
+                <>
+                  [
+                  <SubscribeButton address={subplebbitAddress} />]
+                </>
+              )}
+            </span>
+          </>
+        )}
+      </div>
+    </>
   );
 };

@@ -56,8 +56,8 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
   const boardSelect = (
     <select value={selectValue} onChange={(e) => navigate(`/p/${e.target.value}${isInCatalogView ? '/catalog' : ''}`)}>
       {!currentSubplebbitIsInList && subplebbitAddress && <option value={subplebbitAddress}>{displaySubplebbitAddress}</option>}
-      <option value='all'>{t('all')}</option>
-      <option value='subscriptions'>{t('subscriptions')}</option>
+      <option value='all'>all</option>
+      <option value='subscriptions'>subscriptions</option>
       {subplebbitAddresses.map((address: any, index: number) => {
         const subplebbitAddress = address?.includes('.') ? address : address?.slice(0, 10).concat('...');
         return (
