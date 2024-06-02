@@ -33,7 +33,7 @@
 }
 
 .boardNavMobile .pageJump a {
-  color: var(--button-text-color-mobile);
+  color: var(--topbar-mobile-button-color);
   text-decoration: var(--button-text-decoration-mobile);
 }
 
@@ -44,9 +44,6 @@
 
 .boardNavMobile select {
   font-size: var(--topbar-mobile-font-size);
-  border: var(--select-border, revert);
-  background-color: var(--select-background-color, revert);
-  color: var(--select-color, revert);
 }
 
 .boardSelect {
