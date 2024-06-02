@@ -131,5 +131,15 @@
   "search_image_on_google": "căutați imaginea pe Google",
   "search_image_on_yandex": "căutați imaginea pe Yandex",
   "search_image_on_saucenao": "căutați imaginea pe SauceNAO",
-  "view_on_client": "Vezi pe {{client}}"
+  "view_on_client": "Vezi pe {{client}}",
+  "expand_all_settings": "Extindeți toate setările",
+  "collapse_all_settings": "Recoltați toate setările",
+  "refresh": "Reîmprospătați",
+  "no_board_selected": "nu s-au selectat niciun forum",
+  "none": "nici unul",
+  "not_subscribed_to_any_board": "Nu v-ați abonat încă la niciun forum.",
+  "board_mods": "Mods de la bord",
+  "this_post_was_removed": "acest mesaj a fost eliminat",
+  "user_deleted_this_post": "Utilizatorul a șters acest mesaj.",
+  "reason": "motiv"
 }

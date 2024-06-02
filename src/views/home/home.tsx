@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import styles from './home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
@@ -393,6 +393,10 @@ const Home = () => {
   const defaultSubplebbits = useDefaultSubplebbits();
   const subplebbitAddresses = useDefaultSubplebbitAddresses();
   const { subplebbits } = useSubplebbits({ subplebbitAddresses });
+
+  useEffect(() => {
+    document.title = 'plebchan';
+  }, []);
 
   return (
     <div className={styles.content}>

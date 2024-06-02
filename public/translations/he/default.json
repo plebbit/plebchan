@@ -131,5 +131,15 @@
   "search_image_on_google": "חפש תמונה ב-Google",
   "search_image_on_yandex": "חפש תמונה ב-Yandex",
   "search_image_on_saucenao": "חפש תמונה ב- SauceNAO",
-  "view_on_client": "הצג ב {{client}}"
+  "view_on_client": "הצג ב {{client}}",
+  "expand_all_settings": "הרחב את כל ההגדרות",
+  "collapse_all_settings": "קפל את כל ההגדרות",
+  "refresh": "רענן",
+  "no_board_selected": "לא נבחרו שום פורומים",
+  "none": "אף אחד",
+  "not_subscribed_to_any_board": "עדיין לא הרשמת לאף פורום.",
+  "board_mods": "מנהלי הפורום",
+  "this_post_was_removed": "הודעה זו הוסרה",
+  "user_deleted_this_post": "המשתמש מחק את הפוסט הזה.",
+  "reason": "סיבה"
 }

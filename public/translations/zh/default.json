@@ -131,5 +131,15 @@
   "search_image_on_google": "在Google上搜索图像",
   "search_image_on_yandex": "在Yandex上搜索图像",
   "search_image_on_saucenao": "在SauceNAO上搜索图像",
-  "view_on_client": "在{{client}}上查看"
+  "view_on_client": "在{{client}}上查看",
+  "expand_all_settings": "展开所有设置",
+  "collapse_all_settings": "折叠所有设置",
+  "refresh": "刷新",
+  "no_board_selected": "没有选择任何论坛",
+  "none": "无",
+  "not_subscribed_to_any_board": "您尚未订阅任何论坛。",
+  "board_mods": "董事會版主",
+  "this_post_was_removed": "此帖已被删除",
+  "user_deleted_this_post": "用户删除了这个帖子。",
+  "reason": "原因"
 }

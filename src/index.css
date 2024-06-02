@@ -42,6 +42,10 @@ hr {
     user-select: none;
     display: inline-block;
   }
+
+  select {
+    filter: var(--filter80);
+  }
 }
 
 @media (min-width: 640px) {

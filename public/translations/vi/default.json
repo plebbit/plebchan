@@ -131,5 +131,15 @@
   "search_image_on_google": "Tìm kiếm hình ảnh trên Google",
   "search_image_on_yandex": "Tìm kiếm hình ảnh trên Yandex",
   "search_image_on_saucenao": "Tìm kiếm hình ảnh trên SauceNAO",
-  "view_on_client": "Xem trên {{client}}"
+  "view_on_client": "Xem trên {{client}}",
+  "expand_all_settings": "Mở rộng tất cả các thiết lập",
+  "collapse_all_settings": "Thu gọn tất cả các thiết lập",
+  "refresh": "Làm mới",
+  "no_board_selected": "không có diễn đàn nào được chọn",
+  "none": "không ai",
+  "not_subscribed_to_any_board": "Bạn chưa đăng ký vào bất kỳ diễn đàn nào.",
+  "board_mods": "Bảng Mods",
+  "this_post_was_removed": "bài đăng này đã bị xóa",
+  "user_deleted_this_post": "Người dùng đã xóa bài đăng này.",
+  "reason": "lý do"
 }

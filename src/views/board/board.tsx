@@ -9,6 +9,7 @@ import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbi
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
+import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import Post from '../../components/post';
 import ReplyModal from '../../components/reply-modal';
@@ -40,7 +41,7 @@ const Board = () => {
     return [subplebbitAddress];
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
 
-  const sortType = 'active';
+  const { sortType } = useSortingStore();
   const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType });
 
   const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
@@ -60,7 +61,7 @@ const Board = () => {
       {state === 'failed' ? (
         state
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-        `You have not subscribed to any board yet.`
+        t('not_subscribed_to_any_board')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}

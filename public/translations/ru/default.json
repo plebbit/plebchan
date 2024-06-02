@@ -131,5 +131,15 @@
   "search_image_on_google": "поиск изображения в Google",
   "search_image_on_yandex": "поиск изображения в Yandex",
   "search_image_on_saucenao": "поиск изображения на SauceNAO",
-  "view_on_client": "Посмотреть на {{client}}"
+  "view_on_client": "Посмотреть на {{client}}",
+  "expand_all_settings": "Развернуть все настройки",
+  "collapse_all_settings": "Свернуть все настройки",
+  "refresh": "Обновить",
+  "no_board_selected": "не выбрано ни одного форума",
+  "none": "нет",
+  "not_subscribed_to_any_board": "Вы еще не подписаны ни на один форум.",
+  "board_mods": "Модераторы форума",
+  "this_post_was_removed": "этот пост был удален",
+  "user_deleted_this_post": "Пользователь удалил этот пост.",
+  "reason": "причина"
 }

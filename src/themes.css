@@ -4,18 +4,6 @@
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
   --board-address-font-size: x-small;
-  
-  /* board nav */
-  --topbar-font-size: 9pt;
-  --topbar-separator-color: #b86;
-  --topbar-desktop-link-text-color: #800;
-  --topbar-desktop-link-text-color-hover: #e00;
-  --topbar-desktop-link-text-decoration: none;
-  --topbar-desktop-link-text-decoration-hover: underline;
-  --topbar-mobile-background-color: #f0e0d6;
-  --topbar-mobile-border-bottom: 2px solid #d9c5b7;
-  --topbar-mobile-font-size: 10px;
-  --topbar-mobile-button-text-color: navy;
 
   /* body */
   --body-background-base-color: #ffe;
@@ -180,6 +168,18 @@
 
   /* stats */
   --stats-font-size: 11px;
+  
+  /* topbar */
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #b86;
+  --topbar-desktop-link-text-color: #800;
+  --topbar-desktop-link-text-color-hover: #e00;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: underline;
+  --topbar-mobile-background-color: #f0e0d6;
+  --topbar-mobile-border-bottom: 2px solid #d9c5b7;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: navy;
 }
 
 :root .yotsuba-b {
@@ -190,18 +190,6 @@
   --board-address-font-size: x-small;
   --board-title-text-color: #af0a0f;
   --board-address-text-color: #af0a0f;
-
-  /* board nav */
-  --topbar-font-size: 9pt;
-  --topbar-separator-color: #89a;
-  --topbar-desktop-link-text-color: #34345c;
-  --topbar-desktop-link-text-color-hover: #d00;
-  --topbar-desktop-link-text-decoration: none;
-  --topbar-desktop-link-text-decoration-hover: none;
-  --topbar-mobile-background-color: #d6daf0;
-  --topbar-mobile-border-bottom: 2px solid #b7c5d9;
-  --topbar-mobile-font-size: 10px;
-  --topbar-mobile-button-text-color: #34345c;
 
   /* body */
   --body-background-base-color: #eef2ff;
@@ -364,6 +352,18 @@
 
   /* stats */
   --stats-font-size: 11px;
+
+  /* topbar */
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #89a;
+  --topbar-desktop-link-text-color: #34345c;
+  --topbar-desktop-link-text-color-hover: #d00;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: none;
+  --topbar-mobile-background-color: #d6daf0;
+  --topbar-mobile-border-bottom: 2px solid #b7c5d9;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: #34345c;
 }
 
 :root .futaba {
@@ -373,18 +373,6 @@
   --body-font-color: maroon;
   --body-font-family: times new roman, serif;
   --body-font-size: 16px;
-
-  /* board nav */
-  --topbar-font-size: 11pt;
-  --topbar-separator-color: none;
-  --topbar-desktop-link-text-color: #00e;
-  --topbar-desktop-link-text-color-hover: red;
-  --topbar-desktop-link-text-decoration: underline;
-  --topbar-desktop-link-text-decoration-hover: underline;
-  --topbar-mobile-background-color: #f0e0d6;
-  --topbar-mobile-border-bottom: 2px solid #d9c5b7;
-  --topbar-mobile-font-size: 9pt;
-  --topbar-mobile-button-text-color: #00f;
 
   /* board title */
   --board-title-font-size: 32px;
@@ -514,6 +502,18 @@
 
   /* stats */
   --stats-font-size: 10pt;
+
+  /* topbar */
+  --topbar-font-size: 11pt;
+  --topbar-separator-color: none;
+  --topbar-desktop-link-text-color: #00e;
+  --topbar-desktop-link-text-color-hover: red;
+  --topbar-desktop-link-text-decoration: underline;
+  --topbar-desktop-link-text-decoration-hover: underline;
+  --topbar-mobile-background-color: #f0e0d6;
+  --topbar-mobile-border-bottom: 2px solid #d9c5b7;
+  --topbar-mobile-font-size: 9pt;
+  --topbar-mobile-button-text-color: #00f;
 }
 
 :root .burichan {
@@ -524,18 +524,6 @@
   --board-title-font-family: times new roman, serif;
   --board-address-font-size: 10pt;
   --board-address-text-color: #af0a0f;
-
-  /* board nav */
-  --topbar-font-size: 11pt;
-  --topbar-separator-color: none;
-  --topbar-desktop-link-text-color: #34345c;
-  --topbar-desktop-link-text-color-hover: #d00;
-  --topbar-desktop-link-text-decoration: underline;
-  --topbar-desktop-link-text-decoration-hover: underline;
-  --topbar-mobile-background-color: #d6daf0;
-  --topbar-mobile-border-bottom: 2px solid #b7c5d9;
-  --topbar-mobile-font-size: 9pt;
-  --topbar-mobile-button-text-color: #34345c;
 
   /* body */
   --body-background-base-color: #eef2ff;
@@ -678,6 +666,18 @@
 
   /* stats */
   --stats-font-size: 10pt;
+
+  /* topbar */
+  --topbar-font-size: 11pt;
+  --topbar-separator-color: none;
+  --topbar-desktop-link-text-color: #34345c;
+  --topbar-desktop-link-text-color-hover: #d00;
+  --topbar-desktop-link-text-decoration: underline;
+  --topbar-desktop-link-text-decoration-hover: underline;
+  --topbar-mobile-background-color: #d6daf0;
+  --topbar-mobile-border-bottom: 2px solid #b7c5d9;
+  --topbar-mobile-font-size: 9pt;
+  --topbar-mobile-button-text-color: #34345c;
 }
 
 :root .tomorrow {
@@ -687,18 +687,6 @@
   --body-font-color: #c5c8c6;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 13px;
-
-  /* board nav */
-  --topbar-font-size: 9pt;
-  --topbar-separator-color: #c5c8c6;
-  --topbar-desktop-link-text-color: #81a2be;
-  --topbar-desktop-link-text-color-hover: #5f89ac;
-  --topbar-desktop-link-text-decoration: none;
-  --topbar-desktop-link-text-decoration-hover: none;
-  --topbar-mobile-background-color: #1d1f21;
-  --topbar-mobile-border-bottom: 2px solid #282a2e;
-  --topbar-mobile-font-size: 10px;
-  --topbar-mobile-button-text-color: #81a2be;
 
   /* board title */
   --board-title-font-size: 28px;
@@ -864,6 +852,19 @@
 
   /* stats */
   --stats-font-size: 11px;
+
+  /* topbar */
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #c5c8c6;
+  --topbar-desktop-link-text-color: #81a2be;
+  --topbar-desktop-link-text-color-hover: #5f89ac;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: none;
+  --topbar-mobile-background-color: #1d1f21;
+  --topbar-mobile-border-bottom: 2px solid #282a2e;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: #81a2be;
+  --topbar-mobile-button-color: #81a2be;
 }
 
 :root .photon {
@@ -873,18 +874,6 @@
   --body-font-color: #333;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 13px;
-
-  /* board nav */
-  --topbar-font-size: 9pt;
-  --topbar-separator-color: #333;
-  --topbar-desktop-link-text-color: #f60;
-  --topbar-desktop-link-text-color-hover: #f30;
-  --topbar-desktop-link-text-decoration: none;
-  --topbar-desktop-link-text-decoration-hover: none;
-  --topbar-mobile-background-color: #ddd;
-  --topbar-mobile-border-bottom: 2px solid #ccc;
-  --topbar-mobile-font-size: 10px;
-  --topbar-mobile-button-text-color: #f60;
 
   /* board title */
   --board-title-font-size: 28px;
@@ -1030,4 +1019,17 @@
 
   /* stats */
   --stats-font-size: 11px;
+
+  /* topbar */
+  --topbar-font-size: 9pt;
+  --topbar-separator-color: #333;
+  --topbar-desktop-link-text-color: #f60;
+  --topbar-desktop-link-text-color-hover: #f30;
+  --topbar-desktop-link-text-decoration: none;
+  --topbar-desktop-link-text-decoration-hover: none;
+  --topbar-mobile-background-color: #ddd;
+  --topbar-mobile-border-bottom: 2px solid #ccc;
+  --topbar-mobile-font-size: 10px;
+  --topbar-mobile-button-text-color: #f60;
+  --topbar-mobile-button-color: #f60;
 }

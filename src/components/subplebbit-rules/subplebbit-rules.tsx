@@ -15,7 +15,7 @@ const SubplebbitRules = ({ subplebbitAddress, createdAt, rules }: RulesPostProps
     isRules: true,
     subplebbitAddress,
     timestamp: createdAt,
-    author: { displayName: '## Board Mods' },
+    author: { displayName: `## ${t('board_mods')}` },
     content,
     title: _.capitalize(t('rules')),
     pinned: true,

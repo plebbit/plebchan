@@ -131,5 +131,15 @@
   "search_image_on_google": "пошук зображення в Google",
   "search_image_on_yandex": "пошук зображення в Yandex",
   "search_image_on_saucenao": "пошук зображення в SauceNAO",
-  "view_on_client": "Переглянути на {{client}}"
+  "view_on_client": "Переглянути на {{client}}",
+  "expand_all_settings": "Розгорнути всі налаштування",
+  "collapse_all_settings": "Згорнути всі налаштування",
+  "refresh": "Оновити",
+  "no_board_selected": "не обрано жодного форуму",
+  "none": "немає",
+  "not_subscribed_to_any_board": "Ви ще не підписалися на жоден форум.",
+  "board_mods": "Дошка Моди",
+  "this_post_was_removed": "цей пост було видалено",
+  "user_deleted_this_post": "Користувач видалив цей пост.",
+  "reason": "причина"
 }

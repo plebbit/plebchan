@@ -131,5 +131,15 @@
   "search_image_on_google": "sök bild på Google",
   "search_image_on_yandex": "sök bild på Yandex",
   "search_image_on_saucenao": "sök bild på SauceNAO",
-  "view_on_client": "Visa på {{client}}"
+  "view_on_client": "Visa på {{client}}",
+  "expand_all_settings": "Expandera alla inställningar",
+  "collapse_all_settings": "Kollapsa alla inställningar",
+  "refresh": "Uppdatera",
+  "no_board_selected": "inga forum valda",
+  "none": "ingen",
+  "not_subscribed_to_any_board": "Du har ännu inte prenumererat på några forum.",
+  "board_mods": "Styrelse Mods",
+  "this_post_was_removed": "detta inlägg togs bort",
+  "user_deleted_this_post": "Användaren tog bort detta inlägg.",
+  "reason": "anledning"
 }

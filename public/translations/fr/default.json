@@ -131,5 +131,15 @@
   "search_image_on_google": "Rechercher une image sur Google",
   "search_image_on_yandex": "Rechercher une image sur Yandex",
   "search_image_on_saucenao": "Rechercher une image sur SauceNAO",
-  "view_on_client": "Voir sur {{client}}"
+  "view_on_client": "Voir sur {{client}}",
+  "expand_all_settings": "Développer toutes les configurations",
+  "collapse_all_settings": "Réduire toutes les configurations",
+  "refresh": "Actualiser",
+  "no_board_selected": "aucun forum sélectionné",
+  "none": "aucun",
+  "not_subscribed_to_any_board": "Vous n'avez encore souscrit à aucun forum.",
+  "board_mods": "Mods de la table",
+  "this_post_was_removed": "ce post a été supprimé",
+  "user_deleted_this_post": "L'utilisateur a supprimé ce post.",
+  "reason": "raison"
 }

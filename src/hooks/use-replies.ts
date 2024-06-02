@@ -28,14 +28,18 @@ const useRepliesAndAccountReplies = (comment: Comment) => {
   }, [flattenedReplies, accountComments]);
 
   const repliesAndNotYetPublishedReplies = useMemo(() => {
-    const repliesSortedByVotes = [
-      // put the author's unpublished replies at the top, latest first (reverse)
-      ...accountRepliesNotYetPublished.reverse(),
-      // put the published replies after,
-      ...(flattenedReplies || []),
-    ];
-    // sort by timestamp
-    return repliesSortedByVotes.sort((a: Comment, b: Comment) => a.timestamp - b.timestamp);
+    const repliesSortedByPinnedAndTimestamp = [...accountRepliesNotYetPublished.reverse(), ...(flattenedReplies || [])];
+
+    return repliesSortedByPinnedAndTimestamp.sort((a: Comment, b: Comment) => {
+      // Sort by pinned status first, with pinned comments at the top
+      if (a.pinned && !b.pinned) {
+        return -1;
+      } else if (!a.pinned && b.pinned) {
+        return 1;
+      }
+      // If both are pinned or both are not pinned, sort by timestamp
+      return a.timestamp - b.timestamp;
+    });
   }, [flattenedReplies, accountRepliesNotYetPublished]);
 
   return repliesAndNotYetPublishedReplies;

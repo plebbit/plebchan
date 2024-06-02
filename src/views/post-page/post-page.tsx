@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './post-page.module.css';
-import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
+import { isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
 import useReplyModal from '../../hooks/use-reply-modal';
 import Post from '../../components/post';
 import ReplyModal from '../../components/reply-modal';
@@ -16,10 +16,7 @@ const PostPage = () => {
   const params = useParams();
   const location = useLocation();
   const { commentCid, subplebbitAddress } = params;
-  const showSettings =
-    location.pathname === `/p/${subplebbitAddress}/c/${commentCid}/settings` ||
-    location.pathname === `/p/${subplebbitAddress}/description/settings` ||
-    location.pathname === `/p/${subplebbitAddress}/rules/settings`;
+  const isInSettigsView = isSettingsView(location.pathname, params);
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
@@ -38,7 +35,7 @@ const PostPage = () => {
 
   return (
     <div className={styles.content}>
-      {showSettings && <SettingsModal />}
+      {isInSettigsView && <SettingsModal />}
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
       {isInDescriptionView ? (
         <SubplebbitDescription

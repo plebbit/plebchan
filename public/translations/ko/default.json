@@ -131,5 +131,15 @@
   "search_image_on_google": "Google 이미지 검색",
   "search_image_on_yandex": "Yandex 이미지 검색",
   "search_image_on_saucenao": "SauceNAO 이미지 검색",
-  "view_on_client": "{{client}}에서 보기"
+  "view_on_client": "{{client}}에서 보기",
+  "expand_all_settings": "모든 설정 펼치기",
+  "collapse_all_settings": "모든 설정 축소",
+  "refresh": "새로 고침",
+  "no_board_selected": "선택된 게시판이 없습니다",
+  "none": "없음",
+  "not_subscribed_to_any_board": "아직 어떤 게시판에도 가입하지 않았습니다.",
+  "board_mods": "게시판 모드",
+  "this_post_was_removed": "이 게시물은 삭제되었습니다",
+  "user_deleted_this_post": "사용자가이 게시물을 삭제했습니다.",
+  "reason": "이유"
 }

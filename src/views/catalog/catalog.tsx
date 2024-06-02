@@ -9,6 +9,7 @@ import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useWindowWidth from '../../hooks/use-window-width';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
+import useSortingStore from '../../stores/use-sorting-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
@@ -39,10 +40,10 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         isDescription: true,
         subplebbitAddress: address,
         timestamp: createdAt,
-        author: { displayName: '## Board Mods' },
+        author: { displayName: `## ${t('board_mods')}` },
         content: isInAllView ? multisub?.description : description,
         link: avatarUrl,
-        title: t('welcome_to_board', { board: isInAllView ? multisub?.title : title || `p/${shortAddress}` }),
+        title: t('welcome_to_board', { board: isInAllView ? multisub?.title : title || `p/${shortAddress}`, interpolation: { escapeValue: false } }),
         pinned: true,
         locked: true,
       });
@@ -52,7 +53,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         isRules: true,
         subplebbitAddress: address,
         timestamp: createdAt,
-        author: { displayName: '## Board Mods' },
+        author: { displayName: `## ${t('board_mods')}` },
         content: rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
         title: _.capitalize(t('rules')),
         pinned: true,
@@ -102,7 +103,8 @@ const Catalog = () => {
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
-  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType: 'active', postsPerPage });
+  const { sortType } = useSortingStore();
+  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType, postsPerPage });
 
   const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
   useEffect(() => {
@@ -117,7 +119,7 @@ const Catalog = () => {
       {state === 'failed' ? (
         state
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-        `You haven't subscribed to any board yet.`
+        t('not_subscribed_to_any_board')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}
@@ -156,8 +158,10 @@ const Catalog = () => {
 
   useEffect(() => {
     let documentTitle = title ? title : shortAddress;
-    document.title = documentTitle + ' - Catalog';
-  }, [title, shortAddress]);
+    if (isInAllView) documentTitle = t('all');
+    else if (isInSubscriptionsView) documentTitle = t('subscriptions');
+    document.title = documentTitle + ` - ${t('catalog')}`;
+  }, [title, shortAddress, isInAllView, isInSubscriptionsView, t]);
 
   return (
     <div className={styles.content}>

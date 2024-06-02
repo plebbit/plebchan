@@ -134,7 +134,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             [
             <label>
               <input type='checkbox' onChange={(e) => setContent.spoiler(e.target.checked)} />
-              {t('spoiler')}?
+              {_.capitalize(t('spoiler'))}?
             </label>
             ]
           </span>

@@ -131,5 +131,15 @@
   "search_image_on_google": "keresés kép a Google-ben",
   "search_image_on_yandex": "keresés kép a Yandex-ben",
   "search_image_on_saucenao": "keresés kép a SauceNAO-n",
-  "view_on_client": "Megtekintés itt: {{client}}"
+  "view_on_client": "Megtekintés itt: {{client}}",
+  "expand_all_settings": "Az összes beállítás kibontása",
+  "collapse_all_settings": "Az összes beállítás összevonása",
+  "refresh": "Frissítés",
+  "no_board_selected": "nincsenek kiválasztva fórumok",
+  "none": "egyik sem",
+  "not_subscribed_to_any_board": "Még nem iratkoztál fel egyetlen fórumra sem.",
+  "board_mods": "Tábla Mods",
+  "this_post_was_removed": "ez a bejegyzés eltávolításra került",
+  "user_deleted_this_post": "A felhasználó törölte ezt a bejegyzést.",
+  "reason": "indok"
 }

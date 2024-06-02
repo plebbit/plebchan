@@ -131,5 +131,15 @@
   "search_image_on_google": "گوگل پر تصویر کا مطالعہ کریں",
   "search_image_on_yandex": "یانڈیکس پر تصویر کا مطالعہ کریں",
   "search_image_on_saucenao": "SauceNAO پر تصویر کا مطالعہ کریں",
-  "view_on_client": "{{client}} پر دیکھیں"
+  "view_on_client": "{{client}} پر دیکھیں",
+  "expand_all_settings": "تمام ترتیبات کو بڑھائیں",
+  "collapse_all_settings": "تمام ترتیبات کو مختصر کریں",
+  "refresh": "تازہ کاری",
+  "no_board_selected": "کوئی پیغام بورڈز منتخب نہیں کیا گیا",
+  "none": "کوئی نہیں",
+  "not_subscribed_to_any_board": "آپ نے ابھی تک کسی بورڈز میں سبسکرائب نہیں کیا۔",
+  "board_mods": "بورڈ موڈس",
+  "this_post_was_removed": "یہ پوسٹ ہٹا دی گئی ہے",
+  "user_deleted_this_post": "صارف نے یہ پوسٹ حذف کردی.",
+  "reason": "وجہ"
 }

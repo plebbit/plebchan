@@ -131,5 +131,15 @@
   "search_image_on_google": "søk etter bilde på Google",
   "search_image_on_yandex": "søk etter bilde på Yandex",
   "search_image_on_saucenao": "søk etter bilde på SauceNAO",
-  "view_on_client": "Vis på {{client}}"
+  "view_on_client": "Vis på {{client}}",
+  "expand_all_settings": "Utvid alle innstillinger",
+  "collapse_all_settings": "Sammenlegge alle innstillinger",
+  "refresh": "Oppdater",
+  "no_board_selected": "ingen fora valgt",
+  "none": "ingen",
+  "not_subscribed_to_any_board": "Du har ikke abonnert på noen fora ennå.",
+  "board_mods": "Board Mods",
+  "this_post_was_removed": "dette innlegget ble fjernet",
+  "user_deleted_this_post": "Brukeren slettet dette innlegget.",
+  "reason": "grunn"
 }

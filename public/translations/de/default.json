@@ -131,5 +131,15 @@
   "search_image_on_google": "Bild auf Google suchen",
   "search_image_on_yandex": "Bild auf Yandex suchen",
   "search_image_on_saucenao": "Bild auf SauceNAO suchen",
-  "view_on_client": "Anzeigen auf {{client}}"
+  "view_on_client": "Anzeigen auf {{client}}",
+  "expand_all_settings": "Alle Einstellungen erweitern",
+  "collapse_all_settings": "Alle Einstellungen reduzieren",
+  "refresh": "Aktualisieren",
+  "no_board_selected": "keine Foren ausgewählt",
+  "none": "keiner",
+  "not_subscribed_to_any_board": "Du hast dich noch nicht für Foren angemeldet.",
+  "board_mods": "Board-Moderatoren",
+  "this_post_was_removed": "Dieser Beitrag wurde entfernt",
+  "user_deleted_this_post": "Benutzer hat diesen Beitrag gelöscht.",
+  "reason": "Grund"
 }

@@ -131,5 +131,15 @@
   "search_image_on_google": "Google で画像を検索",
   "search_image_on_yandex": "Yandex で画像を検索",
   "search_image_on_saucenao": "SauceNAO で画像を検索",
-  "view_on_client": "{{client}} で表示"
+  "view_on_client": "{{client}} で表示",
+  "expand_all_settings": "すべての設定を展開",
+  "collapse_all_settings": "すべての設定を折りたたむ",
+  "refresh": "更新",
+  "no_board_selected": "掲示板が選択されていません",
+  "none": "なし",
+  "not_subscribed_to_any_board": "まだどの掲示板にも購読していません。",
+  "board_mods": "ボードの管理者",
+  "this_post_was_removed": "この投稿は削除されました",
+  "user_deleted_this_post": "ユーザーがこの投稿を削除しました。",
+  "reason": "理由"
 }

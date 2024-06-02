@@ -131,5 +131,15 @@
   "search_image_on_google": "cari gambar di Google",
   "search_image_on_yandex": "cari gambar di Yandex",
   "search_image_on_saucenao": "cari gambar di SauceNAO",
-  "view_on_client": "Lihat di {{client}}"
+  "view_on_client": "Lihat di {{client}}",
+  "expand_all_settings": "Perluas Semua Pengaturan",
+  "collapse_all_settings": "Ciutkan Semua Pengaturan",
+  "refresh": "Segarkan",
+  "no_board_selected": "tidak ada papan pesan yang dipilih",
+  "none": "tak ada",
+  "not_subscribed_to_any_board": "Anda belum berlangganan ke papan pesan mana pun.",
+  "board_mods": "Papan Pesan Mods",
+  "this_post_was_removed": "posting ini telah dihapus",
+  "user_deleted_this_post": "Pengguna menghapus posting ini.",
+  "reason": "alasan"
 }

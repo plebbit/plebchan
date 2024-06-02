@@ -131,5 +131,15 @@
   "search_image_on_google": "etsi kuva Googlesta",
   "search_image_on_yandex": "etsi kuva Yandexistä",
   "search_image_on_saucenao": "etsi kuva SauceNAO: sta",
-  "view_on_client": "Näytä {{client}}: ssä"
+  "view_on_client": "Näytä {{client}}: ssä",
+  "expand_all_settings": "Laajenna kaikki asetukset",
+  "collapse_all_settings": "Sulje kaikki asetukset",
+  "refresh": "Päivitä",
+  "no_board_selected": "ei foorumeja valittu",
+  "none": "ei mikään",
+  "not_subscribed_to_any_board": "Et ole vielä tilannut mitään foorumeita.",
+  "board_mods": "Hallituksen Mods",
+  "this_post_was_removed": "tämä viesti on poistettu",
+  "user_deleted_this_post": "Käyttäjä poisti tämän viestin.",
+  "reason": "syy"
 }

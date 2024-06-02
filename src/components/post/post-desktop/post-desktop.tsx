@@ -170,7 +170,7 @@ const PostMedia = ({ post }: PostProps) => {
 
 const PostMessage = ({ post }: PostProps) => {
   const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
-
+  const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
   const isInPostView = isPostPageView(location.pathname, params);
@@ -197,9 +197,9 @@ const PostMessage = ({ post }: PostProps) => {
         </>
       )}
       {removed ? (
-        <span className={styles.removedContent}>(THIS POST WAS REMOVED)</span>
+        <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
       ) : deleted ? (
-        <span className={styles.removedContent}>User deleted this post.</span>
+        <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
       ) : (
         <Markdown content={displayContent} />
       )}
@@ -207,7 +207,7 @@ const PostMessage = ({ post }: PostProps) => {
         <span>
           <br />
           <br />
-          reason: {reason}
+          {t('reason')}: {reason}
         </span>
       )}
       {!isReply && content.length > 1000 && !isInPostView && (

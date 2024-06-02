@@ -7,11 +7,14 @@ import { Comment, useBlock } from '@plebbit/plebbit-react-hooks';
 import styles from './post-menu-desktop.module.css';
 import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../../lib/utils/url-utils';
-import { isCatalogView, isPostPageView } from '../../../../lib/utils/view-utils';
+import { isAllView, isCatalogView, isPostPageView, isSubscriptionsView } from '../../../../lib/utils/view-utils';
+import _ from 'lodash';
 
 interface PostMenuDesktopProps {
   cid: string;
   isDescription?: boolean;
+  isInAllView?: boolean;
+  isInSubscriptionsView?: boolean;
   isRules?: boolean;
   subplebbitAddress: string;
   onClose: () => void;
@@ -48,7 +51,7 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
       ref={refs.setReference}
       onClick={onClose}
     >
-      {t('image_search')} »
+      {_.capitalize(t('image_search'))} »
       {isImageSearchMenuOpen && (
         <div ref={refs.setFloating} style={floatingStyles} className={styles.dropdownMenu}>
           <a href={`https://lens.google.com/uploadbyurl?url=${url}`} target='_blank' rel='noreferrer'>
@@ -66,10 +69,10 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
   );
 };
 
-const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
+const ViewOnButton = ({ cid, isDescription, isInAllView, isInSubscriptionsView, isRules, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
   const { t } = useTranslation();
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
-  const viewOnOtherClientLink = `p/${subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
+  const viewOnOtherClientLink = `p/${isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
 
   const { refs, floatingStyles } = useFloating({
     placement: 'right-start',
@@ -84,13 +87,13 @@ const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose 
       ref={refs.setReference}
       onClick={onClose}
     >
-      {t('view_on')} »
+      {_.capitalize(t('view_on'))} »
       {isClientRedirectMenuOpen && (
         <div ref={refs.setFloating} style={floatingStyles} className={styles.dropdownMenu}>
-          <a href={`https://seedit.app/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
+          <a href={`https://seedit.eth.limo/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
             <div className={styles.postMenuItem}>Seedit</div>
           </a>
-          <a href={`https://plebones.netlify.app/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
+          <a href={`https://plebones.eth.limo/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
             <div className={styles.postMenuItem}>Plebones</div>
           </a>
         </div>
@@ -110,8 +113,10 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
 
   const location = useLocation();
   const params = useParams();
+  const isInAllView = isAllView(location.pathname);
   const isInCatalogView = isCatalogView(location.pathname);
   const isInPostPageView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
@@ -157,7 +162,15 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
                 </div>
               )}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButton url={url} onClose={handleClose} />}
-              <ViewOnButton cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
+              <ViewOnButton
+                cid={cid}
+                isDescription={isDescription}
+                isInAllView={isInAllView}
+                isInSubscriptionsView={isInSubscriptionsView}
+                isRules={isRules}
+                subplebbitAddress={subplebbitAddress}
+                onClose={handleClose}
+              />
             </div>
           </FloatingFocusManager>,
           document.body,
