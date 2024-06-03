@@ -141,5 +141,6 @@
   "board_mods": "Moderatori del Forum",
   "this_post_was_removed": "questo post è stato rimosso",
   "user_deleted_this_post": "L'utente ha eliminato questo post.",
-  "reason": "motivo"
+  "reason": "motivo",
+  "search": "cerca"
 }

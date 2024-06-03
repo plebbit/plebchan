@@ -141,5 +141,6 @@
   "board_mods": "Модераторы форума",
   "this_post_was_removed": "этот пост был удален",
   "user_deleted_this_post": "Пользователь удалил этот пост.",
-  "reason": "причина"
+  "reason": "причина",
+  "search": "поиск"
 }

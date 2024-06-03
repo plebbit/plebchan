@@ -141,5 +141,6 @@
   "board_mods": "Forum Mods",
   "this_post_was_removed": "bu mesaj kaldırıldı",
   "user_deleted_this_post": "Kullanıcı bu mesajı sildi.",
-  "reason": "neden"
+  "reason": "neden",
+  "search": "arama"
 }

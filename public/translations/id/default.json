@@ -141,5 +141,6 @@
   "board_mods": "Papan Pesan Mods",
   "this_post_was_removed": "posting ini telah dihapus",
   "user_deleted_this_post": "Pengguna menghapus posting ini.",
-  "reason": "alasan"
+  "reason": "alasan",
+  "search": "cari"
 }

@@ -141,5 +141,6 @@
   "board_mods": "ボードの管理者",
   "this_post_was_removed": "この投稿は削除されました",
   "user_deleted_this_post": "ユーザーがこの投稿を削除しました。",
-  "reason": "理由"
+  "reason": "理由",
+  "search": "検索"
 }

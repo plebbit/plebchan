@@ -141,5 +141,6 @@
   "board_mods": "Mods του φόρουμ",
   "this_post_was_removed": "αυτή η ανάρτηση αφαιρέθηκε",
   "user_deleted_this_post": "Ο χρήστης διέγραψε αυτή την ανάρτηση.",
-  "reason": "λόγος"
+  "reason": "λόγος",
+  "search": "αναζήτηση"
 }

@@ -141,5 +141,6 @@
   "board_mods": "Board-Moderatoren",
   "this_post_was_removed": "Dieser Beitrag wurde entfernt",
   "user_deleted_this_post": "Benutzer hat diesen Beitrag gelöscht.",
-  "reason": "Grund"
+  "reason": "Grund",
+  "search": "suche"
 }

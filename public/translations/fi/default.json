@@ -141,5 +141,6 @@
   "board_mods": "Hallituksen Mods",
   "this_post_was_removed": "tämä viesti on poistettu",
   "user_deleted_this_post": "Käyttäjä poisti tämän viestin.",
-  "reason": "syy"
+  "reason": "syy",
+  "search": "haku"
 }
