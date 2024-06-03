@@ -158,7 +158,7 @@ const ModMenu = ({ cid, isCommentAuthorMod }: ModMenuProps) => {
                 </div>
               )}
               <div className={`${styles.menuItem} ${styles.menuReason}`}>
-                {_.capitalize(t('reason'))}? <span className={styles.optional}>({t('optional')})</span>
+                {_.capitalize(t('reason'))}?
                 <input type='text' onChange={onReason} defaultValue={post?.reason} size={14} />
               </div>
               <div className={styles.bottom}>
