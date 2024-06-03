@@ -20,6 +20,10 @@ interface BoxModalStore {
   setShowWorksafeBoardsOnly: (value: boolean) => void;
   useCatalog: boolean;
   setUseCatalog: (value: boolean) => void;
+  showWorksafeContentOnly: boolean;
+  setShowWorksafeContentOnly: (value: boolean) => void;
+  showNsfwContentOnly: boolean;
+  setShowNsfwContentOnly: (value: boolean) => void;
 }
 
 const useBoxModalStore = create<BoxModalStore>((set) => ({
@@ -37,6 +41,16 @@ const useBoxModalStore = create<BoxModalStore>((set) => ({
   setUseCatalog: (value: boolean) => {
     set({ useCatalog: value });
     localStorage.setItem('useCatalog', value.toString());
+  },
+  showWorksafeContentOnly: localStorage.getItem('showWorksafeContentOnly') === 'true' ? true : false,
+  setShowWorksafeContentOnly: (value: boolean) => {
+    set({ showWorksafeContentOnly: value });
+    localStorage.setItem('showWorksafeContentOnly', value.toString());
+  },
+  showNsfwContentOnly: localStorage.getItem('showNsfwContentOnly') === 'true' ? true : false,
+  setShowNsfwContentOnly: (value: boolean) => {
+    set({ showNsfwContentOnly: value });
+    localStorage.setItem('showNsfwContentOnly', value.toString());
   },
 }));
 
@@ -112,7 +126,18 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { showNsfwBoardsOnly, setShowNsfwBoardsOnly, showWorksafeBoardsOnly, setShowWorksafeBoardsOnly, useCatalog, setUseCatalog } = useBoxModalStore();
+  const {
+    showNsfwBoardsOnly,
+    setShowNsfwBoardsOnly,
+    showWorksafeBoardsOnly,
+    setShowWorksafeBoardsOnly,
+    useCatalog,
+    setUseCatalog,
+    showWorksafeContentOnly,
+    setShowWorksafeContentOnly,
+    showNsfwContentOnly,
+    setShowNsfwContentOnly,
+  } = useBoxModalStore();
 
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
@@ -186,9 +211,40 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
             </>
           ) : (
             <>
-              <div className={styles.option}>Show Worksafe Content Only</div>
-              <div className={styles.option}>Show NSFW Content Only</div>
-              <div className={`${styles.option} ${styles.selected}`}>Show All Content</div>
+              <div
+                className={`${styles.option} ${showWorksafeContentOnly && styles.selected}`}
+                onClick={() => {
+                  if (showNsfwContentOnly) {
+                    setShowNsfwContentOnly(false);
+                  }
+                  setShowWorksafeContentOnly(!showWorksafeContentOnly);
+                  setShowFilterModal(false);
+                }}
+              >
+                Show Worksafe Content Only
+              </div>
+              <div
+                className={`${styles.option} ${showNsfwContentOnly && styles.selected}`}
+                onClick={() => {
+                  if (showWorksafeContentOnly) {
+                    setShowWorksafeContentOnly(false);
+                  }
+                  setShowNsfwContentOnly(!showNsfwContentOnly);
+                  setShowFilterModal(false);
+                }}
+              >
+                Show NSFW Content Only
+              </div>
+              <div
+                className={`${styles.option} ${!showWorksafeContentOnly && !showNsfwContentOnly && styles.selected}`}
+                onClick={() => {
+                  setShowWorksafeContentOnly(false);
+                  setShowNsfwContentOnly(false);
+                  setShowFilterModal(false);
+                }}
+              >
+                Show All Content
+              </div>
             </>
           )}
         </div>
@@ -359,9 +415,28 @@ const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThrea
   );
 };
 
-const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
+const PopularThreads = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits: any }) => {
   const { t } = useTranslation();
-  const popularPosts = usePopularPosts(subplebbits);
+  const { showWorksafeContentOnly, showNsfwContentOnly } = useBoxModalStore();
+
+  const getFilteredSubplebbits = () => {
+    if (showWorksafeContentOnly) {
+      return subplebbits.filter((sub: Subplebbit) => {
+        const multisubEntry = multisub.find((ms) => ms.address === sub.address);
+        return multisubEntry ? !multisubEntry.tags.some((tag: string) => nsfwTags.includes(tag)) : true;
+      });
+    }
+    if (showNsfwContentOnly) {
+      return subplebbits.filter((sub: Subplebbit) => {
+        const multisubEntry = multisub.find((ms) => ms.address === sub.address);
+        return multisubEntry ? multisubEntry.tags.some((tag: string) => nsfwTags.includes(tag)) : false;
+      });
+    }
+    return subplebbits;
+  };
+
+  const filteredSubplebbits = getFilteredSubplebbits();
+  const popularPosts = usePopularPosts(filteredSubplebbits);
 
   return (
     <div className={styles.box}>
@@ -546,7 +621,7 @@ const Home = () => {
       <SearchBar />
       <InfoBox />
       <Boards multisub={defaultSubplebbits} subplebbits={subplebbits} />
-      <PopularThreads subplebbits={subplebbits} />
+      <PopularThreads multisub={defaultSubplebbits} subplebbits={subplebbits} />
       <Stats multisub={defaultSubplebbits} subplebbitAddresses={subplebbitAddresses} />
       <Footer />
     </div>
