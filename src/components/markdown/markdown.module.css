@@ -29,3 +29,13 @@
   cursor: pointer;
   color: var(--button-desktop-text-color-hover);
 }
+
+.spoiler {
+  background-color: black;
+  color: black;
+  width: fit-content;
+}
+
+.spoiler:hover {
+  color: white;
+}

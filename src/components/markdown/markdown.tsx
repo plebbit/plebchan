@@ -10,6 +10,7 @@ import CommentMedia from '../comment-media';
 
 interface MarkdownProps {
   content: string;
+  spoiler?: boolean;
 }
 
 const MAX_LENGTH_FOR_GFM = 10000; // remarkGfm lags with large content
@@ -37,7 +38,7 @@ const blockquoteToGreentext = () => (tree: any) => {
   });
 };
 
-const Markdown = ({ content }: MarkdownProps) => {
+const Markdown = ({ content, spoiler }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
   if (content && content.length <= MAX_LENGTH_FOR_GFM) {
@@ -68,6 +69,7 @@ const Markdown = ({ content }: MarkdownProps) => {
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
+          p: ({ children }) => <p className=''>{spoiler ? <span className={styles.spoiler}>{children}</span> : children}</p>,
           img: ({ src }) => <span>{src}</span>,
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
