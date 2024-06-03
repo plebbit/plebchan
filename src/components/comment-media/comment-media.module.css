@@ -18,6 +18,17 @@
   display: inline-block;
 }
 
+.spoiler {
+  display: inline-block;
+  margin: 3px 20px 5px 20px;
+  background-color: black;
+  color: white;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 640px) {
   .subplebbitAvatar {
     max-width: 125px;
@@ -50,6 +61,10 @@
 
 .thumbnail {
   float: left;
+}
+
+.thumbnail video {
+  cursor: pointer;
 }
 
 .hide {
