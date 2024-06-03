@@ -146,5 +146,6 @@
   "ban_user_for": "Cấm người dùng trong <1></1> ngày",
   "optional": "tùy chọn",
   "close_thread": "đóng chủ đề",
-  "view_spoiler": "xem spoiler"
+  "view_spoiler": "xem spoiler",
+  "filter": "bộ lọc"
 }

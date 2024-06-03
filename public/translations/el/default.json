@@ -146,5 +146,6 @@
   "ban_user_for": "Αποκλεισμός χρήστη για <1></1> ημέρα(ες)",
   "optional": "προαιρετικό",
   "close_thread": "κλείσιμο νήματος",
-  "view_spoiler": "προβολή spoiler"
+  "view_spoiler": "προβολή spoiler",
+  "filter": "φίλτρο"
 }

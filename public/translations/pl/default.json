@@ -146,5 +146,6 @@
   "ban_user_for": "Zablokuj użytkownika na <1></1> dzień (dni)",
   "optional": "opcjonalnie",
   "close_thread": "zamknij wątek",
-  "view_spoiler": "pokaż spoiler"
+  "view_spoiler": "pokaż spoiler",
+  "filter": "filtr"
 }

@@ -146,5 +146,6 @@
   "ban_user_for": "Zakázat uživatele na <1></1> den (dní)",
   "optional": "volitelný",
   "close_thread": "uzavřít vlákno",
-  "view_spoiler": "zobrazit spoiler"
+  "view_spoiler": "zobrazit spoiler",
+  "filter": "filtr"
 }

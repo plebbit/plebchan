@@ -146,5 +146,6 @@
   "ban_user_for": "Blokker bruker i <1></1> dag(er)",
   "optional": "valgfritt",
   "close_thread": "lukk tråd",
-  "view_spoiler": "se spoiler"
+  "view_spoiler": "se spoiler",
+  "filter": "filter"
 }

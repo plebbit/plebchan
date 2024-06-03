@@ -8,7 +8,6 @@ import useDefaultSubplebbits, { categorizeSubplebbits, useDefaultSubplebbitAddre
 import _, { debounce } from 'lodash';
 
 const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => void }) => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const searchBarRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);

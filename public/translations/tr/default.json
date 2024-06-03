@@ -146,5 +146,6 @@
   "ban_user_for": "Kullanıcıyı <1></1> gün boyunca yasakla",
   "optional": "isteğe bağlı",
   "close_thread": "konuyu kapat",
-  "view_spoiler": "spoileri görüntüle"
+  "view_spoiler": "spoileri görüntüle",
+  "filter": "filtre"
 }

@@ -146,5 +146,6 @@
   "ban_user_for": "Udeluk brugeren i <1></1> dag(e)",
   "optional": "valgfri",
   "close_thread": "luk tråd",
-  "view_spoiler": "vis spoiler"
+  "view_spoiler": "vis spoiler",
+  "filter": "filtrér"
 }

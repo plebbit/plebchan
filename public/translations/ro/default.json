@@ -146,5 +146,6 @@
   "ban_user_for": "Interzice utilizatorul pentru <1></1> zi(zile)",
   "optional": "opțional",
   "close_thread": "închide firul",
-  "view_spoiler": "vezi spoilerul"
+  "view_spoiler": "vezi spoilerul",
+  "filter": "filtru"
 }

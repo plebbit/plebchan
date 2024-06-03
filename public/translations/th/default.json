@@ -146,5 +146,6 @@
   "ban_user_for": "แบนผู้ใช้ <1></1> วัน",
   "optional": "ไม่จำเป็น",
   "close_thread": "ปิดกระทู้",
-  "view_spoiler": "ดูสปอยล์เลอร์"
+  "view_spoiler": "ดูสปอยล์เลอร์",
+  "filter": "ตัวกรอง"
 }

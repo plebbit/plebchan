@@ -146,5 +146,6 @@
   "ban_user_for": "Estä käyttäjä <1></1> päiväksi",
   "optional": "valinnainen",
   "close_thread": "sulje keskustelu",
-  "view_spoiler": "näytä spoiler"
+  "view_spoiler": "näytä spoiler",
+  "filter": "suodatin"
 }

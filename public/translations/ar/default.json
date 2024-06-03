@@ -146,5 +146,6 @@
   "ban_user_for": "حظر المستخدم لمدة <1></1> يوم(أيام)",
   "optional": "اختياري",
   "close_thread": "اغلق الموضوع",
-  "view_spoiler": "عرض الحاضر"
+  "view_spoiler": "عرض الحاضر",
+  "filter": "تصفية"
 }

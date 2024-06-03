@@ -146,5 +146,6 @@
   "ban_user_for": "Prohibir al usuario durante <1></1> día(s)",
   "optional": "opcional",
   "close_thread": "cerrar hilo",
-  "view_spoiler": "ver spoiler"
+  "view_spoiler": "ver spoiler",
+  "filter": "filtrar"
 }

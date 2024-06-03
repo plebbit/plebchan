@@ -146,5 +146,6 @@
   "ban_user_for": "Blockera användaren i <1></1> dag(ar)",
   "optional": "valfritt",
   "close_thread": "stäng tråd",
-  "view_spoiler": "visa spoiler"
+  "view_spoiler": "visa spoiler",
+  "filter": "filter"
 }

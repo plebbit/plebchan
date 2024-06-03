@@ -146,5 +146,6 @@
   "ban_user_for": "Blokir pengguna selama <1></1> hari",
   "optional": "opsional",
   "close_thread": "tutup utas",
-  "view_spoiler": "lihat spoiler"
+  "view_spoiler": "lihat spoiler",
+  "filter": "menyaring"
 }

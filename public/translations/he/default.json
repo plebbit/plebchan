@@ -146,5 +146,6 @@
   "ban_user_for": "אסור למשתמש למשך <1></1> יום",
   "optional": "אופציונלי",
   "close_thread": "סגור את הנושא",
-  "view_spoiler": "הצג ספוילר"
+  "view_spoiler": "הצג ספוילר",
+  "filter": "סנן"
 }

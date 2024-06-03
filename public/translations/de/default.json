@@ -146,5 +146,6 @@
   "ban_user_for": "Benutzer für <1></1> Tag(e) sperren",
   "optional": "optional",
   "close_thread": "Thread schließen",
-  "view_spoiler": "Spoiler anzeigen"
+  "view_spoiler": "Spoiler anzeigen",
+  "filter": "filtern"
 }

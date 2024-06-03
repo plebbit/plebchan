@@ -146,5 +146,6 @@
   "ban_user_for": "ユーザーを<1></1>日間禁止する",
   "optional": "オプショナル",
   "close_thread": "スレッドを閉じる",
-  "view_spoiler": "スポイラーを表示"
+  "view_spoiler": "スポイラーを表示",
+  "filter": "フィルター"
 }

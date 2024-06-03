@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef } from 'react';
-import styles from './home.module.css';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Comment, Subplebbit, useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import { create } from 'zustand';
+import styles from './home.module.css';
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useMultisubMetadata, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import usePopularPosts from '../../hooks/use-popular-posts';
@@ -12,12 +13,32 @@ import { getCommentMediaInfo } from '../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 
-const isValidAddress = (address: string): boolean => {
-  if (address.includes('/') || address.includes('\\') || address.includes(' ')) {
-    return false;
-  }
-  return true;
-};
+interface BoxModalStore {
+  showNsfwBoardsOnly: boolean;
+  setShowNsfwBoardsOnly: (value: boolean) => void;
+  showWorksafeBoardsOnly: boolean;
+  setShowWorksafeBoardsOnly: (value: boolean) => void;
+  useCatalog: boolean;
+  setUseCatalog: (value: boolean) => void;
+}
+
+const useBoxModalStore = create<BoxModalStore>((set) => ({
+  showNsfwBoardsOnly: localStorage.getItem('showNsfwBoardsOnly') === 'true' ? true : false,
+  setShowNsfwBoardsOnly: (value: boolean) => {
+    set({ showNsfwBoardsOnly: value });
+    localStorage.setItem('showNsfwBoardsOnly', value.toString());
+  },
+  showWorksafeBoardsOnly: localStorage.getItem('showWorksafeBoardsOnly') === 'true' ? true : false,
+  setShowWorksafeBoardsOnly: (value: boolean) => {
+    set({ showWorksafeBoardsOnly: value });
+    localStorage.setItem('showWorksafeBoardsOnly', value.toString());
+  },
+  useCatalog: localStorage.getItem('useCatalog') === 'true' ? true : false,
+  setUseCatalog: (value: boolean) => {
+    set({ useCatalog: value });
+    localStorage.setItem('useCatalog', value.toString());
+  },
+}));
 
 const SearchBar = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -25,32 +46,26 @@ const SearchBar = () => {
   const navigate = useNavigate();
 
   const handleSearchSubmit = () => {
-    const inputValue = searchInputRef.current?.value;
-    if (inputValue && isValidAddress(inputValue)) {
-      navigate(`/p/${inputValue}`);
-    } else {
-      alert('invalid address');
+    const searchInput = searchInputRef.current?.value;
+    if (searchInput) {
+      navigate(`/p/${searchInput}`);
     }
   };
 
   return (
     <div className={styles.searchBar}>
-      <input
-        autoCorrect='off'
-        autoComplete='off'
-        spellCheck='false'
-        autoCapitalize='off'
-        type='text'
-        placeholder={`"board.eth/.sol" ${t('or')} "12D3KooW..."`}
-        ref={searchInputRef}
-        onSubmit={handleSearchSubmit}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleSearchSubmit();
-          }
-        }}
-      />
-      <button onClick={handleSearchSubmit}>{t('go')}</button>
+      <form onSubmit={handleSearchSubmit}>
+        <input
+          autoCorrect='off'
+          autoComplete='off'
+          spellCheck='false'
+          autoCapitalize='off'
+          type='text'
+          placeholder={`"board.eth/.sol" ${t('or')} "12D3KooW..."`}
+          ref={searchInputRef}
+        />
+        <button className={styles.searchButton}>{t('go')}</button>
+      </form>
     </div>
   );
 };
@@ -72,18 +87,113 @@ const InfoBox = () => {
   );
 };
 
+// https://github.com/plebbit/temporary-default-subplebbits/blob/master/README.md
+const nsfwTags = ['adult', 'anti', 'gore'];
+
 const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit || {};
-  const nsfwTags = ['adult', 'gore'];
   const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
+  const { useCatalog } = useBoxModalStore();
+
+  const boardLink = useCatalog ? `/p/${address}/catalog` : `/p/${address}`;
 
   return (
     <div className={styles.subplebbit} key={address}>
       {isOffline && <span className={styles.offlineIcon} />}
-      <Link to={`/p/${address}`}>{title || address}</Link>
+      <Link to={boardLink}>{title || address}</Link>
       {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
     </div>
+  );
+};
+
+const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
+  const { t } = useTranslation();
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const { showNsfwBoardsOnly, setShowNsfwBoardsOnly, showWorksafeBoardsOnly, setShowWorksafeBoardsOnly, useCatalog, setUseCatalog } = useBoxModalStore();
+
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setShowFilterModal(false);
+      }
+    },
+    [modalRef, setShowFilterModal],
+  );
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
+  return (
+    <>
+      <span ref={modalRef} onClick={() => setShowFilterModal(true)}>
+        {isBoardsBoxModal ? t('filter') : t('options')} ▼
+      </span>
+      {showFilterModal && (
+        <div ref={modalRef} className={styles.filterModal}>
+          {isBoardsBoxModal ? (
+            <>
+              <div
+                className={`${styles.option} ${!showNsfwBoardsOnly && !showWorksafeBoardsOnly && styles.selected}`}
+                onClick={() => {
+                  setShowNsfwBoardsOnly(false);
+                  setShowWorksafeBoardsOnly(false);
+                  setShowFilterModal(false);
+                }}
+              >
+                Show All Boards
+              </div>
+              <div
+                className={`${styles.option} ${showNsfwBoardsOnly && styles.selected}`}
+                onClick={() => {
+                  if (showWorksafeBoardsOnly) {
+                    setShowWorksafeBoardsOnly(false);
+                  }
+                  setShowNsfwBoardsOnly(!showNsfwBoardsOnly);
+                  setShowFilterModal(false);
+                }}
+              >
+                Show NSFW Boards Only
+              </div>
+              <div
+                className={`${styles.option} ${showWorksafeBoardsOnly && styles.selected}`}
+                onClick={() => {
+                  if (showNsfwBoardsOnly) {
+                    setShowNsfwBoardsOnly(false);
+                  }
+                  setShowWorksafeBoardsOnly(!showWorksafeBoardsOnly);
+                  setShowFilterModal(false);
+                }}
+              >
+                Show Worksafe Boards Only
+              </div>
+              <div className={styles.separator} />
+              <div
+                className={`${styles.option} ${useCatalog && styles.selected}`}
+                onClick={() => {
+                  setUseCatalog(!useCatalog);
+                  setShowFilterModal(false);
+                }}
+              >
+                Use Catalog
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles.option}>Show Worksafe Content Only</div>
+              <div className={styles.option}>Show NSFW Content Only</div>
+              <div className={`${styles.option} ${styles.selected}`}>Show All Content</div>
+            </>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 
@@ -93,14 +203,29 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
   const subscriptions = account?.subscriptions || [];
   const { accountSubplebbits } = useAccountSubplebbits();
   const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
+  const { showNsfwBoardsOnly, showWorksafeBoardsOnly } = useBoxModalStore();
 
-  const plebbitSubs = multisub.filter((sub) => sub.tags?.includes('plebbit'));
-  const interestsSubs = multisub.filter(
-    (sub) => sub.tags?.includes('topic') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('country') && !sub.tags?.includes('international'),
-  );
-  const randomSubs = multisub.filter((sub) => sub.tags?.includes('random') && !sub.tags?.includes('plebbit'));
-  const internationalSubs = multisub.filter((sub) => sub.tags?.includes('international') || sub.tags?.includes('country'));
-  const projectsSubs = multisub.filter((sub) => sub.tags?.includes('project') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('topic'));
+  const filterSubs = (subs: Subplebbit[], includeTags: string[], excludeTags: string[] = []) =>
+    subs.filter((sub) => includeTags.every((tag) => sub.tags?.includes(tag)) && excludeTags.every((tag) => !sub.tags?.includes(tag)));
+
+  let plebbitSubs = filterSubs(multisub, ['plebbit']);
+  let interestsSubs = filterSubs(multisub, ['topic'], ['plebbit', 'country', 'international']);
+  let randomSubs = filterSubs(multisub, ['random'], ['plebbit']);
+  let internationalSubs = filterSubs(multisub, ['international']);
+  let projectsSubs = filterSubs(multisub, ['project'], ['plebbit', 'topic']);
+
+  const filterByNsfw = (subs: Subplebbit[], includeNsfw: boolean) => subs.filter((sub) => sub.tags.some((tag: string) => nsfwTags.includes(tag)) === includeNsfw);
+
+  const filterCategoriesByNsfw = (subsArray: Subplebbit[][], includeNsfw: boolean) => subsArray.map((subs) => filterByNsfw(subs, includeNsfw));
+
+  const includeNsfw = showNsfwBoardsOnly ? true : showWorksafeBoardsOnly ? false : null;
+
+  if (includeNsfw !== null) {
+    [plebbitSubs, interestsSubs, randomSubs, internationalSubs, projectsSubs] = filterCategoriesByNsfw(
+      [plebbitSubs, interestsSubs, randomSubs, internationalSubs, projectsSubs],
+      includeNsfw,
+    );
+  }
 
   const isSubOffline = (address: string) => {
     const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
@@ -113,7 +238,7 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
     <div className={`${styles.box} ${styles.boardsBox}`}>
       <div className={styles.boxBar}>
         <h2 className={styles.capitalize}>{t('boards')}</h2>
-        <span>{t('options')} ▼</span>
+        <BoxModal isBoardsBoxModal={true} />
       </div>
       <div className={styles.boardsBoxContent}>
         <div className={styles.column}>
@@ -126,40 +251,60 @@ const Boards = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits
               <Link to='/p/subscriptions'>Subscriptions</Link>
             </div>
           </div>
-          <h3>Plebbit</h3>
-          <div className={styles.list}>
-            {plebbitSubs.map((sub) => (
-              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
-            ))}
-          </div>
-          <h3>{t('projects')}</h3>
-          <div className={styles.list}>
-            {projectsSubs.map((sub) => (
-              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
-            ))}
-          </div>
+          {plebbitSubs.length > 0 && (
+            <>
+              <h3>Plebbit</h3>
+              <div className={styles.list}>
+                {plebbitSubs.map((sub) => (
+                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                ))}
+              </div>
+            </>
+          )}
+          {projectsSubs.length > 0 && (
+            <>
+              <h3>{t('projects')}</h3>
+              <div className={styles.list}>
+                {projectsSubs.map((sub) => (
+                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
         <div className={styles.column}>
-          <h3>{t('interests')}</h3>
-          <div className={styles.list}>
-            {interestsSubs.map((sub) => (
-              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
-            ))}
-          </div>
+          {interestsSubs.length > 0 && (
+            <>
+              <h3>{t('interests')}</h3>
+              <div className={styles.list}>
+                {interestsSubs.map((sub) => (
+                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
         <div className={styles.column}>
-          <h3>{t('random')}</h3>
-          <div className={styles.list}>
-            {randomSubs.map((sub) => (
-              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
-            ))}
-          </div>
-          <h3>{t('international')}</h3>
-          <div className={styles.list}>
-            {internationalSubs.map((sub) => (
-              <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
-            ))}
-          </div>
+          {randomSubs.length > 0 && (
+            <>
+              <h3>{t('random')}</h3>
+              <div className={styles.list}>
+                {randomSubs.map((sub) => (
+                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                ))}
+              </div>
+            </>
+          )}
+          {internationalSubs.length > 0 && (
+            <>
+              <h3>{t('international')}</h3>
+              <div className={styles.list}>
+                {internationalSubs.map((sub) => (
+                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
         <div className={styles.column}>
           <div className={styles.list}>
@@ -222,7 +367,7 @@ const PopularThreads = ({ subplebbits }: { subplebbits: any }) => {
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className={styles.capitalize}>{t('popular_threads')}</h2>
-        <span>{t('options')} ▼</span>
+        <BoxModal isBoardsBoxModal={false} />
       </div>
       <div className={`${styles.boxContent} ${popularPosts.length === 8 ? styles.popularThreads : ''}`}>
         {popularPosts.length < 8 ? (
@@ -268,9 +413,6 @@ const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAdd
         <h2 className={styles.capitalize}>{t('stats')}</h2>
       </div>
       <div className={`${styles.boxContent} ${enoughStats ? styles.stats : ''}`}>
-        {/* <div className={styles.statsInfo}>
-          <p>{t('stats_info')}</p>
-        </div> */}
         {enoughStats ? (
           <>
             <div className={styles.stat}>

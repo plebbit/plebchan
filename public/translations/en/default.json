@@ -146,5 +146,6 @@
   "ban_user_for": "Ban user for <1></1> day(s)",
   "optional": "optional",
   "close_thread": "close thread",
-  "view_spoiler": "view spoiler"
+  "view_spoiler": "view spoiler",
+  "filter": "filter"
 }

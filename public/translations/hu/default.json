@@ -146,5 +146,6 @@
   "ban_user_for": "Felhasználó letiltása <1></1> napra",
   "optional": "opcionális",
   "close_thread": "szál bezárása",
-  "view_spoiler": "spoiler megtekintése"
+  "view_spoiler": "spoiler megtekintése",
+  "filter": "szűrő"
 }
