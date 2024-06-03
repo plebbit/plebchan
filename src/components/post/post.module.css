@@ -61,12 +61,6 @@
   width: 100%;
 }
 
-.postDesktop .checkbox, .replyDesktop .checkbox {
-  display: inline-block;
-  padding: 3px 7px 3px 4px;
-  filter: var(--filter80);
-}
-
 .postDesktop .subject {
   color: var(--post-subject-text-color);
   font-weight: var(--post-subject-font-weight);

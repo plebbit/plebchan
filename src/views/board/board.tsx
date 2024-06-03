@@ -102,8 +102,8 @@ const Board = () => {
   const lastVirtuosoState = lastVirtuosoStates?.[location.pathname];
 
   useEffect(() => {
-    document.title = title ? title : shortAddress;
-  }, [title, shortAddress]);
+    document.title = title ? title : shortAddress || subplebbitAddress;
+  }, [title, shortAddress, subplebbitAddress]);
 
   return (
     <div className={styles.content}>
