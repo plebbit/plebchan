@@ -6,12 +6,20 @@ const usePopularPosts = (subplebbits: Subplebbit[]) => {
   const [popularPosts, setPopularPosts] = useState<Comment[]>([]);
 
   useEffect(() => {
-    const subplebbitToPost: { [key: string]: any } = {};
     const uniqueLinks: Set<string> = new Set();
+    const allPosts: Comment[] = [];
+
+    let postsPerSub = 1;
+    if (subplebbits.length == 2) {
+      postsPerSub = 4;
+    } else if (subplebbits.length == 3) {
+      postsPerSub = 3;
+    } else if (subplebbits.length >= 4 && subplebbits.length < 8) {
+      postsPerSub = 2;
+    }
 
     subplebbits.forEach((subplebbit: any) => {
-      let maxTimestamp = -Infinity;
-      let mostRecentPost = null;
+      let subplebbitPosts: Comment[] = [];
 
       if (subplebbit?.posts?.pages?.hot?.comments) {
         for (const post of Object.values(subplebbit.posts.pages.hot.comments as Comment)) {
@@ -21,32 +29,27 @@ const usePopularPosts = (subplebbits: Subplebbit[]) => {
 
           if (
             isMediaShowed &&
-            replyCount > 0 &&
+            (replyCount > 0 || postsPerSub > 1) &&
             !deleted &&
             !removed &&
             !locked &&
             !pinned &&
             timestamp > Date.now() / 1000 - 60 * 60 * 24 * 30 &&
-            timestamp > maxTimestamp &&
             !uniqueLinks.has(link)
           ) {
-            maxTimestamp = post.timestamp;
-            mostRecentPost = post;
+            subplebbitPosts.push(post);
             uniqueLinks.add(link);
           }
         }
 
-        if (mostRecentPost) {
-          subplebbitToPost[subplebbit.address] = { post: mostRecentPost, timestamp: maxTimestamp };
-        }
+        subplebbitPosts.sort((a: any, b: any) => b.timestamp - a.timestamp);
+        allPosts.push(...subplebbitPosts.slice(0, postsPerSub));
       }
     });
 
-    const sortedPosts = Object.values(subplebbitToPost)
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, 8);
+    const sortedPosts = allPosts.sort((a: any, b: any) => b.timestamp - a.timestamp).slice(0, 8);
 
-    setPopularPosts(sortedPosts.map((item) => item.post));
+    setPopularPosts(sortedPosts);
   }, [subplebbits]);
 
   return popularPosts;
