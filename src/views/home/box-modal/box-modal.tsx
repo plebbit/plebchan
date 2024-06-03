@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useHomeFiltersStore from '../../../stores/use-home-filters';
+import useHomeFiltersStore from '../../../stores/use-home-filters-store';
 import styles from '../home.module.css';
 
 const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Subplebbit, useAccount, useAccountSubplebbits } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import useHomeFiltersStore from '../../../stores/use-home-filters';
+import useHomeFiltersStore from '../../../stores/use-home-filters-store';
 import { useMultisubMetadata } from '../../../hooks/use-default-subplebbits';
 import styles from '../home.module.css';
 import { nsfwTags } from '../home';
