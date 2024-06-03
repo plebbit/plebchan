@@ -2,19 +2,21 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { PublishCommentEditOptions, useComment, useEditedComment, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
-import styles from './mod-menu.module.css';
+import styles from './edit-menu.module.css';
 import { alertChallengeVerificationFailed } from '../../../lib/utils/challenge-utils';
 import useChallengesStore from '../../../stores/use-challenges-store';
 import _ from 'lodash';
 
 const { addChallenge } = useChallengesStore.getState();
 
-type ModMenuProps = {
+type EditMenuProps = {
   cid: string;
+  isAccountMod?: boolean;
+  isAccountCommentAuthor?: boolean;
   isCommentAuthorMod?: boolean;
 };
 
-const ModMenu = ({ cid, isCommentAuthorMod }: ModMenuProps) => {
+const EditMenu = ({ cid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMod }: EditMenuProps) => {
   const { t } = useTranslation();
 
   let post: any;
@@ -26,9 +28,10 @@ const ModMenu = ({ cid, isCommentAuthorMod }: ModMenuProps) => {
     post = comment;
   }
   const isReply = post?.parentCid;
-  const [isModMenuOpen, setIsModMenuOpen] = useState(false);
+  const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
 
   const defaultPublishOptions: PublishCommentEditOptions = {
+    deleted: post?.deleted,
     removed: post?.removed,
     locked: post?.locked,
     spoiler: post?.spoiler,
@@ -81,8 +84,8 @@ const ModMenu = ({ cid, isCommentAuthorMod }: ModMenuProps) => {
 
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
-    open: isModMenuOpen,
-    onOpenChange: setIsModMenuOpen,
+    open: isEditMenuOpen,
+    onOpenChange: setIsEditMenuOpen,
     middleware: [offset(2), flip({ fallbackAxisSideDirection: 'end' }), shift()],
     whileElementsMounted: autoUpdate,
   });
@@ -97,65 +100,82 @@ const ModMenu = ({ cid, isCommentAuthorMod }: ModMenuProps) => {
 
   const handleSaveClick = async () => {
     await publishCommentEdit();
-    setIsModMenuOpen(false);
+    setIsEditMenuOpen(false);
   };
 
   return (
     <>
       <span className={styles.checkbox} ref={refs.setReference} {...(cid && getReferenceProps())}>
-        <input type='checkbox' onChange={() => cid && setIsModMenuOpen(!isModMenuOpen)} checked={isModMenuOpen} />
+        <input type='checkbox' onChange={() => cid && setIsEditMenuOpen(!isEditMenuOpen)} checked={isEditMenuOpen} />
       </span>
-      {isModMenuOpen && (
+      {isEditMenuOpen && (isAccountCommentAuthor || isAccountMod) && (
         <FloatingFocusManager context={context} modal={false}>
           <div className={styles.modal} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
-            <div className={styles.ModMenu}>
-              <div className={styles.menuItem}>
-                <label>
-                  [
-                  <input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed' />
-                  {_.capitalize(t('remove'))}? ]
-                </label>
-              </div>
-              {!isReply && (
-                <div className={styles.menuItem}>
-                  [
-                  <label>
-                    <input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type='checkbox' id='locked' />
-                    {_.capitalize(t('close_thread'))}?
-                  </label>
-                  ]
-                </div>
+            <div className={styles.editMenu}>
+              {isAccountCommentAuthor && (
+                <>
+                  <div className={styles.menuItem}>
+                    <label>
+                      [
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.deleted} type='checkbox' id='deleted' />
+                      {_.capitalize(t('delete'))}? ]
+                    </label>
+                  </div>
+                </>
               )}
-              <div className={styles.menuItem}>
-                [
-                <label>
-                  <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler} type='checkbox' id='spoiler' />
-                  {_.capitalize(t('spoiler'))}?
-                </label>
-                ]
-              </div>
-              <div className={styles.menuItem}>
-                [
-                <label>
-                  <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned} type='checkbox' id='pinned' />
-                  {_.capitalize(t('sticky'))}?
-                </label>
-                ]
-              </div>
-              {!isCommentAuthorMod && (
-                <div className={styles.menuItem}>
-                  [
-                  <label>
-                    <input onChange={onCheckbox} checked={!!publishCommentEditOptions.commentAuthor?.banExpiresAt} type='checkbox' id='banUser' />
-                    <Trans
-                      i18nKey='ban_user_for'
-                      shouldUnescape={true}
-                      components={{ 1: <input className={styles.banInput} onChange={onBanDurationChange} type='number' min={1} max={100} defaultValue={banDuration} /> }}
-                    />
-                    ?
-                  </label>
-                  ]
-                </div>
+              {isAccountMod && (
+                <>
+                  <div className={styles.menuItem}>
+                    <label>
+                      [
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed' />
+                      {_.capitalize(t('remove'))}? ]
+                    </label>
+                  </div>
+                  {!isReply && (
+                    <div className={styles.menuItem}>
+                      [
+                      <label>
+                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type='checkbox' id='locked' />
+                        {_.capitalize(t('close_thread'))}?
+                      </label>
+                      ]
+                    </div>
+                  )}
+                  <div className={styles.menuItem}>
+                    [
+                    <label>
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler} type='checkbox' id='spoiler' />
+                      {_.capitalize(t('spoiler'))}?
+                    </label>
+                    ]
+                  </div>
+                  <div className={styles.menuItem}>
+                    [
+                    <label>
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned} type='checkbox' id='pinned' />
+                      {_.capitalize(t('sticky'))}?
+                    </label>
+                    ]
+                  </div>
+                  {!isCommentAuthorMod && (
+                    <div className={styles.menuItem}>
+                      [
+                      <label>
+                        <input onChange={onCheckbox} checked={!!publishCommentEditOptions.commentAuthor?.banExpiresAt} type='checkbox' id='banUser' />
+                        <Trans
+                          i18nKey='ban_user_for'
+                          shouldUnescape={true}
+                          components={{
+                            1: <input className={styles.banInput} onChange={onBanDurationChange} type='number' min={1} max={100} defaultValue={banDuration} />,
+                          }}
+                        />
+                        ?
+                      </label>
+                      ]
+                    </div>
+                  )}
+                </>
               )}
               <div className={`${styles.menuItem} ${styles.menuReason}`}>
                 {_.capitalize(t('reason'))}?
@@ -172,4 +192,4 @@ const ModMenu = ({ cid, isCommentAuthorMod }: ModMenuProps) => {
   );
 };
 
-export default ModMenu;
+export default EditMenu;

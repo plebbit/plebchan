@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBlock, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -17,9 +17,9 @@ import { canEmbed } from '../../embed';
 import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
 import PostMenuDesktop from './post-menu-desktop/';
+import EditMenu from '../edit-menu/edit-menu';
 import { PostProps } from '../post';
 import _ from 'lodash';
-import ModMenu from '../mod-menu';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
@@ -39,13 +39,18 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const authorRole = roles?.[address]?.role;
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
 
-  // pending reply by account is not yet published
   const account = useAccount();
-  const accountShortAddress = account?.author?.shortAddress;
+  const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const commentAuthorRole = subplebbit?.roles?.[author?.address]?.role;
+  const isCommentAuthorMod = commentAuthorRole === 'admin' || commentAuthorRole === 'owner' || commentAuthorRole === 'moderator';
+  const accountAuthorRole = subplebbit?.roles?.[account?.author?.address]?.role;
+  const isAccountMod = accountAuthorRole === 'admin' || accountAuthorRole === 'owner' || accountAuthorRole === 'moderator';
+  const isAccountCommentAuthor = account?.author?.address === author?.address;
 
   return (
     <div className={styles.postInfo}>
-      {!isHidden && <ModMenu cid={cid} />}
+      {!isHidden && <EditMenu cid={cid} isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} />}
       {title && <span className={styles.subject}>{displayTitle} </span>}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
