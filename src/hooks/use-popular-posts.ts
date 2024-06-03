@@ -29,7 +29,7 @@ const usePopularPosts = (subplebbits: Subplebbit[]) => {
 
           if (
             isMediaShowed &&
-            (replyCount > 0 || postsPerSub > 1) &&
+            replyCount > 0 &&
             !deleted &&
             !removed &&
             !locked &&
