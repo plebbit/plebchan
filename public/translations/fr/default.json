@@ -142,5 +142,9 @@
   "this_post_was_removed": "ce post a été supprimé",
   "user_deleted_this_post": "L'utilisateur a supprimé ce post.",
   "reason": "raison",
-  "search": "chercher"
+  "search": "chercher",
+  "ban_user_for": "Bannir l'utilisateur pendant <1></1> jour(s)",
+  "optional": "facultatif",
+  "close_thread": "fermer le fil",
+  "view_spoiler": "voir le spoiler"
 }

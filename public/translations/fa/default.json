@@ -142,5 +142,9 @@
   "this_post_was_removed": "این پست حذف شد",
   "user_deleted_this_post": "کاربر این پست را حذف کرده است.",
   "reason": "دلیل",
-  "search": "جستجو"
+  "search": "جستجو",
+  "ban_user_for": "بستن کاربر برای <1></1> روز",
+  "optional": "اختیاری",
+  "close_thread": "بستن موضوع",
+  "view_spoiler": "نمایش اسپویلر"
 }

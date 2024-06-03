@@ -142,5 +142,9 @@
   "this_post_was_removed": "posting ini telah dihapus",
   "user_deleted_this_post": "Pengguna menghapus posting ini.",
   "reason": "alasan",
-  "search": "cari"
+  "search": "cari",
+  "ban_user_for": "Blokir pengguna selama <1></1> hari",
+  "optional": "opsional",
+  "close_thread": "tutup utas",
+  "view_spoiler": "lihat spoiler"
 }

@@ -142,5 +142,9 @@
   "this_post_was_removed": "deze post is verwijderd",
   "user_deleted_this_post": "Gebruiker heeft deze post verwijderd.",
   "reason": "reden",
-  "search": "zoeken"
+  "search": "zoeken",
+  "ban_user_for": "Gebruiker verbannen voor <1></1> dag(en)",
+  "optional": "optioneel",
+  "close_thread": "draad sluiten",
+  "view_spoiler": "bekijk spoiler"
 }

@@ -142,5 +142,9 @@
   "this_post_was_removed": "הודעה זו הוסרה",
   "user_deleted_this_post": "המשתמש מחק את הפוסט הזה.",
   "reason": "סיבה",
-  "search": "חיפוש"
+  "search": "חיפוש",
+  "ban_user_for": "אסור למשתמש למשך <1></1> יום",
+  "optional": "אופציונלי",
+  "close_thread": "סגור את הנושא",
+  "view_spoiler": "הצג ספוילר"
 }

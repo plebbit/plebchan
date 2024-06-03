@@ -142,5 +142,9 @@
   "this_post_was_removed": "此帖已被删除",
   "user_deleted_this_post": "用户删除了这个帖子。",
   "reason": "原因",
-  "search": "搜索"
+  "search": "搜索",
+  "ban_user_for": "封禁用户 <1></1> 天",
+  "optional": "可选的",
+  "close_thread": "关闭主题",
+  "view_spoiler": "查看剧透"
 }

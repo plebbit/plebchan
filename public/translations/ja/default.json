@@ -142,5 +142,9 @@
   "this_post_was_removed": "この投稿は削除されました",
   "user_deleted_this_post": "ユーザーがこの投稿を削除しました。",
   "reason": "理由",
-  "search": "検索"
+  "search": "検索",
+  "ban_user_for": "ユーザーを<1></1>日間禁止する",
+  "optional": "オプショナル",
+  "close_thread": "スレッドを閉じる",
+  "view_spoiler": "スポイラーを表示"
 }

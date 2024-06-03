@@ -142,5 +142,9 @@
   "this_post_was_removed": "ten post został usunięty",
   "user_deleted_this_post": "Użytkownik usunął ten post.",
   "reason": "powód",
-  "search": "szukaj"
+  "search": "szukaj",
+  "ban_user_for": "Zablokuj użytkownika na <1></1> dzień (dni)",
+  "optional": "opcjonalnie",
+  "close_thread": "zamknij wątek",
+  "view_spoiler": "pokaż spoiler"
 }

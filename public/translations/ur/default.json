@@ -142,5 +142,9 @@
   "this_post_was_removed": "یہ پوسٹ ہٹا دی گئی ہے",
   "user_deleted_this_post": "صارف نے یہ پوسٹ حذف کردی.",
   "reason": "وجہ",
-  "search": "تلاش کریں"
+  "search": "تلاش کریں",
+  "ban_user_for": "<1></1> دنوں کے لیے صارف کو پابندی عائد کریں",
+  "optional": "اختیاری",
+  "close_thread": "موضوع بند کریں",
+  "view_spoiler": "اسپوائلر دیکھیں"
 }

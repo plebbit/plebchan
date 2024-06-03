@@ -142,5 +142,9 @@
   "this_post_was_removed": "bu mesaj kaldırıldı",
   "user_deleted_this_post": "Kullanıcı bu mesajı sildi.",
   "reason": "neden",
-  "search": "arama"
+  "search": "arama",
+  "ban_user_for": "Kullanıcıyı <1></1> gün boyunca yasakla",
+  "optional": "isteğe bağlı",
+  "close_thread": "konuyu kapat",
+  "view_spoiler": "spoileri görüntüle"
 }

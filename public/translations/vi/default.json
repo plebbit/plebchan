@@ -142,5 +142,9 @@
   "this_post_was_removed": "bài đăng này đã bị xóa",
   "user_deleted_this_post": "Người dùng đã xóa bài đăng này.",
   "reason": "lý do",
-  "search": "tìm kiếm"
+  "search": "tìm kiếm",
+  "ban_user_for": "Cấm người dùng trong <1></1> ngày",
+  "optional": "tùy chọn",
+  "close_thread": "đóng chủ đề",
+  "view_spoiler": "xem spoiler"
 }

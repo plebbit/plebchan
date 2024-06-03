@@ -142,5 +142,9 @@
   "this_post_was_removed": "kjo postim u hoq",
   "user_deleted_this_post": "Përdoruesi fshiu këtë post.",
   "reason": "arsye",
-  "search": "kërkim"
+  "search": "kërkim",
+  "ban_user_for": "Ndalo përdoruesin për <1></1> ditë",
+  "optional": "opsionale",
+  "close_thread": "mbyll temën",
+  "view_spoiler": "shikoni spoiler"
 }

@@ -142,5 +142,9 @@
   "this_post_was_removed": "αυτή η ανάρτηση αφαιρέθηκε",
   "user_deleted_this_post": "Ο χρήστης διέγραψε αυτή την ανάρτηση.",
   "reason": "λόγος",
-  "search": "αναζήτηση"
+  "search": "αναζήτηση",
+  "ban_user_for": "Αποκλεισμός χρήστη για <1></1> ημέρα(ες)",
+  "optional": "προαιρετικό",
+  "close_thread": "κλείσιμο νήματος",
+  "view_spoiler": "προβολή spoiler"
 }
