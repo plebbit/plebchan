@@ -141,5 +141,11 @@
   "board_mods": "Mods del foro",
   "this_post_was_removed": "este mensaje fue eliminado",
   "user_deleted_this_post": "El usuario eliminó este mensaje.",
-  "reason": "razón"
+  "reason": "razón",
+  "search": "buscar",
+  "ban_user_for": "Prohibir al usuario durante <1></1> día(s)",
+  "optional": "opcional",
+  "close_thread": "cerrar hilo",
+  "view_spoiler": "ver spoiler",
+  "filter": "filtrar"
 }

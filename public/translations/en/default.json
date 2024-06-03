@@ -141,5 +141,11 @@
   "board_mods": "Board Mods",
   "this_post_was_removed": "this post was removed",
   "user_deleted_this_post": "User deleted this post.",
-  "reason": "reason"
+  "reason": "reason",
+  "search": "search",
+  "ban_user_for": "Ban user for <1></1> day(s)",
+  "optional": "optional",
+  "close_thread": "close thread",
+  "view_spoiler": "view spoiler",
+  "filter": "filter"
 }

@@ -19,6 +19,7 @@ import Markdown from '../../markdown';
 import PostMenuDesktop from './post-menu-desktop/';
 import { PostProps } from '../post';
 import _ from 'lodash';
+import ModMenu from '../mod-menu';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
@@ -44,11 +45,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
   return (
     <div className={styles.postInfo}>
-      {!isHidden && (
-        <span className={styles.checkbox}>
-          <input type='checkbox' />
-        </span>
-      )}
+      {!isHidden && <ModMenu cid={cid} />}
       {title && <span className={styles.subject}>{displayTitle} </span>}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
@@ -111,15 +108,11 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
 const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { deleted, link, linkHeight, linkWidth, parentCid, removed } = post || {};
-  const { isDescription, isRules } = post || {}; // custom properties, not from api
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type, url } = commentMediaInfo || {};
   const embedUrl = url && new URL(url);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, post?.link);
   const [showThumbnail, setShowThumbnail] = useState(true);
-
-  const isReply = parentCid;
 
   return (
     <div className={styles.file}>
@@ -152,16 +145,7 @@ const PostMedia = ({ post }: PostProps) => {
       </div>
       {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
         <div className={styles.fileThumbnail}>
-          <CommentMedia
-            commentMediaInfo={commentMediaInfo}
-            isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
-            isDeleted={removed || deleted}
-            isReply={isReply}
-            linkHeight={linkHeight}
-            linkWidth={linkWidth}
-            showThumbnail={showThumbnail}
-            setShowThumbnail={setShowThumbnail}
-          />
+          <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
         </div>
       )}
     </div>
@@ -169,7 +153,7 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -201,7 +185,7 @@ const PostMessage = ({ post }: PostProps) => {
       ) : deleted ? (
         <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
       ) : (
-        <Markdown content={displayContent} />
+        <Markdown content={displayContent} spoiler={spoiler} />
       )}
       {(removed || deleted) && reason && (
         <span>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Comment } from '@plebbit/plebbit-react-hooks';
 import styles from './comment-media.module.css';
 import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getHostname } from '../../lib/utils/url-utils';
@@ -9,16 +10,22 @@ import Embed, { canEmbed } from '../embed';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
-  isDeleted?: boolean;
-  isOutOfFeed?: boolean; // virtuoso wrapper unneeded
-  isReply: boolean;
+  post?: Comment;
+  isReply?: boolean;
   linkHeight?: number;
   linkWidth?: number;
   showThumbnail?: boolean;
   setShowThumbnail: (showThumbnail: boolean) => void;
 }
 
-const Thumbnail = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkHeight, linkWidth, setShowThumbnail }: MediaProps) => {
+const Thumbnail = ({ commentMediaInfo, post, setShowThumbnail }: MediaProps) => {
+  const { t } = useTranslation();
+  const { deleted, linkHeight, linkWidth, parentCid, removed, spoiler } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
+  const isOutOfFeed = isDescription || isRules; // virtuoso wrapper unneeded
+  const isReply = parentCid;
+  const isDeleted = deleted || removed;
+
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
   const [hasError, setHasError] = useState(false);
   const handleError = () => setHasError(true);
@@ -72,6 +79,10 @@ const Thumbnail = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkHeig
 
   return hasError || isDeleted ? (
     <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />
+  ) : spoiler ? (
+    <span className={styles.spoiler} style={{ width: maxThumbnailSize, height: maxThumbnailSize }} onClick={() => setShowThumbnail(false)}>
+      <span className={styles.spoilerText}>[{t('view_spoiler')}]</span>
+    </span>
   ) : isOutOfFeed ? (
     <span className={styles.subplebbitAvatar}>{thumbnailComponent}</span>
   ) : isMobile || isReply ? (
@@ -133,7 +144,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   );
 };
 
-const CommentMedia = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkHeight, linkWidth, showThumbnail, setShowThumbnail }: MediaProps) => {
+const CommentMedia = ({ commentMediaInfo, post, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const { type, url } = commentMediaInfo || {};
@@ -141,21 +152,10 @@ const CommentMedia = ({ commentMediaInfo, isDeleted, isOutOfFeed, isReply, linkH
   return (
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
-        {url && (
-          <Thumbnail
-            commentMediaInfo={commentMediaInfo}
-            isDeleted={isDeleted}
-            isOutOfFeed={isOutOfFeed}
-            isReply={isReply}
-            linkHeight={linkHeight}
-            linkWidth={linkWidth}
-            showThumbnail={showThumbnail}
-            setShowThumbnail={setShowThumbnail}
-          />
-        )}
+        {url && <Thumbnail commentMediaInfo={commentMediaInfo} post={post} setShowThumbnail={setShowThumbnail} />}
         {isMobile && type && <div className={styles.fileInfo}>{getDisplayMediaInfoType(type, t)}</div>}
       </span>
-      {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={isReply} setShowThumbnail={setShowThumbnail} />}
+      {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={post?.parentCid} setShowThumbnail={setShowThumbnail} />}
     </span>
   );
 };

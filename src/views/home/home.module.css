@@ -27,6 +27,7 @@
 
 .boardsBox {
   overflow: hidden;
+  min-height: 150px;
 }
 
 .boxBar, .infoboxBar {
@@ -79,7 +80,7 @@
   color: var(--homepage-infobox-link-text-color);
 }
 
-.searchBar {
+.searchBar form {
   display: flex;
   text-align: center;
   justify-content: center;
@@ -104,7 +105,7 @@
   padding: 3px 10px;
 }
 
-.searchBar button {
+.searchButton {
   margin-left: 4px;
   padding: 3px 5px;
   display: inline-block;
@@ -112,6 +113,41 @@
   font-size: 14px;
   white-space: nowrap;
   flex-shrink: 0;
+  cursor: pointer;
+}
+
+.filterModal {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  display: inline-block;
+  position: absolute;
+  text-align: right;
+  background: #fff;
+  border: 1px solid gray;
+  box-shadow: 2px 2px 0 1px rgba(0, 0, 0, .1);
+  padding: 4px 0;
+  line-height: 1.7em;
+  z-index: 100;
+}
+
+.filterModal .separator {
+  border-bottom: 1px solid #ccc;
+  margin: 6px 0 4px;
+  padding: 0;
+}
+
+.filterModal .option {
+  padding: 0 10px;
+}
+
+.filterModal .option:hover {
+  background-color: #fca;
+  cursor: pointer;
+}
+
+.filterModal .selected::before {
+  content: '✔ ';
 }
 
 .capitalize {

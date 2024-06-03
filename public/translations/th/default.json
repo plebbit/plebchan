@@ -141,5 +141,11 @@
   "board_mods": "บอร์ด Mods",
   "this_post_was_removed": "โพสต์นี้ถูกลบ",
   "user_deleted_this_post": "ผู้ใช้ได้ลบโพสต์นี้",
-  "reason": "เหตุผล"
+  "reason": "เหตุผล",
+  "search": "ค้นหา",
+  "ban_user_for": "แบนผู้ใช้ <1></1> วัน",
+  "optional": "ไม่จำเป็น",
+  "close_thread": "ปิดกระทู้",
+  "view_spoiler": "ดูสปอยล์เลอร์",
+  "filter": "ตัวกรอง"
 }

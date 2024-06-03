@@ -18,15 +18,13 @@ import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
 
 const BoardLayout = () => {
-  const { accountCommentIndex, commentCid, subplebbitAddress } = useParams();
+  const { accountCommentIndex, subplebbitAddress } = useParams();
   const location = useLocation();
   const isMobile = useIsMobile();
 
   const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
-  const isValidCommentCid = !commentCid || /^Qm[a-zA-Z0-9]{44}$/.test(commentCid);
-  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3KooW[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
 
-  if (!isValidAccountCommentIndex || !isValidCommentCid || !isValidSubplebbitAddress) {
+  if (!isValidAccountCommentIndex) {
     return <NotFound />;
   }
 
@@ -45,7 +43,7 @@ const BoardLayout = () => {
       ) : (
         <>
           <PostForm key={key} />
-          {subplebbitAddress && isValidSubplebbitAddress && <SubplebbitStats />}
+          {subplebbitAddress && <SubplebbitStats />}
           <DesktopBoardButtons />
         </>
       )}

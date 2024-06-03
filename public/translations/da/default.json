@@ -141,5 +141,11 @@
   "board_mods": "Board Mods",
   "this_post_was_removed": "dette indlæg blev fjernet",
   "user_deleted_this_post": "Brugeren slettede dette indlæg.",
-  "reason": "grund"
+  "reason": "grund",
+  "search": "søg",
+  "ban_user_for": "Udeluk brugeren i <1></1> dag(e)",
+  "optional": "valgfri",
+  "close_thread": "luk tråd",
+  "view_spoiler": "vis spoiler",
+  "filter": "filtrér"
 }

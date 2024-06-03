@@ -141,5 +141,11 @@
   "board_mods": "Nástěnka Mods",
   "this_post_was_removed": "tento příspěvek byl odstraněn",
   "user_deleted_this_post": "Uživatel smazal tento příspěvek.",
-  "reason": "důvod"
+  "reason": "důvod",
+  "search": "vyhledat",
+  "ban_user_for": "Zakázat uživatele na <1></1> den (dní)",
+  "optional": "volitelný",
+  "close_thread": "uzavřít vlákno",
+  "view_spoiler": "zobrazit spoiler",
+  "filter": "filtr"
 }

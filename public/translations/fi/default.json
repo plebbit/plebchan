@@ -141,5 +141,11 @@
   "board_mods": "Hallituksen Mods",
   "this_post_was_removed": "tämä viesti on poistettu",
   "user_deleted_this_post": "Käyttäjä poisti tämän viestin.",
-  "reason": "syy"
+  "reason": "syy",
+  "search": "haku",
+  "ban_user_for": "Estä käyttäjä <1></1> päiväksi",
+  "optional": "valinnainen",
+  "close_thread": "sulje keskustelu",
+  "view_spoiler": "näytä spoiler",
+  "filter": "suodatin"
 }

@@ -55,7 +55,7 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
       <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />
     ) : (
       // show first frame of the video, as a workaround for Safari not loading thumbnails
-      <video src={`${url}#t=0.001`} onLoad={handleLoad} onError={handleError} style={loadingStyle} />
+      <video src={`${url}#t=0.001`} onError={handleError} />
     );
   } else if (type === 'webpage' && !hasError) {
     thumbnailComponent = <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
@@ -69,7 +69,7 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
 
   return (
     <div className={hasError ? '' : styles.mediaWrapper} style={thumbnailDimensions}>
-      {!isLoaded && !hasError && <span className={styles.loadingSkeleton} />}
+      {!isLoaded && !hasError && type !== 'video' && <span className={styles.loadingSkeleton} />}
       {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' /> : thumbnailComponent}
     </div>
   );

@@ -141,5 +141,11 @@
   "board_mods": "Styrelse Mods",
   "this_post_was_removed": "detta inlägg togs bort",
   "user_deleted_this_post": "Användaren tog bort detta inlägg.",
-  "reason": "anledning"
+  "reason": "anledning",
+  "search": "sök",
+  "ban_user_for": "Blockera användaren i <1></1> dag(ar)",
+  "optional": "valfritt",
+  "close_thread": "stäng tråd",
+  "view_spoiler": "visa spoiler",
+  "filter": "filter"
 }

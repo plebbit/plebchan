@@ -39,7 +39,7 @@ const BoardHeader = () => {
       <div className={styles.bannerCnt}>
         <ImageBanner key={isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : address} />
       </div>
-      <div className={styles.boardTitle}>{title || `p/${shortAddress}`}</div>
+      <div className={styles.boardTitle}>{title || `p/${shortAddress || subplebbitAddress}`}</div>
       <div className={styles.boardSubtitle}>{subtitle}</div>
       <hr />
     </div>

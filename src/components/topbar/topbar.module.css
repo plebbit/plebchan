@@ -2,21 +2,41 @@
 .boardNavDesktop {
   font-size: var(--topbar-font-size);
   color: var(--topbar-separator-color);
+  position: relative;
 }
 
-.boardNavDesktop a {
+.boardNavDesktop a, .navTopRight span {
   color: var(--topbar-desktop-link-text-color);
   text-decoration: var(--topbar-desktop-link-text-decoration);
 }
 
-.boardNavDesktop a:hover {
+.boardNavDesktop a:hover, .navTopRight span:hover {
   color: var(--topbar-desktop-link-text-color-hover);
   text-decoration: var(--topbar-desktop-link-text-decoration-hover);
+  cursor: pointer;
 }
 
 .navTopRight {
   float: right;
   text-transform: capitalize;
+}
+
+.searchBar {
+  position: absolute;
+  right: 0;
+  padding: 3px 5px 0 0;
+}
+
+.boardNavDesktop .searchBar {
+  margin-right: -7px;
+}
+
+.searchBar input[type="text"] {
+  outline: none;
+  margin: 2px;
+  padding: 1px;
+  border: 1px solid #000;
+  width: 220px;
 }
 
 .boardNavMobile {
@@ -32,9 +52,13 @@
   justify-content: space-around;
 }
 
-.boardNavMobile .pageJump a {
+.boardNavMobile .pageJump a, .boardNavMobile .pageJump span {
   color: var(--topbar-mobile-button-color);
   text-decoration: var(--button-text-decoration-mobile);
+}
+
+.pageJump {
+  position: relative;
 }
 
 .boardNavMobile strong {
@@ -55,11 +79,10 @@
   padding: 3px 5px 0 0;
 }
 
-.pageJump a, .mobileSearchButton {
+.pageJump a, .pageJump span {
   padding-right: 5px;
   color: var(--homepage-box-link-text-color);
   text-decoration: var(--homepage-box-link-text-decoration);
-  text-transform: capitalize;
 }
 
 @media (max-width: 640px) {

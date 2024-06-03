@@ -141,5 +141,11 @@
   "board_mods": "게시판 모드",
   "this_post_was_removed": "이 게시물은 삭제되었습니다",
   "user_deleted_this_post": "사용자가이 게시물을 삭제했습니다.",
-  "reason": "이유"
+  "reason": "이유",
+  "search": "검색",
+  "ban_user_for": "사용자를 <1></1>일 동안 차단하기",
+  "optional": "선택",
+  "close_thread": "스레드 닫기",
+  "view_spoiler": "스포일러 보기",
+  "filter": "필터"
 }

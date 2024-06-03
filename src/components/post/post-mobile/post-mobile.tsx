@@ -19,7 +19,7 @@ import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, deleted, link, linkHeight, linkWidth, locked, parentCid, pinned, removed, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, link, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, displayName, shortAddress } = author || {};
 
@@ -94,18 +94,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
           )}
         </span>
       </div>
-      {(hasThumbnail || link) && (
-        <CommentMedia
-          commentMediaInfo={commentMediaInfo}
-          isOutOfFeed={isDescription || isRules} // virtuoso wrapper unneeded
-          isDeleted={removed || deleted}
-          isReply={isReply}
-          linkHeight={linkHeight}
-          linkWidth={linkWidth}
-          showThumbnail={showThumbnail}
-          setShowThumbnail={setShowThumbnail}
-        />
-      )}
+      {(hasThumbnail || link) && <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />}
     </>
   );
 };

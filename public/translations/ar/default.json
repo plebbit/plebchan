@@ -141,5 +141,11 @@
   "board_mods": "مشرفو المنتدى",
   "this_post_was_removed": "تمت إزالة هذا المنشور",
   "user_deleted_this_post": "حذف المستخدم هذا المنشور.",
-  "reason": "السبب"
+  "reason": "السبب",
+  "search": "بحث",
+  "ban_user_for": "حظر المستخدم لمدة <1></1> يوم(أيام)",
+  "optional": "اختياري",
+  "close_thread": "اغلق الموضوع",
+  "view_spoiler": "عرض الحاضر",
+  "filter": "تصفية"
 }

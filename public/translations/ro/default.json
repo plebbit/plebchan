@@ -141,5 +141,11 @@
   "board_mods": "Mods de la bord",
   "this_post_was_removed": "acest mesaj a fost eliminat",
   "user_deleted_this_post": "Utilizatorul a șters acest mesaj.",
-  "reason": "motiv"
+  "reason": "motiv",
+  "search": "căutare",
+  "ban_user_for": "Interzice utilizatorul pentru <1></1> zi(zile)",
+  "optional": "opțional",
+  "close_thread": "închide firul",
+  "view_spoiler": "vezi spoilerul",
+  "filter": "filtru"
 }
