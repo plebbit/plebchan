@@ -49,7 +49,7 @@ const Board = () => {
     setResetFunction(reset);
   }, [reset, setResetFunction]);
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { subplebbit, error } = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, state, suggested } = subplebbit || {};
   const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
 
@@ -64,6 +64,12 @@ const Board = () => {
         t('not_subscribed_to_any_board')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
+      )}
+      {error && (
+        <div style={{ color: 'red' }}>
+          <br />
+          {error.message}
+        </div>
       )}
     </div>
   );
