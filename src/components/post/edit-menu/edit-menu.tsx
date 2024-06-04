@@ -6,6 +6,7 @@ import styles from './edit-menu.module.css';
 import { alertChallengeVerificationFailed } from '../../../lib/utils/challenge-utils';
 import useChallengesStore from '../../../stores/use-challenges-store';
 import _ from 'lodash';
+import useIsMobile from '../../../hooks/use-is-mobile';
 
 const { addChallenge } = useChallengesStore.getState();
 
@@ -18,6 +19,7 @@ type EditMenuProps = {
 
 const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMod }: EditMenuProps) => {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   let post: any;
   const comment = useComment({ commentCid });
   const { editedComment } = useEditedComment({ comment });
@@ -222,7 +224,9 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                 <input type='text' onChange={onReason} defaultValue={post?.reason} size={14} />
               </div>
               <div className={styles.bottom}>
-                <button onClick={_publishCommentEdit}>{t('save')}</button>
+                <button className={isMobile ? 'button' : ''} onClick={_publishCommentEdit}>
+                  {t('save')}
+                </button>
               </div>
             </div>
           </div>
