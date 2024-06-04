@@ -147,5 +147,6 @@
   "optional": "optional",
   "close_thread": "Thread schließen",
   "view_spoiler": "Spoiler anzeigen",
-  "filter": "filtern"
+  "filter": "filtern",
+  "edit": "bearbeiten"
 }

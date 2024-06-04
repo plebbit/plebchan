@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useEffect, useRef, useState } from 'react';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { PublishCommentEditOptions, useComment, useEditedComment, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
@@ -10,35 +10,46 @@ import _ from 'lodash';
 const { addChallenge } = useChallengesStore.getState();
 
 type EditMenuProps = {
-  cid: string;
+  commentCid: string;
   isAccountMod?: boolean;
   isAccountCommentAuthor?: boolean;
   isCommentAuthorMod?: boolean;
 };
 
-const EditMenu = ({ cid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMod }: EditMenuProps) => {
+const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMod }: EditMenuProps) => {
   const { t } = useTranslation();
-
   let post: any;
-  const comment = useComment({ commentCid: cid });
+  const comment = useComment({ commentCid });
   const { editedComment } = useEditedComment({ comment });
   if (editedComment) {
     post = editedComment;
   } else if (comment) {
     post = comment;
   }
-  const isReply = post?.parentCid;
+
+  const { banExpiresAt, content, deleted, locked, parentCid, pinned, removed, spoiler, subplebbitAddress } = post || {};
+  const isReply = parentCid;
+
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
 
+  const [isContentEditorOpen, setIsContentEditorOpen] = useState(false);
+  const contentEditorRef = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    if (contentEditorRef.current) {
+      contentEditorRef.current.focus();
+    }
+  }, []);
+
   const defaultPublishOptions: PublishCommentEditOptions = {
-    deleted: post?.deleted,
-    removed: post?.removed,
-    locked: post?.locked,
-    spoiler: post?.spoiler,
-    pinned: post?.pinned,
-    commentAuthor: { banExpiresAt: post?.banExpiresAt },
-    commentCid: post?.cid,
-    subplebbitAddress: post?.subplebbitAddress,
+    commentAuthor: { banExpiresAt },
+    commentCid,
+    content,
+    deleted,
+    locked,
+    pinned,
+    removed,
+    spoiler,
+    subplebbitAddress,
     onChallenge: (...args: any) => addChallenge([...args, post]),
     onChallengeVerification: alertChallengeVerificationFailed,
     onError: (error: Error) => {
@@ -46,6 +57,13 @@ const EditMenu = ({ cid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMo
       alert(error.message);
     },
   };
+
+  useEffect(() => {
+    if (!isEditMenuOpen) {
+      setPublishCommentEditOptions(defaultPublishOptions);
+      setIsContentEditorOpen(false);
+    }
+  }, [isEditMenuOpen]);
 
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishOptions);
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
@@ -98,15 +116,27 @@ const EditMenu = ({ cid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMo
 
   const headingId = useId();
 
-  const handleSaveClick = async () => {
-    await publishCommentEdit();
+  const _publishCommentEdit = async () => {
+    try {
+      await publishCommentEdit();
+    } catch (error) {
+      if (error instanceof Error) {
+        console.warn(error);
+        alert(error.message);
+      }
+    }
     setIsEditMenuOpen(false);
   };
 
   return (
     <>
-      <span className={styles.checkbox} ref={refs.setReference} {...(cid && getReferenceProps())}>
-        <input type='checkbox' onChange={() => cid && setIsEditMenuOpen(!isEditMenuOpen)} checked={isEditMenuOpen} />
+      <span className={styles.checkbox} ref={refs.setReference} {...(commentCid && getReferenceProps())}>
+        <input
+          type='checkbox'
+          onChange={() => commentCid && setIsEditMenuOpen(!isEditMenuOpen)}
+          checked={isEditMenuOpen}
+          disabled={!isAccountCommentAuthor && !isAccountMod}
+        />
       </span>
       {isEditMenuOpen && (isAccountCommentAuthor || isAccountMod) && (
         <FloatingFocusManager context={context} modal={false}>
@@ -121,6 +151,23 @@ const EditMenu = ({ cid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMo
                       {_.capitalize(t('delete'))}? ]
                     </label>
                   </div>
+                  <div className={styles.menuItem}>
+                    <label>
+                      [
+                      <input type='checkbox' onChange={() => setIsContentEditorOpen(!isContentEditorOpen)} checked={isContentEditorOpen} />
+                      {_.capitalize(t('edit'))}? ]
+                    </label>
+                  </div>
+                  {isContentEditorOpen && (
+                    <div>
+                      <textarea
+                        className={styles.editTextarea}
+                        value={publishCommentEditOptions.content}
+                        ref={contentEditorRef}
+                        onChange={(e) => setPublishCommentEditOptions((state) => ({ ...state, content: e.target.value }))}
+                      />
+                    </div>
+                  )}
                 </>
               )}
               {isAccountMod && (
@@ -178,11 +225,11 @@ const EditMenu = ({ cid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMo
                 </>
               )}
               <div className={`${styles.menuItem} ${styles.menuReason}`}>
-                {_.capitalize(t('reason'))}?
+                {_.capitalize(t('reason'))}? ({t('optional')})
                 <input type='text' onChange={onReason} defaultValue={post?.reason} size={14} />
               </div>
               <div className={styles.bottom}>
-                <button onClick={handleSaveClick}>{t('save')}</button>
+                <button onClick={_publishCommentEdit}>{t('save')}</button>
               </div>
             </div>
           </div>

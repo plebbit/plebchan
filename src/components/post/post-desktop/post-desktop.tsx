@@ -50,7 +50,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
   return (
     <div className={styles.postInfo}>
-      {!isHidden && <EditMenu cid={cid} isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} />}
+      {!isHidden && <EditMenu commentCid={cid} isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} />}
       {title && <span className={styles.subject}>{displayTitle} </span>}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>

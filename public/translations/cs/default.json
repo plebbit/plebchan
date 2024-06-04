@@ -147,5 +147,6 @@
   "optional": "volitelný",
   "close_thread": "uzavřít vlákno",
   "view_spoiler": "zobrazit spoiler",
-  "filter": "filtr"
+  "filter": "filtr",
+  "edit": "upravit"
 }
