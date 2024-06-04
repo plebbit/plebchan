@@ -416,6 +416,10 @@
   border-top: var(--reply-backlink-mobile-border-top);
 }
 
+.highlight {
+  background: var(--reply-highlight-background-color) !important;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
     display: none;

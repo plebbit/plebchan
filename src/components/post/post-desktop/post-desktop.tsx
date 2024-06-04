@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Comment, useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useBlock } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -225,14 +225,8 @@ const PostMessage = ({ post }: PostProps) => {
 };
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
-  // handle pending mod or author edit
-  const { editedComment } = useEditedComment({ comment: post });
-  if (editedComment) {
-    post = editedComment;
-  }
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-
   const params = useParams();
   const location = useLocation();
   const isInPendingPostView = isPendingPostView(location.pathname, params);
@@ -246,6 +240,16 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const totallinksCount = useCountLinksInReplies(post);
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
+
+  const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const replyIndex = replies.findIndex((reply) => location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`));
+
+    if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
+      replyRefs.current[replyIndex]?.scrollIntoView();
+    }
+  }, [location.pathname, replies, subplebbitAddress]);
 
   return (
     <div className={styles.postDesktop}>
@@ -285,18 +289,21 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           !isDescription &&
           !isRules &&
           replies &&
-          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-            <div key={index} className={styles.replyContainer}>
-              <div className={styles.replyDesktop}>
-                <div className={styles.sideArrows}>{'>>'}</div>
-                <div className={styles.reply}>
-                  <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-                  {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
-                  {reply.content && <PostMessage post={reply} />}
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => {
+            const isRouteLinkToReply = location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`);
+            return (
+              <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+                <div className={styles.replyDesktop}>
+                  <div className={styles.sideArrows}>{'>>'}</div>
+                  <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`}>
+                    <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
+                    {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
+                    {reply.content && <PostMessage post={reply} />}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
     </div>
   );

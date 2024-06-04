@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -182,24 +182,26 @@ const PostMessageMobile = ({ post }: PostProps) => {
 };
 
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
-  // handle pending mod or author edit
-  const { editedComment } = useEditedComment({ comment: post });
-  if (editedComment) {
-    post = editedComment;
-  }
   const { t } = useTranslation();
   const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-
   const params = useParams();
   const location = useLocation();
   const isInAllView = isAllView(location.pathname);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
-
   const linksCount = useCountLinksInReplies(post);
-
   const replies = useReplies(post);
+
+  const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const replyIndex = replies.findIndex((reply) => location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`));
+
+    if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
+      replyRefs.current[replyIndex]?.scrollIntoView();
+    }
+  }, [location.pathname, replies, subplebbitAddress]);
 
   return (
     <div className={styles.postMobile}>
@@ -232,19 +234,22 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
           !isDescription &&
           !isRules &&
           replies &&
-          (showAllReplies ? replies : replies.slice(-5)).map((reply) => (
-            <div key={reply.cid} className={styles.replyContainer}>
-              <div className={styles.replyMobile}>
-                <div className={styles.reply}>
-                  <div className={styles.replyContainer}>
-                    <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
-                    {reply.content && <PostMessageMobile post={reply} />}
-                    <ReplyBacklinks post={reply} />
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => {
+            const isRouteLinkToReply = location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`);
+            return (
+              <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+                <div className={styles.replyMobile}>
+                  <div className={styles.reply}>
+                    <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`}>
+                      <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
+                      {reply.content && <PostMessageMobile post={reply} />}
+                      <ReplyBacklinks post={reply} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
     </div>
   );
