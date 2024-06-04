@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
+import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import styles from './post-menu-mobile.module.css';
 import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../../lib/utils/url-utils';
+import useEditCommentPrivileges from '../../../../hooks/use-edit-comment-privileges';
+import EditMenu from '../../edit-menu/edit-menu';
 
 interface PostMenuMobileProps {
   cid: string;
@@ -62,7 +64,8 @@ const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose
 };
 
 const PostMenuMobile = ({ post }: { post: Comment }) => {
-  const { cid, isDescription, isRules, link, subplebbitAddress } = post || {};
+  const { author, cid, isDescription, isRules, link, subplebbitAddress } = post || {};
+  const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: author?.address, subplebbitAddress });
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -98,6 +101,9 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
           </FloatingFocusManager>,
           document.body,
         )}
+      {(isAccountMod || isAccountCommentAuthor) && (
+        <EditMenu commentCid={cid} isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} />
+      )}
     </>
   );
 };

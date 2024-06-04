@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useAccount, useBlock, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -10,6 +10,7 @@ import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
+import useEditCommentPrivileges from '../../../hooks/use-edit-comment-privileges';
 import useReplies from '../../../hooks/use-replies';
 import useStateString from '../../../hooks/use-state-string';
 import CommentMedia from '../../comment-media';
@@ -41,12 +42,8 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
-  const subplebbit = useSubplebbit({ subplebbitAddress });
-  const commentAuthorRole = subplebbit?.roles?.[author?.address]?.role;
-  const isCommentAuthorMod = commentAuthorRole === 'admin' || commentAuthorRole === 'owner' || commentAuthorRole === 'moderator';
-  const accountAuthorRole = subplebbit?.roles?.[account?.author?.address]?.role;
-  const isAccountMod = accountAuthorRole === 'admin' || accountAuthorRole === 'owner' || accountAuthorRole === 'moderator';
-  const isAccountCommentAuthor = account?.author?.address === author?.address;
+
+  const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
 
   return (
     <div className={styles.postInfo}>

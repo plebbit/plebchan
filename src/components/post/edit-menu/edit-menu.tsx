@@ -1,5 +1,5 @@
-import { Trans, useTranslation } from 'react-i18next';
 import { useEffect, useRef, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { PublishCommentEditOptions, useComment, useEditedComment, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
@@ -57,13 +57,6 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
       alert(error.message);
     },
   };
-
-  useEffect(() => {
-    if (!isEditMenuOpen) {
-      setPublishCommentEditOptions(defaultPublishOptions);
-      setIsContentEditorOpen(false);
-    }
-  }, [isEditMenuOpen]);
 
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishOptions);
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
@@ -130,7 +123,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
 
   return (
     <>
-      <span className={styles.checkbox} ref={refs.setReference} {...(commentCid && getReferenceProps())}>
+      <span className={`${styles.checkbox} ${isReply && styles.replyCheckbox}`} ref={refs.setReference} {...(commentCid && getReferenceProps())}>
         <input
           type='checkbox'
           onChange={() => commentCid && setIsEditMenuOpen(!isEditMenuOpen)}
