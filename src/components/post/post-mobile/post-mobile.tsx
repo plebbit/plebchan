@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useAccount, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -96,6 +96,28 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
       </div>
       {(hasThumbnail || link) && <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />}
     </>
+  );
+};
+
+const ReplyBacklinks = ({ post }: PostProps) => {
+  const { cid, parentCid, replyCount, subplebbitAddress } = post || {};
+  const replies = useReplies(post);
+
+  return (
+    replyCount > 0 &&
+    parentCid &&
+    replies && (
+      <div className={styles.mobileReplyBacklinks}>
+        {replies.map(
+          (reply: Comment, index: number) =>
+            reply?.parentCid === cid && (
+              <span key={index} className={styles.backlink}>
+                <Link to={`/p/${subplebbitAddress}/c/${reply?.cid}`}>c/{reply?.shortCid}</Link>
+              </span>
+            ),
+        )}
+      </div>
+    )
   );
 };
 
@@ -217,6 +239,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
                   <div className={styles.replyContainer}>
                     <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
                     {reply.content && <PostMessageMobile post={reply} />}
+                    <ReplyBacklinks post={reply} />
                   </div>
                 </div>
               </div>

@@ -1,4 +1,12 @@
 :root .yotsuba {
+  /* backlink */
+  --post-backlink-text-color: navy;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: red;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #ead6ca;
+  --reply-backlink-mobile-border-top: 1px solid #d9bfb7;
+
   /* board banner */
   --banner-image-border: 1px solid #800;
   --board-title-font-size: 28px;
@@ -183,6 +191,14 @@
 }
 
 :root .yotsuba-b {
+  /* backlink */
+  --post-backlink-text-color: #34345C;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #dd0000;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #c9cde8;
+  --reply-backlink-mobile-border-top: 1px solid #b7c5d9;
+
   /* board banner */
   --banner-image-border: 1px solid #000;
   --board-title-font-size: 28px;
@@ -367,6 +383,14 @@
 }
 
 :root .futaba {
+  /* backlink */
+  --post-backlink-text-color: navy;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: red;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #ead6ca;
+  --reply-backlink-mobile-border-top: 1px solid #d9bfb7;
+
   /* body */
   --body-background-base-color: #ffe;
   --body-background-pattern-image: none;
@@ -517,6 +541,14 @@
 }
 
 :root .burichan {
+  /* backlink */
+  --post-backlink-text-color: #34345C;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #dd0000;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #c9cde8;
+  --reply-backlink-mobile-border-top: 1px solid #b7c5d9;
+
   /* board banner */
   --banner-image-border: 1px solid #000;
   --board-title-font-size: 32px;
@@ -681,6 +713,14 @@
 }
 
 :root .tomorrow {
+  /* backlink */
+  --post-backlink-text-color: #5f89ac;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #81a2be;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #212326;
+  --reply-backlink-mobile-border-top: 1px solid #2D2F33;
+
   /* body */
   --body-background-base-color: #1d1f21;
   --body-background-pattern-image: none;
@@ -868,6 +908,14 @@
 }
 
 :root .photon {
+  /* backlink */
+  --post-backlink-text-color: #f60;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #f30;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #ddd;
+  --reply-backlink-mobile-border-top: 1px solid #ccc;
+
   /* body */
   --body-background-base-color: #eee;
   --body-background-pattern-image: none;

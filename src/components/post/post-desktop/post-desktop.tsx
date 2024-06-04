@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -24,7 +24,8 @@ import _ from 'lodash';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, locked, pinned, parentCid, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const replies = useReplies(post);
   const { address, displayName, shortAddress } = author || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const stateString = useStateString(post);
@@ -104,6 +105,17 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
         )}
       </span>
       <PostMenuDesktop post={post} />
+      {replyCount > 0 &&
+        parentCid &&
+        replies &&
+        replies.map(
+          (reply: Comment, index: number) =>
+            reply?.parentCid === cid && (
+              <span key={index} className={styles.backlink}>
+                <Link to={`/p/${subplebbitAddress}/c/${reply?.cid}`}>c/{reply?.shortCid}</Link>
+              </span>
+            ),
+        )}
     </div>
   );
 };

@@ -393,6 +393,29 @@
   color: red;
 }
 
+.backlink {
+  font-size: 0.8em;
+  padding-left: 5px;
+}
+
+.backlink a {
+  color: var(--post-backlink-text-color);
+  text-decoration: var(--post-backlink-text-decoration);
+}
+
+.backlink a:hover {
+  color: var(--post-backlink-text-color-hover);
+  text-decoration: var(--post-backlink-text-decoration-hover);
+}
+
+.mobileReplyBacklinks {
+  padding: 0 0;
+  padding-bottom: 3px;
+  line-height: 2;
+  background-color: var(--reply-backlink-mobile-background-color);
+  border-top: var(--reply-backlink-mobile-border-top);
+}
+
 @media (max-width: 640px) {
   .postDesktop {
     display: none;
