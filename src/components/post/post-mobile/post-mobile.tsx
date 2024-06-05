@@ -181,7 +181,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
   );
 };
 
-const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
+const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
   const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -234,6 +234,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies }: PostProps) 
           !isDescription &&
           !isRules &&
           replies &&
+          showReplies &&
           (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => {
             const isRouteLinkToReply = location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`);
             return (

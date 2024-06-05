@@ -420,6 +420,19 @@
   background: var(--reply-highlight-background-color) !important;
 }
 
+.replyQuotePreview {
+  background:  var(--quote-preview-background);
+  border: var(--quote-preview-border);
+  border-right: var(--quote-preview-border-right);
+  border-bottom: var(--quote-preview-border-bottom);
+  padding-right: 7px;
+  padding-left: 2px;
+}
+
+.postDesktop .replyQuotePreviewSpacer {
+  padding: 1.5px 0;
+}
+
 @media (max-width: 640px) {
   .postDesktop {
     display: none;

@@ -6,7 +6,7 @@ interface EditCommentPrivileges {
 }
 
 const useEditCommentPrivileges = ({ commentAuthorAddress, subplebbitAddress }: EditCommentPrivileges) => {
-  const accountAuthorAddress = useAccount().author?.address;
+  const accountAuthorAddress = useAccount()?.author?.address;
   const { roles } = useSubplebbit({ subplebbitAddress }) || {};
 
   const commentAuthorRole = roles?.[commentAuthorAddress]?.role;

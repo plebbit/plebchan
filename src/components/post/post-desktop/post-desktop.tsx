@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useBlock } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import { useFloating, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
@@ -19,8 +20,58 @@ import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
 import PostMenuDesktop from './post-menu-desktop/';
 import EditMenu from '../edit-menu/edit-menu';
-import { PostProps } from '../post';
+import Post, { PostProps } from '../post';
 import _ from 'lodash';
+
+const ReplyLink = ({
+  reply,
+  subplebbitAddress,
+  hoveredCid,
+  setHoveredCid,
+}: {
+  reply: Comment;
+  subplebbitAddress: string;
+  hoveredCid: string | null;
+  setHoveredCid: (cid: string | null) => void;
+}) => {
+  const [placement, setPlacement] = useState<Placement>('right');
+
+  const { refs, floatingStyles, update } = useFloating({
+    placement,
+    middleware: [
+      shift({ padding: 10 }),
+      size({
+        apply({ availableWidth, elements }) {
+          if (availableWidth >= 250) {
+            elements.floating.style.maxWidth = `${availableWidth - 5}px`;
+          } else {
+            setPlacement('left');
+          }
+        },
+      }),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
+
+  useEffect(() => {
+    update();
+  }, [placement, update]);
+
+  return (
+    <span className={styles.backlink}>
+      <Link to={`/p/${subplebbitAddress}/c/${reply?.cid}`} ref={refs.setReference} onMouseOver={() => setHoveredCid(reply?.cid)} onMouseLeave={() => setHoveredCid(null)}>
+        c/{reply?.shortCid}
+      </Link>
+      {hoveredCid === reply?.cid &&
+        createPortal(
+          <div className={styles.replyQuotePreview} ref={refs.setFloating} style={floatingStyles}>
+            <Post post={reply} showReplies={false} />
+          </div>,
+          document.body,
+        )}
+    </span>
+  );
+};
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
@@ -45,6 +96,8 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
 
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
+
+  const [hoveredCid, setHoveredCid] = useState<string | null>(null);
 
   return (
     <div className={styles.postInfo}>
@@ -111,9 +164,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
         replies.map(
           (reply: Comment, index: number) =>
             reply?.parentCid === cid && (
-              <span key={index} className={styles.backlink}>
-                <Link to={`/p/${subplebbitAddress}/c/${reply?.cid}`}>c/{reply?.shortCid}</Link>
-              </span>
+              <ReplyLink key={index} reply={reply} subplebbitAddress={subplebbitAddress} hoveredCid={hoveredCid} setHoveredCid={setHoveredCid} />
             ),
         )}
     </div>
@@ -224,7 +275,7 @@ const PostMessage = ({ post }: PostProps) => {
   );
 };
 
-const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
+const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
@@ -241,11 +292,10 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
 
+  // scroll to reply if pathname is reply permalink (backlink)
   const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   useEffect(() => {
     const replyIndex = replies.findIndex((reply) => location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`));
-
     if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
       replyRefs.current[replyIndex]?.scrollIntoView();
     }
@@ -253,9 +303,13 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
 
   return (
     <div className={styles.postDesktop}>
-      <div className={styles.hrWrapper}>
-        <hr />
-      </div>
+      {showAllReplies ? (
+        <div className={styles.hrWrapper}>
+          <hr />
+        </div>
+      ) : (
+        <div className={styles.replyQuotePreviewSpacer} />
+      )}
       <div className={isHidden ? styles.postDesktopBlocked : ''}>
         {!isInPostPageView && !isDescription && !isRules && (
           <span className={styles.hideButtonWrapper}>
@@ -289,6 +343,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           !isDescription &&
           !isRules &&
           replies &&
+          showReplies &&
           (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => {
             const isRouteLinkToReply = location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`);
             return (
