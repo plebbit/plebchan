@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -13,6 +13,7 @@ import useStateString from '../../../hooks/use-state-string';
 import CommentMedia from '../../comment-media';
 import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
+import ReplyQuotePreview from '../reply-quote-preview';
 import PostMenuMobile from './post-menu-mobile';
 import { PostProps } from '../post';
 import _ from 'lodash';
@@ -100,7 +101,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
 };
 
 const ReplyBacklinks = ({ post }: PostProps) => {
-  const { cid, parentCid, replyCount, subplebbitAddress } = post || {};
+  const { cid, parentCid, replyCount } = post || {};
   const replies = useReplies(post);
 
   return (
@@ -108,20 +109,14 @@ const ReplyBacklinks = ({ post }: PostProps) => {
     parentCid &&
     replies && (
       <div className={styles.mobileReplyBacklinks}>
-        {replies.map(
-          (reply: Comment, index: number) =>
-            reply?.parentCid === cid && (
-              <span key={index} className={styles.backlink}>
-                <Link to={`/p/${subplebbitAddress}/c/${reply?.cid}`}>c/{reply?.shortCid}</Link>
-              </span>
-            ),
-        )}
+        {replies.map((reply: Comment, index: number) => reply?.parentCid === cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />)}
       </div>
     )
   );
 };
 
 const PostMessageMobile = ({ post }: PostProps) => {
+  const { t } = useTranslation();
   const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
 
   const params = useParams();
@@ -139,21 +134,16 @@ const PostMessageMobile = ({ post }: PostProps) => {
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
 
+  const quotelinkReply = useComment({ commentCid: parentCid });
+
   return (
     content && (
       <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
-        {isReply && isReplyingToReply && (
-          <>
-            <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-              {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-            </Link>
-            <br />
-          </>
-        )}
+        {isReply && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
         {removed ? (
-          <span className={styles.removedContent}>(THIS POST WAS REMOVED)</span>
+          <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
         ) : deleted ? (
-          <span className={styles.removedContent}>User deleted this post.</span>
+          <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
         ) : (
           <Markdown content={displayContent} />
         )}
@@ -205,10 +195,12 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
 
   return (
     <div className={styles.postMobile}>
-      <div className={styles.hrWrapper}>
-        <hr />
-      </div>
-      <div className={styles.thread}>
+      {showAllReplies && (
+        <div className={styles.hrWrapper}>
+          <hr />
+        </div>
+      )}
+      <div className={showAllReplies ? styles.thread : styles.quotePreview}>
         <div className={styles.postContainer}>
           <div className={styles.postOp}>
             <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />

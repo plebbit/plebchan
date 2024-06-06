@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useBlock } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useBlock, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
@@ -20,74 +18,9 @@ import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
 import PostMenuDesktop from './post-menu-desktop/';
 import EditMenu from '../edit-menu/edit-menu';
-import Post, { PostProps } from '../post';
+import ReplyQuotePreview from '../reply-quote-preview';
+import { PostProps } from '../post';
 import _ from 'lodash';
-
-const ReplyLink = ({
-  reply,
-  subplebbitAddress,
-  hoveredCid,
-  setHoveredCid,
-}: {
-  reply: Comment;
-  subplebbitAddress: string;
-  hoveredCid: string | null;
-  setHoveredCid: (cid: string | null) => void;
-}) => {
-  const placementRef = useRef<Placement>('right');
-  const availableWidthRef = useRef<number>(0);
-
-  const { refs, floatingStyles, update } = useFloating({
-    placement: placementRef.current,
-    middleware: [
-      shift({ padding: 10 }),
-      offset({ mainAxis: placementRef.current === 'right' ? 8 : 4 }),
-      size({
-        apply({ availableWidth, elements }) {
-          availableWidthRef.current = availableWidth;
-          if (availableWidth >= 250) {
-            elements.floating.style.maxWidth = `${availableWidth - 12}px`;
-          } else if (placementRef.current === 'right') {
-            placementRef.current = 'left';
-          }
-        },
-      }),
-    ],
-    whileElementsMounted: autoUpdate,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      const availableWidth = availableWidthRef.current;
-      if (availableWidth >= 250) {
-        placementRef.current = 'right';
-      } else {
-        placementRef.current = 'left';
-      }
-      update();
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [update]);
-
-  return (
-    <span className={styles.backlink}>
-      <Link to={`/p/${subplebbitAddress}/c/${reply?.cid}`} ref={refs.setReference} onMouseOver={() => setHoveredCid(reply?.cid)} onMouseLeave={() => setHoveredCid(null)}>
-        c/{reply?.shortCid}
-      </Link>
-      {hoveredCid === reply?.cid &&
-        createPortal(
-          <div className={styles.replyQuotePreview} ref={refs.setFloating} style={floatingStyles}>
-            <Post post={reply} showReplies={false} />
-          </div>,
-          document.body,
-        )}
-    </span>
-  );
-};
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
@@ -112,8 +45,6 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
 
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
-
-  const [hoveredCid, setHoveredCid] = useState<string | null>(null);
 
   return (
     <div className={styles.postInfo}>
@@ -177,12 +108,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
       {replyCount > 0 &&
         parentCid &&
         replies &&
-        replies.map(
-          (reply: Comment, index: number) =>
-            reply?.parentCid === cid && (
-              <ReplyLink key={index} reply={reply} subplebbitAddress={subplebbitAddress} hoveredCid={hoveredCid} setHoveredCid={setHoveredCid} />
-            ),
-        )}
+        replies.map((reply: Comment, index: number) => reply?.parentCid === cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />)}
     </div>
   );
 };
@@ -251,16 +177,11 @@ const PostMessage = ({ post }: PostProps) => {
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
 
+  const quotelinkReply = useComment({ commentCid: parentCid });
+
   return (
     <blockquote className={styles.postMessage}>
-      {isReply && isReplyingToReply && (
-        <>
-          <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-            {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-          </Link>
-          <br />
-        </>
-      )}
+      {isReply && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
       ) : deleted ? (

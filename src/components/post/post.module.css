@@ -211,6 +211,10 @@
   padding-bottom: 30px;
 }
 
+.quotePreview {
+  padding: 3px;
+}
+
 .postMobile .postContainer {
   background-color: var(--post-mobile-background-color);
 }
@@ -272,7 +276,6 @@
 .postMobile .postMessage {
   padding: 10px;
   font-size: var(--post-mobile-content-font-size);
-  word-break: break-all;
 }
 
 .postMobile .postLink {
@@ -338,6 +341,7 @@
 .quoteLink:hover {
   color: var(--post-quotelink-text-color-hover);
   text-decoration: var(--post-quotelink-text-decoration-hover);
+  cursor: pointer;
 }
 
 .replyMobile {
@@ -389,23 +393,28 @@
 }
 
 .removedContent {
+  text-transform: uppercase;
   font-weight: 700;
   color: red;
 }
 
-.backlink {
+.backlink, .backlinkHash {
   font-size: 0.8em;
+}
+
+.backlink {
   padding-left: 5px;
 }
 
-.backlink a {
+.backlink, .backlinkHash {
   color: var(--post-backlink-text-color);
   text-decoration: var(--post-backlink-text-decoration);
 }
 
-.backlink a:hover {
+.backlink:hover, .backlinkHash:hover {
   color: var(--post-backlink-text-color-hover);
   text-decoration: var(--post-backlink-text-decoration-hover);
+  cursor: pointer;
 }
 
 .mobileReplyBacklinks {
@@ -425,8 +434,6 @@
   border: var(--quote-preview-border);
   border-right: var(--quote-preview-border-right);
   border-bottom: var(--quote-preview-border-bottom);
-  padding-right: 7px;
-  padding-left: 2px;
 }
 
 .postDesktop .replyQuotePreviewSpacer {
@@ -434,6 +441,10 @@
 }
 
 @media (max-width: 640px) {
+  .replyQuotePreview {
+    margin-right: 10px;
+  }
+
   .postDesktop {
     display: none;
   }
@@ -444,6 +455,11 @@
 }
 
 @media (min-width: 640px) {
+  .replyQuotePreview {
+    padding-right: 7px;
+    padding-left: 2px;
+  }
+
   .postMobile {
     display: none;
   }
