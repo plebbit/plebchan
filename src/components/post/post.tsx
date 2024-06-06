@@ -11,10 +11,11 @@ export interface PostProps {
   reply?: any;
   roles?: Role[];
   showAllReplies?: boolean;
+  showReplies?: boolean;
   openReplyModal?: (cid: string) => void;
 }
 
-const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
+const Post = ({ post, showAllReplies = false, showReplies = true, openReplyModal }: PostProps) => {
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   const isMobile = useIsMobile();
 
@@ -22,9 +23,9 @@ const Post = ({ post, showAllReplies = false, openReplyModal }: PostProps) => {
     <div className={styles.thread}>
       <div className={styles.postContainer}>
         {isMobile ? (
-          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openReplyModal={openReplyModal} />
+          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
         ) : (
-          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} openReplyModal={openReplyModal} />
+          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
         )}
       </div>
     </div>

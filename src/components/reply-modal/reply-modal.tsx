@@ -93,7 +93,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           <input
             type='text'
             defaultValue={displayName}
-            placeholder={displayName ? undefined : _.capitalize(t('anonymous'))}
+            placeholder={displayName ? undefined : _.capitalize(t('name'))}
             onChange={(e) => setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } })}
           />
         </div>

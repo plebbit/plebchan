@@ -5,7 +5,7 @@ import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 
-const totalBanners = 57;
+const totalBanners = 59;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {

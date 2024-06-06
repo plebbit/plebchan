@@ -35,18 +35,20 @@ const BoardLayout = () => {
     <div className={styles.boardLayout}>
       <TopBar />
       <BoardHeader />
-      {isMobile ? (
-        <>
-          <PostForm key={key} />
-          <MobileBoardButtons />
-        </>
-      ) : (
-        <>
-          <PostForm key={key} />
-          {subplebbitAddress && <SubplebbitStats />}
-          <DesktopBoardButtons />
-        </>
-      )}
+      {isMobile
+        ? subplebbitAddress && (
+            <>
+              <PostForm key={key} />
+              <MobileBoardButtons />
+            </>
+          )
+        : subplebbitAddress && (
+            <>
+              <PostForm key={key} />
+              <SubplebbitStats />
+              <DesktopBoardButtons />
+            </>
+          )}
       <Outlet />
     </div>
   );

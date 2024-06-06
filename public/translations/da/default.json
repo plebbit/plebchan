@@ -147,5 +147,6 @@
   "optional": "valgfri",
   "close_thread": "luk tråd",
   "view_spoiler": "vis spoiler",
-  "filter": "filtrér"
+  "filter": "filtrér",
+  "edit": "rediger"
 }

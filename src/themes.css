@@ -1,4 +1,12 @@
 :root .yotsuba {
+  /* backlink */
+  --post-backlink-text-color: navy;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: red;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #ead6ca;
+  --reply-backlink-mobile-border-top: 1px solid #d9bfb7;
+
   /* board banner */
   --banner-image-border: 1px solid #800;
   --board-title-font-size: 28px;
@@ -143,12 +151,19 @@
   --post-quotelink-text-color: navy;
   --post-quotelink-text-color-hover: red;
   --post-quotelink-text-decoration: underline;
-  --post-quotelink-text-decoration-hover: underline; 
+  --post-quotelink-text-decoration-hover: underline;
+  --quote-preview-background:  #f0e0d6;
+  --quote-preview-border: 1px solid #d9bfb7;
+  --quote-preview-border-right: 2px solid #d9bfb7;
+  --quote-preview-border-bottom: 2px solid #d9bfb7;
 
   /* reply desktop */
   --side-arrows-color: #e0bfb7;
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
+
+  /* reply highlight */
+  --reply-highlight-background-color: #f0c0b0;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;
@@ -183,6 +198,14 @@
 }
 
 :root .yotsuba-b {
+  /* backlink */
+  --post-backlink-text-color: #34345C;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #dd0000;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #c9cde8;
+  --reply-backlink-mobile-border-top: 1px solid #b7c5d9;
+
   /* board banner */
   --banner-image-border: 1px solid #000;
   --board-title-font-size: 28px;
@@ -327,12 +350,19 @@
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
   --post-quotelink-text-decoration: underline;
-  --post-quotelink-text-decoration-hover: underline; 
+  --post-quotelink-text-decoration-hover: underline;
+  --quote-preview-background:  #d6daf0;
+  --quote-preview-border: 1px solid #b7c5d9;
+  --quote-preview-border-right: 2px solid #b7c5d9;
+  --quote-preview-border-bottom: 2px solid #b7c5d9;
 
   /* reply desktop */
   --side-arrows-color: #b7c5d9;
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
+
+  /* reply highlight */
+  --reply-highlight-background-color: #d6bad0;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;
@@ -367,6 +397,14 @@
 }
 
 :root .futaba {
+  /* backlink */
+  --post-backlink-text-color: navy;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: red;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #ead6ca;
+  --reply-backlink-mobile-border-top: 1px solid #d9bfb7;
+
   /* body */
   --body-background-base-color: #ffe;
   --body-background-pattern-image: none;
@@ -483,11 +521,18 @@
   --post-quotelink-text-color-hover: red;
   --post-quotelink-text-decoration: underline;
   --post-quotelink-text-decoration-hover: underline; 
+  --quote-preview-background:  #f0e0d6;
+  --quote-preview-border: 1px solid rgba(0,0,0,.2);
+  --quote-preview-border-right: 2px solid rgba(0,0,0,.2);
+  --quote-preview-border-bottom: 2px solid rgba(0,0,0,.2);
 
   /* reply desktop */
   --side-arrows-color: #e0bfb7;
   --reply-desktop-background-color: #f0e0d6;
   --reply-desktop-border: 1px solid #d9bfb7;
+
+  /* reply highlight */
+  --reply-highlight-background-color: #f0c0b0;
 
   /* settings modal */
   --settings-modal-background-color: #f0e0d6;
@@ -517,6 +562,14 @@
 }
 
 :root .burichan {
+  /* backlink */
+  --post-backlink-text-color: #34345C;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #dd0000;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #c9cde8;
+  --reply-backlink-mobile-border-top: 1px solid #b7c5d9;
+
   /* board banner */
   --banner-image-border: 1px solid #000;
   --board-title-font-size: 32px;
@@ -646,12 +699,19 @@
   --post-quotelink-text-color: #d00;
   --post-quotelink-text-color-hover: #d00;
   --post-quotelink-text-decoration: underline;
-  --post-quotelink-text-decoration-hover: underline; 
+  --post-quotelink-text-decoration-hover: underline;
+  --quote-preview-background:  #d6daf0;
+  --quote-preview-border: 1px solid rgba(0,0,0,.2);
+  --quote-preview-border-right: 2px solid rgba(0,0,0,.2);
+  --quote-preview-border-bottom: 2px solid rgba(0,0,0,.2);
 
   /* reply desktop */
   --side-arrows-color: #b7c5d9;
   --reply-desktop-background-color: #d6daf0;
   --reply-desktop-border: 1px solid #b7c5d9;
+
+  /* reply highlight */
+  --reply-highlight-background-color: #d6bad0;
 
   /* settings modal */
   --settings-modal-background-color: #d6daf0;
@@ -681,6 +741,14 @@
 }
 
 :root .tomorrow {
+  /* backlink */
+  --post-backlink-text-color: #5f89ac;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #81a2be;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #212326;
+  --reply-backlink-mobile-border-top: 1px solid #2D2F33;
+
   /* body */
   --body-background-base-color: #1d1f21;
   --body-background-pattern-image: none;
@@ -822,6 +890,10 @@
   --post-quotelink-text-color-hover: #81a2be;
   --post-quotelink-text-decoration: underline;
   --post-quotelink-text-decoration-hover: underline; 
+  --quote-preview-background:  #282a2e;
+  --quote-preview-border: 1px solid #333;
+  --quote-preview-border-right: 1px solid #333;
+  --quote-preview-border-bottom: 1px solid #333;
 
   /* reply desktop */
   --side-arrows-color: #c5c8c6;
@@ -832,6 +904,9 @@
   --reply-modal-field-input-border: 1px solid #515151;
   --reply-modal-field-border-focus: 1px solid #757575;
   --reply-modal-field-input-border-focus: 1px solid #757575;
+
+  /* reply highlight */
+  --reply-highlight-background-color: #1d1d21;
 
   /* select */
   --select-border: 1px solid #575a60;
@@ -868,6 +943,14 @@
 }
 
 :root .photon {
+  /* backlink */
+  --post-backlink-text-color: #f60;
+  --post-backlink-text-decoration: underline;
+  --post-backlink-text-color-hover: #f30;
+  --post-backlink-text-decoration-hover: underline;
+  --reply-backlink-mobile-background-color: #ddd;
+  --reply-backlink-mobile-border-top: 1px solid #ccc;
+
   /* body */
   --body-background-base-color: #eee;
   --body-background-pattern-image: none;
@@ -995,11 +1078,18 @@
   --post-quotelink-text-color-hover: #f30;
   --post-quotelink-text-decoration: underline;
   --post-quotelink-text-decoration-hover: underline; 
+  --quote-preview-background: #ddd;
+  --quote-preview-border: 1px solid #ccc;
+  --quote-preview-border-right: 1px solid #ccc;
+  --quote-preview-border-bottom: 1px solid #ccc;
 
   /* reply desktop */
   --side-arrows-color: #333;
   --reply-desktop-background-color: #ddd;
   --reply-desktop-border: 1px solid #ccc;
+
+  /* reply highlight */
+  --reply-highlight-background-color: #ccc;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;

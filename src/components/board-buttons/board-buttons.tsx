@@ -89,18 +89,18 @@ export const MobileBoardButtons = () => {
     <div className={styles.mobileBoardButtons}>
       {isInPostView || isInPendingPostPage ? (
         <>
-          <ReturnButton address={subplebbitAddress} />
+          <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           <SubscribeButton address={subplebbitAddress} />
         </>
       ) : (
         <>
           {isInCatalogView ? (
-            <ReturnButton address={subplebbitAddress} />
+            <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           ) : (
             <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           )}
-          <SubscribeButton address={subplebbitAddress} />
+          {!(isInAllView || isInSubscriptionsView) && <SubscribeButton address={subplebbitAddress} />}
           <RefreshButton />
           {isInCatalogView && (
             <>

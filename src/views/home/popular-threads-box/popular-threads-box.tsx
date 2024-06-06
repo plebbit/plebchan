@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Comment, Subplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from '../home.module.css';
 import usePopularPosts from '../../../hooks/use-popular-posts';
-import useHomeFiltersStore from '../../../stores/use-home-filters';
+import useHomeFiltersStore from '../../../stores/use-home-filters-store';
 import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../../components/catalog-row';
 import LoadingEllipsis from '../../../components/loading-ellipsis';

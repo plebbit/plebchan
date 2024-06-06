@@ -147,5 +147,6 @@
   "optional": "선택",
   "close_thread": "스레드 닫기",
   "view_spoiler": "스포일러 보기",
-  "filter": "필터"
+  "filter": "필터",
+  "edit": "편집"
 }

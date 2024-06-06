@@ -4,14 +4,6 @@
   filter: var(--filter80);
 }
 
-.button {
-  color: var(--text-info);
-  font-weight: bold;
-  text-decoration: none;
-  padding: 0 4px 0 4px;
-  cursor: pointer;
-}
-
 .modal {
   z-index: 7;
   background-color: var(--challenge-modal-background-color);
@@ -43,7 +35,8 @@
   padding-bottom: 2px;
 }
 
-.menuItem input[type="text"] {
+
+.menuItem input[type="text"], .editTextarea {
   padding: 2px;
   box-shadow: var(--box-shadow-input);
   margin-top: 2px;
@@ -51,12 +44,12 @@
   margin-bottom: 2px;
 }
 
-.menuItem input[type="text"], .menuItem input[type='number'] {
+.menuItem input[type="text"], .menuItem input[type='number'], .editTextarea {
   border: var(--post-form-field-input-border);
   outline: none;
 }
 
-.menuItem input[type="text"]:focus, .menuItem input[type='number']:focus {
+.menuItem input[type="text"]:focus, .menuItem input[type='number']:focus, .editTextarea:focus {
   border: var(--post-form-field-input-focus-border);
 }
 
@@ -65,10 +58,14 @@
   display: block;
 }
 
+.editTextarea {
+  width: calc(100% - 12px);
+  margin-left: 3px;
+  font-family: inherit;
+}
+
 .bottom button {
   text-transform: capitalize;
-  cursor: pointer;
-  padding: 2px 6px 3px;
   margin-left: 2px;
   margin-bottom: 2px;
 }
@@ -80,5 +77,24 @@
 @supports (-moz-appearance: none) {
   .banInput {
     width: 3.5em;
+  }
+}
+
+@media (min-width: 640px) {
+  .bottom button {
+    cursor: pointer;
+    padding: 2px 6px 3px; 
+  }
+}
+
+@media (max-width: 640px) {
+  .checkbox {
+    padding-left: 0;
+    padding-bottom: 0;
+  }
+
+  .replyCheckbox {
+    padding-left: 5px;
+    padding-top: 0;
   }
 }

@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useAccount, useBlock, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { Comment, useAccount, useBlock, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
@@ -10,6 +9,7 @@ import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
+import useEditCommentPrivileges from '../../../hooks/use-edit-comment-privileges';
 import useReplies from '../../../hooks/use-replies';
 import useStateString from '../../../hooks/use-state-string';
 import CommentMedia from '../../comment-media';
@@ -17,13 +17,15 @@ import { canEmbed } from '../../embed';
 import LoadingEllipsis from '../../loading-ellipsis';
 import Markdown from '../../markdown';
 import PostMenuDesktop from './post-menu-desktop/';
+import EditMenu from '../edit-menu/edit-menu';
+import ReplyQuotePreview from '../reply-quote-preview';
 import { PostProps } from '../post';
 import _ from 'lodash';
-import ModMenu from '../mod-menu';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, locked, pinned, parentCid, postCid, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, locked, pinned, parentCid, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const replies = useReplies(post);
   const { address, displayName, shortAddress } = author || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const stateString = useStateString(post);
@@ -39,13 +41,14 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const authorRole = roles?.[address]?.role;
   const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
 
-  // pending reply by account is not yet published
   const account = useAccount();
-  const accountShortAddress = account?.author?.shortAddress;
+  const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
+
+  const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
 
   return (
     <div className={styles.postInfo}>
-      {!isHidden && <ModMenu cid={cid} />}
+      {!isHidden && <EditMenu commentCid={cid} isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} />}
       {title && <span className={styles.subject}>{displayTitle} </span>}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
@@ -102,6 +105,10 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
         )}
       </span>
       <PostMenuDesktop post={post} />
+      {replyCount > 0 &&
+        parentCid &&
+        replies &&
+        replies.map((reply: Comment, index: number) => reply?.parentCid === cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />)}
     </div>
   );
 };
@@ -170,16 +177,11 @@ const PostMessage = ({ post }: PostProps) => {
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
 
+  const quotelinkReply = useComment({ commentCid: parentCid });
+
   return (
     <blockquote className={styles.postMessage}>
-      {isReply && isReplyingToReply && (
-        <>
-          <Link to={`/p/${subplebbitAddress}/c/${parentCid}`} className={styles.quoteLink}>
-            {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-          </Link>
-          <br />
-        </>
-      )}
+      {isReply && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
       ) : deleted ? (
@@ -210,15 +212,9 @@ const PostMessage = ({ post }: PostProps) => {
   );
 };
 
-const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps) => {
-  // handle pending mod or author edit
-  const { editedComment } = useEditedComment({ comment: post });
-  if (editedComment) {
-    post = editedComment;
-  }
+const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-
   const params = useParams();
   const location = useLocation();
   const isInPendingPostView = isPendingPostView(location.pathname, params);
@@ -233,11 +229,24 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
 
+  // scroll to reply if pathname is reply permalink (backlink)
+  const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
+  useEffect(() => {
+    const replyIndex = replies.findIndex((reply) => location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`));
+    if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
+      replyRefs.current[replyIndex]?.scrollIntoView();
+    }
+  }, [location.pathname, replies, subplebbitAddress]);
+
   return (
     <div className={styles.postDesktop}>
-      <div className={styles.hrWrapper}>
-        <hr />
-      </div>
+      {showAllReplies ? (
+        <div className={styles.hrWrapper}>
+          <hr />
+        </div>
+      ) : (
+        <div className={styles.replyQuotePreviewSpacer} />
+      )}
       <div className={isHidden ? styles.postDesktopBlocked : ''}>
         {!isInPostPageView && !isDescription && !isRules && (
           <span className={styles.hideButtonWrapper}>
@@ -271,18 +280,22 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies }: PostProps)
           !isDescription &&
           !isRules &&
           replies &&
-          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-            <div key={index} className={styles.replyContainer}>
-              <div className={styles.replyDesktop}>
-                <div className={styles.sideArrows}>{'>>'}</div>
-                <div className={styles.reply}>
-                  <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-                  {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
-                  {reply.content && <PostMessage post={reply} />}
+          showReplies &&
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => {
+            const isRouteLinkToReply = location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`);
+            return (
+              <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+                <div className={styles.replyDesktop}>
+                  <div className={styles.sideArrows}>{'>>'}</div>
+                  <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`}>
+                    <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
+                    {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
+                    {reply.content && <PostMessage post={reply} />}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
     </div>
   );

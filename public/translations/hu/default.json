@@ -147,5 +147,6 @@
   "optional": "opcionális",
   "close_thread": "szál bezárása",
   "view_spoiler": "spoiler megtekintése",
-  "filter": "szűrő"
+  "filter": "szűrő",
+  "edit": "szerkesztés"
 }

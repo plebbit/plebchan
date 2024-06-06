@@ -147,5 +147,6 @@
   "optional": "valinnainen",
   "close_thread": "sulje keskustelu",
   "view_spoiler": "näytä spoiler",
-  "filter": "suodatin"
+  "filter": "suodatin",
+  "edit": "muokkaa"
 }
