@@ -4,7 +4,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useBlock } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { useFloating, shift, size, autoUpdate, Placement } from '@floating-ui/react';
+import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
 import { getFormattedDate } from '../../../lib/utils/time-utils';
@@ -34,18 +34,21 @@ const ReplyLink = ({
   hoveredCid: string | null;
   setHoveredCid: (cid: string | null) => void;
 }) => {
-  const [placement, setPlacement] = useState<Placement>('right');
+  const placementRef = useRef<Placement>('right');
+  const availableWidthRef = useRef<number>(0);
 
   const { refs, floatingStyles, update } = useFloating({
-    placement,
+    placement: placementRef.current,
     middleware: [
       shift({ padding: 10 }),
+      offset({ mainAxis: placementRef.current === 'right' ? 8 : 4 }),
       size({
         apply({ availableWidth, elements }) {
+          availableWidthRef.current = availableWidth;
           if (availableWidth >= 250) {
-            elements.floating.style.maxWidth = `${availableWidth - 5}px`;
-          } else {
-            setPlacement('left');
+            elements.floating.style.maxWidth = `${availableWidth - 12}px`;
+          } else if (placementRef.current === 'right') {
+            placementRef.current = 'left';
           }
         },
       }),
@@ -54,8 +57,21 @@ const ReplyLink = ({
   });
 
   useEffect(() => {
-    update();
-  }, [placement, update]);
+    const handleResize = () => {
+      const availableWidth = availableWidthRef.current;
+      if (availableWidth >= 250) {
+        placementRef.current = 'right';
+      } else {
+        placementRef.current = 'left';
+      }
+      update();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [update]);
 
   return (
     <span className={styles.backlink}>
