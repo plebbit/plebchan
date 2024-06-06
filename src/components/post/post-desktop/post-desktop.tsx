@@ -232,7 +232,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   // scroll to reply if pathname is reply permalink (backlink)
   const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
   useEffect(() => {
-    const replyIndex = replies.findIndex((reply) => location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`));
+    const replyIndex = replies.findIndex((reply) => location.pathname === `/p/${subplebbitAddress}/c/${reply?.cid}`);
     if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
       replyRefs.current[replyIndex]?.scrollIntoView();
     }

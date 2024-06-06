@@ -2,7 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { Comment, useAccountComments } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils';
 
-const useRepliesAndAccountReplies = (comment: Comment) => {
+const useReplies = (comment: Comment) => {
   // flatten all replies including nested ones from the original comment
   const flattenedReplies = useMemo(() => flattenCommentsPages(comment.replies), [comment.replies]);
 
@@ -45,4 +45,4 @@ const useRepliesAndAccountReplies = (comment: Comment) => {
   return repliesAndNotYetPublishedReplies;
 };
 
-export default useRepliesAndAccountReplies;
+export default useReplies;
