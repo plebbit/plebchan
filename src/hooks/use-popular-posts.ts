@@ -10,9 +10,9 @@ const usePopularPosts = (subplebbits: Subplebbit[]) => {
     const allPosts: Comment[] = [];
 
     let postsPerSub = 1;
-    if (subplebbits.length == 2) {
+    if (subplebbits.length === 2) {
       postsPerSub = 4;
-    } else if (subplebbits.length == 3) {
+    } else if (subplebbits.length === 3) {
       postsPerSub = 3;
     } else if (subplebbits.length >= 4 && subplebbits.length < 8) {
       postsPerSub = 2;

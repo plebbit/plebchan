@@ -185,7 +185,7 @@ const PostMessage = ({ post }: PostProps) => {
       {removed ? (
         <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
       ) : deleted ? (
-        <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
+        <span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>
       ) : (
         <Markdown content={displayContent} spoiler={spoiler} />
       )}

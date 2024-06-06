@@ -392,10 +392,13 @@
   cursor: pointer;
 }
 
-.removedContent {
-  text-transform: uppercase;
+.removedContent, .deletedContent {
   font-weight: 700;
   color: red;
+}
+
+.removedContent {
+  text-transform: uppercase;
 }
 
 .backlink, .backlinkHash {
