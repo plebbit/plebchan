@@ -195,18 +195,18 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
 
   return (
     <div className={styles.postMobile}>
-      {showAllReplies && (
+      {showReplies && (
         <div className={styles.hrWrapper}>
           <hr />
         </div>
       )}
-      <div className={showAllReplies ? styles.thread : styles.quotePreview}>
+      <div className={showReplies ? styles.thread : styles.quotePreview}>
         <div className={styles.postContainer}>
           <div className={styles.postOp}>
             <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
             {content && <PostMessageMobile post={post} />}
           </div>
-          {!isInPostView && !isInPendingPostView && (
+          {!isInPostView && !isInPendingPostView && showReplies && (
             <div className={styles.postLink}>
               <span className={styles.info}>
                 {replyCount > 0 && `${replyCount} Replies`}
