@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Comment } from '@plebbit/plebbit-react-hooks';
@@ -104,12 +104,10 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
 
 const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, isQuotelinkReply }: ReplyQuotePreviewProps) => {
   const [hoveredCid, setHoveredCid] = useState<string | null>(null);
-  const placementRef = useRef<Placement>('bottom');
-  const quotelinkRef = useRef<HTMLSpanElement>(null);
 
   const { refs, floatingStyles, update } = useFloating({
-    placement: placementRef.current,
-    middleware: [shift({ padding: 10 })],
+    placement: 'bottom',
+    middleware: [shift({ padding: isBacklinkReply ? 5 : 10 })],
     whileElementsMounted: autoUpdate,
   });
 
@@ -120,25 +118,9 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
     };
   }, [update]);
 
-  const handleClickOutside = useCallback(
-    (event: MouseEvent) => {
-      if (quotelinkRef.current && !quotelinkRef.current.contains(event.target as Node)) {
-        setHoveredCid(null);
-      }
-    },
-    [quotelinkRef, setHoveredCid],
-  );
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
-
   const replyBacklink = (
-    <span ref={quotelinkRef}>
-      <span className={styles.backlink} ref={refs.setReference} onClick={() => setHoveredCid(backlinkReply?.cid)}>
+    <>
+      <span className={styles.backlink} ref={refs.setReference} onMouseOver={() => setHoveredCid(backlinkReply?.cid)} onMouseLeave={() => setHoveredCid(null)}>
         c/{backlinkReply?.shortCid}{' '}
       </span>
       <Link to={`/p/${backlinkReply?.subplebbitAddress}/c/${backlinkReply?.cid}`} className={styles.backlinkHash}>
@@ -151,13 +133,13 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
           </div>,
           document.body,
         )}
-    </span>
+    </>
   );
 
   const replyQuotelink = (
-    <span ref={quotelinkRef}>
-      <span ref={refs.setReference} className={styles.quoteLink} onClick={() => setHoveredCid(quotelinkReply?.cid)}>
-        {quotelinkReply?.shortCid}{' '}
+    <>
+      <span ref={refs.setReference} className={styles.quoteLink} onMouseOver={() => setHoveredCid(quotelinkReply?.cid)} onMouseLeave={() => setHoveredCid(null)}>
+        c/{quotelinkReply?.shortCid}{' '}
       </span>
       <Link className={styles.quoteLink} to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}>
         #
@@ -170,7 +152,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
           </div>,
           document.body,
         )}
-    </span>
+    </>
   );
 
   return isBacklinkReply ? replyBacklink : isQuotelinkReply && replyQuotelink;
