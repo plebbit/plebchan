@@ -26,6 +26,10 @@ hr {
   color: var(--post-greentext-color);
 }
 
+.highlight {
+  background: var(--reply-highlight-background-color) !important;
+}
+
 @media (max-width: 640px) {
   .button {
     font-size: var(--button-font-size-mobile);

@@ -232,7 +232,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
                 <div className={styles.replyMobile}>
                   <div className={styles.reply}>
-                    <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`}>
+                    <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
                       <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
                       {reply.content && <PostMessageMobile post={reply} />}
                       <ReplyBacklinks post={reply} />

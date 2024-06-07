@@ -287,7 +287,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
               <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
                 <div className={styles.replyDesktop}>
                   <div className={styles.sideArrows}>{'>>'}</div>
-                  <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`}>
+                  <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
                     <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
                     {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
                     {reply.content && <PostMessage post={reply} />}
