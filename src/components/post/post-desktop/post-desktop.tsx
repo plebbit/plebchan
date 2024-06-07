@@ -240,7 +240,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
 
   return (
     <div className={styles.postDesktop}>
-      {showAllReplies ? (
+      {showReplies ? (
         <div className={styles.hrWrapper}>
           <hr />
         </div>
