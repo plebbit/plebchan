@@ -1,14 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Comment } from '@plebbit/plebbit-react-hooks';
-import styles from './catalog-row.module.css';
+import { Link, useLocation } from 'react-router-dom';
+import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
+import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView } from '../../lib/utils/view-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import PostMenuDesktop from '../post/post-desktop/post-menu-desktop/';
+import styles from './catalog-row.module.css';
+import _ from 'lodash';
 
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface CatalogPostMediaProps {
   commentMediaInfo: any;
@@ -77,7 +83,8 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
 
 const CatalogPost = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
-  const { cid, content, isDescription, isRules, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, title } = post || {};
+  const { author, cid, content, isDescription, isRules, lastChildCid, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, timestamp, title } =
+    post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
@@ -95,37 +102,132 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     </div>
   );
 
+  const [hoveredCid, setHoveredCid] = useState<string | null>(null);
+  const [showPortal, setShowPortal] = useState<boolean>(false);
+  const placementRef = useRef<Placement>('right-start');
+  const availableWidthRef = useRef<number>(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const { refs, floatingStyles, update } = useFloating({
+    placement: placementRef.current,
+    middleware: [
+      shift({ padding: 10 }),
+      offset({ mainAxis: -7 }),
+      size({
+        apply({ availableWidth, elements }) {
+          availableWidthRef.current = availableWidth;
+          if (availableWidth >= 250) {
+            elements.floating.style.maxWidth = `${availableWidth - 12}px`;
+          } else if (placementRef.current === 'right-start') {
+            placementRef.current = 'left-start';
+          }
+        },
+      }),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const availableWidth = availableWidthRef.current;
+      if (availableWidth >= 250) {
+        placementRef.current = 'right-start';
+      } else {
+        placementRef.current = 'left-start';
+      }
+      update();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [update]);
+
+  const handleMouseOver = () => {
+    setHoveredCid(cid);
+    timeoutRef.current = setTimeout(() => setShowPortal(true), 250);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredCid(null);
+    setShowPortal(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
+
+  const lastReply = useComment({ commentCid: lastChildCid });
+
+  const { isCommentAuthorMod: isCatalogPostAuthorMod, commentAuthorRole: catalogPostAuthorRole } = useEditCommentPrivileges({
+    commentAuthorAddress: author?.address,
+    subplebbitAddress,
+  });
+  const { isCommentAuthorMod: isLastReplyAuthorMod, commentAuthorRole: lastReplyAuthorRole } = useEditCommentPrivileges({
+    commentAuthorAddress: lastReply?.author?.address,
+    subplebbitAddress,
+  });
+
   return (
-    <div className={styles.post}>
-      {hasThumbnail ? (
-        <Link to={postLink}>
-          <div className={styles.mediaPaddingWrapper}>
-            {threadIcons}
-            <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
+    <>
+      <div className={styles.post} ref={refs.setReference}>
+        <div onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+          {hasThumbnail ? (
+            <Link to={postLink}>
+              <div className={styles.mediaPaddingWrapper}>
+                {threadIcons}
+                <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
+              </div>
+            </Link>
+          ) : (
+            threadIcons
+          )}
+          <div className={styles.meta}>
+            R: <b>{replyCount || '0'}</b>
+            {linkCount > 0 && (
+              <span>
+                {' '}
+                / L: <b>{linkCount}</b>
+              </span>
+            )}
+            <span className={`${styles.postMenu} ${hoveredCid && styles.postMenuVisible}`}>
+              <PostMenuDesktop post={post} />
+            </span>
           </div>
-        </Link>
-      ) : (
-        threadIcons
-      )}
-      <div className={styles.meta}>
-        R: <b>{replyCount || '0'}</b>
-        {linkCount > 0 && (
-          <span>
-            {' '}
-            / L: <b>{linkCount}</b>
-          </span>
-        )}
-        <span className={styles.postMenu}>
-          <PostMenuDesktop post={post} />
-        </span>
-      </div>
-      <Link to={postLink}>
-        <div className={styles.teaser}>
-          <b>{title && `${title}${content ? ': ' : ''}`}</b>
-          {content}
+          <Link to={postLink}>
+            <div className={styles.teaser}>
+              <b>{title && `${title}${content ? ': ' : ''}`}</b>
+              {content}
+            </div>
+          </Link>
         </div>
-      </Link>
-    </div>
+      </div>
+      {hoveredCid === cid &&
+        showPortal &&
+        createPortal(
+          <div className={styles.postPreview} ref={refs.setFloating} style={floatingStyles}>
+            <span className={styles.postSubject}>{title}</span>
+            {' by '}
+            <span className={`${styles.postAuthor} ${isCatalogPostAuthorMod && styles.capcode}`}>
+              {author?.displayName || _.capitalize(t('anonymous'))}
+              {isCatalogPostAuthorMod && <span className='capitalize'>{` ## Board ${catalogPostAuthorRole}`}</span>}
+            </span>
+            <span className={styles.postAgo}> {getFormattedTimeAgo(timestamp)}</span>
+            {replyCount > 0 && (
+              <div className={styles.postLast}>
+                Last reply by{' '}
+                <span className={`${styles.postAuthor} ${isLastReplyAuthorMod && styles.capcode}`}>
+                  {lastReply?.author?.displayName || _.capitalize(t('anonymous'))}
+                  {isLastReplyAuthorMod && ` ## Board ${lastReplyAuthorRole}`}
+                </span>
+                <span className={styles.postAgo}> {getFormattedTimeAgo(lastReply?.timestamp)}</span>
+              </div>
+            )}
+          </div>,
+          document.body,
+        )}
+    </>
   );
 };
 

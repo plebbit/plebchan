@@ -9,7 +9,7 @@ import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
-import useEditCommentPrivileges from '../../../hooks/use-edit-comment-privileges';
+import useEditCommentPrivileges from '../../../hooks/use-author-privileges';
 import useReplies from '../../../hooks/use-replies';
 import useStateString from '../../../hooks/use-state-string';
 import CommentMedia from '../../comment-media';
@@ -248,7 +248,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         <div className={styles.replyQuotePreviewSpacer} />
       )}
       <div className={isHidden ? styles.postDesktopBlocked : ''}>
-        {!isInPostPageView && !isDescription && !isRules && (
+        {!isInPostPageView && !isDescription && !isRules && showReplies && (
           <span className={styles.hideButtonWrapper}>
             <span className={`${styles.hideButton} ${blocked ? styles.unhideThread : styles.hideThread}`} onClick={blocked ? unblock : block} />
           </span>

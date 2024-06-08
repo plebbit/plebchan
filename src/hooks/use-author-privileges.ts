@@ -1,11 +1,11 @@
 import { useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 
-interface EditCommentPrivileges {
+interface AuthorPrivilegesProps {
   commentAuthorAddress: string;
   subplebbitAddress: string;
 }
 
-const useEditCommentPrivileges = ({ commentAuthorAddress, subplebbitAddress }: EditCommentPrivileges) => {
+const useAuthorPrivileges = ({ commentAuthorAddress, subplebbitAddress }: AuthorPrivilegesProps) => {
   const accountAuthorAddress = useAccount()?.author?.address;
   const { roles } = useSubplebbit({ subplebbitAddress }) || {};
 
@@ -15,7 +15,7 @@ const useEditCommentPrivileges = ({ commentAuthorAddress, subplebbitAddress }: E
   const isAccountMod = accountAuthorRole === 'admin' || accountAuthorRole === 'owner' || accountAuthorRole === 'moderator';
   const isAccountCommentAuthor = accountAuthorAddress === commentAuthorAddress;
 
-  return { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor };
+  return { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor, commentAuthorRole, accountAuthorRole };
 };
 
-export default useEditCommentPrivileges;
+export default useAuthorPrivileges;

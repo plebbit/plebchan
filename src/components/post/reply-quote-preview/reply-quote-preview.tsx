@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Comment } from '@plebbit/plebbit-react-hooks';
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import useIsMobile from '../../../hooks/use-is-mobile';
 import styles from '../post.module.css';
@@ -129,7 +128,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
-        {`c/${quotelinkReply?.cid && Plebbit.getShortCid(quotelinkReply.cid)}`}
+        {`c/${quotelinkReply?.shortCid}`}
       </Link>
       <br />
       {hoveredCid === quotelinkReply?.cid &&

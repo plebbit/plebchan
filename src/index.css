@@ -30,6 +30,10 @@ hr {
   background: var(--reply-highlight-background-color) !important;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 @media (max-width: 640px) {
   .button {
     font-size: var(--button-font-size-mobile);

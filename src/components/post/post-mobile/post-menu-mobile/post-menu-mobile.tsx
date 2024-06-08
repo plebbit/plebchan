@@ -6,7 +6,7 @@ import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDis
 import styles from './post-menu-mobile.module.css';
 import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../../lib/utils/url-utils';
-import useEditCommentPrivileges from '../../../../hooks/use-edit-comment-privileges';
+import useEditCommentPrivileges from '../../../../hooks/use-author-privileges';
 import EditMenu from '../../edit-menu/edit-menu';
 
 interface PostMenuMobileProps {
