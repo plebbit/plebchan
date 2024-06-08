@@ -73,7 +73,7 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
 
   return (
     <div className={hasError ? '' : styles.mediaWrapper} style={thumbnailDimensions}>
-      {!isLoaded && !hasError && type !== 'video' && <span className={styles.loadingSkeleton} />}
+      {!isLoaded && !hasError && type !== 'video' && type !== 'audio' && <span className={styles.loadingSkeleton} />}
       {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' /> : thumbnailComponent}
     </div>
   );
