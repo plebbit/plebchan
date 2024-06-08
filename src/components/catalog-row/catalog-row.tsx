@@ -155,6 +155,13 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     subplebbitAddress,
   });
 
+  const postContent = (
+    <div className={styles.teaser}>
+      <b>{title && `${title}${content ? ': ' : ''}`}</b>
+      {content}
+    </div>
+  );
+
   return (
     <>
       <div className={styles.post}>
@@ -192,12 +199,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               <PostMenuDesktop post={post} />
             </span>
           </div>
-          <Link to={postLink}>
-            <div className={styles.teaser}>
-              <b>{title && `${title}${content ? ': ' : ''}`}</b>
-              {content}
-            </div>
-          </Link>
+          {hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>}
         </div>
       </div>
       {hoveredCid === cid &&
