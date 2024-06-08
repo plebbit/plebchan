@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { isHomeView } from './lib/utils/view-utils';
+import { isAllView, isHomeView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
@@ -21,6 +21,8 @@ const BoardLayout = () => {
   const { accountCommentIndex, subplebbitAddress } = useParams();
   const location = useLocation();
   const isMobile = useIsMobile();
+  const isInAllView = isAllView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
 
@@ -36,16 +38,16 @@ const BoardLayout = () => {
       <TopBar />
       <BoardHeader />
       {isMobile
-        ? subplebbitAddress && (
+        ? (subplebbitAddress || isInAllView || isInSubscriptionsView) && (
             <>
               <PostForm key={key} />
               <MobileBoardButtons />
             </>
           )
-        : subplebbitAddress && (
+        : (subplebbitAddress || isInAllView || isInSubscriptionsView) && (
             <>
               <PostForm key={key} />
-              <SubplebbitStats />
+              {!(isInAllView || isInSubscriptionsView) && <SubplebbitStats />}
               <DesktopBoardButtons />
             </>
           )}

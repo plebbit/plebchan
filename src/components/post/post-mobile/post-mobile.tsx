@@ -5,7 +5,6 @@ import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
-import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
 import useReplies from '../../../hooks/use-replies';
@@ -16,6 +15,7 @@ import Markdown from '../../markdown';
 import ReplyQuotePreview from '../reply-quote-preview';
 import PostMenuMobile from './post-menu-mobile';
 import { PostProps } from '../post';
+import Timestamp from '../timestamp';
 import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
@@ -78,7 +78,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
               <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
             </div>
           )}
-          {getFormattedDate(timestamp)}{' '}
+          <Timestamp timestamp={timestamp} />{' '}
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
               <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
@@ -117,7 +117,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
 
   const params = useParams();
   const location = useLocation();
@@ -145,7 +145,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
         ) : deleted ? (
           <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
         ) : (
-          <Markdown content={displayContent} />
+          <Markdown content={displayContent} spoiler={spoiler} />
         )}
         {(removed || deleted) && reason && (
           <span>
@@ -183,11 +183,10 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
   const linksCount = useCountLinksInReplies(post);
   const replies = useReplies(post);
 
+  // scroll to reply if pathname is reply permalink (backlink)
   const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   useEffect(() => {
-    const replyIndex = replies.findIndex((reply) => location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`));
-
+    const replyIndex = replies.findIndex((reply) => location.pathname === `/p/${subplebbitAddress}/c/${reply?.cid}`);
     if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
       replyRefs.current[replyIndex]?.scrollIntoView();
     }
@@ -195,18 +194,18 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
 
   return (
     <div className={styles.postMobile}>
-      {showAllReplies && (
+      {showReplies && (
         <div className={styles.hrWrapper}>
           <hr />
         </div>
       )}
-      <div className={showAllReplies ? styles.thread : styles.quotePreview}>
+      <div className={showReplies ? styles.thread : styles.quotePreview}>
         <div className={styles.postContainer}>
           <div className={styles.postOp}>
             <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
             {content && <PostMessageMobile post={post} />}
           </div>
-          {!isInPostView && !isInPendingPostView && (
+          {!isInPostView && !isInPendingPostView && showReplies && (
             <div className={styles.postLink}>
               <span className={styles.info}>
                 {replyCount > 0 && `${replyCount} Replies`}
@@ -233,7 +232,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
                 <div className={styles.replyMobile}>
                   <div className={styles.reply}>
-                    <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`}>
+                    <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
                       <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
                       {reply.content && <PostMessageMobile post={reply} />}
                       <ReplyBacklinks post={reply} />

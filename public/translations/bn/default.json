@@ -148,5 +148,16 @@
   "close_thread": "থ্রেড বন্ধ করুন",
   "view_spoiler": "স্পোয়ালার দেখুন",
   "filter": "ফিল্টার",
-  "edit": "সম্পাদনা"
+  "edit": "সম্পাদনা",
+  "time_1_minute_ago": "১ মিনিট আগে",
+  "time_x_minutes_ago": "{{count}} মিনিট আগে",
+  "time_1_hour_ago": "১ ঘণ্টা আগে",
+  "time_x_hours_ago": "{{count}} ঘণ্টা আগে",
+  "time_1_day_ago": "১ দিন আগে",
+  "time_x_days_ago": "{{count}} দিন আগে",
+  "time_1_month_ago": "১ মাস আগে",
+  "time_x_months_ago": "{{count}} মাস আগে",
+  "time_1_year_ago": "১ বছর আগে",
+  "time_x_years_ago": "{{count}} বছর আগে",
+  "open": "খুলুন"
 }

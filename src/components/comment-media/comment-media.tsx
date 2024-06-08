@@ -11,6 +11,7 @@ import Embed, { canEmbed } from '../embed';
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
   post?: Comment;
+  isFloatingEmbed?: boolean;
   isReply?: boolean;
   linkHeight?: number;
   linkWidth?: number;
@@ -18,11 +19,11 @@ interface MediaProps {
   setShowThumbnail: (showThumbnail: boolean) => void;
 }
 
-const Thumbnail = ({ commentMediaInfo, post, setShowThumbnail }: MediaProps) => {
+const Thumbnail = ({ commentMediaInfo, isFloatingEmbed, post, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const { deleted, linkHeight, linkWidth, parentCid, removed, spoiler } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-  const isOutOfFeed = isDescription || isRules; // virtuoso wrapper unneeded
+  const isOutOfFeed = isDescription || isRules || isFloatingEmbed; // virtuoso wrapper unneeded
   const isReply = parentCid;
   const isDeleted = deleted || removed;
 
@@ -84,7 +85,7 @@ const Thumbnail = ({ commentMediaInfo, post, setShowThumbnail }: MediaProps) => 
       <span className={styles.spoilerText}>[{t('view_spoiler')}]</span>
     </span>
   ) : isOutOfFeed ? (
-    <span className={styles.subplebbitAvatar}>{thumbnailComponent}</span>
+    <span className={`${isFloatingEmbed ? styles.floatingEmbed : styles.subplebbitAvatar}`}>{thumbnailComponent}</span>
   ) : isMobile || isReply ? (
     <span className={`${styles.thumbnailSmall} ${thumbnailSmallPadding}`} style={thumbnailDimensions}>
       {thumbnailComponent}
@@ -135,7 +136,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
       )}
       {isMobile && (type === 'iframe' || type === 'video' || type === 'audio') && (
         <div className={styles.closeButton}>
-          <span className='button' onClick={() => setShowThumbnail(true)}>
+          <span className='button' onClick={() => setShowThumbnail(false)}>
             {t('close')}
           </span>
         </div>
@@ -144,7 +145,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   );
 };
 
-const CommentMedia = ({ commentMediaInfo, post, showThumbnail, setShowThumbnail }: MediaProps) => {
+const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const { type, url } = commentMediaInfo || {};
@@ -152,7 +153,7 @@ const CommentMedia = ({ commentMediaInfo, post, showThumbnail, setShowThumbnail 
   return (
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
-        {url && <Thumbnail commentMediaInfo={commentMediaInfo} post={post} setShowThumbnail={setShowThumbnail} />}
+        {url && <Thumbnail commentMediaInfo={commentMediaInfo} isFloatingEmbed={isFloatingEmbed} post={post} setShowThumbnail={setShowThumbnail} />}
         {isMobile && type && <div className={styles.fileInfo}>{getDisplayMediaInfoType(type, t)}</div>}
       </span>
       {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={post?.parentCid} setShowThumbnail={setShowThumbnail} />}

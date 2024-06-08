@@ -88,7 +88,7 @@ const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAdd
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
-        <h2 className={styles.capitalize}>{t('stats')}</h2>
+        <h2 className='capitalize'>{t('stats')}</h2>
       </div>
       <div className={`${styles.boxContent} ${enoughStats ? styles.stats : ''}`}>
         {enoughStats ? (
@@ -143,7 +143,7 @@ const Footer = () => {
           </a>
         </li>
         <li>
-          <a href='https://twitter.com/plebchan_eth' target='_blank' rel='noopener noreferrer'>
+          <a href='https://twitter.com/getplebchan' target='_blank' rel='noopener noreferrer'>
             Twitter
           </a>
         </li>

@@ -148,5 +148,16 @@
   "close_thread": "关闭主题",
   "view_spoiler": "查看剧透",
   "filter": "过滤器",
-  "edit": "编辑"
+  "edit": "编辑",
+  "time_1_minute_ago": "1分钟前",
+  "time_x_minutes_ago": "{{count}}分钟前",
+  "time_1_hour_ago": "1小时前",
+  "time_x_hours_ago": "{{count}}小时前",
+  "time_1_day_ago": "1天前",
+  "time_x_days_ago": "{{count}}天前",
+  "time_1_month_ago": "1个月前",
+  "time_x_months_ago": "{{count}}个月前",
+  "time_1_year_ago": "1年前",
+  "time_x_years_ago": "{{count}}年前",
+  "open": "打开"
 }

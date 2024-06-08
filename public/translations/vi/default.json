@@ -148,5 +148,16 @@
   "close_thread": "đóng chủ đề",
   "view_spoiler": "xem spoiler",
   "filter": "bộ lọc",
-  "edit": "chỉnh sửa"
+  "edit": "chỉnh sửa",
+  "time_1_minute_ago": "1 phút trước",
+  "time_x_minutes_ago": "{{count}} phút trước",
+  "time_1_hour_ago": "1 giờ trước",
+  "time_x_hours_ago": "{{count}} giờ trước",
+  "time_1_day_ago": "1 ngày trước",
+  "time_x_days_ago": "{{count}} ngày trước",
+  "time_1_month_ago": "1 tháng trước",
+  "time_x_months_ago": "{{count}} tháng trước",
+  "time_1_year_ago": "1 năm trước",
+  "time_x_years_ago": "{{count}} năm trước",
+  "open": "mở"
 }

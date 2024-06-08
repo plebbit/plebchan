@@ -83,8 +83,8 @@
   visibility: hidden;
 }
 
-.post:hover .postMenu {
-  visibility: visible;
+.postMenuVisible {
+  visibility: visible !important;
 }
 
 .loadingSkeleton {
@@ -95,4 +95,37 @@
 
 .fileDeleted {
   image-rendering: pixelated;
+}
+
+.postPreview {
+  background-color: var(--catalog-post-preview-background-color);
+  border-radius: 3px;
+  padding: 5px 8px 4px;
+  z-index: 100000;
+  word-wrap: break-word;
+  white-space: pre-line;
+  max-width: 500px;
+  color: var(--catalog-post-preview-color);
+  font-family: arial, helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+.postPreview .postSubject {
+  font-weight: 700;
+  color: var(--catalog-post-preview-subject-color);
+}
+
+.postPreview .postAuthor {
+  color: var(--catalog-post-preview-author-color);
+  font-weight: 700; 
+}
+
+.postPreview .postLast {
+  color: var(--catalog-post-preview-last-color);
+  font-size: 90%;
+  margin-top: 3px;
+}
+
+.postPreview .capcode {
+  color: var(--catalog-post-preview-author-capcode-color);
 }

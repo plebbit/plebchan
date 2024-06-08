@@ -5,11 +5,10 @@ import { Comment, useAccount, useBlock, useComment } from '@plebbit/plebbit-reac
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
-import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
-import useEditCommentPrivileges from '../../../hooks/use-edit-comment-privileges';
+import useEditCommentPrivileges from '../../../hooks/use-author-privileges';
 import useReplies from '../../../hooks/use-replies';
 import useStateString from '../../../hooks/use-state-string';
 import CommentMedia from '../../comment-media';
@@ -20,6 +19,7 @@ import PostMenuDesktop from './post-menu-desktop/';
 import EditMenu from '../edit-menu/edit-menu';
 import ReplyQuotePreview from '../reply-quote-preview';
 import { PostProps } from '../post';
+import Timestamp from '../timestamp';
 import _ from 'lodash';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
@@ -58,7 +58,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
         {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>}
       </span>
       <span className={styles.dateTime}>
-        {getFormattedDate(timestamp)}
+        <Timestamp timestamp={timestamp} />
         {isDescription || isRules ? '' : ' '}
       </span>
       <span className={styles.postNum}>
@@ -185,7 +185,7 @@ const PostMessage = ({ post }: PostProps) => {
       {removed ? (
         <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
       ) : deleted ? (
-        <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
+        <span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>
       ) : (
         <Markdown content={displayContent} spoiler={spoiler} />
       )}
@@ -232,7 +232,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   // scroll to reply if pathname is reply permalink (backlink)
   const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
   useEffect(() => {
-    const replyIndex = replies.findIndex((reply) => location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`));
+    const replyIndex = replies.findIndex((reply) => location.pathname === `/p/${subplebbitAddress}/c/${reply?.cid}`);
     if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
       replyRefs.current[replyIndex]?.scrollIntoView();
     }
@@ -240,7 +240,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
 
   return (
     <div className={styles.postDesktop}>
-      {showAllReplies ? (
+      {showReplies ? (
         <div className={styles.hrWrapper}>
           <hr />
         </div>
@@ -248,7 +248,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         <div className={styles.replyQuotePreviewSpacer} />
       )}
       <div className={isHidden ? styles.postDesktopBlocked : ''}>
-        {!isInPostPageView && !isDescription && !isRules && (
+        {!isInPostPageView && !isDescription && !isRules && showReplies && (
           <span className={styles.hideButtonWrapper}>
             <span className={`${styles.hideButton} ${blocked ? styles.unhideThread : styles.hideThread}`} onClick={blocked ? unblock : block} />
           </span>
@@ -287,7 +287,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
               <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
                 <div className={styles.replyDesktop}>
                   <div className={styles.sideArrows}>{'>>'}</div>
-                  <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`}>
+                  <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
                     <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
                     {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
                     {reply.content && <PostMessage post={reply} />}
