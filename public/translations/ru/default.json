@@ -148,5 +148,15 @@
   "close_thread": "закрыть тему",
   "view_spoiler": "посмотреть спойлер",
   "filter": "фильтр",
-  "edit": "редактировать"
+  "edit": "редактировать",
+  "time_1_minute_ago": "1 минуту назад",
+  "time_x_minutes_ago": "{{count}} минут назад",
+  "time_1_hour_ago": "1 час назад",
+  "time_x_hours_ago": "{{count}} часов назад",
+  "time_1_day_ago": "1 день назад",
+  "time_x_days_ago": "{{count}} дней назад",
+  "time_1_month_ago": "1 месяц назад",
+  "time_x_months_ago": "{{count}} месяцев назад",
+  "time_1_year_ago": "1 год назад",
+  "time_x_years_ago": "{{count}} лет назад"
 }

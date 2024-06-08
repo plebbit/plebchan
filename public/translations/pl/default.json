@@ -148,5 +148,15 @@
   "close_thread": "zamknij wątek",
   "view_spoiler": "pokaż spoiler",
   "filter": "filtr",
-  "edit": "edytuj"
+  "edit": "edytuj",
+  "time_1_minute_ago": "1 minutę temu",
+  "time_x_minutes_ago": "{{count}} minut temu",
+  "time_1_hour_ago": "1 godzinę temu",
+  "time_x_hours_ago": "{{count}} godzin temu",
+  "time_1_day_ago": "1 dzień temu",
+  "time_x_days_ago": "{{count}} dni temu",
+  "time_1_month_ago": "1 miesiąc temu",
+  "time_x_months_ago": "{{count}} miesięcy temu",
+  "time_1_year_ago": "1 rok temu",
+  "time_x_years_ago": "{{count}} lat temu"
 }

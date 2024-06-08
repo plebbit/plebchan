@@ -148,5 +148,15 @@
   "close_thread": "fechar tópico",
   "view_spoiler": "ver spoiler",
   "filter": "filtro",
-  "edit": "editar"
+  "edit": "editar",
+  "time_1_minute_ago": "há 1 minuto",
+  "time_x_minutes_ago": "há {{count}} minutos",
+  "time_1_hour_ago": "há 1 hora",
+  "time_x_hours_ago": "há {{count}} horas",
+  "time_1_day_ago": "há 1 dia",
+  "time_x_days_ago": "há {{count}} dias",
+  "time_1_month_ago": "há 1 mês",
+  "time_x_months_ago": "há {{count}} meses",
+  "time_1_year_ago": "há 1 ano",
+  "time_x_years_ago": "há {{count}} anos"
 }

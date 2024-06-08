@@ -148,5 +148,15 @@
   "close_thread": "mbyll temën",
   "view_spoiler": "shikoni spoiler",
   "filter": "filtruar",
-  "edit": "redakto"
+  "edit": "redakto",
+  "time_1_minute_ago": "1 minutë më parë",
+  "time_x_minutes_ago": "{{count}} minuta më parë",
+  "time_1_hour_ago": "1 orë më parë",
+  "time_x_hours_ago": "{{count}} orë më parë",
+  "time_1_day_ago": "1 ditë më parë",
+  "time_x_days_ago": "{{count}} ditë më parë",
+  "time_1_month_ago": "1 muaj më parë",
+  "time_x_months_ago": "{{count}} muaj më parë",
+  "time_1_year_ago": "1 vit më parë",
+  "time_x_years_ago": "{{count}} vite më parë"
 }

@@ -209,7 +209,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
           <div className={styles.postPreview} ref={refs.setFloating} style={floatingStyles}>
             <span className={styles.postSubject}>{title}</span>
             {' by '}
-            <span className={`${styles.postAuthor} ${isCatalogPostAuthorMod && styles.capcode}`}>
+            <span className={`${styles.postAuthor} ${(isCatalogPostAuthorMod || isRules || isDescription) && styles.capcode}`}>
               {author?.displayName || _.capitalize(t('anonymous'))}
               {isCatalogPostAuthorMod && <span className='capitalize'>{` ## Board ${catalogPostAuthorRole}`}</span>}
             </span>

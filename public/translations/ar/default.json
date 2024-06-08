@@ -148,5 +148,15 @@
   "close_thread": "اغلق الموضوع",
   "view_spoiler": "عرض الحاضر",
   "filter": "تصفية",
-  "edit": "تحرير"
+  "edit": "تحرير",
+  "time_1_minute_ago": "منذ دقيقة واحدة",
+  "time_x_minutes_ago": "منذ {{count}} دقائق",
+  "time_1_hour_ago": "منذ ساعة واحدة",
+  "time_x_hours_ago": "منذ {{count}} ساعات",
+  "time_1_day_ago": "منذ يوم واحد",
+  "time_x_days_ago": "منذ {{count}} أيام",
+  "time_1_month_ago": "منذ شهر واحد",
+  "time_x_months_ago": "منذ {{count}} شهور",
+  "time_1_year_ago": "منذ عام واحد",
+  "time_x_years_ago": "منذ {{count}} سنوات"
 }

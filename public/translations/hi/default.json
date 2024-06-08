@@ -148,5 +148,15 @@
   "close_thread": "थ्रेड बंद करें",
   "view_spoiler": "स्पॉइलर देखें",
   "filter": "फ़िल्टर",
-  "edit": "संपादित करें"
+  "edit": "संपादित करें",
+  "time_1_minute_ago": "1 मिनट पहले",
+  "time_x_minutes_ago": "{{count}} मिनट पहले",
+  "time_1_hour_ago": "1 घंटा पहले",
+  "time_x_hours_ago": "{{count}} घंटे पहले",
+  "time_1_day_ago": "1 दिन पहले",
+  "time_x_days_ago": "{{count}} दिन पहले",
+  "time_1_month_ago": "1 महीना पहले",
+  "time_x_months_ago": "{{count}} महीने पहले",
+  "time_1_year_ago": "1 साल पहले",
+  "time_x_years_ago": "{{count}} साल पहले"
 }

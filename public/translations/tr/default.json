@@ -148,5 +148,15 @@
   "close_thread": "konuyu kapat",
   "view_spoiler": "spoileri görüntüle",
   "filter": "filtre",
-  "edit": "düzenle"
+  "edit": "düzenle",
+  "time_1_minute_ago": "1 dakika önce",
+  "time_x_minutes_ago": "{{count}} dakika önce",
+  "time_1_hour_ago": "1 saat önce",
+  "time_x_hours_ago": "{{count}} saat önce",
+  "time_1_day_ago": "1 gün önce",
+  "time_x_days_ago": "{{count}} gün önce",
+  "time_1_month_ago": "1 ay önce",
+  "time_x_months_ago": "{{count}} ay önce",
+  "time_1_year_ago": "1 yıl önce",
+  "time_x_years_ago": "{{count}} yıl önce"
 }

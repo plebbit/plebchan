@@ -148,5 +148,15 @@
   "close_thread": "chiudi il thread",
   "view_spoiler": "mostra spoiler",
   "filter": "filtro",
-  "edit": "modifica"
+  "edit": "modifica",
+  "time_1_minute_ago": "1 minuto fa",
+  "time_x_minutes_ago": "{{count}} minuti fa",
+  "time_1_hour_ago": "1 ora fa",
+  "time_x_hours_ago": "{{count}} ore fa",
+  "time_1_day_ago": "1 giorno fa",
+  "time_x_days_ago": "{{count}} giorni fa",
+  "time_1_month_ago": "1 mese fa",
+  "time_x_months_ago": "{{count}} mesi fa",
+  "time_1_year_ago": "1 anno fa",
+  "time_x_years_ago": "{{count}} anni fa"
 }

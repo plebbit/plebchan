@@ -148,5 +148,15 @@
   "close_thread": "isara ang thread",
   "view_spoiler": "tingnan ang spoiler",
   "filter": "salain",
-  "edit": "i-edit"
+  "edit": "i-edit",
+  "time_1_minute_ago": "1 minuto ang nakalipas",
+  "time_x_minutes_ago": "{{count}} minuto ang nakalipas",
+  "time_1_hour_ago": "1 oras ang nakalipas",
+  "time_x_hours_ago": "{{count}} oras ang nakalipas",
+  "time_1_day_ago": "1 araw ang nakalipas",
+  "time_x_days_ago": "{{count}} araw ang nakalipas",
+  "time_1_month_ago": "1 buwan ang nakalipas",
+  "time_x_months_ago": "{{count}} buwan ang nakalipas",
+  "time_1_year_ago": "1 taon ang nakalipas",
+  "time_x_years_ago": "{{count}} taon ang nakalipas"
 }

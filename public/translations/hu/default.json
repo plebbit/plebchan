@@ -148,5 +148,15 @@
   "close_thread": "szál bezárása",
   "view_spoiler": "spoiler megtekintése",
   "filter": "szűrő",
-  "edit": "szerkesztés"
+  "edit": "szerkesztés",
+  "time_1_minute_ago": "1 perce",
+  "time_x_minutes_ago": "{{count}} perce",
+  "time_1_hour_ago": "1 órája",
+  "time_x_hours_ago": "{{count}} órája",
+  "time_1_day_ago": "1 napja",
+  "time_x_days_ago": "{{count}} napja",
+  "time_1_month_ago": "1 hónapja",
+  "time_x_months_ago": "{{count}} hónapja",
+  "time_1_year_ago": "1 éve",
+  "time_x_years_ago": "{{count}} éve"
 }
