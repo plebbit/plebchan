@@ -158,5 +158,6 @@
   "time_1_month_ago": "Před 1 měsícem",
   "time_x_months_ago": "Před {{count}} měsíci",
   "time_1_year_ago": "Před 1 rokem",
-  "time_x_years_ago": "Před {{count}} roky"
+  "time_x_years_ago": "Před {{count}} roky",
+  "open": "otevřít"
 }

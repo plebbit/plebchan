@@ -39,3 +39,9 @@
 .spoiler:hover {
   color: white;
 }
+
+.floatingEmbed {
+  background-color: #d6daf0;
+  border: 1px solid #b7c5d9;
+  padding: 2px;
+}

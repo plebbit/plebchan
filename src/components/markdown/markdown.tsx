@@ -1,17 +1,99 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import supersub from 'remark-supersub';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
-import styles from './markdown.module.css';
-import { useTranslation } from 'react-i18next';
+import { useDismiss, useFloating, useFocus, useHover, useInteractions, offset, shift, size, autoUpdate, Placement, FloatingPortal } from '@floating-ui/react';
 import { getLinkMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import useIsMobile from '../../hooks/use-is-mobile';
 import CommentMedia from '../comment-media';
+import styles from './markdown.module.css';
 
-interface MarkdownProps {
-  content: string;
-  spoiler?: boolean;
+interface ContentLinkEmbedProps {
+  children: any;
+  href: string;
+  linkMediaInfo: any;
 }
+
+const ContentLinkEmbed = ({ children, href, linkMediaInfo }: ContentLinkEmbedProps) => {
+  const { t } = useTranslation();
+  const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useState(false);
+  const [showMedia, setShowMedia] = useState(false);
+  const placementRef = useRef<Placement>('right');
+  const availableWidthRef = useRef<number>(0);
+
+  const { refs, floatingStyles, update, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement: placementRef.current,
+    middleware: [
+      shift({ padding: 10 }),
+      offset({ mainAxis: 5 }),
+      size({
+        apply({ availableWidth, elements }) {
+          availableWidthRef.current = availableWidth;
+          if (availableWidth >= 250) {
+            elements.floating.style.maxWidth = `${availableWidth - 12}px`;
+          } else if (placementRef.current === 'right') {
+            placementRef.current = 'left';
+          }
+        },
+      }),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
+
+  const hover = useHover(context, { move: false });
+  const focus = useFocus(context);
+  const dismiss = useDismiss(context);
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const availableWidth = availableWidthRef.current;
+      if (availableWidth >= 250) {
+        placementRef.current = 'right';
+      } else {
+        placementRef.current = 'left';
+      }
+      update();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [update]);
+
+  return (
+    <>
+      <a href={href} target='_blank' rel='noopener noreferrer'>
+        {children}
+      </a>{' '}
+      [
+      <span className={styles.embedButton} onClick={() => setShowMedia(!showMedia)} ref={refs.setReference} {...getReferenceProps()}>
+        {showMedia ? t('remove') : isMobile ? t('open') : t('embed')}
+      </span>
+      ]
+      {showMedia && (
+        <>
+          <br />
+          <CommentMedia isReply={false} setShowThumbnail={setShowMedia} commentMediaInfo={linkMediaInfo} showThumbnail={false} />
+        </>
+      )}
+      <FloatingPortal>
+        {isOpen && !isMobile && (
+          <div className={styles.floatingEmbed} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+            <CommentMedia isReply={false} isFloatingEmbed={true} setShowThumbnail={setShowMedia} commentMediaInfo={linkMediaInfo} showThumbnail={true} />
+          </div>
+        )}
+      </FloatingPortal>
+    </>
+  );
+};
 
 const MAX_LENGTH_FOR_GFM = 10000; // remarkGfm lags with large content
 
@@ -38,6 +120,11 @@ const blockquoteToGreentext = () => (tree: any) => {
   });
 };
 
+interface MarkdownProps {
+  content: string;
+  spoiler?: boolean;
+}
+
 const Markdown = ({ content, spoiler }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
@@ -58,9 +145,6 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
   );
 
   remarkPlugins.push([blockquoteToGreentext]);
-
-  const { t } = useTranslation();
-  const [showMedia, setShowMedia] = useState(false);
 
   return (
     <span className={styles.markdown}>
@@ -83,24 +167,7 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
             if (href) {
               const linkMediaInfo = getLinkMediaInfo(href);
               if (getHasThumbnail(linkMediaInfo, href)) {
-                return (
-                  <>
-                    <a href={href} target='_blank' rel='noopener noreferrer'>
-                      {children}
-                    </a>{' '}
-                    [
-                    <span className={styles.embedButton} onClick={() => setShowMedia(!showMedia)}>
-                      {showMedia ? t('remove') : t('embed')}
-                    </span>
-                    ]
-                    {showMedia && (
-                      <>
-                        <br />
-                        <CommentMedia isReply={false} setShowThumbnail={setShowMedia} commentMediaInfo={linkMediaInfo} showThumbnail={false} />
-                      </>
-                    )}
-                  </>
-                );
+                return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
               } else {
                 return (
                   <a href={href} target='_blank' rel='noopener noreferrer'>

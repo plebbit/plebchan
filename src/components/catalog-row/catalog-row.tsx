@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
@@ -12,9 +13,6 @@ import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import PostMenuDesktop from '../post/post-desktop/post-menu-desktop/';
 import styles from './catalog-row.module.css';
 import _ from 'lodash';
-
-import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 
 interface CatalogPostMediaProps {
   commentMediaInfo: any;
@@ -109,6 +107,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { refs, floatingStyles, update } = useFloating({
+    open: showPortal,
     placement: placementRef.current,
     middleware: [
       shift({ padding: 10 }),

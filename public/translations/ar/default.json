@@ -158,5 +158,6 @@
   "time_1_month_ago": "منذ شهر واحد",
   "time_x_months_ago": "منذ {{count}} شهور",
   "time_1_year_ago": "منذ عام واحد",
-  "time_x_years_ago": "منذ {{count}} سنوات"
+  "time_x_years_ago": "منذ {{count}} سنوات",
+  "open": "فتح"
 }
