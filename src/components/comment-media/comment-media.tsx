@@ -136,7 +136,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
       )}
       {isMobile && (type === 'iframe' || type === 'video' || type === 'audio') && (
         <div className={styles.closeButton}>
-          <span className='button' onClick={() => setShowThumbnail(false)}>
+          <span className='button' onClick={() => setShowThumbnail(true)}>
             {t('close')}
           </span>
         </div>
