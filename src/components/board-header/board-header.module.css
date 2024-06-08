@@ -28,6 +28,16 @@
   width: 90%;
 }
 
+.offlineIcon {
+ background-image: url('/public/assets/icons/offline.png');
+ display: inline-block;
+ margin-left: 10px;
+ width: 16px;
+ height: 16px;
+ background-repeat: no-repeat;
+ background-size: contain;
+ image-rendering: pixelated;
+}
 
 @media (max-width: 640px) {
   .bannerCnt {

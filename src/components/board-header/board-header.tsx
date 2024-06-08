@@ -34,12 +34,17 @@ const BoardHeader = () => {
   const title = isInAllView ? multisubMetadata?.title : isInSubscriptionsView ? 'Subscriptions' : subplebbit?.title;
   const subtitle = isInAllView ? 'p/all' : isInSubscriptionsView ? 'p/subscriptions' : `p/${address}`;
 
+  const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
+
   return (
     <div className={styles.content}>
       <div className={styles.bannerCnt}>
         <ImageBanner key={isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : address} />
       </div>
-      <div className={styles.boardTitle}>{title || `p/${shortAddress || subplebbitAddress}`}</div>
+      <div className={styles.boardTitle}>
+        {title || `p/${shortAddress || subplebbitAddress}`}
+        {isBoardOffline && <span className={styles.offlineIcon} />}
+      </div>
       <div className={styles.boardSubtitle}>{subtitle}</div>
       <hr />
     </div>
