@@ -197,7 +197,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
   return (
     <div className={`${styles.box} ${styles.boardsBox}`}>
       <div className={styles.boxBar}>
-        <h2 className={styles.capitalize}>{t('boards')}</h2>
+        <h2 className='capitalize'>{t('boards')}</h2>
         <BoxModal isBoardsBoxModal={true} />
       </div>
       <div className={styles.boardsBoxContent}>

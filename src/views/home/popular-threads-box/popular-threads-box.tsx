@@ -63,7 +63,7 @@ const PopularThreadsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; 
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
-        <h2 className={styles.capitalize}>{t('popular_threads')}</h2>
+        <h2 className='capitalize'>{t('popular_threads')}</h2>
         <BoxModal isBoardsBoxModal={false} />
       </div>
       <div className={`${styles.boxContent} ${popularPosts.length === 8 ? styles.popularThreads : ''}`}>

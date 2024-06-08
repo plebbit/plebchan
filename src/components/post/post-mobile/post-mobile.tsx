@@ -5,7 +5,6 @@ import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../../lib/utils/media-utils';
-import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
 import useReplies from '../../../hooks/use-replies';
@@ -16,6 +15,7 @@ import Markdown from '../../markdown';
 import ReplyQuotePreview from '../reply-quote-preview';
 import PostMenuMobile from './post-menu-mobile';
 import { PostProps } from '../post';
+import Timestamp from '../timestamp';
 import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
@@ -78,7 +78,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
               <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
             </div>
           )}
-          {getFormattedDate(timestamp)}{' '}
+          <Timestamp timestamp={timestamp} />{' '}
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
               <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>

@@ -5,7 +5,6 @@ import { Comment, useAccount, useBlock, useComment } from '@plebbit/plebbit-reac
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../../lib/utils/media-utils';
-import { getFormattedDate } from '../../../lib/utils/time-utils';
 import { isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../../hooks/use-count-links-in-replies';
@@ -20,6 +19,7 @@ import PostMenuDesktop from './post-menu-desktop/';
 import EditMenu from '../edit-menu/edit-menu';
 import ReplyQuotePreview from '../reply-quote-preview';
 import { PostProps } from '../post';
+import Timestamp from '../timestamp';
 import _ from 'lodash';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
@@ -58,7 +58,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
         {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>}
       </span>
       <span className={styles.dateTime}>
-        {getFormattedDate(timestamp)}
+        <Timestamp timestamp={timestamp} />
         {isDescription || isRules ? '' : ' '}
       </span>
       <span className={styles.postNum}>
