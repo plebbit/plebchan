@@ -45,12 +45,13 @@ export const isRulesView = (pathname: string, params: ParamsType): boolean => {
 };
 
 export const isSettingsView = (pathname: string, params: ParamsType): boolean => {
-  const { subplebbitAddress, commentCid } = params;
+  const { accountCommentIndex, commentCid, subplebbitAddress } = params;
   const decodedPathname = decodeURIComponent(pathname);
   return (
     decodedPathname === `/p/${subplebbitAddress}/c/${commentCid}/settings` ||
     decodedPathname === `/p/${subplebbitAddress}/description/settings` ||
-    decodedPathname === `/p/${subplebbitAddress}/rules/settings`
+    decodedPathname === `/p/${subplebbitAddress}/rules/settings` ||
+    decodedPathname === `/profile/${accountCommentIndex}/settings`
   );
 };
 

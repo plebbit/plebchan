@@ -1,13 +1,18 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import { isSettingsView } from '../../lib/utils/view-utils';
 import Post from '../../components/post';
+import SettingsModal from '../../components/settings-modal';
 
 const PendingPost = () => {
   const { accountCommentIndex } = useParams<{ accountCommentIndex?: string }>();
   const commentIndex = accountCommentIndex ? parseInt(accountCommentIndex) : undefined;
   const post = useAccountComment({ commentIndex });
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
+  const isInSettingsView = isSettingsView(location.pathname, params);
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -17,7 +22,12 @@ const PendingPost = () => {
     }
   }, [post, navigate]);
 
-  return <Post post={post} />;
+  return (
+    <>
+      {isInSettingsView && <SettingsModal />}
+      <Post post={post} showReplies={false} />;
+    </>
+  );
 };
 
 export default PendingPost;
