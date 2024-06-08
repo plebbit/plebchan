@@ -117,7 +117,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, deleted, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
 
   const params = useParams();
   const location = useLocation();
@@ -145,7 +145,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
         ) : deleted ? (
           <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
         ) : (
-          <Markdown content={displayContent} />
+          <Markdown content={displayContent} spoiler={spoiler} />
         )}
         {(removed || deleted) && reason && (
           <span>
