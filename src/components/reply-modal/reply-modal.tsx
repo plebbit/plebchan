@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
+import { setAccount, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { setAccount, useAccount } from '@plebbit/plebbit-react-hooks';
+import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import useReply from '../../hooks/use-reply';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -75,6 +76,15 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
     }
   }, [parentCid]);
 
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { updatedAt } = subplebbit || {};
+  const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
+  const offlineAlert = updatedAt
+    ? isBoardOffline && (
+        <div className={styles.offlineBoard}>{`Posts last synced ${getFormattedTimeAgo(updatedAt)}, the subplebbit might be offline and publishing might fail.`}</div>
+      )
+    : `The subplebbit might be offline and publishing might fail.`;
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>
@@ -124,6 +134,8 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
           />
         </div>
+        {offlineAlert}
+        <div className={styles.offlineAlert}></div>
         <div className={styles.footer}>
           {url && (
             <>

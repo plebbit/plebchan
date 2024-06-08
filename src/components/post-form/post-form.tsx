@@ -278,11 +278,13 @@ const PostForm = () => {
 
   const offlineAlert =
     showForm &&
-    (updatedAt
-      ? isBoardOffline && (
-          <div className={styles.offlineBoard}>{`Posts last synced ${getFormattedTimeAgo(updatedAt)}, the subplebbit might be offline and publishing might fail.`}</div>
-        )
-      : `The subplebbit might be offline and publishing might fail.`);
+    (updatedAt ? (
+      isBoardOffline && (
+        <div className={styles.offlineBoard}>{`Posts last synced ${getFormattedTimeAgo(updatedAt)}, the subplebbit might be offline and publishing might fail.`}</div>
+      )
+    ) : (
+      <div className={styles.offlineBoard}>{`The subplebbit might be offline and publishing might fail.`}</div>
+    ));
 
   return (
     <>
