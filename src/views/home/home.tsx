@@ -143,7 +143,7 @@ const Footer = () => {
           </a>
         </li>
         <li>
-          <a href='https://twitter.com/plebchan_eth' target='_blank' rel='noopener noreferrer'>
+          <a href='https://twitter.com/getplebchan' target='_blank' rel='noopener noreferrer'>
             Twitter
           </a>
         </li>
