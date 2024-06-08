@@ -112,7 +112,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     placement: placementRef.current,
     middleware: [
       shift({ padding: 10 }),
-      offset({ mainAxis: -7 }),
+      offset({ mainAxis: 5 }),
       size({
         apply({ availableWidth, elements }) {
           availableWidthRef.current = availableWidth;
@@ -157,21 +157,22 @@ const CatalogPost = ({ post }: { post: Comment }) => {
 
   return (
     <>
-      <div className={styles.post} ref={refs.setReference}>
+      <div className={styles.post}>
         <div onMouseOver={() => setHoveredCid(cid)} onMouseLeave={() => setHoveredCid(null)}>
           {hasThumbnail ? (
-            <Link
-              to={postLink}
-              onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
-              onMouseLeave={() => {
-                setShowPortal(false);
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                  timeoutRef.current = null;
-                }
-              }}
-            >
-              <div className={styles.mediaPaddingWrapper}>
+            <Link to={postLink}>
+              <div
+                className={styles.mediaPaddingWrapper}
+                ref={refs.setReference}
+                onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
+                onMouseLeave={() => {
+                  setShowPortal(false);
+                  if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                    timeoutRef.current = null;
+                  }
+                }}
+              >
                 {threadIcons}
                 <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
               </div>
