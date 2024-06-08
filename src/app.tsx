@@ -47,7 +47,7 @@ const BoardLayout = () => {
         : (subplebbitAddress || isInAllView || isInSubscriptionsView) && (
             <>
               <PostForm key={key} />
-              <SubplebbitStats />
+              {!(isInAllView || isInSubscriptionsView) && <SubplebbitStats />}
               <DesktopBoardButtons />
             </>
           )}
