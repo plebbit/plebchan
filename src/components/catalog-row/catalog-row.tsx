@@ -144,20 +144,6 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     };
   }, [update]);
 
-  const handleMouseOver = () => {
-    setHoveredCid(cid);
-    timeoutRef.current = setTimeout(() => setShowPortal(true), 250);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredCid(null);
-    setShowPortal(false);
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-  };
-
   const lastReply = useComment({ commentCid: lastChildCid });
 
   const { isCommentAuthorMod: isCatalogPostAuthorMod, commentAuthorRole: catalogPostAuthorRole } = useEditCommentPrivileges({
@@ -172,9 +158,19 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   return (
     <>
       <div className={styles.post} ref={refs.setReference}>
-        <div onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+        <div onMouseOver={() => setHoveredCid(cid)} onMouseLeave={() => setHoveredCid(null)}>
           {hasThumbnail ? (
-            <Link to={postLink}>
+            <Link
+              to={postLink}
+              onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
+              onMouseLeave={() => {
+                setShowPortal(false);
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                  timeoutRef.current = null;
+                }
+              }}
+            >
               <div className={styles.mediaPaddingWrapper}>
                 {threadIcons}
                 <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
