@@ -153,7 +153,7 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
-          p: ({ children }) => <p className=''>{spoiler ? <span className={styles.spoiler}>{children}</span> : children}</p>,
+          p: ({ children }) => <p>{spoiler ? <span className={styles.spoiler}>{children}</span> : children}</p>,
           img: ({ src }) => <span>{src}</span>,
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,

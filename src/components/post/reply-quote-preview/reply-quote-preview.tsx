@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Comment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import useIsMobile from '../../../hooks/use-is-mobile';
 import styles from '../post.module.css';
@@ -119,6 +119,8 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
     </>
   );
 
+  const account = useAccount();
+
   const replyQuotelink = (
     <>
       <Link
@@ -129,6 +131,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
         {`c/${quotelinkReply?.shortCid}`}
+        {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
       </Link>
       <br />
       {hoveredCid === quotelinkReply?.cid &&
@@ -204,6 +207,8 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
     </>
   );
 
+  const account = useAccount();
+
   const replyQuotelink = (
     <>
       <span
@@ -212,9 +217,11 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
-        c/{quotelinkReply?.shortCid}{' '}
+        c/{quotelinkReply?.shortCid}
+        {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
       </span>
       <Link className={styles.quoteLink} to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}>
+        {' '}
         #
       </Link>
       <br />
