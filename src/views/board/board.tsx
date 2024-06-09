@@ -8,6 +8,7 @@ import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
+import useTimeFilter from '../../hooks/use-time-filter';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
@@ -42,7 +43,8 @@ const Board = () => {
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
 
   const { sortType } = useSortingStore();
-  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType });
+  const { timeFilterSeconds } = useTimeFilter();
+  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds });
 
   const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
   useEffect(() => {
@@ -91,15 +93,15 @@ const Board = () => {
     const setLastVirtuosoState = () => {
       virtuosoRef.current?.getState((snapshot: StateSnapshot) => {
         if (snapshot?.ranges?.length) {
-          lastVirtuosoStates[location.pathname] = snapshot;
+          lastVirtuosoStates[sortType + timeFilterSeconds] = snapshot;
         }
       });
     };
     window.addEventListener('scroll', setLastVirtuosoState);
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [location.pathname]);
+  }, [sortType, timeFilterSeconds]);
 
-  const lastVirtuosoState = lastVirtuosoStates?.[location.pathname];
+  const lastVirtuosoState = lastVirtuosoStates?.[sortType + timeFilterSeconds];
 
   useEffect(() => {
     document.title = title ? title : shortAddress || subplebbitAddress;

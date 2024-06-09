@@ -4,8 +4,10 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './topbar.module.css';
+import useTimeFilter from '../../hooks/use-time-filter';
 import useDefaultSubplebbits, { categorizeSubplebbits, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import _, { debounce } from 'lodash';
+import { TimeFilter } from '../board-buttons';
 
 const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => void }) => {
   const navigate = useNavigate();
@@ -55,7 +57,8 @@ const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => 
 const TopBarDesktop = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const isInCatalogView = isCatalogView(location.pathname);
+  const params = useParams();
+  const isInCatalogView = isCatalogView(location.pathname, params);
   const subplebbits = useDefaultSubplebbits();
   const [showSearchBar, setShowSearchBar] = useState(false);
 
@@ -74,8 +77,13 @@ const TopBarDesktop = () => {
   return (
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
-        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>] [{renderSubplebbits(plebbitSubs)}] [{renderSubplebbits(projectsSubs)}] [
-        {renderSubplebbits(interestsSubs)}] [{renderSubplebbits(randomSubs)}] [{renderSubplebbits(internationalSubs)}]
+        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>]{' '}
+        {subplebbits && (
+          <>
+            [{renderSubplebbits(plebbitSubs)}] [{renderSubplebbits(projectsSubs)}] [{renderSubplebbits(interestsSubs)}] [{renderSubplebbits(randomSubs)}] [
+            {renderSubplebbits(internationalSubs)}]
+          </>
+        )}
       </span>
       <span className={styles.navTopRight}>
         [<Link to={!location.pathname.endsWith('settings') ? location.pathname.replace(/\/$/, '') + '/settings' : location.pathname}>{t('settings')}</Link>] [
@@ -96,8 +104,9 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
   const currentSubplebbitIsInList = subplebbitAddresses.some((address: string) => address === subplebbitAddress);
 
   const location = useLocation();
+  const params = useParams();
   const isInAllView = isAllView(location.pathname);
-  const isInCatalogView = isCatalogView(location.pathname);
+  const isInCatalogView = isCatalogView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
   const selectValue = isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress;
 
@@ -140,6 +149,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
       <div className={styles.boardSelect}>
         <strong>{t('board')}</strong>
         {boardSelect}
+        <TimeFilter isTopbar={true} isInCatalogView={isInCatalogView} />
       </div>
       <div className={styles.pageJump}>
         <Link to={useLocation().pathname.replace(/\/$/, '') + '/settings'}>{t('settings')}</Link>

@@ -31,7 +31,7 @@ const BoardHeader = () => {
 
   const multisubMetadata = useMultisubMetadata();
 
-  const title = isInAllView ? multisubMetadata?.title : isInSubscriptionsView ? 'Subscriptions' : subplebbit?.title;
+  const title = isInAllView ? multisubMetadata?.title || 'all' : isInSubscriptionsView ? 'Subscriptions' : subplebbit?.title;
   const subtitle = isInAllView ? 'p/all' : isInSubscriptionsView ? 'p/subscriptions' : `p/${address}`;
 
   const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;

@@ -2,6 +2,7 @@ export type ParamsType = {
   accountCommentIndex?: string;
   commentCid?: string;
   subplebbitAddress?: string;
+  timeFilterName?: string;
 };
 
 export const isAllView = (pathname: string): boolean => {
@@ -14,8 +15,17 @@ export const isBoardView = (pathname: string, params: ParamsType): boolean => {
   return params.subplebbitAddress ? decodedPathname.startsWith(`/p/${params.subplebbitAddress}`) : false;
 };
 
-export const isCatalogView = (pathname: string): boolean => {
-  return pathname.endsWith('/catalog') || pathname.endsWith('/catalog/settings');
+export const isCatalogView = (pathname: string, params: ParamsType): boolean => {
+  const { subplebbitAddress, timeFilterName } = params;
+  const decodedPathname = decodeURIComponent(pathname);
+
+  return (
+    decodedPathname === `/p/${subplebbitAddress}/catalog` ||
+    decodedPathname === `/p/all/catalog` ||
+    decodedPathname === `/p/all/catalog/${timeFilterName}` ||
+    decodedPathname === `/p/subscriptions/catalog` ||
+    decodedPathname === `/p/subscriptions/catalog/${timeFilterName}`
+  );
 };
 
 export const isDescriptionView = (pathname: string, params: ParamsType): boolean => {
@@ -63,7 +73,7 @@ export const isNotFoundView = (pathname: string, params: ParamsType): boolean =>
   return (
     !isAllView(pathname) &&
     !isBoardView(pathname, params) &&
-    !isCatalogView(pathname) &&
+    !isCatalogView(pathname, params) &&
     !isDescriptionView(pathname, params) &&
     !isHomeView(pathname) &&
     !isPendingPostView(pathname, params) &&

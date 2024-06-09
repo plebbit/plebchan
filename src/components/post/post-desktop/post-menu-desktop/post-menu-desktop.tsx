@@ -114,7 +114,7 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
   const location = useLocation();
   const params = useParams();
   const isInAllView = isAllView(location.pathname);
-  const isInCatalogView = isCatalogView(location.pathname);
+  const isInCatalogView = isCatalogView(location.pathname, params);
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 

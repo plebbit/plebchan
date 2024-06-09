@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
+import useTimeFilter from '../../hooks/use-time-filter';
 import styles from './board-buttons.module.css';
 
 interface BoardButtonsProps {
@@ -55,6 +56,7 @@ const RefreshButton = () => {
 };
 
 const SortOptions = () => {
+  const { t } = useTranslation();
   const { sortType, setSortType } = useSortingStore();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -63,12 +65,45 @@ const SortOptions = () => {
   };
   return (
     <>
-      Sort by:&nbsp;
+      {t('sort_by')}:&nbsp;
       <select value={sortType} onChange={handleSortChange}>
-        <option value='active'>Bump order</option>
-        <option value='new'>Creation date</option>
+        <option value='active'>{t('bump_order')}</option>
+        <option value='new'>{t('creation_date')}</option>
       </select>
       &nbsp;
+    </>
+  );
+};
+
+export const TimeFilter = ({ isInCatalogView, isTopbar = false }: { isInCatalogView: boolean; isTopbar?: boolean }) => {
+  const { t } = useTranslation();
+  const params = useParams();
+  const navigate = useNavigate();
+  const { timeFilterNames } = useTimeFilter();
+  const selectedTimeFilterName = params.timeFilterName;
+
+  const changeTimeFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const timeFilterName = event.target.value;
+    const link = isInCatalogView ? `/p/all/catalog/${timeFilterName}` : `/p/all/${timeFilterName}`;
+    navigate(link);
+  };
+
+  return (
+    <>
+      {!isTopbar ? (
+        <>
+          <span className='capitalize'>{t('time_filter')}</span>:&nbsp;
+        </>
+      ) : (
+        <> </>
+      )}
+      <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedTimeFilterName}>
+        {timeFilterNames.map((timeFilterName, i) => (
+          <option key={timeFilterName + i} value={timeFilterName}>
+            {timeFilterName}
+          </option>
+        ))}
+      </select>
     </>
   );
 };
@@ -77,7 +112,7 @@ export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
   const isInAllView = isAllView(location.pathname);
-  const isInCatalogView = isCatalogView(location.pathname);
+  const isInCatalogView = isCatalogView(location.pathname, params);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
@@ -106,7 +141,17 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
+                <TimeFilter isInCatalogView={true} />
+                &nbsp;&nbsp;
                 <SortOptions />
+              </div>
+            </>
+          )}
+          {(isInAllView || isInSubscriptionsView) && !isInCatalogView && (
+            <>
+              <hr />
+              <div className={styles.options}>
+                <TimeFilter isInCatalogView={false} />
               </div>
             </>
           )}
@@ -121,7 +166,7 @@ export const DesktopBoardButtons = () => {
   const location = useLocation();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
-  const isInCatalogView = isCatalogView(location.pathname);
+  const isInCatalogView = isCatalogView(location.pathname, params);
   const isInAllView = isAllView(location.pathname);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
@@ -164,6 +209,11 @@ export const DesktopBoardButtons = () => {
                 <>
                   [
                   <SubscribeButton address={subplebbitAddress} />]
+                </>
+              )}
+              {(isInAllView || isInSubscriptionsView) && (
+                <>
+                  <TimeFilter isInCatalogView={isInCatalogView} />
                 </>
               )}
             </span>
