@@ -159,5 +159,11 @@
   "time_x_months_ago": "Před {{count}} měsíci",
   "time_1_year_ago": "Před 1 rokem",
   "time_x_years_ago": "Před {{count}} roky",
-  "open": "otevřít"
+  "open": "otevřít",
+  "bump_order": "Pořadí bump",
+  "creation_date": "Datum vytvoření",
+  "sort_by": "Řadit podle",
+  "time_filter": "Filtr času",
+  "subplebbit_offline_info": "Subplebbit může být offline a zveřejnění může selhat.",
+  "posts_last_synced_info": "Poslední synchronizace příspěvků {{time}}, subplebbit může být offline a zveřejňování může selhat."
 }

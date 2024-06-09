@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { PublishCommentOptions, setAccount, useAccount, useAccountComment, useComment, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { PublishCommentOptions, setAccount, useAccount, useAccountComment, useComment, usePublishComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
 import { getLinkMediaInfo } from '../../lib/utils/media-utils';
@@ -12,6 +12,7 @@ import useReply from '../../hooks/use-reply';
 import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './post-form.module.css';
 import _ from 'lodash';
+import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 
 type SubmitState = {
   subplebbitAddress: string | undefined;
@@ -271,9 +272,24 @@ const PostForm = () => {
 
   const [showForm, setShowForm] = useState(false);
 
+  const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
+  const { updatedAt } = subplebbit || {};
+  const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
+
+  const offlineAlert =
+    showForm &&
+    (updatedAt ? (
+      isBoardOffline && (
+        <div className={styles.offlineBoard}>{t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })}</div>
+      )
+    ) : (
+      <div className={styles.offlineBoard}>{t('subplebbit_offline_info')}</div>
+    ));
+
   return (
     <>
       <div className={styles.postFormDesktop}>
+        {offlineAlert}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -293,6 +309,7 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormMobile}>
+        {offlineAlert}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}

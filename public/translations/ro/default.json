@@ -159,5 +159,11 @@
   "time_x_months_ago": "Acum {{count}} luni",
   "time_1_year_ago": "Acum 1 an",
   "time_x_years_ago": "Acum {{count}} ani",
-  "open": "deschis"
+  "open": "deschis",
+  "bump_order": "Ordinea Bump",
+  "creation_date": "Data de creare",
+  "sort_by": "Sortează după",
+  "time_filter": "Filtru de timp",
+  "subplebbit_offline_info": "Subplebbitul ar putea fi offline și publicarea ar putea eșua.",
+  "posts_last_synced_info": "Ultimele postări sincronizate {{time}}, subplebbitul ar putea fi offline și publicarea ar putea eșua."
 }

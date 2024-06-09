@@ -192,6 +192,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
     const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
     return isOffline;
   };
+
   const multisubMetadata = useMultisubMetadata();
 
   return (

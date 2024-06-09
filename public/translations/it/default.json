@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} mesi fa",
   "time_1_year_ago": "1 anno fa",
   "time_x_years_ago": "{{count}} anni fa",
-  "open": "apri"
+  "open": "apri",
+  "bump_order": "Ordine di Bump",
+  "creation_date": "Data di creazione",
+  "sort_by": "Ordina per",
+  "time_filter": "Filtro temporale",
+  "subplebbit_offline_info": "Il subplebbit potrebbe essere offline e la pubblicazione potrebbe fallire.",
+  "posts_last_synced_info": "Ultimi post sincronizzati {{time}}, il subplebbit potrebbe essere offline e la pubblicazione potrebbe fallire."
 }

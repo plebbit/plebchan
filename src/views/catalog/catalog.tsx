@@ -7,6 +7,7 @@ import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
+import useTimeFilter from '../../hooks/use-time-filter';
 import useWindowWidth from '../../hooks/use-window-width';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
@@ -104,7 +105,19 @@ const Catalog = () => {
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
   const { sortType } = useSortingStore();
-  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType, postsPerPage });
+  const { timeFilterSeconds } = useTimeFilter();
+
+  const feedOptions: any = {
+    subplebbitAddresses,
+    sortType,
+    postsPerPage,
+  };
+
+  if (isInAllView || isInSubscriptionsView) {
+    feedOptions.newerThan = timeFilterSeconds;
+  }
+
+  const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);
 
   const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
   useEffect(() => {
@@ -147,14 +160,14 @@ const Catalog = () => {
     const setLastVirtuosoState = () =>
       virtuosoRef.current?.getState((snapshot: StateSnapshot) => {
         if (snapshot?.ranges?.length) {
-          lastVirtuosoStates[location.pathname] = snapshot;
+          lastVirtuosoStates[sortType + timeFilterSeconds + 'catalog'] = snapshot;
         }
       });
     window.addEventListener('scroll', setLastVirtuosoState);
     return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [location.pathname]);
+  }, [sortType, timeFilterSeconds]);
 
-  const lastVirtuosoState = lastVirtuosoStates?.[location.pathname];
+  const lastVirtuosoState = lastVirtuosoStates?.[sortType + timeFilterSeconds + 'catalog'];
 
   useEffect(() => {
     let documentTitle = title ? title : shortAddress;

@@ -159,5 +159,11 @@
   "time_x_months_ago": "منذ {{count}} شهور",
   "time_1_year_ago": "منذ عام واحد",
   "time_x_years_ago": "منذ {{count}} سنوات",
-  "open": "فتح"
+  "open": "فتح",
+  "bump_order": "ترتيب الدفع",
+  "creation_date": "تاريخ الإنشاء",
+  "sort_by": "ترتيب حسب",
+  "time_filter": "تصفية الوقت",
+  "subplebbit_offline_info": "قد يكون الرد على الرسائل غير متاح حالياً وقد تفشل النشر.",
+  "posts_last_synced_info": "آخر تزامن الرسائل {{time}}، قد يكون الرد على الرسائل غير متاح حالياً وقد تفشل النشر."
 }

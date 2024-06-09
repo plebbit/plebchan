@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} เดือนที่ผ่านมา",
   "time_1_year_ago": "1 ปีที่ผ่านมา",
   "time_x_years_ago": "{{count}} ปีที่ผ่านมา",
-  "open": "เปิด"
+  "open": "เปิด",
+  "bump_order": "ลำดับของ Bump",
+  "creation_date": "วันที่สร้าง",
+  "sort_by": "เรียงลำดับตาม",
+  "time_filter": "ตัวกรองเวลา",
+  "subplebbit_offline_info": "เซ็บเพล็บบิทอาจออฟไลน์และการเผยแพร่อาจล้มเหลว",
+  "posts_last_synced_info": "โพสต์ล่าสุดที่ซิงค์ {{time}}, ซับเพลบบิทอาจออฟไลน์และการเผยแพร่อาจล้มเหลว"
 }

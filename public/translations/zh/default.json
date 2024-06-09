@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}}个月前",
   "time_1_year_ago": "1年前",
   "time_x_years_ago": "{{count}}年前",
-  "open": "打开"
+  "open": "打开",
+  "bump_order": "顶贴顺序",
+  "creation_date": "创造日期",
+  "sort_by": "排序方式",
+  "time_filter": "时间过滤器",
+  "subplebbit_offline_info": "子维基可能离线，发布可能失败。",
+  "posts_last_synced_info": "最后同步的帖子 {{time}}, 子维基可能离线，发布可能失败。"
 }

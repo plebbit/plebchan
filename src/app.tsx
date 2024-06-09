@@ -92,16 +92,16 @@ const App = () => {
             <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
             <Route path='/p/:subplebbitAddress/rules/settings' element={<PostPage />} />
 
-            <Route path='/p/all' element={<Board />} />
+            <Route path='/p/all/:timeFilterName?' element={<Board />} />
+            <Route path='/p/all/:timeFilterName?/settings' element={<Board />} />
             <Route path='/p/all/description' element={<PostPage />} />
-            <Route path='/p/all/settings' element={<Board />} />
-            <Route path='/p/all/catalog' element={<Catalog />} />
-            <Route path='/p/all/catalog/settings' element={<Catalog />} />
+            <Route path='/p/all/catalog/:timeFilterName?' element={<Catalog />} />
+            <Route path='/p/all/catalog/:timeFilterName?/settings' element={<Catalog />} />
 
-            <Route path='/p/subscriptions' element={<Board />} />
-            <Route path='/p/subscriptions/settings' element={<Board />} />
-            <Route path='/p/subscriptions/catalog' element={<Catalog />} />
-            <Route path='/p/subscriptions/catalog/settings' element={<Catalog />} />
+            <Route path='/p/subscriptions/:timeFilterName?' element={<Board />} />
+            <Route path='/p/subscriptions/:timeFilterName?/settings' element={<Board />} />
+            <Route path='/p/subscriptions/catalog/:timeFilterName?' element={<Catalog />} />
+            <Route path='/p/subscriptions/catalog/:timeFilterName?/settings' element={<Catalog />} />
 
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
             <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />

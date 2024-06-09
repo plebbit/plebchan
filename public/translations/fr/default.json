@@ -159,5 +159,11 @@
   "time_x_months_ago": "il y a {{count}} mois",
   "time_1_year_ago": "il y a 1 an",
   "time_x_years_ago": "il y a {{count}} ans",
-  "open": "ouvrir"
+  "open": "ouvrir",
+  "bump_order": "Ordre de Bump",
+  "creation_date": "Date de création",
+  "sort_by": "Trier par",
+  "time_filter": "Filtre temporel",
+  "subplebbit_offline_info": "Le subplebbit pourrait être hors ligne et la publication pourrait échouer.",
+  "posts_last_synced_info": "Dernières publications synchronisées {{time}}, le subplebbit pourrait être hors ligne et la publication pourrait échouer."
 }
