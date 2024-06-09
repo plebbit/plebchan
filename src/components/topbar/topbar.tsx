@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './topbar.module.css';
-import useTimeFilter from '../../hooks/use-time-filter';
 import useDefaultSubplebbits, { categorizeSubplebbits, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import _, { debounce } from 'lodash';
 import { TimeFilter } from '../board-buttons';
@@ -149,7 +148,9 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
       <div className={styles.boardSelect}>
         <strong>{t('board')}</strong>
         {boardSelect}
-        <TimeFilter isTopbar={true} isInCatalogView={isInCatalogView} />
+        {(isInAllView || isInSubscriptionsView) && (
+          <TimeFilter isTopbar={true} isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
+        )}
       </div>
       <div className={styles.pageJump}>
         <Link to={useLocation().pathname.replace(/\/$/, '') + '/settings'}>{t('settings')}</Link>

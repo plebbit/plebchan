@@ -8,10 +8,11 @@ import useTimeFilter from '../../hooks/use-time-filter';
 import styles from './board-buttons.module.css';
 
 interface BoardButtonsProps {
-  isInAllView?: boolean;
   address?: string | undefined;
+  isInAllView?: boolean;
   isInCatalogView?: boolean;
   isInSubscriptionsView?: boolean;
+  isTopbar?: boolean;
 }
 
 const CatalogButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
@@ -75,7 +76,7 @@ const SortOptions = () => {
   );
 };
 
-export const TimeFilter = ({ isInCatalogView, isTopbar = false }: { isInCatalogView: boolean; isTopbar?: boolean }) => {
+export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView, isTopbar = false }: BoardButtonsProps) => {
   const { t } = useTranslation();
   const params = useParams();
   const navigate = useNavigate();
@@ -84,8 +85,16 @@ export const TimeFilter = ({ isInCatalogView, isTopbar = false }: { isInCatalogV
 
   const changeTimeFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const timeFilterName = event.target.value;
-    const link = isInCatalogView ? `/p/all/catalog/${timeFilterName}` : `/p/all/${timeFilterName}`;
-    navigate(link);
+    const link = isInAllView
+      ? isInCatalogView
+        ? `/p/all/catalog/${timeFilterName}`
+        : `/p/all/${timeFilterName}`
+      : isInSubscriptionsView
+      ? isInCatalogView
+        ? `/p/subscriptions/catalog/${timeFilterName}`
+        : `/p/subscriptions/${timeFilterName}`
+      : null;
+    link && navigate(link);
   };
 
   return (
@@ -141,8 +150,12 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
-                <TimeFilter isInCatalogView={true} />
-                &nbsp;&nbsp;
+                {(isInAllView || isInSubscriptionsView) && (
+                  <>
+                    <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
+                    &nbsp;&nbsp;
+                  </>
+                )}
                 <SortOptions />
               </div>
             </>
@@ -151,7 +164,7 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
-                <TimeFilter isInCatalogView={false} />
+                <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
               </div>
             </>
           )}
@@ -213,7 +226,7 @@ export const DesktopBoardButtons = () => {
               )}
               {(isInAllView || isInSubscriptionsView) && (
                 <>
-                  <TimeFilter isInCatalogView={isInCatalogView} />
+                  <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
                 </>
               )}
             </span>
