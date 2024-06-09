@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} hónapja",
   "time_1_year_ago": "1 éve",
   "time_x_years_ago": "{{count}} éve",
-  "open": "nyit"
+  "open": "nyit",
+  "bump_order": "Bump sorrend",
+  "creation_date": "Létrehozás dátuma",
+  "sort_by": "Rendezés",
+  "time_filter": "Idő szűrő",
+  "subplebbit_offline_info": "A subplebbit offline lehet, és a közzététel sikertelen lehet.",
+  "posts_last_synced_info": "Legutóbb szinkronizált bejegyzések {{time}}, a subplebbit offline lehet, és a közzététel sikertelen lehet."
 }

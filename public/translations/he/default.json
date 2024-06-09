@@ -159,5 +159,11 @@
   "time_x_months_ago": "לפני {{count}} חודשים",
   "time_1_year_ago": "לפני שנה",
   "time_x_years_ago": "לפני {{count}} שנים",
-  "open": "לפתוח"
+  "open": "לפתוח",
+  "bump_order": "סדר הפעם",
+  "creation_date": "תאריך יצירה",
+  "sort_by": "מיין לפי",
+  "time_filter": "סינון זמן",
+  "subplebbit_offline_info": "הסאבפלביט עשוי להיות לא מקוון והפרסום עשוי להכשל.",
+  "posts_last_synced_info": "הפוסטים סונכרנו לאחרונה {{time}}, הסאבפלביט עשוי להיות לא מקוון והפרסום עשוי להכשל."
 }

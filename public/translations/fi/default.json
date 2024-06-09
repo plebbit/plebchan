@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} kuukautta sitten",
   "time_1_year_ago": "1 vuosi sitten",
   "time_x_years_ago": "{{count}} vuotta sitten",
-  "open": "avata"
+  "open": "avata",
+  "bump_order": "Bump-järjestys",
+  "creation_date": "Luomispäivämäärä",
+  "sort_by": "Järjestä",
+  "time_filter": "Aikasuodatin",
+  "subplebbit_offline_info": "Subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua.",
+  "posts_last_synced_info": "Viimeksi synkronoidut viestit {{time}}, subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua."
 }

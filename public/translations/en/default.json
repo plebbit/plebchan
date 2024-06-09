@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} months ago",
   "time_1_year_ago": "1 year ago",
   "time_x_years_ago": "{{count}} years ago",
-  "open": "open"
+  "open": "open",
+  "bump_order": "Bump order",
+  "creation_date": "Creation date",
+  "sort_by": "Sort by",
+  "time_filter": "Time Filter",
+  "subplebbit_offline_info": "The subplebbit might be offline and publishing might fail.",
+  "posts_last_synced_info": "Posts last synced {{time}}, the subplebbit might be offline and publishing might fail."
 }

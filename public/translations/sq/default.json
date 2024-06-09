@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} muaj më parë",
   "time_1_year_ago": "1 vit më parë",
   "time_x_years_ago": "{{count}} vite më parë",
-  "open": "hap"
+  "open": "hap",
+  "bump_order": "Renditja e Bump",
+  "creation_date": "Data e krijimit",
+  "sort_by": "Rendit sipas",
+  "time_filter": "Filtri i kohës",
+  "subplebbit_offline_info": "Subplebbiti mund të jetë jashtë linje dhe publikimi mund të dështojë.",
+  "posts_last_synced_info": "Postimet e fundit të sinkronizuara {{time}}, subplebbiti mund të jetë jashtë linje dhe publikimi mund të dështojë."
 }

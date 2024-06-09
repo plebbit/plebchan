@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} maanden geleden",
   "time_1_year_ago": "1 jaar geleden",
   "time_x_years_ago": "{{count}} jaar geleden",
-  "open": "openen"
+  "open": "openen",
+  "bump_order": "Bump-volgorde",
+  "creation_date": "Creatiedatum",
+  "sort_by": "Sorteer op",
+  "time_filter": "Tijdsfilter",
+  "subplebbit_offline_info": "De subplebbit kan offline zijn en publiceren kan mislukken.",
+  "posts_last_synced_info": "Laatste keer gesynchroniseerde berichten {{time}}, de subplebbit kan offline zijn en publiceren kan mislukken."
 }

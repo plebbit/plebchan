@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} महिन्यांपूर्वी",
   "time_1_year_ago": "१ वर्षांपूर्वी",
   "time_x_years_ago": "{{count}} वर्षांपूर्वी",
-  "open": "उघडा"
+  "open": "उघडा",
+  "bump_order": "बंप क्रम",
+  "creation_date": "निर्माण तारीख",
+  "sort_by": "क्रमवार करा",
+  "time_filter": "वेळ फिल्टर",
+  "subplebbit_offline_info": "सबप्लेबिट मोबाइल असून प्रकाशन अयशस्वी होऊ शकतो.",
+  "posts_last_synced_info": "शेवटच्या बारीस सिन्क केलेले पोस्ट {{time}}, सबप्लेबिट मोबाइल असून प्रकाशन अयशस्वी होऊ शकतो."
 }

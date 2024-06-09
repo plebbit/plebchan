@@ -280,10 +280,10 @@ const PostForm = () => {
     showForm &&
     (updatedAt ? (
       isBoardOffline && (
-        <div className={styles.offlineBoard}>{`Posts last synced ${getFormattedTimeAgo(updatedAt)}, the subplebbit might be offline and publishing might fail.`}</div>
+        <div className={styles.offlineBoard}>{t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })}</div>
       )
     ) : (
-      <div className={styles.offlineBoard}>{`The subplebbit might be offline and publishing might fail.`}</div>
+      <div className={styles.offlineBoard}>{t('subplebbit_offline_info')}</div>
     ));
 
   return (

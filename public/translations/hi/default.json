@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} महीने पहले",
   "time_1_year_ago": "1 साल पहले",
   "time_x_years_ago": "{{count}} साल पहले",
-  "open": "खोलें"
+  "open": "खोलें",
+  "bump_order": "बंप आदेश",
+  "creation_date": "निर्माण तिथि",
+  "sort_by": "क्रमबद्ध करें द्वारा",
+  "time_filter": "समय फ़िल्टर",
+  "subplebbit_offline_info": "सबप्लेबिट ऑफलाइन हो सकता है और प्रकाशन विफल हो सकता है।",
+  "posts_last_synced_info": "आखिरी बार सिंक की गई पोस्ट {{time}}, सबप्लेबिट ऑफलाइन हो सकता है और प्रकाशन विफल हो सकता है।"
 }

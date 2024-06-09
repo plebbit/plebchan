@@ -159,5 +159,11 @@
   "time_x_months_ago": "För {{count}} månader sedan",
   "time_1_year_ago": "För 1 år sedan",
   "time_x_years_ago": "För {{count}} år sedan",
-  "open": "öppna"
+  "open": "öppna",
+  "bump_order": "Bump ordning",
+  "creation_date": "Skapelsedatum",
+  "sort_by": "Sortera efter",
+  "time_filter": "Tidsfilter",
+  "subplebbit_offline_info": "Subplebbit kan vara offline och publicering kan misslyckas.",
+  "posts_last_synced_info": "Inlägg senast synkroniserade {{time}}, subplebbit kan vara offline och publicering kan misslyckas."
 }

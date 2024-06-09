@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} مہینے پہلے",
   "time_1_year_ago": "1 سال پہلے",
   "time_x_years_ago": "{{count}} سال پہلے",
-  "open": "کھولیں"
+  "open": "کھولیں",
+  "bump_order": "بمپ آرڈر",
+  "creation_date": "تخلیق کی تاریخ",
+  "sort_by": "کے ذریعہ سارٹ کریں",
+  "time_filter": "وقت فلٹر",
+  "subplebbit_offline_info": "سب پلیبٹ آف لائن ہوسکتا ہے اور شائع ہونے میں ناکام ہوسکتا ہے۔",
+  "posts_last_synced_info": "آخری بار پوسٹ سنک کی گئی {{time}}, سب پلیبٹ آف لائن ہوسکتا ہے اور شائع ہونے میں ناکام ہوسکتا ہے۔"
 }

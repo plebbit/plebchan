@@ -159,5 +159,11 @@
   "time_x_months_ago": "{{count}} tháng trước",
   "time_1_year_ago": "1 năm trước",
   "time_x_years_ago": "{{count}} năm trước",
-  "open": "mở"
+  "open": "mở",
+  "bump_order": "Thứ tự Bump",
+  "creation_date": "Ngày tạo",
+  "sort_by": "Sắp xếp theo",
+  "time_filter": "Bộ lọc thời gian",
+  "subplebbit_offline_info": "Subplebbit có thể ngoại tuyến và việc xuất bản có thể thất bại.",
+  "posts_last_synced_info": "Bài viết được đồng bộ lần cuối {{time}}, subplebbit có thể ngoại tuyến và việc xuất bản có thể thất bại."
 }
