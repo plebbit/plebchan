@@ -44,7 +44,18 @@ const Board = () => {
 
   const { sortType } = useSortingStore();
   const { timeFilterSeconds } = useTimeFilter();
-  const { feed, hasMore, loadMore, reset } = useFeed({ subplebbitAddresses, sortType, postsPerPage: 10, newerThan: timeFilterSeconds });
+
+  const feedOptions: any = {
+    subplebbitAddresses,
+    sortType,
+    postsPerPage: 10,
+  };
+
+  if (isInAllView || isInSubscriptionsView) {
+    feedOptions.newerThan = timeFilterSeconds;
+  }
+
+  const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);
 
   const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
   useEffect(() => {
