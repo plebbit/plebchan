@@ -202,7 +202,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
         </tr>
         <tr>
           <td>{t('link')}</td>
-          <td>
+          <td className={styles.linkField}>
             <input
               type='text'
               autoCorrect='off'
@@ -214,11 +214,8 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
                 isInPostView ? setContent.link(e.target.value) : setSubmitStore({ link: e.target.value });
               }}
             />
+            <span className={styles.linkType}> {url && <LinkTypePreviewer link={url} />}</span>
           </td>
-        </tr>
-        <tr className={styles.linkType}>
-          <td>{t('file_type')}</td>
-          <td>{url ? <LinkTypePreviewer link={url} /> : t('no_link_provided')}</td>
         </tr>
         <tr className={styles.spoilerButton}>
           <td>{t('options')}</td>

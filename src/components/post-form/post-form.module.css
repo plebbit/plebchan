@@ -91,9 +91,8 @@
   font-weight: normal;
 }
 
-.linkType td {
-  height: 20px;
-  padding-left: 2px;
+.linkField input[type="text"] {
+  width: 190px !important;
 }
 
 .spoilerButton input[type="checkbox"] {
