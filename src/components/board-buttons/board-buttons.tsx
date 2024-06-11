@@ -105,7 +105,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
   const params = useParams();
   const navigate = useNavigate();
   const { timeFilterNames } = useTimeFilter();
-  const selectedTimeFilterName = params.timeFilterName || '24h';
+  const selectedTimeFilterName = params.timeFilterName;
 
   const changeTimeFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const timeFilterName = event.target.value;
@@ -174,21 +174,7 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
-                {(isInAllView || isInSubscriptionsView) && (
-                  <>
-                    <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
-                    &nbsp;&nbsp;
-                  </>
-                )}
                 <SortOptions />
-              </div>
-            </>
-          )}
-          {(isInAllView || isInSubscriptionsView) && !isInCatalogView && (
-            <>
-              <hr />
-              <div className={styles.options}>
-                <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
               </div>
             </>
           )}
