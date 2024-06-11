@@ -166,5 +166,6 @@
   "time_filter": "Filtro temporale",
   "subplebbit_offline_info": "Il subplebbit potrebbe essere offline e la pubblicazione potrebbe fallire.",
   "posts_last_synced_info": "Ultimi post sincronizzati {{time}}, il subplebbit potrebbe essere offline e la pubblicazione potrebbe fallire.",
-  "newer_than": "più recente di"
+  "newer_than": "più recente di",
+  "no_posts": "nessun post"
 }

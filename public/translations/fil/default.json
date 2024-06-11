@@ -166,5 +166,6 @@
   "time_filter": "Time Filter",
   "subplebbit_offline_info": "Maaaring offline ang subplebbit at maaaring mabigo ang paglalathala.",
   "posts_last_synced_info": "Huling naka-sync na mga post {{time}}, maaaring offline ang subplebbit at maaaring mabigo ang paglalathala.",
-  "newer_than": "mas bago kaysa"
+  "newer_than": "mas bago kaysa",
+  "no_posts": "walang post"
 }

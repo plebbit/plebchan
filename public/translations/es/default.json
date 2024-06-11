@@ -166,5 +166,6 @@
   "time_filter": "Filtro de tiempo",
   "subplebbit_offline_info": "El subplebbit podría estar fuera de línea y la publicación podría fallar.",
   "posts_last_synced_info": "Últimas publicaciones sincronizadas {{time}}, el subplebbit podría estar fuera de línea y la publicación podría fallar.",
-  "newer_than": "más reciente que"
+  "newer_than": "más reciente que",
+  "no_posts": "sin publicaciones"
 }

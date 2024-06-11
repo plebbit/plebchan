@@ -81,7 +81,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
   const params = useParams();
   const navigate = useNavigate();
   const { timeFilterNames } = useTimeFilter();
-  const selectedTimeFilterName = params.timeFilterName;
+  const selectedTimeFilterName = params.timeFilterName || '24h';
 
   const changeTimeFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const timeFilterName = event.target.value;
@@ -226,7 +226,7 @@ export const DesktopBoardButtons = () => {
               )}
               {(isInAllView || isInSubscriptionsView) && (
                 <>
-                  <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
+                  <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
                 </>
               )}
             </span>

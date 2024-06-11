@@ -166,5 +166,6 @@
   "time_filter": "Filter Waktu",
   "subplebbit_offline_info": "Subplebbit mungkin offline dan penerbitan mungkin gagal.",
   "posts_last_synced_info": "Posting terakhir disinkronkan {{time}}, subplebbit mungkin offline dan penerbitan mungkin gagal.",
-  "newer_than": "baru daripada"
+  "newer_than": "baru daripada",
+  "no_posts": "tidak ada posting"
 }

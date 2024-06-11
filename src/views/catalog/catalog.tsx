@@ -110,7 +110,7 @@ const Catalog = () => {
   const feedOptions: any = {
     subplebbitAddresses,
     sortType,
-    postsPerPage: isInAllView || isInSubscriptionsView ? 10 : 25,
+    postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
   };
 
   if (isInAllView || isInSubscriptionsView) {

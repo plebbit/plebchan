@@ -166,5 +166,6 @@
   "time_filter": "Tidsfilter",
   "subplebbit_offline_info": "Subplebbiten kan være offline, og publisering kan mislykkes.",
   "posts_last_synced_info": "Siste synkroniserte innlegg {{time}}, subplebbiten kan være offline, og publisering kan mislykkes.",
-  "newer_than": "nyere enn"
+  "newer_than": "nyere enn",
+  "no_posts": "ingen innlegg"
 }

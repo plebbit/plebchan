@@ -166,5 +166,6 @@
   "time_filter": "Bộ lọc thời gian",
   "subplebbit_offline_info": "Subplebbit có thể ngoại tuyến và việc xuất bản có thể thất bại.",
   "posts_last_synced_info": "Bài viết được đồng bộ lần cuối {{time}}, subplebbit có thể ngoại tuyến và việc xuất bản có thể thất bại.",
-  "newer_than": "mới hơn"
+  "newer_than": "mới hơn",
+  "no_posts": "không có bài viết"
 }
