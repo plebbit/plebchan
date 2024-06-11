@@ -143,7 +143,7 @@
   "user_deleted_this_post": "L'utilisateur a supprimé ce post.",
   "reason": "raison",
   "search": "chercher",
-  "ban_user_for": "Bannir l'utilisateur pendant <1></1> jour(s)",
+  "ban_user_for": "Bannir l'utilisateur pendant <1></1> jours",
   "optional": "facultatif",
   "close_thread": "fermer le fil",
   "view_spoiler": "voir le spoiler",
