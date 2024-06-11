@@ -11,7 +11,8 @@ import PopularThreadsBox from './popular-threads-box';
 import BoardsBox from './boards-box';
 
 // https://github.com/plebbit/temporary-default-subplebbits/blob/master/README.md
-export const nsfwTags = ['adult', 'anti', 'gore'];
+// plebchan shouldn't consider 'vulgar' or 'anti' as nsfw tags, unlike more sfw-oriented clients
+export const nsfwTags = ['adult', 'gore'];
 
 const SearchBar = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
