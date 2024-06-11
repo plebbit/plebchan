@@ -171,7 +171,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                     <label>
                       [
                       <input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed' />
-                      {_.capitalize(t('remove'))}? ]
+                      {_.capitalize(t('remove'))}?]
                     </label>
                   </div>
                   {!isReply && (
