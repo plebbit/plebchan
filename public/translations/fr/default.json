@@ -165,5 +165,6 @@
   "sort_by": "Trier par",
   "time_filter": "Filtre temporel",
   "subplebbit_offline_info": "Le subplebbit pourrait être hors ligne et la publication pourrait échouer.",
-  "posts_last_synced_info": "Dernières publications synchronisées {{time}}, le subplebbit pourrait être hors ligne et la publication pourrait échouer."
+  "posts_last_synced_info": "Dernières publications synchronisées {{time}}, le subplebbit pourrait être hors ligne et la publication pourrait échouer.",
+  "newer_than": "plus récent que"
 }

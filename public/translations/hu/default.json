@@ -165,5 +165,6 @@
   "sort_by": "Rendezés",
   "time_filter": "Idő szűrő",
   "subplebbit_offline_info": "A subplebbit offline lehet, és a közzététel sikertelen lehet.",
-  "posts_last_synced_info": "Legutóbb szinkronizált bejegyzések {{time}}, a subplebbit offline lehet, és a közzététel sikertelen lehet."
+  "posts_last_synced_info": "Legutóbb szinkronizált bejegyzések {{time}}, a subplebbit offline lehet, és a közzététel sikertelen lehet.",
+  "newer_than": "újabb, mint"
 }

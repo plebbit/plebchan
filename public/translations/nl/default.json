@@ -165,5 +165,6 @@
   "sort_by": "Sorteer op",
   "time_filter": "Tijdsfilter",
   "subplebbit_offline_info": "De subplebbit kan offline zijn en publiceren kan mislukken.",
-  "posts_last_synced_info": "Laatste keer gesynchroniseerde berichten {{time}}, de subplebbit kan offline zijn en publiceren kan mislukken."
+  "posts_last_synced_info": "Laatste keer gesynchroniseerde berichten {{time}}, de subplebbit kan offline zijn en publiceren kan mislukken.",
+  "newer_than": "nieuwer dan"
 }

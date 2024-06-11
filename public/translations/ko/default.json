@@ -165,5 +165,6 @@
   "sort_by": "정렬 기준",
   "time_filter": "시간 필터",
   "subplebbit_offline_info": "서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다.",
-  "posts_last_synced_info": "최근 동기화된 게시물 {{time}}, 서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다."
+  "posts_last_synced_info": "최근 동기화된 게시물 {{time}}, 서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다.",
+  "newer_than": "이전보다 최신"
 }

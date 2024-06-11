@@ -165,5 +165,6 @@
   "sort_by": "Sırala",
   "time_filter": "Zaman Filtresi",
   "subplebbit_offline_info": "Subplebbit çevrimdışı olabilir ve yayınlama başarısız olabilir.",
-  "posts_last_synced_info": "Son senkronize edilen gönderiler {{time}}, subplebbit çevrimdışı olabilir ve yayınlama başarısız olabilir."
+  "posts_last_synced_info": "Son senkronize edilen gönderiler {{time}}, subplebbit çevrimdışı olabilir ve yayınlama başarısız olabilir.",
+  "newer_than": "daha yeni"
 }

@@ -165,5 +165,6 @@
   "sort_by": "Järjestä",
   "time_filter": "Aikasuodatin",
   "subplebbit_offline_info": "Subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua.",
-  "posts_last_synced_info": "Viimeksi synkronoidut viestit {{time}}, subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua."
+  "posts_last_synced_info": "Viimeksi synkronoidut viestit {{time}}, subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua.",
+  "newer_than": "uudempi kuin"
 }

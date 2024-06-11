@@ -101,7 +101,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
     <>
       {!isTopbar ? (
         <>
-          <span className='capitalize'>{t('time_filter')}</span>:&nbsp;
+          <span className='capitalize'>{t('newer_than')}</span>:&nbsp;
         </>
       ) : (
         <> </>

@@ -165,5 +165,6 @@
   "sort_by": "排序方式",
   "time_filter": "时间过滤器",
   "subplebbit_offline_info": "子维基可能离线，发布可能失败。",
-  "posts_last_synced_info": "最后同步的帖子 {{time}}, 子维基可能离线，发布可能失败。"
+  "posts_last_synced_info": "最后同步的帖子 {{time}}, 子维基可能离线，发布可能失败。",
+  "newer_than": "新于"
 }

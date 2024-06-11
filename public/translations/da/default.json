@@ -165,5 +165,6 @@
   "sort_by": "Sorter efter",
   "time_filter": "Tidsfilter",
   "subplebbit_offline_info": "Subplebbiten kan være offline, og offentliggørelse kan mislykkes.",
-  "posts_last_synced_info": "Seneste synkroniserede indlæg {{time}}, subplebbiten kan være offline, og offentliggørelse kan mislykkes."
+  "posts_last_synced_info": "Seneste synkroniserede indlæg {{time}}, subplebbiten kan være offline, og offentliggørelse kan mislykkes.",
+  "newer_than": "nyere end"
 }
