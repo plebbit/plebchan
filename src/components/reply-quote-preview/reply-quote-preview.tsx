@@ -3,9 +3,9 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Comment, useAccount } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
-import useIsMobile from '../../../hooks/use-is-mobile';
-import styles from '../post.module.css';
-import Post from '../post';
+import useIsMobile from '../../hooks/use-is-mobile';
+import styles from '../../views/post/post.module.css';
+import { Post } from '../../views/post';
 
 interface ReplyQuotePreviewProps {
   isBacklinkReply?: boolean;

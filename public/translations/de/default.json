@@ -143,7 +143,7 @@
   "user_deleted_this_post": "Benutzer hat diesen Beitrag gelöscht.",
   "reason": "Grund",
   "search": "suche",
-  "ban_user_for": "Benutzer für <1></1> Tag(e) sperren",
+  "ban_user_for": "Benutzer für <1></1> Tage sperren",
   "optional": "optional",
   "close_thread": "Thread schließen",
   "view_spoiler": "Spoiler anzeigen",
@@ -165,5 +165,7 @@
   "sort_by": "Sortieren nach",
   "time_filter": "Zeitfilter",
   "subplebbit_offline_info": "Der Subplebbit könnte offline sein und das Veröffentlichen könnte fehlschlagen.",
-  "posts_last_synced_info": "Beiträge zuletzt synchronisiert {{time}}, der Subplebbit könnte offline sein und das Veröffentlichen könnte fehlschlagen."
+  "posts_last_synced_info": "Beiträge zuletzt synchronisiert {{time}}, der Subplebbit könnte offline sein und das Veröffentlichen könnte fehlschlagen.",
+  "newer_than": "neuer als",
+  "no_posts": "keine Beiträge"
 }

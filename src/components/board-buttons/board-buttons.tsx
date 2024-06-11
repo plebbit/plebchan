@@ -17,10 +17,22 @@ interface BoardButtonsProps {
 
 const CatalogButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
   const { t } = useTranslation();
-  const link = isInAllView ? `/p/all/catalog` : isInSubscriptionsView ? `/p/subscriptions/catalog` : `/p/${address}/catalog`;
+  const params = useParams();
+
+  const createCatalogLink = () => {
+    if (isInAllView) {
+      if (params?.timeFilterName) return `/p/all/catalog/${params.timeFilterName}`;
+      return `/p/all/catalog`;
+    } else if (isInSubscriptionsView) {
+      if (params?.timeFilterName) return `/p/subscriptions/catalog/${params.timeFilterName}`;
+      return `/p/subscriptions/catalog`;
+    }
+    return `/p/${address}/catalog`;
+  };
+
   return (
     <button className='button'>
-      <Link to={link}>{t('catalog')}</Link>
+      <Link to={createCatalogLink()}>{t('catalog')}</Link>
     </button>
   );
 };
@@ -38,10 +50,22 @@ const SubscribeButton = ({ address }: BoardButtonsProps) => {
 
 const ReturnButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
   const { t } = useTranslation();
-  const link = isInAllView ? `/p/all` : isInSubscriptionsView ? `/p/subscriptions` : `/p/${address}`;
+  const params = useParams();
+
+  const createReturnLink = () => {
+    if (isInAllView) {
+      if (params?.timeFilterName) return `/p/all/${params.timeFilterName}`;
+      return `/p/all`;
+    } else if (isInSubscriptionsView) {
+      if (params?.timeFilterName) return `/p/subscriptions/${params.timeFilterName}`;
+      return `/p/subscriptions`;
+    }
+    return `/p/${address}`;
+  };
+
   return (
     <button className='button'>
-      <Link to={link}>{t('return')}</Link>
+      <Link to={createReturnLink()}>{t('return')}</Link>
     </button>
   );
 };
@@ -66,7 +90,7 @@ const SortOptions = () => {
   };
   return (
     <>
-      {t('sort_by')}:&nbsp;
+      <span className='capitalize'>{t('sort_by')}</span>:&nbsp;
       <select value={sortType} onChange={handleSortChange}>
         <option value='active'>{t('bump_order')}</option>
         <option value='new'>{t('creation_date')}</option>
@@ -101,7 +125,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
     <>
       {!isTopbar ? (
         <>
-          <span className='capitalize'>{t('time_filter')}</span>:&nbsp;
+          <span className='capitalize'>{t('newer_than')}</span>:&nbsp;
         </>
       ) : (
         <> </>
@@ -150,21 +174,7 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
-                {(isInAllView || isInSubscriptionsView) && (
-                  <>
-                    <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
-                    &nbsp;&nbsp;
-                  </>
-                )}
                 <SortOptions />
-              </div>
-            </>
-          )}
-          {(isInAllView || isInSubscriptionsView) && !isInCatalogView && (
-            <>
-              <hr />
-              <div className={styles.options}>
-                <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
               </div>
             </>
           )}
@@ -226,7 +236,7 @@ export const DesktopBoardButtons = () => {
               )}
               {(isInAllView || isInSubscriptionsView) && (
                 <>
-                  <TimeFilter isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
+                  <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
                 </>
               )}
             </span>

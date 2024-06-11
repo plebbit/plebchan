@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getFormattedDate, getFormattedTimeAgo } from '../../../lib/utils/time-utils';
+import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { useFloating, autoUpdate, offset, flip, shift, useHover, useFocus, useDismiss, useRole, useInteractions, FloatingPortal } from '@floating-ui/react';
 
 const Timestamp = ({ timestamp }: { timestamp: number }) => {

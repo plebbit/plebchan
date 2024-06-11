@@ -10,7 +10,7 @@ import { isAllView } from '../../lib/utils/view-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
-import PostMenuDesktop from '../post/post-desktop/post-menu-desktop/';
+import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
 import _ from 'lodash';
 
@@ -164,7 +164,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   return (
     <>
       <div className={styles.post}>
-        <div onMouseOver={() => setHoveredCid(cid)} onMouseLeave={() => setHoveredCid(null)}>
+        <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
           {hasThumbnail ? (
             <Link to={postLink}>
               <div

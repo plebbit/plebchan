@@ -143,7 +143,7 @@
   "user_deleted_this_post": "Përdoruesi fshiu këtë post.",
   "reason": "arsye",
   "search": "kërkim",
-  "ban_user_for": "Ndalo përdoruesin për <1></1> ditë",
+  "ban_user_for": "Blloko përdoruesin për <1></1> ditë",
   "optional": "opsionale",
   "close_thread": "mbyll temën",
   "view_spoiler": "shikoni spoiler",
@@ -165,5 +165,7 @@
   "sort_by": "Rendit sipas",
   "time_filter": "Filtri i kohës",
   "subplebbit_offline_info": "Subplebbiti mund të jetë jashtë linje dhe publikimi mund të dështojë.",
-  "posts_last_synced_info": "Postimet e fundit të sinkronizuara {{time}}, subplebbiti mund të jetë jashtë linje dhe publikimi mund të dështojë."
+  "posts_last_synced_info": "Postimet e fundit të sinkronizuara {{time}}, subplebbiti mund të jetë jashtë linje dhe publikimi mund të dështojë.",
+  "newer_than": "më i ri se",
+  "no_posts": "asnjë postim"
 }

@@ -143,7 +143,7 @@
   "user_deleted_this_post": "Użytkownik usunął ten post.",
   "reason": "powód",
   "search": "szukaj",
-  "ban_user_for": "Zablokuj użytkownika na <1></1> dzień (dni)",
+  "ban_user_for": "Zablokuj użytkownika na <1></1> dni",
   "optional": "opcjonalnie",
   "close_thread": "zamknij wątek",
   "view_spoiler": "pokaż spoiler",
@@ -165,5 +165,7 @@
   "sort_by": "Sortuj według",
   "time_filter": "Filtr czasu",
   "subplebbit_offline_info": "Subplebbit może być offline, a publikacja może się nie powieść.",
-  "posts_last_synced_info": "Ostatnio zsynchronizowane posty {{time}}, subplebbit może być offline, a publikacja może się nie powieść."
+  "posts_last_synced_info": "Ostatnio zsynchronizowane posty {{time}}, subplebbit może być offline, a publikacja może się nie powieść.",
+  "newer_than": "nowsze niż",
+  "no_posts": "brak postów"
 }

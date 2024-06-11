@@ -23,7 +23,7 @@
   text-align: center;
   color: red;
   font-weight: 700;
-  padding-top: 100px 0;
+  padding: 100px 0;
 }
 
 .offlineBoard {
@@ -91,9 +91,8 @@
   font-weight: normal;
 }
 
-.linkType td {
-  height: 20px;
-  padding-left: 2px;
+.linkField input[type="text"] {
+  width: 190px !important;
 }
 
 .spoilerButton input[type="checkbox"] {

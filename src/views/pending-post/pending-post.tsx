@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { isSettingsView } from '../../lib/utils/view-utils';
-import Post from '../../components/post';
+import { Post } from '../post';
 import SettingsModal from '../../components/settings-modal';
 
 const PendingPost = () => {

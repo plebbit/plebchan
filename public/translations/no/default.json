@@ -143,7 +143,7 @@
   "user_deleted_this_post": "Brukeren slettet dette innlegget.",
   "reason": "grunn",
   "search": "søk",
-  "ban_user_for": "Blokker bruker i <1></1> dag(er)",
+  "ban_user_for": "Blokker brukeren i <1></1> dager",
   "optional": "valgfritt",
   "close_thread": "lukk tråd",
   "view_spoiler": "se spoiler",
@@ -165,5 +165,7 @@
   "sort_by": "Sorter etter",
   "time_filter": "Tidsfilter",
   "subplebbit_offline_info": "Subplebbiten kan være offline, og publisering kan mislykkes.",
-  "posts_last_synced_info": "Siste synkroniserte innlegg {{time}}, subplebbiten kan være offline, og publisering kan mislykkes."
+  "posts_last_synced_info": "Siste synkroniserte innlegg {{time}}, subplebbiten kan være offline, og publisering kan mislykkes.",
+  "newer_than": "nyere enn",
+  "no_posts": "ingen innlegg"
 }

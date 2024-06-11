@@ -143,7 +143,7 @@
   "user_deleted_this_post": "Användaren tog bort detta inlägg.",
   "reason": "anledning",
   "search": "sök",
-  "ban_user_for": "Blockera användaren i <1></1> dag(ar)",
+  "ban_user_for": "Blockera användaren i <1></1> dagar",
   "optional": "valfritt",
   "close_thread": "stäng tråd",
   "view_spoiler": "visa spoiler",
@@ -165,5 +165,7 @@
   "sort_by": "Sortera efter",
   "time_filter": "Tidsfilter",
   "subplebbit_offline_info": "Subplebbit kan vara offline och publicering kan misslyckas.",
-  "posts_last_synced_info": "Inlägg senast synkroniserade {{time}}, subplebbit kan vara offline och publicering kan misslyckas."
+  "posts_last_synced_info": "Inlägg senast synkroniserade {{time}}, subplebbit kan vara offline och publicering kan misslyckas.",
+  "newer_than": "nyare än",
+  "no_posts": "inga inlägg"
 }

@@ -143,7 +143,7 @@
   "user_deleted_this_post": "사용자가이 게시물을 삭제했습니다.",
   "reason": "이유",
   "search": "검색",
-  "ban_user_for": "사용자를 <1></1>일 동안 차단하기",
+  "ban_user_for": "<1></1> 일 동안 사용자 차단",
   "optional": "선택",
   "close_thread": "스레드 닫기",
   "view_spoiler": "스포일러 보기",
@@ -165,5 +165,7 @@
   "sort_by": "정렬 기준",
   "time_filter": "시간 필터",
   "subplebbit_offline_info": "서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다.",
-  "posts_last_synced_info": "최근 동기화된 게시물 {{time}}, 서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다."
+  "posts_last_synced_info": "최근 동기화된 게시물 {{time}}, 서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다.",
+  "newer_than": "이전보다 최신",
+  "no_posts": "게시물이 없습니다"
 }

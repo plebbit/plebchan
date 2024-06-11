@@ -143,7 +143,7 @@
   "user_deleted_this_post": "Uživatel smazal tento příspěvek.",
   "reason": "důvod",
   "search": "vyhledat",
-  "ban_user_for": "Zakázat uživatele na <1></1> den (dní)",
+  "ban_user_for": "Zakázat uživatele na <1></1> dní",
   "optional": "volitelný",
   "close_thread": "uzavřít vlákno",
   "view_spoiler": "zobrazit spoiler",
@@ -165,5 +165,7 @@
   "sort_by": "Řadit podle",
   "time_filter": "Filtr času",
   "subplebbit_offline_info": "Subplebbit může být offline a zveřejnění může selhat.",
-  "posts_last_synced_info": "Poslední synchronizace příspěvků {{time}}, subplebbit může být offline a zveřejňování může selhat."
+  "posts_last_synced_info": "Poslední synchronizace příspěvků {{time}}, subplebbit může být offline a zveřejňování může selhat.",
+  "newer_than": "novější než",
+  "no_posts": "žádné příspěvky"
 }

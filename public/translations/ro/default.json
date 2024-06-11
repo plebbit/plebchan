@@ -143,7 +143,7 @@
   "user_deleted_this_post": "Utilizatorul a șters acest mesaj.",
   "reason": "motiv",
   "search": "căutare",
-  "ban_user_for": "Interzice utilizatorul pentru <1></1> zi(zile)",
+  "ban_user_for": "Interziceți utilizatorul pentru <1></1> zile",
   "optional": "opțional",
   "close_thread": "închide firul",
   "view_spoiler": "vezi spoilerul",
@@ -165,5 +165,7 @@
   "sort_by": "Sortează după",
   "time_filter": "Filtru de timp",
   "subplebbit_offline_info": "Subplebbitul ar putea fi offline și publicarea ar putea eșua.",
-  "posts_last_synced_info": "Ultimele postări sincronizate {{time}}, subplebbitul ar putea fi offline și publicarea ar putea eșua."
+  "posts_last_synced_info": "Ultimele postări sincronizate {{time}}, subplebbitul ar putea fi offline și publicarea ar putea eșua.",
+  "newer_than": "mai nou decât",
+  "no_posts": "niciun post"
 }
