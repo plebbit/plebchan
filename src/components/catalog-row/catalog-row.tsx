@@ -164,7 +164,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   return (
     <>
       <div className={styles.post}>
-        <div onMouseOver={() => setHoveredCid(cid)} onMouseLeave={() => setHoveredCid(null)}>
+        <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
           {hasThumbnail ? (
             <Link to={postLink}>
               <div
