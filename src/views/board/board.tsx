@@ -48,7 +48,7 @@ const Board = () => {
   const feedOptions: any = {
     subplebbitAddresses,
     sortType,
-    postsPerPage: 10,
+    postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
   };
 
   if (isInAllView || isInSubscriptionsView) {
