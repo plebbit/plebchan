@@ -1,15 +1,45 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Comment, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useLocation, useParams } from 'react-router-dom';
-import styles from './post-page.module.css';
 import { isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
+import useIsMobile from '../../hooks/use-is-mobile';
 import useReplyModal from '../../hooks/use-reply-modal';
-import Post from '../../components/post';
+import PostDesktop from '../../components/post-desktop';
+import PostMobile from '../../components/post-mobile';
 import ReplyModal from '../../components/reply-modal';
 import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
+import styles from './post.module.css';
+
+export interface PostProps {
+  index?: number;
+  isHidden?: boolean;
+  post?: any;
+  reply?: any;
+  roles?: Role[];
+  showAllReplies?: boolean;
+  showReplies?: boolean;
+  openReplyModal?: (cid: string) => void;
+}
+
+export const Post = ({ post, showAllReplies = false, showReplies = true, openReplyModal }: PostProps) => {
+  const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
+  const isMobile = useIsMobile();
+
+  return (
+    <div className={styles.thread}>
+      <div className={styles.postContainer}>
+        {isMobile ? (
+          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
+        ) : (
+          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
+        )}
+      </div>
+    </div>
+  );
+};
 
 const PostPage = () => {
   const { t } = useTranslation();

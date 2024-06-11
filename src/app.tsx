@@ -9,7 +9,7 @@ import Catalog from './views/catalog';
 import Home from './views/home';
 import NotFound from './views/not-found';
 import PendingPost from './views/pending-post';
-import PostPage from './views/post-page';
+import Post from './views/post';
 import { DesktopBoardButtons, MobileBoardButtons } from './components/board-buttons';
 import BoardHeader from './components/board-header';
 import ChallengeModal from './components/challenge-modal';
@@ -85,16 +85,16 @@ const App = () => {
             <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
             <Route path='/p/:subplebbitAddress/catalog/settings' element={<Catalog />} />
 
-            <Route path='/p/:subplebbitAddress/c/:commentCid' element={<PostPage />} />
-            <Route path='/p/:subplebbitAddress/c/:commentCid/settings' element={<PostPage />} />
-            <Route path='/p/:subplebbitAddress/description' element={<PostPage />} />
-            <Route path='/p/:subplebbitAddress/description/settings' element={<PostPage />} />
-            <Route path='/p/:subplebbitAddress/rules' element={<PostPage />} />
-            <Route path='/p/:subplebbitAddress/rules/settings' element={<PostPage />} />
+            <Route path='/p/:subplebbitAddress/c/:commentCid' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/c/:commentCid/settings' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/description' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/description/settings' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/rules' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/rules/settings' element={<Post />} />
 
             <Route path='/p/all/:timeFilterName?' element={<Board />} />
             <Route path='/p/all/:timeFilterName?/settings' element={<Board />} />
-            <Route path='/p/all/description' element={<PostPage />} />
+            <Route path='/p/all/description' element={<Post />} />
             <Route path='/p/all/catalog/:timeFilterName?' element={<Catalog />} />
             <Route path='/p/all/catalog/:timeFilterName?/settings' element={<Catalog />} />
 

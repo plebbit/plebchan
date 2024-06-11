@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { Comment, useBlock } from '@plebbit/plebbit-react-hooks';
 import styles from './post-menu-desktop.module.css';
-import { getCommentMediaInfo } from '../../../../lib/utils/media-utils';
-import { copyShareLinkToClipboard, isValidURL } from '../../../../lib/utils/url-utils';
-import { isAllView, isCatalogView, isPostPageView, isSubscriptionsView } from '../../../../lib/utils/view-utils';
+import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
+import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-utils';
+import { isAllView, isCatalogView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import _ from 'lodash';
 
 interface PostMenuDesktopProps {

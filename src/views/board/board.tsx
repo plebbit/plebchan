@@ -12,7 +12,7 @@ import useTimeFilter from '../../hooks/use-time-filter';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
-import Post from '../../components/post';
+import { Post } from '../post';
 import ReplyModal from '../../components/reply-modal';
 import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';

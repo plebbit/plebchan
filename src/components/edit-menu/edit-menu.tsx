@@ -3,10 +3,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { PublishCommentEditOptions, useComment, useEditedComment, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
-import { alertChallengeVerificationFailed } from '../../../lib/utils/challenge-utils';
-import useChallengesStore from '../../../stores/use-challenges-store';
+import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
+import useChallengesStore from '../../stores/use-challenges-store';
 import _ from 'lodash';
-import useIsMobile from '../../../hooks/use-is-mobile';
+import useIsMobile from '../../hooks/use-is-mobile';
 
 const { addChallenge } = useChallengesStore.getState();
 

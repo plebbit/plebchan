@@ -1,4 +1,4 @@
-import Post from '../post';
+import { Post } from '../../views/post';
 import { useTranslation } from 'react-i18next';
 import { isAllView } from '../../lib/utils/view-utils';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
