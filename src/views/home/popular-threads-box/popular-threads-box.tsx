@@ -60,6 +60,7 @@ const PopularThreadsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; 
   const filteredSubplebbits = useMemo(getFilteredSubplebbits, [subplebbits, showWorksafeContentOnly, showNsfwContentOnly, multisub]);
   const popularPosts = usePopularPosts(filteredSubplebbits);
 
+  console.log(showWorksafeContentOnly, showNsfwContentOnly);
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>

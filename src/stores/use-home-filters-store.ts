@@ -29,7 +29,7 @@ const useHomeFiltersStore = create<HomeFiltersStore>((set) => ({
     set({ useCatalog: value });
     localStorage.setItem('useCatalog', value.toString());
   },
-  showWorksafeContentOnly: localStorage.getItem('showWorksafeContentOnly') === 'true' ? true : false,
+  showWorksafeContentOnly: localStorage.getItem('showWorksafeContentOnly') === 'true' || localStorage.getItem('showWorksafeContentOnly') === null ? true : false,
   setShowWorksafeContentOnly: (value: boolean) => {
     set({ showWorksafeContentOnly: value });
     localStorage.setItem('showWorksafeContentOnly', value.toString());
