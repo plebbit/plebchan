@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAccount, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './board.module.css';
@@ -87,15 +87,40 @@ const Board = () => {
     </div>
   );
 
+  const { blocked, unblock } = useBlock({ address: subplebbitAddress });
+
   const Footer = () => {
     let footerContent;
     if (feed.length === 0) {
-      footerContent = t('no_posts');
+      if (blocked) {
+        footerContent = 'you have blocked this board';
+      } else {
+        footerContent = t('no_posts');
+      }
     }
     if (hasMore || subplebbitAddresses.length === 0) {
       footerContent = loadingString;
     }
-    return <div className={styles.footer}>{footerContent}</div>;
+    return (
+      <div className={styles.footer}>
+        {footerContent}
+        {blocked && (
+          <>
+            &nbsp;&nbsp;[
+            <span
+              className='button'
+              onClick={() => {
+                unblock();
+                reset();
+              }}
+            >
+              Unblock
+            </span>
+            ]
+          </>
+        )}
+      </div>
+    );
   };
 
   // save the last Virtuoso state to restore it when navigating back

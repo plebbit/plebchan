@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useBlock, useComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
+import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
@@ -220,8 +221,8 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostPageView = isPostPageView(location.pathname, params);
 
-  const { blocked, unblock, block } = useBlock({ cid });
-  const isHidden = blocked && !isInPostPageView;
+  const { hidden, unhide, hide } = useHide({ cid });
+  const isHidden = hidden && !isInPostPageView;
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -250,7 +251,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
       <div className={isHidden ? styles.postDesktopBlocked : ''}>
         {!isInPostPageView && !isDescription && !isRules && showReplies && (
           <span className={styles.hideButtonWrapper}>
-            <span className={`${styles.hideButton} ${blocked ? styles.unhideThread : styles.hideThread}`} onClick={blocked ? unblock : block} />
+            <span className={`${styles.hideButton} ${hidden ? styles.unhideThread : styles.hideThread}`} onClick={hidden ? unhide : hide} />
           </span>
         )}
         {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}

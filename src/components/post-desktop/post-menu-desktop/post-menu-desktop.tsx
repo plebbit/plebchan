@@ -8,6 +8,7 @@ import styles from './post-menu-desktop.module.css';
 import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-utils';
 import { isAllView, isCatalogView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
+import useHide from '../../../hooks/use-hide';
 import _ from 'lodash';
 
 interface PostMenuDesktopProps {
@@ -102,14 +103,34 @@ const ViewOnButton = ({ cid, isDescription, isInAllView, isInSubscriptionsView, 
   );
 };
 
+const BlockUserButton = ({ address }: { address: string }) => {
+  const { blocked, unblock, block } = useBlock({ address });
+
+  return (
+    <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+      {blocked ? 'Unblock' : 'Block'} user
+    </div>
+  );
+};
+
+const BlockBoardButton = ({ address }: { address: string }) => {
+  const { blocked, unblock, block } = useBlock({ address });
+
+  return (
+    <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+      {blocked ? 'Unblock' : 'Block'} board
+    </div>
+  );
+};
+
 const PostMenuDesktop = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
-  const { cid, isDescription, isRules, link, postCid, subplebbitAddress } = post || {};
+  const { author, cid, isDescription, isRules, link, postCid, subplebbitAddress } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
 
-  const { blocked, unblock, block } = useBlock({ cid });
+  const { hidden, unhide, hide } = useHide({ cid });
 
   const location = useLocation();
   const params = useParams();
@@ -154,11 +175,11 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
                 <div
                   className={styles.postMenuItem}
                   onClick={() => {
-                    blocked ? unblock() : block();
+                    hidden ? unhide() : hide();
                     handleClose();
                   }}
                 >
-                  {blocked ? (postCid === cid ? t('unhide_thread') : t('unhide_post')) : postCid === cid ? t('hide_thread') : t('hide_post')}
+                  {hidden ? (postCid === cid ? t('unhide_thread') : t('unhide_post')) : postCid === cid ? t('hide_thread') : t('hide_post')}
                 </div>
               )}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButton url={url} onClose={handleClose} />}
@@ -171,6 +192,8 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
                 subplebbitAddress={subplebbitAddress}
                 onClose={handleClose}
               />
+              <BlockUserButton address={author?.address} />
+              {(isInAllView || isInSubscriptionsView) && <BlockBoardButton address={subplebbitAddress} />}
             </div>
           </FloatingFocusManager>,
           document.body,
