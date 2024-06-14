@@ -176,5 +176,6 @@
   "unblock_user": "Deblochează utilizatorul",
   "block_board": "Blochează forumul",
   "unblock_board": "Deblochează forumul",
-  "unblock_all_confirm": "Sunteți sigur că doriți să deblocați toate adresele de board și adresele de utilizatori?"
+  "unblock_all_confirm": "Sunteți sigur că doriți să deblocați toate adresele de board și adresele de utilizatori?",
+  "hidden": "ascuns"
 }

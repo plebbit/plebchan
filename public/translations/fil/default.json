@@ -176,5 +176,6 @@
   "unblock_user": "I-unblock ang user",
   "block_board": "I-block ang board",
   "unblock_board": "I-unblock ang board",
-  "unblock_all_confirm": "Sigurado ka bang gusto mong i-unblock ang lahat ng mga board address at mga user address?"
+  "unblock_all_confirm": "Sigurado ka bang gusto mong i-unblock ang lahat ng mga board address at mga user address?",
+  "hidden": "nakatago"
 }

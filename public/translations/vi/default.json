@@ -176,5 +176,6 @@
   "unblock_user": "Bỏ chặn người dùng",
   "block_board": "Chặn diễn đàn",
   "unblock_board": "Bỏ chặn diễn đàn",
-  "unblock_all_confirm": "Bạn có chắc chắn muốn bỏ chặn tất cả các địa chỉ diễn đàn và địa chỉ người dùng không?"
+  "unblock_all_confirm": "Bạn có chắc chắn muốn bỏ chặn tất cả các địa chỉ diễn đàn và địa chỉ người dùng không?",
+  "hidden": "ẩn"
 }

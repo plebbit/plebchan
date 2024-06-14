@@ -176,5 +176,6 @@
   "unblock_user": "Desbloquear usuario",
   "block_board": "Bloquear foro",
   "unblock_board": "Desbloquear foro",
-  "unblock_all_confirm": "¿Estás seguro de que quieres desbloquear todas las direcciones de foro y las direcciones de usuario?"
+  "unblock_all_confirm": "¿Estás seguro de que quieres desbloquear todas las direcciones de foro y las direcciones de usuario?",
+  "hidden": "oculto"
 }

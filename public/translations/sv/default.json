@@ -176,5 +176,6 @@
   "unblock_user": "Avblockera användare",
   "block_board": "Blockera forum",
   "unblock_board": "Avblockera forum",
-  "unblock_all_confirm": "Är du säker på att du vill låsa upp alla boardadresser och användaradresser?"
+  "unblock_all_confirm": "Är du säker på att du vill låsa upp alla boardadresser och användaradresser?",
+  "hidden": "dold"
 }

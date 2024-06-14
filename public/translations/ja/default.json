@@ -176,5 +176,6 @@
   "unblock_user": "ユーザーのブロックを解除する",
   "block_board": "掲示板をブロックする",
   "unblock_board": "掲示板のブロックを解除する",
-  "unblock_all_confirm": "すべての掲示板アドレスとユーザーアドレスを解除してもよろしいですか？"
+  "unblock_all_confirm": "すべての掲示板アドレスとユーザーアドレスを解除してもよろしいですか？",
+  "hidden": "隠し"
 }

@@ -176,5 +176,6 @@
   "unblock_user": "Buka blokir pengguna",
   "block_board": "Blokir papan",
   "unblock_board": "Buka blokir forum",
-  "unblock_all_confirm": "Apakah Anda yakin ingin membuka blokir semua alamat board dan alamat pengguna?"
+  "unblock_all_confirm": "Apakah Anda yakin ingin membuka blokir semua alamat board dan alamat pengguna?",
+  "hidden": "tersembunyi"
 }

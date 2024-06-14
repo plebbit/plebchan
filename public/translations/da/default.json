@@ -176,5 +176,6 @@
   "unblock_user": "Fjern blokering af bruger",
   "block_board": "Bloker forum",
   "unblock_board": "Fjern blokering af forum",
-  "unblock_all_confirm": "Er du sikker på, at du vil ophæve blokeringen af alle boardadresser og brugeradresser?"
+  "unblock_all_confirm": "Er du sikker på, at du vil ophæve blokeringen af alle boardadresser og brugeradresser?",
+  "hidden": "skjult"
 }

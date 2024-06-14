@@ -176,5 +176,6 @@
   "unblock_user": "解除封锁用户",
   "block_board": "封锁论坛",
   "unblock_board": "解除封锁论坛",
-  "unblock_all_confirm": "您确定要解锁所有论坛地址和用户地址吗？"
+  "unblock_all_confirm": "您确定要解锁所有论坛地址和用户地址吗？",
+  "hidden": "隐藏"
 }

@@ -176,5 +176,6 @@
   "unblock_user": "Estä käyttäjä",
   "block_board": "Estä foorumi",
   "unblock_board": "Poista foorumin esto",
-  "unblock_all_confirm": "Oletko varma, että haluat poistaa estoja kaikista foorumin osoitteista ja käyttäjien osoitteista?"
+  "unblock_all_confirm": "Oletko varma, että haluat poistaa estoja kaikista foorumin osoitteista ja käyttäjien osoitteista?",
+  "hidden": "piilotettu"
 }

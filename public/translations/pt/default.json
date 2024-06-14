@@ -176,5 +176,6 @@
   "unblock_user": "Desbloquear usuário",
   "block_board": "Bloquear fórum",
   "unblock_board": "Desbloquear fórum",
-  "unblock_all_confirm": "Tem certeza de que deseja desbloquear todos os endereços de board e endereços de usuário?"
+  "unblock_all_confirm": "Tem certeza de que deseja desbloquear todos os endereços de board e endereços de usuário?",
+  "hidden": "escondido"
 }

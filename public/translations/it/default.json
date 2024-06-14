@@ -176,5 +176,6 @@
   "unblock_user": "Sblocca utente",
   "block_board": "Blocca forum",
   "unblock_board": "Sblocca forum",
-  "unblock_all_confirm": "Sei sicuro di voler sbloccare tutti gli indirizzi del forum e gli indirizzi degli utenti?"
+  "unblock_all_confirm": "Sei sicuro di voler sbloccare tutti gli indirizzi del forum e gli indirizzi degli utenti?",
+  "hidden": "nascosto"
 }
