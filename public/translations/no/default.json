@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbiten kan være offline, og publisering kan mislykkes.",
   "posts_last_synced_info": "Siste synkroniserte innlegg {{time}}, subplebbiten kan være offline, og publisering kan mislykkes.",
   "newer_than": "nyere enn",
-  "no_posts": "ingen innlegg"
+  "no_posts": "ingen innlegg",
+  "unblock": "Fjern blokkering",
+  "unblock_all": "Fjern alle blokkeringer",
+  "blocked_addresses": "Blokkerte adresser",
+  "you_have_not_blocked": "Du har ikke blokkert noen bordadresse eller brukeradresse.",
+  "block_user": "Blokker bruker",
+  "unblock_user": "Fjern blokkering av bruker",
+  "block_board": "Blokker forum",
+  "unblock_board": "Fjern blokkering av forum",
+  "unblock_all_confirm": "Er du sikker på at du vil fjerne blokkeringen av alle bordadresser og brukeradresser?"
 }

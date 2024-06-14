@@ -3,13 +3,13 @@
   margin-bottom: 10px;
 }
 
-.blockedAddresses {
-  padding-top: 5px;
+.blockedAddress {
+  padding-bottom: 5px;
+  margin-left: 20px;
 }
 
-.blockedAddress {
-  padding-top: 5px;
-  margin-left: 20px;
+.unblockAll {
+  padding-bottom: 10px;
 }
 
 .button {

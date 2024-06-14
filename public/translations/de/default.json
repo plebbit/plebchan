@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Der Subplebbit könnte offline sein und das Veröffentlichen könnte fehlschlagen.",
   "posts_last_synced_info": "Beiträge zuletzt synchronisiert {{time}}, der Subplebbit könnte offline sein und das Veröffentlichen könnte fehlschlagen.",
   "newer_than": "neuer als",
-  "no_posts": "keine Beiträge"
+  "no_posts": "keine Beiträge",
+  "unblock": "Entsperren",
+  "unblock_all": "Alle entsperren",
+  "blocked_addresses": "Blockierte Adressen",
+  "you_have_not_blocked": "Sie haben keine Board-Adresse oder Benutzeradresse blockiert.",
+  "block_user": "Benutzer blockieren",
+  "unblock_user": "Benutzer entsperren",
+  "block_board": "Forum blockieren",
+  "unblock_board": "Forum entsperren",
+  "unblock_all_confirm": "Möchten Sie wirklich alle Boardadressen und Benutzeradressen entsperren?"
 }

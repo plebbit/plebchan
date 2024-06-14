@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다.",
   "posts_last_synced_info": "최근 동기화된 게시물 {{time}}, 서브플레빗이 오프라인 일 수 있으며 게시가 실패할 수 있습니다.",
   "newer_than": "이전보다 최신",
-  "no_posts": "게시물이 없습니다"
+  "no_posts": "게시물이 없습니다",
+  "unblock": "차단 해제",
+  "unblock_all": "모두 차단 해제",
+  "blocked_addresses": "차단된 주소",
+  "you_have_not_blocked": "게시판 주소나 사용자 주소를 차단하지 않았습니다.",
+  "block_user": "사용자 차단",
+  "unblock_user": "사용자 차단 해제",
+  "block_board": "게시판 차단",
+  "unblock_board": "게시판 차단 해제",
+  "unblock_all_confirm": "모든 게시판 주소와 사용자 주소를 해제하시겠습니까?"
 }

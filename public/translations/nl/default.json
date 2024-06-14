@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "De subplebbit kan offline zijn en publiceren kan mislukken.",
   "posts_last_synced_info": "Laatste keer gesynchroniseerde berichten {{time}}, de subplebbit kan offline zijn en publiceren kan mislukken.",
   "newer_than": "nieuwer dan",
-  "no_posts": "geen berichten"
+  "no_posts": "geen berichten",
+  "unblock": "Deblokkeren",
+  "unblock_all": "Alles deblokkeren",
+  "blocked_addresses": "Geblokkeerde adressen",
+  "you_have_not_blocked": "U heeft geen enkel bordadres of gebruikersadres geblokkeerd.",
+  "block_user": "Gebruiker blokkeren",
+  "unblock_user": "Gebruiker deblokkeren",
+  "block_board": "Forum blokkeren",
+  "unblock_board": "Deblokkeer forum",
+  "unblock_all_confirm": "Weet u zeker dat u alle boardadressen en gebruikersadressen wilt deblokkeren?"
 }

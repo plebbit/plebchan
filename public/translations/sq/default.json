@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbiti mund të jetë jashtë linje dhe publikimi mund të dështojë.",
   "posts_last_synced_info": "Postimet e fundit të sinkronizuara {{time}}, subplebbiti mund të jetë jashtë linje dhe publikimi mund të dështojë.",
   "newer_than": "më i ri se",
-  "no_posts": "asnjë postim"
+  "no_posts": "asnjë postim",
+  "unblock": "Zhblloko",
+  "unblock_all": "Zhblloko të gjitha",
+  "blocked_addresses": "Adresat e bllokuara",
+  "you_have_not_blocked": "Ju nuk keni bllokuar asnjë adresë bordi ose adresë përdoruesi.",
+  "block_user": "Blloko përdoruesin",
+  "unblock_user": "Hiq bllokimin e përdoruesit",
+  "block_board": "Blloko bordi",
+  "unblock_board": "Hiq bllokimin e bordit",
+  "unblock_all_confirm": "A jeni i sigurt se doni të hiqni bllokimin e të gjitha adresave të bordit dhe adresave të përdoruesit?"
 }

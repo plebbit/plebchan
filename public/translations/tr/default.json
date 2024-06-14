@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbit çevrimdışı olabilir ve yayınlama başarısız olabilir.",
   "posts_last_synced_info": "Son senkronize edilen gönderiler {{time}}, subplebbit çevrimdışı olabilir ve yayınlama başarısız olabilir.",
   "newer_than": "daha yeni",
-  "no_posts": "gönderi yok"
+  "no_posts": "gönderi yok",
+  "unblock": "Engeli kaldır",
+  "unblock_all": "Tüm engelleri kaldır",
+  "blocked_addresses": "Engellenen adresler",
+  "you_have_not_blocked": "Herhangi bir board adresi veya kullanıcı adresi engellemediniz.",
+  "block_user": "Kullanıcıyı engelle",
+  "unblock_user": "Kullanıcı engelini kaldır",
+  "block_board": "Forumu engelle",
+  "unblock_board": "Forumu engeli kaldır",
+  "unblock_all_confirm": "Tüm forum adreslerini ve kullanıcı adreslerini engellemek istediğinizden emin misiniz?"
 }

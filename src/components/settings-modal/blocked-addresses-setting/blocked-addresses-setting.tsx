@@ -28,11 +28,15 @@ const BlockedAddressesSetting = () => {
     <div className={styles.setting}>
       {addressList.length > 0 ? (
         <>
-          [
-          <span className={styles.button} onClick={unblockAll}>
-            {t('unblock_all')}
-          </span>
-          ]
+          {addressList.length > 1 && (
+            <div className={styles.unblockAll}>
+              [
+              <span className={styles.button} onClick={unblockAll}>
+                {t('unblock_all')}
+              </span>
+              ]
+            </div>
+          )}
           <ul className={styles.blockedAddresses}>
             {addressList.map((address: string) => (
               <li key={address} className={styles.blockedAddress}>
@@ -42,7 +46,7 @@ const BlockedAddressesSetting = () => {
           </ul>
         </>
       ) : (
-        'You have not blocked any board address or user address.'
+        t('you_have_not_blocked')
       )}
     </div>
   );

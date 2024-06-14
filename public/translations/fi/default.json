@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua.",
   "posts_last_synced_info": "Viimeksi synkronoidut viestit {{time}}, subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua.",
   "newer_than": "uudempi kuin",
-  "no_posts": "ei viestejä"
+  "no_posts": "ei viestejä",
+  "unblock": "Poista estäminen",
+  "unblock_all": "Poista kaikki estot",
+  "blocked_addresses": "Estetyt osoitteet",
+  "you_have_not_blocked": "Et ole estänyt mitään hallituksen osoitetta tai käyttäjän osoitetta.",
+  "block_user": "Estä käyttäjä",
+  "unblock_user": "Estä käyttäjä",
+  "block_board": "Estä foorumi",
+  "unblock_board": "Poista foorumin esto",
+  "unblock_all_confirm": "Oletko varma, että haluat poistaa estoja kaikista foorumin osoitteista ja käyttäjien osoitteista?"
 }

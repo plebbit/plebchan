@@ -104,21 +104,21 @@ const ViewOnButton = ({ cid, isDescription, isInAllView, isInSubscriptionsView, 
 };
 
 export const BlockUserButton = ({ address }: { address: string }) => {
+  const { t } = useTranslation();
   const { blocked, unblock, block } = useBlock({ address });
-
   return (
     <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
-      {blocked ? 'Unblock' : 'Block'} user
+      {blocked ? t('unblock_user') : t('block_user')}
     </div>
   );
 };
 
 export const BlockBoardButton = ({ address }: { address: string }) => {
+  const { t } = useTranslation();
   const { blocked, unblock, block } = useBlock({ address });
-
   return (
     <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
-      {blocked ? 'Unblock' : 'Block'} board
+      {blocked ? t('unblock_board') : t('block_board')}
     </div>
   );
 };

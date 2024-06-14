@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "サブプレビットがオフラインになっている可能性があり、公開が失敗することがあります。",
   "posts_last_synced_info": "最後に同期された投稿 {{time}}, サブプレビットがオフラインになっている可能性があり、公開が失敗することがあります。",
   "newer_than": "より新しい",
-  "no_posts": "投稿はありません"
+  "no_posts": "投稿はありません",
+  "unblock": "ブロック解除",
+  "unblock_all": "すべてのブロックを解除",
+  "blocked_addresses": "ブロックされたアドレス",
+  "you_have_not_blocked": "ボードアドレスまたはユーザーアドレスをブロックしていません。",
+  "block_user": "ユーザーをブロックする",
+  "unblock_user": "ユーザーのブロックを解除する",
+  "block_board": "掲示板をブロックする",
+  "unblock_board": "掲示板のブロックを解除する",
+  "unblock_all_confirm": "すべての掲示板アドレスとユーザーアドレスを解除してもよろしいですか？"
 }
