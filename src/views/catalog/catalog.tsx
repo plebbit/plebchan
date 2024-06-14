@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAccount, Subplebbit, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, Subplebbit, useFeed, useSubplebbit, Comment } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
@@ -9,6 +9,7 @@ import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useWindowWidth from '../../hooks/use-window-width';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import CatalogRow from '../../components/catalog-row';
@@ -16,6 +17,7 @@ import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
 import styles from './catalog.module.css';
 import _ from 'lodash';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -77,6 +79,12 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
 
 const columnWidth = 180;
 
+const catalogFilter = (comment: Comment) => {
+  const commentMediaInfo = getCommentMediaInfo(comment);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, comment?.link);
+  return hasThumbnail;
+};
+
 const Catalog = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -106,11 +114,13 @@ const Catalog = () => {
 
   const { sortType } = useSortingStore();
   const { timeFilterSeconds } = useTimeFilter();
+  const { showTextOnlyThreads } = useCatalogFiltersStore();
 
   const feedOptions: any = {
     subplebbitAddresses,
     sortType,
     postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
+    filter: !showTextOnlyThreads && catalogFilter,
   };
 
   if (isInAllView || isInSubscriptionsView) {

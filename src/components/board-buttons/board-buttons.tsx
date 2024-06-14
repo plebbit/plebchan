@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import useTimeFilter from '../../hooks/use-time-filter';
@@ -95,7 +96,6 @@ const SortOptions = () => {
         <option value='active'>{t('bump_order')}</option>
         <option value='new'>{t('creation_date')}</option>
       </select>
-      &nbsp;
     </>
   );
 };
@@ -184,6 +184,20 @@ export const MobileBoardButtons = () => {
   );
 };
 
+const TextOnlyPostsFilter = () => {
+  const { showTextOnlyThreads, setShowTextOnlyThreads } = useCatalogFiltersStore();
+
+  return (
+    <div>
+      Text-Only Posts:{' '}
+      <select value={showTextOnlyThreads ? 'Show' : 'Hide'} onChange={(e) => setShowTextOnlyThreads(e.target.value === 'Show')}>
+        <option value='Hide'>Hide</option>
+        <option value='Show'>Show</option>
+      </select>
+    </div>
+  );
+};
+
 export const DesktopBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -228,15 +242,14 @@ export const DesktopBoardButtons = () => {
             [<RefreshButton />]
             <span className={styles.rightSideButtons}>
               {isInCatalogView && <SortOptions />}
+              {(isInAllView || isInSubscriptionsView) && (
+                <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
+              )}
+              {isInCatalogView && <TextOnlyPostsFilter />}
               {!(isInAllView || isInSubscriptionsView) && (
                 <>
                   [
                   <SubscribeButton address={subplebbitAddress} />]
-                </>
-              )}
-              {(isInAllView || isInSubscriptionsView) && (
-                <>
-                  <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
                 </>
               )}
             </span>
