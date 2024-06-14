@@ -75,7 +75,7 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
   return (
     <div className={hasError ? '' : styles.mediaWrapper} style={thumbnailDimensions}>
       {!isLoaded && !hasError && type !== 'video' && type !== 'audio' && <span className={styles.loadingSkeleton} />}
-      {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' /> : thumbnailComponent}
+      {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='' /> : thumbnailComponent}
     </div>
   );
 };
@@ -156,21 +156,31 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     subplebbitAddress,
   });
 
-  const postContent = !hidden && (
-    <div className={styles.teaser}>
-      <b>{title && `${title}${content ? ': ' : ''}`}</b>
-      {content}
+  const postContent = (
+    <div className={`${styles.teaser} ${hidden && styles.hidden}`}>
+      {hidden ? (
+        <b>({t('hidden')})</b>
+      ) : (
+        <>
+          <b>{title && `${title}${content ? ': ' : ''}`}</b>
+          {content}
+        </>
+      )}
     </div>
   );
 
   return (
     <>
-      <div className={`${styles.post} ${hidden && styles.hidden}`}>
+      <div className={styles.post}>
         <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
-          {hasThumbnail && !hidden ? (
+          {hidden ? (
+            <Link to={postLink}>
+              <span className={`${styles.blackThumbnail} ${styles.hidden}`} />
+            </Link>
+          ) : hasThumbnail ? (
             <Link to={postLink}>
               <div
-                className={styles.mediaPaddingWrapper}
+                className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
                 ref={refs.setReference}
                 onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
                 onMouseLeave={() => {

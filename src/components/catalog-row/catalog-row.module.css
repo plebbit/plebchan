@@ -20,6 +20,13 @@
   opacity: 0.5;
 }
 
+.blackThumbnail {
+  width: 150px;
+  height: 150px;
+  background-color: black;
+  display: inline-block;
+}
+
 .mediaPaddingWrapper {
   padding-bottom: 5px;
   display: inline-flex;
