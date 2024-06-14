@@ -216,6 +216,20 @@
   padding-bottom: 30px;
 }
 
+.mobileUnhideButton {
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mobileUnhideButton span {
+  padding: 5px 18px 5px;
+}
+
+.unhideButtonHr {
+  margin: 0;
+}
+
 .quotePreview {
   padding: 3px;
 }
