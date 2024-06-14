@@ -33,7 +33,7 @@
   transform: translateY(-1px);
 }
 
-.postDesktopBlocked {
+.postDesktopHidden {
   opacity: 0.5;
 }
 
