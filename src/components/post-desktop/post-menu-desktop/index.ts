@@ -1,1 +1,1 @@
-export { BlockBoardButton, BlockUserButton, default } from './post-menu-desktop';
+export { default } from './post-menu-desktop';

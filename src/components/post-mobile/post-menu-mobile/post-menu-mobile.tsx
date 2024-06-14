@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { Comment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useBlock } from '@plebbit/plebbit-react-hooks';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import styles from './post-menu-mobile.module.css';
 import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-utils';
 import useEditCommentPrivileges from '../../../hooks/use-author-privileges';
 import useHide from '../../../hooks/use-hide';
-import { BlockBoardButton, BlockUserButton } from '../../post-desktop/post-menu-desktop';
 import EditMenu from '../../edit-menu/edit-menu';
 import { isBoardView, isPostPageView } from '../../../lib/utils/view-utils';
 import { useLocation, useParams } from 'react-router-dom';
@@ -84,6 +83,26 @@ const HidePostButton = ({ cid, isReply, postCid }: PostMenuMobileProps) => {
         </div>
       </div>
     )
+  );
+};
+
+const BlockUserButton = ({ address }: { address: string }) => {
+  const { t } = useTranslation();
+  const { blocked, unblock, block } = useBlock({ address });
+  return (
+    <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+      {blocked ? t('unblock_user') : t('block_user')}
+    </div>
+  );
+};
+
+const BlockBoardButton = ({ address }: { address: string }) => {
+  const { t } = useTranslation();
+  const { blocked, unblock, block } = useBlock({ address });
+  return (
+    <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+      {blocked ? t('unblock_board') : t('block_board')}
+    </div>
   );
 };
 
