@@ -108,7 +108,7 @@ const Board = () => {
           <>
             &nbsp;&nbsp;[
             <span
-              className='button'
+              className={styles.button}
               onClick={() => {
                 unblock();
                 reset();

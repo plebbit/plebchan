@@ -103,7 +103,7 @@ const ViewOnButton = ({ cid, isDescription, isInAllView, isInSubscriptionsView, 
   );
 };
 
-const BlockUserButton = ({ address }: { address: string }) => {
+export const BlockUserButton = ({ address }: { address: string }) => {
   const { blocked, unblock, block } = useBlock({ address });
 
   return (
@@ -113,7 +113,7 @@ const BlockUserButton = ({ address }: { address: string }) => {
   );
 };
 
-const BlockBoardButton = ({ address }: { address: string }) => {
+export const BlockBoardButton = ({ address }: { address: string }) => {
   const { blocked, unblock, block } = useBlock({ address });
 
   return (
