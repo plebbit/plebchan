@@ -4,7 +4,6 @@ import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
-import useSortingStore from '../../stores/use-sorting-store';
 import useTimeFilter from '../../hooks/use-time-filter';
 import styles from './board-buttons.module.css';
 
@@ -83,7 +82,7 @@ const RefreshButton = () => {
 
 const SortOptions = () => {
   const { t } = useTranslation();
-  const { sortType, setSortType } = useSortingStore();
+  const { sortType, setSortType } = useCatalogFiltersStore();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const type = event.target.value as 'active' | 'new';

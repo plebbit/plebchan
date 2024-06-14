@@ -11,7 +11,6 @@ import useTimeFilter from '../../hooks/use-time-filter';
 import useWindowWidth from '../../hooks/use-window-width';
 import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
-import useSortingStore from '../../stores/use-sorting-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
@@ -112,9 +111,8 @@ const Catalog = () => {
   // eslint-disable-next-line
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
-  const { sortType } = useSortingStore();
   const { timeFilterSeconds } = useTimeFilter();
-  const { showTextOnlyThreads } = useCatalogFiltersStore();
+  const { showTextOnlyThreads, sortType } = useCatalogFiltersStore();
 
   const feedOptions: any = {
     subplebbitAddresses,
