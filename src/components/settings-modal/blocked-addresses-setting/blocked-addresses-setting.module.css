@@ -1,0 +1,24 @@
+.setting {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.blockedAddresses {
+  padding-top: 5px;
+}
+
+.blockedAddress {
+  padding-top: 5px;
+  margin-left: 20px;
+}
+
+.button {
+  text-transform: capitalize;
+  color: var(--button-desktop-text-color);
+  text-decoration: var(--button-text-decoration);
+}
+
+.button:hover {
+  color: var(--button-desktop-text-color-hover);
+  cursor: pointer;
+}
