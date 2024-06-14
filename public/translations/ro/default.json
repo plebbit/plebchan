@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbitul ar putea fi offline și publicarea ar putea eșua.",
   "posts_last_synced_info": "Ultimele postări sincronizate {{time}}, subplebbitul ar putea fi offline și publicarea ar putea eșua.",
   "newer_than": "mai nou decât",
-  "no_posts": "niciun post"
+  "no_posts": "niciun post",
+  "unblock": "Deblocare",
+  "unblock_all": "Deblocare toate",
+  "blocked_addresses": "Adrese blocate",
+  "you_have_not_blocked": "Nu ați blocat nicio adresă de bord sau adresă de utilizator.",
+  "block_user": "Blochează utilizatorul",
+  "unblock_user": "Deblochează utilizatorul",
+  "block_board": "Blochează forumul",
+  "unblock_board": "Deblochează forumul",
+  "unblock_all_confirm": "Sunteți sigur că doriți să deblocați toate adresele de board și adresele de utilizatori?"
 }

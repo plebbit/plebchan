@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Maaaring offline ang subplebbit at maaaring mabigo ang paglalathala.",
   "posts_last_synced_info": "Huling naka-sync na mga post {{time}}, maaaring offline ang subplebbit at maaaring mabigo ang paglalathala.",
   "newer_than": "mas bago kaysa",
-  "no_posts": "walang post"
+  "no_posts": "walang post",
+  "unblock": "I-unblock",
+  "unblock_all": "I-unblock ang lahat",
+  "blocked_addresses": "Mga blocked na address",
+  "you_have_not_blocked": "Hindi mo na-block ang anumang address ng board o address ng user.",
+  "block_user": "I-block ang user",
+  "unblock_user": "I-unblock ang user",
+  "block_board": "I-block ang board",
+  "unblock_board": "I-unblock ang board",
+  "unblock_all_confirm": "Sigurado ka bang gusto mong i-unblock ang lahat ng mga board address at mga user address?"
 }

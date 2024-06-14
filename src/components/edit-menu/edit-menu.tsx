@@ -142,7 +142,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                   <div className={styles.menuItem}>
                     <label>
                       [
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.deleted} type='checkbox' id='deleted' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.deleted ?? false} type='checkbox' id='deleted' />
                       {_.capitalize(t('delete'))}? ]
                     </label>
                   </div>
@@ -157,7 +157,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                     <div>
                       <textarea
                         className={styles.editTextarea}
-                        value={publishCommentEditOptions.content}
+                        value={publishCommentEditOptions.content ?? ''}
                         ref={contentEditorRef}
                         onChange={(e) => setPublishCommentEditOptions((state) => ({ ...state, content: e.target.value }))}
                       />
@@ -170,7 +170,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                   <div className={styles.menuItem}>
                     <label>
                       [
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed ?? false} type='checkbox' id='removed' />
                       {_.capitalize(t('remove'))}?]
                     </label>
                   </div>
@@ -178,7 +178,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                     <div className={styles.menuItem}>
                       [
                       <label>
-                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type='checkbox' id='locked' />
+                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked ?? false} type='checkbox' id='locked' />
                         {_.capitalize(t('close_thread'))}?
                       </label>
                       ]
@@ -187,7 +187,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler} type='checkbox' id='spoiler' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler ?? false} type='checkbox' id='spoiler' />
                       {_.capitalize(t('spoiler'))}?
                     </label>
                     ]
@@ -195,7 +195,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned} type='checkbox' id='pinned' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned ?? false} type='checkbox' id='pinned' />
                       {_.capitalize(t('sticky'))}?
                     </label>
                     ]
@@ -204,7 +204,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
                     <div className={styles.menuItem}>
                       [
                       <label>
-                        <input onChange={onCheckbox} checked={!!publishCommentEditOptions.commentAuthor?.banExpiresAt} type='checkbox' id='banUser' />
+                        <input onChange={onCheckbox} checked={!!publishCommentEditOptions.commentAuthor?.banExpiresAt ?? false} type='checkbox' id='banUser' />
                         <Trans
                           i18nKey='ban_user_for'
                           shouldUnescape={true}
@@ -221,7 +221,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
               )}
               <div className={`${styles.menuItem} ${styles.menuReason}`}>
                 {_.capitalize(t('reason'))}? ({t('optional')})
-                <input type='text' onChange={onReason} defaultValue={post?.reason} size={14} />
+                <input type='text' onChange={onReason} defaultValue={post?.reason ?? ''} size={14} />
               </div>
               <div className={styles.bottom}>
                 <button className={isMobile ? 'button' : ''} onClick={_publishCommentEdit}>

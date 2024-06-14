@@ -7,14 +7,20 @@ import styles from './post-menu-mobile.module.css';
 import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-utils';
 import useEditCommentPrivileges from '../../../hooks/use-author-privileges';
+import useHide from '../../../hooks/use-hide';
+import { BlockBoardButton, BlockUserButton } from '../../post-desktop/post-menu-desktop';
 import EditMenu from '../../edit-menu/edit-menu';
+import { isBoardView, isPostPageView } from '../../../lib/utils/view-utils';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface PostMenuMobileProps {
   cid: string;
   isDescription?: boolean;
+  isReply?: boolean;
   isRules?: boolean;
-  subplebbitAddress: string;
-  onClose: () => void;
+  postCid?: string;
+  subplebbitAddress?: string;
+  onClose?: () => void;
 }
 
 const CopyLinkButton = ({ cid, subplebbitAddress, onClose }: PostMenuMobileProps) => {
@@ -22,8 +28,10 @@ const CopyLinkButton = ({ cid, subplebbitAddress, onClose }: PostMenuMobileProps
   return (
     <div
       onClick={() => {
-        copyShareLinkToClipboard(subplebbitAddress, cid);
-        onClose();
+        if (subplebbitAddress) {
+          copyShareLinkToClipboard(subplebbitAddress, cid);
+        }
+        onClose && onClose();
       }}
     >
       <div className={styles.postMenuItem}>{t('copy_link')}</div>
@@ -63,13 +71,28 @@ const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose
   );
 };
 
+const HidePostButton = ({ cid, isReply, postCid }: PostMenuMobileProps) => {
+  const { t } = useTranslation();
+  const { hide, hidden, unhide } = useHide({ cid });
+  const isInPostView = isPostPageView(useLocation().pathname, useParams());
+
+  return (
+    (!isInPostView || isReply) && (
+      <div onClick={hidden ? unhide : hide}>
+        <div className={styles.postMenuItem}>
+          {hidden ? (postCid === cid ? t('unhide_thread') : t('unhide_post')) : postCid === cid ? t('hide_thread') : t('hide_post')}
+        </div>
+      </div>
+    )
+  );
+};
+
 const PostMenuMobile = ({ post }: { post: Comment }) => {
-  const { author, cid, isDescription, isRules, link, subplebbitAddress } = post || {};
+  const { author, cid, isDescription, isRules, link, parentCid, subplebbitAddress } = post || {};
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: author?.address, subplebbitAddress });
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
     open: isMenuOpen,
@@ -85,6 +108,8 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
 
   const handleClose = () => setIsMenuOpen(false);
 
+  const isInBoardView = isBoardView(useLocation().pathname, useParams());
+
   return (
     <>
       <span className={styles.postMenuBtn} title='Post menu' onClick={() => setIsMenuOpen((prev) => !prev)} ref={refs.setReference} {...getReferenceProps()}>
@@ -95,6 +120,9 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
+              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={post.postCid} />}
+              {cid && subplebbitAddress && <BlockUserButton address={author?.address} />}
+              {cid && subplebbitAddress && !isInBoardView && <BlockBoardButton address={subplebbitAddress} />}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}
               <ViewOnButtons cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
             </div>

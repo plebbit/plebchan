@@ -1,5 +1,15 @@
-.footer {
-  padding-top: 10px;
+.setting {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.blockedAddress {
+  padding-bottom: 5px;
+  margin-left: 20px;
+}
+
+.unblockAll {
+  padding-bottom: 10px;
 }
 
 .button {
@@ -11,10 +21,4 @@
 .button:hover {
   color: var(--button-desktop-text-color-hover);
   cursor: pointer;
-}
-
-@media (max-width: 640px) {
-  .footer {
-    padding-left: 5px;
-  }
 }

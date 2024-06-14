@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
 import { setAccount, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
+import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useReply from '../../hooks/use-reply';
 import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './reply-modal.module.css';
@@ -76,6 +77,9 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
     }
   }, [parentCid]);
 
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { updatedAt } = subplebbit || {};
   const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
@@ -134,7 +138,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
           />
         </div>
-        {offlineAlert}
+        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
         <div className={styles.offlineAlert}></div>
         <div className={styles.footer}>
           {url && (

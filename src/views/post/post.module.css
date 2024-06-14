@@ -33,7 +33,7 @@
   transform: translateY(-1px);
 }
 
-.postDesktopBlocked {
+.postDesktopHidden {
   opacity: 0.5;
 }
 
@@ -214,6 +214,20 @@
   margin: 0;
   clear: both;
   padding-bottom: 30px;
+}
+
+.mobileUnhideButton {
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mobileUnhideButton span {
+  padding: 5px 18px 5px;
+}
+
+.unhideButtonHr {
+  margin: 0;
 }
 
 .quotePreview {

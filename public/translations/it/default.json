@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Il subplebbit potrebbe essere offline e la pubblicazione potrebbe fallire.",
   "posts_last_synced_info": "Ultimi post sincronizzati {{time}}, il subplebbit potrebbe essere offline e la pubblicazione potrebbe fallire.",
   "newer_than": "più recente di",
-  "no_posts": "nessun post"
+  "no_posts": "nessun post",
+  "unblock": "Sblocca",
+  "unblock_all": "Sblocca tutti",
+  "blocked_addresses": "Indirizzi bloccati",
+  "you_have_not_blocked": "Non hai bloccato nessun indirizzo di forum o utente.",
+  "block_user": "Blocca utente",
+  "unblock_user": "Sblocca utente",
+  "block_board": "Blocca forum",
+  "unblock_board": "Sblocca forum",
+  "unblock_all_confirm": "Sei sicuro di voler sbloccare tutti gli indirizzi del forum e gli indirizzi degli utenti?"
 }

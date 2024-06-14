@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbit mungkin offline dan penerbitan mungkin gagal.",
   "posts_last_synced_info": "Posting terakhir disinkronkan {{time}}, subplebbit mungkin offline dan penerbitan mungkin gagal.",
   "newer_than": "baru daripada",
-  "no_posts": "tidak ada posting"
+  "no_posts": "tidak ada posting",
+  "unblock": "Buka blokir",
+  "unblock_all": "Buka semua blokir",
+  "blocked_addresses": "Alamat yang diblokir",
+  "you_have_not_blocked": "Anda belum memblokir alamat papan atau alamat pengguna apa pun.",
+  "block_user": "Blokir pengguna",
+  "unblock_user": "Buka blokir pengguna",
+  "block_board": "Blokir papan",
+  "unblock_board": "Buka blokir forum",
+  "unblock_all_confirm": "Apakah Anda yakin ingin membuka blokir semua alamat board dan alamat pengguna?"
 }

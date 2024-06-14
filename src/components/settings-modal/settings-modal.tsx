@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './settings-modal.module.css';
 import AccountSettings from './account-settings';
+import BlockedAddressesSetting from './blocked-addresses-setting';
 import CryptoAddressSetting from './crypto-address-setting';
 import CryptoWalletsSetting from './crypto-wallets-setting';
 import InterfaceSettings from './interface-settings';
@@ -19,6 +20,7 @@ const SettingsModal = () => {
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [showCryptoAddressSetting, setShowCryptoAddressSetting] = useState(false);
   const [showCryptoWalletSettings, setShowCryptoWalletSettings] = useState(false);
+  const [showBlockedAddressesSetting, setShowBlockedAddressesSetting] = useState(false);
   const [expandAll, setExpandAll] = useState(false);
 
   const handleExpandAll = () => {
@@ -28,6 +30,7 @@ const SettingsModal = () => {
     setShowAccountSettings(newExpandState);
     setShowCryptoAddressSetting(newExpandState);
     setShowCryptoWalletSettings(newExpandState);
+    setShowBlockedAddressesSetting(newExpandState);
   };
 
   return (
@@ -69,6 +72,13 @@ const SettingsModal = () => {
           </label>
         </div>
         {showCryptoWalletSettings && <CryptoWalletsSetting />}
+        <div className={`${styles.setting} ${styles.category}`}>
+          <label onClick={() => setShowBlockedAddressesSetting(!showBlockedAddressesSetting)}>
+            <span className={showBlockedAddressesSetting ? styles.hideButton : styles.showButton} />
+            {t('blocked_addresses')}
+          </label>
+        </div>
+        {showBlockedAddressesSetting && <BlockedAddressesSetting />}
       </div>
     </>
   );

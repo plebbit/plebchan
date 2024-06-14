@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbit kan vara offline och publicering kan misslyckas.",
   "posts_last_synced_info": "Inlägg senast synkroniserade {{time}}, subplebbit kan vara offline och publicering kan misslyckas.",
   "newer_than": "nyare än",
-  "no_posts": "inga inlägg"
+  "no_posts": "inga inlägg",
+  "unblock": "Avblockera",
+  "unblock_all": "Avblockera alla",
+  "blocked_addresses": "Blockerade adresser",
+  "you_have_not_blocked": "Du har inte blockerat någon brädadress eller användaradress.",
+  "block_user": "Blockera användare",
+  "unblock_user": "Avblockera användare",
+  "block_board": "Blockera forum",
+  "unblock_board": "Avblockera forum",
+  "unblock_all_confirm": "Är du säker på att du vill låsa upp alla boardadresser och användaradresser?"
 }

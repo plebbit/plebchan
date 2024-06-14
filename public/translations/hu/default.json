@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "A subplebbit offline lehet, és a közzététel sikertelen lehet.",
   "posts_last_synced_info": "Legutóbb szinkronizált bejegyzések {{time}}, a subplebbit offline lehet, és a közzététel sikertelen lehet.",
   "newer_than": "újabb, mint",
-  "no_posts": "nincsenek hozzászólások"
+  "no_posts": "nincsenek hozzászólások",
+  "unblock": "Blokkolás feloldása",
+  "unblock_all": "Összes feloldása",
+  "blocked_addresses": "Blokkolt címek",
+  "you_have_not_blocked": "Nem tiltottál le egyetlen táblacímet vagy felhasználói címet sem.",
+  "block_user": "Felhasználó blokkolása",
+  "unblock_user": "Felhasználó feloldása",
+  "block_board": "Fórum blokkolása",
+  "unblock_board": "Fórum feloldása",
+  "unblock_all_confirm": "Biztos vagy benne, hogy fel akarod oldani az összes fórumcímet és felhasználói címet?"
 }

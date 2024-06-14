@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useBlock, useComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
+import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
@@ -212,6 +213,23 @@ const PostMessage = ({ post }: PostProps) => {
   );
 };
 
+const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
+  const { cid, subplebbitAddress } = reply || {};
+  const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
+  const { hidden } = useHide({ cid });
+
+  return (
+    <div className={styles.replyDesktop}>
+      <div className={styles.sideArrows}>{'>>'}</div>
+      <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`} id={reply?.cid}>
+        <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
+        {reply.link && !hidden && isValidURL(reply.link) && <PostMedia post={reply} />}
+        {reply.content && !hidden && <PostMessage post={reply} />}
+      </div>
+    </div>
+  );
+};
+
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -220,8 +238,8 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostPageView = isPostPageView(location.pathname, params);
 
-  const { blocked, unblock, block } = useBlock({ cid });
-  const isHidden = blocked && !isInPostPageView;
+  const { hidden, unhide, hide } = useHide({ cid });
+  const isHidden = hidden && !isInPostPageView;
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
@@ -247,10 +265,10 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
       ) : (
         <div className={styles.replyQuotePreviewSpacer} />
       )}
-      <div className={isHidden ? styles.postDesktopBlocked : ''}>
+      <div className={isHidden ? styles.postDesktopHidden : ''}>
         {!isInPostPageView && !isDescription && !isRules && showReplies && (
           <span className={styles.hideButtonWrapper}>
-            <span className={`${styles.hideButton} ${blocked ? styles.unhideThread : styles.hideThread}`} onClick={blocked ? unblock : block} />
+            <span className={`${styles.hideButton} ${hidden ? styles.unhideThread : styles.hideThread}`} onClick={hidden ? unhide : hide} />
           </span>
         )}
         {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
@@ -281,21 +299,11 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           !isRules &&
           replies &&
           showReplies &&
-          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => {
-            const isRouteLinkToReply = location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`);
-            return (
-              <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
-                <div className={styles.replyDesktop}>
-                  <div className={styles.sideArrows}>{'>>'}</div>
-                  <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
-                    <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-                    {reply.link && isValidURL(reply.link) && <PostMedia post={reply} />}
-                    {reply.content && <PostMessage post={reply} />}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+            <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+              <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} />
+            </div>
+          ))}
       </div>
     </div>
   );

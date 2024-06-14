@@ -9,14 +9,7 @@ const usePopularPosts = (subplebbits: Subplebbit[]) => {
     const uniqueLinks: Set<string> = new Set();
     const allPosts: Comment[] = [];
 
-    let postsPerSub = 1;
-    if (subplebbits.length === 2) {
-      postsPerSub = 4;
-    } else if (subplebbits.length === 3) {
-      postsPerSub = 3;
-    } else if (subplebbits.length >= 4 && subplebbits.length < 8) {
-      postsPerSub = 2;
-    }
+    const postsPerSub = [0, 8, 4, 3, 2, 2, 2, 2, 1][Math.min(subplebbits.length, 8)];
 
     subplebbits.forEach((subplebbit: any) => {
       let subplebbitPosts: Comment[] = [];

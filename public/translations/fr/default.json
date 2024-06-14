@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Le subplebbit pourrait être hors ligne et la publication pourrait échouer.",
   "posts_last_synced_info": "Dernières publications synchronisées {{time}}, le subplebbit pourrait être hors ligne et la publication pourrait échouer.",
   "newer_than": "plus récent que",
-  "no_posts": "pas de publications"
+  "no_posts": "pas de publications",
+  "unblock": "Débloquer",
+  "unblock_all": "Débloquer tout",
+  "blocked_addresses": "Adresses bloquées",
+  "you_have_not_blocked": "Vous n'avez bloqué aucune adresse de board ou d'utilisateur.",
+  "block_user": "Bloquer l'utilisateur",
+  "unblock_user": "Débloquer l'utilisateur",
+  "block_board": "Bloquer le forum",
+  "unblock_board": "Débloquer le forum",
+  "unblock_all_confirm": "Êtes-vous sûr de vouloir débloquer toutes les adresses de forum et les adresses d'utilisateur ?"
 }

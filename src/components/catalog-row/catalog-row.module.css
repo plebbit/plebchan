@@ -16,6 +16,10 @@
   overflow: hidden;
 }
 
+.hidden {
+  opacity: 0.5;
+}
+
 .mediaPaddingWrapper {
   padding-bottom: 5px;
   display: inline-flex;

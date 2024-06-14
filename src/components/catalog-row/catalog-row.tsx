@@ -7,9 +7,10 @@ import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floati
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView } from '../../lib/utils/view-utils';
-import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
-import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
+import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
+import useHide from '../../hooks/use-hide';
 import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
 import _ from 'lodash';
@@ -85,6 +86,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  const { hidden } = useHide({ cid });
 
   const location = useLocation();
   const isInAllView = isAllView(location.pathname);
@@ -154,7 +156,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     subplebbitAddress,
   });
 
-  const postContent = (
+  const postContent = !hidden && (
     <div className={styles.teaser}>
       <b>{title && `${title}${content ? ': ' : ''}`}</b>
       {content}
@@ -163,9 +165,9 @@ const CatalogPost = ({ post }: { post: Comment }) => {
 
   return (
     <>
-      <div className={styles.post}>
+      <div className={`${styles.post} ${hidden && styles.hidden}`}>
         <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
-          {hasThumbnail ? (
+          {hasThumbnail && !hidden ? (
             <Link to={postLink}>
               <div
                 className={styles.mediaPaddingWrapper}

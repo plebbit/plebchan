@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "The subplebbit might be offline and publishing might fail.",
   "posts_last_synced_info": "Posts last synced {{time}}, the subplebbit might be offline and publishing might fail.",
   "newer_than": "newer than",
-  "no_posts": "no posts"
+  "no_posts": "no posts",
+  "unblock": "Unblock",
+  "unblock_all": "Unblock all",
+  "blocked_addresses": "Blocked addresses",
+  "you_have_not_blocked": "You have not blocked any board address or user address.",
+  "block_user": "Block user",
+  "unblock_user": "Unblock user",
+  "block_board": "Block board",
+  "unblock_board": "Unblock board",
+  "unblock_all_confirm": "Are you sure you want to unblock all board addresses and user addresses?"
 }

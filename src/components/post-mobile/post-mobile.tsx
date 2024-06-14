@@ -7,6 +7,7 @@ import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
@@ -171,6 +172,24 @@ const PostMessageMobile = ({ post }: PostProps) => {
   );
 };
 
+const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
+  const { subplebbitAddress, cid } = reply || {};
+  const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
+  const { hidden } = useHide({ cid });
+
+  return (
+    <div className={styles.replyMobile}>
+      <div className={styles.reply}>
+        <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
+          <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
+          {reply.content && !hidden && <PostMessageMobile post={reply} />}
+          <ReplyBacklinks post={reply} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
   const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
@@ -183,6 +202,9 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
   const linksCount = useCountLinksInReplies(post);
   const replies = useReplies(post);
 
+  const isInPostPageView = isPostPageView(location.pathname, params);
+  const { hidden, unhide } = useHide({ cid });
+
   // scroll to reply if pathname is reply permalink (backlink)
   const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
   useEffect(() => {
@@ -193,57 +215,59 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
   }, [location.pathname, replies, subplebbitAddress]);
 
   return (
-    <div className={styles.postMobile}>
-      {showReplies && (
-        <div className={styles.hrWrapper}>
-          <hr />
-        </div>
-      )}
-      <div className={showReplies ? styles.thread : styles.quotePreview}>
-        <div className={styles.postContainer}>
-          <div className={styles.postOp}>
-            <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
-            {content && <PostMessageMobile post={post} />}
-          </div>
-          {!isInPostView && !isInPendingPostView && showReplies && (
-            <div className={styles.postLink}>
-              <span className={styles.info}>
-                {replyCount > 0 && `${replyCount} Replies`}
-                {linksCount > 0 && ` / ${linksCount} Links`}
-              </span>
-              <Link
-                to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`}
-                className='button'
-              >
-                {t('view_thread')}
-              </Link>
+    <>
+      {hidden && !isInPostPageView ? (
+        <>
+          <hr className={styles.unhideButtonHr} />
+          <span className={styles.mobileUnhideButton}>
+            <span className='button' onClick={unhide}>
+              Show Hidden Thread
+            </span>
+          </span>
+        </>
+      ) : (
+        <div className={styles.postMobile}>
+          {showReplies && (
+            <div className={styles.hrWrapper}>
+              <hr />
             </div>
           )}
-        </div>
-        {!(pinned && !isInPostView) &&
-          !isInPendingPostView &&
-          !isDescription &&
-          !isRules &&
-          replies &&
-          showReplies &&
-          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => {
-            const isRouteLinkToReply = location.pathname.startsWith(`/p/${subplebbitAddress}/c/${reply?.cid}`);
-            return (
-              <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
-                <div className={styles.replyMobile}>
-                  <div className={styles.reply}>
-                    <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
-                      <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
-                      {reply.content && <PostMessageMobile post={reply} />}
-                      <ReplyBacklinks post={reply} />
-                    </div>
-                  </div>
-                </div>
+          <div className={showReplies ? styles.thread : styles.quotePreview}>
+            <div className={styles.postContainer}>
+              <div className={styles.postOp}>
+                <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
+                {content && <PostMessageMobile post={post} />}
               </div>
-            );
-          })}
-      </div>
-    </div>
+              {!isInPostView && !isInPendingPostView && showReplies && (
+                <div className={styles.postLink}>
+                  <span className={styles.info}>
+                    {replyCount > 0 && `${replyCount} Replies`}
+                    {linksCount > 0 && ` / ${linksCount} Links`}
+                  </span>
+                  <Link
+                    to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`}
+                    className='button'
+                  >
+                    {t('view_thread')}
+                  </Link>
+                </div>
+              )}
+            </div>
+            {!(pinned && !isInPostView) &&
+              !isInPendingPostView &&
+              !isDescription &&
+              !isRules &&
+              replies &&
+              showReplies &&
+              (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+                <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+                  <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} />
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

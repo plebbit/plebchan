@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbit có thể ngoại tuyến và việc xuất bản có thể thất bại.",
   "posts_last_synced_info": "Bài viết được đồng bộ lần cuối {{time}}, subplebbit có thể ngoại tuyến và việc xuất bản có thể thất bại.",
   "newer_than": "mới hơn",
-  "no_posts": "không có bài viết"
+  "no_posts": "không có bài viết",
+  "unblock": "Bỏ chặn",
+  "unblock_all": "Bỏ chặn tất cả",
+  "blocked_addresses": "Địa chỉ bị chặn",
+  "you_have_not_blocked": "Bạn chưa chặn bất kỳ địa chỉ bảng nào hoặc địa chỉ người dùng.",
+  "block_user": "Chặn người dùng",
+  "unblock_user": "Bỏ chặn người dùng",
+  "block_board": "Chặn diễn đàn",
+  "unblock_board": "Bỏ chặn diễn đàn",
+  "unblock_all_confirm": "Bạn có chắc chắn muốn bỏ chặn tất cả các địa chỉ diễn đàn và địa chỉ người dùng không?"
 }

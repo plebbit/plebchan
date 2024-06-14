@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "子维基可能离线，发布可能失败。",
   "posts_last_synced_info": "最后同步的帖子 {{time}}, 子维基可能离线，发布可能失败。",
   "newer_than": "新于",
-  "no_posts": "没有帖子"
+  "no_posts": "没有帖子",
+  "unblock": "解除封禁",
+  "unblock_all": "解除全部封禁",
+  "blocked_addresses": "被阻止的地址",
+  "you_have_not_blocked": "您尚未封锁任何板块地址或用户地址。",
+  "block_user": "封锁用户",
+  "unblock_user": "解除封锁用户",
+  "block_board": "封锁论坛",
+  "unblock_board": "解除封锁论坛",
+  "unblock_all_confirm": "您确定要解锁所有论坛地址和用户地址吗？"
 }

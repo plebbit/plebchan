@@ -262,6 +262,8 @@ const PostForm = () => {
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   const comment = useComment({ commentCid: useParams().commentCid });
   const { deleted, locked, removed } = comment || {};
@@ -286,7 +288,7 @@ const PostForm = () => {
   return (
     <>
       <div className={styles.postFormDesktop}>
-        {offlineAlert}
+        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -306,7 +308,7 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormMobile}>
-        {offlineAlert}
+        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}

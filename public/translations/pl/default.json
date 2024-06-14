@@ -167,5 +167,14 @@
   "subplebbit_offline_info": "Subplebbit może być offline, a publikacja może się nie powieść.",
   "posts_last_synced_info": "Ostatnio zsynchronizowane posty {{time}}, subplebbit może być offline, a publikacja może się nie powieść.",
   "newer_than": "nowsze niż",
-  "no_posts": "brak postów"
+  "no_posts": "brak postów",
+  "unblock": "Odblokuj",
+  "unblock_all": "Odblokuj wszystkie",
+  "blocked_addresses": "Zablokowane adresy",
+  "you_have_not_blocked": "Nie zablokowałeś żadnego adresu forum ani użytkownika.",
+  "block_user": "Zablokuj użytkownika",
+  "unblock_user": "Odblokuj użytkownika",
+  "block_board": "Zablokuj forum",
+  "unblock_board": "Odblokuj forum",
+  "unblock_all_confirm": "Jesteś pewien, że chcesz odblokować wszystkie adresy forum i adresy użytkowników?"
 }
