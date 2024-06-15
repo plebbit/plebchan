@@ -128,7 +128,7 @@ interface MarkdownProps {
   title?: string;
 }
 
-const Markdown = ({ content, spoiler, title }: MarkdownProps) => {
+const Markdown = ({ content, title }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
   if (content && content.length <= MAX_LENGTH_FOR_GFM) {
