@@ -70,14 +70,19 @@ const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose
   );
 };
 
-const HidePostButton = ({ cid, isReply, postCid }: PostMenuMobileProps) => {
+const HidePostButton = ({ cid, isReply, onClose, postCid }: PostMenuMobileProps) => {
   const { t } = useTranslation();
   const { hide, hidden, unhide } = useHide({ cid });
   const isInPostView = isPostPageView(useLocation().pathname, useParams());
 
   return (
     (!isInPostView || isReply) && (
-      <div onClick={hidden ? unhide : hide}>
+      <div
+        onClick={() => {
+          hidden ? unhide() : hide();
+          onClose && onClose();
+        }}
+      >
         <div className={styles.postMenuItem}>
           {hidden ? (postCid === cid ? t('unhide_thread') : t('unhide_post')) : postCid === cid ? t('hide_thread') : t('hide_post')}
         </div>
@@ -139,7 +144,7 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
-              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={post.postCid} />}
+              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={post.postCid} onClose={handleClose} />}
               {cid && subplebbitAddress && <BlockUserButton address={author?.address} />}
               {cid && subplebbitAddress && !isInBoardView && <BlockBoardButton address={subplebbitAddress} />}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}
