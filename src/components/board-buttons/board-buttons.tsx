@@ -174,7 +174,7 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
-                <SortOptions />
+                <SortOptions /> <CatalogFilters />
               </div>
             </>
           )}
@@ -231,7 +231,12 @@ export const DesktopBoardButtons = () => {
               {(isInAllView || isInSubscriptionsView) && (
                 <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
               )}
-              {(isInCatalogView || isInAllView || isInSubscriptionsView) && <CatalogFilters />}{' '}
+              {(isInCatalogView || isInAllView || isInSubscriptionsView) && (
+                <>
+                  [
+                  <CatalogFilters />]
+                </>
+              )}{' '}
               {!(isInAllView || isInSubscriptionsView) && (
                 <>
                   [

@@ -47,7 +47,6 @@
   border-left: var(--settings-modal-border-left);
 }
 
-
 .header {
   font-size: 16px;
   font-weight: 700;
@@ -77,6 +76,7 @@
 
 .filters {
   padding: 5px;
+  text-align: left;
 }
 
 .filters label {

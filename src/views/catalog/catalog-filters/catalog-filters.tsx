@@ -55,11 +55,10 @@ const CatalogFilters = () => {
 
   return (
     <>
-      [
-      <span className={styles.button} onClick={() => setShowModal(true)}>
+      <span className='button' onClick={() => setShowModal(true)}>
         Filters
       </span>
-      ]{showModal && <FiltersModal closeModal={closeModal} />}
+      {showModal && <FiltersModal closeModal={closeModal} />}
     </>
   );
 };
