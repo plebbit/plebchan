@@ -6,9 +6,11 @@ import supersub from 'remark-supersub';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import { useDismiss, useFloating, useFocus, useHover, useInteractions, offset, shift, size, autoUpdate, Placement, FloatingPortal } from '@floating-ui/react';
 import { getLinkMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { isCatalogView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
 import CommentMedia from '../comment-media';
 import styles from './markdown.module.css';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface ContentLinkEmbedProps {
   children: any;
@@ -146,6 +148,8 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
 
   remarkPlugins.push([blockquoteToGreentext]);
 
+  const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
+
   return (
     <span className={styles.markdown}>
       <ReactMarkdown
@@ -158,13 +162,14 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
           source: ({ src }) => <span>{src}</span>,
-          hr: () => (
-            <div className={styles.hrWrapper}>
-              <hr />
-            </div>
-          ),
+          hr: () =>
+            !isInCatalogView && (
+              <div className={styles.hrWrapper}>
+                <hr />
+              </div>
+            ),
           a: ({ href, children }) => {
-            if (href) {
+            if (href && !isInCatalogView) {
               const linkMediaInfo = getLinkMediaInfo(href);
               if (getHasThumbnail(linkMediaInfo, href)) {
                 return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
