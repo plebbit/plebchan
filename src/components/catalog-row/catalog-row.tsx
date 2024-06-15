@@ -175,7 +175,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
         <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
           {hidden ? (
             <Link to={postLink}>
-              <span className={`${styles.blackThumbnail} ${styles.hidden}`} />
+              <span className={styles.hiddenThumbnail} />
             </Link>
           ) : hasThumbnail ? (
             <Link to={postLink}>
