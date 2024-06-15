@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
+import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useTimeFilter from '../../hooks/use-time-filter';
+import CatalogFilters from '../../views/catalog/catalog-filters/';
 import styles from './board-buttons.module.css';
 
 interface BoardButtonsProps {
@@ -95,7 +96,6 @@ const SortOptions = () => {
         <option value='active'>{t('bump_order')}</option>
         <option value='new'>{t('creation_date')}</option>
       </select>
-      &nbsp;
     </>
   );
 };
@@ -174,7 +174,7 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
-                <SortOptions />
+                <SortOptions /> <CatalogFilters />
               </div>
             </>
           )}
@@ -228,15 +228,19 @@ export const DesktopBoardButtons = () => {
             [<RefreshButton />]
             <span className={styles.rightSideButtons}>
               {isInCatalogView && <SortOptions />}
+              {(isInAllView || isInSubscriptionsView) && (
+                <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
+              )}
+              {(isInCatalogView || isInAllView || isInSubscriptionsView) && (
+                <>
+                  [
+                  <CatalogFilters />]
+                </>
+              )}{' '}
               {!(isInAllView || isInSubscriptionsView) && (
                 <>
                   [
                   <SubscribeButton address={subplebbitAddress} />]
-                </>
-              )}
-              {(isInAllView || isInSubscriptionsView) && (
-                <>
-                  <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
                 </>
               )}
             </span>

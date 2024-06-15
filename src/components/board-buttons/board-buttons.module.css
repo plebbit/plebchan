@@ -43,6 +43,10 @@
   align-items: center;
 }
 
+.desktopBoardButtons .rightSideButtons select {
+  margin-right: 5px;
+}
+
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;

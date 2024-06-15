@@ -20,6 +20,25 @@
   opacity: 0.5;
 }
 
+.hiddenThumbnail {
+  width: 150px;
+  height: 150px;
+  background-color: var(--media-thumbnail-background-color);
+  display: inline-block;
+}
+
+.spoilerThumbnail {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  background-color: black;
+  color: white !important;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
 .mediaPaddingWrapper {
   padding-bottom: 5px;
   display: inline-flex;

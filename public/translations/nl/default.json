@@ -176,5 +176,6 @@
   "unblock_user": "Gebruiker deblokkeren",
   "block_board": "Forum blokkeren",
   "unblock_board": "Deblokkeer forum",
-  "unblock_all_confirm": "Weet u zeker dat u alle boardadressen en gebruikersadressen wilt deblokkeren?"
+  "unblock_all_confirm": "Weet u zeker dat u alle boardadressen en gebruikersadressen wilt deblokkeren?",
+  "hidden": "verborgen"
 }

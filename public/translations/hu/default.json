@@ -176,5 +176,6 @@
   "unblock_user": "Felhasználó feloldása",
   "block_board": "Fórum blokkolása",
   "unblock_board": "Fórum feloldása",
-  "unblock_all_confirm": "Biztos vagy benne, hogy fel akarod oldani az összes fórumcímet és felhasználói címet?"
+  "unblock_all_confirm": "Biztos vagy benne, hogy fel akarod oldani az összes fórumcímet és felhasználói címet?",
+  "hidden": "rejtett"
 }

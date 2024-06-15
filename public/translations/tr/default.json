@@ -176,5 +176,6 @@
   "unblock_user": "Kullanıcı engelini kaldır",
   "block_board": "Forumu engelle",
   "unblock_board": "Forumu engeli kaldır",
-  "unblock_all_confirm": "Tüm forum adreslerini ve kullanıcı adreslerini engellemek istediğinizden emin misiniz?"
+  "unblock_all_confirm": "Tüm forum adreslerini ve kullanıcı adreslerini engellemek istediğinizden emin misiniz?",
+  "hidden": "gizli"
 }

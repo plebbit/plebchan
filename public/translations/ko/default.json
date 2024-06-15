@@ -176,5 +176,6 @@
   "unblock_user": "사용자 차단 해제",
   "block_board": "게시판 차단",
   "unblock_board": "게시판 차단 해제",
-  "unblock_all_confirm": "모든 게시판 주소와 사용자 주소를 해제하시겠습니까?"
+  "unblock_all_confirm": "모든 게시판 주소와 사용자 주소를 해제하시겠습니까?",
+  "hidden": "숨겨진"
 }

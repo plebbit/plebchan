@@ -176,5 +176,6 @@
   "unblock_user": "Benutzer entsperren",
   "block_board": "Forum blockieren",
   "unblock_board": "Forum entsperren",
-  "unblock_all_confirm": "Möchten Sie wirklich alle Boardadressen und Benutzeradressen entsperren?"
+  "unblock_all_confirm": "Möchten Sie wirklich alle Boardadressen und Benutzeradressen entsperren?",
+  "hidden": "versteckt"
 }

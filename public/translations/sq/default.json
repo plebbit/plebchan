@@ -176,5 +176,6 @@
   "unblock_user": "Hiq bllokimin e përdoruesit",
   "block_board": "Blloko bordi",
   "unblock_board": "Hiq bllokimin e bordit",
-  "unblock_all_confirm": "A jeni i sigurt se doni të hiqni bllokimin e të gjitha adresave të bordit dhe adresave të përdoruesit?"
+  "unblock_all_confirm": "A jeni i sigurt se doni të hiqni bllokimin e të gjitha adresave të bordit dhe adresave të përdoruesit?",
+  "hidden": "i fshehur"
 }

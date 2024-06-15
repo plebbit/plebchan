@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { Comment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useBlock } from '@plebbit/plebbit-react-hooks';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import styles from './post-menu-mobile.module.css';
 import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-utils';
 import useEditCommentPrivileges from '../../../hooks/use-author-privileges';
 import useHide from '../../../hooks/use-hide';
-import { BlockBoardButton, BlockUserButton } from '../../post-desktop/post-menu-desktop';
 import EditMenu from '../../edit-menu/edit-menu';
 import { isBoardView, isPostPageView } from '../../../lib/utils/view-utils';
 import { useLocation, useParams } from 'react-router-dom';
@@ -71,19 +70,44 @@ const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose
   );
 };
 
-const HidePostButton = ({ cid, isReply, postCid }: PostMenuMobileProps) => {
+const HidePostButton = ({ cid, isReply, onClose, postCid }: PostMenuMobileProps) => {
   const { t } = useTranslation();
   const { hide, hidden, unhide } = useHide({ cid });
   const isInPostView = isPostPageView(useLocation().pathname, useParams());
 
   return (
     (!isInPostView || isReply) && (
-      <div onClick={hidden ? unhide : hide}>
+      <div
+        onClick={() => {
+          hidden ? unhide() : hide();
+          onClose && onClose();
+        }}
+      >
         <div className={styles.postMenuItem}>
           {hidden ? (postCid === cid ? t('unhide_thread') : t('unhide_post')) : postCid === cid ? t('hide_thread') : t('hide_post')}
         </div>
       </div>
     )
+  );
+};
+
+const BlockUserButton = ({ address }: { address: string }) => {
+  const { t } = useTranslation();
+  const { blocked, unblock, block } = useBlock({ address });
+  return (
+    <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+      {blocked ? t('unblock_user') : t('block_user')}
+    </div>
+  );
+};
+
+const BlockBoardButton = ({ address }: { address: string }) => {
+  const { t } = useTranslation();
+  const { blocked, unblock, block } = useBlock({ address });
+  return (
+    <div className={styles.postMenuItem} onClick={blocked ? unblock : block}>
+      {blocked ? t('unblock_board') : t('block_board')}
+    </div>
   );
 };
 
@@ -120,7 +144,7 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
-              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={post.postCid} />}
+              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={post.postCid} onClose={handleClose} />}
               {cid && subplebbitAddress && <BlockUserButton address={author?.address} />}
               {cid && subplebbitAddress && !isInBoardView && <BlockBoardButton address={subplebbitAddress} />}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}

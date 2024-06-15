@@ -176,5 +176,6 @@
   "unblock_user": "Odblokuj użytkownika",
   "block_board": "Zablokuj forum",
   "unblock_board": "Odblokuj forum",
-  "unblock_all_confirm": "Jesteś pewien, że chcesz odblokować wszystkie adresy forum i adresy użytkowników?"
+  "unblock_all_confirm": "Jesteś pewien, że chcesz odblokować wszystkie adresy forum i adresy użytkowników?",
+  "hidden": "ukryty"
 }

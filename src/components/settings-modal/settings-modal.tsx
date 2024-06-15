@@ -35,7 +35,7 @@ const SettingsModal = () => {
 
   return (
     <>
-      <div className={styles.overlay} onClick={closeModal}></div>
+      <div className={styles.overlay} onClick={closeModal} />
       <div className={styles.settingsModal}>
         <div className={styles.header}>
           <span className={styles.title}>{t('settings')}</span>

@@ -13,6 +13,7 @@ import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
 import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
+import Markdown from '../markdown';
 import _ from 'lodash';
 
 interface CatalogPostMediaProps {
@@ -75,15 +76,31 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
   return (
     <div className={hasError ? '' : styles.mediaWrapper} style={thumbnailDimensions}>
       {!isLoaded && !hasError && type !== 'video' && type !== 'audio' && <span className={styles.loadingSkeleton} />}
-      {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' /> : thumbnailComponent}
+      {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='' /> : thumbnailComponent}
     </div>
   );
 };
 
 const CatalogPost = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
-  const { author, cid, content, isDescription, isRules, lastChildCid, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, timestamp, title } =
-    post || {};
+  const {
+    author,
+    cid,
+    content,
+    isDescription,
+    isRules,
+    lastChildCid,
+    link,
+    linkHeight,
+    linkWidth,
+    locked,
+    pinned,
+    replyCount,
+    spoiler,
+    subplebbitAddress,
+    timestamp,
+    title,
+  } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const { hidden } = useHide({ cid });
@@ -156,21 +173,24 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     subplebbitAddress,
   });
 
-  const postContent = !hidden && (
-    <div className={styles.teaser}>
-      <b>{title && `${title}${content ? ': ' : ''}`}</b>
-      {content}
+  const postContent = (
+    <div className={`${styles.teaser} ${hidden && styles.hidden}`}>
+      {hidden ? <b>({t('hidden')})</b> : <Markdown title={title} content={content} spoiler={spoiler} />}
     </div>
   );
 
   return (
     <>
-      <div className={`${styles.post} ${hidden && styles.hidden}`}>
+      <div className={styles.post}>
         <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
-          {hasThumbnail && !hidden ? (
+          {hidden ? (
+            <Link to={postLink}>
+              <span className={styles.hiddenThumbnail} />
+            </Link>
+          ) : hasThumbnail ? (
             <Link to={postLink}>
               <div
-                className={styles.mediaPaddingWrapper}
+                className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
                 ref={refs.setReference}
                 onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
                 onMouseLeave={() => {
@@ -182,7 +202,13 @@ const CatalogPost = ({ post }: { post: Comment }) => {
                 }}
               >
                 {threadIcons}
-                <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
+                {spoiler ? (
+                  <span className={styles.spoilerThumbnail}>
+                    <span className={styles.spoilerText}>{t('spoiler')}</span>
+                  </span>
+                ) : (
+                  <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
+                )}
               </div>
             </Link>
           ) : (

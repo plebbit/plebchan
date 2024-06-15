@@ -176,5 +176,6 @@
   "unblock_user": "Odblokovat uživatele",
   "block_board": "Blokovat diskuzní fórum",
   "unblock_board": "Odblokovat diskuzní fórum",
-  "unblock_all_confirm": "Jste si jisti, že chcete odblokovat všechny adresy diskuzních fór a adresy uživatelů?"
+  "unblock_all_confirm": "Jste si jisti, že chcete odblokovat všechny adresy diskuzních fór a adresy uživatelů?",
+  "hidden": "skrytý"
 }

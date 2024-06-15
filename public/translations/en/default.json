@@ -176,5 +176,6 @@
   "unblock_user": "Unblock user",
   "block_board": "Block board",
   "unblock_board": "Unblock board",
-  "unblock_all_confirm": "Are you sure you want to unblock all board addresses and user addresses?"
+  "unblock_all_confirm": "Are you sure you want to unblock all board addresses and user addresses?",
+  "hidden": "hidden"
 }

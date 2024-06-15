@@ -53,6 +53,21 @@
   vertical-align: top;
 }
 
+.container input[type="text"], .container textarea {
+  border: var(--post-form-field-input-border, 1px solid #aaa);
+  font-family: var(--post-form-field-font-family, revert);
+  appearance: var(--post-form-field-input-appearance, revert);
+  outline: var(--post-form-field-input-outline, revert);
+  background-color: var(--post-form-field-input-background-color, revert);
+  color: var(--post-form-field-input-color, revert);
+  padding: 2px 4px 3px;
+  font-size: 10pt;
+}
+
+.container input[type="text"]:focus, .container textarea:focus {
+  border: var(--post-form-field-input-focus-border, revert);
+}
+
 .challengeAnswer {
   font-size: 11px !important;
   padding: 0px 2px;

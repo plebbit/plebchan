@@ -6,9 +6,11 @@ import supersub from 'remark-supersub';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import { useDismiss, useFloating, useFocus, useHover, useInteractions, offset, shift, size, autoUpdate, Placement, FloatingPortal } from '@floating-ui/react';
 import { getLinkMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { isCatalogView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
 import CommentMedia from '../comment-media';
 import styles from './markdown.module.css';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface ContentLinkEmbedProps {
   children: any;
@@ -123,9 +125,10 @@ const blockquoteToGreentext = () => (tree: any) => {
 interface MarkdownProps {
   content: string;
   spoiler?: boolean;
+  title?: string;
 }
 
-const Markdown = ({ content, spoiler }: MarkdownProps) => {
+const Markdown = ({ content, spoiler, title }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
   if (content && content.length <= MAX_LENGTH_FOR_GFM) {
@@ -146,25 +149,34 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
 
   remarkPlugins.push([blockquoteToGreentext]);
 
+  const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
+
   return (
     <span className={styles.markdown}>
+      {isInCatalogView && title && (
+        <span>
+          <b>{title}</b>
+          {content ? ': ' : ''}
+        </span>
+      )}
       <ReactMarkdown
         children={content}
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
-          p: ({ children }) => <p>{spoiler ? <span className={styles.spoiler}>{children}</span> : children}</p>,
+          p: ({ children }) => <p className={isInCatalogView ? styles.inline : ''}>{spoiler ? <span className={styles.spoiler}>{children}</span> : children}</p>,
           img: ({ src }) => <span>{src}</span>,
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
           source: ({ src }) => <span>{src}</span>,
-          hr: () => (
-            <div className={styles.hrWrapper}>
-              <hr />
-            </div>
-          ),
+          hr: () =>
+            !isInCatalogView && (
+              <div className={styles.hrWrapper}>
+                <hr />
+              </div>
+            ),
           a: ({ href, children }) => {
-            if (href) {
+            if (href && !isInCatalogView) {
               const linkMediaInfo = getLinkMediaInfo(href);
               if (getHasThumbnail(linkMediaInfo, href)) {
                 return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
@@ -182,5 +194,4 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
     </span>
   );
 };
-
 export default React.memo(Markdown);

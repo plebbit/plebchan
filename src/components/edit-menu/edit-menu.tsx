@@ -42,25 +42,25 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
     }
   }, []);
 
-  const defaultPublishOptions: PublishCommentEditOptions = {
-    commentAuthor: { banExpiresAt },
+  const defaultPublishEditOptions: PublishCommentEditOptions = {
+    commentAuthor: isAccountMod && !isAccountCommentAuthor && banExpiresAt !== undefined ? { banExpiresAt } : undefined,
     commentCid,
-    content,
-    deleted,
-    locked,
-    pinned,
-    removed,
+    content: isAccountCommentAuthor ? content : undefined,
+    deleted: isAccountCommentAuthor ? deleted : undefined,
+    locked: isAccountMod ? locked : undefined,
+    pinned: isAccountMod ? pinned : undefined,
+    removed: isAccountMod ? removed : undefined,
     spoiler,
     subplebbitAddress,
     onChallenge: (...args: any) => addChallenge([...args, post]),
     onChallengeVerification: alertChallengeVerificationFailed,
     onError: (error: Error) => {
       console.warn(error);
-      alert(error.message);
+      alert('Comment edit failed. ' + error.message);
     },
   };
 
-  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishOptions);
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishEditOptions);
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
   const [banDuration, setBanDuration] = useState(1);
@@ -112,6 +112,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
   const headingId = useId();
 
   const _publishCommentEdit = async () => {
+    console.log('publishCommentEditOptions', publishCommentEditOptions);
     try {
       await publishCommentEdit();
     } catch (error) {
