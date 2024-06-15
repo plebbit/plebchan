@@ -27,6 +27,19 @@
   display: inline-block;
 }
 
+.spoilerThumbnail {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  margin: 3px 20px 5px 20px;
+  background-color: black;
+  color: white !important;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
 .mediaPaddingWrapper {
   padding-bottom: 5px;
   display: inline-flex;

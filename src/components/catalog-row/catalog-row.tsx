@@ -13,6 +13,7 @@ import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
 import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
+import Markdown from '../markdown';
 import _ from 'lodash';
 
 interface CatalogPostMediaProps {
@@ -80,10 +81,35 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
   );
 };
 
+const SpoilerImage = ({ postLink }: { postLink: string }) => {
+  const { t } = useTranslation();
+  return (
+    <Link to={postLink} className={styles.spoilerThumbnail}>
+      <span className={styles.spoilerText}>{t('spoiler')}</span>
+    </Link>
+  );
+};
+
 const CatalogPost = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
-  const { author, cid, content, isDescription, isRules, lastChildCid, link, linkHeight, linkWidth, locked, pinned, replyCount, subplebbitAddress, timestamp, title } =
-    post || {};
+  const {
+    author,
+    cid,
+    content,
+    isDescription,
+    isRules,
+    lastChildCid,
+    link,
+    linkHeight,
+    linkWidth,
+    locked,
+    pinned,
+    replyCount,
+    spoiler,
+    subplebbitAddress,
+    timestamp,
+    title,
+  } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const { hidden } = useHide({ cid });
@@ -163,7 +189,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
       ) : (
         <>
           <b>{title && `${title}${content ? ': ' : ''}`}</b>
-          {content}
+          <Markdown content={content} spoiler={spoiler} />
         </>
       )}
     </div>
@@ -178,23 +204,27 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               <span className={styles.hiddenThumbnail} />
             </Link>
           ) : hasThumbnail ? (
-            <Link to={postLink}>
-              <div
-                className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
-                ref={refs.setReference}
-                onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
-                onMouseLeave={() => {
-                  setShowPortal(false);
-                  if (timeoutRef.current) {
-                    clearTimeout(timeoutRef.current);
-                    timeoutRef.current = null;
-                  }
-                }}
-              >
-                {threadIcons}
-                <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
-              </div>
-            </Link>
+            spoiler ? (
+              <SpoilerImage postLink={postLink} />
+            ) : (
+              <Link to={postLink}>
+                <div
+                  className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
+                  ref={refs.setReference}
+                  onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
+                  onMouseLeave={() => {
+                    setShowPortal(false);
+                    if (timeoutRef.current) {
+                      clearTimeout(timeoutRef.current);
+                      timeoutRef.current = null;
+                    }
+                  }}
+                >
+                  {threadIcons}
+                  <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
+                </div>
+              </Link>
+            )
           ) : (
             threadIcons
           )}
