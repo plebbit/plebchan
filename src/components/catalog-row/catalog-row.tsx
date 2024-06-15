@@ -81,15 +81,6 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
   );
 };
 
-const SpoilerImage = ({ postLink }: { postLink: string }) => {
-  const { t } = useTranslation();
-  return (
-    <Link to={postLink} className={styles.spoilerThumbnail}>
-      <span className={styles.spoilerText}>{t('spoiler')}</span>
-    </Link>
-  );
-};
-
 const CatalogPost = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
   const {
@@ -204,27 +195,29 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               <span className={styles.hiddenThumbnail} />
             </Link>
           ) : hasThumbnail ? (
-            spoiler ? (
-              <SpoilerImage postLink={postLink} />
-            ) : (
-              <Link to={postLink}>
-                <div
-                  className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
-                  ref={refs.setReference}
-                  onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
-                  onMouseLeave={() => {
-                    setShowPortal(false);
-                    if (timeoutRef.current) {
-                      clearTimeout(timeoutRef.current);
-                      timeoutRef.current = null;
-                    }
-                  }}
-                >
-                  {threadIcons}
+            <Link to={postLink}>
+              <div
+                className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
+                ref={refs.setReference}
+                onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
+                onMouseLeave={() => {
+                  setShowPortal(false);
+                  if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                    timeoutRef.current = null;
+                  }
+                }}
+              >
+                {threadIcons}
+                {spoiler ? (
+                  <span className={styles.spoilerThumbnail}>
+                    <span className={styles.spoilerText}>{t('spoiler')}</span>
+                  </span>
+                ) : (
                   <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
-                </div>
-              </Link>
-            )
+                )}
+              </div>
+            </Link>
           ) : (
             threadIcons
           )}
