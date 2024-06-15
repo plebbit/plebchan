@@ -24,12 +24,12 @@
 
 .settingsModal {
   top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 394px;
   height: auto;
   max-height: 80%;
-  left: calc(50% - 22px);
   overflow-y: auto;
-  margin-left: -178px;
   position: fixed;
   z-index: 5;
   padding: 2px;

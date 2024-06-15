@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAccount, Subplebbit, useFeed, useSubplebbit, Comment } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useTimeFilter from '../../hooks/use-time-filter';
@@ -91,21 +91,39 @@ const Catalog = () => {
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
 
   const isInAllView = isAllView(location.pathname);
-  const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
+  const defaultSubplebbits = useDefaultSubplebbits();
+  const { showAdultBoards, showGoreBoards } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
   const isInSubscriptionsView = isSubscriptionsView(location.pathname);
 
   const subplebbitAddresses = useMemo(() => {
+    const filteredDefaultSubplebbits = defaultSubplebbits
+      .filter((subplebbit) => {
+        const { tags } = subplebbit;
+        const hasGoreTag = tags?.includes('gore');
+        const hasAdultTag = tags?.includes('adult');
+
+        if ((hasGoreTag && !showGoreBoards) || (hasAdultTag && !showAdultBoards)) {
+          return false;
+        }
+        return true;
+      })
+      .map((subplebbit) => subplebbit.address);
+
     if (isInAllView) {
-      return defaultSubplebbitAddresses;
+      return filteredDefaultSubplebbits;
     }
     if (isInSubscriptionsView) {
       return subscriptions || [];
     }
     return [subplebbitAddress];
-  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
+  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbits, subscriptions, showAdultBoards, showGoreBoards]);
+
+  useEffect(() => {
+    console.log(showAdultBoards, showGoreBoards);
+  }, [showAdultBoards, showGoreBoards]);
 
   const columnCount = Math.floor(useWindowWidth() / columnWidth);
   // postPerPage based on columnCount for optimized feed, dont change value after first render

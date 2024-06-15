@@ -1,0 +1,99 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 4;
+}
+
+.button {
+  text-transform: capitalize;
+  color: var(--button-desktop-text-color);
+  text-decoration: var(--button-text-decoration);
+}
+
+.button:hover {
+  color: var(--button-desktop-text-color-hover);
+  cursor: pointer;
+}
+
+.modal label, .modal button, .modal select {
+  cursor: pointer;
+}
+
+.modal button {
+  text-transform: capitalize;
+}
+
+.modal {
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  height: auto;
+  max-height: 80%;
+  overflow-y: auto;
+  position: fixed;
+  z-index: 5;
+  padding: 2px;
+  font-size: var(--settings-modal-font-size);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  background-color: var(--settings-modal-background-color);
+  border-top: var(--settings-modal-border-top);
+  border-right: var(--settings-modal-border-right);
+  border-bottom: var(--settings-modal-border-bottom);
+  border-left: var(--settings-modal-border-left);
+}
+
+
+.header {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  line-height: 14px;
+  border-bottom: var(--settings-modal-header-border-bottom);
+}
+
+.title {
+  text-transform: capitalize;
+}
+
+.closeButton {
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  display: block;
+  background-size: 100%;
+  position: absolute;
+  top: 5px;
+  image-rendering: pixelated;
+  background-image: var(--settings-modal-close-button-background-image);
+}
+
+.filters {
+  padding: 5px;
+}
+
+.filters label {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.filters label input[type='checkbox'] {
+  margin-right: 5px;
+}
+
+.categoryTitle {
+  font-size: 14px;
+  font-weight: 700;
+  padding-bottom: 5px;
+}
+
+.paddingBottom {
+  padding-bottom: 5px;
+}

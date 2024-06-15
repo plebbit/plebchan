@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
+import useSortingStore from '../../stores/use-sorting-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useTimeFilter from '../../hooks/use-time-filter';
+import CatalogFilters from '../../views/catalog/catalog-filters/';
 import styles from './board-buttons.module.css';
 
 interface BoardButtonsProps {
@@ -82,7 +83,7 @@ const RefreshButton = () => {
 
 const SortOptions = () => {
   const { t } = useTranslation();
-  const { sortType, setSortType } = useCatalogFiltersStore();
+  const { sortType, setSortType } = useSortingStore();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const type = event.target.value as 'active' | 'new';
@@ -183,20 +184,6 @@ export const MobileBoardButtons = () => {
   );
 };
 
-const TextOnlyPostsFilter = () => {
-  const { showTextOnlyThreads, setShowTextOnlyThreads } = useCatalogFiltersStore();
-
-  return (
-    <div>
-      Text-Only Posts:{' '}
-      <select value={showTextOnlyThreads ? 'Show' : 'Hide'} onChange={(e) => setShowTextOnlyThreads(e.target.value === 'Show')}>
-        <option value='Hide'>Hide</option>
-        <option value='Show'>Show</option>
-      </select>
-    </div>
-  );
-};
-
 export const DesktopBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -244,7 +231,7 @@ export const DesktopBoardButtons = () => {
               {(isInAllView || isInSubscriptionsView) && (
                 <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
               )}
-              {isInCatalogView && <TextOnlyPostsFilter />}
+              {(isInCatalogView || isInAllView || isInSubscriptionsView) && <CatalogFilters />}{' '}
               {!(isInAllView || isInSubscriptionsView) && (
                 <>
                   [
