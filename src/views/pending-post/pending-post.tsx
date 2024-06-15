@@ -25,7 +25,7 @@ const PendingPost = () => {
   return (
     <>
       {isInSettingsView && <SettingsModal />}
-      <Post post={post} showReplies={false} />;
+      <Post post={post} showReplies={false} />
     </>
   );
 };
