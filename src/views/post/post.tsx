@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useLocation, useParams } from 'react-router-dom';
 import { isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -55,8 +55,9 @@ const PostPage = () => {
 
   const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
-  const comment: Comment = useComment({ commentCid });
-  // if the comment is a reply, get the parent comment
+  const comment = useComment({ commentCid });
+
+  // if the comment is a reply, return the post comment instead, then the reply will be highlighted in the thread
   const postComment = useComment({ commentCid: comment?.postCid });
   let post;
   if (comment.parentCid) {
@@ -64,6 +65,7 @@ const PostPage = () => {
   } else {
     post = comment;
   }
+
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: post });
   if (editedComment) {

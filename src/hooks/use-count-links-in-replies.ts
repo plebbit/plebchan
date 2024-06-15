@@ -4,7 +4,7 @@ import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/util
 
 const useCountLinksInReplies = (comment: Comment, firstXReplies?: number) => {
   let linkCount = 0;
-  const flattenedReplies = useMemo(() => flattenCommentsPages(comment.replies), [comment.replies]);
+  const flattenedReplies = useMemo(() => flattenCommentsPages(comment?.replies), [comment?.replies]);
 
   const repliesToConsider = firstXReplies !== undefined ? flattenedReplies.slice(0, firstXReplies) : flattenedReplies;
 

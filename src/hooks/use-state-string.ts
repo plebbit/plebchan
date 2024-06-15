@@ -49,7 +49,7 @@ const useStateString = (commentOrSubplebbit: CommentOrSubplebbit): string | unde
       if (commentOrSubplebbit?.publishingState && commentOrSubplebbit?.publishingState !== 'stopped' && commentOrSubplebbit?.publishingState !== 'succeeded') {
         stateString = commentOrSubplebbit.publishingState;
       } else if (commentOrSubplebbit?.updatingState !== 'stopped' && commentOrSubplebbit?.updatingState !== 'succeeded') {
-        stateString = commentOrSubplebbit.updatingState;
+        stateString = commentOrSubplebbit?.updatingState;
       }
       if (stateString) {
         stateString = stateString.replaceAll('-', ' ').replace('ipfs', 'IPFS').replace('ipns', 'IPNS');

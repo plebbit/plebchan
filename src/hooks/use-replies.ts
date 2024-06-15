@@ -4,17 +4,17 @@ import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/util
 
 const useReplies = (comment: Comment) => {
   // flatten all replies including nested ones from the original comment
-  const flattenedReplies = useMemo(() => flattenCommentsPages(comment.replies), [comment.replies]);
+  const flattenedReplies = useMemo(() => flattenCommentsPages(comment?.replies), [comment?.replies]);
 
   // generate a Set of CIDs from flattened replies for quick lookup
-  const replyCids = useMemo(() => new Set(flattenedReplies.map((reply) => reply.cid)), [flattenedReplies]);
+  const replyCids = useMemo(() => new Set(flattenedReplies.map((reply) => reply?.cid)), [flattenedReplies]);
 
   // filter against the original comment's CID and all CIDs in flattened replies
   const filter = useCallback(
     (accountComment: Comment) => {
-      return accountComment.parentCid === comment.cid || replyCids.has(accountComment.parentCid);
+      return accountComment.parentCid === comment?.cid || replyCids.has(accountComment.parentCid);
     },
-    [comment.cid, replyCids],
+    [comment?.cid, replyCids],
   );
 
   const { accountComments } = useAccountComments({ filter });
