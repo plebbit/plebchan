@@ -10,7 +10,7 @@ import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
-import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
+import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import { Post } from '../post';
 import ReplyModal from '../../components/reply-modal';
@@ -42,7 +42,7 @@ const Board = () => {
     return [subplebbitAddress];
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
 
-  const { sortType } = useCatalogFiltersStore();
+  const { sortType } = useSortingStore();
   const { timeFilterSeconds } = useTimeFilter();
 
   const feedOptions: any = {
