@@ -175,14 +175,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
 
   const postContent = (
     <div className={`${styles.teaser} ${hidden && styles.hidden}`}>
-      {hidden ? (
-        <b>({t('hidden')})</b>
-      ) : (
-        <>
-          <b>{title && `${title}${content ? ': ' : ''}`}</b>
-          <Markdown content={content} spoiler={spoiler} />
-        </>
-      )}
+      {hidden ? <b>({t('hidden')})</b> : <Markdown title={title} content={content} spoiler={spoiler} />}
     </div>
   );
 

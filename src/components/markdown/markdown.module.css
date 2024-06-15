@@ -45,3 +45,7 @@
   border: 1px solid #b7c5d9;
   padding: 2px;
 }
+
+.inline {
+  display: inline;
+}

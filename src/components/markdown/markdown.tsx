@@ -125,9 +125,10 @@ const blockquoteToGreentext = () => (tree: any) => {
 interface MarkdownProps {
   content: string;
   spoiler?: boolean;
+  title?: string;
 }
 
-const Markdown = ({ content, spoiler }: MarkdownProps) => {
+const Markdown = ({ content, spoiler, title }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
   if (content && content.length <= MAX_LENGTH_FOR_GFM) {
@@ -152,12 +153,18 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
 
   return (
     <span className={styles.markdown}>
+      {isInCatalogView && title && (
+        <span>
+          <b>{title}</b>
+          {content ? ': ' : ''}
+        </span>
+      )}
       <ReactMarkdown
         children={content}
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
-          p: ({ children }) => <p>{spoiler ? <span className={styles.spoiler}>{children}</span> : children}</p>,
+          p: ({ children }) => <p className={isInCatalogView ? styles.inline : ''}>{spoiler ? <span className={styles.spoiler}>{children}</span> : children}</p>,
           img: ({ src }) => <span>{src}</span>,
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
@@ -187,5 +194,4 @@ const Markdown = ({ content, spoiler }: MarkdownProps) => {
     </span>
   );
 };
-
 export default React.memo(Markdown);
