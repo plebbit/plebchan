@@ -4,7 +4,7 @@ import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lr
 interface ThemeState {
   themes: Record<string, string>;
   setTheme: (subplebbitAddress: string, theme: string) => void;
-  getTheme: (subplebbitAddress: string) => string;
+  getTheme: (subplebbitAddress: string) => string | null;
   loadThemes: () => void;
 }
 
@@ -23,7 +23,7 @@ const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'],
   },
   getTheme: (subplebbitAddress: string) => {
     const currentThemes = get().themes;
-    return currentThemes[subplebbitAddress] || 'yotsuba-b';
+    return currentThemes[subplebbitAddress] || null;
   },
   loadThemes: async () => {
     const entries: [string, string][] = await themeStore.entries();
