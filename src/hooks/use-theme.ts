@@ -35,7 +35,7 @@ const useTheme = (): [string, (theme: string) => void] => {
       return 'yotsuba-b';
     }
     return 'yotsuba';
-  }, [location.pathname, subplebbitAddress, subplebbits, getTheme]);
+  }, [subplebbitAddress, subplebbits, getTheme, isInAllView, isInHomeView, isInNotFoundView, isInSubscriptionsView]);
 
   const [theme, setLocalTheme] = useState(initialTheme);
 
