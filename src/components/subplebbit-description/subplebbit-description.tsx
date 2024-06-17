@@ -2,7 +2,7 @@ import { Post } from '../../views/post';
 import { useTranslation } from 'react-i18next';
 import { isAllView } from '../../lib/utils/view-utils';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface DescriptionPostProps {
   avatarUrl?: string;
@@ -16,7 +16,7 @@ interface DescriptionPostProps {
 const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress, subplebbitAddress, title }: DescriptionPostProps) => {
   const { t } = useTranslation();
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, useParams());
   const multisubMetadata = useMultisubMetadata();
 
   const post = {

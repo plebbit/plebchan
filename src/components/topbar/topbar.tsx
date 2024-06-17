@@ -104,9 +104,9 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
 
   const location = useLocation();
   const params = useParams();
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, params);
   const isInCatalogView = isCatalogView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const selectValue = isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress;
 
   const boardSelect = (

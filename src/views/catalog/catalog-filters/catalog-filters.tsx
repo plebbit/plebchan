@@ -9,8 +9,9 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation();
   const { showAdultBoards, setShowAdultBoards, showGoreBoards, setShowGoreBoards, showTextOnlyThreads, setShowTextOnlyThreads } = useCatalogFiltersStore();
   const location = useLocation();
-  const isInCatalogView = isCatalogView(location.pathname, useParams());
-  const isInAllView = isAllView(location.pathname);
+  const params = useParams();
+  const isInCatalogView = isCatalogView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname, params);
 
   return (
     <>

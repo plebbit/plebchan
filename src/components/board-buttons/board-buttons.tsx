@@ -144,11 +144,11 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
 export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, params);
   const isInCatalogView = isCatalogView(location.pathname, params);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
@@ -190,10 +190,10 @@ export const DesktopBoardButtons = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
   const isInCatalogView = isCatalogView(location.pathname, params);
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, params);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   return (
     <>

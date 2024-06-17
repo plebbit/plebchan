@@ -65,8 +65,12 @@ const CheckForUpdates = () => {
 const Style = () => {
   const [theme, setTheme] = useTheme();
 
+  const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTheme(e.target.value);
+  };
+
   return (
-    <select className={styles.themeSettings} value={theme} onChange={(e) => setTheme(e.target.value)}>
+    <select className={styles.themeSettings} value={theme} onChange={handleThemeChange}>
       <option value='yotsuba'>Yotsuba</option>
       <option value='yotsuba-b'>Yotsuba B</option>
       <option value='futaba'>Futaba</option>

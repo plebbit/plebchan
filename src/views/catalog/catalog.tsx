@@ -27,7 +27,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
   const { avatarUrl } = suggested || {};
 
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, useParams());
   const multisub = useMultisubMetadata();
 
   const feedWithDescriptionAndRules = useMemo(() => {
@@ -90,13 +90,13 @@ const Catalog = () => {
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
 
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbits = useDefaultSubplebbits();
   const { showAdultBoards, showGoreBoards } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const subplebbitAddresses = useMemo(() => {
     const filteredDefaultSubplebbits = defaultSubplebbits
@@ -120,10 +120,6 @@ const Catalog = () => {
     }
     return [subplebbitAddress];
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbits, subscriptions, showAdultBoards, showGoreBoards]);
-
-  useEffect(() => {
-    console.log(showAdultBoards, showGoreBoards);
-  }, [showAdultBoards, showGoreBoards]);
 
   const columnCount = Math.floor(useWindowWidth() / columnWidth);
   // postPerPage based on columnCount for optimized feed, dont change value after first render
