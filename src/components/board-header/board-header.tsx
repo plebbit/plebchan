@@ -20,8 +20,8 @@ const BoardHeader = () => {
   const location = useLocation();
   const params = useParams();
 
-  const isInAllView = isAllView(location.pathname);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInAllView = isAllView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;

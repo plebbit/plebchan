@@ -112,7 +112,6 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
   const headingId = useId();
 
   const _publishCommentEdit = async () => {
-    console.log('publishCommentEditOptions', publishCommentEditOptions);
     try {
       await publishCommentEdit();
     } catch (error) {

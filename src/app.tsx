@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { isAllView, isHomeView, isSubscriptionsView } from './lib/utils/view-utils';
+import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
-import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
 import Board from './views/board';
 import Catalog from './views/catalog';
@@ -16,17 +14,19 @@ import ChallengeModal from './components/challenge-modal';
 import PostForm from './components/post-form';
 import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
+import { timeFilterNames } from './hooks/use-time-filter';
+import useTheme from './hooks/use-theme';
 
 const BoardLayout = () => {
-  const { accountCommentIndex, subplebbitAddress } = useParams();
+  const { accountCommentIndex, subplebbitAddress, timeFilterName } = useParams();
   const location = useLocation();
   const isMobile = useIsMobile();
-  const isInAllView = isAllView(location.pathname);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInAllView = isAllView(location.pathname, useParams());
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
 
-  if (!isValidAccountCommentIndex) {
+  if (!isValidAccountCommentIndex || (timeFilterName && !timeFilterNames.includes(timeFilterName))) {
     return <NotFound />;
   }
 
@@ -56,28 +56,22 @@ const BoardLayout = () => {
   );
 };
 
-const App = () => {
-  const location = useLocation();
-  const isInHomeView = isHomeView(location.pathname);
-  const [theme] = useTheme();
+const GlobalLayout = () => {
+  useTheme();
 
-  useEffect(() => {
-    document.body.classList.forEach((className) => document.body.classList.remove(className));
-    const classToAdd = isInHomeView ? 'yotsuba' : theme;
-    document.body.classList.add(classToAdd);
-  }, [theme, isInHomeView]);
-
-  const globalLayout = (
+  return (
     <>
       <ChallengeModal />
       <Outlet />
     </>
   );
+};
 
+const App = () => {
   return (
     <div className={styles.app}>
       <Routes>
-        <Route element={globalLayout}>
+        <Route element={<GlobalLayout />}>
           <Route path='/' element={<Home />} />
           <Route element={<BoardLayout />}>
             <Route path='/p/:subplebbitAddress' element={<Board />} />

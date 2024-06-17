@@ -134,10 +134,10 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
 
   const location = useLocation();
   const params = useParams();
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, params);
   const isInCatalogView = isCatalogView(location.pathname, params);
   const isInPostPageView = isPostPageView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',

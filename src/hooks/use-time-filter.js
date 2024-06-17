@@ -40,7 +40,7 @@ if (secondsSinceLastVisit > 30 * day) {
   timeFilterNamesToSeconds[lastVisitTimeFilterName] = timeFilterNamesToSeconds['24h'];
 }
 
-const timeFilterNames = [lastVisitTimeFilterName, '1h', '12h', '24h', '48h', 'week', 'month', 'year', 'all'];
+export const timeFilterNames = [lastVisitTimeFilterName, '1h', '12h', '24h', '48h', 'week', 'month', 'year', 'all'];
 
 const useTimeFilter = () => {
   const params = useParams();

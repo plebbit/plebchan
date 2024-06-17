@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
-import { setAccount, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { setAccount, useAccount, useAuthorAddress, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
@@ -78,8 +78,8 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   }, [parentCid]);
 
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInAllView = isAllView(location.pathname, useParams());
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { updatedAt } = subplebbit || {};
   const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;

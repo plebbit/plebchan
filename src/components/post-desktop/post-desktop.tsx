@@ -34,9 +34,9 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
   const params = useParams();
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
   const authorRole = roles?.[address]?.role;

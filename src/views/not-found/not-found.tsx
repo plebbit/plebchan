@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { HomeLogo } from '../home';
 import styles from './not-found.module.css';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import useTheme from '../../hooks/use-theme';
 
 const totalNotFoundImages = 2;
 
@@ -19,22 +18,6 @@ const NotFoundImage = () => {
 const NotFound = () => {
   const { subplebbitAddress } = useParams();
   const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3K[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
-
-  const [theme, setTheme] = useTheme();
-  const previousThemeRef = useRef(theme);
-
-  useEffect(() => {
-    if (theme !== 'yotsuba') {
-      previousThemeRef.current = theme;
-      setTheme('yotsuba');
-    }
-
-    return () => {
-      if (theme === 'yotsuba') {
-        setTheme(previousThemeRef.current);
-      }
-    };
-  }, [theme, setTheme]);
 
   return (
     <div className={styles.wrapper}>

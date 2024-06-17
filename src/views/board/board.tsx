@@ -25,12 +25,12 @@ const Board = () => {
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
 
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const subplebbitAddresses = useMemo(() => {
     if (isInAllView) {

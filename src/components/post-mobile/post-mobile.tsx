@@ -26,8 +26,8 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const { address, displayName, shortAddress } = author || {};
 
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname);
+  const isInAllView = isAllView(location.pathname, useParams());
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const authorRole = roles?.[address]?.role;
   const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
@@ -196,7 +196,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname);
+  const isInAllView = isAllView(location.pathname, params);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const linksCount = useCountLinksInReplies(post);
