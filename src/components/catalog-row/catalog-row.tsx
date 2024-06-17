@@ -7,6 +7,7 @@ import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floati
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView } from '../../lib/utils/view-utils';
+import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
@@ -50,7 +51,16 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
     displayHeight = 'unset';
   }
 
-  const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
+  const { imageSize } = useCatalogStyleStore();
+  const maxWidth = imageSize === 'Large' ? '250px' : '150px';
+  const maxHeight = imageSize === 'Large' ? '250px' : '150px';
+
+  const CSSProperties = {
+    '--width': displayWidth,
+    '--height': displayHeight,
+    '--maxWidth': maxWidth,
+    '--maxHeight': maxHeight,
+  } as React.CSSProperties;
 
   let thumbnailComponent: React.ReactNode = null;
 
@@ -74,7 +84,7 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
   }
 
   return (
-    <div className={hasError ? '' : styles.mediaWrapper} style={thumbnailDimensions}>
+    <div className={hasError ? '' : styles.mediaWrapper} style={CSSProperties}>
       {!isLoaded && !hasError && type !== 'video' && type !== 'audio' && <span className={styles.loadingSkeleton} />}
       {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='' /> : thumbnailComponent}
     </div>
@@ -179,9 +189,11 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     </div>
   );
 
+  const { imageSize, showOPComment } = useCatalogStyleStore();
+
   return (
     <>
-      <div className={styles.post}>
+      <div className={`${styles.post} ${imageSize === 'Large' ? styles.large : ''}`}>
         <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
           {hidden ? (
             <Link to={postLink}>
@@ -226,7 +238,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               <PostMenuDesktop post={post} />
             </span>
           </div>
-          {hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>}
+          {showOPComment && (hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>)}
         </div>
       </div>
       {hoveredCid === cid &&

@@ -16,20 +16,24 @@
   overflow: hidden;
 }
 
+.large {
+  width: 270px !important;
+}
+
 .hidden {
   opacity: 0.5;
 }
 
 .hiddenThumbnail {
-  width: 150px;
-  height: 150px;
+  width: var(--maxWidth);
+  height: var(--maxHeight);
   background-color: var(--media-thumbnail-background-color);
   display: inline-block;
 }
 
 .spoilerThumbnail {
-  width: 150px;
-  height: 150px;
+  width: var(--maxWidth);
+  height: var(--maxHeight);
   display: inline-block;
   background-color: black;
   color: white !important;
@@ -80,8 +84,8 @@
 
 .post img, .post video, .post audio {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-  max-width: 150px;
-  max-height: 150px;
+  max-width: var(--maxWidth);
+  max-height: var(--maxHeight);
 }
 
 .meta {
@@ -111,8 +115,8 @@
 }
 
 .loadingSkeleton {
-  width: 150px;
-  height: 150px;
+  width: var(--maxWidth);
+  height: var(--maxHeight);
   display: inline-block;
 }
 
