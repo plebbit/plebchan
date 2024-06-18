@@ -26,6 +26,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
   const { t } = useTranslation();
   const { address, createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
   const { avatarUrl } = suggested || {};
+  const { showTextOnlyThreads } = useCatalogFiltersStore();
 
   const location = useLocation();
   const isInAllView = isAllView(location.pathname, useParams());
@@ -35,11 +36,13 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
     if (!isFeedLoaded) {
       return []; // prevent rules and description from appearing while feed is loading
     }
+
     if (!description && !rules && !isInAllView) {
       return feed;
     }
+
     const _feed = [...feed];
-    if ((description && description.length > 0) || isInAllView) {
+    if ((description && description.length > 0 && (showTextOnlyThreads || (!showTextOnlyThreads && suggested?.avatarUrl))) || isInAllView) {
       _feed.unshift({
         isDescription: true,
         subplebbitAddress: address,
@@ -52,7 +55,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
         locked: true,
       });
     }
-    if (rules && rules.length > 0) {
+    if (rules && rules.length > 0 && showTextOnlyThreads) {
       _feed.unshift({
         isRules: true,
         subplebbitAddress: address,
