@@ -1,0 +1,78 @@
+.content {
+  margin-left: 10px;
+}
+
+.category {
+  margin-bottom: 10px;
+}
+
+.settingTitle {
+  text-transform: capitalize;
+  font-size: 13px;
+}
+
+.categoryTitle {
+  text-transform: capitalize;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.ipfsGatewaysSettings textarea {
+  height: 70px;
+}
+
+.pubsubProvidersSettings textarea {
+  height: 50px;
+}
+
+.blockchainProvidersSettings textarea {
+  height: 50px;
+}
+
+.content button {
+  cursor: pointer;
+}
+
+.plebbitRpcSettingsInfo {
+  padding: 5px 20px 0 0;
+  word-break: break-word;
+}
+
+.plebbitRpcSettingsInfo ol {
+  padding-bottom: 5px;
+  padding-left: 20px;
+}
+
+.saveOptions {
+  float: right;
+  margin-top: -27px;
+  margin-right: 10px;
+  text-transform: capitalize;
+}
+
+.content textarea {
+  display: block;
+  outline: none;
+  border: 1px solid #aaa;
+  margin: 0 2px 0 0;
+  padding: 2px 4px 3px;
+  width: 95%;
+  font-size: 13px;
+}
+
+.content input[type="text"] {
+  outline: none;
+  width: 55%;
+  font-size: 13px;
+}
+
+.settingTip {
+  display: block;
+  font-size: 0.85em;
+  margin: 5px 0 0 0;
+  padding-left: 2px;
+}
+
+.plebbitRPCSettings button {
+  margin-left: 5px;
+}

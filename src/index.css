@@ -77,6 +77,7 @@ hr {
     text-decoration: var(--button-text-decoration-mobile);
     user-select: none;
     display: inline-block;
+    cursor: pointer;
   }
 
   select {

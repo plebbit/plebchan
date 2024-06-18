@@ -47,6 +47,10 @@
   margin-right: 5px;
 }
 
+.mobileCatalogOptionsPadding {
+  padding-top: 15px;
+}
+
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;

@@ -7,6 +7,7 @@ import BlockedAddressesSetting from './blocked-addresses-setting';
 import CryptoAddressSetting from './crypto-address-setting';
 import CryptoWalletsSetting from './crypto-wallets-setting';
 import InterfaceSettings from './interface-settings';
+import PlebbitOptions from './plebbit-options';
 
 const SettingsModal = () => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ const SettingsModal = () => {
   const [showCryptoAddressSetting, setShowCryptoAddressSetting] = useState(false);
   const [showCryptoWalletSettings, setShowCryptoWalletSettings] = useState(false);
   const [showBlockedAddressesSetting, setShowBlockedAddressesSetting] = useState(false);
+  const [showPlebbitOptionsSettings, setShowPlebbitOptionsSettings] = useState(false);
   const [expandAll, setExpandAll] = useState(false);
 
   const handleExpandAll = () => {
@@ -31,6 +33,7 @@ const SettingsModal = () => {
     setShowCryptoAddressSetting(newExpandState);
     setShowCryptoWalletSettings(newExpandState);
     setShowBlockedAddressesSetting(newExpandState);
+    setShowPlebbitOptionsSettings(newExpandState);
   };
 
   return (
@@ -79,6 +82,13 @@ const SettingsModal = () => {
           </label>
         </div>
         {showBlockedAddressesSetting && <BlockedAddressesSetting />}
+        <div className={`${styles.setting} ${styles.category}`}>
+          <label onClick={() => setShowPlebbitOptionsSettings(!showPlebbitOptionsSettings)}>
+            <span className={showPlebbitOptionsSettings ? styles.hideButton : styles.showButton} />
+            {t('plebbit_options')}
+          </label>
+        </div>
+        {showPlebbitOptionsSettings && <PlebbitOptions />}
       </div>
     </>
   );

@@ -18,6 +18,7 @@ import SettingsModal from '../../components/settings-modal';
 import styles from './catalog.module.css';
 import _ from 'lodash';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -77,8 +78,6 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
   return rows;
 };
 
-const columnWidth = 180;
-
 const catalogFilter = (comment: Comment) => {
   const commentMediaInfo = getCommentMediaInfo(comment);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, comment?.link);
@@ -120,6 +119,9 @@ const Catalog = () => {
     }
     return [subplebbitAddress];
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbits, subscriptions, showAdultBoards, showGoreBoards]);
+
+  const { imageSize } = useCatalogStyleStore();
+  const columnWidth = imageSize === 'Large' ? 270 : 180;
 
   const columnCount = Math.floor(useWindowWidth() / columnWidth);
   // postPerPage based on columnCount for optimized feed, dont change value after first render

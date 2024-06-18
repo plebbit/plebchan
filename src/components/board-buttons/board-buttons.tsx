@@ -7,6 +7,8 @@ import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useTimeFilter from '../../hooks/use-time-filter';
 import CatalogFilters from '../../views/catalog/catalog-filters/';
 import styles from './board-buttons.module.css';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
+import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -100,6 +102,35 @@ const SortOptions = () => {
   );
 };
 
+const ImageSizeOptions = () => {
+  const { imageSize, setImageSize } = useCatalogStyleStore();
+
+  return (
+    <>
+      <span>Image Size:</span>&nbsp;
+      <select value={imageSize} onChange={(e) => setImageSize(e.target.value as 'Small' | 'Large')}>
+        <option value='Small'>Small</option>
+        <option value='Large'>Large</option>
+      </select>
+    </>
+  );
+};
+
+const ShowOPCommentOption = () => {
+  const { showOPComment, setShowOPComment } = useCatalogStyleStore();
+  const { showTextOnlyThreads } = useCatalogFiltersStore();
+
+  return (
+    <>
+      <span>Show OP Comment:</span>&nbsp;
+      <select value={showOPComment ? 'On' : 'Off'} onChange={(e) => setShowOPComment(e.target.value === 'On')} disabled={showTextOnlyThreads}>
+        <option value='Off'>Off</option>
+        <option value='On'>On</option>
+      </select>
+    </>
+  );
+};
+
 export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView, isTopbar = false }: BoardButtonsProps) => {
   const { t } = useTranslation();
   const params = useParams();
@@ -174,7 +205,12 @@ export const MobileBoardButtons = () => {
             <>
               <hr />
               <div className={styles.options}>
-                <SortOptions /> <CatalogFilters />
+                <div>
+                  <SortOptions /> <ImageSizeOptions />
+                </div>
+                <div className={styles.mobileCatalogOptionsPadding}>
+                  <ShowOPCommentOption /> <CatalogFilters />
+                </div>
               </div>
             </>
           )}
@@ -227,7 +263,13 @@ export const DesktopBoardButtons = () => {
             )}
             [<RefreshButton />]
             <span className={styles.rightSideButtons}>
-              {isInCatalogView && <SortOptions />}
+              {isInCatalogView && (
+                <>
+                  <SortOptions />
+                  <ImageSizeOptions />
+                  <ShowOPCommentOption />
+                </>
+              )}
               {(isInAllView || isInSubscriptionsView) && (
                 <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
               )}
