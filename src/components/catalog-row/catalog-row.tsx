@@ -190,10 +190,16 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   );
 
   const { imageSize, showOPComment } = useCatalogStyleStore();
+  const maxWidth = imageSize === 'Large' ? '250px' : '150px';
+  const maxHeight = imageSize === 'Large' ? '250px' : '150px';
+  const CSSProperties = {
+    '--maxWidth': maxWidth,
+    '--maxHeight': maxHeight,
+  } as React.CSSProperties;
 
   return (
     <>
-      <div className={`${styles.post} ${imageSize === 'Large' ? styles.large : ''}`}>
+      <div className={`${styles.post} ${imageSize === 'Large' ? styles.large : ''}`} style={CSSProperties}>
         <div onMouseOver={() => setHoveredCid(isDescription ? 'd' : isRules ? 'r' : cid)} onMouseLeave={() => setHoveredCid(null)}>
           {hidden ? (
             <Link to={postLink}>
