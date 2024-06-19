@@ -5,6 +5,7 @@ import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getFormattedDate } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
@@ -118,7 +119,9 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, deleted, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const [content, setContent] = useState(post?.content);
+  const [showOriginal, setShowOriginal] = useState(false);
 
   const params = useParams();
   const location = useLocation();
@@ -146,7 +149,25 @@ const PostMessageMobile = ({ post }: PostProps) => {
         ) : deleted ? (
           <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
         ) : (
-          <Markdown content={displayContent} spoiler={spoiler} />
+          <>
+            <Markdown content={displayContent} spoiler={spoiler} />
+            {edit && original?.content !== post?.content && (
+              <span className={styles.editedInfo}>
+                <br />
+                (Edited at {getFormattedDate(edit?.timestamp)},{' '}
+                <span
+                  className={styles.showOriginal}
+                  onClick={() => {
+                    setContent(showOriginal ? post?.content : original?.content);
+                    setShowOriginal(!showOriginal);
+                  }}
+                >
+                  show {showOriginal ? 'edited' : 'original'}
+                </span>
+                )
+              </span>
+            )}
+          </>
         )}
         {(removed || deleted) && reason && (
           <span>

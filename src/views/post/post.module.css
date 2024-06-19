@@ -462,6 +462,21 @@
   padding: 1.5px 0;
 }
 
+.editedInfo {
+  color: var(--post-mobile-abbr-text-color);
+}
+
+.showOriginal {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.showOriginal:hover {
+  cursor: pointer;
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
 @media (max-width: 640px) {
   .replyQuotePreview {
     margin-right: 10px;
