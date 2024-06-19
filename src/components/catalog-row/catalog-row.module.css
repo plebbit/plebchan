@@ -31,18 +31,6 @@
   display: inline-block;
 }
 
-.spoilerThumbnail {
-  width: var(--maxWidth);
-  height: var(--maxHeight);
-  display: inline-block;
-  background-color: black;
-  color: white !important;
-  display: flex;
-  cursor: pointer;
-  justify-content: center;
-  align-items: center;
-}
-
 .mediaPaddingWrapper {
   padding-bottom: 5px;
   display: inline-flex;

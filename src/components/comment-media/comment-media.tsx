@@ -7,6 +7,7 @@ import { getHostname } from '../../lib/utils/url-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useIsMobile from '../../hooks/use-is-mobile';
 import Embed, { canEmbed } from '../embed';
+import _ from 'lodash';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
@@ -20,7 +21,6 @@ interface MediaProps {
 }
 
 const Thumbnail = ({ commentMediaInfo, isFloatingEmbed, post, setShowThumbnail }: MediaProps) => {
-  const { t } = useTranslation();
   const { deleted, linkHeight, linkWidth, parentCid, removed, spoiler } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const isOutOfFeed = isDescription || isRules || isFloatingEmbed; // virtuoso wrapper unneeded
@@ -81,9 +81,7 @@ const Thumbnail = ({ commentMediaInfo, isFloatingEmbed, post, setShowThumbnail }
   return hasError || isDeleted ? (
     <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />
   ) : spoiler ? (
-    <span className={styles.spoiler} style={{ width: maxThumbnailSize, height: maxThumbnailSize }} onClick={() => setShowThumbnail(false)}>
-      <span className={styles.spoilerText}>[{t('view_spoiler')}]</span>
-    </span>
+    <img className={styles.spoiler} src='/assets/spoiler.png' alt='' onClick={() => setShowThumbnail(false)} />
   ) : isOutOfFeed ? (
     <span className={`${isFloatingEmbed ? styles.floatingEmbed : styles.subplebbitAvatar}`}>{thumbnailComponent}</span>
   ) : isMobile || isReply ? (
@@ -154,7 +152,7 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
         {url && <Thumbnail commentMediaInfo={commentMediaInfo} isFloatingEmbed={isFloatingEmbed} post={post} setShowThumbnail={setShowThumbnail} />}
-        {isMobile && type && <div className={styles.fileInfo}>{getDisplayMediaInfoType(type, t)}</div>}
+        {isMobile && type && <div className={styles.fileInfo}>{`${post?.spoiler && `${t('spoiler')} - `} ${getDisplayMediaInfoType(type, t)}`}</div>}
       </span>
       {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={post?.parentCid} setShowThumbnail={setShowThumbnail} />}
     </span>

@@ -22,6 +22,7 @@ import ReplyQuotePreview from '../reply-quote-preview';
 import { PostProps } from '../../views/post/post';
 import Timestamp from '../timestamp';
 import _ from 'lodash';
+import { getFormattedDate } from '../../lib/utils/time-utils';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
@@ -116,10 +117,11 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
 const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
+  const { link, spoiler } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type, url } = commentMediaInfo || {};
   const embedUrl = url && new URL(url);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, post?.link);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   return (
@@ -127,7 +129,7 @@ const PostMedia = ({ post }: PostProps) => {
       <div className={styles.fileText}>
         {t('link')}:{' '}
         <a href={url} target='_blank' rel='noopener noreferrer'>
-          {url && url.length > 30 ? url.slice(0, 30) + '...' : url}
+          {spoiler ? _.capitalize(t('spoiler')) : url && url.length > 30 ? url.slice(0, 30) + '...' : url}
         </a>{' '}
         ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
         {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
@@ -161,11 +163,13 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
   const isInPostView = isPostPageView(location.pathname, params);
+  const [content, setContent] = useState(post?.content);
+  const [showOriginal, setShowOriginal] = useState(false);
 
   const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
@@ -188,7 +192,25 @@ const PostMessage = ({ post }: PostProps) => {
       ) : deleted ? (
         <span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>
       ) : (
-        <Markdown content={displayContent} spoiler={spoiler} />
+        <>
+          <Markdown content={displayContent} spoiler={spoiler} />
+          {edit && original?.content !== post?.content && (
+            <span className={styles.editedInfo}>
+              <br />
+              (Edited at {getFormattedDate(edit?.timestamp)},{' '}
+              <span
+                className={styles.showOriginal}
+                onClick={() => {
+                  setContent(showOriginal ? post?.content : original?.content);
+                  setShowOriginal(!showOriginal);
+                }}
+              >
+                show {showOriginal ? 'edited' : 'original'}
+              </span>
+              )
+            </span>
+          )}
+        </>
       )}
       {(removed || deleted) && reason && (
         <span>

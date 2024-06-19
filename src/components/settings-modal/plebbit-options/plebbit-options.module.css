@@ -3,7 +3,7 @@
 }
 
 .category {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .settingTitle {
@@ -69,8 +69,8 @@
 .settingTip {
   display: block;
   font-size: 0.85em;
-  margin: 5px 0 0 0;
-  padding-left: 2px;
+  margin: 10px 0 0 0;
+  padding-left: 1px;
 }
 
 .plebbitRPCSettings button {

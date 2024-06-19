@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
@@ -16,6 +17,7 @@ import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
 import { timeFilterNames } from './hooks/use-time-filter';
 import useTheme from './hooks/use-theme';
+import useInitialTheme from './hooks/use-initial-theme';
 
 const BoardLayout = () => {
   const { accountCommentIndex, subplebbitAddress, timeFilterName } = useParams();
@@ -68,6 +70,12 @@ const GlobalLayout = () => {
 };
 
 const App = () => {
+  const initialTheme = useInitialTheme();
+
+  useEffect(() => {
+    document.body.classList.add(initialTheme);
+  }, [initialTheme]);
+
   return (
     <div className={styles.app}>
       <Routes>
