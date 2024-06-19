@@ -219,7 +219,9 @@ const PlebbitOptions = () => {
         </span>
       </div>
       <div className={styles.category}>
-        <span className={styles.categoryTitle}>blockchain providers:</span>
+        <span className={styles.categoryTitle} style={{ marginBottom: '-5px' }}>
+          blockchain providers:
+        </span>
         <span className={styles.categorySettings}>
           <BlockchainProvidersSettings ethRpcRef={ethRpcRef} solRpcRef={solRpcRef} maticRpcRef={maticRpcRef} avaxRpcRef={avaxRpcRef} />
         </span>
