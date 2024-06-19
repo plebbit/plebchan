@@ -118,12 +118,11 @@ const ImageSizeOptions = () => {
 
 const ShowOPCommentOption = () => {
   const { showOPComment, setShowOPComment } = useCatalogStyleStore();
-  const { showTextOnlyThreads } = useCatalogFiltersStore();
 
   return (
     <>
       <span>Show OP Comment:</span>&nbsp;
-      <select value={showOPComment ? 'On' : 'Off'} onChange={(e) => setShowOPComment(e.target.value === 'On')} disabled={showTextOnlyThreads}>
+      <select value={showOPComment ? 'On' : 'Off'} onChange={(e) => setShowOPComment(e.target.value === 'On')}>
         <option value='Off'>Off</option>
         <option value='On'>On</option>
       </select>

@@ -197,6 +197,8 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     '--maxHeight': maxHeight,
   } as React.CSSProperties;
 
+  const isTextOnlyThread = !hasThumbnail || isRules;
+
   return (
     <>
       <div className={`${styles.post} ${imageSize === 'Large' ? styles.large : ''}`} style={CSSProperties}>
@@ -244,7 +246,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               <PostMenuDesktop post={post} />
             </span>
           </div>
-          {showOPComment && (hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>)}
+          {(showOPComment || isTextOnlyThread) && (hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>)}
         </div>
       </div>
       {hoveredCid === cid &&
