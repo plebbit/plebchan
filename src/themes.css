@@ -354,6 +354,7 @@
   --post-mobile-link-border-top: 1px solid #b7c5d9;
   --post-mobile-link-info-text-color: #34345c;
   --post-mobile-abbr-text-color: #707070;
+  --post-mobile-file-info-text-color: #707070;
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
@@ -530,6 +531,7 @@
   --post-mobile-link-border-top: 1px solid #d9bfb7;
   --post-mobile-link-info-text-color: #800;
   --post-mobile-abbr-text-color: #707070;
+  --post-mobile-file-info-text-color: #707070;
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
 
@@ -714,6 +716,7 @@
   --post-mobile-link-border-top: 1px solid #b7c5d9;
   --post-mobile-link-info-text-color: #34345c;
   --post-mobile-abbr-text-color: #707070;
+  --post-mobile-file-info-text-color: #707070;
   --post-mobile-abbr-font-size: 12pt;
   --post-mobile-content-font-size: 13pt;
 
@@ -910,6 +913,7 @@
   --post-mobile-link-border-bottom: 1px solid #2D2F33;
   --post-mobile-link-info-text-color: #707070;
   --post-mobile-abbr-text-color: #707070;
+  --post-mobile-file-info-text-color: #707070;
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 
@@ -1071,6 +1075,7 @@
   --post-mobile-link-border-bottom: 1px solid #ccc;
   --post-mobile-link-info-text-color: #333;
   --post-mobile-abbr-text-color: #333;
+  --post-mobile-file-info-text-color: #333;
   --post-mobile-abbr-font-size: 10pt;
   --post-mobile-content-font-size: 11pt;
 

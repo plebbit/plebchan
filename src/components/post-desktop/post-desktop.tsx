@@ -116,10 +116,11 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
 const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
+  const { link, spoiler } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
   const { type, url } = commentMediaInfo || {};
   const embedUrl = url && new URL(url);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, post?.link);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   return (
@@ -127,7 +128,7 @@ const PostMedia = ({ post }: PostProps) => {
       <div className={styles.fileText}>
         {t('link')}:{' '}
         <a href={url} target='_blank' rel='noopener noreferrer'>
-          {url && url.length > 30 ? url.slice(0, 30) + '...' : url}
+          {spoiler ? _.capitalize(t('spoiler')) : url && url.length > 30 ? url.slice(0, 30) + '...' : url}
         </a>{' '}
         ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
         {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (

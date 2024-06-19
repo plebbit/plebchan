@@ -223,9 +223,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               >
                 {threadIcons}
                 {spoiler ? (
-                  <span className={styles.spoilerThumbnail}>
-                    <span className={styles.spoilerText}>{t('spoiler')}</span>
-                  </span>
+                  <img src='/assets/spoiler.png' alt='' />
                 ) : (
                   <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
                 )}
