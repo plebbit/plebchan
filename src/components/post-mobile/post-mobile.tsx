@@ -119,8 +119,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
-  const [content, setContent] = useState(post?.content);
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
   const [showOriginal, setShowOriginal] = useState(false);
 
   const params = useParams();
@@ -150,19 +149,14 @@ const PostMessageMobile = ({ post }: PostProps) => {
           <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
         ) : (
           <>
-            <Markdown content={displayContent} spoiler={spoiler} />
+            {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
             {edit && original?.content !== post?.content && (
               <span className={styles.editedInfo}>
+                {showOriginal && <Markdown content={original?.content} />}
                 <br />
                 (Edited at {getFormattedDate(edit?.timestamp)},{' '}
-                <span
-                  className={styles.showOriginal}
-                  onClick={() => {
-                    setContent(showOriginal ? post?.content : original?.content);
-                    setShowOriginal(!showOriginal);
-                  }}
-                >
-                  show {showOriginal ? 'edited' : 'original'}
+                <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)}>
+                  {showOriginal ? 'hide original' : 'show original'}
                 </span>
                 )
               </span>

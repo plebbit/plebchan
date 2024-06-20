@@ -163,12 +163,11 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
   const isInPostView = isPostPageView(location.pathname, params);
-  const [content, setContent] = useState(post?.content);
   const [showOriginal, setShowOriginal] = useState(false);
 
   const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
@@ -193,19 +192,14 @@ const PostMessage = ({ post }: PostProps) => {
         <span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>
       ) : (
         <>
-          <Markdown content={displayContent} spoiler={spoiler} />
+          {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
           {edit && original?.content !== post?.content && (
             <span className={styles.editedInfo}>
+              {showOriginal && <Markdown content={original?.content} />}
               <br />
               (Edited at {getFormattedDate(edit?.timestamp)},{' '}
-              <span
-                className={styles.showOriginal}
-                onClick={() => {
-                  setContent(showOriginal ? post?.content : original?.content);
-                  setShowOriginal(!showOriginal);
-                }}
-              >
-                show {showOriginal ? 'edited' : 'original'}
+              <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)}>
+                {showOriginal ? 'hide original' : 'show original'}
               </span>
               )
             </span>
