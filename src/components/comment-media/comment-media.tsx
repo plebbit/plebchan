@@ -7,7 +7,6 @@ import { getHostname } from '../../lib/utils/url-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useIsMobile from '../../hooks/use-is-mobile';
 import Embed, { canEmbed } from '../embed';
-import _ from 'lodash';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
@@ -79,9 +78,9 @@ const Thumbnail = ({ commentMediaInfo, isFloatingEmbed, post, setShowThumbnail }
   const linkWithoutThumbnail = url && new URL(url);
 
   return hasError || isDeleted ? (
-    <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='File deleted' />
+    <img className={styles.fileDeleted} src='assets/filedeleted-res.gif' alt='File deleted' />
   ) : spoiler ? (
-    <img className={styles.spoiler} src='/assets/spoiler.png' alt='' onClick={() => setShowThumbnail(false)} />
+    <img className={styles.spoiler} src='assets/spoiler.png' alt='' onClick={() => setShowThumbnail(false)} />
   ) : isOutOfFeed ? (
     <span className={`${isFloatingEmbed ? styles.floatingEmbed : styles.subplebbitAvatar}`}>{thumbnailComponent}</span>
   ) : isMobile || isReply ? (

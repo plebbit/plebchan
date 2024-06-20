@@ -1,7 +1,8 @@
 {
   "name": "plebchan",
-  "version": "0.1.17",
+  "version": "0.2.1",
   "description": "A GUI for plebbit similar to 4chan",
+  "type": "module",
   "author": "plebeius.eth",
   "private": true,
   "dependencies": {
@@ -93,8 +94,8 @@
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
     "decompress": "4.2.1",
-    "electron": "19.1.8",
-    "electron-builder": "23.0.9",
+    "electron": "28.2.3",
+    "electron-builder": "24.13.2",
     "husky": "4.3.8",
     "lint-staged": "12.3.8",
     "wait-on": "7.0.1"

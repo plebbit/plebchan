@@ -68,7 +68,7 @@ const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subp
       });
     }
     return _feed;
-  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub]);
+  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub, showTextOnlyThreads, suggested?.avatarUrl]);
 
   const rows = useMemo(() => {
     const rows = [];

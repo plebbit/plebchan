@@ -1,5 +1,6 @@
 # docs https://github.com/marketplace/actions/create-release
 # docs https://github.com/ncipollo/release-action
+# docs https://docs.github.com/en/actions/using-jobs/choosing-the-runner-for-a-job#choosing-github-hosted-runners
 
 name: release
 
@@ -10,7 +11,7 @@ on:
 
 jobs:
   linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       contents: write
     steps:
@@ -21,7 +22,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
       - run: yarn install --frozen-lockfile
       # make sure the ipfs executable is executable
       - run: node electron/download-ipfs && sudo chmod +x bin/linux/ipfs
@@ -40,7 +41,7 @@ jobs:
           allowUpdates: true
 
   mac:
-    runs-on: macOS-latest
+    runs-on: macOS-13
     permissions:
       contents: write
     steps:
@@ -51,7 +52,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
 
       # install missing dep for sqlite
       - run: python3 -m ensurepip
@@ -75,7 +76,7 @@ jobs:
           allowUpdates: true
 
   windows:
-    runs-on: windows-latest
+    runs-on: windows-2022
     permissions:
       contents: write
     steps:
@@ -86,7 +87,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
       - run: yarn install --frozen-lockfile
       - run: yarn build
       - run: yarn electron:build:windows
@@ -103,7 +104,7 @@ jobs:
           allowUpdates: true
 
   android:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       contents: write
     steps:
@@ -120,7 +121,7 @@ jobs:
           gradle-version: 7.6
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
       - run: sudo apt install -y apksigner zipalign
 
       # build react app

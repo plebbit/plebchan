@@ -204,7 +204,7 @@ export const HomeLogo = () => {
   return (
     <Link to='/'>
       <div className={styles.logo}>
-        <img alt='' src='/assets/logo/logo-transparent.png' />
+        <img alt='' src='assets/logo/logo-transparent.png' />
       </div>
     </Link>
   );

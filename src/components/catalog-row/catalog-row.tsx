@@ -86,7 +86,7 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
   return (
     <div className={hasError ? '' : styles.mediaWrapper} style={CSSProperties}>
       {!isLoaded && !hasError && type !== 'video' && type !== 'audio' && <span className={styles.loadingSkeleton} />}
-      {hasError ? <img className={styles.fileDeleted} src='/assets/filedeleted-res.gif' alt='' /> : thumbnailComponent}
+      {hasError ? <img className={styles.fileDeleted} src='assets/filedeleted-res.gif' alt='' /> : thumbnailComponent}
     </div>
   );
 };
@@ -223,7 +223,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               >
                 {threadIcons}
                 {spoiler ? (
-                  <img src='/assets/spoiler.png' alt='' />
+                  <img src='assets/spoiler.png' alt='' />
                 ) : (
                   <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
                 )}

@@ -10,7 +10,7 @@ const totalBanners = 59;
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
     const randomBannerIndex = Math.floor(Math.random() * totalBanners) + 1;
-    return `/assets/banners/banner-${randomBannerIndex}.jpg`;
+    return `assets/banners/banner-${randomBannerIndex}.jpg`;
   });
 
   return <img src={imagePath} alt='' />;

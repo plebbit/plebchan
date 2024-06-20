@@ -58,12 +58,12 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
           {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
           {pinned && (
             <span className={styles.stickyIconWrapper}>
-              <img src='/assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+              <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
             </span>
           )}
           {locked && (
             <span className={`${styles.closedIconWrapper} ${pinned && styles.addPaddingInBetween}`}>
-              <img src='/assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+              <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
           {title && (
@@ -119,8 +119,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
-  const [content, setContent] = useState(post?.content);
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
   const [showOriginal, setShowOriginal] = useState(false);
 
   const params = useParams();
@@ -150,19 +149,14 @@ const PostMessageMobile = ({ post }: PostProps) => {
           <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
         ) : (
           <>
-            <Markdown content={displayContent} spoiler={spoiler} />
+            {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
             {edit && original?.content !== post?.content && (
               <span className={styles.editedInfo}>
+                {showOriginal && <Markdown content={original?.content} />}
                 <br />
                 (Edited at {getFormattedDate(edit?.timestamp)},{' '}
-                <span
-                  className={styles.showOriginal}
-                  onClick={() => {
-                    setContent(showOriginal ? post?.content : original?.content);
-                    setShowOriginal(!showOriginal);
-                  }}
-                >
-                  show {showOriginal ? 'edited' : 'original'}
+                <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)}>
+                  {showOriginal ? 'hide original' : 'show original'}
                 </span>
                 )
               </span>
