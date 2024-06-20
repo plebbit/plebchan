@@ -2,13 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useSortingStore from '../../stores/use-sorting-store';
+import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
+import useSortingStore from '../../stores/use-sorting-store';
 import useTimeFilter from '../../hooks/use-time-filter';
 import CatalogFilters from '../../views/catalog/catalog-filters/';
 import styles from './board-buttons.module.css';
-import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
-import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 
 interface BoardButtonsProps {
   address?: string | undefined;

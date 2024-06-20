@@ -7,7 +7,6 @@ import { getHostname } from '../../lib/utils/url-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useIsMobile from '../../hooks/use-is-mobile';
 import Embed, { canEmbed } from '../embed';
-import _ from 'lodash';
 
 interface MediaProps {
   commentMediaInfo?: CommentMediaInfo;
