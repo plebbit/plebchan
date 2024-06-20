@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
-import determineInitialTheme from './use-initial-theme';
+import useInitialTheme from './use-initial-theme';
 
 const useTheme = (): [string, (theme: string) => void] => {
   const location = useLocation();
@@ -20,14 +20,18 @@ const useTheme = (): [string, (theme: string) => void] => {
     load();
   }, [loadThemes]);
 
-  const initialTheme = determineInitialTheme();
+  const initialTheme = useInitialTheme();
 
   const [theme, setLocalTheme] = useState(initialTheme);
 
   useEffect(() => {
+    const previousTheme = document.body.className;
     document.body.classList.add(initialTheme);
     return () => {
       document.body.classList.remove(initialTheme);
+      if (previousTheme) {
+        document.body.classList.add(previousTheme);
+      }
     };
   }, [initialTheme]);
 
