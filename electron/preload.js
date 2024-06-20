@@ -1,4 +1,4 @@
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
 // dev uses http://localhost, prod uses file://...index.html
 const isDev = window.location.protocol === 'http:';
@@ -8,9 +8,11 @@ const defaultPlebbitOptions = {
 };
 
 contextBridge.exposeInMainWorld('defaultPlebbitOptions', defaultPlebbitOptions);
+contextBridge.exposeInMainWorld('defaultMediaIpfsGatewayUrl', 'http://localhost:6473');
 
-// expose a flag to indicate that we are running in electron
-contextBridge.exposeInMainWorld('electron', { isElectron: true });
+// receive plebbit rpc auth key from main
+ipcRenderer.on('plebbit-rpc-auth-key', (event, plebbitRpcAuthKey) => contextBridge.exposeInMainWorld('plebbitRpcAuthKey', plebbitRpcAuthKey));
+ipcRenderer.send('get-plebbit-rpc-auth-key');
 
 // uncomment for logs
 // localStorage.debug = 'plebbit-js:*,plebbit-react-hooks:*,plebchan:*'
