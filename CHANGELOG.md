@@ -1,6 +1,14 @@
+## [0.2.1](https://github.com/plebbit/plebchan/compare/v0.2.0...v0.2.1) (2024-06-20)
+
+
+### Bug Fixes
+
+* incorrect assets path ([4cca4a5](https://github.com/plebbit/plebchan/commit/4cca4a58dd0a8e4913cb10e7ab7bd19b46b57146))
+
+
+
 # [0.2.0](https://github.com/plebbit/plebchan/compare/v0.1.17...v0.2.0) (2024-06-20)
 
-v0.2.0 is a complete rewrite of plebchan using typescript and CSS modules, optimizing for performance and code cleanliness, also adding some new features.
 
 ### Bug Fixes
 
