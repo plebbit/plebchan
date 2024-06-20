@@ -9,7 +9,7 @@ const totalNotFoundImages = 2;
 const NotFoundImage = () => {
   const [imagePath] = useState(() => {
     const randomBannerIndex = Math.floor(Math.random() * totalNotFoundImages) + 1;
-    return `/assets/not-found/not-found-${randomBannerIndex}.jpg`;
+    return `assets/not-found/not-found-${randomBannerIndex}.jpg`;
   });
 
   return <img src={imagePath} alt='' />;

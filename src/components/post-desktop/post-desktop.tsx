@@ -86,12 +86,12 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
         )}
         {pinned && (
           <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
-            <img src='/assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+            <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
           </span>
         )}
         {locked && (
           <span className={`${styles.closedIconWrapper} ${styles.addPaddingBeforeReply} ${pinned && styles.addPaddingInBetween}`}>
-            <img src='/assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+            <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
           </span>
         )}
         {!isInPostView && !isReply && !isHidden && (
