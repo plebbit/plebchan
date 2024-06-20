@@ -1,6 +1,6 @@
 {
   "name": "plebchan",
-  "version": "0.1.17",
+  "version": "0.2.0",
   "description": "A GUI for plebbit similar to 4chan",
   "author": "plebeius.eth",
   "private": true,
