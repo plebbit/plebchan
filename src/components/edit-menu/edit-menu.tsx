@@ -130,14 +130,14 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                     <label>
                       [
                       <input onChange={onCheckbox} checked={publishCommentEditOptions.deleted ?? false} type='checkbox' id='deleted' />
-                      {_.capitalize(t('delete'))}? ]
+                      {_.capitalize(t('delete'))}?]
                     </label>
                   </div>
                   <div className={styles.menuItem}>
                     <label>
                       [
                       <input type='checkbox' onChange={() => setIsContentEditorOpen(!isContentEditorOpen)} checked={isContentEditorOpen} />
-                      {_.capitalize(t('edit'))}? ]
+                      {_.capitalize(t('edit'))}?]
                     </label>
                   </div>
                   {isContentEditorOpen && (
