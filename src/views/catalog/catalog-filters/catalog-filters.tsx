@@ -25,7 +25,7 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
           {isInCatalogView && (
             <label className={styles.paddingBottom}>
               <input type='checkbox' checked={!showTextOnlyThreads} onChange={(e) => setShowTextOnlyThreads(!e.target.checked)} />
-              Hide Text-Only Posts
+              Hide Threads Without Media
             </label>
           )}
           {isInAllView && (
