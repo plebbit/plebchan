@@ -24,19 +24,19 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
         <div className={styles.filters}>
           {isInCatalogView && (
             <label className={styles.paddingBottom}>
-              <input type='checkbox' checked={!showTextOnlyThreads} onChange={(e) => setShowTextOnlyThreads(!e.target.checked)} />
-              Hide Threads Without Media
+              <input type='checkbox' checked={showTextOnlyThreads} onChange={(e) => setShowTextOnlyThreads(e.target.checked)} />
+              Hide Threads Without Images
             </label>
           )}
           {isInAllView && (
             <div className={styles.nsfwLabels}>
               <div className={styles.categoryTitle}>NSFW Boards</div>
               <label>
-                <input type='checkbox' checked={!showGoreBoards} onChange={(e) => setShowGoreBoards(!e.target.checked)} />
+                <input type='checkbox' checked={showGoreBoards} onChange={(e) => setShowGoreBoards(e.target.checked)} />
                 Hide Gore Boards
               </label>
               <label>
-                <input type='checkbox' checked={!showAdultBoards} onChange={(e) => setShowAdultBoards(!e.target.checked)} />
+                <input type='checkbox' checked={showAdultBoards} onChange={(e) => setShowAdultBoards(e.target.checked)} />
                 Hide Adult Boards
               </label>
             </div>
