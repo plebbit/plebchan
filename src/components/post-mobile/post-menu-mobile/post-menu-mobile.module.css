@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+.checkbox {
+  float: left;
+}
+
 .postMenu {
   font-size: 16px;
   line-height: 2.5em;
