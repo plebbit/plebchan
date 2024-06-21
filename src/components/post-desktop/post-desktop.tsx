@@ -185,7 +185,7 @@ const PostMessage = ({ post }: PostProps) => {
 
   return (
     <blockquote className={styles.postMessage}>
-      {isReply && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+      {isReply && !(removed || deleted) && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
       ) : deleted ? (
