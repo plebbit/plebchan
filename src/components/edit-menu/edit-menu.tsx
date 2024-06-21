@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
-import { PublishCommentEditOptions, useComment, useEditedComment, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
+import { Comment, PublishCommentEditOptions, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
 import useChallengesStore from '../../stores/use-challenges-store';
@@ -11,25 +11,17 @@ import useIsMobile from '../../hooks/use-is-mobile';
 const { addChallenge } = useChallengesStore.getState();
 
 type EditMenuProps = {
-  commentCid: string;
   isAccountMod?: boolean;
   isAccountCommentAuthor?: boolean;
   isCommentAuthorMod?: boolean;
+  post: Comment;
 };
 
-const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentAuthorMod }: EditMenuProps) => {
+const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, post }: EditMenuProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  let post: any;
-  const comment = useComment({ commentCid });
-  const { editedComment } = useEditedComment({ comment });
-  if (editedComment) {
-    post = editedComment;
-  } else if (comment) {
-    post = comment;
-  }
 
-  const { banExpiresAt, content, deleted, locked, parentCid, pinned, removed, spoiler, subplebbitAddress } = post || {};
+  const { banExpiresAt, cid, content, deleted, locked, parentCid, pinned, removed, spoiler, subplebbitAddress } = post || {};
   const isReply = parentCid;
 
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
@@ -44,7 +36,7 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
 
   const defaultPublishEditOptions: PublishCommentEditOptions = {
     commentAuthor: isAccountMod && !isAccountCommentAuthor && banExpiresAt !== undefined ? { banExpiresAt } : undefined,
-    commentCid,
+    commentCid: cid,
     content: isAccountCommentAuthor ? content : undefined,
     deleted: isAccountCommentAuthor ? deleted : undefined,
     locked: isAccountMod ? locked : undefined,
@@ -125,13 +117,8 @@ const EditMenu = ({ commentCid, isAccountMod, isAccountCommentAuthor, isCommentA
 
   return (
     <>
-      <span className={`${styles.checkbox} ${isReply && styles.replyCheckbox}`} ref={refs.setReference} {...(commentCid && getReferenceProps())}>
-        <input
-          type='checkbox'
-          onChange={() => commentCid && setIsEditMenuOpen(!isEditMenuOpen)}
-          checked={isEditMenuOpen}
-          disabled={!isAccountCommentAuthor && !isAccountMod}
-        />
+      <span className={`${styles.checkbox} ${isReply && styles.replyCheckbox}`} ref={refs.setReference} {...(cid && getReferenceProps())}>
+        <input type='checkbox' onChange={() => cid && setIsEditMenuOpen(!isEditMenuOpen)} checked={isEditMenuOpen} disabled={!isAccountCommentAuthor && !isAccountMod} />
       </span>
       {isEditMenuOpen && (isAccountCommentAuthor || isAccountMod) && (
         <FloatingFocusManager context={context} modal={false}>
