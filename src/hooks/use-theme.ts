@@ -4,44 +4,53 @@ import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
 import useInitialTheme from './use-initial-theme';
 
+const updateThemeClass = (newTheme: string) => {
+  document.body.classList.remove('yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon');
+  if (newTheme) {
+    document.body.classList.add(newTheme);
+  }
+};
+
 const useTheme = (): [string, (theme: string) => void] => {
   const location = useLocation();
   const params = useParams();
   const setThemeStore = useThemeStore((state) => state.setTheme);
+  const getTheme = useThemeStore((state) => state.getTheme);
   const loadThemes = useThemeStore((state) => state.loadThemes);
 
+  const initialTheme = useInitialTheme();
+  const [theme, setLocalTheme] = useState<string>(() => initialTheme);
   const [themesLoaded, setThemesLoaded] = useState(false);
 
   useEffect(() => {
-    const load = async () => {
+    const loadAndApplyThemes = async () => {
       await loadThemes();
       setThemesLoaded(true);
     };
-    load();
+
+    loadAndApplyThemes();
   }, [loadThemes]);
 
-  const initialTheme = useInitialTheme();
-
-  const [theme, setLocalTheme] = useState(initialTheme);
-
   useEffect(() => {
-    const previousTheme = document.body.className;
-    document.body.classList.add(initialTheme);
-    return () => {
-      document.body.classList.remove(initialTheme);
-      if (previousTheme) {
-        document.body.classList.add(previousTheme);
-      }
-    };
-  }, [initialTheme]);
+    if (!themesLoaded) return;
 
-  useEffect(() => {
-    if (themesLoaded) {
-      document.body.classList.remove('yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon');
-      document.body.classList.add(initialTheme);
-      setLocalTheme(initialTheme);
+    const subplebbitAddress = params?.subplebbitAddress;
+    const isInAllView = isAllView(location.pathname, params);
+    const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+
+    let storedTheme = null;
+    if (subplebbitAddress) {
+      storedTheme = getTheme(subplebbitAddress);
+    } else if (isInAllView) {
+      storedTheme = getTheme('all');
+    } else if (isInSubscriptionsView) {
+      storedTheme = getTheme('subscriptions');
     }
-  }, [initialTheme, themesLoaded]);
+
+    const themeToSet = storedTheme || initialTheme;
+    setLocalTheme(themeToSet);
+    updateThemeClass(themeToSet);
+  }, [initialTheme, location.pathname, params, getTheme, themesLoaded]);
 
   const setSubplebbitTheme = (newTheme: string) => {
     const subplebbitAddress = params?.subplebbitAddress;
@@ -55,9 +64,9 @@ const useTheme = (): [string, (theme: string) => void] => {
     } else if (isInSubscriptionsView) {
       setThemeStore('subscriptions', newTheme);
     }
+
     setLocalTheme(newTheme);
-    document.body.classList.remove('yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon');
-    document.body.classList.add(newTheme);
+    updateThemeClass(newTheme);
   };
 
   return [theme, setSubplebbitTheme];
