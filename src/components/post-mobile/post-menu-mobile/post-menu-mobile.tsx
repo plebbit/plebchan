@@ -154,7 +154,9 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
           document.body,
         )}
       {(isAccountMod || isAccountCommentAuthor) && (
-        <EditMenu commentCid={cid} isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} />
+        <span className={styles.checkbox}>
+          <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />
+        </span>
       )}
     </>
   );

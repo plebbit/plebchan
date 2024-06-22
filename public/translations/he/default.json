@@ -177,5 +177,21 @@
   "block_board": "חסום פורום",
   "unblock_board": "ביטול חסימת פורום",
   "unblock_all_confirm": "האם אתה בטוח שברצונך לבטל את חסימת כל כתובות הפורום וכתובות המשתמש?",
-  "hidden": "מוסתר"
+  "hidden": "מוסתר",
+  "save_options": "שמירת האפשרויות",
+  "filters": "מסננים",
+  "image_size": "גודל התמונה",
+  "show_op_comment": "הצג תגובת היוצר",
+  "hide_threads_without_images": "הסתר תכניות ללא תמונות",
+  "on": "פועל",
+  "off": "כבוי",
+  "small": "קטן",
+  "large": "גדול",
+  "show_worksafe_content_only": "הצג רק לוחות עבודה בטוחים",
+  "show_all_boards": "הצג את כל הלוחות",
+  "show_nsfw_content_only": "הצג רק תוכן NSFW",
+  "show_nsfw_boards_only": "הצג רק לוחות NSFW",
+  "use_catalog": "השתמש בקטלוג",
+  "show_worksafe_boards_only": "הצג לוחות עבודה בטוחים בלבד",
+  "show_all_content": "הצג את כל התוכן"
 }

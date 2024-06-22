@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -50,7 +50,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
   return (
     <div className={styles.postInfo}>
-      {!isHidden && <EditMenu commentCid={cid} isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} />}
+      {!isHidden && <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />}
       {title && <span className={styles.subject}>{displayTitle} </span>}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
@@ -185,7 +185,7 @@ const PostMessage = ({ post }: PostProps) => {
 
   return (
     <blockquote className={styles.postMessage}>
-      {isReply && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+      {isReply && !(removed || deleted) && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
       ) : deleted ? (
@@ -230,17 +230,24 @@ const PostMessage = ({ post }: PostProps) => {
 };
 
 const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
-  const { cid, subplebbitAddress } = reply || {};
+  let post = reply;
+  // handle pending mod or author edit
+  const { editedComment } = useEditedComment({ comment: reply });
+  if (editedComment) {
+    post = editedComment;
+  }
+
+  const { cid, content, link, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
-      <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`} id={reply?.cid}>
-        <PostInfo openReplyModal={openReplyModal} post={reply} roles={roles} />
-        {reply.link && !hidden && isValidURL(reply.link) && <PostMedia post={reply} />}
-        {reply.content && !hidden && <PostMessage post={reply} />}
+      <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`} id={cid}>
+        <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
+        {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
+        {content && !hidden && <PostMessage post={post} />}
       </div>
     </div>
   );

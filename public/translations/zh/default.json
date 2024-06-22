@@ -177,5 +177,21 @@
   "block_board": "封锁论坛",
   "unblock_board": "解除封锁论坛",
   "unblock_all_confirm": "您确定要解锁所有论坛地址和用户地址吗？",
-  "hidden": "隐藏"
+  "hidden": "隐藏",
+  "save_options": "保存选项",
+  "filters": "过滤器",
+  "image_size": "图像尺寸",
+  "show_op_comment": "显示楼主评论",
+  "hide_threads_without_images": "隐藏没有图片的主题",
+  "on": "开启",
+  "off": "关闭",
+  "small": "小",
+  "large": "大",
+  "show_worksafe_content_only": "仅显示安全工作板",
+  "show_all_boards": "显示所有板块",
+  "show_nsfw_content_only": "仅显示NSFW内容",
+  "show_nsfw_boards_only": "仅显示NSFW板块",
+  "use_catalog": "使用目录",
+  "show_worksafe_boards_only": "仅显示安全工作板",
+  "show_all_content": "显示所有内容"
 }

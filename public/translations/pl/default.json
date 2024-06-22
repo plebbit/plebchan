@@ -177,5 +177,21 @@
   "block_board": "Zablokuj forum",
   "unblock_board": "Odblokuj forum",
   "unblock_all_confirm": "Jesteś pewien, że chcesz odblokować wszystkie adresy forum i adresy użytkowników?",
-  "hidden": "ukryty"
+  "hidden": "ukryty",
+  "save_options": "Zapisz opcje",
+  "filters": "filtry",
+  "image_size": "rozmiar obrazu",
+  "show_op_comment": "Pokaż komentarz OP",
+  "hide_threads_without_images": "Ukryj wątki bez obrazów",
+  "on": "włączone",
+  "off": "wyłączone",
+  "small": "mały",
+  "large": "duży",
+  "show_worksafe_content_only": "Pokaż tylko bezpieczne tablice",
+  "show_all_boards": "Pokaż wszystkie tablice",
+  "show_nsfw_content_only": "Pokaż tylko zawartość NSFW",
+  "show_nsfw_boards_only": "Pokaż tylko tablice NSFW",
+  "use_catalog": "użyj katalogu",
+  "show_worksafe_boards_only": "Pokaż tylko bezpieczne tablice",
+  "show_all_content": "Pokaż całą zawartość"
 }

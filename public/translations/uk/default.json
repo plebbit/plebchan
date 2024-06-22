@@ -177,5 +177,21 @@
   "block_board": "Заблокувати форум",
   "unblock_board": "Розблокувати форум",
   "unblock_all_confirm": "Ви впевнені, що хочете розблокувати всі адреси форуму та адреси користувачів?",
-  "hidden": "прихований"
+  "hidden": "прихований",
+  "save_options": "Зберегти налаштування",
+  "filters": "фільтри",
+  "image_size": "розмір зображення",
+  "show_op_comment": "Показати коментар OP",
+  "hide_threads_without_images": "Приховати теми без зображень",
+  "on": "увімкнено",
+  "off": "вимкнено",
+  "small": "малий",
+  "large": "великий",
+  "show_worksafe_content_only": "Показувати лише безпечні дошки",
+  "show_all_boards": "Показати всі дошки",
+  "show_nsfw_content_only": "Показувати лише NSFW вміст",
+  "show_nsfw_boards_only": "Показувати лише NSFW дошки",
+  "use_catalog": "використовуйте каталог",
+  "show_worksafe_boards_only": "Показувати лише безпечні дошки",
+  "show_all_content": "Показати весь вміст"
 }

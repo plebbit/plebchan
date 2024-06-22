@@ -5,7 +5,7 @@ interface ThemeState {
   themes: Record<string, string>;
   setTheme: (subplebbitAddress: string, theme: string) => void;
   getTheme: (subplebbitAddress: string) => string | null;
-  loadThemes: () => void;
+  loadThemes: () => Promise<void>;
 }
 
 const themeStore = localForageLru.createInstance({
@@ -35,6 +35,7 @@ const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'],
   },
 }));
 
+// Load themes on store initialization
 useThemeStore.getState().loadThemes();
 
 export default useThemeStore;

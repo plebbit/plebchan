@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -142,7 +142,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
   return (
     content && (
       <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
-        {isReply && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+        {isReply && !(removed || deleted) && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
         {removed ? (
           <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
         ) : deleted ? (
@@ -188,16 +188,22 @@ const PostMessageMobile = ({ post }: PostProps) => {
 };
 
 const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
-  const { subplebbitAddress, cid } = reply || {};
+  let post = reply;
+  // handle pending mod or author edit
+  const { editedComment } = useEditedComment({ comment: reply });
+  if (editedComment) {
+    post = editedComment;
+  }
+  const { cid, content, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
   return (
     <div className={styles.replyMobile}>
       <div className={styles.reply}>
-        <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={reply?.cid}>
-          <PostInfoAndMedia openReplyModal={openReplyModal} post={reply} roles={roles} />
-          {reply.content && !hidden && <PostMessageMobile post={reply} />}
+        <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={cid}>
+          <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
+          {content && !hidden && <PostMessageMobile post={post} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>

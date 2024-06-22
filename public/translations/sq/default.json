@@ -177,5 +177,21 @@
   "block_board": "Blloko bordi",
   "unblock_board": "Hiq bllokimin e bordit",
   "unblock_all_confirm": "A jeni i sigurt se doni të hiqni bllokimin e të gjitha adresave të bordit dhe adresave të përdoruesit?",
-  "hidden": "i fshehur"
+  "hidden": "i fshehur",
+  "save_options": "Ruaj Cilësimet",
+  "filters": "filtrot",
+  "image_size": "madhësia e imazhit",
+  "show_op_comment": "Shfaq komentin e OP-së",
+  "hide_threads_without_images": "Fshih temat pa imazhe",
+  "on": "në",
+  "off": "jashtë",
+  "small": "i vogël",
+  "large": "i madh",
+  "show_worksafe_content_only": "Shfaq vetëm tabela të sigurta pune",
+  "show_all_boards": "Shfaq të gjitha taulat",
+  "show_nsfw_content_only": "Shfaq vetëm përmbajtje NSFW",
+  "show_nsfw_boards_only": "Shfaq vetëm taulat NSFW",
+  "use_catalog": "përdor katalogun",
+  "show_worksafe_boards_only": "Shfaq vetëm taulat e sigurta të punës",
+  "show_all_content": "Shfaq të gjitha përmbajtjet"
 }

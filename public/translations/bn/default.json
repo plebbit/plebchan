@@ -177,5 +177,21 @@
   "block_board": "ফোরাম ব্লক",
   "unblock_board": "ফোরাম অনবন্ধ করুন",
   "unblock_all_confirm": "আপনি কি নিশ্চিত যে আপনি সমস্ত বোর্ড ঠিকানা এবং ব্যবহারকারী ঠিকানা অনবন্ধ করতে চান?",
-  "hidden": "লুকানো"
+  "hidden": "লুকানো",
+  "save_options": "অপশন সংরক্ষণ করুন",
+  "filters": "ফিল্টার",
+  "image_size": "চিত্রের আকার",
+  "show_op_comment": "মূল মন্তব্য দেখান",
+  "hide_threads_without_images": "চিত্র ছাড়াই থ্রেড লুকাও",
+  "on": "চালু",
+  "off": "বন্ধ",
+  "small": "ছোট",
+  "large": "বড়",
+  "show_worksafe_content_only": "শুধুমাত্র কাজের বোর্ড দেখান",
+  "show_all_boards": "সমস্ত বোর্ড দেখান",
+  "show_nsfw_content_only": "শুধুমাত্র NSFW বিষয়বস্তু দেখান",
+  "show_nsfw_boards_only": "শুধুমাত্র NSFW বোর্ড দেখান",
+  "use_catalog": "ক্যাটালগ ব্যবহার",
+  "show_worksafe_boards_only": "শুধুমাত্র কাজ-সম্পূর্ণ বোর্ড দেখান",
+  "show_all_content": "সমস্ত কন্টেন্ট দেখান"
 }

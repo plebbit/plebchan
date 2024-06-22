@@ -424,6 +424,9 @@
   --body-font-family: times new roman, serif;
   --body-font-size: 16px;
 
+  /* board banner */
+  --banner-image-border: none;
+
   /* board title */
   --board-title-font-size: 32px;
   --board-address-font-size: 10pt;
@@ -781,6 +784,9 @@
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 13px;
 
+  /* board banner */
+  --banner-image-border: none;
+
   /* board title */
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
@@ -989,6 +995,9 @@
   --body-font-color: #333;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 13px;
+
+  /* board banner */
+  --banner-image-border: none;
 
   /* board title */
   --board-title-font-size: 28px;

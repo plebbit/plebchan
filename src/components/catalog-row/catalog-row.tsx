@@ -34,8 +34,10 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
   const handleError = () => setHasError(true);
   const loadingStyle = { display: isLoaded ? 'block' : 'none' };
 
+  const { imageSize } = useCatalogStyleStore();
+
   let displayWidth, displayHeight;
-  const maxThumbnailSize = 150;
+  const maxThumbnailSize = imageSize === 'Large' ? 250 : 150;
 
   if (linkWidth && linkHeight) {
     let scale = Math.min(1, maxThumbnailSize / Math.max(linkWidth, linkHeight));
@@ -51,7 +53,6 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
     displayHeight = 'unset';
   }
 
-  const { imageSize } = useCatalogStyleStore();
   const maxWidth = imageSize === 'Large' ? '250px' : '150px';
   const maxHeight = imageSize === 'Large' ? '250px' : '150px';
 

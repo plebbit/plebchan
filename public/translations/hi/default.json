@@ -177,5 +177,21 @@
   "block_board": "फ़ोरम अवरोधित करें",
   "unblock_board": "फ़ोरम को अनब्लॉक करें",
   "unblock_all_confirm": "क्या आप सभी बोर्ड पतों और उपयोगकर्ता पतों को अनब्लॉक करना चाहते हैं, क्या आप सुनिश्चित हैं?",
-  "hidden": "छिपा हुआ"
+  "hidden": "छिपा हुआ",
+  "save_options": "विकल्प सहेजें",
+  "filters": "फिल्टर",
+  "image_size": "चित्र का आकार",
+  "show_op_comment": "मूल टिप्पणी दिखाएं",
+  "hide_threads_without_images": "तस्वीरें नहीं वाले धागे छिपाएं",
+  "on": "चालू",
+  "off": "बंद",
+  "small": "छोटा",
+  "large": "बड़ा",
+  "show_worksafe_content_only": "केवल कार्य सुरक्षित बोर्ड दिखाएं",
+  "show_all_boards": "सभी बोर्ड दिखाएं",
+  "show_nsfw_content_only": "केवल NSFW सामग्री दिखाएं",
+  "show_nsfw_boards_only": "केवल NSFW बोर्ड्स दिखाएं",
+  "use_catalog": "कैटलॉग का उपयोग करें",
+  "show_worksafe_boards_only": "केवल कामसुरक्षित बोर्ड्स दिखाएं",
+  "show_all_content": "सभी सामग्री दिखाएं"
 }

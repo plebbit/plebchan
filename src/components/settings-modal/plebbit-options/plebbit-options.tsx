@@ -1,5 +1,6 @@
 import { RefObject, useRef, useState } from 'react';
 import { setAccount, useAccount, usePlebbitRpcSettings } from '@plebbit/plebbit-react-hooks';
+import { useTranslation } from 'react-i18next';
 import styles from './plebbit-options.module.css';
 
 interface SettingsProps {
@@ -134,6 +135,7 @@ const NodeDataPathSettings = ({ nodeDataPathRef }: SettingsProps) => {
 };
 
 const PlebbitOptions = () => {
+  const { t } = useTranslation();
   const account = useAccount();
   const { plebbitOptions } = account || {};
 
@@ -204,7 +206,7 @@ const PlebbitOptions = () => {
   return (
     <div className={styles.content}>
       <button className={styles.saveOptions} onClick={handleSave}>
-        save options
+        {t('save_options')}
       </button>
       <div className={styles.category}>
         <span className={styles.categoryTitle}>IPFS gateways:</span>

@@ -41,6 +41,8 @@
 .boxContent img {
   display: block;
   margin: auto;
+  max-height: 500px;
+  max-width: 500px;
 }
 
 .backToBoard {

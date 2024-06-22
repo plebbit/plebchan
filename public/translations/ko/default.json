@@ -177,5 +177,21 @@
   "block_board": "게시판 차단",
   "unblock_board": "게시판 차단 해제",
   "unblock_all_confirm": "모든 게시판 주소와 사용자 주소를 해제하시겠습니까?",
-  "hidden": "숨겨진"
+  "hidden": "숨겨진",
+  "save_options": "옵션 저장",
+  "filters": "필터",
+  "image_size": "이미지 크기",
+  "show_op_comment": "작성자 댓글 보기",
+  "hide_threads_without_images": "이미지 없는 스레드 숨기기",
+  "on": "켜짐",
+  "off": "끔",
+  "small": "작은",
+  "large": "큰",
+  "show_worksafe_content_only": "안전한 게시판만 표시",
+  "show_all_boards": "모든 게시판 보기",
+  "show_nsfw_content_only": "NSFW 콘텐츠만 표시",
+  "show_nsfw_boards_only": "NSFW 보드만 표시",
+  "use_catalog": "카탈로그 사용",
+  "show_worksafe_boards_only": "작업 안전 보드만 표시",
+  "show_all_content": "모든 콘텐츠 보기"
 }

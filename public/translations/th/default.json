@@ -177,5 +177,21 @@
   "block_board": "บล็อกบอร์ด",
   "unblock_board": "ยกเลิกการบล็อกบอร์ด",
   "unblock_all_confirm": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการบล็อกทุกที่อยู่ของบอร์ดและผู้ใช้?",
-  "hidden": "ซ่อน"
+  "hidden": "ซ่อน",
+  "save_options": "บันทึกตัวเลือก",
+  "filters": "ตัวกรอง",
+  "image_size": "ขนาดภาพ",
+  "show_op_comment": "แสดงความคิดเห็นของ OP",
+  "hide_threads_without_images": "ซ่อนกระทู้ที่ไม่มีภาพ",
+  "on": "เปิด",
+  "off": "ปิด",
+  "small": "เล็ก",
+  "large": "ใหญ่",
+  "show_worksafe_content_only": "แสดงกระดานทำงานที่ปลอดภัยเท่านั้น",
+  "show_all_boards": "แสดงกระดานทั้งหมด",
+  "show_nsfw_content_only": "แสดงเนื้อหา NSFW เท่านั้น",
+  "show_nsfw_boards_only": "แสดงบอร์ด NSFW เท่านั้น",
+  "use_catalog": "ใช้แคตตาล็อก",
+  "show_worksafe_boards_only": "แสดงบอร์ด Worksafe เท่านั้น",
+  "show_all_content": "แสดงเนื้อหาทั้งหมด"
 }

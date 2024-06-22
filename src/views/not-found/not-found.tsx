@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HomeLogo } from '../home';
 import styles from './not-found.module.css';
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 
 const totalNotFoundImages = 2;
 
@@ -16,8 +16,10 @@ const NotFoundImage = () => {
 };
 
 const NotFound = () => {
-  const { subplebbitAddress } = useParams();
-  const isValidSubplebbitAddress = !subplebbitAddress || subplebbitAddress.includes('.') || /^12D3K[a-zA-Z0-9]{44}$/.test(subplebbitAddress);
+  const location = useLocation();
+  const subplebbitAddress = location.pathname.startsWith('/p/') ? location.pathname.split('/')[2] : '';
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { address, shortAddress } = subplebbit || {};
 
   return (
     <div className={styles.wrapper}>
@@ -30,11 +32,11 @@ const NotFound = () => {
             </div>
             <div className={styles.boxContent}>
               <NotFoundImage />
-              {subplebbitAddress && isValidSubplebbitAddress && (
+              {address && (
                 <>
                   <br />
                   <div className={styles.backToBoard}>
-                    [<Link to={`/p/${subplebbitAddress}`}>Back to p/{Plebbit.getShortAddress(subplebbitAddress)}</Link>]
+                    [<Link to={`/p/${subplebbitAddress}`}>Back to p/{shortAddress}</Link>]
                   </div>
                 </>
               )}

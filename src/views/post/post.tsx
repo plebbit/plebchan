@@ -28,13 +28,21 @@ export const Post = ({ post, showAllReplies = false, showReplies = true, openRep
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   const isMobile = useIsMobile();
 
+  let comment = post;
+
+  // handle pending mod or author edit
+  const { editedComment } = useEditedComment({ comment });
+  if (editedComment) {
+    comment = editedComment;
+  }
+
   return (
     <div className={styles.thread}>
       <div className={styles.postContainer}>
         {isMobile ? (
-          <PostMobile post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
+          <PostMobile post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
         ) : (
-          <PostDesktop post={post} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
+          <PostDesktop post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
         )}
       </div>
     </div>
@@ -64,12 +72,6 @@ const PostPage = () => {
     post = postComment;
   } else {
     post = comment;
-  }
-
-  // handle pending mod or author edit
-  const { editedComment } = useEditedComment({ comment: post });
-  if (editedComment) {
-    post = editedComment;
   }
 
   const { deleted, locked, removed } = post || {};

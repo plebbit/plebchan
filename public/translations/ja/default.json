@@ -177,5 +177,21 @@
   "block_board": "掲示板をブロックする",
   "unblock_board": "掲示板のブロックを解除する",
   "unblock_all_confirm": "すべての掲示板アドレスとユーザーアドレスを解除してもよろしいですか？",
-  "hidden": "隠し"
+  "hidden": "隠し",
+  "save_options": "オプションを保存",
+  "filters": "フィルター",
+  "image_size": "画像サイズ",
+  "show_op_comment": "OPコメントを表示",
+  "hide_threads_without_images": "画像のないスレッドを非表示にする",
+  "on": "オン",
+  "off": "オフ",
+  "small": "小",
+  "large": "大",
+  "show_worksafe_content_only": "安全な掲示板のみ表示",
+  "show_all_boards": "すべての掲示板を表示",
+  "show_nsfw_content_only": "NSFWコンテンツのみ表示",
+  "show_nsfw_boards_only": "NSFWボードのみ表示",
+  "use_catalog": "カタログを使用する",
+  "show_worksafe_boards_only": "Worksafeボードのみ表示",
+  "show_all_content": "すべてのコンテンツを表示"
 }

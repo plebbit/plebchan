@@ -177,5 +177,21 @@
   "block_board": "I-block ang board",
   "unblock_board": "I-unblock ang board",
   "unblock_all_confirm": "Sigurado ka bang gusto mong i-unblock ang lahat ng mga board address at mga user address?",
-  "hidden": "nakatago"
+  "hidden": "nakatago",
+  "save_options": "I-save ang mga Opsyon",
+  "filters": "mga filter",
+  "image_size": "laki ng larawan",
+  "show_op_comment": "Ipakita ang OP na Komento",
+  "hide_threads_without_images": "Itago ang Mga Threads Nang Walang Mga Larawan",
+  "on": "bukas",
+  "off": "naka-off",
+  "small": "maliit",
+  "large": "malaki",
+  "show_worksafe_content_only": "Ipakita lamang ang mga work-safe boards",
+  "show_all_boards": "Ipakita ang lahat ng mga boards",
+  "show_nsfw_content_only": "Ipakita lamang ang NSFW na nilalaman",
+  "show_nsfw_boards_only": "Ipakita lamang ang NSFW na boards",
+  "use_catalog": "gamitin ang catalog",
+  "show_worksafe_boards_only": "Ipakita lamang ang mga Worksafe boards",
+  "show_all_content": "Ipakita lahat ng nilalaman"
 }

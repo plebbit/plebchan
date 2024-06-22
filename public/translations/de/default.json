@@ -177,5 +177,21 @@
   "block_board": "Forum blockieren",
   "unblock_board": "Forum entsperren",
   "unblock_all_confirm": "Möchten Sie wirklich alle Boardadressen und Benutzeradressen entsperren?",
-  "hidden": "versteckt"
+  "hidden": "versteckt",
+  "save_options": "Optionen speichern",
+  "filters": "Filter",
+  "image_size": "Bildgröße",
+  "show_op_comment": "OP-Kommentar anzeigen",
+  "hide_threads_without_images": "Threads ohne Bilder ausblenden",
+  "on": "an",
+  "off": "aus",
+  "small": "klein",
+  "large": "groß",
+  "show_worksafe_content_only": "Nur sichere Boards anzeigen",
+  "show_all_boards": "Alle Boards anzeigen",
+  "show_nsfw_content_only": "Nur NSFW-Inhalte anzeigen",
+  "show_nsfw_boards_only": "Nur NSFW-Boards anzeigen",
+  "use_catalog": "Benutze Katalog",
+  "show_worksafe_boards_only": "Nur sichere Boards anzeigen",
+  "show_all_content": "Alle Inhalte anzeigen"
 }
