@@ -4,8 +4,10 @@ import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
 import useInitialTheme from './use-initial-theme';
 
+const themeClasses = ['yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon'];
+
 const updateThemeClass = (newTheme: string) => {
-  document.body.classList.remove('yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon');
+  document.body.classList.remove(...themeClasses);
   if (newTheme) {
     document.body.classList.add(newTheme);
   }
@@ -52,17 +54,17 @@ const useTheme = (): [string, (theme: string) => void] => {
     updateThemeClass(themeToSet);
   }, [initialTheme, location.pathname, params, getTheme, themesLoaded]);
 
-  const setSubplebbitTheme = (newTheme: string) => {
+  const setSubplebbitTheme = async (newTheme: string) => {
     const subplebbitAddress = params?.subplebbitAddress;
     const isInAllView = isAllView(location.pathname, params);
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
     if (subplebbitAddress) {
-      setThemeStore(subplebbitAddress, newTheme);
+      await setThemeStore(subplebbitAddress, newTheme);
     } else if (isInAllView) {
-      setThemeStore('all', newTheme);
+      await setThemeStore('all', newTheme);
     } else if (isInSubscriptionsView) {
-      setThemeStore('subscriptions', newTheme);
+      await setThemeStore('subscriptions', newTheme);
     }
 
     setLocalTheme(newTheme);
