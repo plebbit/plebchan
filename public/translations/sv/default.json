@@ -177,5 +177,21 @@
   "block_board": "Blockera forum",
   "unblock_board": "Avblockera forum",
   "unblock_all_confirm": "Är du säker på att du vill låsa upp alla boardadresser och användaradresser?",
-  "hidden": "dold"
+  "hidden": "dold",
+  "save_options": "Spara alternativ",
+  "filters": "filter",
+  "image_size": "bildstorlek",
+  "show_op_comment": "Visa OP-kommentar",
+  "hide_threads_without_images": "Dölj trådar utan bilder",
+  "on": "på",
+  "off": "av",
+  "small": "liten",
+  "large": "stor",
+  "show_worksafe_content_only": "Visa endast säkra styrelser",
+  "show_all_boards": "Visa alla styrelser",
+  "show_nsfw_content_only": "Visa endast NSFW-innehåll",
+  "show_nsfw_boards_only": "Visa endast NSFW-styrelser",
+  "use_catalog": "använd katalog",
+  "show_worksafe_boards_only": "Visa endast Worksafe-styrelser",
+  "show_all_content": "Visa allt innehåll"
 }

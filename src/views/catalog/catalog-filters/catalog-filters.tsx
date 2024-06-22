@@ -23,9 +23,9 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
         </div>
         <div className={styles.filters}>
           {isInCatalogView && (
-            <label className={styles.paddingBottom}>
+            <label className={`${styles.paddingBottom} capitalize`}>
               <input type='checkbox' checked={showTextOnlyThreads} onChange={(e) => setShowTextOnlyThreads(e.target.checked)} />
-              Hide Threads Without Images
+              {t('hide_threads_without_images')}
             </label>
           )}
           {isInAllView && (
@@ -48,6 +48,7 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
 };
 
 const CatalogFilters = () => {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
@@ -57,7 +58,7 @@ const CatalogFilters = () => {
   return (
     <>
       <span className='button' onClick={() => setShowModal(true)}>
-        Filters
+        {t('filters')}
       </span>
       {showModal && <FiltersModal closeModal={closeModal} />}
     </>

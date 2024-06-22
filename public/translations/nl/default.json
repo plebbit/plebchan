@@ -177,5 +177,21 @@
   "block_board": "Forum blokkeren",
   "unblock_board": "Deblokkeer forum",
   "unblock_all_confirm": "Weet u zeker dat u alle boardadressen en gebruikersadressen wilt deblokkeren?",
-  "hidden": "verborgen"
+  "hidden": "verborgen",
+  "save_options": "Opties opslaan",
+  "filters": "filters",
+  "image_size": "afbeeldingsgrootte",
+  "show_op_comment": "Toon OP opmerking",
+  "hide_threads_without_images": "Verberg Threads Zonder Afbeeldingen",
+  "on": "aan",
+  "off": "uit",
+  "small": "klein",
+  "large": "groot",
+  "show_worksafe_content_only": "Toon alleen veilige boards",
+  "show_all_boards": "Toon alle boards",
+  "show_nsfw_content_only": "Toon alleen NSFW inhoud",
+  "show_nsfw_boards_only": "Toon alleen NSFW boards",
+  "use_catalog": "gebruik catalogus",
+  "show_worksafe_boards_only": "Toon alleen Worksafe boards",
+  "show_all_content": "Toon alle inhoud"
 }

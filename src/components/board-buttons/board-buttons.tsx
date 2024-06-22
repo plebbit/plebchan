@@ -93,7 +93,7 @@ const SortOptions = () => {
   return (
     <>
       <span className='capitalize'>{t('sort_by')}</span>:&nbsp;
-      <select value={sortType} onChange={handleSortChange}>
+      <select className='capitalize' value={sortType} onChange={handleSortChange}>
         <option value='active'>{t('bump_order')}</option>
         <option value='new'>{t('creation_date')}</option>
       </select>
@@ -102,28 +102,30 @@ const SortOptions = () => {
 };
 
 const ImageSizeOptions = () => {
+  const { t } = useTranslation();
   const { imageSize, setImageSize } = useCatalogStyleStore();
 
   return (
     <>
-      <span>Image Size:</span>&nbsp;
-      <select value={imageSize} onChange={(e) => setImageSize(e.target.value as 'Small' | 'Large')}>
-        <option value='Small'>Small</option>
-        <option value='Large'>Large</option>
+      <span className='capitalize'>{t('image_size')}:</span>&nbsp;
+      <select className='capitalize' value={imageSize} onChange={(e) => setImageSize(e.target.value as 'Small' | 'Large')}>
+        <option value='Small'>{t('small')}</option>
+        <option value='Large'>{t('large')}</option>
       </select>
     </>
   );
 };
 
 const ShowOPCommentOption = () => {
+  const { t } = useTranslation();
   const { showOPComment, setShowOPComment } = useCatalogStyleStore();
 
   return (
     <>
-      <span>Show OP Comment:</span>&nbsp;
-      <select value={showOPComment ? 'On' : 'Off'} onChange={(e) => setShowOPComment(e.target.value === 'On')}>
-        <option value='Off'>Off</option>
-        <option value='On'>On</option>
+      <span className='capitalize'>{t('show_op_comment')}:</span>&nbsp;
+      <select className='capitalize' value={showOPComment ? 'On' : 'Off'} onChange={(e) => setShowOPComment(e.target.value === 'On')}>
+        <option value='Off'>{t('off')}</option>
+        <option value='On'>{t('on')}</option>
       </select>
     </>
   );
@@ -159,7 +161,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
       ) : (
         <> </>
       )}
-      <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem].join(' ')} value={selectedTimeFilterName}>
+      <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem, 'capitalize'].join(' ')} value={selectedTimeFilterName}>
         {timeFilterNames.map((timeFilterName, i) => (
           <option key={timeFilterName + i} value={timeFilterName}>
             {timeFilterName}

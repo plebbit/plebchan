@@ -177,5 +177,21 @@
   "block_board": "Chặn diễn đàn",
   "unblock_board": "Bỏ chặn diễn đàn",
   "unblock_all_confirm": "Bạn có chắc chắn muốn bỏ chặn tất cả các địa chỉ diễn đàn và địa chỉ người dùng không?",
-  "hidden": "ẩn"
+  "hidden": "ẩn",
+  "save_options": "Lưu tùy chọn",
+  "filters": "bộ lọc",
+  "image_size": "kích thước ảnh",
+  "show_op_comment": "Hiển thị Bình luận của OP",
+  "hide_threads_without_images": "Ẩn các chủ đề không có hình ảnh",
+  "on": "bật",
+  "off": "tắt",
+  "small": "nhỏ",
+  "large": "lớn",
+  "show_worksafe_content_only": "Chỉ hiển thị bảng an toàn",
+  "show_all_boards": "Hiển thị tất cả các bảng",
+  "show_nsfw_content_only": "Chỉ hiển thị nội dung NSFW",
+  "show_nsfw_boards_only": "Chỉ hiển thị bảng NSFW",
+  "use_catalog": "sử dụng danh mục",
+  "show_worksafe_boards_only": "Chỉ hiển thị bảng Worksafe",
+  "show_all_content": "Hiển thị tất cả nội dung"
 }

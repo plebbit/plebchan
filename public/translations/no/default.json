@@ -177,5 +177,21 @@
   "block_board": "Blokker forum",
   "unblock_board": "Fjern blokkering av forum",
   "unblock_all_confirm": "Er du sikker på at du vil fjerne blokkeringen av alle bordadresser og brukeradresser?",
-  "hidden": "skjult"
+  "hidden": "skjult",
+  "save_options": "Lagre alternativer",
+  "filters": "filtre",
+  "image_size": "bilde størrelse",
+  "show_op_comment": "Vis OP-kommentar",
+  "hide_threads_without_images": "Skjul tråder uten bilder",
+  "on": "på",
+  "off": "av",
+  "small": "liten",
+  "large": "stor",
+  "show_worksafe_content_only": "Vis bare sikre tavler",
+  "show_all_boards": "Vis alle boards",
+  "show_nsfw_content_only": "Vis kun NSFW innhold",
+  "show_nsfw_boards_only": "Vis kun NSFW boards",
+  "use_catalog": "bruk katalog",
+  "show_worksafe_boards_only": "Vis kun Worksafe boards",
+  "show_all_content": "Vis allt innhold"
 }

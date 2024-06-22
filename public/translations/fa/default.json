@@ -177,5 +177,21 @@
   "block_board": "بلاک تالار",
   "unblock_board": "آزاد کردن تالار",
   "unblock_all_confirm": "آیا از می خواهید تمام آدرس های بورد و آدرس های کاربر را از مسدودیت خارج کنید؟",
-  "hidden": "مخفی"
+  "hidden": "مخفی",
+  "save_options": "ذخیره گزینه‌ها",
+  "filters": "فیلترها",
+  "image_size": "اندازه تصویر",
+  "show_op_comment": "نمایش نظر OP",
+  "hide_threads_without_images": "پنهان کردن موضوعات بدون تصاویر",
+  "on": "روشن",
+  "off": "خاموش",
+  "small": "کوچک",
+  "large": "بزرگ",
+  "show_worksafe_content_only": "نمایش تنها تابلوهای ایمن",
+  "show_all_boards": "نمایش همه تابلوها",
+  "show_nsfw_content_only": "نمایش تنها محتوای NSFW",
+  "show_nsfw_boards_only": "نمایش تنها بوردهای NSFW",
+  "use_catalog": "استفاده از کاتالوگ",
+  "show_worksafe_boards_only": "نمایش تنها بوردهای ایمن برای کار",
+  "show_all_content": "نمایش تمام محتوا"
 }

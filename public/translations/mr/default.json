@@ -177,5 +177,21 @@
   "block_board": "फोरम अवरोधित करा",
   "unblock_board": "फोरम अनब्लॉक करा",
   "unblock_all_confirm": "आपल्याला सर्व बोर्ड पत्ते आणि वापरकर्ता पत्ते अनब्लॉक करायचं आहे का?",
-  "hidden": "लपवलेले"
+  "hidden": "लपवलेले",
+  "save_options": "विकल्प साठवा",
+  "filters": "फिल्टर",
+  "image_size": "चित्राचा आकार",
+  "show_op_comment": "OP टिप्पणी दाखवा",
+  "hide_threads_without_images": "चित्रे बिनांतर स्थिर करा",
+  "on": "चालू",
+  "off": "बंद",
+  "small": "लहान",
+  "large": "मोठा",
+  "show_worksafe_content_only": "कार्यसुरक्षित बोर्ड्सचीच फक्त दाखवा",
+  "show_all_boards": "सर्व बोर्ड्स दाखवा",
+  "show_nsfw_content_only": "केवळ NSFW सामग्री दर्शवा",
+  "show_nsfw_boards_only": "केवळ NSFW बोर्ड्स दाखवा",
+  "use_catalog": "कॅटलॉग वापरा",
+  "show_worksafe_boards_only": "केवळ कामसुरक्षित बोर्ड्स दाखवा",
+  "show_all_content": "सर्व सामग्री दाखवा"
 }

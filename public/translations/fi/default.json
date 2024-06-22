@@ -177,5 +177,21 @@
   "block_board": "Estä foorumi",
   "unblock_board": "Poista foorumin esto",
   "unblock_all_confirm": "Oletko varma, että haluat poistaa estoja kaikista foorumin osoitteista ja käyttäjien osoitteista?",
-  "hidden": "piilotettu"
+  "hidden": "piilotettu",
+  "save_options": "Tallenna asetukset",
+  "filters": "suodattimet",
+  "image_size": "kuvan koko",
+  "show_op_comment": "Näytä OP:n kommentti",
+  "hide_threads_without_images": "Piilota langat ilman kuvia",
+  "on": "päällä",
+  "off": "pois",
+  "small": "pieni",
+  "large": "suuri",
+  "show_worksafe_content_only": "Näytä vain turvalliset lautat",
+  "show_all_boards": "Näytä kaikki lautat",
+  "show_nsfw_content_only": "Näytä vain NSFW-sisältö",
+  "show_nsfw_boards_only": "Näytä vain NSFW-laudat",
+  "use_catalog": "käytä luetteloa",
+  "show_worksafe_boards_only": "Näytä vain työturvalliset hallit",
+  "show_all_content": "Näytä kaikki sisällöt"
 }

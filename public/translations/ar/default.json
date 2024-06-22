@@ -177,5 +177,21 @@
   "block_board": "حظر المجلس",
   "unblock_board": "إلغاء حظر المجلس",
   "unblock_all_confirm": "هل أنت متأكد أنك تريد إلغاء حظر جميع عناوين المجالس وعناوين المستخدمين؟",
-  "hidden": "مخفي"
+  "hidden": "مخفي",
+  "save_options": "حفظ الخيارات",
+  "filters": "مرشحات",
+  "image_size": "حجم الصورة",
+  "show_op_comment": "عرض تعليق الموضوع الأصلي",
+  "hide_threads_without_images": "إخفاء المواضيع بدون صور",
+  "on": "تشغيل",
+  "off": "إيقاف",
+  "small": "صغير",
+  "large": "كبير",
+  "show_worksafe_content_only": "عرض المحتوى الآمن فقط",
+  "show_all_boards": "عرض جميع اللوحات",
+  "show_nsfw_content_only": "عرض المحتوى غير الآمن فقط",
+  "show_nsfw_boards_only": "عرض لوحات NSFW فقط",
+  "use_catalog": "استخدام الكتالوج",
+  "show_worksafe_boards_only": "عرض لوحات آمنة للعمل فقط",
+  "show_all_content": "عرض جميع المحتويات"
 }

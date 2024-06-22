@@ -177,5 +177,21 @@
   "block_board": "Blokir papan",
   "unblock_board": "Buka blokir forum",
   "unblock_all_confirm": "Apakah Anda yakin ingin membuka blokir semua alamat board dan alamat pengguna?",
-  "hidden": "tersembunyi"
+  "hidden": "tersembunyi",
+  "save_options": "Simpan Opsi",
+  "filters": "filter",
+  "image_size": "ukuran gambar",
+  "show_op_comment": "Tampilkan Komentar OP",
+  "hide_threads_without_images": "Sembunyikan Thread Tanpa Gambar",
+  "on": "nyala",
+  "off": "mati",
+  "small": "kecil",
+  "large": "besar",
+  "show_worksafe_content_only": "Tampilkan Hanya Papan Kerja Aman",
+  "show_all_boards": "Tampilkan Semua Board",
+  "show_nsfw_content_only": "Tampilkan Hanya Konten NSFW",
+  "show_nsfw_boards_only": "Tampilkan Hanya Board NSFW",
+  "use_catalog": "gunakan katalog",
+  "show_worksafe_boards_only": "Tampilkan Hanya Board Worksafe",
+  "show_all_content": "Tampilkan Semua Konten"
 }

@@ -54,7 +54,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
                   setShowFilterModal(false);
                 }}
               >
-                Show All Boards
+                {t('show_all_boards')}
               </div>
               <div
                 className={`${styles.option} ${showNsfwBoardsOnly && styles.selected}`}
@@ -66,7 +66,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
                   setShowFilterModal(false);
                 }}
               >
-                Show NSFW Boards Only
+                {t('show_nsfw_boards_only')}
               </div>
               <div
                 className={`${styles.option} ${showWorksafeBoardsOnly && styles.selected}`}
@@ -78,7 +78,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
                   setShowFilterModal(false);
                 }}
               >
-                Show Worksafe Boards Only
+                {t('show_worksafe_boards_only')}
               </div>
               <div className={styles.separator} />
               <div
@@ -88,7 +88,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
                   setShowFilterModal(false);
                 }}
               >
-                Use Catalog
+                {t('use_catalog')}
               </div>
             </>
           ) : (
@@ -103,7 +103,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
                   setShowFilterModal(false);
                 }}
               >
-                Show Worksafe Content Only
+                {t('show_worksafe_content_only')}
               </div>
               <div
                 className={`${styles.option} ${showNsfwContentOnly && styles.selected}`}
@@ -115,7 +115,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
                   setShowFilterModal(false);
                 }}
               >
-                Show NSFW Content Only
+                {t('show_nsfw_content_only')}
               </div>
               <div
                 className={`${styles.option} ${!showWorksafeContentOnly && !showNsfwContentOnly && styles.selected}`}
@@ -125,7 +125,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
                   setShowFilterModal(false);
                 }}
               >
-                Show All Content
+                {t('show_all_content')}
               </div>
             </>
           )}

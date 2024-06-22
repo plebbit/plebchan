@@ -177,5 +177,21 @@
   "block_board": "فورم کو بلاک کریں",
   "unblock_board": "فورم کو انبلاک کریں",
   "unblock_all_confirm": "کیا آپ بورڈ کے تمام پتے اور صارف پتے کھولنے کے لیے یقینی ہیں؟",
-  "hidden": "چھپا ہوا"
+  "hidden": "چھپا ہوا",
+  "save_options": "خیارات محفوظ کریں",
+  "filters": "فلٹر",
+  "image_size": "تصویر کا سائز",
+  "show_op_comment": "OP تبصرہ دکھائیں",
+  "hide_threads_without_images": "تصاویر کے بغیر دھاگے چھپائیں",
+  "on": "چالو",
+  "off": "بند",
+  "small": "چھوٹا",
+  "large": "بڑا",
+  "show_worksafe_content_only": "صرف ورکسیف بورڈز دکھائیں",
+  "show_all_boards": "تمام بورڈز دکھائیں",
+  "show_nsfw_content_only": "صرف NSFW مواد دکھائیں",
+  "show_nsfw_boards_only": "صرف NSFW بورڈز دکھائیں",
+  "use_catalog": "استعمال کیٹالوگ",
+  "show_worksafe_boards_only": "صرف کام سے بچائے گئے بورڈز دکھائیں",
+  "show_all_content": "تمام مواد دکھائیں"
 }

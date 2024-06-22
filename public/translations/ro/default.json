@@ -177,5 +177,21 @@
   "block_board": "Blochează forumul",
   "unblock_board": "Deblochează forumul",
   "unblock_all_confirm": "Sunteți sigur că doriți să deblocați toate adresele de board și adresele de utilizatori?",
-  "hidden": "ascuns"
+  "hidden": "ascuns",
+  "save_options": "Salvați opțiunile",
+  "filters": "filtre",
+  "image_size": "dimensiunea imaginii",
+  "show_op_comment": "Afișează comentariul OP",
+  "hide_threads_without_images": "Ascunde firele fără imagini",
+  "on": "pornit",
+  "off": "oprit",
+  "small": "mic",
+  "large": "mare",
+  "show_worksafe_content_only": "Afișați doar tablourile de lucru sigure",
+  "show_all_boards": "Afișează toate tablourile",
+  "show_nsfw_content_only": "Afișați doar conținutul NSFW",
+  "show_nsfw_boards_only": "Afișați doar tablourile NSFW",
+  "use_catalog": "folosește catalogul",
+  "show_worksafe_boards_only": "Afișați doar tablourile Worksafe",
+  "show_all_content": "Afișați tot conținutul"
 }

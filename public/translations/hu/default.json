@@ -177,5 +177,21 @@
   "block_board": "Fórum blokkolása",
   "unblock_board": "Fórum feloldása",
   "unblock_all_confirm": "Biztos vagy benne, hogy fel akarod oldani az összes fórumcímet és felhasználói címet?",
-  "hidden": "rejtett"
+  "hidden": "rejtett",
+  "save_options": "Beállítások mentése",
+  "filters": "szűrők",
+  "image_size": "képméret",
+  "show_op_comment": "Mutassuk meg az OP hozzászólását",
+  "hide_threads_without_images": "Szálak elrejtése képek nélkül",
+  "on": "be",
+  "off": "ki",
+  "small": "kicsi",
+  "large": "nagy",
+  "show_worksafe_content_only": "Csak a biztonságos táblák megjelenítése",
+  "show_all_boards": "Mutasd az összes táblát",
+  "show_nsfw_content_only": "Csak NSFW tartalmat mutasson",
+  "show_nsfw_boards_only": "Csak NSFW táblák mutatása",
+  "use_catalog": "használja a katalógust",
+  "show_worksafe_boards_only": "Csak munkabiztos táblák mutatása",
+  "show_all_content": "Mutasd az összes tartalmat"
 }

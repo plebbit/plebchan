@@ -177,5 +177,21 @@
   "block_board": "Block board",
   "unblock_board": "Unblock board",
   "unblock_all_confirm": "Are you sure you want to unblock all board addresses and user addresses?",
-  "hidden": "hidden"
+  "hidden": "hidden",
+  "save_options": "Save Options",
+  "filters": "filters",
+  "image_size": "image size",
+  "show_op_comment": "Show OP Comment",
+  "hide_threads_without_images": "Hide Threads Without Images",
+  "on": "on",
+  "off": "off",
+  "small": "small",
+  "large": "large",
+  "show_worksafe_content_only": "Show Worksafe Boards Only",
+  "show_all_boards": "Show All Boards",
+  "show_nsfw_content_only": "Show NSFW Content Only",
+  "show_nsfw_boards_only": "Show NSFW Boards Only",
+  "use_catalog": "use catalog",
+  "show_worksafe_boards_only": "Show Worksafe Boards Only",
+  "show_all_content": "Show All Content"
 }

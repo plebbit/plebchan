@@ -177,5 +177,21 @@
   "block_board": "Forumu engelle",
   "unblock_board": "Forumu engeli kaldır",
   "unblock_all_confirm": "Tüm forum adreslerini ve kullanıcı adreslerini engellemek istediğinizden emin misiniz?",
-  "hidden": "gizli"
+  "hidden": "gizli",
+  "save_options": "Seçenekleri Kaydet",
+  "filters": "filtreler",
+  "image_size": "resim boyutu",
+  "show_op_comment": "OP Yorumunu Göster",
+  "hide_threads_without_images": "Resimsiz Konuları Gizle",
+  "on": "açık",
+  "off": "kapalı",
+  "small": "küçük",
+  "large": "büyük",
+  "show_worksafe_content_only": "Sadece güvenli panoları göster",
+  "show_all_boards": "Tüm panoları göster",
+  "show_nsfw_content_only": "Sadece NSFW İçerik Göster",
+  "show_nsfw_boards_only": "Sadece NSFW Panoları Göster",
+  "use_catalog": "katalog kullan",
+  "show_worksafe_boards_only": "Sadece Worksafe Panoları Göster",
+  "show_all_content": "Tüm İçeriği Göster"
 }
