@@ -1,3 +1,18 @@
+## [0.2.2](https://github.com/plebbit/plebchan/compare/v0.2.1...v0.2.2) (2024-06-22)
+
+
+### Bug Fixes
+
+* **catalog filters:** clarify label ([677fe64](https://github.com/plebbit/plebchan/commit/677fe641a3ad6aa33449ed4bf92bb31ede27dc4a))
+* **catalog:** large image size was incorrect ([b5b5c5c](https://github.com/plebbit/plebchan/commit/b5b5c5ca467e2b1c1695a37d43b0a9ad9adcd9ce))
+* **not found page:** only show 'back to p/...' button if subplebbitAddress is in valid format; limit img size ([1900d1c](https://github.com/plebbit/plebchan/commit/1900d1cdf2a9869ad3af8e9a7a2a563f9850c868))
+* **post:** don't show c/quote in content if reply is removed or deleted ([533fc2f](https://github.com/plebbit/plebchan/commit/533fc2ffa3123519d4f0cee8c7766610a9434c44))
+* **post:** mod and author edits weren't instant ([cb745ff](https://github.com/plebbit/plebchan/commit/cb745ffce62e63f6721f4024f1b843c549def548))
+* **reply:** edit menu checkbox was displaced on mobile ([9052b0f](https://github.com/plebbit/plebchan/commit/9052b0f4f626fa70181b28986b8a3a76ae44f348))
+* **themes:** changing theme would bug out ([032ba62](https://github.com/plebbit/plebchan/commit/032ba62cbefc41df328d8a3f1a767e6115736da5))
+
+
+
 ## [0.2.1](https://github.com/plebbit/plebchan/compare/v0.2.0...v0.2.1) (2024-06-20)
 
 
