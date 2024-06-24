@@ -90,11 +90,8 @@
 
 @media (max-width: 640px) {
   .checkbox {
+    padding-top: 0;
     padding-left: 0;
     padding-bottom: 0;
-  }
-
-  .replyCheckbox {
-    padding-top: 0;
   }
 }
