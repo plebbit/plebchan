@@ -197,11 +197,11 @@ const PostMessage = ({ post }: PostProps) => {
             <span className={styles.editedInfo}>
               {showOriginal && <Markdown content={original?.content} />}
               <br />
-              (Edited at {getFormattedDate(edit?.timestamp)},{' '}
+              Comment edited at {getFormattedDate(edit?.timestamp)}. {reason && 'Reason: "' + reason + '". '}
               <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)}>
-                {showOriginal ? 'hide original' : 'show original'}
+                Click here
               </span>
-              )
+              {showOriginal ? ' to hide the original.' : ' to show the original.'}
             </span>
           )}
         </>
