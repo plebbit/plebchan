@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "Toon alleen NSFW boards",
   "use_catalog": "gebruik catalogus",
   "show_worksafe_boards_only": "Toon alleen Worksafe boards",
-  "show_all_content": "Toon alle inhoud"
+  "show_all_content": "Toon alle inhoud",
+  "link_type": "Link type"
 }

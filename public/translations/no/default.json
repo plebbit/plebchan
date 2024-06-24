@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "Vis kun NSFW boards",
   "use_catalog": "bruk katalog",
   "show_worksafe_boards_only": "Vis kun Worksafe boards",
-  "show_all_content": "Vis allt innhold"
+  "show_all_content": "Vis allt innhold",
+  "link_type": "Lenketype"
 }

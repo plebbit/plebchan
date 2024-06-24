@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "NSFW 보드만 표시",
   "use_catalog": "카탈로그 사용",
   "show_worksafe_boards_only": "작업 안전 보드만 표시",
-  "show_all_content": "모든 콘텐츠 보기"
+  "show_all_content": "모든 콘텐츠 보기",
+  "link_type": "링크 유형"
 }

@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "Nur NSFW-Boards anzeigen",
   "use_catalog": "Benutze Katalog",
   "show_worksafe_boards_only": "Nur sichere Boards anzeigen",
-  "show_all_content": "Alle Inhalte anzeigen"
+  "show_all_content": "Alle Inhalte anzeigen",
+  "link_type": "Linktyp"
 }

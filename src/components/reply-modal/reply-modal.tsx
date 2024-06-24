@@ -143,7 +143,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
         <div className={styles.footer}>
           {url && (
             <>
-              {t('file_type')}: <LinkTypePreviewer link={url} />{' '}
+              {t('link_type')}: <LinkTypePreviewer link={url} />{' '}
             </>
           )}
           <span className={styles.spoilerButton}>

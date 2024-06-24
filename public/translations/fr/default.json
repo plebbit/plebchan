@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "Afficher uniquement les boards NSFW",
   "use_catalog": "utiliser le catalogue",
   "show_worksafe_boards_only": "Afficher uniquement les tableaux Worksafe",
-  "show_all_content": "Afficher tout le contenu"
+  "show_all_content": "Afficher tout le contenu",
+  "link_type": "Type de lien"
 }

@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "Mostrar solo tableros NSFW",
   "use_catalog": "usar catálogo",
   "show_worksafe_boards_only": "Mostrar solo tableros seguros para el trabajo",
-  "show_all_content": "Mostrar todo el contenido"
+  "show_all_content": "Mostrar todo el contenido",
+  "link_type": "Tipo de enlace"
 }

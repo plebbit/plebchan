@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "Näytä vain NSFW-laudat",
   "use_catalog": "käytä luetteloa",
   "show_worksafe_boards_only": "Näytä vain työturvalliset hallit",
-  "show_all_content": "Näytä kaikki sisällöt"
+  "show_all_content": "Näytä kaikki sisällöt",
+  "link_type": "Linkin tyyppi"
 }

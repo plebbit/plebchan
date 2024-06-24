@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "NSFWボードのみ表示",
   "use_catalog": "カタログを使用する",
   "show_worksafe_boards_only": "Worksafeボードのみ表示",
-  "show_all_content": "すべてのコンテンツを表示"
+  "show_all_content": "すべてのコンテンツを表示",
+  "link_type": "リンクの種類"
 }

@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "הצג רק לוחות NSFW",
   "use_catalog": "השתמש בקטלוג",
   "show_worksafe_boards_only": "הצג לוחות עבודה בטוחים בלבד",
-  "show_all_content": "הצג את כל התוכן"
+  "show_all_content": "הצג את כל התוכן",
+  "link_type": "סוג קישור"
 }

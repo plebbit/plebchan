@@ -193,5 +193,6 @@
   "show_nsfw_boards_only": "केवल NSFW बोर्ड्स दिखाएं",
   "use_catalog": "कैटलॉग का उपयोग करें",
   "show_worksafe_boards_only": "केवल कामसुरक्षित बोर्ड्स दिखाएं",
-  "show_all_content": "सभी सामग्री दिखाएं"
+  "show_all_content": "सभी सामग्री दिखाएं",
+  "link_type": "लिंक प्रकार"
 }
