@@ -194,5 +194,10 @@
   "use_catalog": "కాటలాగ్ ఉపయోగించు",
   "show_worksafe_boards_only": "పనిమాడు భద్రపరిచిన బోర్డులను మాత్రమే చూపించు",
   "show_all_content": "అన్ని కాంటెంట్ చూపించు",
-  "link_type": "లింక్ రకం"
+  "link_type": "లింక్ రకం",
+  "comment_edited_at_timestamp": "వ్యాఖ్యను {{timestamp}} లో సవరించబడింది.",
+  "reason_reason": "కారణం: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>ఇక్కడ క్లిక్ చేయండి</1> అసలు చూపించడానికి.",
+  "click_here_to_hide_original": "<1>ఇక్కడ క్లిక్ చేయండి</1> అసలు దాచడానికి.",
+  "loading": "లోడ్ అవుతోంది"
 }

@@ -194,5 +194,10 @@
   "use_catalog": "usa catalogo",
   "show_worksafe_boards_only": "Mostra solo le board Worksafe",
   "show_all_content": "Mostra tutti i contenuti",
-  "link_type": "Tipo di link"
+  "link_type": "Tipo di link",
+  "comment_edited_at_timestamp": "Commento modificato il {{timestamp}}.",
+  "reason_reason": "Motivo: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Clicca qui</1> per mostrare l'originale.",
+  "click_here_to_hide_original": "<1>Clicca qui</1> per nascondere l'originale.",
+  "loading": "Caricamento"
 }

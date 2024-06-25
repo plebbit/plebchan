@@ -194,5 +194,10 @@
   "use_catalog": "gamitin ang catalog",
   "show_worksafe_boards_only": "Ipakita lamang ang mga Worksafe boards",
   "show_all_content": "Ipakita lahat ng nilalaman",
-  "link_type": "Uri ng Link"
+  "link_type": "Uri ng Link",
+  "comment_edited_at_timestamp": "Inedit na komento sa {{timestamp}}.",
+  "reason_reason": "Dahilan: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>I-click dito</1> upang ipakita ang orihinal.",
+  "click_here_to_hide_original": "<1>I-click dito</1> upang itago ang orihinal.",
+  "loading": "Naglo-load"
 }

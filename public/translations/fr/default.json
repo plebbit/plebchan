@@ -194,5 +194,10 @@
   "use_catalog": "utiliser le catalogue",
   "show_worksafe_boards_only": "Afficher uniquement les tableaux Worksafe",
   "show_all_content": "Afficher tout le contenu",
-  "link_type": "Type de lien"
+  "link_type": "Type de lien",
+  "comment_edited_at_timestamp": "Commentaire modifié à {{timestamp}}.",
+  "reason_reason": "Raison: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Cliquez ici</1> pour afficher l'original.",
+  "click_here_to_hide_original": "<1>Cliquez ici</1> pour masquer l'original.",
+  "loading": "Chargement"
 }

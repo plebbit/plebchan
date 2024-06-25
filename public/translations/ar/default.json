@@ -194,5 +194,10 @@
   "use_catalog": "استخدام الكتالوج",
   "show_worksafe_boards_only": "عرض لوحات آمنة للعمل فقط",
   "show_all_content": "عرض جميع المحتويات",
-  "link_type": "نوع الرابط"
+  "link_type": "نوع الرابط",
+  "comment_edited_at_timestamp": "تم تحرير التعليق في {{timestamp}}.",
+  "reason_reason": "السبب: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>انقر هنا</1> لعرض الأصل.",
+  "click_here_to_hide_original": "<1>انقر هنا</1> لإخفاء الأصل.",
+  "loading": "جار التحميل"
 }

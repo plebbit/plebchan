@@ -194,5 +194,10 @@
   "use_catalog": "använd katalog",
   "show_worksafe_boards_only": "Visa endast Worksafe-styrelser",
   "show_all_content": "Visa allt innehåll",
-  "link_type": "Länktyp"
+  "link_type": "Länktyp",
+  "comment_edited_at_timestamp": "Kommentaren redigerades den {{timestamp}}.",
+  "reason_reason": "Anledning: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Klicka här</1> för att visa original.",
+  "click_here_to_hide_original": "<1>Klicka här</1> för att dölja original.",
+  "loading": "Laddar"
 }

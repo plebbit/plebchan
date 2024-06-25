@@ -194,5 +194,10 @@
   "use_catalog": "ใช้แคตตาล็อก",
   "show_worksafe_boards_only": "แสดงบอร์ด Worksafe เท่านั้น",
   "show_all_content": "แสดงเนื้อหาทั้งหมด",
-  "link_type": "ประเภทลิงก์"
+  "link_type": "ประเภทลิงก์",
+  "comment_edited_at_timestamp": "แก้ไขความคิดเห็นที่ {{timestamp}}",
+  "reason_reason": "เหตุผล: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>คลิกที่นี่</1> เพื่อแสดงข้อมูลต้นฉบับ",
+  "click_here_to_hide_original": "<1>คลิกที่นี่</1> เพื่อซ่อนข้อมูลต้นฉบับ",
+  "loading": "กำลังโหลด"
 }

@@ -194,5 +194,10 @@
   "use_catalog": "استعمال کیٹالوگ",
   "show_worksafe_boards_only": "صرف کام سے بچائے گئے بورڈز دکھائیں",
   "show_all_content": "تمام مواد دکھائیں",
-  "link_type": "لنک کی قسم"
+  "link_type": "لنک کی قسم",
+  "comment_edited_at_timestamp": "تبدیل کی گئی تبدیلی کا {{timestamp}}۔",
+  "reason_reason": "وجہ: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>یہاں کلک کریں</1> تاکہ اصل دکھائی دے۔",
+  "click_here_to_hide_original": "<1>یہاں کلک کریں</1> تاکہ اصل چھپ جائے۔",
+  "loading": "لوڈ ہو رہا ہے"
 }

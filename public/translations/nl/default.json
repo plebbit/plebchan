@@ -194,5 +194,10 @@
   "use_catalog": "gebruik catalogus",
   "show_worksafe_boards_only": "Toon alleen Worksafe boards",
   "show_all_content": "Toon alle inhoud",
-  "link_type": "Link type"
+  "link_type": "Link type",
+  "comment_edited_at_timestamp": "Reactie bewerkt op {{timestamp}}.",
+  "reason_reason": "Reden: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Klik hier</1> om de originele te tonen.",
+  "click_here_to_hide_original": "<1>Klik hier</1> om de originele te verbergen.",
+  "loading": "Laden"
 }

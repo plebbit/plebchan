@@ -194,5 +194,10 @@
   "use_catalog": "השתמש בקטלוג",
   "show_worksafe_boards_only": "הצג לוחות עבודה בטוחים בלבד",
   "show_all_content": "הצג את כל התוכן",
-  "link_type": "סוג קישור"
+  "link_type": "סוג קישור",
+  "comment_edited_at_timestamp": "התגובה עודכנה ב {{timestamp}}.",
+  "reason_reason": "סיבה: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>לחץ כאן</1> כדי להציג את המקור.",
+  "click_here_to_hide_original": "<1>לחץ כאן</1> כדי להסתיר את המקור.",
+  "loading": "טוען"
 }

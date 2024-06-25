@@ -194,5 +194,10 @@
   "use_catalog": "použít katalog",
   "show_worksafe_boards_only": "Zobrazit pouze bezpečné pracovní desky",
   "show_all_content": "Zobrazit veškerý obsah",
-  "link_type": "Typ odkazu"
+  "link_type": "Typ odkazu",
+  "comment_edited_at_timestamp": "Komentář byl upraven dne {{timestamp}}.",
+  "reason_reason": "Důvod: \"{{reason}}\".",
+  "click_here_to_show_original": "Klikněte <1>zde</1> pro zobrazení původního.",
+  "click_here_to_hide_original": "Klikněte <1>zde</1> pro skrytí původního.",
+  "loading": "Načítání"
 }

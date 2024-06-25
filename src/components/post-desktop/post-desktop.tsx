@@ -197,11 +197,21 @@ const PostMessage = ({ post }: PostProps) => {
             <span className={styles.editedInfo}>
               {showOriginal && <Markdown content={original?.content} />}
               <br />
-              Comment edited at {getFormattedDate(edit?.timestamp)}. {reason && 'Reason: "' + reason + '". '}
-              <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)}>
-                Click here
-              </span>
-              {showOriginal ? ' to hide the original.' : ' to show the original.'}
+              {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}
+              {reason && <> {t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })}</>}
+              {showOriginal ? (
+                <Trans
+                  i18nKey={'click_here_to_hide_original'}
+                  shouldUnescape={true}
+                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                />
+              ) : (
+                <Trans
+                  i18nKey={'click_here_to_show_original'}
+                  shouldUnescape={true}
+                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                />
+              )}
             </span>
           )}
         </>
