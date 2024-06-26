@@ -7,6 +7,7 @@ import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useSelectedTextStore from '../../stores/use-selected-text-store';
 import useReply from '../../hooks/use-reply';
 import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './reply-modal.module.css';
@@ -23,14 +24,12 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
   const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
-
   const account = useAccount();
   const { displayName } = account?.author || {};
-
   const [url, setUrl] = useState('');
-
-  const textRef = useRef<HTMLTextAreaElement>(null);
+  const textRef = useRef<HTMLTextAreaElement | null>(null);
   const urlRef = useRef<HTMLInputElement>(null);
+  const { selectedText } = useSelectedTextStore();
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -89,6 +88,15 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
       )
     : `The subplebbit might be offline and publishing might fail.`;
 
+  const setTextRef = (ref: HTMLTextAreaElement | null) => {
+    if (ref) {
+      textRef.current = ref;
+      !isMobile && ref.focus();
+      const len = ref.value.length;
+      ref.setSelectionRange(len, len);
+    }
+  };
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>
@@ -130,12 +138,12 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             cols={48}
             rows={3}
             wrap='soft'
-            ref={textRef}
+            ref={setTextRef}
+            defaultValue={selectedText}
             onChange={(e) => {
               const content = e.target.value.replace(/\n/g, '\n\n');
               setContent.content(content);
             }}
-            autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
           />
         </div>
         {!(isInAllView || isInSubscriptionsView) && offlineAlert}

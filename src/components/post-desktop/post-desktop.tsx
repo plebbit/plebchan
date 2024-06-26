@@ -78,7 +78,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
             {!cid ? (
               <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
             ) : (
-              <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
+              <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
                 {shortCid}
               </span>
             )}
