@@ -89,7 +89,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
               {!cid ? (
                 <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')} onClick={() => openReplyModal && openReplyModal(cid)}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
                   {shortCid}
                 </span>
               )}
@@ -154,11 +154,21 @@ const PostMessageMobile = ({ post }: PostProps) => {
               <span className={styles.editedInfo}>
                 {showOriginal && <Markdown content={original?.content} />}
                 <br />
-                (Edited at {getFormattedDate(edit?.timestamp)},{' '}
-                <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)}>
-                  {showOriginal ? 'hide original' : 'show original'}
-                </span>
-                )
+                {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}{' '}
+                {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
+                {showOriginal ? (
+                  <Trans
+                    i18nKey={'click_here_to_hide_original'}
+                    shouldUnescape={true}
+                    components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                  />
+                ) : (
+                  <Trans
+                    i18nKey={'click_here_to_show_original'}
+                    shouldUnescape={true}
+                    components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                  />
+                )}
               </span>
             )}
           </>

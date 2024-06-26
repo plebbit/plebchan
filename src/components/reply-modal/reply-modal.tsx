@@ -7,6 +7,7 @@ import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useSelectedTextStore from '../../stores/use-selected-text-store';
 import useReply from '../../hooks/use-reply';
 import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './reply-modal.module.css';
@@ -22,15 +23,13 @@ interface ReplyModalProps {
 const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
-  const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
-
+  const { setContent, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
-
   const [url, setUrl] = useState('');
-
-  const textRef = useRef<HTMLTextAreaElement>(null);
+  const textRef = useRef<HTMLTextAreaElement | null>(null);
   const urlRef = useRef<HTMLInputElement>(null);
+  const { selectedText } = useSelectedTextStore();
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -46,14 +45,8 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
       return;
     }
     publishReply();
+    closeModal();
   };
-
-  useEffect(() => {
-    if (typeof replyIndex === 'number') {
-      closeModal();
-      resetContent();
-    }
-  }, [replyIndex, resetContent, closeModal]);
 
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
@@ -89,6 +82,32 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
       )
     : `The subplebbit might be offline and publishing might fail.`;
 
+  const setTextRef = (ref: HTMLTextAreaElement | null) => {
+    if (ref) {
+      textRef.current = ref;
+      !isMobile && ref.focus();
+      const len = ref.value.length;
+      ref.setSelectionRange(len, len);
+    }
+  };
+
+  const contentPrefix = `c/${parentCid && Plebbit.getShortCid(parentCid)}\n`;
+
+  const handleContentInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    if (!value.startsWith(contentPrefix)) {
+      e.target.value = contentPrefix + value.slice(contentPrefix.length);
+    }
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // remove the prefix from the content to publish, and also add newlines for markdown
+    const contentWithoutPrefix = e.target.value.slice(contentPrefix.length).replace(/\n/g, '\n\n');
+    if (textRef.current && textRef.current.value !== contentWithoutPrefix) {
+      setContent.content(contentWithoutPrefix);
+    }
+  };
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>
@@ -123,19 +142,15 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           />
         </div>
         <div className={styles.content}>
-          <span className={styles.parentCid} ref={parentCidRef}>
-            {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-          </span>
           <textarea
             cols={48}
-            rows={3}
+            rows={4}
             wrap='soft'
-            ref={textRef}
-            onChange={(e) => {
-              const content = e.target.value.replace(/\n/g, '\n\n');
-              setContent.content(content);
-            }}
-            autoFocus={!isMobile} // autofocus causes auto scroll to top on mobile
+            ref={setTextRef}
+            spellCheck={false}
+            defaultValue={contentPrefix + selectedText}
+            onInput={handleContentInput}
+            onChange={handleContentChange}
           />
         </div>
         {!(isInAllView || isInSubscriptionsView) && offlineAlert}
@@ -143,7 +158,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
         <div className={styles.footer}>
           {url && (
             <>
-              {t('file_type')}: <LinkTypePreviewer link={url} />{' '}
+              {t('link_type')}: <LinkTypePreviewer link={url} />{' '}
             </>
           )}
           <span className={styles.spoilerButton}>
@@ -154,7 +169,9 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             </label>
             ]
           </span>
-          <button onClick={onPublishReply}>{t('reply')}</button>
+          <button className={styles.publishButton} onClick={onPublishReply}>
+            {t('post')}
+          </button>
         </div>
       </div>
     </div>

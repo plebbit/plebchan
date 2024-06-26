@@ -193,5 +193,11 @@
   "show_nsfw_boards_only": "Vis kun NSFW boards",
   "use_catalog": "bruk katalog",
   "show_worksafe_boards_only": "Vis kun Worksafe boards",
-  "show_all_content": "Vis allt innhold"
+  "show_all_content": "Vis allt innhold",
+  "link_type": "Lenketype",
+  "comment_edited_at_timestamp": "Kommentaren ble redigert på {{timestamp}}.",
+  "reason_reason": "Årsak: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Klikk her</1> for å vise originalen.",
+  "click_here_to_hide_original": "<1>Klikk her</1> for å skjule originalen.",
+  "loading": "Laster"
 }

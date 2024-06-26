@@ -193,5 +193,11 @@
   "show_nsfw_boards_only": "Показывать только NSFW доски",
   "use_catalog": "использовать каталог",
   "show_worksafe_boards_only": "Показывать только безопасные доски",
-  "show_all_content": "Показать весь контент"
+  "show_all_content": "Показать весь контент",
+  "link_type": "Тип ссылки",
+  "comment_edited_at_timestamp": "Комментарий изменён {{timestamp}}.",
+  "reason_reason": "Причина: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Нажмите здесь</1> для отображения оригинала.",
+  "click_here_to_hide_original": "<1>Нажмите здесь</1> чтобы скрыть оригинал.",
+  "loading": "Загрузка"
 }

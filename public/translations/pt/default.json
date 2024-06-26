@@ -193,5 +193,11 @@
   "show_nsfw_boards_only": "Mostrar apenas boards NSFW",
   "use_catalog": "usar catálogo",
   "show_worksafe_boards_only": "Mostrar apenas boards Worksafe",
-  "show_all_content": "Mostrar Todo o Conteúdo"
+  "show_all_content": "Mostrar Todo o Conteúdo",
+  "link_type": "Tipo de link",
+  "comment_edited_at_timestamp": "Comentário editado em {{timestamp}}.",
+  "reason_reason": "Razão: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Clique aqui</1> para mostrar o original.",
+  "click_here_to_hide_original": "<1>Clique aqui</1> para ocultar o original.",
+  "loading": "Carregando"
 }

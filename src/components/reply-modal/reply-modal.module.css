@@ -62,7 +62,6 @@
 
 .content textarea {
   vertical-align: top;
-  padding-top: 18px;
 }
 
 .footer button {
@@ -81,14 +80,9 @@
   padding-top: 2px;
 }
 
-.parentCid {
-  color: var(--post-form-field-input-color);
-  position: absolute;
-  width: auto;
-  background-color: var(--post-form-field-input-background-color, white);
-  padding: 2px;
-  left: 1px;
-  top: 1px;
+.publishButton {
+  width: 75px;
+  filter: var(--filter80)
 }
 
 .offlineBoard {

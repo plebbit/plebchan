@@ -193,5 +193,11 @@
   "show_nsfw_boards_only": "Shfaq vetëm taulat NSFW",
   "use_catalog": "përdor katalogun",
   "show_worksafe_boards_only": "Shfaq vetëm taulat e sigurta të punës",
-  "show_all_content": "Shfaq të gjitha përmbajtjet"
+  "show_all_content": "Shfaq të gjitha përmbajtjet",
+  "link_type": "Lloji i lidhjes",
+  "comment_edited_at_timestamp": "Komenti është ndryshuar në {{timestamp}}.",
+  "reason_reason": "Arsye: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Kliko këtu</1> për të treguar origjinalin.",
+  "click_here_to_hide_original": "<1>Kliko këtu</1> për të fshehur origjinalin.",
+  "loading": "Ngarkimi"
 }

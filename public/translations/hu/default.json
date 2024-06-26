@@ -193,5 +193,11 @@
   "show_nsfw_boards_only": "Csak NSFW táblák mutatása",
   "use_catalog": "használja a katalógust",
   "show_worksafe_boards_only": "Csak munkabiztos táblák mutatása",
-  "show_all_content": "Mutasd az összes tartalmat"
+  "show_all_content": "Mutasd az összes tartalmat",
+  "link_type": "Link típusa",
+  "comment_edited_at_timestamp": "Hozzászólás szerkesztve itt: {{timestamp}}.",
+  "reason_reason": "Ok: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Kattints ide</1> az eredeti megjelenítéséhez.",
+  "click_here_to_hide_original": "<1>Kattints ide</1> az eredeti elrejtéséhez.",
+  "loading": "Betöltés"
 }

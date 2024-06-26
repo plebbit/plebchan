@@ -193,5 +193,11 @@
   "show_nsfw_boards_only": "نمایش تنها بوردهای NSFW",
   "use_catalog": "استفاده از کاتالوگ",
   "show_worksafe_boards_only": "نمایش تنها بوردهای ایمن برای کار",
-  "show_all_content": "نمایش تمام محتوا"
+  "show_all_content": "نمایش تمام محتوا",
+  "link_type": "نوع پیوند",
+  "comment_edited_at_timestamp": "ویرایش نظر در {{timestamp}}.",
+  "reason_reason": "دلیل: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>برای نمایش اصلی اینجا کلیک کنید</1>.",
+  "click_here_to_hide_original": "<1>برای پنهان کردن اصل اینجا کلیک کنید</1>.",
+  "loading": "در حال بارگذاری"
 }

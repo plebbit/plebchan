@@ -193,5 +193,11 @@
   "show_nsfw_boards_only": "Εμφάνιση μόνο NSFW πινάκων",
   "use_catalog": "χρησιμοποίηση καταλόγου",
   "show_worksafe_boards_only": "Εμφάνιση μόνο ασφαλών πινάκων εργασίας",
-  "show_all_content": "Εμφάνιση όλων των περιεχομένων"
+  "show_all_content": "Εμφάνιση όλων των περιεχομένων",
+  "link_type": "Τύπος συνδέσμου",
+  "comment_edited_at_timestamp": "Επεξεργασία σχολίου στις {{timestamp}}.",
+  "reason_reason": "Λόγος: \"{{reason}}\".",
+  "click_here_to_show_original": "<1>Κάντε κλικ εδώ</1> για να εμφανιστεί το αρχικό.",
+  "click_here_to_hide_original": "<1>Κάντε κλικ εδώ</1> για να κρύψετε το αρχικό.",
+  "loading": "Φόρτωση"
 }
