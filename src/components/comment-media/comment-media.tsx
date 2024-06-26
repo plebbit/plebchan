@@ -151,7 +151,7 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
     <span className={styles.content}>
       <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
         {url && <Thumbnail commentMediaInfo={commentMediaInfo} isFloatingEmbed={isFloatingEmbed} post={post} setShowThumbnail={setShowThumbnail} />}
-        {isMobile && type && <div className={styles.fileInfo}>{`${post?.spoiler && `${t('spoiler')} - `} ${getDisplayMediaInfoType(type, t)}`}</div>}
+        {isMobile && type && <div className={styles.fileInfo}>{`${post?.spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
       </span>
       {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={post?.parentCid} setShowThumbnail={setShowThumbnail} />}
     </span>
