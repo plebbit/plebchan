@@ -23,7 +23,7 @@ interface ReplyModalProps {
 const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
-  const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
+  const { setContent, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
   const [url, setUrl] = useState('');
@@ -45,14 +45,8 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
       return;
     }
     publishReply();
+    closeModal();
   };
-
-  useEffect(() => {
-    if (typeof replyIndex === 'number') {
-      closeModal();
-      resetContent();
-    }
-  }, [replyIndex, resetContent, closeModal]);
 
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
@@ -97,6 +91,23 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
     }
   };
 
+  const contentPrefix = `c/${parentCid && Plebbit.getShortCid(parentCid)}\n`;
+
+  const handleContentInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    if (!value.startsWith(contentPrefix)) {
+      e.target.value = contentPrefix + value.slice(contentPrefix.length);
+    }
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // remove the prefix from the content to publish, and also add newlines for markdown
+    const contentWithoutPrefix = e.target.value.slice(contentPrefix.length).replace(/\n/g, '\n\n');
+    if (textRef.current && textRef.current.value !== contentWithoutPrefix) {
+      setContent.content(contentWithoutPrefix);
+    }
+  };
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>
@@ -131,19 +142,15 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           />
         </div>
         <div className={styles.content}>
-          <span className={styles.parentCid} ref={parentCidRef}>
-            {`c/${parentCid && Plebbit.getShortCid(parentCid)}`}
-          </span>
           <textarea
             cols={48}
-            rows={3}
+            rows={4}
             wrap='soft'
             ref={setTextRef}
-            defaultValue={selectedText}
-            onChange={(e) => {
-              const content = e.target.value.replace(/\n/g, '\n\n');
-              setContent.content(content);
-            }}
+            spellCheck={false}
+            defaultValue={contentPrefix + selectedText}
+            onInput={handleContentInput}
+            onChange={handleContentChange}
           />
         </div>
         {!(isInAllView || isInSubscriptionsView) && offlineAlert}
@@ -162,7 +169,9 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             </label>
             ]
           </span>
-          <button onClick={onPublishReply}>{t('reply')}</button>
+          <button className={styles.publishButton} onClick={onPublishReply}>
+            {t('post')}
+          </button>
         </div>
       </div>
     </div>
