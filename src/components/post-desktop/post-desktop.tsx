@@ -197,8 +197,8 @@ const PostMessage = ({ post }: PostProps) => {
             <span className={styles.editedInfo}>
               {showOriginal && <Markdown content={original?.content} />}
               <br />
-              {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}
-              {reason && <> {t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })}</>}
+              {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}{' '}
+              {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
               {showOriginal ? (
                 <Trans
                   i18nKey={'click_here_to_hide_original'}
