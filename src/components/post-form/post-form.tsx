@@ -282,7 +282,7 @@ const PostForm = () => {
   return (
     <>
       <div className={styles.postFormDesktop}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && <div className={styles.offlineBoard}>{offlineMessage}</div>}
+        {!(isInAllView || isInSubscriptionsView) && showForm && isBoardOffline && <div className={styles.offlineBoard}>{offlineMessage}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -302,7 +302,7 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormMobile}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && <div className={styles.offlineBoard}>{offlineMessage}</div>}
+        {!(isInAllView || isInSubscriptionsView) && showForm && isBoardOffline && <div className={styles.offlineBoard}>{offlineMessage}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
