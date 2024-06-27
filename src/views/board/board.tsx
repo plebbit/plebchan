@@ -62,8 +62,8 @@ const Board = () => {
     setResetFunction(reset);
   }, [reset, setResetFunction]);
 
-  const { subplebbit, error } = useSubplebbit({ subplebbitAddress });
-  const { createdAt, description, rules, shortAddress, state, suggested } = subplebbit || {};
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { createdAt, description, error, rules, shortAddress, state, suggested } = subplebbit || {};
   const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
 
   const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
