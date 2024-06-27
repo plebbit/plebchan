@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAccount, Subplebbit, useFeed, useSubplebbit, Comment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, Subplebbit, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
@@ -174,15 +174,40 @@ const Catalog = () => {
     </div>
   );
 
+  const { blocked, unblock } = useBlock({ address: subplebbitAddress });
+
   const Footer = () => {
     let footerContent;
     if (feed.length === 0) {
-      footerContent = t('no_posts');
+      if (blocked) {
+        footerContent = 'you have blocked this board';
+      } else {
+        footerContent = t('no_posts');
+      }
     }
     if (hasMore || subplebbitAddresses.length === 0) {
       footerContent = loadingString;
     }
-    return <div className={styles.footer}>{footerContent}</div>;
+    return (
+      <div className={styles.footer}>
+        {footerContent}
+        {blocked && (
+          <>
+            &nbsp;&nbsp;[
+            <span
+              className={styles.button}
+              onClick={() => {
+                unblock();
+                reset();
+              }}
+            >
+              Unblock
+            </span>
+            ]
+          </>
+        )}
+      </div>
+    );
   };
 
   const isFeedLoaded = feed.length > 0 || state === 'failed';
