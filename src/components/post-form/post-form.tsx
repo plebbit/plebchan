@@ -273,22 +273,16 @@ const PostForm = () => {
 
   const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
   const { updatedAt } = subplebbit || {};
-  const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
+  const isBoardOffline = updatedAt && updatedAt < Date.now() / 1000 - 60 * 60;
 
-  const offlineAlert =
-    showForm &&
-    (updatedAt ? (
-      isBoardOffline && (
-        <div className={styles.offlineBoard}>{t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })}</div>
-      )
-    ) : (
-      <div className={styles.offlineBoard}>{t('subplebbit_offline_info')}</div>
-    ));
+  const offlineMessage = updatedAt
+    ? isBoardOffline && t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })
+    : t('subplebbit_offline_info');
 
   return (
     <>
       <div className={styles.postFormDesktop}>
-        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
+        {!(isInAllView || isInSubscriptionsView) && showForm && <div className={styles.offlineBoard}>{offlineMessage}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -308,7 +302,7 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormMobile}>
-        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
+        {!(isInAllView || isInSubscriptionsView) && showForm && <div className={styles.offlineBoard}>{offlineMessage}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
