@@ -154,7 +154,7 @@ const Catalog = () => {
   }, [reset, setResetFunction]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { shortAddress, state, title } = subplebbit || {};
+  const { error, shortAddress, state, title } = subplebbit || {};
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = (
     <div className={styles.stateString}>
@@ -164,6 +164,12 @@ const Catalog = () => {
         t('not_subscribed_to_any_board')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
+      )}
+      {error && (
+        <div style={{ color: 'red' }}>
+          <br />
+          {error.message}
+        </div>
       )}
     </div>
   );
