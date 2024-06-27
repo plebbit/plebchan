@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Subplebbit, useAccount, useAccountSubplebbits } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import { getFormattedTimeAgo } from '../../../lib/utils/time-utils';
 import useHomeFiltersStore from '../../../stores/use-home-filters-store';
 import { useMultisubMetadata } from '../../../hooks/use-default-subplebbits';
 import styles from '../home.module.css';
 import { nsfwTags } from '../home';
 import BoxModal from '../box-modal';
 
-const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subplebbit }) => {
+const Board = ({ subplebbit, subplebbits }: { subplebbit: Subplebbit; subplebbits: any }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit || {};
   const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
@@ -16,9 +17,16 @@ const Board = ({ isOffline, subplebbit }: { isOffline: boolean; subplebbit: Subp
 
   const boardLink = useCatalog ? `/p/${address}/catalog` : `/p/${address}`;
 
+  const subplebbitData = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
+  const updatedAt = subplebbitData?.updatedAt;
+  const isOffline = updatedAt && updatedAt < Date.now() / 1000 - 60 * 60;
+  const offlineTitle = updatedAt
+    ? isOffline && t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })
+    : t('subplebbit_offline_info');
+
   return (
     <div className={styles.subplebbit} key={address}>
-      {isOffline && <span className={styles.offlineIcon} />}
+      {isOffline && <span className={styles.offlineIcon} title={offlineTitle} />}
       <Link to={boardLink}>{title || address}</Link>
       {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
     </div>
@@ -55,12 +63,6 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
     );
   }
 
-  const isSubOffline = (address: string) => {
-    const subplebbit = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
-    const isOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
-    return isOffline;
-  };
-
   const multisubMetadata = useMultisubMetadata();
 
   return (
@@ -85,7 +87,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
               <h3>Plebbit</h3>
               <div className={styles.list}>
                 {plebbitSubs.map((sub) => (
-                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                  <Board key={sub.address} subplebbit={sub} subplebbits={subplebbits} />
                 ))}
               </div>
             </>
@@ -95,7 +97,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
               <h3>{t('projects')}</h3>
               <div className={styles.list}>
                 {projectsSubs.map((sub) => (
-                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                  <Board key={sub.address} subplebbit={sub} subplebbits={subplebbits} />
                 ))}
               </div>
             </>
@@ -107,7 +109,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
               <h3>{t('interests')}</h3>
               <div className={styles.list}>
                 {interestsSubs.map((sub) => (
-                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                  <Board key={sub.address} subplebbit={sub} subplebbits={subplebbits} />
                 ))}
               </div>
             </>
@@ -119,7 +121,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
               <h3>{t('random')}</h3>
               <div className={styles.list}>
                 {randomSubs.map((sub) => (
-                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                  <Board key={sub.address} subplebbit={sub} subplebbits={subplebbits} />
                 ))}
               </div>
             </>
@@ -129,7 +131,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
               <h3>{t('international')}</h3>
               <div className={styles.list}>
                 {internationalSubs.map((sub) => (
-                  <Board key={sub.address} subplebbit={sub} isOffline={sub.address && isSubOffline(sub.address)} />
+                  <Board key={sub.address} subplebbit={sub} subplebbits={subplebbits} />
                 ))}
               </div>
             </>
