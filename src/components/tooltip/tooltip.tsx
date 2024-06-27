@@ -1,8 +1,13 @@
-import { useState } from 'react';
-import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
+import { useState, ReactNode } from 'react';
 import { useFloating, autoUpdate, offset, flip, shift, useHover, useFocus, useDismiss, useRole, useInteractions, FloatingPortal } from '@floating-ui/react';
+import styles from './tooltip.module.css';
 
-const Timestamp = ({ timestamp }: { timestamp: number }) => {
+interface TooltipProps {
+  content: string;
+  children: ReactNode;
+}
+
+const Tooltip = ({ content, children }: TooltipProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -29,12 +34,12 @@ const Timestamp = ({ timestamp }: { timestamp: number }) => {
   return (
     <>
       <span ref={refs.setReference} {...getReferenceProps()}>
-        {getFormattedDate(timestamp)}
+        {children}
       </span>
       <FloatingPortal>
         {isOpen && (
-          <div className='tooltip' ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
-            {getFormattedTimeAgo(timestamp)}
+          <div className={styles.tooltip} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+            {content}
           </div>
         )}
       </FloatingPortal>
@@ -42,4 +47,4 @@ const Timestamp = ({ timestamp }: { timestamp: number }) => {
   );
 };
 
-export default Timestamp;
+export default Tooltip;
