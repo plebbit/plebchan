@@ -233,7 +233,7 @@ const Catalog = () => {
     let documentTitle = title ? title : shortAddress;
     if (isInAllView) documentTitle = t('all');
     else if (isInSubscriptionsView) documentTitle = t('subscriptions');
-    document.title = documentTitle + ` - ${t('catalog')}`;
+    document.title = documentTitle + ` - ${t('catalog')} - plebchan`;
   }, [title, shortAddress, isInAllView, isInSubscriptionsView, t]);
 
   return (

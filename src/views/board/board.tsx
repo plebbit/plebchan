@@ -140,7 +140,8 @@ const Board = () => {
   const lastVirtuosoState = lastVirtuosoStates?.[sortType + timeFilterSeconds];
 
   useEffect(() => {
-    document.title = title ? title : shortAddress || subplebbitAddress;
+    const boardTitle = title ? title : shortAddress || subplebbitAddress;
+    document.title = boardTitle + ' - plebchan';
   }, [title, shortAddress, subplebbitAddress]);
 
   return (
