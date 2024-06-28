@@ -172,6 +172,24 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
   );
 };
 
+const CreateBoardButton = () => {
+  return (
+    <div className={styles.createBoardButton}>
+      [
+      <Link
+        to='/boards/create'
+        onClick={(e) => {
+          e.preventDefault();
+          alert('work in progress');
+        }}
+      >
+        Create a Board
+      </Link>
+      ]
+    </div>
+  );
+};
+
 export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -186,6 +204,8 @@ export const MobileBoardButtons = () => {
 
   return (
     <div className={styles.mobileBoardButtons}>
+      <CreateBoardButton />
+      <hr />
       {isInPostView || isInPendingPostPage ? (
         <>
           <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
@@ -233,6 +253,8 @@ export const DesktopBoardButtons = () => {
 
   return (
     <>
+      <hr />
+      <CreateBoardButton />
       <hr />
       <div className={styles.desktopBoardButtons}>
         {isInPostView || isInPendingPostPage ? (
