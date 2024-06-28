@@ -2,7 +2,11 @@
 
 _Telegram group for this repo https://t.me/plebchanreact_
 
-_Demo https://plebchan.netlify.app and https://plebchan.eth.limo_
+_Web client https://plebchan.eth.limo_
+
+# Plebchan
+
+Plebchan is a serverless, adminless, decentralized 4chan alternative where any pleb can create and own unlimited boards. All data comes from the plebbit protocol, it's all text including links from which media is embedded, shared peer-to-peer. Users do not need to register an account before participating in the community.
 
 ## To run locally
 
