@@ -24,7 +24,7 @@ const Tooltip = ({ content, children }: TooltipProps) => {
     ],
   });
 
-  const hover = useHover(context, { move: false, delay: { open: 250, close: 0 } });
+  const hover = useHover(context, { move: false, delay: { open: 500, close: 0 } });
   const focus = useFocus(context);
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: 'tooltip' });

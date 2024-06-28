@@ -8,6 +8,7 @@ import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '.
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
@@ -47,6 +48,9 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
 
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
 
+  const handleUserAddressClick = useAuthorAddressClick();
+  const numberOfPostsByAuthor = document.querySelectorAll(`.${shortAddress}`).length;
+
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />}
@@ -75,7 +79,24 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
           )}
           {authorRole && ` ## Board ${authorRole}`}{' '}
         </span>
-        {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>}
+        {!(isDescription || isRules) && (
+          <>
+            (u/
+            <Tooltip
+              children={
+                <span
+                  title='Highlight posts by this user address'
+                  className={styles.userAddress}
+                  onClick={() => handleUserAddressClick(shortAddress || accountShortAddress)}
+                >
+                  {shortAddress || accountShortAddress}
+                </span>
+              }
+              content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
+            />
+            ){' '}
+          </>
+        )}
       </span>
       <span className={styles.dateTime}>
         <Tooltip children={<span>{getFormattedDate(timestamp)}</span>} content={getFormattedTimeAgo(timestamp)} />
@@ -272,7 +293,15 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
-      <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`} id={cid}>
+      <div
+        className={`
+            ${styles.reply}
+            ${isRouteLinkToReply && styles.highlight}
+            ${hidden && styles.postDesktopHidden}
+            ${cid}
+            ${post?.author?.shortAddress}
+          `}
+      >
         <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
         {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
         {content && !hidden && <PostMessage post={post} />}

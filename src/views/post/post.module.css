@@ -66,6 +66,14 @@
   width: 100%;
 }
 
+.userAddress {
+  cursor: pointer;
+}
+
+.postDesktop .userAddress:hover {
+  color: var(--button-desktop-text-color-hover);
+}
+
 .postDesktop .subject {
   color: var(--post-subject-text-color);
   font-weight: var(--post-subject-font-weight);

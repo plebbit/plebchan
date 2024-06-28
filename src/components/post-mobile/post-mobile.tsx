@@ -7,6 +7,7 @@ import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
@@ -45,6 +46,9 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
 
   const stateString = useStateString(post);
 
+  const handleUserAddressClick = useAuthorAddressClick();
+  const numberOfPostsByAuthor = document.querySelectorAll(`.${shortAddress}`).length;
+
   return (
     <>
       <div className={styles.postInfo}>
@@ -65,7 +69,24 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
             )}
             {authorRole && ` ## Board ${authorRole}`}{' '}
           </span>
-          {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
+          {!(isDescription || isRules) && (
+            <>
+              (u/
+              <Tooltip
+                children={
+                  <span
+                    title='Highlight posts by this user address'
+                    className={styles.userAddress}
+                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress)}
+                  >
+                    {shortAddress || accountShortAddress}
+                  </span>
+                }
+                content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
+              />
+              ){' '}
+            </>
+          )}
           {pinned && (
             <span className={styles.stickyIconWrapper}>
               <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -224,7 +245,15 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
   return (
     <div className={styles.replyMobile}>
       <div className={styles.reply}>
-        <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={cid}>
+        <div
+          className={`
+            ${styles.replyContainer}
+            ${isRouteLinkToReply && styles.highlight}
+            ${hidden && styles.postDesktopHidden}
+            ${cid}
+            ${post?.author?.shortAddress}
+          `}
+        >
           <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
           {content && !hidden && <PostMessageMobile post={post} />}
           <ReplyBacklinks post={reply} />

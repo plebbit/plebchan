@@ -20,7 +20,6 @@
 }
 
 .boardSubtitle {
-  margin-top: 3px;
   font-size: var(--board-address-font-size);
   color: var(--board-address-text-color);
 }

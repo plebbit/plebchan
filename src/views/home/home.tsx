@@ -143,10 +143,23 @@ const Footer = () => {
             {t('about')}
           </a>
         </li>
+        {downloadAppLink && (
+          <li>
+            <a href={downloadAppLink} target='_blank' rel='noopener noreferrer'>
+              {t('download_app')}
+            </a>
+          </li>
+        )}
         <li>
-          <a href='https://twitter.com/getplebchan' target='_blank' rel='noopener noreferrer'>
-            Twitter
-          </a>
+          <Link
+            to='/faq'
+            onClick={(e) => {
+              e.preventDefault();
+              alert('work in progress');
+            }}
+          >
+            FAQ
+          </Link>
         </li>
         <li>
           <a href='https://t.me/plebbit' target='_blank' rel='noopener noreferrer'>
@@ -163,13 +176,6 @@ const Footer = () => {
             GitHub
           </a>
         </li>
-        {downloadAppLink && (
-          <li>
-            <a href={downloadAppLink} target='_blank' rel='noopener noreferrer'>
-              {t('download_app')}
-            </a>
-          </li>
-        )}
         <li>
           <a href='https://etherscan.io/token/0xEA81DaB2e0EcBc6B5c4172DE4c22B6Ef6E55Bd8f' target='_blank' rel='noopener noreferrer'>
             {t('token')}
