@@ -82,13 +82,13 @@ const TopBarDesktop = () => {
             [{renderSubplebbits(plebbitSubs)}] [{renderSubplebbits(projectsSubs)}] [{renderSubplebbits(interestsSubs)}] [{renderSubplebbits(randomSubs)}] [
             {renderSubplebbits(internationalSubs)}] [
             <Link
-              to='boards'
+              to='boards/create'
               onClick={(e) => {
                 e.preventDefault();
                 alert('work in progress');
               }}
             >
-              Edit
+              Create
             </Link>
             ]
           </>

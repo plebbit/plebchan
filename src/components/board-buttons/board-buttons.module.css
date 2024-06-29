@@ -51,17 +51,17 @@
   padding-top: 15px;
 }
 
-.createBoardButton {
+.adButton {
   text-align: center;
   font-size: 10px;
 }
 
-.createBoardButton a {
+.adButton a {
   text-decoration: none;
   color: var(--button-desktop-text-color);
 
 }
-.createBoardButton a:hover {
+.adButton a:hover {
   cursor: pointer;
   color: var(--button-desktop-text-color-hover);
 }
@@ -71,7 +71,7 @@
     display: none;
   }
 
-  .createBoardButton {
+  .adButton {
     display: inline-flex;
   }
 }

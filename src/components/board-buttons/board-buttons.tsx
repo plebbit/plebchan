@@ -172,24 +172,6 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
   );
 };
 
-const CreateBoardButton = () => {
-  return (
-    <div className={styles.createBoardButton}>
-      [
-      <Link
-        to='/boards/create'
-        onClick={(e) => {
-          e.preventDefault();
-          alert('work in progress');
-        }}
-      >
-        Create a Board
-      </Link>
-      ]
-    </div>
-  );
-};
-
 export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -204,7 +186,19 @@ export const MobileBoardButtons = () => {
 
   return (
     <div className={styles.mobileBoardButtons}>
-      <CreateBoardButton />
+      <div className={styles.adButton}>
+        [
+        <Link
+          to='/boards'
+          onClick={(e) => {
+            e.preventDefault();
+            alert('work in progress');
+          }}
+        >
+          Vote for Boards
+        </Link>
+        ]
+      </div>
       <hr />
       {isInPostView || isInPendingPostPage ? (
         <>
@@ -254,7 +248,19 @@ export const DesktopBoardButtons = () => {
   return (
     <>
       <hr />
-      <CreateBoardButton />
+      <div className={styles.adButton}>
+        [
+        <Link
+          to='/boards'
+          onClick={(e) => {
+            e.preventDefault();
+            alert('work in progress');
+          }}
+        >
+          Vote for Boards
+        </Link>
+        ]
+      </div>
       <hr />
       <div className={styles.desktopBoardButtons}>
         {isInPostView || isInPendingPostPage ? (
