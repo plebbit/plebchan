@@ -66,6 +66,14 @@
   width: 100%;
 }
 
+.userAddress {
+  cursor: pointer;
+}
+
+.postDesktop .userAddress:hover {
+  color: var(--button-desktop-text-color-hover);
+}
+
 .postDesktop .subject {
   color: var(--post-subject-text-color);
   font-weight: var(--post-subject-font-weight);
@@ -342,8 +350,8 @@
 .replyDesktop .reply {
   background-color: var(--reply-desktop-background-color);
   border: var(--reply-desktop-border);
-  border-left: none;
-  border-top: none;
+  border-top: var(--reply-desktop-border-top, revert);
+  border-left: var(--reply-desktop-border-left, revert);
   display: table;
   padding: 0 2px 2px 2px;
 }
@@ -445,6 +453,7 @@
   line-height: 2;
   background-color: var(--reply-backlink-mobile-background-color);
   border-top: var(--reply-backlink-mobile-border-top);
+  clear: both;
 }
 
 .highlight {

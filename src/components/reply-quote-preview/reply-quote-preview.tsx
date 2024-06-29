@@ -15,9 +15,9 @@ interface ReplyQuotePreviewProps {
 }
 
 const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
-  const targetElement = document.getElementById(cid);
+  const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
 
-  if (!targetElement) return;
+  if (targetElements.length === 0) return;
 
   const isInViewport = (element: HTMLElement) => {
     const bounding = element.getBoundingClientRect();
@@ -29,10 +29,19 @@ const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
     );
   };
 
-  if (isInViewport(targetElement)) {
-    targetElement.classList.add('highlight');
-  } else {
-    targetElement.classList.remove('highlight');
+  let anyInView = false;
+
+  targetElements.forEach((element) => {
+    const htmlElement = element as HTMLElement;
+    if (isInViewport(htmlElement)) {
+      htmlElement.classList.add('highlight');
+      anyInView = true;
+    } else {
+      htmlElement.classList.remove('highlight');
+    }
+  });
+
+  if (!anyInView) {
     onElementOutOfView();
   }
 };
@@ -88,10 +97,10 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
 
   const handleMouseLeave = (cid: string | null) => {
     if (cid) {
-      const targetElement = document.getElementById(cid);
-      if (targetElement) {
-        targetElement.classList.remove('highlight');
-      }
+      const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
+      targetElements.forEach((element) => {
+        element.classList.remove('highlight');
+      });
     }
     setHoveredCid(null);
     setOutOfViewCid(null);
@@ -174,10 +183,10 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
 
   const handleMouseLeave = (cid: string | null) => {
     if (cid) {
-      const targetElement = document.getElementById(cid);
-      if (targetElement) {
-        targetElement.classList.remove('highlight');
-      }
+      const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
+      targetElements.forEach((element) => {
+        element.classList.remove('highlight');
+      });
     }
     setHoveredCid(null);
     setOutOfViewCid(null);

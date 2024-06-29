@@ -5,30 +5,34 @@ import { Comment, useAccount, useComment, useEditedComment } from '@plebbit/pleb
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
+import EditMenu from '../edit-menu/edit-menu';
 import { canEmbed } from '../embed';
 import LoadingEllipsis from '../loading-ellipsis';
 import Markdown from '../markdown';
 import PostMenuDesktop from './post-menu-desktop';
-import EditMenu from '../edit-menu/edit-menu';
 import ReplyQuotePreview from '../reply-quote-preview';
+import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
-import Timestamp from '../timestamp';
 import _ from 'lodash';
-import { getFormattedDate } from '../../lib/utils/time-utils';
 
 const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, locked, pinned, parentCid, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, locked, pinned, parentCid, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const title = post?.title?.trim();
   const replies = useReplies(post);
-  const { address, displayName, shortAddress } = author || {};
+  const { address, shortAddress } = author || {};
+  const displayName = author?.displayName?.trim();
+  const authorRole = roles?.[address]?.role;
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const stateString = useStateString(post);
   const isReply = parentCid;
@@ -36,31 +40,67 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const params = useParams();
   const location = useLocation();
   const isInAllView = isAllView(location.pathname, params);
-  const isInPostView = isPostPageView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
-
-  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
-  const authorRole = roles?.[address]?.role;
-  const displayTitle = title && title.length > 75 ? title?.slice(0, 75) + '...' : title;
+  const isInPostPageView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
 
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
 
+  const handleUserAddressClick = useAuthorAddressClick();
+  let numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"]`).length;
+
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />}
-      {title && <span className={styles.subject}>{displayTitle} </span>}
+      {title &&
+        (title.length <= 75 ? (
+          <span className={styles.subject}>{title} </span>
+        ) : (
+          <Tooltip
+            children={<span className={styles.subject}>{title.slice(0, 75) + '(...)'} </span>}
+            content={title.length < 1000 ? title : title.slice(0, 1000) + '... title too long'}
+          />
+        ))}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-          {shortDisplayName || _.capitalize(t('anonymous'))}
+          {displayName ? (
+            displayName.length <= 20 ? (
+              <span className={styles.name}>{displayName}</span>
+            ) : (
+              <Tooltip
+                children={<span className={styles.name}>{displayName.slice(0, 20) + '(...)'}</span>}
+                content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + '... display name too long'}
+              />
+            )
+          ) : (
+            _.capitalize(t('anonymous'))
+          )}
           {authorRole && ` ## Board ${authorRole}`}{' '}
         </span>
-        {!(isDescription || isRules) && <span className={styles.userAddress}>(u/{shortAddress || accountShortAddress}) </span>}
+        {!(isDescription || isRules) && (
+          <>
+            (u/
+            <Tooltip
+              children={
+                <span
+                  title='Highlight posts by this user address'
+                  className={styles.userAddress}
+                  onClick={() => handleUserAddressClick(shortAddress || accountShortAddress)}
+                >
+                  {shortAddress || accountShortAddress}
+                </span>
+              }
+              content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
+              showTooltip={isInPostPageView}
+            />
+            ){' '}
+          </>
+        )}
       </span>
       <span className={styles.dateTime}>
-        <Timestamp timestamp={timestamp} />
+        <Tooltip children={<span>{getFormattedDate(timestamp)}</span>} content={getFormattedTimeAgo(timestamp)} />
         {isDescription || isRules ? '' : ' '}
       </span>
       <span className={styles.postNum}>
@@ -94,7 +134,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
             <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
           </span>
         )}
-        {!isInPostView && !isReply && !isHidden && (
+        {!isInPostPageView && !isReply && !isHidden && (
           <span className={styles.replyButton}>
             [
             <Link
@@ -254,7 +294,11 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
-      <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`} id={cid}>
+      <div
+        className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
+        data-cid={cid}
+        data-author-address={post?.author?.shortAddress}
+      >
         <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
         {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
         {content && !hidden && <PostMessage post={post} />}
@@ -304,10 +348,12 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             <span className={`${styles.hideButton} ${hidden ? styles.unhideThread : styles.hideThread}`} onClick={hidden ? unhide : hide} />
           </span>
         )}
-        {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
-        <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
-        {!isHidden && !content && <div className={styles.spacer} />}
-        {!isHidden && content && <PostMessage post={post} />}
+        <div data-cid={cid} data-author-address={post?.author?.shortAddress}>
+          {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
+          <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
+          {!isHidden && !content && <div className={styles.spacer} />}
+          {!isHidden && content && <PostMessage post={post} />}
+        </div>
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
             <span className={styles.expandButtonWrapper}>

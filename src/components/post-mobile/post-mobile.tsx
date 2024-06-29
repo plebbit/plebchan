@@ -5,8 +5,9 @@ import { Comment, useAccount, useComment, useEditedComment } from '@plebbit/pleb
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
-import { getFormattedDate } from '../../lib/utils/time-utils';
+import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
@@ -14,25 +15,26 @@ import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
 import LoadingEllipsis from '../loading-ellipsis';
 import Markdown from '../markdown';
-import ReplyQuotePreview from '../reply-quote-preview';
 import PostMenuMobile from './post-menu-mobile';
+import ReplyQuotePreview from '../reply-quote-preview';
+import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
-import Timestamp from '../timestamp';
 import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, link, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp, title } = post || {};
+  const { author, cid, link, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-  const { address, displayName, shortAddress } = author || {};
-
-  const location = useLocation();
-  const isInAllView = isAllView(location.pathname, useParams());
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
-
+  const { address, shortAddress } = author || {};
+  const displayName = author?.displayName?.trim();
   const authorRole = roles?.[address]?.role;
-  const shortDisplayName = displayName?.trim().length > 20 ? displayName?.trim().slice(0, 20).trim() + '...' : displayName?.trim();
-  const displayTitle = title && title.length > 30 ? title?.slice(0, 30) + '(...)' : title;
+
+  const params = useParams();
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname, params);
+  const isInPostPageView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -46,16 +48,48 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
 
   const stateString = useStateString(post);
 
+  const handleUserAddressClick = useAuthorAddressClick();
+  const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"]`).length;
+
   return (
     <>
       <div className={styles.postInfo}>
         <PostMenuMobile post={post} />
         <span className={styles.nameBlock}>
           <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-            {shortDisplayName || _.capitalize(t('anonymous'))}
+            {displayName ? (
+              displayName.length <= 20 ? (
+                <span className={styles.name}>{displayName}</span>
+              ) : (
+                <Tooltip
+                  children={<span className={styles.name}>{displayName.slice(0, 20) + '(...)'}</span>}
+                  content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + '... display name too long'}
+                />
+              )
+            ) : (
+              _.capitalize(t('anonymous'))
+            )}
             {authorRole && ` ## Board ${authorRole}`}{' '}
           </span>
-          {!(isDescription || isRules) && <span className={styles.address}>(u/{shortAddress || accountShortAddress})</span>}
+          {!(isDescription || isRules) && (
+            <>
+              (u/
+              <Tooltip
+                children={
+                  <span
+                    title='Highlight posts by this user address'
+                    className={styles.userAddress}
+                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress)}
+                  >
+                    {shortAddress || accountShortAddress}
+                  </span>
+                }
+                content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
+                showTooltip={isInPostPageView}
+              />
+              ){' '}
+            </>
+          )}
           {pinned && (
             <span className={styles.stickyIconWrapper}>
               <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -66,12 +100,15 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
               <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
-          {title && (
-            <>
-              <br />
-              <span className={styles.subject}>{displayTitle}</span>
-            </>
-          )}
+          {title &&
+            (title.length <= 30 ? (
+              <span className={styles.subject}>{title}</span>
+            ) : (
+              <Tooltip
+                children={<span className={styles.subject}>{title.slice(0, 30) + '(...)'}</span>}
+                content={title.length < 1000 ? title : title.slice(0, 1000) + '... title too long'}
+              />
+            ))}
         </span>
         <span className={styles.dateTimePostNum}>
           {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
@@ -80,7 +117,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
               <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>
             </div>
           )}
-          <Timestamp timestamp={timestamp} />{' '}
+          <Tooltip children={<span>{getFormattedDate(timestamp)}</span>} content={getFormattedTimeAgo(timestamp)} />{' '}
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
               <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
@@ -211,7 +248,11 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
   return (
     <div className={styles.replyMobile}>
       <div className={styles.reply}>
-        <div className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight}`} id={cid}>
+        <div
+          className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
+          data-cid={cid}
+          data-author-address={post?.author?.shortAddress}
+        >
           <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
           {content && !hidden && <PostMessageMobile post={post} />}
           <ReplyBacklinks post={reply} />
@@ -265,7 +306,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
           )}
           <div className={showReplies ? styles.thread : styles.quotePreview}>
             <div className={styles.postContainer}>
-              <div className={styles.postOp}>
+              <div className={styles.postOp} data-cid={cid} data-author-address={post?.author?.shortAddress}>
                 <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
                 {content && <PostMessageMobile post={post} />}
               </div>

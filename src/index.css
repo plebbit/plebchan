@@ -26,40 +26,8 @@ hr {
   color: var(--post-greentext-color);
 }
 
-.highlight {
-  background: var(--reply-highlight-background-color) !important;
-}
-
 .capitalize {
   text-transform: capitalize;
-}
-
-.tooltip {
-  position: absolute;
-  background-color: #181f24;
-  font-size: 11px;
-  line-height: 13px;
-  padding: 3px 6px;
-  z-index: 100000;
-  word-wrap: break-word;
-  white-space: pre-line;
-  max-width: 400px;
-  color: #fff;
-  text-align: center;
-}
-
-.tooltip::before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid #181f24;
-  margin-left: -4px;
-  bottom: -4px;
-  left: 50%;
 }
 
 @media (max-width: 640px) {
@@ -83,6 +51,10 @@ hr {
   select {
     filter: var(--filter80);
   }
+
+  .highlight {
+    background: var(--reply-highlight-background-color) !important;
+  }
 }
 
 @media (min-width: 640px) {
@@ -96,5 +68,12 @@ hr {
   .button:hover {
     color: var(--button-desktop-text-color-hover);
     cursor: pointer;
+  }
+
+  .highlight {
+    background: var(--reply-highlight-background-color) !important;
+    border: var(--reply-highlight-border) !important;
+    border-left: var(--reply-highlight-border-left, revert) !important;
+    border-top: var(--reply-highlight-border-top, revert) !important;
   }
 }

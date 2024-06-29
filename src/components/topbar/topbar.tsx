@@ -80,7 +80,17 @@ const TopBarDesktop = () => {
         {subplebbits && (
           <>
             [{renderSubplebbits(plebbitSubs)}] [{renderSubplebbits(projectsSubs)}] [{renderSubplebbits(interestsSubs)}] [{renderSubplebbits(randomSubs)}] [
-            {renderSubplebbits(internationalSubs)}]
+            {renderSubplebbits(internationalSubs)}] [
+            <Link
+              to='boards/create'
+              onClick={(e) => {
+                e.preventDefault();
+                alert('work in progress');
+              }}
+            >
+              Create
+            </Link>
+            ]
           </>
         )}
       </span>

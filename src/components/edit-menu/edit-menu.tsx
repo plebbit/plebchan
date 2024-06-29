@@ -118,7 +118,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
   return (
     <>
       <span className={`${styles.checkbox} ${isReply && styles.replyCheckbox}`} ref={refs.setReference} {...(cid && getReferenceProps())}>
-        <input type='checkbox' onChange={() => cid && setIsEditMenuOpen(!isEditMenuOpen)} checked={isEditMenuOpen} disabled={!isAccountCommentAuthor && !isAccountMod} />
+        <input type='checkbox' onChange={() => cid && setIsEditMenuOpen(!isEditMenuOpen)} checked={isEditMenuOpen} />
       </span>
       {isEditMenuOpen && (isAccountCommentAuthor || isAccountMod) && (
         <FloatingFocusManager context={context} modal={false}>

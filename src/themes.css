@@ -170,6 +170,7 @@
 
   /* reply highlight */
   --reply-highlight-background-color: #f0c0b0;
+  --reply-highlight-border: 1px solid #d99f91;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;
@@ -375,6 +376,7 @@
 
   /* reply highlight */
   --reply-highlight-background-color: #d6bad0;
+  --reply-highlight-border: 1px solid #ba9dbf;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;
@@ -549,9 +551,7 @@
   --quote-preview-border-bottom: 2px solid rgba(0,0,0,.2);
 
   /* reply desktop */
-  --side-arrows-color: #e0bfb7;
   --reply-desktop-background-color: #f0e0d6;
-  --reply-desktop-border: 1px solid #d9bfb7;
 
   /* reply highlight */
   --reply-highlight-background-color: #f0c0b0;
@@ -734,9 +734,7 @@
   --quote-preview-border-bottom: 2px solid rgba(0,0,0,.2);
 
   /* reply desktop */
-  --side-arrows-color: #b7c5d9;
   --reply-desktop-background-color: #d6daf0;
-  --reply-desktop-border: 1px solid #b7c5d9;
 
   /* reply highlight */
   --reply-highlight-background-color: #d6bad0;
@@ -937,6 +935,8 @@
   --side-arrows-color: #c5c8c6;
   --reply-desktop-background-color: #282a2e;
   --reply-desktop-border: 1px solid #282a2e;
+  --reply-desktop-border-left: 1px solid #282a2e;
+  --reply-desktop-border-top: 1px solid #282a2e;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #515151;
@@ -945,6 +945,9 @@
 
   /* reply highlight */
   --reply-highlight-background-color: #1d1d21;
+  --reply-highlight-border: 1px solid #111;
+  --reply-highlight-border-left: 1px solid #111;
+  --reply-highlight-border-top: 1px solid #111;
 
   /* select */
   --select-border: 1px solid #575a60;
@@ -1133,9 +1136,14 @@
   --side-arrows-color: #333;
   --reply-desktop-background-color: #ddd;
   --reply-desktop-border: 1px solid #ccc;
+  --reply-desktop-border-left: 1px solid #ccc;
+  --reply-desktop-border-top: 1px solid #ccc;
 
   /* reply highlight */
   --reply-highlight-background-color: #ccc;
+  --reply-highlight-border: 1px solid #ccc;
+  --reply-highlight-border-left: 1px solid #ccc;
+  --reply-highlight-border-top: 1px solid #ccc;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;

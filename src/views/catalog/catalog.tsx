@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAccount, Subplebbit, useFeed, useSubplebbit, Comment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, Subplebbit, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
@@ -154,7 +154,7 @@ const Catalog = () => {
   }, [reset, setResetFunction]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { shortAddress, state, title } = subplebbit || {};
+  const { error, shortAddress, state, title } = subplebbit || {};
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = (
     <div className={styles.stateString}>
@@ -165,18 +165,49 @@ const Catalog = () => {
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}
+      {error && (
+        <div style={{ color: 'red' }}>
+          <br />
+          {error.message}
+        </div>
+      )}
     </div>
   );
+
+  const { blocked, unblock } = useBlock({ address: subplebbitAddress });
 
   const Footer = () => {
     let footerContent;
     if (feed.length === 0) {
-      footerContent = t('no_posts');
+      if (blocked) {
+        footerContent = 'you have blocked this board';
+      } else {
+        footerContent = t('no_posts');
+      }
     }
     if (hasMore || subplebbitAddresses.length === 0) {
       footerContent = loadingString;
     }
-    return <div className={styles.footer}>{footerContent}</div>;
+    return (
+      <div className={styles.footer}>
+        {footerContent}
+        {blocked && (
+          <>
+            &nbsp;&nbsp;[
+            <span
+              className={styles.button}
+              onClick={() => {
+                unblock();
+                reset();
+              }}
+            >
+              Unblock
+            </span>
+            ]
+          </>
+        )}
+      </div>
+    );
   };
 
   const isFeedLoaded = feed.length > 0 || state === 'failed';
@@ -202,7 +233,7 @@ const Catalog = () => {
     let documentTitle = title ? title : shortAddress;
     if (isInAllView) documentTitle = t('all');
     else if (isInSubscriptionsView) documentTitle = t('subscriptions');
-    document.title = documentTitle + ` - ${t('catalog')}`;
+    document.title = documentTitle + ` - ${t('catalog')} - plebchan`;
   }, [title, shortAddress, isInAllView, isInSubscriptionsView, t]);
 
   return (

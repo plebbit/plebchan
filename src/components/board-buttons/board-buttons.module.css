@@ -1,6 +1,6 @@
 .mobileBoardButtons {
   text-align: center;
-  margin: 10px 0;
+  margin-bottom: 10px;
 }
 
 .mobileBoardButtons button {
@@ -51,9 +51,28 @@
   padding-top: 15px;
 }
 
+.adButton {
+  text-align: center;
+  font-size: 10px;
+}
+
+.adButton a {
+  text-decoration: none;
+  color: var(--button-desktop-text-color);
+
+}
+.adButton a:hover {
+  cursor: pointer;
+  color: var(--button-desktop-text-color-hover);
+}
+
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;
+  }
+
+  .adButton {
+    display: inline-flex;
   }
 }
 
