@@ -26,10 +26,6 @@ hr {
   color: var(--post-greentext-color);
 }
 
-.highlight {
-  background: var(--reply-highlight-background-color) !important;
-}
-
 .capitalize {
   text-transform: capitalize;
 }
@@ -55,6 +51,10 @@ hr {
   select {
     filter: var(--filter80);
   }
+
+  .highlight {
+    background: var(--reply-highlight-background-color) !important;
+  }
 }
 
 @media (min-width: 640px) {
@@ -68,5 +68,12 @@ hr {
   .button:hover {
     color: var(--button-desktop-text-color-hover);
     cursor: pointer;
+  }
+
+  .highlight {
+    background: var(--reply-highlight-background-color) !important;
+    border: var(--reply-highlight-border) !important;
+    border-left: var(--reply-highlight-border-left, revert) !important;
+    border-top: var(--reply-highlight-border-top, revert) !important;
   }
 }

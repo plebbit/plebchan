@@ -5,9 +5,10 @@ import styles from './tooltip.module.css';
 interface TooltipProps {
   content: string;
   children: ReactNode;
+  showTooltip?: boolean;
 }
 
-const Tooltip = ({ content, children }: TooltipProps) => {
+const Tooltip = ({ content, children, showTooltip = true }: TooltipProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -36,13 +37,15 @@ const Tooltip = ({ content, children }: TooltipProps) => {
       <span ref={refs.setReference} {...getReferenceProps()}>
         {children}
       </span>
-      <FloatingPortal>
-        {isOpen && (
-          <div className={styles.tooltip} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
-            {content}
-          </div>
-        )}
-      </FloatingPortal>
+      {showTooltip && (
+        <FloatingPortal>
+          {isOpen && (
+            <div className={styles.tooltip} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+              {content}
+            </div>
+          )}
+        </FloatingPortal>
+      )}
     </>
   );
 };

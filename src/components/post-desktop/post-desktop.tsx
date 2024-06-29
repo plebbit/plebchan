@@ -40,8 +40,8 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const params = useParams();
   const location = useLocation();
   const isInAllView = isAllView(location.pathname, params);
-  const isInPostView = isPostPageView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInPostPageView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const account = useAccount();
   const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
@@ -49,7 +49,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
 
   const handleUserAddressClick = useAuthorAddressClick();
-  const numberOfPostsByAuthor = document.querySelectorAll(`.${shortAddress}`).length;
+  let numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"]`).length;
 
   return (
     <div className={styles.postInfo}>
@@ -93,6 +93,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
                 </span>
               }
               content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
+              showTooltip={isInPostPageView}
             />
             ){' '}
           </>
@@ -133,7 +134,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
             <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
           </span>
         )}
-        {!isInPostView && !isReply && !isHidden && (
+        {!isInPostPageView && !isReply && !isHidden && (
           <span className={styles.replyButton}>
             [
             <Link
@@ -294,13 +295,9 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
       <div
-        className={`
-            ${styles.reply}
-            ${isRouteLinkToReply && styles.highlight}
-            ${hidden && styles.postDesktopHidden}
-            ${cid}
-            ${post?.author?.shortAddress}
-          `}
+        className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
+        data-cid={cid}
+        data-author-address={post?.author?.shortAddress}
       >
         <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
         {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
@@ -351,10 +348,12 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             <span className={`${styles.hideButton} ${hidden ? styles.unhideThread : styles.hideThread}`} onClick={hidden ? unhide : hide} />
           </span>
         )}
-        {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
-        <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
-        {!isHidden && !content && <div className={styles.spacer} />}
-        {!isHidden && content && <PostMessage post={post} />}
+        <div data-cid={cid} data-author-address={post?.author?.shortAddress}>
+          {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
+          <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
+          {!isHidden && !content && <div className={styles.spacer} />}
+          {!isHidden && content && <PostMessage post={post} />}
+        </div>
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
             <span className={styles.expandButtonWrapper}>

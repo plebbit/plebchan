@@ -350,8 +350,8 @@
 .replyDesktop .reply {
   background-color: var(--reply-desktop-background-color);
   border: var(--reply-desktop-border);
-  border-left: none;
-  border-top: none;
+  border-top: var(--reply-desktop-border-top, revert);
+  border-left: var(--reply-desktop-border-left, revert);
   display: table;
   padding: 0 2px 2px 2px;
 }

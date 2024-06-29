@@ -15,7 +15,7 @@ interface ReplyQuotePreviewProps {
 }
 
 const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
-  const targetElements = document.querySelectorAll(`.${cid}`);
+  const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
 
   if (targetElements.length === 0) return;
 
@@ -97,7 +97,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
 
   const handleMouseLeave = (cid: string | null) => {
     if (cid) {
-      const targetElements = document.querySelectorAll(`.${cid}`);
+      const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
       targetElements.forEach((element) => {
         element.classList.remove('highlight');
       });
@@ -183,7 +183,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
 
   const handleMouseLeave = (cid: string | null) => {
     if (cid) {
-      const targetElements = document.querySelectorAll(`.${cid}`);
+      const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
       targetElements.forEach((element) => {
         element.classList.remove('highlight');
       });

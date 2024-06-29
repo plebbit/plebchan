@@ -30,9 +30,11 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const displayName = author?.displayName?.trim();
   const authorRole = roles?.[address]?.role;
 
+  const params = useParams();
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname, useParams());
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInAllView = isAllView(location.pathname, params);
+  const isInPostPageView = isPostPageView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
@@ -47,7 +49,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const stateString = useStateString(post);
 
   const handleUserAddressClick = useAuthorAddressClick();
-  const numberOfPostsByAuthor = document.querySelectorAll(`.${shortAddress}`).length;
+  const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"]`).length;
 
   return (
     <>
@@ -83,6 +85,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
                   </span>
                 }
                 content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
+                showTooltip={isInPostPageView}
               />
               ){' '}
             </>
@@ -246,13 +249,9 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
     <div className={styles.replyMobile}>
       <div className={styles.reply}>
         <div
-          className={`
-            ${styles.replyContainer}
-            ${isRouteLinkToReply && styles.highlight}
-            ${hidden && styles.postDesktopHidden}
-            ${cid}
-            ${post?.author?.shortAddress}
-          `}
+          className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
+          data-cid={cid}
+          data-author-address={post?.author?.shortAddress}
         >
           <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
           {content && !hidden && <PostMessageMobile post={post} />}
@@ -307,7 +306,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
           )}
           <div className={showReplies ? styles.thread : styles.quotePreview}>
             <div className={styles.postContainer}>
-              <div className={styles.postOp}>
+              <div className={styles.postOp} data-cid={cid} data-author-address={post?.author?.shortAddress}>
                 <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
                 {content && <PostMessageMobile post={post} />}
               </div>
