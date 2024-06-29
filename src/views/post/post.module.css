@@ -453,6 +453,7 @@
   line-height: 2;
   background-color: var(--reply-backlink-mobile-background-color);
   border-top: var(--reply-backlink-mobile-border-top);
+  clear: both;
 }
 
 .highlight {
