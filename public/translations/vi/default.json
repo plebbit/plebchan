@@ -199,5 +199,8 @@
   "reason_reason": "Lý do: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Nhấp vào đây</1> để hiển thị nguyên bản.",
   "click_here_to_hide_original": "<1>Nhấp vào đây</1> để ẩn nguyên bản.",
-  "loading": "Đang tải"
+  "loading": "Đang tải",
+  "posted_by": "Được đăng bởi",
+  "by": "bởi",
+  "last_reply_by": "Trả lời cuối cùng bởi"
 }

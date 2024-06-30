@@ -199,5 +199,8 @@
   "reason_reason": "Grund: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klik her</1> for at vise originalen.",
   "click_here_to_hide_original": "<1>Klik her</1> for at skjule originalen.",
-  "loading": "Indlæser"
+  "loading": "Indlæser",
+  "posted_by": "Skrevet af",
+  "by": "af",
+  "last_reply_by": "Seneste svar fra"
 }

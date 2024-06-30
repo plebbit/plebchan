@@ -199,5 +199,8 @@
   "reason_reason": "เหตุผล: \"{{reason}}\".",
   "click_here_to_show_original": "<1>คลิกที่นี่</1> เพื่อแสดงข้อมูลต้นฉบับ",
   "click_here_to_hide_original": "<1>คลิกที่นี่</1> เพื่อซ่อนข้อมูลต้นฉบับ",
-  "loading": "กำลังโหลด"
+  "loading": "กำลังโหลด",
+  "posted_by": "โพสต์โดย",
+  "by": "โดย",
+  "last_reply_by": "การตอบคำถามล่าสุดโดย"
 }

@@ -199,5 +199,8 @@
   "reason_reason": "Syy: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klikkaa tästä</1> näyttääksesi alkuperäisen.",
   "click_here_to_hide_original": "<1>Klikkaa tästä</1> piilottaaksesi alkuperäisen.",
-  "loading": "Lataa"
+  "loading": "Lataa",
+  "posted_by": "Lähettäjä",
+  "by": "kirjoittanut",
+  "last_reply_by": "Viimeisin vastaus"
 }

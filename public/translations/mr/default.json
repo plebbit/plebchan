@@ -199,5 +199,8 @@
   "reason_reason": "कारण: \"{{reason}}\".",
   "click_here_to_show_original": "<1>येथे क्लिक करा</1> मूळ पाहण्यासाठी।",
   "click_here_to_hide_original": "<1>येथे क्लिक करा</1> मूळ लपविण्यासाठी।",
-  "loading": "लोड होत आहे"
+  "loading": "लोड होत आहे",
+  "posted_by": "ने टप्पल केला",
+  "by": "व्यक्ती",
+  "last_reply_by": "शेवटचा प्रतिसाद व्यक्ती"
 }

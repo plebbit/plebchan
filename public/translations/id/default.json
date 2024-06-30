@@ -199,5 +199,8 @@
   "reason_reason": "Alasan: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klik di sini</1> untuk menampilkan aslinya.",
   "click_here_to_hide_original": "<1>Klik di sini</1> untuk menyembunyikan aslinya.",
-  "loading": "Memuat"
+  "loading": "Memuat",
+  "posted_by": "Diposting oleh",
+  "by": "oleh",
+  "last_reply_by": "Balasan terakhir oleh"
 }

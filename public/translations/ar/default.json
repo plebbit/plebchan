@@ -199,5 +199,8 @@
   "reason_reason": "السبب: \"{{reason}}\".",
   "click_here_to_show_original": "<1>انقر هنا</1> لعرض الأصل.",
   "click_here_to_hide_original": "<1>انقر هنا</1> لإخفاء الأصل.",
-  "loading": "جار التحميل"
+  "loading": "جار التحميل",
+  "posted_by": "نشر بواسطة",
+  "by": "بواسطة",
+  "last_reply_by": "آخر رد بواسطة"
 }

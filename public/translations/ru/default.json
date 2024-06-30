@@ -199,5 +199,8 @@
   "reason_reason": "Причина: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Нажмите здесь</1> для отображения оригинала.",
   "click_here_to_hide_original": "<1>Нажмите здесь</1> чтобы скрыть оригинал.",
-  "loading": "Загрузка"
+  "loading": "Загрузка",
+  "posted_by": "Опубликовано",
+  "by": "от",
+  "last_reply_by": "Последний ответ от"
 }

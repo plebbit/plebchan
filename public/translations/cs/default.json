@@ -199,5 +199,8 @@
   "reason_reason": "Důvod: \"{{reason}}\".",
   "click_here_to_show_original": "Klikněte <1>zde</1> pro zobrazení původního.",
   "click_here_to_hide_original": "Klikněte <1>zde</1> pro skrytí původního.",
-  "loading": "Načítání"
+  "loading": "Načítání",
+  "posted_by": "Publikoval(a)",
+  "by": "od",
+  "last_reply_by": "Poslední odpověď od"
 }

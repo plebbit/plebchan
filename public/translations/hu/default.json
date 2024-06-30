@@ -199,5 +199,8 @@
   "reason_reason": "Ok: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Kattints ide</1> az eredeti megjelenítéséhez.",
   "click_here_to_hide_original": "<1>Kattints ide</1> az eredeti elrejtéséhez.",
-  "loading": "Betöltés"
+  "loading": "Betöltés",
+  "posted_by": "Írta",
+  "by": "által",
+  "last_reply_by": "Utolsó válasz írta"
 }

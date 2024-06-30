@@ -199,5 +199,8 @@
   "reason_reason": "סיבה: \"{{reason}}\".",
   "click_here_to_show_original": "<1>לחץ כאן</1> כדי להציג את המקור.",
   "click_here_to_hide_original": "<1>לחץ כאן</1> כדי להסתיר את המקור.",
-  "loading": "טוען"
+  "loading": "טוען",
+  "posted_by": "פורסם על ידי",
+  "by": "על ידי",
+  "last_reply_by": "תגובה אחרונה מאת"
 }

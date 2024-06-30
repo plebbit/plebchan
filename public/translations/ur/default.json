@@ -199,5 +199,8 @@
   "reason_reason": "وجہ: \"{{reason}}\".",
   "click_here_to_show_original": "<1>یہاں کلک کریں</1> تاکہ اصل دکھائی دے۔",
   "click_here_to_hide_original": "<1>یہاں کلک کریں</1> تاکہ اصل چھپ جائے۔",
-  "loading": "لوڈ ہو رہا ہے"
+  "loading": "لوڈ ہو رہا ہے",
+  "posted_by": "پوسٹ کیا گیا",
+  "by": "کے ذریعے",
+  "last_reply_by": "آخری جواب دیا گیا"
 }

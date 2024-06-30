@@ -199,5 +199,8 @@
   "reason_reason": "Motiv: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Click aici</1> pentru a arăta originalul.",
   "click_here_to_hide_original": "<1>Click aici</1> pentru a ascunde originalul.",
-  "loading": "Încărcare"
+  "loading": "Încărcare",
+  "posted_by": "Postat de",
+  "by": "de către",
+  "last_reply_by": "Ultima răspuns de la"
 }

@@ -199,5 +199,8 @@
   "reason_reason": "Anledning: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klicka här</1> för att visa original.",
   "click_here_to_hide_original": "<1>Klicka här</1> för att dölja original.",
-  "loading": "Laddar"
+  "loading": "Laddar",
+  "posted_by": "Postat av",
+  "by": "av",
+  "last_reply_by": "Senaste svar av"
 }

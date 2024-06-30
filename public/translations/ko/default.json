@@ -199,5 +199,8 @@
   "reason_reason": "이유: \"{{reason}}\".",
   "click_here_to_show_original": "<1>여기를 클릭</1> 하여 원본 표시.",
   "click_here_to_hide_original": "<1>여기를 클릭</1> 하여 원본 숨기기.",
-  "loading": "로딩 중"
+  "loading": "로딩 중",
+  "posted_by": "작성자",
+  "by": "작성자:",
+  "last_reply_by": "마지막 답글 작성자:"
 }

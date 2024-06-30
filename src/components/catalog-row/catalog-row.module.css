@@ -77,6 +77,7 @@
 }
 
 .meta {
+  cursor: help;
   font-size: 11px;
   line-height: 8px;
   padding: 2px 0 1px 0;

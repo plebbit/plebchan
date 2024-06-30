@@ -233,7 +233,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
           ) : (
             threadIcons
           )}
-          <div className={styles.meta}>
+          <div className={styles.meta} title='(R)eplies / (L)ink Replies'>
             R: <b>{replyCount || '0'}</b>
             {linkCount > 0 && (
               <span>
@@ -252,8 +252,14 @@ const CatalogPost = ({ post }: { post: Comment }) => {
         showPortal &&
         createPortal(
           <div className={styles.postPreview} ref={refs.setFloating} style={floatingStyles}>
-            <span className={styles.postSubject}>{title}</span>
-            {' by '}
+            {title ? (
+              <>
+                <span className={styles.postSubject}>{title} </span>
+                {t('by')}
+              </>
+            ) : (
+              t('posted_by')
+            )}{' '}
             <span className={`${styles.postAuthor} ${(isCatalogPostAuthorMod || isRules || isDescription) && styles.capcode}`}>
               {author?.displayName || _.capitalize(t('anonymous'))}
               {isCatalogPostAuthorMod && <span className='capitalize'>{` ## Board ${catalogPostAuthorRole}`}</span>}
@@ -261,7 +267,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
             <span className={styles.postAgo}> {getFormattedTimeAgo(timestamp)}</span>
             {replyCount > 0 && (
               <div className={styles.postLast}>
-                Last reply by{' '}
+                {t('last_reply_by')}{' '}
                 <span className={`${styles.postAuthor} ${isLastReplyAuthorMod && styles.capcode}`}>
                   {lastReply?.author?.displayName || _.capitalize(t('anonymous'))}
                   {isLastReplyAuthorMod && ` ## Board ${lastReplyAuthorRole}`}

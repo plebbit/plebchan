@@ -199,5 +199,8 @@
   "reason_reason": "理由: \"{{reason}}\".",
   "click_here_to_show_original": "<1>ここをクリック</1> して元の表示。",
   "click_here_to_hide_original": "<1>ここをクリック</1> して元を非表示にする。",
-  "loading": "読み込み中"
+  "loading": "読み込み中",
+  "posted_by": "投稿者",
+  "by": "によって",
+  "last_reply_by": "最後の返信者"
 }

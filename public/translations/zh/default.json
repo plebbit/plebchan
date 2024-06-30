@@ -199,5 +199,8 @@
   "reason_reason": "原因: \"{{reason}}\".",
   "click_here_to_show_original": "<1>点击这里</1> 显示原文。",
   "click_here_to_hide_original": "<1>点击这里</1> 隐藏原文。",
-  "loading": "加载中"
+  "loading": "加载中",
+  "posted_by": "由...发布",
+  "by": "由...发布",
+  "last_reply_by": "最后回复者"
 }

@@ -199,5 +199,8 @@
   "reason_reason": "Reden: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klik hier</1> om de originele te tonen.",
   "click_here_to_hide_original": "<1>Klik hier</1> om de originele te verbergen.",
-  "loading": "Laden"
+  "loading": "Laden",
+  "posted_by": "Geplaatst door",
+  "by": "door",
+  "last_reply_by": "Laatste reactie door"
 }

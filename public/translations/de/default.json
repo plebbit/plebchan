@@ -199,5 +199,8 @@
   "reason_reason": "Grund: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Hier klicken</1>, um das Original anzuzeigen.",
   "click_here_to_hide_original": "<1>Hier klicken</1>, um das Original zu verstecken.",
-  "loading": "Laden"
+  "loading": "Laden",
+  "posted_by": "Geschrieben von",
+  "by": "von",
+  "last_reply_by": "Letzte Antwort von"
 }

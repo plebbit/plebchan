@@ -199,5 +199,8 @@
   "reason_reason": "कारण: \"{{reason}}\".",
   "click_here_to_show_original": "<1>यहां क्लिक करें</1> मूल दिखाने के लिए।",
   "click_here_to_hide_original": "<1>यहां क्लिक करें</1> मूल छुपाने के लिए।",
-  "loading": "लोड हो रहा है"
+  "loading": "लोड हो रहा है",
+  "posted_by": "द्वारा लिखित",
+  "by": "द्वारा",
+  "last_reply_by": "अंतिम उत्तर दिया गया है"
 }

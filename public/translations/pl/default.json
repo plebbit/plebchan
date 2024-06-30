@@ -199,5 +199,8 @@
   "reason_reason": "Powód: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Kliknij tutaj</1>, aby pokazać oryginał.",
   "click_here_to_hide_original": "<1>Kliknij tutaj</1>, aby ukryć oryginał.",
-  "loading": "Ładowanie"
+  "loading": "Ładowanie",
+  "posted_by": "Opublikowane przez",
+  "by": "przez",
+  "last_reply_by": "Ostatnia odpowiedź od"
 }
