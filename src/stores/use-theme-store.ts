@@ -2,9 +2,14 @@ import { create, StoreApi } from 'zustand';
 import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru/index.js';
 
 interface ThemeState {
-  themes: Record<string, string>;
-  setTheme: (subplebbitAddress: string, theme: string) => void;
-  getTheme: (subplebbitAddress: string) => string | null;
+  themes: {
+    nsfw: string;
+    sfw: string;
+    all: string;
+    subscriptions: string;
+  };
+  setTheme: (category: keyof ThemeState['themes'], theme: string) => void;
+  getTheme: (category: keyof ThemeState['themes']) => string | null;
   loadThemes: () => Promise<void>;
 }
 
@@ -14,20 +19,30 @@ const themeStore = localForageLru.createInstance({
 });
 
 const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'], get: StoreApi<ThemeState>['getState']) => ({
-  themes: {},
-  setTheme: async (subplebbitAddress: string, theme: string) => {
+  themes: {
+    nsfw: 'yotsuba',
+    sfw: 'yotsuba-b',
+    all: 'yotsuba-b',
+    subscriptions: 'yotsuba-b',
+  },
+  setTheme: async (category, theme) => {
     const currentThemes = get().themes;
-    const updatedThemes = { ...currentThemes, [subplebbitAddress]: theme };
-    await themeStore.setItem(subplebbitAddress, theme);
+    const updatedThemes = { ...currentThemes, [category]: theme };
+    await themeStore.setItem(category, theme);
     set({ themes: updatedThemes });
   },
-  getTheme: (subplebbitAddress: string) => {
+  getTheme: (category) => {
     const currentThemes = get().themes;
-    return currentThemes[subplebbitAddress] || null;
+    return currentThemes[category] || null;
   },
   loadThemes: async () => {
-    const entries: [string, string][] = await themeStore.entries();
-    const themes: Record<string, string> = {};
+    const entries: [keyof ThemeState['themes'], string][] = await themeStore.entries();
+    const themes: Record<keyof ThemeState['themes'], string> = {
+      nsfw: 'yotsuba',
+      sfw: 'yotsuba-b',
+      all: 'yotsuba-b',
+      subscriptions: 'yotsuba-b',
+    };
     entries.forEach(([key, value]) => {
       themes[key] = value;
     });

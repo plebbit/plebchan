@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
+import useDefaultSubplebbits from './use-default-subplebbits';
 import useInitialTheme from './use-initial-theme';
+import { nsfwTags } from '../views/home/home';
 
 const themeClasses = ['yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon'];
 
@@ -15,10 +17,11 @@ const updateThemeClass = (newTheme: string) => {
 
 const useTheme = (): [string, (theme: string) => void] => {
   const location = useLocation();
-  const params = useParams();
+  const params = useParams<{ subplebbitAddress: string }>();
   const setThemeStore = useThemeStore((state) => state.setTheme);
   const getTheme = useThemeStore((state) => state.getTheme);
   const loadThemes = useThemeStore((state) => state.loadThemes);
+  const subplebbits = useDefaultSubplebbits();
 
   const initialTheme = useInitialTheme();
   const [theme, setLocalTheme] = useState<string>(() => initialTheme);
@@ -41,30 +44,40 @@ const useTheme = (): [string, (theme: string) => void] => {
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
     let storedTheme = null;
-    if (subplebbitAddress) {
-      storedTheme = getTheme(subplebbitAddress);
-    } else if (isInAllView) {
+    if (isInAllView) {
       storedTheme = getTheme('all');
     } else if (isInSubscriptionsView) {
       storedTheme = getTheme('subscriptions');
+    } else if (subplebbitAddress) {
+      const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
+      if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
+        storedTheme = getTheme('nsfw');
+      } else {
+        storedTheme = getTheme('sfw');
+      }
     }
 
     const themeToSet = storedTheme || initialTheme;
     setLocalTheme(themeToSet);
     updateThemeClass(themeToSet);
-  }, [initialTheme, location.pathname, params, getTheme, themesLoaded]);
+  }, [initialTheme, location.pathname, params, getTheme, themesLoaded, subplebbits]);
 
   const setSubplebbitTheme = async (newTheme: string) => {
     const subplebbitAddress = params?.subplebbitAddress;
     const isInAllView = isAllView(location.pathname, params);
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-    if (subplebbitAddress) {
-      await setThemeStore(subplebbitAddress, newTheme);
-    } else if (isInAllView) {
+    if (isInAllView) {
       await setThemeStore('all', newTheme);
     } else if (isInSubscriptionsView) {
       await setThemeStore('subscriptions', newTheme);
+    } else if (subplebbitAddress) {
+      const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
+      if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
+        await setThemeStore('nsfw', newTheme);
+      } else {
+        await setThemeStore('sfw', newTheme);
+      }
     }
 
     setLocalTheme(newTheme);

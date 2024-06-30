@@ -15,21 +15,18 @@ const useInitialTheme = () => {
   const isInAllView = isAllView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  if (isInAllView || isInSubscriptionsView) {
-    const userTheme = getTheme(isInAllView ? 'all' : 'subscriptions');
-    return userTheme || 'yotsuba-b';
+  if (isInAllView) {
+    return getTheme('all') || 'yotsuba-b';
+  } else if (isInSubscriptionsView) {
+    return getTheme('subscriptions') || 'yotsuba-b';
   } else if (isInHomeView || isInNotFoundView) {
     return 'yotsuba';
   } else if (subplebbitAddress) {
-    const userTheme = getTheme(subplebbitAddress);
-    if (userTheme) {
-      return userTheme;
-    }
     const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
     if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
-      return 'yotsuba';
+      return getTheme('nsfw') || 'yotsuba';
     }
-    return 'yotsuba-b';
+    return getTheme('sfw') || 'yotsuba-b';
   }
   return 'yotsuba';
 };
