@@ -1,11 +1,14 @@
 .mobileBoardButtons {
   text-align: center;
-  margin-bottom: 10px;
+}
+
+.addMargin {
+  margin-bottom: 7px;
 }
 
 .mobileBoardButtons button {
-  margin: 0 2px;
   text-transform: capitalize;
+  margin: 5px 2px;
 }
 
 .mobileBoardButtons a, .desktopBoardButtons a {

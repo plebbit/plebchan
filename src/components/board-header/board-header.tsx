@@ -6,6 +6,7 @@ import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
+import useIsMobile from '../../hooks/use-is-mobile';
 
 const totalBanners = 59;
 
@@ -45,9 +46,11 @@ const BoardHeader = () => {
 
   return (
     <div className={styles.content}>
-      <div className={styles.bannerCnt}>
-        <ImageBanner key={isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : address} />
-      </div>
+      {!useIsMobile() && (
+        <div className={styles.bannerCnt}>
+          <ImageBanner key={isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : address} />
+        </div>
+      )}
       <div className={styles.boardTitle}>
         {title || `p/${shortAddress || subplebbitAddress}`}
         {isBoardOffline && <span className={styles.offlineIcon} title={offlineMessage} />}

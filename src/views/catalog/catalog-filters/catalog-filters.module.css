@@ -19,6 +19,10 @@
   cursor: pointer;
 }
 
+.filtersButton {
+  text-transform: capitalize;
+}
+
 .modal label, .modal button, .modal select {
   cursor: pointer;
 }

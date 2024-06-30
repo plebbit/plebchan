@@ -185,7 +185,7 @@ export const MobileBoardButtons = () => {
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
-    <div className={styles.mobileBoardButtons}>
+    <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
       <div className={styles.adButton}>
         [
         <Link
