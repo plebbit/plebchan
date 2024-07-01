@@ -172,24 +172,6 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
   );
 };
 
-const AdButton = () => {
-  return (
-    <div className={styles.adButton}>
-      [
-      <Link
-        to='/boards'
-        onClick={(e) => {
-          e.preventDefault();
-          alert('work in progress');
-        }}
-      >
-        Plebbit Leaderboard
-      </Link>
-      ]
-    </div>
-  );
-};
-
 export const MobileBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -204,8 +186,6 @@ export const MobileBoardButtons = () => {
 
   return (
     <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
-      <AdButton />
-      <hr />
       {isInPostView || isInPendingPostPage ? (
         <>
           <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
@@ -253,8 +233,6 @@ export const DesktopBoardButtons = () => {
 
   return (
     <>
-      <hr />
-      <AdButton />
       <hr />
       <div className={styles.desktopBoardButtons}>
         {isInPostView || isInPendingPostPage ? (

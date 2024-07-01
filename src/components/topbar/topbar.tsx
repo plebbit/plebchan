@@ -90,6 +90,16 @@ const TopBarDesktop = () => {
             >
               Create
             </Link>
+            ] [
+            <Link
+              to='boards'
+              onClick={(e) => {
+                e.preventDefault();
+                alert('work in progress');
+              }}
+            >
+              Vote
+            </Link>
             ]
           </>
         )}
