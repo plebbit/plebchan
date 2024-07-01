@@ -63,7 +63,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
               ) : (
                 <Tooltip
                   children={<span className={styles.name}>{displayName.slice(0, 20) + '(...)'}</span>}
-                  content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + '... display name too long'}
+                  content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + `... ${t('display_name_too_long')}`}
                 />
               )
             ) : (
@@ -76,15 +76,11 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
               (u/
               <Tooltip
                 children={
-                  <span
-                    title='Highlight posts by this user address'
-                    className={styles.userAddress}
-                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
-                  >
+                  <span title={t('highlight_posts')} className={styles.userAddress} onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}>
                     {shortAddress || accountShortAddress}
                   </span>
                 }
-                content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
+                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_user_address') : t('x_posts_by_this_user_address', { number: numberOfPostsByAuthor })}`}
                 showTooltip={isInPostPageView || postReplyCount < 6}
               />
               ){' '}
@@ -106,7 +102,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
             ) : (
               <Tooltip
                 children={<span className={styles.subject}>{title.slice(0, 30) + '(...)'}</span>}
-                content={title.length < 1000 ? title : title.slice(0, 1000) + '... title too long'}
+                content={title.length < 1000 ? title : title.slice(0, 1000) + `... ${t('title_too_long')}`}
               />
             ))}
         </span>

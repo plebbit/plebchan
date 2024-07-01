@@ -203,5 +203,10 @@
   "posted_by": "โพสต์โดย",
   "by": "โดย",
   "last_reply_by": "การตอบคำถามล่าสุดโดย",
-  "showing_all_replies": "กำลังแสดงคำตอบทั้งหมด"
+  "showing_all_replies": "กำลังแสดงคำตอบทั้งหมด",
+  "x_posts_by_this_user_address": "{{number}} โพสต์โดยที่อยู่ผู้ใช้นี้",
+  "1_post_by_this_user_address": "1 โพสต์โดยที่อยู่ผู้ใช้นี้",
+  "highlight_posts": "เน้นโพสต์โดยที่อยู่ผู้ใช้นี้",
+  "display_name_too_long": "ชื่อที่แสดงนามสกุลยาวเกินไป",
+  "title_too_long": "ชื่อเรื่องยาวเกินไป"
 }

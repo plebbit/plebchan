@@ -203,5 +203,10 @@
   "posted_by": "Geplaatst door",
   "by": "door",
   "last_reply_by": "Laatste reactie door",
-  "showing_all_replies": "Alle antwoorden weergeven."
+  "showing_all_replies": "Alle antwoorden weergeven.",
+  "x_posts_by_this_user_address": "{{number}} berichten van dit gebruikersadres",
+  "1_post_by_this_user_address": "1 bericht van dit gebruikersadres",
+  "highlight_posts": "Berichten van dit gebruikersadres markeren",
+  "display_name_too_long": "weergavenaam te lang",
+  "title_too_long": "titel te lang"
 }

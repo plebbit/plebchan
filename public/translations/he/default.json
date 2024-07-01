@@ -203,5 +203,10 @@
   "posted_by": "פורסם על ידי",
   "by": "על ידי",
   "last_reply_by": "תגובה אחרונה מאת",
-  "showing_all_replies": "מציג את כל התגובות."
+  "showing_all_replies": "מציג את כל התגובות.",
+  "x_posts_by_this_user_address": "{{number}} הודעות מכתובת המשתמש הזו",
+  "1_post_by_this_user_address": "1 הודעה מכתובת המשתמש הזו",
+  "highlight_posts": "הדגשת הודעות מכתובת המשתמש הזו",
+  "display_name_too_long": "שם התצוגה ארוך מדי",
+  "title_too_long": "הכותרת ארוכה מדי"
 }

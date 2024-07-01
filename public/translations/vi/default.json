@@ -203,5 +203,10 @@
   "posted_by": "Được đăng bởi",
   "by": "bởi",
   "last_reply_by": "Trả lời cuối cùng bởi",
-  "showing_all_replies": "Đang hiển thị tất cả các phản hồi."
+  "showing_all_replies": "Đang hiển thị tất cả các phản hồi.",
+  "x_posts_by_this_user_address": "{{number}} bài đăng từ địa chỉ người dùng này",
+  "1_post_by_this_user_address": "1 bài đăng từ địa chỉ người dùng này",
+  "highlight_posts": "Đánh dấu bài đăng từ địa chỉ người dùng này",
+  "display_name_too_long": "tên hiển thị quá dài",
+  "title_too_long": "tiêu đề quá dài"
 }

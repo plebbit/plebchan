@@ -203,5 +203,10 @@
   "posted_by": "Publikoval(a)",
   "by": "od",
   "last_reply_by": "Poslední odpověď od",
-  "showing_all_replies": "Zobrazuji všechny odpovědi."
+  "showing_all_replies": "Zobrazuji všechny odpovědi.",
+  "x_posts_by_this_user_address": "{{number}} příspěvků od tohoto uživatelského adresy",
+  "1_post_by_this_user_address": "1 příspěvek od tohoto uživatelského adresy",
+  "highlight_posts": "Zvýraznit příspěvky z této uživatelské adresy",
+  "display_name_too_long": "Zobrazované jméno je příliš dlouhé",
+  "title_too_long": "Název je příliš dlouhý"
 }

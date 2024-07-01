@@ -203,5 +203,10 @@
   "posted_by": "Pubblicato da",
   "by": "da",
   "last_reply_by": "Ultima risposta da",
-  "showing_all_replies": "Mostrando tutte le risposte."
+  "showing_all_replies": "Mostrando tutte le risposte.",
+  "x_posts_by_this_user_address": "{{number}} post da questo indirizzo di utente",
+  "1_post_by_this_user_address": "1 post da questo indirizzo di utente",
+  "highlight_posts": "Evidenziare i post da questo indirizzo di utente",
+  "display_name_too_long": "nome visualizzato troppo lungo",
+  "title_too_long": "titolo troppo lungo"
 }

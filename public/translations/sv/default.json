@@ -203,5 +203,10 @@
   "posted_by": "Postat av",
   "by": "av",
   "last_reply_by": "Senaste svar av",
-  "showing_all_replies": "Visar alla svar."
+  "showing_all_replies": "Visar alla svar.",
+  "x_posts_by_this_user_address": "{{number}} inlägg från denna användaradress",
+  "1_post_by_this_user_address": "1 inlägg från denna användaradress",
+  "highlight_posts": "Markera inlägg från denna användaradress",
+  "display_name_too_long": "visningsnamn för långt",
+  "title_too_long": "titel för långt"
 }

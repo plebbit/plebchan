@@ -203,5 +203,10 @@
   "posted_by": "Postat de",
   "by": "de către",
   "last_reply_by": "Ultima răspuns de la",
-  "showing_all_replies": "Afișare toate răspunsurile."
+  "showing_all_replies": "Afișare toate răspunsurile.",
+  "x_posts_by_this_user_address": "{{number}} mesaje de la această adresă de utilizator",
+  "1_post_by_this_user_address": "1 mesaj de la această adresă de utilizator",
+  "highlight_posts": "Evidențiați mesajele de la această adresă de utilizator",
+  "display_name_too_long": "numele afișat este prea lung",
+  "title_too_long": "titlul este prea lung"
 }
