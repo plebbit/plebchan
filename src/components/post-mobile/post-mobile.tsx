@@ -21,9 +21,9 @@ import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import _ from 'lodash';
 
-const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
+const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, link, locked, parentCid, pinned, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, link, locked, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, shortAddress } = author || {};
@@ -49,7 +49,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
   const stateString = useStateString(post);
 
   const handleUserAddressClick = useAuthorAddressClick();
-  const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"]`).length;
+  const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
   return (
     <>
@@ -79,13 +79,13 @@ const PostInfoAndMedia = ({ openReplyModal, post, roles }: PostProps) => {
                   <span
                     title='Highlight posts by this user address'
                     className={styles.userAddress}
-                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress)}
+                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
                   >
                     {shortAddress || accountShortAddress}
                   </span>
                 }
                 content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
-                showTooltip={isInPostPageView}
+                showTooltip={isInPostPageView || postReplyCount < 6}
               />
               ){' '}
             </>
@@ -234,14 +234,14 @@ const PostMessageMobile = ({ post }: PostProps) => {
   );
 };
 
-const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
+const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
   if (editedComment) {
     post = editedComment;
   }
-  const { cid, content, subplebbitAddress } = post || {};
+  const { author, cid, content, postCid, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -251,9 +251,10 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
         <div
           className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
           data-cid={cid}
-          data-author-address={post?.author?.shortAddress}
+          data-author-address={author?.shortAddress}
+          data-post-cid={postCid}
         >
-          <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
+          <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
           {content && !hidden && <PostMessageMobile post={post} />}
           <ReplyBacklinks post={reply} />
         </div>
@@ -264,7 +265,7 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
 
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, pinned, replyCount, subplebbitAddress } = post || {};
+  const { author, cid, content, pinned, postCid, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -306,8 +307,8 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
           )}
           <div className={showReplies ? styles.thread : styles.quotePreview}>
             <div className={styles.postContainer}>
-              <div className={styles.postOp} data-cid={cid} data-author-address={post?.author?.shortAddress}>
-                <PostInfoAndMedia openReplyModal={openReplyModal} post={post} roles={roles} />
+              <div className={styles.postOp} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
+                <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
                 {content && <PostMessageMobile post={post} />}
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
@@ -333,7 +334,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               showReplies &&
               (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
                 <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
-                  <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} />
+                  <Reply openReplyModal={openReplyModal} postReplyCount={replyCount} reply={reply} roles={roles} />
                 </div>
               ))}
           </div>

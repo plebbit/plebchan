@@ -202,5 +202,6 @@
   "loading": "Betöltés",
   "posted_by": "Írta",
   "by": "által",
-  "last_reply_by": "Utolsó válasz írta"
+  "last_reply_by": "Utolsó válasz írta",
+  "showing_all_replies": "Az összes válasz megjelenítése."
 }

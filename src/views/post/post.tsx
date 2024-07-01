@@ -17,6 +17,7 @@ export interface PostProps {
   index?: number;
   isHidden?: boolean;
   post?: any;
+  postReplyCount?: number;
   reply?: any;
   roles?: Role[];
   showAllReplies?: boolean;

@@ -202,5 +202,6 @@
   "loading": "加载中",
   "posted_by": "由...发布",
   "by": "由...发布",
-  "last_reply_by": "最后回复者"
+  "last_reply_by": "最后回复者",
+  "showing_all_replies": "显示所有回复。"
 }

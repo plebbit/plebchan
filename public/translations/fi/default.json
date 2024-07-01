@@ -202,5 +202,6 @@
   "loading": "Lataa",
   "posted_by": "Lähettäjä",
   "by": "kirjoittanut",
-  "last_reply_by": "Viimeisin vastaus"
+  "last_reply_by": "Viimeisin vastaus",
+  "showing_all_replies": "Näytetään kaikki vastaukset."
 }

@@ -202,5 +202,6 @@
   "loading": "読み込み中",
   "posted_by": "投稿者",
   "by": "によって",
-  "last_reply_by": "最後の返信者"
+  "last_reply_by": "最後の返信者",
+  "showing_all_replies": "すべての返信を表示しています。"
 }

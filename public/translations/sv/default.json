@@ -202,5 +202,6 @@
   "loading": "Laddar",
   "posted_by": "Postat av",
   "by": "av",
-  "last_reply_by": "Senaste svar av"
+  "last_reply_by": "Senaste svar av",
+  "showing_all_replies": "Visar alla svar."
 }

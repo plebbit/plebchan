@@ -202,5 +202,6 @@
   "loading": "Yükleniyor",
   "posted_by": "Tarafından gönderildi",
   "by": "tarafından",
-  "last_reply_by": "Son cevap"
+  "last_reply_by": "Son cevap",
+  "showing_all_replies": "Tüm yanıtlar gösteriliyor."
 }

@@ -202,5 +202,6 @@
   "loading": "Ngarkimi",
   "posted_by": "Postuar nga",
   "by": "nga",
-  "last_reply_by": "Përgjigje e fundit nga"
+  "last_reply_by": "Përgjigje e fundit nga",
+  "showing_all_replies": "Duke treguar të gjitha përgjigjet."
 }

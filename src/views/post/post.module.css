@@ -179,14 +179,13 @@
   color: var(--post-mobile-abbr-text-color);
 }
 
-.postDesktop .summary .expandButtonWrapper {
+.postDesktop .summary .omittedRepliesButtonWrapper {
   position: absolute;
   top: 8px;
   left: 2px;
 }
 
-.postDesktop .summary .expandButton {
-  background-image: var(--post-replies-expand-button-background-image);
+.postDesktop .summary .omittedRepliesButtonWrapper {
   background-repeat: no-repeat;
   background-position: center;
   width: 18px;
@@ -194,6 +193,14 @@
   display: inline-block;
   image-rendering: pixelated;
   cursor: pointer;
+}
+
+.postDesktop .summary .hideOmittedReplies {
+  background-image: var(--post-hide-button-background-image);
+}
+
+.postDesktop .summary .showOmittedReplies {
+  background-image: var(--post-unhide-button-background-image);
 }
 
 .postDesktop .summary a {
