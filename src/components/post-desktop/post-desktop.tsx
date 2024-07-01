@@ -365,7 +365,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         )}
         <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
           {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
-          <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
+          <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && <div className={styles.spacer} />}
           {!isHidden && content && <PostMessage post={post} />}
         </div>
