@@ -204,9 +204,9 @@
   "by": "ద్వారా",
   "last_reply_by": "చివరి సమాధానం ఇచ్చింది",
   "showing_all_replies": "అన్ని సమాధానాలను చూపుతుంది.",
-  "x_posts_by_this_user_address": "ఈ వాడుకరి చిరునామ నుండి {{number}} పోస్టులు",
-  "1_post_by_this_user_address": "ఈ వాడుకరి చిరునామ నుండి 1 పోస్టు",
   "highlight_posts": "ఈ వాడుకరి చిరునామ నుండి పోస్టులను హైలైట్ చేయండి",
   "display_name_too_long": "ప్రదర్శన పేరు చాలా నీటిగా ఉంది",
-  "title_too_long": "శీర్షిక చాలా పొడవుగా ఉంది"
+  "title_too_long": "శీర్షిక చాలా పొడవుగా ఉంది",
+  "1_post_by_this_id": "ఈ ID ద్వారా 1 పోస్టు",
+  "x_posts_by_this_id": "ఈ ID నుండి {{number}} పోస్టు"
 }

@@ -204,9 +204,9 @@
   "by": "tarafından",
   "last_reply_by": "Son cevap",
   "showing_all_replies": "Tüm yanıtlar gösteriliyor.",
-  "x_posts_by_this_user_address": "Bu kullanıcı adresinden {{number}} gönderi",
-  "1_post_by_this_user_address": "Bu kullanıcı adresinden 1 gönderi",
   "highlight_posts": "Bu kullanıcı adresinden gelen gönderileri vurgula",
   "display_name_too_long": "görünen adı çok uzun",
-  "title_too_long": "başlık çok uzun"
+  "title_too_long": "başlık çok uzun",
+  "1_post_by_this_id": "Bu ID ile 1 gönderi",
+  "x_posts_by_this_id": "Bu ID ile {{number}} gönderi"
 }

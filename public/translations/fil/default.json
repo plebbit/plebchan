@@ -204,9 +204,9 @@
   "by": "ni",
   "last_reply_by": "Huling sagot ni",
   "showing_all_replies": "Nagpapakita ng lahat ng mga sagot.",
-  "x_posts_by_this_user_address": "{{number}} mga post mula sa user address na ito",
-  "1_post_by_this_user_address": "1 post mula sa user address na ito",
   "highlight_posts": "I-highlight ang mga post mula sa user address na ito",
   "display_name_too_long": "ang display name ay masyadong mahaba",
-  "title_too_long": "ang pamagat ay masyadong mahaba"
+  "title_too_long": "ang pamagat ay masyadong mahaba",
+  "1_post_by_this_id": "1 post sa pamamagitan ng ID na ito",
+  "x_posts_by_this_id": "{{number}} post mula sa ID na ito"
 }

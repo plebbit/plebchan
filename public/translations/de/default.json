@@ -204,9 +204,9 @@
   "by": "von",
   "last_reply_by": "Letzte Antwort von",
   "showing_all_replies": "Zeige alle Antworten.",
-  "x_posts_by_this_user_address": "{{number}} Beiträge von dieser Benutzeradresse",
-  "1_post_by_this_user_address": "1 Beitrag von dieser Benutzeradresse",
   "highlight_posts": "Beiträge von dieser Benutzeradresse hervorheben",
   "display_name_too_long": "Angezeigter Name zu lang",
-  "title_too_long": "Titel zu lang"
+  "title_too_long": "Titel zu lang",
+  "1_post_by_this_id": "1 Beitrag mit dieser ID",
+  "x_posts_by_this_id": "{{number}} Beiträge von dieser ID"
 }

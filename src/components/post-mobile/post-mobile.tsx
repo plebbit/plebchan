@@ -80,7 +80,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                     {shortAddress || accountShortAddress}
                   </span>
                 }
-                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_user_address') : t('x_posts_by_this_user_address', { number: numberOfPostsByAuthor })}`}
+                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
                 showTooltip={isInPostPageView || postReplyCount < 6}
               />
               ){' '}

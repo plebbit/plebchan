@@ -204,9 +204,9 @@
   "by": "کے ذریعے",
   "last_reply_by": "آخری جواب دیا گیا",
   "showing_all_replies": "تمام جوابات دکھا رہا ہے۔",
-  "x_posts_by_this_user_address": "اس صارف ایڈریس کے {{number}} پوسٹس",
-  "1_post_by_this_user_address": "1 پوسٹ اس صارف ایڈریس کے",
   "highlight_posts": "اس صارف ایڈریس کے ذریعے پوسٹس کو ہائی لائٹ کریں",
   "display_name_too_long": "ڈسپلے نام بہت لمبا ہے",
-  "title_too_long": "عنوان بہت لمبا ہے"
+  "title_too_long": "عنوان بہت لمبا ہے",
+  "1_post_by_this_id": "اس آئی ڈی پر 1 پوسٹ",
+  "x_posts_by_this_id": "اس آئی ڈی سے {{number}} پوسٹ"
 }

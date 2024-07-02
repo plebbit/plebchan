@@ -204,9 +204,9 @@
   "by": "द्वारा",
   "last_reply_by": "अंतिम उत्तर दिया गया है",
   "showing_all_replies": "सभी उत्तर दिखा रहा है।",
-  "x_posts_by_this_user_address": "इस उपयोगकर्ता पते से {{number}} पोस्ट",
-  "1_post_by_this_user_address": "इस उपयोगकर्ता पते से 1 पोस्ट",
   "highlight_posts": "इस उपयोगकर्ता पते से पोस्ट्स को हाइलाइट करें",
   "display_name_too_long": "प्रदर्शन नाम बहुत लंबा है",
-  "title_too_long": "शीर्षक बहुत लंबा है"
+  "title_too_long": "शीर्षक बहुत लंबा है",
+  "1_post_by_this_id": "इस आईडी द्वारा 1 पोस्ट",
+  "x_posts_by_this_id": "इस आईडी से {{number}} पोस्ट"
 }

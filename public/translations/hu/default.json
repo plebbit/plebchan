@@ -204,9 +204,9 @@
   "by": "által",
   "last_reply_by": "Utolsó válasz írta",
   "showing_all_replies": "Az összes válasz megjelenítése.",
-  "x_posts_by_this_user_address": "{{number}} bejegyzés ebből a felhasználói címből",
-  "1_post_by_this_user_address": "1 bejegyzés ebből a felhasználói címből",
   "highlight_posts": "Kiemelt bejegyzések ebből a felhasználói címből",
   "display_name_too_long": "a megjelenített név túl hosszú",
-  "title_too_long": "a cím túl hosszú"
+  "title_too_long": "a cím túl hosszú",
+  "1_post_by_this_id": "1 bejegyzés ezzel az azonosítóval",
+  "x_posts_by_this_id": "{{number}} bejegyzés erről az azonosítóról"
 }
