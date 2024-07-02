@@ -217,7 +217,8 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, content, commentAuthor, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const banned = commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -266,6 +267,19 @@ const PostMessage = ({ post }: PostProps) => {
                   components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
                 />
               )}
+            </span>
+          )}
+          {banned && (
+            <span className={styles.removedContent}>
+              <br />
+              <Tooltip
+                children={`(${t('user_banned')})`}
+                content={t('ban_expires_at', {
+                  address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
+                  timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
+                  interpolation: { escapeValue: false },
+                })}
+              />
             </span>
           )}
         </>

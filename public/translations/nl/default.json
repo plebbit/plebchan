@@ -208,5 +208,7 @@
   "display_name_too_long": "weergavenaam te lang",
   "title_too_long": "titel te lang",
   "1_post_by_this_id": "1 bericht met dit ID",
-  "x_posts_by_this_id": "{{number}} berichten met dit ID"
+  "x_posts_by_this_id": "{{number}} berichten met dit ID",
+  "ban_expires_at": "Verbannen van p/{{address}} tot {{timestamp}}",
+  "user_banned": "Gebruiker is verbannen voor deze post"
 }

@@ -208,5 +208,7 @@
   "display_name_too_long": "ชื่อที่แสดงนามสกุลยาวเกินไป",
   "title_too_long": "ชื่อเรื่องยาวเกินไป",
   "1_post_by_this_id": "1 โพสต์โดย ID นี้",
-  "x_posts_by_this_id": "{{number}} โพสต์จาก ID นี้"
+  "x_posts_by_this_id": "{{number}} โพสต์จาก ID นี้",
+  "ban_expires_at": "ถูกห้ามใช้งานจาก p/{{address}} จนถึง {{timestamp}}",
+  "user_banned": "ผู้ใช้ถูกห้ามใช้งานสำหรับโพสต์นี้"
 }

@@ -208,5 +208,7 @@
   "display_name_too_long": "nazwa wyświetlana jest zbyt długa",
   "title_too_long": "tytuł jest zbyt długi",
   "1_post_by_this_id": "1 post z tym identyfikatorem",
-  "x_posts_by_this_id": "{{number}} postów z tego identyfikatora"
+  "x_posts_by_this_id": "{{number}} postów z tego identyfikatora",
+  "ban_expires_at": "Zablokowany na p/{{address}} do {{timestamp}}",
+  "user_banned": "Użytkownik został zablokowany za ten post"
 }

@@ -208,5 +208,7 @@
   "display_name_too_long": "प्रदर्शन नाम बहुत लंबा है",
   "title_too_long": "शीर्षक बहुत लंबा है",
   "1_post_by_this_id": "इस आईडी द्वारा 1 पोस्ट",
-  "x_posts_by_this_id": "इस आईडी से {{number}} पोस्ट"
+  "x_posts_by_this_id": "इस आईडी से {{number}} पोस्ट",
+  "ban_expires_at": "p/{{address}} से {{timestamp}} तक पर प्रतिबंधित",
+  "user_banned": "इस पोस्ट के लिए उपयोगकर्ता पर प्रतिबंध लगा दिया गया था"
 }

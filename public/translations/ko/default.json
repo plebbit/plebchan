@@ -208,5 +208,7 @@
   "display_name_too_long": "표시 이름이 너무 깁니다",
   "title_too_long": "제목이 너무 깁니다",
   "1_post_by_this_id": "이 ID로 게시된 1개의 글",
-  "x_posts_by_this_id": "이 ID로부터의 {{number}}개의 글"
+  "x_posts_by_this_id": "이 ID로부터의 {{number}}개의 글",
+  "ban_expires_at": "p/{{address}}에서 {{timestamp}}까지 금지됨",
+  "user_banned": "이 게시물로 인해 사용자가 차단되었습니다"
 }

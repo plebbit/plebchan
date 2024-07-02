@@ -208,5 +208,7 @@
   "display_name_too_long": "görünen adı çok uzun",
   "title_too_long": "başlık çok uzun",
   "1_post_by_this_id": "Bu ID ile 1 gönderi",
-  "x_posts_by_this_id": "Bu ID ile {{number}} gönderi"
+  "x_posts_by_this_id": "Bu ID ile {{number}} gönderi",
+  "ban_expires_at": "p/{{address}} adresinden {{timestamp}} tarihine kadar yasaklandı",
+  "user_banned": "Kullanıcı bu gönderi için yasaklandı"
 }

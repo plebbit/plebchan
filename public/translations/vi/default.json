@@ -208,5 +208,7 @@
   "display_name_too_long": "tên hiển thị quá dài",
   "title_too_long": "tiêu đề quá dài",
   "1_post_by_this_id": "1 bài đăng bởi ID này",
-  "x_posts_by_this_id": "{{number}} bài đăng từ ID này"
+  "x_posts_by_this_id": "{{number}} bài đăng từ ID này",
+  "ban_expires_at": "Bị cấm từ p/{{address}} cho đến {{timestamp}}",
+  "user_banned": "Người dùng đã bị cấm vì bài đăng này"
 }

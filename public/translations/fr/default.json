@@ -208,5 +208,7 @@
   "display_name_too_long": "nom d'affichage trop long",
   "title_too_long": "titre trop long",
   "1_post_by_this_id": "1 publication avec cet identifiant",
-  "x_posts_by_this_id": "{{number}} publications depuis cet identifiant"
+  "x_posts_by_this_id": "{{number}} publications depuis cet identifiant",
+  "ban_expires_at": "Banni de p/{{address}} jusqu'au {{timestamp}}",
+  "user_banned": "L'utilisateur a été banni pour ce post"
 }

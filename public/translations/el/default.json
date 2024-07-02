@@ -208,5 +208,7 @@
   "display_name_too_long": "Το όνομα εμφάνισης είναι πολύ μεγάλο",
   "title_too_long": "Το τίτλος είναι πολύ μεγάλος",
   "1_post_by_this_id": "1 ανάρτηση με αυτό το ID",
-  "x_posts_by_this_id": "{{number}} αναρτήσεις από αυτό το ID"
+  "x_posts_by_this_id": "{{number}} αναρτήσεις από αυτό το ID",
+  "ban_expires_at": "Αποκλείστηκε από p/{{address}} έως {{timestamp}}",
+  "user_banned": "Ο χρήστης αποκλείστηκε για αυτή τη δημοσίευση"
 }

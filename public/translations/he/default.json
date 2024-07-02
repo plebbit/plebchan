@@ -208,5 +208,7 @@
   "display_name_too_long": "שם התצוגה ארוך מדי",
   "title_too_long": "הכותרת ארוכה מדי",
   "1_post_by_this_id": "פוסט אחד עם המזהה הזה",
-  "x_posts_by_this_id": "{{number}} פוסטים מהמזהה הזה"
+  "x_posts_by_this_id": "{{number}} פוסטים מהמזהה הזה",
+  "ban_expires_at": "נחסם מ-p/{{address}} עד {{timestamp}}",
+  "user_banned": "המשתמש נחסם עבור הפוסט הזה"
 }

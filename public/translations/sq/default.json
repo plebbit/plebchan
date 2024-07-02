@@ -208,5 +208,7 @@
   "display_name_too_long": "emri i shfaqur është shumë i gjatë",
   "title_too_long": "titulli shumë i gjatë",
   "1_post_by_this_id": "1 postim me këtë ID",
-  "x_posts_by_this_id": "{{number}} postime nga ky ID"
+  "x_posts_by_this_id": "{{number}} postime nga ky ID",
+  "ban_expires_at": "I ndaluar nga p/{{address}} deri më {{timestamp}}",
+  "user_banned": "Përdoruesi u ndalua për këtë postim"
 }

@@ -152,7 +152,8 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, commentAuthor, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const banned = commentAuthor?.banExpiresAt;
   const [showOriginal, setShowOriginal] = useState(false);
 
   const params = useParams();
@@ -202,6 +203,19 @@ const PostMessageMobile = ({ post }: PostProps) => {
                     components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
                   />
                 )}
+              </span>
+            )}
+            {banned && (
+              <span className={styles.removedContent}>
+                <br />
+                <Tooltip
+                  children={`(${t('user_banned')})`}
+                  content={t('ban_expires_at', {
+                    address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
+                    timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
+                    interpolation: { escapeValue: false },
+                  })}
+                />
               </span>
             )}
           </>

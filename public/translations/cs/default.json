@@ -208,5 +208,7 @@
   "display_name_too_long": "Zobrazované jméno je příliš dlouhé",
   "title_too_long": "Název je příliš dlouhý",
   "1_post_by_this_id": "1 příspěvek s tímto ID",
-  "x_posts_by_this_id": "{{number}} příspěvků z tohoto ID"
+  "x_posts_by_this_id": "{{number}} příspěvků z tohoto ID",
+  "ban_expires_at": "Zakázán z p/{{address}} do {{timestamp}}",
+  "user_banned": "Uživatel byl zablokován za tento příspěvek"
 }

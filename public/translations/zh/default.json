@@ -208,5 +208,7 @@
   "display_name_too_long": "显示名称太长",
   "title_too_long": "标题太长",
   "1_post_by_this_id": "此ID的1篇帖子",
-  "x_posts_by_this_id": "此ID的{{number}}篇帖子"
+  "x_posts_by_this_id": "此ID的{{number}}篇帖子",
+  "ban_expires_at": "被禁止从p/{{address}}到{{timestamp}}",
+  "user_banned": "用户因此帖子被禁止"
 }

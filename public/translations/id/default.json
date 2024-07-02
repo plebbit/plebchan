@@ -208,5 +208,7 @@
   "display_name_too_long": "nama tampilan terlalu panjang",
   "title_too_long": "judul terlalu panjang",
   "1_post_by_this_id": "1 pos dengan ID ini",
-  "x_posts_by_this_id": "{{number}} pos dari ID ini"
+  "x_posts_by_this_id": "{{number}} pos dari ID ini",
+  "ban_expires_at": "Dilarang dari p/{{address}} sampai {{timestamp}}",
+  "user_banned": "Pengguna diblokir untuk pos ini"
 }

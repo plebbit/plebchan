@@ -208,5 +208,7 @@
   "display_name_too_long": "Näyttönimi liian pitkä",
   "title_too_long": "Otsikko on liian pitkä",
   "1_post_by_this_id": "1 viesti tällä tunnuksella",
-  "x_posts_by_this_id": "{{number}} viestiä tältä tunnukselta"
+  "x_posts_by_this_id": "{{number}} viestiä tältä tunnukselta",
+  "ban_expires_at": "Porttikielto p/{{address}} asti {{timestamp}}",
+  "user_banned": "Käyttäjä on estetty tästä viestistä"
 }

@@ -208,5 +208,7 @@
   "display_name_too_long": "表示名が長すぎます",
   "title_too_long": "タイトルが長すぎます",
   "1_post_by_this_id": "このIDで1件の投稿",
-  "x_posts_by_this_id": "このIDからの{{number}} 件の投稿"
+  "x_posts_by_this_id": "このIDからの{{number}} 件の投稿",
+  "ban_expires_at": "p/{{address}}から{{timestamp}}まで禁止",
+  "user_banned": "この投稿のためにユーザーが禁止されました"
 }
