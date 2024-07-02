@@ -109,6 +109,10 @@
   padding: 3px 10px;
 }
 
+.searchBar input:focus {
+  border-color: #ea8;
+}
+
 .searchButton {
   margin-left: 4px;
   padding: 3px 5px;
