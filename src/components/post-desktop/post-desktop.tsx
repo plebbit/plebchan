@@ -85,10 +85,10 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
           {displayName ? (
             displayName.length <= 20 ? (
-              <span className={styles.name}>{displayName}</span>
+              displayName
             ) : (
               <Tooltip
-                children={<span className={styles.name}>{displayName.slice(0, 20) + '(...)'}</span>}
+                children={displayName.slice(0, 20) + '(...)'}
                 content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + `... ${t('display_name_too_long')}`}
               />
             )
@@ -392,7 +392,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           </span>
         )}
         {!isHidden &&
-          !(pinned && !isInPostPageView) &&
+          !(pinned && !isInPostPageView && !showOmittedReplies[cid]) &&
           !isInPendingPostView &&
           !isDescription &&
           !isRules &&
