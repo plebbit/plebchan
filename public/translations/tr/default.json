@@ -199,5 +199,14 @@
   "reason_reason": "Sebep: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Buraya tıklayın</1> orijinali göstermek için.",
   "click_here_to_hide_original": "<1>Buraya tıklayın</1> orijinali gizlemek için.",
-  "loading": "Yükleniyor"
+  "loading": "Yükleniyor",
+  "posted_by": "Tarafından gönderildi",
+  "by": "tarafından",
+  "last_reply_by": "Son cevap",
+  "showing_all_replies": "Tüm yanıtlar gösteriliyor.",
+  "x_posts_by_this_user_address": "Bu kullanıcı adresinden {{number}} gönderi",
+  "1_post_by_this_user_address": "Bu kullanıcı adresinden 1 gönderi",
+  "highlight_posts": "Bu kullanıcı adresinden gelen gönderileri vurgula",
+  "display_name_too_long": "görünen adı çok uzun",
+  "title_too_long": "başlık çok uzun"
 }

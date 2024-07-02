@@ -199,5 +199,14 @@
   "reason_reason": "Syy: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klikkaa tästä</1> näyttääksesi alkuperäisen.",
   "click_here_to_hide_original": "<1>Klikkaa tästä</1> piilottaaksesi alkuperäisen.",
-  "loading": "Lataa"
+  "loading": "Lataa",
+  "posted_by": "Lähettäjä",
+  "by": "kirjoittanut",
+  "last_reply_by": "Viimeisin vastaus",
+  "showing_all_replies": "Näytetään kaikki vastaukset.",
+  "x_posts_by_this_user_address": "Tästä käyttäjän osoitteesta {{number}} viestiä",
+  "1_post_by_this_user_address": "1 viesti tästä käyttäjän osoitteesta",
+  "highlight_posts": "Korosta tämän käyttäjän osoitteen viestit",
+  "display_name_too_long": "Näyttönimi liian pitkä",
+  "title_too_long": "Otsikko on liian pitkä"
 }

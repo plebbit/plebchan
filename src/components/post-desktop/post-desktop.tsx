@@ -23,9 +23,26 @@ import PostMenuDesktop from './post-menu-desktop';
 import ReplyQuotePreview from '../reply-quote-preview';
 import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
+import { create } from 'zustand';
 import _ from 'lodash';
 
-const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
+interface ShowOmittedRepliesState {
+  showOmittedReplies: Record<string, boolean>;
+  setShowOmittedReplies: (cid: string, showOmittedReplies: boolean) => void;
+}
+
+const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
+  showOmittedReplies: {},
+  setShowOmittedReplies: (cid, showOmittedReplies) =>
+    set((state) => ({
+      showOmittedReplies: {
+        ...state.showOmittedReplies,
+        [cid]: showOmittedReplies,
+      },
+    })),
+}));
+
+const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, locked, pinned, parentCid, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
@@ -36,6 +53,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const stateString = useStateString(post);
   const isReply = parentCid;
+  const { showOmittedReplies } = useShowOmittedReplies();
 
   const params = useParams();
   const location = useLocation();
@@ -49,7 +67,7 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
 
   const handleUserAddressClick = useAuthorAddressClick();
-  let numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"]`).length;
+  const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
   return (
     <div className={styles.postInfo}>
@@ -60,18 +78,18 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
         ) : (
           <Tooltip
             children={<span className={styles.subject}>{title.slice(0, 75) + '(...)'} </span>}
-            content={title.length < 1000 ? title : title.slice(0, 1000) + '... title too long'}
+            content={title.length < 1000 ? title : title.slice(0, 1000) + `... ${t('title_too_long')}`}
           />
         ))}
       <span className={styles.nameBlock}>
         <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
           {displayName ? (
             displayName.length <= 20 ? (
-              <span className={styles.name}>{displayName}</span>
+              displayName
             ) : (
               <Tooltip
-                children={<span className={styles.name}>{displayName.slice(0, 20) + '(...)'}</span>}
-                content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + '... display name too long'}
+                children={displayName.slice(0, 20) + '(...)'}
+                content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + `... ${t('display_name_too_long')}`}
               />
             )
           ) : (
@@ -84,16 +102,12 @@ const PostInfo = ({ openReplyModal, post, roles, isHidden }: PostProps) => {
             (u/
             <Tooltip
               children={
-                <span
-                  title='Highlight posts by this user address'
-                  className={styles.userAddress}
-                  onClick={() => handleUserAddressClick(shortAddress || accountShortAddress)}
-                >
+                <span title={t('highlight_posts')} className={styles.userAddress} onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}>
                   {shortAddress || accountShortAddress}
                 </span>
               }
-              content={`${numberOfPostsByAuthor} ${numberOfPostsByAuthor === 1 ? 'post' : 'posts'} by this user address`}
-              showTooltip={isInPostPageView}
+              content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_user_address') : t('x_posts_by_this_user_address', { number: numberOfPostsByAuthor })}`}
+              showTooltip={isInPostPageView || showOmittedReplies[postCid] || (postReplyCount < 6 && !pinned)}
             />
             ){' '}
           </>
@@ -279,7 +293,7 @@ const PostMessage = ({ post }: PostProps) => {
   );
 };
 
-const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
+const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
@@ -287,7 +301,7 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
     post = editedComment;
   }
 
-  const { cid, content, link, subplebbitAddress } = post || {};
+  const { author, cid, content, link, postCid, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -297,9 +311,10 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
       <div
         className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
         data-cid={cid}
-        data-author-address={post?.author?.shortAddress}
+        data-author-address={author?.shortAddress}
+        data-post-cid={postCid}
       >
-        <PostInfo openReplyModal={openReplyModal} post={post} roles={roles} />
+        <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
         {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
         {content && !hidden && <PostMessage post={post} />}
       </div>
@@ -308,7 +323,8 @@ const Reply = ({ openReplyModal, reply, roles }: PostProps) => {
 };
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
-  const { cid, content, link, pinned, replyCount, subplebbitAddress } = post || {};
+  const { t } = useTranslation();
+  const { author, cid, content, link, pinned, postCid, replyCount, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -323,6 +339,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const totallinksCount = useCountLinksInReplies(post);
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
+  const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
 
   // scroll to reply if pathname is reply permalink (backlink)
   const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -348,18 +365,21 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             <span className={`${styles.hideButton} ${hidden ? styles.unhideThread : styles.hideThread}`} onClick={hidden ? unhide : hide} />
           </span>
         )}
-        <div data-cid={cid} data-author-address={post?.author?.shortAddress}>
+        <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
           {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
-          <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} roles={roles} />
+          <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && <div className={styles.spacer} />}
           {!isHidden && content && <PostMessage post={post} />}
         </div>
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
-            <span className={styles.expandButtonWrapper}>
-              <span className={styles.expandButton} />
-            </span>
-            {linksCount > 0 ? (
+            <span
+              className={`${showOmittedReplies[cid] ? styles.hideOmittedReplies : styles.showOmittedReplies} ${styles.omittedRepliesButtonWrapper}`}
+              onClick={() => setShowOmittedReplies(cid, !showOmittedReplies[cid])}
+            />
+            {showOmittedReplies[cid] ? (
+              t('showing_all_replies')
+            ) : linksCount > 0 ? (
               <Trans
                 i18nKey={'replies_and_links_omitted'}
                 shouldUnescape={true}
@@ -372,15 +392,15 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           </span>
         )}
         {!isHidden &&
-          !(pinned && !isInPostPageView) &&
+          !(pinned && !isInPostPageView && !showOmittedReplies[cid]) &&
           !isInPendingPostView &&
           !isDescription &&
           !isRules &&
           replies &&
           showReplies &&
-          (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
+          (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
-              <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} />
+              <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} postReplyCount={replyCount} />
             </div>
           ))}
       </div>

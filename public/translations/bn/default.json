@@ -199,5 +199,14 @@
   "reason_reason": "কারণ: \"{{reason}}\".",
   "click_here_to_show_original": "<1>এখানে ক্লিক করুন</1> অসল দেখানোর জন্য।",
   "click_here_to_hide_original": "<1>এখানে ক্লিক করুন</1> অসল লুকাতে।",
-  "loading": "লোড হচ্ছে"
+  "loading": "লোড হচ্ছে",
+  "posted_by": "পোস্ট করেছেন",
+  "by": "দ্বারা",
+  "last_reply_by": "শেষ উত্তর দেননি",
+  "showing_all_replies": "সব উত্তর দেখাচ্ছি।",
+  "x_posts_by_this_user_address": "এই ব্যবহারকারী ঠিকানা দ্বারা {{number}} টি পোস্ট",
+  "1_post_by_this_user_address": "এই ব্যবহারকারী ঠিকানা দ্বারা 1 টি পোস্ট",
+  "highlight_posts": "এই ব্যবহারকারী ঠিকানা দ্বারা পোস্টগুলি হাইলাইট করুন",
+  "display_name_too_long": "প্রদর্শনী নাম অত্যন্ত দীর্ঘ",
+  "title_too_long": "শিরোনাম অত্যন্ত দীর্ঘ"
 }

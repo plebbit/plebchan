@@ -199,5 +199,14 @@
   "reason_reason": "原因: \"{{reason}}\".",
   "click_here_to_show_original": "<1>点击这里</1> 显示原文。",
   "click_here_to_hide_original": "<1>点击这里</1> 隐藏原文。",
-  "loading": "加载中"
+  "loading": "加载中",
+  "posted_by": "由...发布",
+  "by": "由...发布",
+  "last_reply_by": "最后回复者",
+  "showing_all_replies": "显示所有回复。",
+  "x_posts_by_this_user_address": "此用户地址的{{number}}篇帖子",
+  "1_post_by_this_user_address": "此用户地址的1篇帖子",
+  "highlight_posts": "突出显示此用户地址的帖子",
+  "display_name_too_long": "显示名称太长",
+  "title_too_long": "标题太长"
 }

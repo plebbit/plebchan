@@ -199,5 +199,14 @@
   "reason_reason": "कारण: \"{{reason}}\".",
   "click_here_to_show_original": "<1>येथे क्लिक करा</1> मूळ पाहण्यासाठी।",
   "click_here_to_hide_original": "<1>येथे क्लिक करा</1> मूळ लपविण्यासाठी।",
-  "loading": "लोड होत आहे"
+  "loading": "लोड होत आहे",
+  "posted_by": "ने टप्पल केला",
+  "by": "व्यक्ती",
+  "last_reply_by": "शेवटचा प्रतिसाद व्यक्ती",
+  "showing_all_replies": "सर्व प्रतिसाद दाखवत आहे.",
+  "x_posts_by_this_user_address": "या वापरकर्त्याचे {{number}} पोस्ट्स",
+  "1_post_by_this_user_address": "या वापरकर्त्याची 1 पोस्ट",
+  "highlight_posts": "या वापरकर्त्याच्या पत्त्यापासून पोस्ट्स हायलाइट करा",
+  "display_name_too_long": "डिस्प्ले नाम खूप लांब आहे",
+  "title_too_long": "शीर्षक खूप लांब आहे"
 }

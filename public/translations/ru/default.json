@@ -199,5 +199,14 @@
   "reason_reason": "Причина: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Нажмите здесь</1> для отображения оригинала.",
   "click_here_to_hide_original": "<1>Нажмите здесь</1> чтобы скрыть оригинал.",
-  "loading": "Загрузка"
+  "loading": "Загрузка",
+  "posted_by": "Опубликовано",
+  "by": "от",
+  "last_reply_by": "Последний ответ от",
+  "showing_all_replies": "Показываются все ответы.",
+  "x_posts_by_this_user_address": "{{number}} сообщений с этого адреса пользователя",
+  "1_post_by_this_user_address": "1 сообщение с этого адреса пользователя",
+  "highlight_posts": "Выделить сообщения с этого адреса пользователя",
+  "display_name_too_long": "отображаемое имя слишком длинное",
+  "title_too_long": "заголовок слишком длинный"
 }

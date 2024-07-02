@@ -16,6 +16,7 @@ import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
 import Markdown from '../markdown';
 import _ from 'lodash';
+import useWindowWidth from '../../hooks/use-window-width';
 
 interface CatalogPostMediaProps {
   commentMediaInfo: any;
@@ -133,8 +134,9 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   const [hoveredCid, setHoveredCid] = useState<string | null>(null);
   const [showPortal, setShowPortal] = useState<boolean>(false);
   const placementRef = useRef<Placement>('right-start');
-  const availableWidthRef = useRef<number>(0);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const windowWidth = useWindowWidth();
 
   const { refs, floatingStyles, update } = useFloating({
     open: showPortal,
@@ -143,12 +145,26 @@ const CatalogPost = ({ post }: { post: Comment }) => {
       shift({ padding: 10 }),
       offset({ mainAxis: 5 }),
       size({
-        apply({ availableWidth, elements }) {
-          availableWidthRef.current = availableWidth;
-          if (availableWidth >= 250) {
-            elements.floating.style.maxWidth = `${availableWidth - 12}px`;
-          } else if (placementRef.current === 'right-start') {
-            placementRef.current = 'left-start';
+        apply({ elements }) {
+          const referenceElement = refs.reference.current;
+          if (referenceElement) {
+            const availableWidthToTheRight = windowWidth - (referenceElement.getBoundingClientRect().left + referenceElement.getBoundingClientRect().width);
+            const availableWidthToTheLeft = referenceElement.getBoundingClientRect().left;
+            const minWidth = windowWidth * 0.25;
+
+            if (availableWidthToTheRight >= minWidth) {
+              placementRef.current = 'right-start';
+              elements.floating.style.maxWidth = `${availableWidthToTheRight - 40}px`;
+            } else if (availableWidthToTheLeft >= minWidth) {
+              placementRef.current = 'left-start';
+              elements.floating.style.maxWidth = `${availableWidthToTheLeft - 25}px`;
+            } else if (availableWidthToTheRight > availableWidthToTheLeft) {
+              placementRef.current = 'right-start';
+              elements.floating.style.maxWidth = `${availableWidthToTheRight - 40}px`;
+            } else {
+              placementRef.current = 'left-start';
+              elements.floating.style.maxWidth = `${availableWidthToTheLeft - 25}px`;
+            }
           }
         },
       }),
@@ -157,21 +173,8 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   });
 
   useEffect(() => {
-    const handleResize = () => {
-      const availableWidth = availableWidthRef.current;
-      if (availableWidth >= 250) {
-        placementRef.current = 'right-start';
-      } else {
-        placementRef.current = 'left-start';
-      }
-      update();
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [update]);
+    update();
+  }, [update, windowWidth]);
 
   const lastReply = useComment({ commentCid: lastChildCid });
 
@@ -233,7 +236,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
           ) : (
             threadIcons
           )}
-          <div className={styles.meta}>
+          <div className={styles.meta} title='(R)eplies / (L)ink Replies'>
             R: <b>{replyCount || '0'}</b>
             {linkCount > 0 && (
               <span>
@@ -248,12 +251,18 @@ const CatalogPost = ({ post }: { post: Comment }) => {
           {(showOPComment || isTextOnlyThread) && (hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>)}
         </div>
       </div>
-      {hoveredCid === cid &&
+      {(hoveredCid === cid || isDescription) &&
         showPortal &&
         createPortal(
           <div className={styles.postPreview} ref={refs.setFloating} style={floatingStyles}>
-            <span className={styles.postSubject}>{title}</span>
-            {' by '}
+            {title ? (
+              <>
+                <span className={styles.postSubject}>{title} </span>
+                {t('by')}
+              </>
+            ) : (
+              t('posted_by')
+            )}{' '}
             <span className={`${styles.postAuthor} ${(isCatalogPostAuthorMod || isRules || isDescription) && styles.capcode}`}>
               {author?.displayName || _.capitalize(t('anonymous'))}
               {isCatalogPostAuthorMod && <span className='capitalize'>{` ## Board ${catalogPostAuthorRole}`}</span>}
@@ -261,7 +270,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
             <span className={styles.postAgo}> {getFormattedTimeAgo(timestamp)}</span>
             {replyCount > 0 && (
               <div className={styles.postLast}>
-                Last reply by{' '}
+                {t('last_reply_by')}{' '}
                 <span className={`${styles.postAuthor} ${isLastReplyAuthorMod && styles.capcode}`}>
                   {lastReply?.author?.displayName || _.capitalize(t('anonymous'))}
                   {isLastReplyAuthorMod && ` ## Board ${lastReplyAuthorRole}`}

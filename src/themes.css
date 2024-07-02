@@ -103,7 +103,6 @@
   --post-menu-desktop-btn-opacity: 0.8;
   --post-menu-desktop-button-color-hover: red;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -309,7 +308,6 @@
   --post-menu-desktop-btn-opacity: 0.8;
   --post-menu-desktop-button-color-hover: #d00;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -496,7 +494,6 @@
   --post-menu-desktop-btn-opacity: 0.8;
   --post-menu-desktop-button-color-hover: red;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-red.png");
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -679,7 +676,6 @@
   --post-menu-desktop-btn-opacity: 0.8;
   --post-menu-desktop-button-color-hover: #d00;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-blue.png");
   
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -867,7 +863,6 @@
   --post-menu-desktop-btn-opacity: 0.8;
   --post-menu-desktop-button-color-hover: #81a2be;
   --post-greentext-color: #b5bd68;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-dark.png");
 
   /* post form */
   --post-form-toggle-font-size: 22px;
@@ -1069,7 +1064,6 @@
   --post-menu-desktop-btn-opacity: 0.8;
   --post-menu-desktop-button-color-hover: #FF3300;
   --post-greentext-color: #789922;
-  --post-replies-expand-button-background-image: url("/public/assets/buttons/plus-photon.png");
 
   /* post mobile */
   --post-mobile-background-color: #eee;

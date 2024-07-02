@@ -199,5 +199,14 @@
   "reason_reason": "Grund: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Hier klicken</1>, um das Original anzuzeigen.",
   "click_here_to_hide_original": "<1>Hier klicken</1>, um das Original zu verstecken.",
-  "loading": "Laden"
+  "loading": "Laden",
+  "posted_by": "Geschrieben von",
+  "by": "von",
+  "last_reply_by": "Letzte Antwort von",
+  "showing_all_replies": "Zeige alle Antworten.",
+  "x_posts_by_this_user_address": "{{number}} Beiträge von dieser Benutzeradresse",
+  "1_post_by_this_user_address": "1 Beitrag von dieser Benutzeradresse",
+  "highlight_posts": "Beiträge von dieser Benutzeradresse hervorheben",
+  "display_name_too_long": "Angezeigter Name zu lang",
+  "title_too_long": "Titel zu lang"
 }

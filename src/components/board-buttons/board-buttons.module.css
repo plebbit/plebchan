@@ -1,11 +1,14 @@
 .mobileBoardButtons {
   text-align: center;
-  margin-bottom: 10px;
+}
+
+.addMargin {
+  margin-bottom: 7px;
 }
 
 .mobileBoardButtons button {
-  margin: 0 2px;
   text-transform: capitalize;
+  margin: 5px 2px;
 }
 
 .mobileBoardButtons a, .desktopBoardButtons a {
@@ -51,28 +54,9 @@
   padding-top: 15px;
 }
 
-.adButton {
-  text-align: center;
-  font-size: 10px;
-}
-
-.adButton a {
-  text-decoration: none;
-  color: var(--button-desktop-text-color);
-
-}
-.adButton a:hover {
-  cursor: pointer;
-  color: var(--button-desktop-text-color-hover);
-}
-
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;
-  }
-
-  .adButton {
-    display: inline-flex;
   }
 }
 

@@ -185,21 +185,7 @@ export const MobileBoardButtons = () => {
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
-    <div className={styles.mobileBoardButtons}>
-      <div className={styles.adButton}>
-        [
-        <Link
-          to='/boards'
-          onClick={(e) => {
-            e.preventDefault();
-            alert('work in progress');
-          }}
-        >
-          Vote for Boards
-        </Link>
-        ]
-      </div>
-      <hr />
+    <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
       {isInPostView || isInPendingPostPage ? (
         <>
           <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
@@ -247,20 +233,6 @@ export const DesktopBoardButtons = () => {
 
   return (
     <>
-      <hr />
-      <div className={styles.adButton}>
-        [
-        <Link
-          to='/boards'
-          onClick={(e) => {
-            e.preventDefault();
-            alert('work in progress');
-          }}
-        >
-          Vote for Boards
-        </Link>
-        ]
-      </div>
       <hr />
       <div className={styles.desktopBoardButtons}>
         {isInPostView || isInPendingPostPage ? (

@@ -199,5 +199,14 @@
   "reason_reason": "Årsak: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klikk her</1> for å vise originalen.",
   "click_here_to_hide_original": "<1>Klikk her</1> for å skjule originalen.",
-  "loading": "Laster"
+  "loading": "Laster",
+  "posted_by": "Skrevet av",
+  "by": "av",
+  "last_reply_by": "Siste svar fra",
+  "showing_all_replies": "Viser alle svar.",
+  "x_posts_by_this_user_address": "{{number}} innlegg fra denne brukeradressen",
+  "1_post_by_this_user_address": "1 innlegg fra denne brukeradressen",
+  "highlight_posts": "Fremhev innlegg fra denne brukeradressen",
+  "display_name_too_long": "visningsnavn for langt",
+  "title_too_long": "tittel for lang"
 }

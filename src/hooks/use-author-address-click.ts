@@ -1,11 +1,7 @@
-import { useParams } from 'react-router-dom';
-
 const useAuthorAddressClick = () => {
-  const { commentCid } = useParams<{ commentCid: string }>();
-
-  const handleUserAddressClick = (shortAddress: string) => {
+  const handleUserAddressClick = (shortAddress: string, postCid: string) => {
     // Select the elements corresponding to the clicked short address
-    const elements = document.querySelectorAll(`[data-author-address="${shortAddress}"]`);
+    const elements = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`);
 
     // Check if the clicked address is already highlighted
     const isAlreadyHighlighted = Array.from(elements).some((element) => element.classList.contains('highlight'));
@@ -21,7 +17,7 @@ const useAuthorAddressClick = () => {
 
     // Highlight the new elements, excluding the element matching the cid if it is the OP post
     elements.forEach((element) => {
-      if (element.getAttribute('data-cid') !== commentCid) {
+      if (element.getAttribute('data-cid') !== element.getAttribute('data-post-cid')) {
         element.classList.add('highlight');
       }
     });

@@ -1,1 +1,1 @@
-export { HomeLogo, default } from './home';
+export { HomeLogo, Footer, default } from './home';

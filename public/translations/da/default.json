@@ -199,5 +199,14 @@
   "reason_reason": "Grund: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Klik her</1> for at vise originalen.",
   "click_here_to_hide_original": "<1>Klik her</1> for at skjule originalen.",
-  "loading": "Indlæser"
+  "loading": "Indlæser",
+  "posted_by": "Skrevet af",
+  "by": "af",
+  "last_reply_by": "Seneste svar fra",
+  "showing_all_replies": "Viser alle svar.",
+  "x_posts_by_this_user_address": "{{number}} indlæg fra denne brugeradresse",
+  "1_post_by_this_user_address": "1 indlæg fra denne brugeradresse",
+  "highlight_posts": "Fremhæv indlæg fra denne brugeradresse",
+  "display_name_too_long": "Visningsnavn for langt",
+  "title_too_long": "Titel for lang"
 }

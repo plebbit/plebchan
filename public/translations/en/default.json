@@ -199,5 +199,14 @@
   "reason_reason": "Reason: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Click here</1> to show the original.",
   "click_here_to_hide_original": "<1>Click here</1> to hide the original.",
-  "loading": "Loading"
+  "loading": "Loading",
+  "posted_by": "Posted by",
+  "by": "by",
+  "last_reply_by": "Last reply by",
+  "showing_all_replies": "Showing all replies.",
+  "x_posts_by_this_user_address": "{{number}} posts by this user address",
+  "1_post_by_this_user_address": "1 post by this user address",
+  "highlight_posts": "Highlight posts by this user address",
+  "display_name_too_long": "display name too long",
+  "title_too_long": "title too long"
 }

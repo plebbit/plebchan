@@ -199,5 +199,14 @@
   "reason_reason": "Arsye: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Kliko këtu</1> për të treguar origjinalin.",
   "click_here_to_hide_original": "<1>Kliko këtu</1> për të fshehur origjinalin.",
-  "loading": "Ngarkimi"
+  "loading": "Ngarkimi",
+  "posted_by": "Postuar nga",
+  "by": "nga",
+  "last_reply_by": "Përgjigje e fundit nga",
+  "showing_all_replies": "Duke treguar të gjitha përgjigjet.",
+  "x_posts_by_this_user_address": "{{number}} postime nga ky adresa e përdoruesit",
+  "1_post_by_this_user_address": "1 postim nga ky adresa e përdoruesit",
+  "highlight_posts": "Shëno postime nga ky adresa e përdoruesit",
+  "display_name_too_long": "emri i shfaqur është shumë i gjatë",
+  "title_too_long": "titulli shumë i gjatë"
 }

@@ -44,6 +44,7 @@
   background-color: var(--topbar-mobile-background-color);
   border-bottom: var(--topbar-mobile-border-bottom);
   font-size: var(--topbar-mobile-font-size);
+  color: var(--topbar-mobile-button-text-color);
   position: fixed;
   width: 100%;
   z-index: 3;
@@ -72,6 +73,7 @@
 
 .boardSelect {
   float: left;
+  color: var(--homepage-box-link-text-color);
 }
 
 .pageJump {
@@ -81,8 +83,8 @@
 
 .pageJump a, .pageJump span {
   padding-right: 5px;
-  color: var(--homepage-box-link-text-color);
   text-decoration: var(--homepage-box-link-text-decoration);
+  cursor: pointer;
 }
 
 @media (max-width: 640px) {

@@ -57,7 +57,7 @@ const CatalogFilters = () => {
 
   return (
     <>
-      <span className='button' onClick={() => setShowModal(true)}>
+      <span className={`${styles.filtersButton} button`} onClick={() => setShowModal(true)}>
         {t('filters')}
       </span>
       {showModal && <FiltersModal closeModal={closeModal} />}
