@@ -11,7 +11,7 @@
   position: relative;
   margin-bottom: 0.5em;
   padding-bottom: 0.5em;
-  border: 1px solid var(--homepage-box-border-color);
+  border: 1px solid;
 }
 
 .boxBar {
@@ -38,6 +38,7 @@
 .infoBox {
   background: var(--homepage-box-background-color);
   color: var(--homepage-infobox-text-color);
+  border: 1px solid var(--homepage-box-border-color);
 }
 
 .infoBox .boxBar {
