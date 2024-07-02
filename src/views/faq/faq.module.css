@@ -1,0 +1,123 @@
+.content {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  text-align: left;
+  width: 750px;
+  min-width: 750px;
+}
+
+.box {
+  position: relative;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  border: 1px solid var(--homepage-box-border-color);
+}
+
+.boxBar {
+  padding-left: 0.5em;
+  line-height: 2em;
+  text-transform: capitalize;
+}
+
+.boxBar h2 {
+  font-size: 131%;
+  font-weight: 700;
+}
+
+.boxContent {
+  line-height: 1.5em;
+  font-size: 93%;
+  padding: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0;
+  line-height: 1.5em;
+  color: #000;
+}
+
+.infoBox {
+  background: var(--homepage-box-background-color);
+  color: var(--homepage-infobox-text-color);
+}
+
+.infoBox .boxBar {
+  background: var(--homepage-box-bar-background-color);
+  color: var(--homepage-box-bar-text-color);
+}
+
+.leftBox {
+  float: left;
+  width: 49.1%;
+  background: #efe;
+  color: #060;
+}
+
+.leftBox .boxBar {
+  background: #9c6;
+  color: #060;
+}
+
+.rightBox {
+  float: right;
+  width: 49.1%;
+  background: #eff;
+  color: #006;
+}
+
+.rightBox .boxBar {
+  background: #59a;
+  color: #fff;
+}
+
+.list {
+  margin: 1em;
+  margin-left: 4em;
+}
+
+.list ul {
+  margin-left: 1em;
+  margin-bottom: .5em;
+}
+
+.box ul li {
+  list-style: disc outside;
+}
+
+.leftBox a:visited {
+  color: #00e;
+  text-decoration: underline;
+}
+
+.rightBox dl {
+  margin: 1em;
+}
+
+.rightBox .first {
+  padding-top: 0;
+}
+
+.rightBox dt {
+  padding-top: 1em;
+  margin-bottom: .5em;
+  font-weight: 700;
+  color: #006;
+}
+
+.rightBox dd {
+  margin-left: 1em;
+  padding-bottom: 1.5em;
+  border-bottom: solid #006 1px;
+}
+
+@media (max-width: 640px) {
+  .content {
+    min-width: 0;
+    width: auto;
+    padding: 10px;
+  }
+
+  .rightBox, .leftBox {
+    float: none;
+    width: auto;
+  }
+}

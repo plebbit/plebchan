@@ -107,7 +107,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                 </span>
               }
               content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_user_address') : t('x_posts_by_this_user_address', { number: numberOfPostsByAuthor })}`}
-              showTooltip={isInPostPageView || showOmittedReplies[postCid] || postReplyCount < 6}
+              showTooltip={isInPostPageView || showOmittedReplies[postCid] || (postReplyCount < 6 && !pinned)}
             />
             ){' '}
           </>

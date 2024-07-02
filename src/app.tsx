@@ -5,6 +5,7 @@ import useIsMobile from './hooks/use-is-mobile';
 import styles from './app.module.css';
 import Board from './views/board';
 import Catalog from './views/catalog';
+import FAQ from './views/faq';
 import Home from './views/home';
 import NotFound from './views/not-found';
 import PendingPost from './views/pending-post';
@@ -81,6 +82,9 @@ const App = () => {
       <Routes>
         <Route element={<GlobalLayout />}>
           <Route path='/' element={<Home />} />
+          <Route path='/faq' element={<FAQ />} />
+          <Route path='*' element={<NotFound />} />
+
           <Route element={<BoardLayout />}>
             <Route path='/p/:subplebbitAddress' element={<Board />} />
             <Route path='/p/:subplebbitAddress/settings' element={<Board />} />
@@ -108,7 +112,6 @@ const App = () => {
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
             <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />
           </Route>
-          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </div>

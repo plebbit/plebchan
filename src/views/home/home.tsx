@@ -133,7 +133,7 @@ const downloadAppLink = (() => {
 const isElectron = window.isElectron === true;
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 
-const Footer = () => {
+export const Footer = () => {
   const { t } = useTranslation();
   return (
     <>
@@ -151,15 +151,7 @@ const Footer = () => {
           </li>
         )}
         <li>
-          <Link
-            to='/faq'
-            onClick={(e) => {
-              e.preventDefault();
-              alert('work in progress');
-            }}
-          >
-            FAQ
-          </Link>
+          <Link to='/faq'>FAQ</Link>
         </li>
         <li>
           <a href='https://t.me/plebbit' target='_blank' rel='noopener noreferrer'>
