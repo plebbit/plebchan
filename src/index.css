@@ -30,20 +30,8 @@ hr {
   text-transform: capitalize;
 }
 
-select {
-  border: var(--select-border, revert);
-  background-color: var(--select-background-color, revert);
-  color: var(--select-text-color, revert);
-}
-
-button {
-  background-color: var(--select-background-color, revert);
-  color: var(--select-text-color, revert);
-}
-
-textarea, input[type="text"] {
-  background-color: var(--select-background-color, revert);
-  color: var(--select-text-color, revert);
+* {
+  color-scheme: var(--color-scheme, revert);
 }
 
 @media (max-width: 640px) {
