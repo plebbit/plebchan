@@ -25,6 +25,10 @@
   padding-bottom: 0.5em;
 }
 
+.infoBox {
+  border: 1px solid black;
+}
+
 .boardsBox {
   overflow: hidden;
   min-height: 150px;
