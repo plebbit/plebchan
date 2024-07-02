@@ -169,7 +169,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
         <strong>{t('board')}</strong>
         {boardSelect}
         {(isInAllView || isInSubscriptionsView) && (
-          <TimeFilter isTopbar={true} isInAllView={isInAllView} isInCatalogView={false} isInSubscriptionsView={isInSubscriptionsView} />
+          <TimeFilter isTopbar={true} isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
         )}
       </div>
       <div className={styles.pageJump}>
