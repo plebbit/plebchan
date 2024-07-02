@@ -27,13 +27,19 @@ import { create } from 'zustand';
 import _ from 'lodash';
 
 interface ShowOmittedRepliesState {
-  showOmittedReplies: boolean;
-  setShowOmittedReplies: (showOmittedReplies: boolean) => void;
+  showOmittedReplies: Record<string, boolean>;
+  setShowOmittedReplies: (cid: string, showOmittedReplies: boolean) => void;
 }
 
 const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
-  showOmittedReplies: false,
-  setShowOmittedReplies: (showOmittedReplies: boolean) => set({ showOmittedReplies }),
+  showOmittedReplies: {},
+  setShowOmittedReplies: (cid, showOmittedReplies) =>
+    set((state) => ({
+      showOmittedReplies: {
+        ...state.showOmittedReplies,
+        [cid]: showOmittedReplies,
+      },
+    })),
 }));
 
 const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }: PostProps) => {
@@ -101,7 +107,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                 </span>
               }
               content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_user_address') : t('x_posts_by_this_user_address', { number: numberOfPostsByAuthor })}`}
-              showTooltip={isInPostPageView || showOmittedReplies || postReplyCount < 6}
+              showTooltip={isInPostPageView || showOmittedReplies[postCid] || postReplyCount < 6}
             />
             ){' '}
           </>
@@ -368,10 +374,10 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
             <span
-              className={`${showOmittedReplies ? styles.hideOmittedReplies : styles.showOmittedReplies} ${styles.omittedRepliesButtonWrapper}`}
-              onClick={() => setShowOmittedReplies(!showOmittedReplies)}
+              className={`${showOmittedReplies[cid] ? styles.hideOmittedReplies : styles.showOmittedReplies} ${styles.omittedRepliesButtonWrapper}`}
+              onClick={() => setShowOmittedReplies(cid, !showOmittedReplies[cid])}
             />
-            {showOmittedReplies ? (
+            {showOmittedReplies[cid] ? (
               t('showing_all_replies')
             ) : linksCount > 0 ? (
               <Trans
@@ -392,7 +398,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           !isRules &&
           replies &&
           showReplies &&
-          (showAllReplies || showOmittedReplies ? replies : replies.slice(-5)).map((reply, index) => (
+          (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
               <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} postReplyCount={replyCount} />
             </div>
