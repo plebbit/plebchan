@@ -1,5 +1,5 @@
 import { useState, ReactNode } from 'react';
-import { useFloating, autoUpdate, offset, flip, shift, useHover, useFocus, useDismiss, useRole, useInteractions, FloatingPortal } from '@floating-ui/react';
+import { useFloating, autoUpdate, offset, shift, useHover, useFocus, useDismiss, useRole, useInteractions, FloatingPortal } from '@floating-ui/react';
 import styles from './tooltip.module.css';
 
 interface TooltipProps {
@@ -16,13 +16,7 @@ const Tooltip = ({ content, children, showTooltip = true }: TooltipProps) => {
     onOpenChange: setIsOpen,
     placement: 'top',
     whileElementsMounted: autoUpdate,
-    middleware: [
-      offset(5),
-      flip({
-        fallbackAxisSideDirection: 'start',
-      }),
-      shift(),
-    ],
+    middleware: [offset(5), shift()],
   });
 
   const hover = useHover(context, { move: false, delay: { open: 500, close: 0 } });
