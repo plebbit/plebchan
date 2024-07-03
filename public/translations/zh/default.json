@@ -204,9 +204,11 @@
   "by": "由...发布",
   "last_reply_by": "最后回复者",
   "showing_all_replies": "显示所有回复。",
-  "x_posts_by_this_user_address": "此用户地址的{{number}}篇帖子",
-  "1_post_by_this_user_address": "此用户地址的1篇帖子",
   "highlight_posts": "突出显示此用户地址的帖子",
   "display_name_too_long": "显示名称太长",
-  "title_too_long": "标题太长"
+  "title_too_long": "标题太长",
+  "1_post_by_this_id": "此ID的1篇帖子",
+  "x_posts_by_this_id": "此ID的{{number}}篇帖子",
+  "ban_expires_at": "被禁止从p/{{address}}到{{timestamp}}",
+  "user_banned": "用户因此帖子被禁止"
 }

@@ -204,9 +204,11 @@
   "by": "작성자:",
   "last_reply_by": "마지막 답글 작성자:",
   "showing_all_replies": "모든 답글을 표시합니다.",
-  "x_posts_by_this_user_address": "이 사용자 주소로부터 {{number}}개의 게시물",
-  "1_post_by_this_user_address": "이 사용자 주소로부터 1개의 게시물",
   "highlight_posts": "이 사용자 주소의 게시물 강조 표시",
   "display_name_too_long": "표시 이름이 너무 깁니다",
-  "title_too_long": "제목이 너무 깁니다"
+  "title_too_long": "제목이 너무 깁니다",
+  "1_post_by_this_id": "이 ID로 게시된 1개의 글",
+  "x_posts_by_this_id": "이 ID로부터의 {{number}}개의 글",
+  "ban_expires_at": "p/{{address}}에서 {{timestamp}}까지 금지됨",
+  "user_banned": "이 게시물로 인해 사용자가 차단되었습니다"
 }

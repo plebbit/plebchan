@@ -44,7 +44,6 @@
   background-color: var(--topbar-mobile-background-color);
   border-bottom: var(--topbar-mobile-border-bottom);
   font-size: var(--topbar-mobile-font-size);
-  color: var(--topbar-mobile-button-text-color);
   position: fixed;
   width: 100%;
   z-index: 3;
@@ -54,7 +53,7 @@
 }
 
 .boardNavMobile .pageJump a, .boardNavMobile .pageJump span {
-  color: var(--topbar-mobile-button-color);
+  color: var(--topbar-mobile-button-text-color);
   text-decoration: var(--button-text-decoration-mobile);
 }
 

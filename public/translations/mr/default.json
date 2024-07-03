@@ -204,9 +204,11 @@
   "by": "व्यक्ती",
   "last_reply_by": "शेवटचा प्रतिसाद व्यक्ती",
   "showing_all_replies": "सर्व प्रतिसाद दाखवत आहे.",
-  "x_posts_by_this_user_address": "या वापरकर्त्याचे {{number}} पोस्ट्स",
-  "1_post_by_this_user_address": "या वापरकर्त्याची 1 पोस्ट",
   "highlight_posts": "या वापरकर्त्याच्या पत्त्यापासून पोस्ट्स हायलाइट करा",
   "display_name_too_long": "डिस्प्ले नाम खूप लांब आहे",
-  "title_too_long": "शीर्षक खूप लांब आहे"
+  "title_too_long": "शीर्षक खूप लांब आहे",
+  "1_post_by_this_id": "या ID वर 1 पोस्ट",
+  "x_posts_by_this_id": "या ID पासून {{number}} पोस्ट",
+  "ban_expires_at": "p/{{address}} ते {{timestamp}} पर्यंत प्रतिबंधित",
+  "user_banned": "या पोस्टसाठी वापरकर्ता ब्लॉक केला गेला होता"
 }

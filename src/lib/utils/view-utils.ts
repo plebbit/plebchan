@@ -44,9 +44,11 @@ export const isCatalogView = (pathname: string, params: ParamsType): boolean => 
     decodedPathname === `/p/all/catalog` ||
     decodedPathname === `/p/all/catalog/settings` ||
     decodedPathname === `/p/all/catalog/${timeFilterName}` ||
+    decodedPathname === `/p/all/catalog/${timeFilterName}/settings` ||
     decodedPathname === `/p/subscriptions/catalog` ||
     decodedPathname === `/p/subscriptions/catalog/settings` ||
-    decodedPathname === `/p/subscriptions/catalog/${timeFilterName}`
+    decodedPathname === `/p/subscriptions/catalog/${timeFilterName}` ||
+    decodedPathname === `/p/subscriptions/catalog/${timeFilterName}/settings`
   );
 };
 

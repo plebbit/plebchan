@@ -204,9 +204,11 @@
   "by": "โดย",
   "last_reply_by": "การตอบคำถามล่าสุดโดย",
   "showing_all_replies": "กำลังแสดงคำตอบทั้งหมด",
-  "x_posts_by_this_user_address": "{{number}} โพสต์โดยที่อยู่ผู้ใช้นี้",
-  "1_post_by_this_user_address": "1 โพสต์โดยที่อยู่ผู้ใช้นี้",
   "highlight_posts": "เน้นโพสต์โดยที่อยู่ผู้ใช้นี้",
   "display_name_too_long": "ชื่อที่แสดงนามสกุลยาวเกินไป",
-  "title_too_long": "ชื่อเรื่องยาวเกินไป"
+  "title_too_long": "ชื่อเรื่องยาวเกินไป",
+  "1_post_by_this_id": "1 โพสต์โดย ID นี้",
+  "x_posts_by_this_id": "{{number}} โพสต์จาก ID นี้",
+  "ban_expires_at": "ถูกห้ามใช้งานจาก p/{{address}} จนถึง {{timestamp}}",
+  "user_banned": "ผู้ใช้ถูกห้ามใช้งานสำหรับโพสต์นี้"
 }

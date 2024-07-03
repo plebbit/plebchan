@@ -204,9 +204,11 @@
   "by": "nga",
   "last_reply_by": "Përgjigje e fundit nga",
   "showing_all_replies": "Duke treguar të gjitha përgjigjet.",
-  "x_posts_by_this_user_address": "{{number}} postime nga ky adresa e përdoruesit",
-  "1_post_by_this_user_address": "1 postim nga ky adresa e përdoruesit",
   "highlight_posts": "Shëno postime nga ky adresa e përdoruesit",
   "display_name_too_long": "emri i shfaqur është shumë i gjatë",
-  "title_too_long": "titulli shumë i gjatë"
+  "title_too_long": "titulli shumë i gjatë",
+  "1_post_by_this_id": "1 postim me këtë ID",
+  "x_posts_by_this_id": "{{number}} postime nga ky ID",
+  "ban_expires_at": "I ndaluar nga p/{{address}} deri më {{timestamp}}",
+  "user_banned": "Përdoruesi u ndalua për këtë postim"
 }

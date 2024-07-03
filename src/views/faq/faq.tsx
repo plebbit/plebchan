@@ -1,8 +1,14 @@
+import { useEffect } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { Footer, HomeLogo } from '../home';
 import styles from './faq.module.css';
 
 const FAQ = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'FAQ - plebchan';
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
