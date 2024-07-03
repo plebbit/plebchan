@@ -30,6 +30,10 @@ hr {
   text-transform: capitalize;
 }
 
+* {
+  color-scheme: var(--color-scheme, revert);
+}
+
 @media (max-width: 640px) {
   .button {
     font-size: var(--button-font-size-mobile);
@@ -46,10 +50,6 @@ hr {
     user-select: none;
     display: inline-block;
     cursor: pointer;
-  }
-
-  select {
-    filter: var(--filter80);
   }
 
   .highlight {

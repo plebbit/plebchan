@@ -204,9 +204,11 @@
   "by": "od",
   "last_reply_by": "Poslední odpověď od",
   "showing_all_replies": "Zobrazuji všechny odpovědi.",
-  "x_posts_by_this_user_address": "{{number}} příspěvků od tohoto uživatelského adresy",
-  "1_post_by_this_user_address": "1 příspěvek od tohoto uživatelského adresy",
   "highlight_posts": "Zvýraznit příspěvky z této uživatelské adresy",
   "display_name_too_long": "Zobrazované jméno je příliš dlouhé",
-  "title_too_long": "Název je příliš dlouhý"
+  "title_too_long": "Název je příliš dlouhý",
+  "1_post_by_this_id": "1 příspěvek s tímto ID",
+  "x_posts_by_this_id": "{{number}} příspěvků z tohoto ID",
+  "ban_expires_at": "Zakázán z p/{{address}} do {{timestamp}}",
+  "user_banned": "Uživatel byl zablokován za tento příspěvek"
 }

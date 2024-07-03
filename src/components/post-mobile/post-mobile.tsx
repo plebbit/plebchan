@@ -80,7 +80,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                     {shortAddress || accountShortAddress}
                   </span>
                 }
-                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_user_address') : t('x_posts_by_this_user_address', { number: numberOfPostsByAuthor })}`}
+                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
                 showTooltip={isInPostPageView || postReplyCount < 6}
               />
               ){' '}
@@ -152,7 +152,8 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, commentAuthor, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const banned = !!commentAuthor?.banExpiresAt;
   const [showOriginal, setShowOriginal] = useState(false);
 
   const params = useParams();
@@ -177,9 +178,13 @@ const PostMessageMobile = ({ post }: PostProps) => {
       <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
         {isReply && !(removed || deleted) && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
         {removed ? (
-          <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
+          <Tooltip
+            children={<span className={styles.removedContent}>({t('this_post_was_removed')})</span>}
+            content={`${_.capitalize(t('reason'))}: "${reason}"`}
+            showTooltip={!!reason}
+          />
         ) : deleted ? (
-          <span className={styles.removedContent}>{t('user_deleted_this_post')}</span>
+          <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
         ) : (
           <>
             {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
@@ -206,11 +211,18 @@ const PostMessageMobile = ({ post }: PostProps) => {
             )}
           </>
         )}
-        {(removed || deleted) && reason && (
-          <span>
+        {banned && (
+          <span className={styles.removedContent}>
             <br />
             <br />
-            reason: {reason}
+            <Tooltip
+              children={`(${t('user_banned')})`}
+              content={`${t('ban_expires_at', {
+                address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
+                timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
+                interpolation: { escapeValue: false },
+              })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
+            />
           </span>
         )}
         {!isReply && content.length > 1000 && !isInPostView && (

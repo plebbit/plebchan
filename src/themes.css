@@ -763,6 +763,8 @@
 }
 
 :root .tomorrow {
+  --color-scheme: dark;
+  
   /* backlink */
   --post-backlink-text-color: #5f89ac;
   --post-backlink-text-decoration: underline;
@@ -943,11 +945,6 @@
   --reply-highlight-border: 1px solid #111;
   --reply-highlight-border-left: 1px solid #111;
   --reply-highlight-border-top: 1px solid #111;
-
-  /* select */
-  --select-border: 1px solid #575a60;
-  --select-background-color: #282a2e;
-  --select-color: #c5c8c6;
 
   /* settings modal */
   --settings-modal-font-size: 14px;

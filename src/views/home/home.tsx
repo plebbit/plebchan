@@ -47,7 +47,7 @@ const SearchBar = () => {
 const InfoBox = () => {
   const { t } = useTranslation();
   return (
-    <div className={styles.box}>
+    <div className={`${styles.box} ${styles.infoBox}`}>
       <div className={styles.infoboxBar}>
         <h2>{t('what_is_plebchan')}</h2>
       </div>

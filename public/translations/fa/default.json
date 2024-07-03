@@ -204,9 +204,11 @@
   "by": "توسط",
   "last_reply_by": "آخرین پاسخ توسط",
   "showing_all_replies": "نمایش تمام پاسخ‌ها.",
-  "x_posts_by_this_user_address": "{{number}} پست از این آدرس کاربر",
-  "1_post_by_this_user_address": "1 پست از این آدرس کاربر",
   "highlight_posts": "برجسته سازی پست ها از این آدرس کاربر",
   "display_name_too_long": "نام نمایشی خیلی طولانی است",
-  "title_too_long": "عنوان خیلی طولانی است"
+  "title_too_long": "عنوان خیلی طولانی است",
+  "1_post_by_this_id": "1 پست با این شناسه",
+  "x_posts_by_this_id": "{{number}} پست از این شناسه",
+  "ban_expires_at": "مسدود از p/{{address}} تا {{timestamp}}",
+  "user_banned": "این کاربر برای این پست مسدود شد"
 }

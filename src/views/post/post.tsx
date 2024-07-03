@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useLocation, useParams } from 'react-router-dom';
 import { isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -68,7 +68,7 @@ const PostPage = () => {
 
   // if the comment is a reply, return the post comment instead, then the reply will be highlighted in the thread
   const postComment = useComment({ commentCid: comment?.postCid });
-  let post;
+  let post: Comment;
   if (comment.parentCid) {
     post = postComment;
   } else {
@@ -81,6 +81,12 @@ const PostPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    const boardTitle = title ? title : shortAddress || subplebbitAddress;
+    const postTitle = post?.title?.slice(0, 30) || post?.content?.slice(0, 30);
+    document.title = (postTitle ? postTitle.trim() + '... - ' : '') + boardTitle + ' - plebchan';
+  }, [title, shortAddress, subplebbitAddress, post?.title, post?.content]);
 
   return (
     <div className={styles.content}>

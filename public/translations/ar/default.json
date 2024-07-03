@@ -204,9 +204,11 @@
   "by": "بواسطة",
   "last_reply_by": "آخر رد بواسطة",
   "showing_all_replies": "عرض جميع الردود.",
-  "x_posts_by_this_user_address": "{{number}} مشاركات من هذا العنوان للمستخدم",
-  "1_post_by_this_user_address": "مشاركة واحدة من هذا العنوان للمستخدم",
   "highlight_posts": "تسليط الضوء على المشاركات من خلال هذا العنوان للمستخدم",
   "display_name_too_long": "اسم العرض طويل جداً",
-  "title_too_long": "العنوان طويل جداً"
+  "title_too_long": "العنوان طويل جداً",
+  "1_post_by_this_id": "مشاركة واحدة بهذا المعرف",
+  "x_posts_by_this_id": "{{number}} منشور من هذا المعرف",
+  "ban_expires_at": "محظور من p/{{address}} حتى {{timestamp}}",
+  "user_banned": "تم حظر المستخدم لهذا المنشور"
 }

@@ -204,9 +204,11 @@
   "by": "przez",
   "last_reply_by": "Ostatnia odpowiedź od",
   "showing_all_replies": "Wyświetlanie wszystkich odpowiedzi.",
-  "x_posts_by_this_user_address": "{{number}} postów z tego adresu użytkownika",
-  "1_post_by_this_user_address": "1 post z tego adresu użytkownika",
   "highlight_posts": "Wyróżnij posty z tego adresu użytkownika",
   "display_name_too_long": "nazwa wyświetlana jest zbyt długa",
-  "title_too_long": "tytuł jest zbyt długi"
+  "title_too_long": "tytuł jest zbyt długi",
+  "1_post_by_this_id": "1 post z tym identyfikatorem",
+  "x_posts_by_this_id": "{{number}} postów z tego identyfikatora",
+  "ban_expires_at": "Zablokowany na p/{{address}} do {{timestamp}}",
+  "user_banned": "Użytkownik został zablokowany za ten post"
 }

@@ -25,6 +25,10 @@
   padding-bottom: 0.5em;
 }
 
+.infoBox {
+  border: 1px solid black;
+}
+
 .boardsBox {
   overflow: hidden;
   min-height: 150px;
@@ -103,6 +107,10 @@
 .searchBar input {
   width: 400px;
   padding: 3px 10px;
+}
+
+.searchBar input:focus {
+  border-color: #ea8;
 }
 
 .searchButton {

@@ -106,7 +106,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                   {shortAddress || accountShortAddress}
                 </span>
               }
-              content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_user_address') : t('x_posts_by_this_user_address', { number: numberOfPostsByAuthor })}`}
+              content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
               showTooltip={isInPostPageView || showOmittedReplies[postCid] || (postReplyCount < 6 && !pinned)}
             />
             ){' '}
@@ -217,7 +217,8 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, content, commentAuthor, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const banned = !!commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -241,9 +242,13 @@ const PostMessage = ({ post }: PostProps) => {
     <blockquote className={styles.postMessage}>
       {isReply && !(removed || deleted) && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
-        <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
+        <Tooltip
+          children={<span className={styles.removedContent}>({t('this_post_was_removed')})</span>}
+          content={`${_.capitalize(t('reason'))}: "${reason}"`}
+          showTooltip={!!reason}
+        />
       ) : deleted ? (
-        <span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>
+        <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
       ) : (
         <>
           {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
@@ -270,11 +275,18 @@ const PostMessage = ({ post }: PostProps) => {
           )}
         </>
       )}
-      {(removed || deleted) && reason && (
-        <span>
+      {banned && (
+        <span className={styles.removedContent}>
           <br />
           <br />
-          {t('reason')}: {reason}
+          <Tooltip
+            children={`(${t('user_banned')})`}
+            content={`${t('ban_expires_at', {
+              address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
+              timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
+              interpolation: { escapeValue: false },
+            })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
+          />
         </span>
       )}
       {!isReply && content.length > 1000 && !isInPostView && (
@@ -371,7 +383,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           {!isHidden && !content && <div className={styles.spacer} />}
           {!isHidden && content && <PostMessage post={post} />}
         </div>
-        {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replies.length > 5 || (pinned && replies.length > 0)) && !isInPostPageView && (
+        {!isHidden && !isDescription && !isRules && !isInPendingPostView && (repliesCount > 5 || (pinned && repliesCount > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
             <span
               className={`${showOmittedReplies[cid] ? styles.hideOmittedReplies : styles.showOmittedReplies} ${styles.omittedRepliesButtonWrapper}`}
