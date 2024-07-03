@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { Comment, PublishCommentEditOptions, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
@@ -17,25 +17,27 @@ type EditMenuProps = {
   post: Comment;
 };
 
+const daysToTimestampInSeconds = (days: number) => {
+  const now = new Date();
+  now.setDate(now.getDate() + days);
+  return Math.floor(now.getTime() / 1000);
+};
+
+const timestampToDays = (timestamp: number) => {
+  const now = Math.floor(Date.now() / 1000);
+  return Math.max(1, Math.floor((timestamp - now) / (24 * 60 * 60)));
+};
+
 const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, post }: EditMenuProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-
-  const { banExpiresAt, cid, content, deleted, locked, parentCid, pinned, removed, spoiler, subplebbitAddress } = post || {};
+  const { cid, commentAuthor, content, deleted, locked, parentCid, pinned, reason, removed, spoiler, subplebbitAddress } = post || {};
   const isReply = parentCid;
-
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
-
   const [isContentEditorOpen, setIsContentEditorOpen] = useState(false);
-  const contentEditorRef = useRef<HTMLTextAreaElement>(null);
-  useEffect(() => {
-    if (contentEditorRef.current) {
-      contentEditorRef.current.focus();
-    }
-  }, []);
 
   const defaultPublishEditOptions: PublishCommentEditOptions = {
-    commentAuthor: isAccountMod && !isAccountCommentAuthor && banExpiresAt !== undefined ? { banExpiresAt } : undefined,
+    commentAuthor: isAccountMod && !isAccountCommentAuthor ? commentAuthor : undefined,
     commentCid: cid,
     content: isAccountCommentAuthor ? content : undefined,
     deleted: isAccountCommentAuthor ? deleted : undefined,
@@ -55,13 +57,9 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishEditOptions);
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
 
-  const [banDuration, setBanDuration] = useState(1);
-
-  const daysToTimestampInSeconds = (days: number) => {
-    const now = new Date();
-    now.setDate(now.getDate() + days);
-    return Math.floor(now.getTime() / 1000);
-  };
+  const [banDuration, setBanDuration] = useState(() =>
+    publishCommentEditOptions.commentAuthor?.banExpiresAt ? timestampToDays(publishCommentEditOptions.commentAuthor.banExpiresAt) : 1,
+  );
 
   const onCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, checked } = e.target;
@@ -145,8 +143,8 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                       <textarea
                         className={styles.editTextarea}
                         value={publishCommentEditOptions.content ?? ''}
-                        ref={contentEditorRef}
                         onChange={(e) => setPublishCommentEditOptions((state) => ({ ...state, content: e.target.value }))}
+                        autoFocus={true}
                       />
                     </div>
                   )}
@@ -157,7 +155,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   <div className={styles.menuItem}>
                     <label>
                       [
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed ?? false} type='checkbox' id='removed' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed' />
                       {_.capitalize(t('remove'))}?]
                     </label>
                   </div>
@@ -165,7 +163,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                     <div className={styles.menuItem}>
                       [
                       <label>
-                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked ?? false} type='checkbox' id='locked' />
+                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type='checkbox' id='locked' />
                         {_.capitalize(t('close_thread'))}?
                       </label>
                       ]
@@ -174,7 +172,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler ?? false} type='checkbox' id='spoiler' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler} type='checkbox' id='spoiler' />
                       {_.capitalize(t('spoiler'))}?
                     </label>
                     ]
@@ -182,7 +180,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned ?? false} type='checkbox' id='pinned' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned} type='checkbox' id='pinned' />
                       {_.capitalize(t('sticky'))}?
                     </label>
                     ]
@@ -191,12 +189,12 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                     <div className={styles.menuItem}>
                       [
                       <label>
-                        <input onChange={onCheckbox} checked={!!publishCommentEditOptions.commentAuthor?.banExpiresAt ?? false} type='checkbox' id='banUser' />
+                        <input onChange={onCheckbox} checked={publishCommentEditOptions.commentAuthor?.banExpiresAt !== undefined} type='checkbox' id='banUser' />
                         <Trans
                           i18nKey='ban_user_for'
                           shouldUnescape={true}
                           components={{
-                            1: <input className={styles.banInput} onChange={onBanDurationChange} type='number' min={1} max={100} defaultValue={banDuration} />,
+                            1: <input className={styles.banInput} onChange={onBanDurationChange} type='number' min={1} max={100} value={banDuration} />,
                           }}
                         />
                         ?
@@ -208,7 +206,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
               )}
               <div className={`${styles.menuItem} ${styles.menuReason}`}>
                 {_.capitalize(t('reason'))}? ({t('optional')})
-                <input type='text' onChange={onReason} defaultValue={post?.reason ?? ''} size={14} />
+                <input type='text' onChange={onReason} defaultValue={reason ?? ''} size={14} />
               </div>
               <div className={styles.bottom}>
                 <button className={isMobile ? 'button' : ''} onClick={_publishCommentEdit}>
