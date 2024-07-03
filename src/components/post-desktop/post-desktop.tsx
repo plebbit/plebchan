@@ -218,7 +218,7 @@ const PostMedia = ({ post }: PostProps) => {
 
 const PostMessage = ({ post }: PostProps) => {
   const { cid, content, commentAuthor, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
-  const banned = commentAuthor?.banExpiresAt;
+  const banned = !!commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -242,9 +242,13 @@ const PostMessage = ({ post }: PostProps) => {
     <blockquote className={styles.postMessage}>
       {isReply && !(removed || deleted) && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
-        <span className={styles.removedContent}>({t('this_post_was_removed')})</span>
+        <Tooltip
+          children={<span className={styles.removedContent}>({t('this_post_was_removed')})</span>}
+          content={`${_.capitalize(t('reason'))}: "${reason}"`}
+          showTooltip={!!reason}
+        />
       ) : deleted ? (
-        <span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>
+        <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
       ) : (
         <>
           {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
@@ -269,26 +273,20 @@ const PostMessage = ({ post }: PostProps) => {
               )}
             </span>
           )}
-          {banned && (
-            <span className={styles.removedContent}>
-              <br />
-              <Tooltip
-                children={`(${t('user_banned')})`}
-                content={t('ban_expires_at', {
-                  address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
-                  timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
-                  interpolation: { escapeValue: false },
-                })}
-              />
-            </span>
-          )}
         </>
       )}
-      {(removed || deleted) && reason && (
-        <span>
+      {banned && (
+        <span className={styles.removedContent}>
           <br />
           <br />
-          {t('reason')}: {reason}
+          <Tooltip
+            children={`(${t('user_banned')})`}
+            content={`${t('ban_expires_at', {
+              address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
+              timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
+              interpolation: { escapeValue: false },
+            })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
+          />
         </span>
       )}
       {!isReply && content.length > 1000 && !isInPostView && (
