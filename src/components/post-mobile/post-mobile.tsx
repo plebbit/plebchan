@@ -152,7 +152,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, commentAuthor, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const [showOriginal, setShowOriginal] = useState(false);
@@ -188,7 +188,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
           <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
         ) : (
           <>
-            {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
+            {!showOriginal && <Markdown content={displayContent} />}
             {edit && original?.content !== post?.content && (
               <span className={styles.editedInfo}>
                 {showOriginal && <Markdown content={original?.content} />}

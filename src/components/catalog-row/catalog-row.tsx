@@ -188,9 +188,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   });
 
   const postContent = (
-    <div className={`${styles.teaser} ${hidden && styles.hidden}`}>
-      {hidden ? <b>({t('hidden')})</b> : <Markdown title={title} content={content} spoiler={spoiler} />}
-    </div>
+    <div className={`${styles.teaser} ${hidden && styles.hidden}`}>{hidden ? <b>({t('hidden')})</b> : <Markdown title={title} content={content} />}</div>
   );
 
   const { imageSize, showOPComment } = useCatalogStyleStore();

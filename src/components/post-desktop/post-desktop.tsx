@@ -207,7 +207,7 @@ const PostMedia = ({ post }: PostProps) => {
           </span>
         )}
       </div>
-      {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
+      {(hasThumbnail || (!hasThumbnail && !showThumbnail) || spoiler) && (
         <div className={styles.fileThumbnail}>
           <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
         </div>
@@ -217,7 +217,7 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
@@ -252,7 +252,7 @@ const PostMessage = ({ post }: PostProps) => {
         <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
       ) : (
         <>
-          {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
+          {!showOriginal && <Markdown content={displayContent} />}
           {edit && original?.content !== post?.content && (
             <span className={styles.editedInfo}>
               {showOriginal && <Markdown content={original?.content} />}
