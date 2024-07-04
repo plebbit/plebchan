@@ -8,7 +8,7 @@ import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useIsMobile from '../../hooks/use-is-mobile';
 
-const totalBanners = 59;
+const totalBanners = 60;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
