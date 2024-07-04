@@ -217,8 +217,9 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, commentAuthor, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
-  const banned = !!commentAuthor?.banExpiresAt;
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
+  // TODO: commentAuthor is not available outside of editedComment, update when available
+  // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -275,7 +276,8 @@ const PostMessage = ({ post }: PostProps) => {
           )}
         </>
       )}
-      {banned && (
+      {/* TODO: commentAuthor is not available outside of editedComment, update when available */}
+      {/* {banned && (
         <span className={styles.removedContent}>
           <br />
           <br />
@@ -288,7 +290,7 @@ const PostMessage = ({ post }: PostProps) => {
             })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
           />
         </span>
-      )}
+      )} */}
       {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />

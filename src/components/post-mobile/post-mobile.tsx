@@ -153,7 +153,8 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
   const { cid, commentAuthor, content, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
-  const banned = !!commentAuthor?.banExpiresAt;
+  // TODO: commentAuthor is not available outside of editedComment, update when available
+  // const banned = !!post?.commentAuthor?.banExpiresAt;
   const [showOriginal, setShowOriginal] = useState(false);
 
   const params = useParams();
@@ -211,7 +212,8 @@ const PostMessageMobile = ({ post }: PostProps) => {
             )}
           </>
         )}
-        {banned && (
+        {/* TODO: commentAuthor is not available outside of editedComment, update when available */}
+        {/* {banned && (
           <span className={styles.removedContent}>
             <br />
             <br />
@@ -224,7 +226,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
               })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
             />
           </span>
-        )}
+        )} */}
         {!isReply && content.length > 1000 && !isInPostView && (
           <span className={styles.abbr}>
             <br />
