@@ -32,6 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between; /* Ensure elements are spaced out properly */
+  padding-right: 5px;
 }
 
 .desktopBoardButtons::after {
