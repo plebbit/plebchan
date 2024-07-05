@@ -11,6 +11,7 @@ import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
+import useReplyCount from '../../hooks/use-reply-count';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
 import LoadingEllipsis from '../loading-ellipsis';
@@ -275,8 +276,9 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, pinned, postCid, replyCount, subplebbitAddress } = post || {};
+  const { author, cid, content, pinned, postCid, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
+  const replyCount = useReplyCount(post);
   const params = useParams();
   const location = useLocation();
   const isInAllView = isAllView(location.pathname, params);

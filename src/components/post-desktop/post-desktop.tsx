@@ -13,6 +13,7 @@ import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
+import useReplyCount from '../../hooks/use-reply-count';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
 import EditMenu from '../edit-menu/edit-menu';
@@ -338,7 +339,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, pinned, postCid, replyCount, subplebbitAddress } = post || {};
+  const { author, cid, content, link, pinned, postCid, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -349,10 +350,11 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const isHidden = hidden && !isInPostPageView;
 
   const replies = useReplies(post);
+  const replyCount = useReplyCount(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
-  const totallinksCount = useCountLinksInReplies(post);
+  const totalLinksCount = useCountLinksInReplies(post);
   const repliesCount = pinned ? replyCount : replyCount - 5;
-  const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
+  const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
 
   // scroll to reply if pathname is reply permalink (backlink)
