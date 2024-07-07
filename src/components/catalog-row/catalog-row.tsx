@@ -12,7 +12,6 @@ import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
-import useReplyCount from '../../hooks/use-reply-count';
 import useWindowWidth from '../../hooks/use-window-width';
 import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
@@ -96,8 +95,25 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
 
 const CatalogPost = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
-  const { author, cid, content, isDescription, isRules, lastChildCid, link, linkHeight, linkWidth, locked, pinned, spoiler, subplebbitAddress, timestamp, title } =
-    post || {};
+  const {
+    author,
+    cid,
+    content,
+    isDescription,
+    isRules,
+    lastChildCid,
+    link,
+    linkHeight,
+    linkWidth,
+    locked,
+    pinned,
+    replyCount,
+    spoiler,
+    subplebbitAddress,
+    timestamp,
+    title,
+  } = post || {};
+  const linkCount = useCountLinksInReplies(post);
   const commentMediaInfo = getCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const { hidden } = useHide({ cid });
@@ -106,9 +122,6 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   const isInAllView = isAllView(location.pathname, useParams());
 
   const postLink = isInAllView && isDescription ? `/p/all/description` : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`;
-
-  const linkCount = useCountLinksInReplies(post);
-  const replyCount = useReplyCount(post);
 
   const threadIcons = (
     <div className={styles.threadIcons}>

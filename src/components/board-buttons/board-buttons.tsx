@@ -1,8 +1,6 @@
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
-import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils';
 import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
@@ -12,7 +10,6 @@ import CatalogFilters from '../../views/catalog/catalog-filters/';
 import styles from './board-buttons.module.css';
 import Tooltip from '../tooltip';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
-import useReplyCount from '../../hooks/use-reply-count';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -232,10 +229,8 @@ const PostPageStats = () => {
   const isInRulesView = isRulesView(location.pathname, params);
 
   const comment = useComment({ commentCid: params?.commentCid });
-  const { closed, pinned } = comment || {};
-
+  const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);
-  const replyCount = useReplyCount(comment);
 
   return (
     <span>
