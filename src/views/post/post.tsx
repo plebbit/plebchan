@@ -75,7 +75,7 @@ const PostPage = () => {
     post = comment;
   }
 
-  const { deleted, locked, removed } = post || {};
+  const { error, deleted, locked, removed, replyCount } = post || {};
   const isThreadClosed = deleted || locked || removed;
 
   useEffect(() => {
@@ -92,6 +92,9 @@ const PostPage = () => {
     <div className={styles.content}>
       {isInSettigsView && <SettingsModal />}
       {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
+      {/* TODO: remove this replyCount error once api supports scrolling replies pages */}
+      {replyCount > 60 && <span className={styles.error}>Error: this thread has too many replies, some of them cannot be displayed right now.</span>}
+      {error && <span className={styles.error}>Error: {error.message}</span>}
       {isInDescriptionView ? (
         <SubplebbitDescription
           avatarUrl={suggested?.avatarUrl}
