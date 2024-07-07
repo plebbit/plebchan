@@ -257,7 +257,12 @@ const PostMessage = ({ post }: PostProps) => {
             <span className={styles.editedInfo}>
               {showOriginal && <Markdown content={original?.content} />}
               <br />
-              {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}{' '}
+              <Trans
+                i18nKey={'comment_edited_at_timestamp'}
+                values={{ timestamp: getFormattedDate(edit?.timestamp) }}
+                shouldUnescape={true}
+                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<></>} /> }}
+              />{' '}
               {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
               {showOriginal ? (
                 <Trans

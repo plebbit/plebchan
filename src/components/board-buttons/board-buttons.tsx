@@ -236,7 +236,7 @@ const PostPageStats = () => {
     <span>
       {(pinned || isInDescriptionView || isInRulesView) && 'Sticky / '}
       {(closed || isInDescriptionView || isInRulesView) && 'Closed / '}
-      <Tooltip children={replyCount.toString()} content='Replies' /> / <Tooltip children={linkCount.toString()} content='Links' />
+      <Tooltip children={replyCount?.toString()} content='Replies' /> / <Tooltip children={linkCount?.toString()} content='Links' />
     </span>
   );
 };
