@@ -124,7 +124,6 @@ const blockquoteToGreentext = () => (tree: any) => {
 
 interface MarkdownProps {
   content: string;
-  spoiler?: boolean;
   title?: string;
 }
 

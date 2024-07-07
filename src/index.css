@@ -30,8 +30,12 @@ hr {
   text-transform: capitalize;
 }
 
-* {
-  color-scheme: var(--color-scheme, revert);
+.red {
+  color: red !important;
+}
+
+:root {
+  color-scheme: dark;
 }
 
 @media (max-width: 640px) {

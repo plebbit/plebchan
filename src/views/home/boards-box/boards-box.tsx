@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Subplebbit, useAccount, useAccountSubplebbits } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { getFormattedTimeAgo } from '../../../lib/utils/time-utils';
 import useHomeFiltersStore from '../../../stores/use-home-filters-store';
 import { useMultisubMetadata } from '../../../hooks/use-default-subplebbits';
 import styles from '../home.module.css';
 import { nsfwTags } from '../home';
 import BoxModal from '../box-modal';
+import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 
 const Board = ({ subplebbit, subplebbits }: { subplebbit: Subplebbit; subplebbits: any }) => {
   const { t } = useTranslation();
@@ -18,15 +18,12 @@ const Board = ({ subplebbit, subplebbits }: { subplebbit: Subplebbit; subplebbit
   const boardLink = useCatalog ? `/p/${address}/catalog` : `/p/${address}`;
 
   const subplebbitData = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
-  const updatedAt = subplebbitData?.updatedAt;
-  const isOffline = updatedAt && updatedAt < Date.now() / 1000 - 60 * 60;
-  const offlineTitle = updatedAt
-    ? isOffline && t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })
-    : t('subplebbit_offline_info');
+  const { isDefinitelyOffline, isOffline, offlineTitle } = useIsSubplebbitOffline(subplebbitData);
+  const iconClass = `${styles.offlineIcon} ${isDefinitelyOffline ? styles.redOfflineIcon : ''}`;
 
   return (
     <div className={styles.subplebbit} key={address}>
-      {isOffline && <span className={styles.offlineIcon} title={offlineTitle} />}
+      {isOffline && <span className={`${styles.offlineIcon} ${iconClass}`} title={offlineTitle} />}
       <Link to={boardLink}>{title || address}</Link>
       {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
     </div>

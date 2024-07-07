@@ -195,7 +195,7 @@
   "show_worksafe_boards_only": "Show Worksafe Boards Only",
   "show_all_content": "Show All Content",
   "link_type": "Link type",
-  "comment_edited_at_timestamp": "Comment edited at {{timestamp}}.",
+  "comment_edited_at_timestamp": "Comment edited at <1>{{timestamp}}</1>",
   "reason_reason": "Reason: \"{{reason}}\".",
   "click_here_to_show_original": "<1>Click here</1> to show the original.",
   "click_here_to_hide_original": "<1>Click here</1> to hide the original.",

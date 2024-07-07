@@ -1,13 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
-import { isAllView, isCatalogView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { useAccountComment, useComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import useTimeFilter from '../../hooks/use-time-filter';
 import CatalogFilters from '../../views/catalog/catalog-filters/';
 import styles from './board-buttons.module.css';
+import Tooltip from '../tooltip';
+import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -220,6 +222,25 @@ export const MobileBoardButtons = () => {
   );
 };
 
+const PostPageStats = () => {
+  const params = useParams();
+  const location = useLocation();
+  const isInDescriptionView = isDescriptionView(location.pathname, params);
+  const isInRulesView = isRulesView(location.pathname, params);
+
+  const comment = useComment({ commentCid: params?.commentCid });
+  const { closed, pinned, replyCount } = comment || {};
+  const linkCount = useCountLinksInReplies(comment);
+
+  return (
+    <span>
+      {(pinned || isInDescriptionView || isInRulesView) && 'Sticky / '}
+      {(closed || isInDescriptionView || isInRulesView) && 'Closed / '}
+      <Tooltip children={replyCount?.toString()} content='Replies' /> / <Tooltip children={linkCount?.toString()} content='Links' />
+    </span>
+  );
+};
+
 export const DesktopBoardButtons = () => {
   const params = useParams();
   const location = useLocation();
@@ -243,8 +264,7 @@ export const DesktopBoardButtons = () => {
             <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />]
             {isInPostView && (
               <span className={styles.rightSideButtons}>
-                [
-                <SubscribeButton address={subplebbitAddress} />]
+                <PostPageStats />
               </span>
             )}
           </>

@@ -187,6 +187,10 @@
   image-rendering: pixelated;
 }
 
+.redOfflineIcon {
+  background-image: url('/public/assets/icons/offline-red.png') !important;
+}
+
 .boardsBoxContent {
   font-size: 93%;
   padding: 0.5em;

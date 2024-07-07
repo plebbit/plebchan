@@ -1,4 +1,6 @@
 :root .yotsuba {
+  --color-scheme: light;
+  
   /* backlink */
   --post-backlink-text-color: navy;
   --post-backlink-text-decoration: underline;
@@ -204,6 +206,8 @@
 }
 
 :root .yotsuba-b {
+  --color-scheme: light;
+  
   /* backlink */
   --post-backlink-text-color: #34345C;
   --post-backlink-text-decoration: underline;
@@ -409,6 +413,8 @@
 }
 
 :root .futaba {
+  --color-scheme: light;
+
   /* backlink */
   --post-backlink-text-color: navy;
   --post-backlink-text-decoration: underline;
@@ -581,6 +587,8 @@
 }
 
 :root .burichan {
+  --color-scheme: light;
+  
   /* backlink */
   --post-backlink-text-color: #34345C;
   --post-backlink-text-decoration: underline;
@@ -976,6 +984,8 @@
 }
 
 :root .photon {
+  --color-scheme: light;
+  
   /* backlink */
   --post-backlink-text-color: #f60;
   --post-backlink-text-decoration: underline;

@@ -39,6 +39,10 @@
  image-rendering: pixelated;
 }
 
+.redOfflineIcon {
+  background-image: url('/public/assets/icons/offline-red.png') !important;
+}
+
 @media (max-width: 640px) {
   .boardTitle {
     padding-top: 40px;

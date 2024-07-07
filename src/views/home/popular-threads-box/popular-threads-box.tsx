@@ -30,8 +30,13 @@ const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThrea
         </Link>
       </div>
       <div className={styles.threadContent}>
-        {title && <b>{title}</b>}
-        {content && (content.length > 99 ? `: ${content.substring(0, 99)}...` : `: ${content}`)}
+        {title && (
+          <>
+            <b>{title.trim()}</b>
+            {content && ': '}
+          </>
+        )}
+        {content && (content.length > 99 ? `${content.substring(0, 99).trim()}...` : `${content}`)}
       </div>
     </div>
   );

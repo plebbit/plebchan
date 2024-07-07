@@ -207,7 +207,7 @@ const PostMedia = ({ post }: PostProps) => {
           </span>
         )}
       </div>
-      {(hasThumbnail || (!hasThumbnail && !showThumbnail)) && (
+      {(hasThumbnail || (!hasThumbnail && !showThumbnail) || spoiler) && (
         <div className={styles.fileThumbnail}>
           <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
         </div>
@@ -217,8 +217,9 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, commentAuthor, deleted, edit, original, parentCid, postCid, reason, removed, spoiler, state, subplebbitAddress } = post || {};
-  const banned = !!commentAuthor?.banExpiresAt;
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
+  // TODO: commentAuthor is not available outside of editedComment, update when available
+  // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -240,7 +241,7 @@ const PostMessage = ({ post }: PostProps) => {
 
   return (
     <blockquote className={styles.postMessage}>
-      {isReply && !(removed || deleted) && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+      {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         <Tooltip
           children={<span className={styles.removedContent}>({t('this_post_was_removed')})</span>}
@@ -251,12 +252,17 @@ const PostMessage = ({ post }: PostProps) => {
         <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
       ) : (
         <>
-          {!showOriginal && <Markdown content={displayContent} spoiler={spoiler} />}
+          {!showOriginal && <Markdown content={displayContent} />}
           {edit && original?.content !== post?.content && (
             <span className={styles.editedInfo}>
               {showOriginal && <Markdown content={original?.content} />}
               <br />
-              {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}{' '}
+              <Trans
+                i18nKey={'comment_edited_at_timestamp'}
+                values={{ timestamp: getFormattedDate(edit?.timestamp) }}
+                shouldUnescape={true}
+                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<></>} /> }}
+              />{' '}
               {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
               {showOriginal ? (
                 <Trans
@@ -275,7 +281,8 @@ const PostMessage = ({ post }: PostProps) => {
           )}
         </>
       )}
-      {banned && (
+      {/* TODO: commentAuthor is not available outside of editedComment, update when available */}
+      {/* {banned && (
         <span className={styles.removedContent}>
           <br />
           <br />
@@ -288,7 +295,7 @@ const PostMessage = ({ post }: PostProps) => {
             })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
           />
         </span>
-      )}
+      )} */}
       {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />
@@ -348,9 +355,9 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
-  const totallinksCount = useCountLinksInReplies(post);
+  const totalLinksCount = useCountLinksInReplies(post);
   const repliesCount = pinned ? replyCount : replyCount - 5;
-  const linksCount = pinned ? totallinksCount : totallinksCount - visiblelinksCount;
+  const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
 
   // scroll to reply if pathname is reply permalink (backlink)

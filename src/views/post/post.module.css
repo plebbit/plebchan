@@ -3,6 +3,12 @@
   overflow-x: hidden;
 }
 
+.error {
+  color: red;
+  padding: 5px;
+  display: block;
+}
+
 .thread {
   clear: both;
 }
@@ -508,6 +514,11 @@
 }
 
 @media (min-width: 640px) {
+  .error {
+    padding-left: 0;
+    padding-bottom: 0;
+  }
+
   .replyQuotePreview {
     padding-right: 7px;
     padding-left: 2px;
