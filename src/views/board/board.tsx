@@ -72,14 +72,14 @@ const Board = () => {
   const loadingString = (
     <div className={styles.stateString}>
       {state === 'failed' ? (
-        state
+        <span className='red'>{state}</span>
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
         t('not_subscribed_to_any_board')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}
       {error && (
-        <div style={{ color: 'red' }}>
+        <div className='red'>
           <br />
           {error.message}
         </div>

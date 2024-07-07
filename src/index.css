@@ -30,6 +30,10 @@ hr {
   text-transform: capitalize;
 }
 
+.red {
+  color: red !important;
+}
+
 :root {
   color-scheme: dark;
 }

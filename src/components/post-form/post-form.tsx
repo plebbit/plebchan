@@ -12,7 +12,7 @@ import useReply from '../../hooks/use-reply';
 import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './post-form.module.css';
 import _ from 'lodash';
-import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
+import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 
 type SubmitState = {
   subplebbitAddress: string | undefined;
@@ -272,17 +272,12 @@ const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
 
   const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
-  const { updatedAt } = subplebbit || {};
-  const isBoardOffline = updatedAt && updatedAt < Date.now() / 1000 - 60 * 60;
-
-  const offlineMessage = updatedAt
-    ? isBoardOffline && t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })
-    : t('subplebbit_offline_info');
+  const { isOffline, offlineTitle } = useIsSubplebbitOffline(subplebbit);
 
   return (
     <>
       <div className={styles.postFormDesktop}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && isBoardOffline && <div className={styles.offlineBoard}>{offlineMessage}</div>}
+        {!(isInAllView || isInSubscriptionsView) && showForm && isOffline && <div className={styles.offlineBoard}>{offlineTitle}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -302,7 +297,7 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormMobile}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && isBoardOffline && <div className={styles.offlineBoard}>{offlineMessage}</div>}
+        {!(isInAllView || isInSubscriptionsView) && showForm && isOffline && <div className={styles.offlineBoard}>{offlineTitle}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
