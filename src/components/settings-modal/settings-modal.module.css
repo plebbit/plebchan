@@ -42,6 +42,10 @@
   border-left: var(--settings-modal-border-left);
 }
 
+.settingsModal textarea {
+  resize: vertical;
+}
+
 .settingsModal select, .settingsModal button, .settingsModal textarea, .settingsModal input[type='text'] {
   filter: var(--filter80);
 }
