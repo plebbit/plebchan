@@ -21,9 +21,13 @@ const useIsSubplebbitOffline = (subplebbit: Subplebbit) => {
     }
   }, [address, state, updatedAt, updatingState, setSubplebbitOfflineState]);
 
-  const subplebbitData = subplebbitOfflineState[address] || { initialLoad: true };
+  const subplebbitOfflineStore = subplebbitOfflineState[address] || { initialLoad: true };
 
-  const isLoading = (updatingState === 'resolving-address' && state !== 'stopped') || (subplebbitData.initialLoad && updatingState === 'fetching-ipns' && !updatedAt);
+  const isLoading =
+    updatingState === 'resolving-address' ||
+    (updatingState === 'stopped' && state === 'stopped' && !updatedAt) ||
+    (subplebbitOfflineStore.initialLoad && updatingState === 'fetching-ipns' && !updatedAt);
+
   const isOffline =
     !isLoading && ((updatedAt && updatedAt < Date.now() / 1000 - 60 * 60) || updatingState === 'failed' || (updatingState === 'fetching-ipns' && !updatedAt));
 
