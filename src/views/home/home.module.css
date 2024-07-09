@@ -176,7 +176,6 @@
 }
 
 .offlineIcon {
-  background-image: url('/public/assets/icons/offline.png');
   display: inline-block;
   vertical-align: text-top;
   margin-right: 2px;
@@ -185,10 +184,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
-}
-
-.redOfflineIcon {
-  background-image: url('/public/assets/icons/offline-red.png') !important;
 }
 
 .boardsBoxContent {

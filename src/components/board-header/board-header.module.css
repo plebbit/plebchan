@@ -29,7 +29,6 @@
 }
 
 .offlineIcon {
- background-image: url('/public/assets/icons/offline.png');
  display: inline-block;
  margin-left: 10px;
  width: 16px;
@@ -37,10 +36,6 @@
  background-repeat: no-repeat;
  background-size: contain;
  image-rendering: pixelated;
-}
-
-.redOfflineIcon {
-  background-image: url('/public/assets/icons/offline-red.png') !important;
 }
 
 @media (max-width: 640px) {

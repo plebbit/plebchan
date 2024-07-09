@@ -18,12 +18,11 @@ const Board = ({ subplebbit, subplebbits }: { subplebbit: Subplebbit; subplebbit
   const boardLink = useCatalog ? `/p/${address}/catalog` : `/p/${address}`;
 
   const subplebbitData = subplebbits && subplebbits.find((sub: Subplebbit) => sub?.address === address);
-  const { isDefinitelyOffline, isOffline, offlineTitle } = useIsSubplebbitOffline(subplebbitData);
-  const iconClass = `${styles.offlineIcon} ${isDefinitelyOffline ? styles.redOfflineIcon : ''}`;
+  const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbitData);
 
   return (
     <div className={styles.subplebbit} key={address}>
-      {isOffline && <span className={`${styles.offlineIcon} ${iconClass}`} title={offlineTitle} />}
+      {(isOffline || isOnlineStatusLoading) && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
       <Link to={boardLink}>{title || address}</Link>
       {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
     </div>
