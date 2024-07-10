@@ -15,16 +15,16 @@ const SubplebbitStats = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { address, createdAt } = subplebbit || {};
 
+  const stats = useSubplebbitStats({ subplebbitAddress: address });
+  const [showStats, setShowStats] = useState(true);
+
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
   const comment = useComment({ commentCid: params?.commentCid });
   const { deleted, locked, removed } = comment || {};
-  const hideStats = deleted || locked || removed || isInDescriptionView || isInRulesView;
-
-  const stats = useSubplebbitStats({ subplebbitAddress: address });
-  const [showStats, setShowStats] = useState(true);
+  const hideStats = !stats.allPostCount || deleted || locked || removed || isInDescriptionView || isInRulesView;
 
   const unixToMMDDYYYY = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
