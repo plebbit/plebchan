@@ -63,46 +63,49 @@ const TopBarDesktop = () => {
 
   const { plebbitSubs, interestsSubs, randomSubs, internationalSubs, projectsSubs } = categorizeSubplebbits(subplebbits);
 
-  const renderSubplebbits = (subplebbits: any) => {
-    return subplebbits.map((sub: any, index: any) => (
-      <span key={index}>
-        {index === 0 ? null : ' '}
-        <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>{sub.address.includes('.') ? sub.address : sub.address.slice(0, 10).concat('...')}</Link>
-        {index !== subplebbits.length - 1 ? ' /' : null}
-      </span>
-    ));
-  };
+  const renderSubplebbits = (subplebbits: any) =>
+    subplebbits.length > 0 && (
+      <>
+        [
+        {subplebbits.map((sub: any, index: any) => (
+          <span key={index}>
+            {index === 0 ? null : ' '}
+            <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>{sub.address.includes('.') ? sub.address : sub.address.slice(0, 10).concat('...')}</Link>
+            {index !== subplebbits.length - 1 ? ' /' : null}
+          </span>
+        ))}
+        ]{' '}
+      </>
+    );
 
   return (
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
-        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>]{' '}
-        {subplebbits && (
-          <>
-            [{renderSubplebbits(plebbitSubs)}] [{renderSubplebbits(projectsSubs)}] [{renderSubplebbits(interestsSubs)}] [{renderSubplebbits(randomSubs)}] [
-            {renderSubplebbits(internationalSubs)}] [
-            <Link
-              to='boards/create'
-              onClick={(e) => {
-                e.preventDefault();
-                alert('work in progress');
-              }}
-            >
-              Create
-            </Link>
-            ] [
-            <Link
-              to='boards'
-              onClick={(e) => {
-                e.preventDefault();
-                alert('work in progress');
-              }}
-            >
-              Vote
-            </Link>
-            ]
-          </>
-        )}
+        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>] {renderSubplebbits(plebbitSubs)}
+        {renderSubplebbits(projectsSubs)}
+        {renderSubplebbits(interestsSubs)}
+        {renderSubplebbits(randomSubs)}
+        {renderSubplebbits(internationalSubs)}[
+        <Link
+          to='boards/create'
+          onClick={(e) => {
+            e.preventDefault();
+            alert('work in progress');
+          }}
+        >
+          Create
+        </Link>
+        ] [
+        <Link
+          to='boards'
+          onClick={(e) => {
+            e.preventDefault();
+            alert('work in progress');
+          }}
+        >
+          Vote
+        </Link>
+        ]
       </span>
       <span className={styles.navTopRight}>
         [<Link to={!location.pathname.endsWith('settings') ? location.pathname.replace(/\/$/, '') + '/settings' : location.pathname}>{t('settings')}</Link>] [
