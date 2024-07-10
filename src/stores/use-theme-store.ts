@@ -8,6 +8,7 @@ interface ThemeState {
     all: string;
     subscriptions: string;
   };
+  currentTheme: string | null;
   setTheme: (category: keyof ThemeState['themes'], theme: string) => void;
   getTheme: (category: keyof ThemeState['themes']) => string | null;
   loadThemes: () => Promise<void>;
@@ -25,15 +26,18 @@ const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'],
     all: 'yotsuba-b',
     subscriptions: 'yotsuba-b',
   },
+  currentTheme: null,
   setTheme: async (category, theme) => {
     const currentThemes = get().themes;
     const updatedThemes = { ...currentThemes, [category]: theme };
     await themeStore.setItem(category, theme);
-    set({ themes: updatedThemes });
+    set({ themes: updatedThemes, currentTheme: theme });
   },
   getTheme: (category) => {
     const currentThemes = get().themes;
-    return currentThemes[category] || null;
+    const theme = currentThemes[category] || null;
+    set({ currentTheme: theme });
+    return theme;
   },
   loadThemes: async () => {
     const entries: [keyof ThemeState['themes'], string][] = await themeStore.entries();
@@ -46,7 +50,7 @@ const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'],
     entries.forEach(([key, value]) => {
       themes[key] = value;
     });
-    set({ themes });
+    set({ themes, currentTheme: null });
   },
 }));
 
