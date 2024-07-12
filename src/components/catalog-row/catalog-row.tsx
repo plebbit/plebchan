@@ -141,7 +141,6 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     open: showPortal,
     placement: placementRef.current,
     middleware: [
-      shift({ padding: 10 }),
       offset({ mainAxis: 5 }),
       size({
         apply({ elements }) {
