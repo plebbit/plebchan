@@ -504,6 +504,17 @@
   text-decoration: var(--post-content-link-text-decoration-hover);
 }
 
+.authorAvatar {
+  width: 32px;
+  height: 32px;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 16px;
+}
+
 @media (max-width: 640px) {
   .replyQuotePreview {
     margin-right: 10px;
