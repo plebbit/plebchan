@@ -130,6 +130,7 @@ const AccountSettings = () => {
           await importAccount(fileContent);
           setSwitchToLastAccount(true);
           alert(`Imported ${newAccount.account?.name}`);
+          window.location.reload();
         };
         reader.readAsText(file);
       } catch (error) {

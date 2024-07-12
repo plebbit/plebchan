@@ -213,5 +213,8 @@
   "user_banned": "Përdoruesi u ndalua për këtë postim",
   "loading_comments": "Duke u ngarkuar komentet",
   "replies": "përgjigje",
-  "links": "lidhje"
+  "links": "lidhje",
+  "avatar": "avatar",
+  "token_address_whitelist": "Adresa e tokenit (<1>vetëm lista e bardhë</1>)",
+  "token_id": "ID e tokenit"
 }

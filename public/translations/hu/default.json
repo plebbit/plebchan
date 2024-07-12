@@ -213,5 +213,8 @@
   "user_banned": "A felhasználót letiltották ennek a posztnak a kapcsán",
   "loading_comments": "Megjegyzések betöltése",
   "replies": "válaszok",
-  "links": "linkek"
+  "links": "linkek",
+  "avatar": "avatár",
+  "token_address_whitelist": "Token cím (<1>csak fehérlista</1>)",
+  "token_id": "Token azonosító"
 }

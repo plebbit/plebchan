@@ -213,5 +213,8 @@
   "user_banned": "Brugeren blev blokeret for dette indlæg",
   "loading_comments": "Indlæser kommentarer",
   "replies": "Svar",
-  "links": "Links"
+  "links": "Links",
+  "avatar": "avatar",
+  "token_address_whitelist": "Tokenadresse (<1>kun hvidliste</1>)",
+  "token_id": "Token ID"
 }

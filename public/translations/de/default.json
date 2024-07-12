@@ -213,5 +213,8 @@
   "user_banned": "Benutzer wurde für diesen Beitrag gesperrt",
   "loading_comments": "Lade Kommentare",
   "replies": "Antworten",
-  "links": "Links"
+  "links": "Links",
+  "avatar": "Avatar",
+  "token_address_whitelist": "Tokenadresse (<1>nur Weiße Liste</1>)",
+  "token_id": "Token-ID"
 }

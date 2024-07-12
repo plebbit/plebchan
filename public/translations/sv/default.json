@@ -213,5 +213,8 @@
   "user_banned": "Användaren blev blockerad för detta inlägg",
   "loading_comments": "Laddar kommentarer",
   "replies": "svar",
-  "links": "länkar"
+  "links": "länkar",
+  "avatar": "avatar",
+  "token_address_whitelist": "Tokenadress (<1>endast vitlista</1>)",
+  "token_id": "Token ID"
 }

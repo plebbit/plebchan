@@ -213,5 +213,8 @@
   "user_banned": "Użytkownik został zablokowany za ten post",
   "loading_comments": "Ładowanie komentarzy",
   "replies": "odpowiedzi",
-  "links": "linki"
+  "links": "linki",
+  "avatar": "avatar",
+  "token_address_whitelist": "Adres tokenu (<1>tylko biała lista</1>)",
+  "token_id": "Identyfikator tokena"
 }

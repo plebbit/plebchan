@@ -1,5 +1,8 @@
 :root .yotsuba {
   --color-scheme: light;
+
+  /* avatar */
+  --avatar-text-color: black;
   
   /* backlink */
   --post-backlink-text-color: navy;
@@ -415,6 +418,9 @@
 :root .futaba {
   --color-scheme: light;
 
+  /* avatar */
+  --avatar-text-color: black;
+
   /* backlink */
   --post-backlink-text-color: navy;
   --post-backlink-text-decoration: underline;
@@ -772,6 +778,9 @@
 
 :root .tomorrow {
   --color-scheme: dark;
+
+  /* avatar */
+  --avatar-background-color: black;
   
   /* backlink */
   --post-backlink-text-color: #5f89ac;

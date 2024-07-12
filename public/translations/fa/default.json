@@ -136,7 +136,7 @@
   "collapse_all_settings": "تايید همه تنظیمات",
   "refresh": "تازه‌سازی",
   "no_board_selected": "هیچ تالاری انتخاب نشده است",
-  "none": "هیچ‌کدام",
+  "none": "هیچکدام",
   "not_subscribed_to_any_board": "هنوز به هیچ تالاری مشترک نشده‌اید.",
   "board_mods": "مدیران تالار",
   "this_post_was_removed": "این پست حذف شد",
@@ -213,5 +213,8 @@
   "user_banned": "این کاربر برای این پست مسدود شد",
   "loading_comments": "بارگذاری نظرات",
   "replies": "پاسخ‌ها",
-  "links": "لینک‌ها"
+  "links": "لینک‌ها",
+  "avatar": "آواتار",
+  "token_address_whitelist": "آدرس توکن (<1>فقط سفیدپوشان</1>)",
+  "token_id": "شناسه توکن"
 }

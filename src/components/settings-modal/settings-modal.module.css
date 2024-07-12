@@ -22,6 +22,10 @@
   padding: 2px 4px 3px;
 }
 
+.settingsModal input[type="text"]:focus, .settingsModal textarea:focus {
+  border: var(--reply-modal-field-input-border-focus, revert);
+}
+
 .settingsModal {
   top: 25px;
   left: 50%;

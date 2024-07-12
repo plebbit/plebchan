@@ -213,5 +213,8 @@
   "user_banned": "Kullanıcı bu gönderi için yasaklandı",
   "loading_comments": "Yorumlar yükleniyor",
   "replies": "cevaplar",
-  "links": "bağlantılar"
+  "links": "bağlantılar",
+  "avatar": "avatar",
+  "token_address_whitelist": "Token adresi (<1>yalnızca beyaz liste</1>)",
+  "token_id": "Token kimliği"
 }

@@ -213,5 +213,8 @@
   "user_banned": "Gebruiker is verbannen voor deze post",
   "loading_comments": "Reacties laden",
   "replies": "reacties",
-  "links": "links"
+  "links": "links",
+  "avatar": "avatar",
+  "token_address_whitelist": "Tokenadres (<1>alleen whitelist</1>)",
+  "token_id": "Token-ID"
 }

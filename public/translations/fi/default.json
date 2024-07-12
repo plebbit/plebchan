@@ -136,7 +136,7 @@
   "collapse_all_settings": "Sulje kaikki asetukset",
   "refresh": "Päivitä",
   "no_board_selected": "ei foorumeja valittu",
-  "none": "ei mikään",
+  "none": "ei mitään",
   "not_subscribed_to_any_board": "Et ole vielä tilannut mitään foorumeita.",
   "board_mods": "Hallituksen Mods",
   "this_post_was_removed": "tämä viesti on poistettu",
@@ -213,5 +213,8 @@
   "user_banned": "Käyttäjä on estetty tästä viestistä",
   "loading_comments": "Ladataan kommentteja",
   "replies": "vastaukset",
-  "links": "linkit"
+  "links": "linkit",
+  "avatar": "avatar",
+  "token_address_whitelist": "Token-osoite (<1>vain valkoinen lista</1>)",
+  "token_id": "Token-id"
 }

@@ -136,7 +136,7 @@
   "collapse_all_settings": "طي جميع الإعدادات",
   "refresh": "تحديث",
   "no_board_selected": "لم يتم تحديد أية منتديات",
-  "none": "بلا",
+  "none": "لا شيء",
   "not_subscribed_to_any_board": "لم تشترك في أي منتديات بعد.",
   "board_mods": "مشرفو المنتدى",
   "this_post_was_removed": "تمت إزالة هذا المنشور",
@@ -213,5 +213,8 @@
   "user_banned": "تم حظر المستخدم لهذا المنشور",
   "loading_comments": "تحميل التعليقات",
   "replies": "الردود",
-  "links": "الروابط"
+  "links": "الروابط",
+  "avatar": "الصورة الرمزية",
+  "token_address_whitelist": "عنوان الرمز (فقط على الـ <1>قائمة البيضاء</1>)",
+  "token_id": "تعريف الرمز"
 }

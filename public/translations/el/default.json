@@ -213,5 +213,8 @@
   "user_banned": "Ο χρήστης αποκλείστηκε για αυτή τη δημοσίευση",
   "loading_comments": "Φόρτωση σχολίων",
   "replies": "Απαντήσεις",
-  "links": "Σύνδεσμοι"
+  "links": "Σύνδεσμοι",
+  "avatar": "εικόνα προφίλ",
+  "token_address_whitelist": "Διεύθυνση του token (<1>μόνο λευκή λίστα</1>)",
+  "token_id": "Token ID"
 }

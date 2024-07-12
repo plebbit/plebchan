@@ -213,5 +213,8 @@
   "user_banned": "Uživatel byl zablokován za tento příspěvek",
   "loading_comments": "Načítání komentářů",
   "replies": "Odpovědi",
-  "links": "Odkazy"
+  "links": "Odkazy",
+  "avatar": "avatar",
+  "token_address_whitelist": "Tokenová adresa (<1>jen bílý seznam</1>)",
+  "token_id": "Token ID"
 }

@@ -34,6 +34,7 @@ i18next
       'eu',
       'fa',
       'fi',
+      'fil',
       'fr',
       'fy',
       'ga',

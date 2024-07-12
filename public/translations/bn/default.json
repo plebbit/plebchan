@@ -136,7 +136,7 @@
   "collapse_all_settings": "সমস্ত সেটিংস সঙ্কুচিত করুন",
   "refresh": "পুনরায় লোড করুন",
   "no_board_selected": "কোনো ফোরাম নির্বাচিত হয়নি",
-  "none": "নাই",
+  "none": "কিছু না",
   "not_subscribed_to_any_board": "আপনি এখনো কোনো ফোরামে সদস্য হননি।",
   "board_mods": "বোর্ড মডস",
   "this_post_was_removed": "এই পোস্টটি সরানো হয়েছে",
@@ -213,5 +213,8 @@
   "user_banned": "এই পোস্টের জন্য ব্যবহারকারী নিষিদ্ধ হয়েছে",
   "loading_comments": "মন্তব্য লোড হচ্ছে",
   "replies": "উত্তর",
-  "links": "লিঙ্কগুলি"
+  "links": "লিঙ্কগুলি",
+  "avatar": "অবতার",
+  "token_address_whitelist": "টোকেন ঠিকানা (<1>সাফল্যবান</1> কেবল)",
+  "token_id": "টোকেন আইডি"
 }

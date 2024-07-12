@@ -213,5 +213,8 @@
   "user_banned": "המשתמש נחסם עבור הפוסט הזה",
   "loading_comments": "טוען תגובות",
   "replies": "תגובות",
-  "links": "קישורים"
+  "links": "קישורים",
+  "avatar": "אוואטר",
+  "token_address_whitelist": "כתובת הטוקן (<1>רק רשימה לבנה</1>)",
+  "token_id": "מזהה טוקן"
 }

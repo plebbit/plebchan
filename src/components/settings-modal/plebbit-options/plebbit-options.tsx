@@ -193,6 +193,7 @@ const PlebbitOptions = () => {
         },
       });
       alert('Options saved.');
+      window.location.reload();
     } catch (e) {
       if (e instanceof Error) {
         alert('Error saving options: ' + e.message);

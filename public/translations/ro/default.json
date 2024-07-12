@@ -213,5 +213,8 @@
   "user_banned": "Utilizatorul a fost interzis pentru acest mesaj",
   "loading_comments": "Se încarcă comentariile",
   "replies": "răspunsuri",
-  "links": "linkuri"
+  "links": "linkuri",
+  "avatar": "avatar",
+  "token_address_whitelist": "Adresa tokenului (<1>doar lista albă</1>)",
+  "token_id": "ID token"
 }
