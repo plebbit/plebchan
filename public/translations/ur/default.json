@@ -210,5 +210,8 @@
   "1_post_by_this_id": "اس آئی ڈی پر 1 پوسٹ",
   "x_posts_by_this_id": "اس آئی ڈی سے {{number}} پوسٹ",
   "ban_expires_at": "p/{{address}} سے {{timestamp}} تک ممنوع",
-  "user_banned": "اس پوسٹ کے لئے صارف کو پابندی عائد کردی گئی تھی"
+  "user_banned": "اس پوسٹ کے لئے صارف کو پابندی عائد کردی گئی تھی",
+  "loading_comments": "تبصرے لوڈ ہو رہے ہیں",
+  "replies": "جوابات",
+  "links": "لنکس"
 }

@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 Beitrag mit dieser ID",
   "x_posts_by_this_id": "{{number}} Beiträge von dieser ID",
   "ban_expires_at": "Gesperrt von p/{{address}} bis {{timestamp}}",
-  "user_banned": "Benutzer wurde für diesen Beitrag gesperrt"
+  "user_banned": "Benutzer wurde für diesen Beitrag gesperrt",
+  "loading_comments": "Lade Kommentare",
+  "replies": "Antworten",
+  "links": "Links"
 }

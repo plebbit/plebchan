@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 ανάρτηση με αυτό το ID",
   "x_posts_by_this_id": "{{number}} αναρτήσεις από αυτό το ID",
   "ban_expires_at": "Αποκλείστηκε από p/{{address}} έως {{timestamp}}",
-  "user_banned": "Ο χρήστης αποκλείστηκε για αυτή τη δημοσίευση"
+  "user_banned": "Ο χρήστης αποκλείστηκε για αυτή τη δημοσίευση",
+  "loading_comments": "Φόρτωση σχολίων",
+  "replies": "Απαντήσεις",
+  "links": "Σύνδεσμοι"
 }

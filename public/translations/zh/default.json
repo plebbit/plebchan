@@ -210,5 +210,8 @@
   "1_post_by_this_id": "此ID的1篇帖子",
   "x_posts_by_this_id": "此ID的{{number}}篇帖子",
   "ban_expires_at": "被禁止从p/{{address}}到{{timestamp}}",
-  "user_banned": "用户因此帖子被禁止"
+  "user_banned": "用户因此帖子被禁止",
+  "loading_comments": "正在加载评论",
+  "replies": "回复",
+  "links": "链接"
 }

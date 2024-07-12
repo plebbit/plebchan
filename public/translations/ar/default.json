@@ -210,5 +210,8 @@
   "1_post_by_this_id": "مشاركة واحدة بهذا المعرف",
   "x_posts_by_this_id": "{{number}} منشور من هذا المعرف",
   "ban_expires_at": "محظور من p/{{address}} حتى {{timestamp}}",
-  "user_banned": "تم حظر المستخدم لهذا المنشور"
+  "user_banned": "تم حظر المستخدم لهذا المنشور",
+  "loading_comments": "تحميل التعليقات",
+  "replies": "الردود",
+  "links": "الروابط"
 }

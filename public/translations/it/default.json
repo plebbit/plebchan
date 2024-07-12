@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 post con questo ID",
   "x_posts_by_this_id": "{{number}} post da questo ID",
   "ban_expires_at": "Bannato da p/{{address}} fino al {{timestamp}}",
-  "user_banned": "L'utente è stato bannato per questo post"
+  "user_banned": "L'utente è stato bannato per questo post",
+  "loading_comments": "Caricamento commenti",
+  "replies": "commenti",
+  "links": "link"
 }

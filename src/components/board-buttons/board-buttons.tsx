@@ -10,6 +10,7 @@ import CatalogFilters from '../../views/catalog/catalog-filters/';
 import styles from './board-buttons.module.css';
 import Tooltip from '../tooltip';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import _ from 'lodash';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -223,6 +224,7 @@ export const MobileBoardButtons = () => {
 };
 
 const PostPageStats = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
@@ -232,11 +234,14 @@ const PostPageStats = () => {
   const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);
 
+  const displayReplyCount = replyCount ? replyCount.toString() : '?';
+  const replyCountTooltip = replyCount ? _.capitalize(t('replies')) : t('loading');
+
   return (
     <span>
-      {(pinned || isInDescriptionView || isInRulesView) && 'Sticky / '}
-      {(closed || isInDescriptionView || isInRulesView) && 'Closed / '}
-      <Tooltip children={replyCount?.toString()} content='Replies' /> / <Tooltip children={linkCount?.toString()} content='Links' />
+      {(pinned || isInDescriptionView || isInRulesView) && `${_.capitalize(t('sticky'))} / `}
+      {(closed || isInDescriptionView || isInRulesView) && `${_.capitalize(t('closed'))} / `}
+      <Tooltip children={displayReplyCount} content={replyCountTooltip} /> / <Tooltip children={linkCount?.toString()} content={_.capitalize(t('links'))} />
     </span>
   );
 };

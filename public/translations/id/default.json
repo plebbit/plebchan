@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 pos dengan ID ini",
   "x_posts_by_this_id": "{{number}} pos dari ID ini",
   "ban_expires_at": "Dilarang dari p/{{address}} sampai {{timestamp}}",
-  "user_banned": "Pengguna diblokir untuk pos ini"
+  "user_banned": "Pengguna diblokir untuk pos ini",
+  "loading_comments": "Memuat komentar",
+  "replies": "balasan",
+  "links": "tautan"
 }

@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 post med denne ID-en",
   "x_posts_by_this_id": "{{number}} poster med denne ID-en",
   "ban_expires_at": "Utestengt fra p/{{address}} til {{timestamp}}",
-  "user_banned": "Brukeren ble utestengt for dette innlegget"
+  "user_banned": "Brukeren ble utestengt for dette innlegget",
+  "loading_comments": "Laster inn kommentarer",
+  "replies": "svar",
+  "links": "lenker"
 }

@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 post sa pamamagitan ng ID na ito",
   "x_posts_by_this_id": "{{number}} post mula sa ID na ito",
   "ban_expires_at": "Bawal sa p/{{address}} hanggang {{timestamp}}",
-  "user_banned": "Banal ang user para sa post na ito"
+  "user_banned": "Banal ang user para sa post na ito",
+  "loading_comments": "Naglo-load ng mga komento",
+  "replies": "mga tugon",
+  "links": "mga link"
 }

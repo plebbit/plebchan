@@ -210,5 +210,8 @@
   "1_post_by_this_id": "이 ID로 게시된 1개의 글",
   "x_posts_by_this_id": "이 ID로부터의 {{number}}개의 글",
   "ban_expires_at": "p/{{address}}에서 {{timestamp}}까지 금지됨",
-  "user_banned": "이 게시물로 인해 사용자가 차단되었습니다"
+  "user_banned": "이 게시물로 인해 사용자가 차단되었습니다",
+  "loading_comments": "댓글 로드 중",
+  "replies": "답글",
+  "links": "링크"
 }

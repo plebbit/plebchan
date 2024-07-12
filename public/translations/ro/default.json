@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 post cu acest ID",
   "x_posts_by_this_id": "{{number}} postări cu acest ID",
   "ban_expires_at": "Interzis de la p/{{address}} până la {{timestamp}}",
-  "user_banned": "Utilizatorul a fost interzis pentru acest mesaj"
+  "user_banned": "Utilizatorul a fost interzis pentru acest mesaj",
+  "loading_comments": "Se încarcă comentariile",
+  "replies": "răspunsuri",
+  "links": "linkuri"
 }

@@ -210,5 +210,8 @@
   "1_post_by_this_id": "এই আইডি দ্বারা 1 পোস্ট",
   "x_posts_by_this_id": "এই আইডি থেকে {{number}} পোস্ট",
   "ban_expires_at": "p/{{address}} থেকে {{timestamp}} পর্যন্ত নিষিদ্ধ",
-  "user_banned": "এই পোস্টের জন্য ব্যবহারকারী নিষিদ্ধ হয়েছে"
+  "user_banned": "এই পোস্টের জন্য ব্যবহারকারী নিষিদ্ধ হয়েছে",
+  "loading_comments": "মন্তব্য লোড হচ্ছে",
+  "replies": "উত্তর",
+  "links": "লিঙ্কগুলি"
 }

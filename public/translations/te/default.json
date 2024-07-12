@@ -210,5 +210,8 @@
   "1_post_by_this_id": "ఈ ID ద్వారా 1 పోస్టు",
   "x_posts_by_this_id": "ఈ ID నుండి {{number}} పోస్టు",
   "ban_expires_at": "p/{{address}} నుండి {{timestamp}} వరకు నిషేధించబడింది",
-  "user_banned": "ఈ పోస్టు కోసం వాడు బ్యాన్ చేయబడింది"
+  "user_banned": "ఈ పోస్టు కోసం వాడు బ్యాన్ చేయబడింది",
+  "loading_comments": "వ్యాఖ్యలను లోడ్ అవుతోంది",
+  "replies": "సమాధానాలు",
+  "links": "లింక్లు"
 }

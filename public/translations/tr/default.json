@@ -210,5 +210,8 @@
   "1_post_by_this_id": "Bu ID ile 1 gönderi",
   "x_posts_by_this_id": "Bu ID ile {{number}} gönderi",
   "ban_expires_at": "p/{{address}} adresinden {{timestamp}} tarihine kadar yasaklandı",
-  "user_banned": "Kullanıcı bu gönderi için yasaklandı"
+  "user_banned": "Kullanıcı bu gönderi için yasaklandı",
+  "loading_comments": "Yorumlar yükleniyor",
+  "replies": "cevaplar",
+  "links": "bağlantılar"
 }

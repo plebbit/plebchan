@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 پست با این شناسه",
   "x_posts_by_this_id": "{{number}} پست از این شناسه",
   "ban_expires_at": "مسدود از p/{{address}} تا {{timestamp}}",
-  "user_banned": "این کاربر برای این پست مسدود شد"
+  "user_banned": "این کاربر برای این پست مسدود شد",
+  "loading_comments": "بارگذاری نظرات",
+  "replies": "پاسخ‌ها",
+  "links": "لینک‌ها"
 }

@@ -210,5 +210,8 @@
   "1_post_by_this_id": "このIDで1件の投稿",
   "x_posts_by_this_id": "このIDからの{{number}} 件の投稿",
   "ban_expires_at": "p/{{address}}から{{timestamp}}まで禁止",
-  "user_banned": "この投稿のためにユーザーが禁止されました"
+  "user_banned": "この投稿のためにユーザーが禁止されました",
+  "loading_comments": "コメントを読み込み中",
+  "replies": "返信",
+  "links": "リンク"
 }

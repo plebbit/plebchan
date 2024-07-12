@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 post med dette ID",
   "x_posts_by_this_id": "{{number}} indlæg fra denne ID",
   "ban_expires_at": "Udelukket fra p/{{address}} indtil {{timestamp}}",
-  "user_banned": "Brugeren blev blokeret for dette indlæg"
+  "user_banned": "Brugeren blev blokeret for dette indlæg",
+  "loading_comments": "Indlæser kommentarer",
+  "replies": "Svar",
+  "links": "Links"
 }

@@ -210,5 +210,8 @@
   "1_post_by_this_id": "1 bài đăng bởi ID này",
   "x_posts_by_this_id": "{{number}} bài đăng từ ID này",
   "ban_expires_at": "Bị cấm từ p/{{address}} cho đến {{timestamp}}",
-  "user_banned": "Người dùng đã bị cấm vì bài đăng này"
+  "user_banned": "Người dùng đã bị cấm vì bài đăng này",
+  "loading_comments": "Đang tải bình luận",
+  "replies": "trả lời",
+  "links": "liên kết"
 }

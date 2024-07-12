@@ -185,6 +185,11 @@
   color: var(--post-mobile-abbr-text-color);
 }
 
+.loadingString {
+  display: block;
+  color: var(--post-mobile-abbr-text-color);
+} 
+
 .postDesktop .summary .omittedRepliesButtonWrapper {
   position: absolute;
   top: 8px;
@@ -511,6 +516,11 @@
   .replyDesktop {
     display: none;
   }
+
+  .loadingString {
+    margin-top: 10px;
+    margin-left: 5px;
+  } 
 }
 
 @media (min-width: 640px) {
