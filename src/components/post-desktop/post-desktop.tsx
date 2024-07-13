@@ -100,13 +100,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         </span>
         {!(isDescription || isRules) && (
           <>
-            {isReply && author?.avatar && (
-              <Tooltip
-                children={<span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />}
-                content={avatarImageUrl?.toString() || ''}
-                showTooltip={!!avatarImageUrl}
-              />
-            )}
+            {isReply && author?.avatar && <span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />}
             (u/
             <Tooltip
               children={
