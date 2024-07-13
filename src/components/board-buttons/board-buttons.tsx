@@ -234,8 +234,8 @@ const PostPageStats = () => {
   const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);
 
-  const displayReplyCount = replyCount ? replyCount.toString() : '?';
-  const replyCountTooltip = replyCount ? _.capitalize(t('replies')) : t('loading');
+  const displayReplyCount = replyCount !== undefined ? replyCount.toString() : '?';
+  const replyCountTooltip = replyCount !== undefined ? _.capitalize(t('replies')) : t('loading');
 
   return (
     <span>
