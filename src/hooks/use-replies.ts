@@ -12,7 +12,9 @@ const useReplies = (comment: Comment) => {
   // filter against the original comment's CID and all CIDs in flattened replies
   const filter = useCallback(
     (accountComment: Comment) => {
-      return accountComment.parentCid === comment?.cid || replyCids.has(accountComment.parentCid);
+      const parentCid = accountComment.parentCid || 'n/a';
+      const isCidInDocument = !!document.querySelector(`[data-cid="${parentCid}"]`);
+      return parentCid === (comment?.cid || 'n/a') || replyCids.has(parentCid) || isCidInDocument;
     },
     [comment?.cid, replyCids],
   );

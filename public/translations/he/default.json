@@ -210,5 +210,11 @@
   "1_post_by_this_id": "פוסט אחד עם המזהה הזה",
   "x_posts_by_this_id": "{{number}} פוסטים מהמזהה הזה",
   "ban_expires_at": "נחסם מ-p/{{address}} עד {{timestamp}}",
-  "user_banned": "המשתמש נחסם עבור הפוסט הזה"
+  "user_banned": "המשתמש נחסם עבור הפוסט הזה",
+  "loading_comments": "טוען תגובות",
+  "replies": "תגובות",
+  "links": "קישורים",
+  "avatar": "אוואטר",
+  "token_address_whitelist": "כתובת הטוקן (<1>רק רשימה לבנה</1>)",
+  "token_id": "מזהה טוקן"
 }

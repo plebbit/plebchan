@@ -210,5 +210,11 @@
   "1_post_by_this_id": "इस आईडी द्वारा 1 पोस्ट",
   "x_posts_by_this_id": "इस आईडी से {{number}} पोस्ट",
   "ban_expires_at": "p/{{address}} से {{timestamp}} तक पर प्रतिबंधित",
-  "user_banned": "इस पोस्ट के लिए उपयोगकर्ता पर प्रतिबंध लगा दिया गया था"
+  "user_banned": "इस पोस्ट के लिए उपयोगकर्ता पर प्रतिबंध लगा दिया गया था",
+  "loading_comments": "टिप्पणियाँ लोड हो रही हैं",
+  "replies": "जवाब",
+  "links": "लिंक",
+  "avatar": "अवतार",
+  "token_address_whitelist": "टोकन पता (<1>केवल सफेद सूची</1>)",
+  "token_id": "टोकन आईडी"
 }

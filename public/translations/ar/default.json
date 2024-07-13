@@ -136,7 +136,7 @@
   "collapse_all_settings": "طي جميع الإعدادات",
   "refresh": "تحديث",
   "no_board_selected": "لم يتم تحديد أية منتديات",
-  "none": "بلا",
+  "none": "لا شيء",
   "not_subscribed_to_any_board": "لم تشترك في أي منتديات بعد.",
   "board_mods": "مشرفو المنتدى",
   "this_post_was_removed": "تمت إزالة هذا المنشور",
@@ -210,5 +210,11 @@
   "1_post_by_this_id": "مشاركة واحدة بهذا المعرف",
   "x_posts_by_this_id": "{{number}} منشور من هذا المعرف",
   "ban_expires_at": "محظور من p/{{address}} حتى {{timestamp}}",
-  "user_banned": "تم حظر المستخدم لهذا المنشور"
+  "user_banned": "تم حظر المستخدم لهذا المنشور",
+  "loading_comments": "تحميل التعليقات",
+  "replies": "الردود",
+  "links": "الروابط",
+  "avatar": "الصورة الرمزية",
+  "token_address_whitelist": "عنوان الرمز (فقط على الـ <1>قائمة البيضاء</1>)",
+  "token_id": "تعريف الرمز"
 }

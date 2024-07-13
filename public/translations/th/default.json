@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 โพสต์โดย ID นี้",
   "x_posts_by_this_id": "{{number}} โพสต์จาก ID นี้",
   "ban_expires_at": "ถูกห้ามใช้งานจาก p/{{address}} จนถึง {{timestamp}}",
-  "user_banned": "ผู้ใช้ถูกห้ามใช้งานสำหรับโพสต์นี้"
+  "user_banned": "ผู้ใช้ถูกห้ามใช้งานสำหรับโพสต์นี้",
+  "loading_comments": "กำลังโหลดความคิดเห็น",
+  "replies": "คำตอบ",
+  "links": "ลิงก์",
+  "avatar": "อวตาร์",
+  "token_address_whitelist": "ที่อยู่โทเค็น (<1>รายชื่อที่ได้รับอนุญาตเท่านั้น</1>)",
+  "token_id": "รหัสโทเค็น"
 }

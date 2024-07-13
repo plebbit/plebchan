@@ -38,6 +38,14 @@ hr {
   color-scheme: dark;
 }
 
+.yellowOfflineIcon {
+  background-image: url('/public/assets/icons/offline-yellow.png');
+}
+
+.redOfflineIcon {
+  background-image: url('/public/assets/icons/offline-red.png');
+}
+
 @media (max-width: 640px) {
   .button {
     font-size: var(--button-font-size-mobile);

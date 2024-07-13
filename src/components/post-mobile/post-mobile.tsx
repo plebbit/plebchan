@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -29,6 +29,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const { address, shortAddress } = author || {};
   const displayName = author?.displayName?.trim();
   const authorRole = roles?.[address]?.role;
+  const { imageUrl: avatarImageUrl } = useAuthorAvatar({ author });
 
   const params = useParams();
   const location = useLocation();
@@ -73,6 +74,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
           {!(isDescription || isRules) && (
             <>
+              {isReply && author?.avatar && <span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />}
               (u/
               <Tooltip
                 children={
@@ -336,6 +338,11 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               )}
             </div>
+            {replyCount === undefined && (
+              <span className={styles.loadingString}>
+                <LoadingEllipsis string={t('loading_comments')} />
+              </span>
+            )}
             {!(pinned && !isInPostView) &&
               !isInPendingPostView &&
               !isDescription &&

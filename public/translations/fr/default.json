@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 publication avec cet identifiant",
   "x_posts_by_this_id": "{{number}} publications depuis cet identifiant",
   "ban_expires_at": "Banni de p/{{address}} jusqu'au {{timestamp}}",
-  "user_banned": "L'utilisateur a été banni pour ce post"
+  "user_banned": "L'utilisateur a été banni pour ce post",
+  "loading_comments": "Chargement des commentaires",
+  "replies": "réponses",
+  "links": "liens",
+  "avatar": "avatar",
+  "token_address_whitelist": "Adresse du token (<1>liste blanche</1> seulement)",
+  "token_id": "Identifiant de jeton"
 }

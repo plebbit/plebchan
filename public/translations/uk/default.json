@@ -136,7 +136,7 @@
   "collapse_all_settings": "Згорнути всі налаштування",
   "refresh": "Оновити",
   "no_board_selected": "не обрано жодного форуму",
-  "none": "немає",
+  "none": "ніхто",
   "not_subscribed_to_any_board": "Ви ще не підписалися на жоден форум.",
   "board_mods": "Дошка Моди",
   "this_post_was_removed": "цей пост було видалено",
@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 пост з цим ідентифікатором",
   "x_posts_by_this_id": "{{number}} пост з цього ідентифікатора",
   "ban_expires_at": "Заборонений з p/{{address}} до {{timestamp}}",
-  "user_banned": "Користувач був заблокований за цей пост"
+  "user_banned": "Користувач був заблокований за цей пост",
+  "loading_comments": "Завантаження коментарів",
+  "replies": "відповіді",
+  "links": "посилання",
+  "avatar": "аватар",
+  "token_address_whitelist": "Адреса токена (<1>тільки білий список</1>)",
+  "token_id": "Ідентифікатор токена"
 }

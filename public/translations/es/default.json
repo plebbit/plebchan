@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 publicación con este ID",
   "x_posts_by_this_id": "{{number}} publicaciones desde este ID",
   "ban_expires_at": "Baneado de p/{{address}} hasta {{timestamp}}",
-  "user_banned": "El usuario fue baneado por esta publicación"
+  "user_banned": "El usuario fue baneado por esta publicación",
+  "loading_comments": "Cargando comentarios",
+  "replies": "respuestas",
+  "links": "enlaces",
+  "avatar": "avatar",
+  "token_address_whitelist": "Dirección del token (<1>solo lista blanca</1>)",
+  "token_id": "ID de token"
 }

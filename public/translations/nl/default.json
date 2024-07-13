@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 bericht met dit ID",
   "x_posts_by_this_id": "{{number}} berichten met dit ID",
   "ban_expires_at": "Verbannen van p/{{address}} tot {{timestamp}}",
-  "user_banned": "Gebruiker is verbannen voor deze post"
+  "user_banned": "Gebruiker is verbannen voor deze post",
+  "loading_comments": "Reacties laden",
+  "replies": "reacties",
+  "links": "links",
+  "avatar": "avatar",
+  "token_address_whitelist": "Tokenadres (<1>alleen whitelist</1>)",
+  "token_id": "Token-ID"
 }

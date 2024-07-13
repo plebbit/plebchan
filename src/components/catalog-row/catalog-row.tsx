@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
-import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
+import { useFloating, offset, size, autoUpdate, Placement } from '@floating-ui/react';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView } from '../../lib/utils/view-utils';
@@ -141,7 +141,6 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     open: showPortal,
     placement: placementRef.current,
     middleware: [
-      shift({ padding: 10 }),
       offset({ mainAxis: 5 }),
       size({
         apply({ elements }) {

@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 postim me këtë ID",
   "x_posts_by_this_id": "{{number}} postime nga ky ID",
   "ban_expires_at": "I ndaluar nga p/{{address}} deri më {{timestamp}}",
-  "user_banned": "Përdoruesi u ndalua për këtë postim"
+  "user_banned": "Përdoruesi u ndalua për këtë postim",
+  "loading_comments": "Duke u ngarkuar komentet",
+  "replies": "përgjigje",
+  "links": "lidhje",
+  "avatar": "avatar",
+  "token_address_whitelist": "Adresa e tokenit (<1>vetëm lista e bardhë</1>)",
+  "token_id": "ID e tokenit"
 }

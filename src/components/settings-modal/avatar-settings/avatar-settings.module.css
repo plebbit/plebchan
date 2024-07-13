@@ -1,0 +1,86 @@
+.avatar {
+  width: 70px;
+  height: 70px;
+  border: 1px solid #aaa;
+  background-color: var(--avatar-background-color, white);
+  margin-left: 10px;
+}
+
+.avatarPreview {
+  display: inline-block;
+}
+
+.avatar img {
+  width: 70px;
+  height: 70px;
+}
+
+.emptyAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  color: var(--avatar-text-color);
+  cursor: pointer;
+}
+
+.avatarSettingsForm {
+  padding: 10px 0 15px 10px;
+}
+
+.avatarSettingsForm input {
+  width: 200px;
+  padding: 2px;
+}
+
+.avatarSettingInput input {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.avatarSettingInput a {
+  color: var(--link-primary);
+}
+
+.avatarSettingInput a {
+  color: var(--post-link-text-color);
+  text-decoration: var(--post-content-link-text-decoration);
+}
+
+.avatarSettingInput a:hover {
+  color: var(--post-link-text-color-hover);
+  text-decoration: var(--post-content-link-text-decoration-hover);
+}
+
+.settingTitle {
+  font-style: italic;
+  text-transform: lowercase;
+}
+
+.copyMessage {
+  padding-bottom: 10px;
+}
+
+.pasteSignature span {
+  display: block;
+}
+
+.pasteSignature button {
+  margin-left: 5px;
+}
+
+.state {
+  padding-top: 10px;
+  padding-left: 10px;
+  max-width: 300px;
+  color: var(--post-mobile-abbr-text-color);
+}
+
+.copyMessage a {
+  color: var(--text-primary);
+}
+
+.copyMessage a:hover {
+  text-decoration: underline;
+}

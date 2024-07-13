@@ -43,6 +43,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
     deleted: isAccountCommentAuthor ? deleted : undefined,
     locked: isAccountMod ? locked : undefined,
     pinned: isAccountMod ? pinned : undefined,
+    reason,
     removed: isAccountMod ? removed : undefined,
     spoiler,
     subplebbitAddress,
@@ -82,8 +83,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
     }));
   };
 
-  const onReason = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPublishCommentEditOptions((state) => ({ ...state, reason: e.target.value ? e.target.value : undefined }));
+  const onReason = (e: React.ChangeEvent<HTMLInputElement>) => setPublishCommentEditOptions((state) => ({ ...state, reason: e.target.value }));
 
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
@@ -206,7 +206,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
               )}
               <div className={`${styles.menuItem} ${styles.menuReason}`}>
                 {_.capitalize(t('reason'))}? ({t('optional')})
-                <input type='text' onChange={onReason} defaultValue={reason ?? ''} size={14} />
+                <input type='text' onChange={onReason} value={publishCommentEditOptions.reason} size={14} />
               </div>
               <div className={styles.bottom}>
                 <button className={isMobile ? 'button' : ''} onClick={_publishCommentEdit}>

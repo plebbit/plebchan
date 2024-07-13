@@ -136,7 +136,7 @@
   "collapse_all_settings": "Свернуть все настройки",
   "refresh": "Обновить",
   "no_board_selected": "не выбрано ни одного форума",
-  "none": "нет",
+  "none": "ничего",
   "not_subscribed_to_any_board": "Вы еще не подписаны ни на один форум.",
   "board_mods": "Модераторы форума",
   "this_post_was_removed": "этот пост был удален",
@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 сообщение с этим идентификатором",
   "x_posts_by_this_id": "{{number}} сообщений с этого идентификатора",
   "ban_expires_at": "Забанен на p/{{address}} до {{timestamp}}",
-  "user_banned": "Пользователь был заблокирован за этот пост"
+  "user_banned": "Пользователь был заблокирован за этот пост",
+  "loading_comments": "Загрузка комментариев",
+  "replies": "ответы",
+  "links": "ссылки",
+  "avatar": "аватар",
+  "token_address_whitelist": "Адрес токена (<1>только белый список</1>)",
+  "token_id": "Идентификатор токена"
 }

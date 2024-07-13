@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 inlägg med detta ID",
   "x_posts_by_this_id": "{{number}} inlägg från detta ID",
   "ban_expires_at": "Bannad från p/{{address}} till {{timestamp}}",
-  "user_banned": "Användaren blev blockerad för detta inlägg"
+  "user_banned": "Användaren blev blockerad för detta inlägg",
+  "loading_comments": "Laddar kommentarer",
+  "replies": "svar",
+  "links": "länkar",
+  "avatar": "avatar",
+  "token_address_whitelist": "Tokenadress (<1>endast vitlista</1>)",
+  "token_id": "Token ID"
 }

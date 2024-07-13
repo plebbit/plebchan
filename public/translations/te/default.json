@@ -136,7 +136,7 @@
   "collapse_all_settings": "అన్ని సెట్టింగ్‌లను సంక్షిప్తము చేయండి",
   "refresh": "రీఫ్రెష్",
   "no_board_selected": "ఏటీ ఎలాంటి సందేశ బోర్డులు ఎంచుకోలేదు",
-  "none": "ఏమీ లేదు",
+  "none": "ఎవరూ లేరు",
   "not_subscribed_to_any_board": "మీరు ఇంకా ఏకైక సందేశ బోర్డులకు చేరలేదు.",
   "board_mods": "సందేశ బోర్డుల మాడ్స్",
   "this_post_was_removed": "ఈ పోస్టు తొలగించబడింది",
@@ -210,5 +210,11 @@
   "1_post_by_this_id": "ఈ ID ద్వారా 1 పోస్టు",
   "x_posts_by_this_id": "ఈ ID నుండి {{number}} పోస్టు",
   "ban_expires_at": "p/{{address}} నుండి {{timestamp}} వరకు నిషేధించబడింది",
-  "user_banned": "ఈ పోస్టు కోసం వాడు బ్యాన్ చేయబడింది"
+  "user_banned": "ఈ పోస్టు కోసం వాడు బ్యాన్ చేయబడింది",
+  "loading_comments": "వ్యాఖ్యలను లోడ్ అవుతోంది",
+  "replies": "సమాధానాలు",
+  "links": "లింక్లు",
+  "avatar": "అవతార్",
+  "token_address_whitelist": "టోకెన్ చిరునామా (<1>కేవలం వెలుపల్లి</1>)",
+  "token_id": "టోకెన్ ఐడి"
 }

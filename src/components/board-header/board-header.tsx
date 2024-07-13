@@ -34,8 +34,7 @@ const BoardHeader = () => {
   const title = isInAllView ? multisubMetadata?.title || 'all' : isInSubscriptionsView ? 'Subscriptions' : subplebbit?.title;
   const subtitle = isInAllView ? 'p/all' : isInSubscriptionsView ? 'p/subscriptions' : `p/${address}`;
 
-  const { isOffline, isDefinitelyOffline, offlineTitle } = useIsSubplebbitOffline(subplebbit);
-  const iconClass = `${styles.offlineIcon} ${isDefinitelyOffline ? styles.redOfflineIcon : ''}`;
+  const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbit);
 
   return (
     <div className={styles.content}>
@@ -46,7 +45,7 @@ const BoardHeader = () => {
       )}
       <div className={styles.boardTitle}>
         {title || `p/${shortAddress || subplebbitAddress}`}
-        {isOffline && <span className={`${styles.offlineIcon} ${iconClass}`} title={offlineTitle} />}
+        {(isOffline || isOnlineStatusLoading) && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
       </div>
       <div className={styles.boardSubtitle}>{subtitle}</div>
       <hr />

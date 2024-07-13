@@ -136,7 +136,7 @@
   "collapse_all_settings": "Ciutkan Semua Pengaturan",
   "refresh": "Segarkan",
   "no_board_selected": "tidak ada papan pesan yang dipilih",
-  "none": "tak ada",
+  "none": "tidak ada",
   "not_subscribed_to_any_board": "Anda belum berlangganan ke papan pesan mana pun.",
   "board_mods": "Papan Pesan Mods",
   "this_post_was_removed": "posting ini telah dihapus",
@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 pos dengan ID ini",
   "x_posts_by_this_id": "{{number}} pos dari ID ini",
   "ban_expires_at": "Dilarang dari p/{{address}} sampai {{timestamp}}",
-  "user_banned": "Pengguna diblokir untuk pos ini"
+  "user_banned": "Pengguna diblokir untuk pos ini",
+  "loading_comments": "Memuat komentar",
+  "replies": "balasan",
+  "links": "tautan",
+  "avatar": "avatar",
+  "token_address_whitelist": "Alamat token (<1>hanya daftar putih</1>)",
+  "token_id": "ID token"
 }

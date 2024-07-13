@@ -136,7 +136,7 @@
   "collapse_all_settings": "I-collapse ang lahat ng mga setting",
   "refresh": "I-refresh",
   "no_board_selected": "walang mga board na napiling",
-  "none": "wala",
+  "none": "walang anuman",
   "not_subscribed_to_any_board": "Hindi ka pa naka-subscribe sa anumang mga board.",
   "board_mods": "Board Mods",
   "this_post_was_removed": "tinanggal ang post na ito",
@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 post sa pamamagitan ng ID na ito",
   "x_posts_by_this_id": "{{number}} post mula sa ID na ito",
   "ban_expires_at": "Bawal sa p/{{address}} hanggang {{timestamp}}",
-  "user_banned": "Banal ang user para sa post na ito"
+  "user_banned": "Banal ang user para sa post na ito",
+  "loading_comments": "Naglo-load ng mga komento",
+  "replies": "mga tugon",
+  "links": "mga link",
+  "avatar": "avatar",
+  "token_address_whitelist": "Address ng token (<1>whitelist</1> lang)",
+  "token_id": "Token ID"
 }

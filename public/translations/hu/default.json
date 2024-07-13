@@ -210,5 +210,11 @@
   "1_post_by_this_id": "1 bejegyzés ezzel az azonosítóval",
   "x_posts_by_this_id": "{{number}} bejegyzés erről az azonosítóról",
   "ban_expires_at": "Tiltva p/{{address}}-tól {{timestamp}}-ig",
-  "user_banned": "A felhasználót letiltották ennek a posztnak a kapcsán"
+  "user_banned": "A felhasználót letiltották ennek a posztnak a kapcsán",
+  "loading_comments": "Megjegyzések betöltése",
+  "replies": "válaszok",
+  "links": "linkek",
+  "avatar": "avatár",
+  "token_address_whitelist": "Token cím (<1>csak fehérlista</1>)",
+  "token_id": "Token azonosító"
 }

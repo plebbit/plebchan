@@ -136,7 +136,7 @@
   "collapse_all_settings": "折叠所有设置",
   "refresh": "刷新",
   "no_board_selected": "没有选择任何论坛",
-  "none": "无",
+  "none": "没有",
   "not_subscribed_to_any_board": "您尚未订阅任何论坛。",
   "board_mods": "董事會版主",
   "this_post_was_removed": "此帖已被删除",
@@ -210,5 +210,11 @@
   "1_post_by_this_id": "此ID的1篇帖子",
   "x_posts_by_this_id": "此ID的{{number}}篇帖子",
   "ban_expires_at": "被禁止从p/{{address}}到{{timestamp}}",
-  "user_banned": "用户因此帖子被禁止"
+  "user_banned": "用户因此帖子被禁止",
+  "loading_comments": "正在加载评论",
+  "replies": "回复",
+  "links": "链接",
+  "avatar": "头像",
+  "token_address_whitelist": "代币地址（<1>仅限白名单</1>）",
+  "token_id": "令牌ID"
 }
