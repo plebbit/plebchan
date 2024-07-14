@@ -230,16 +230,15 @@ const PostMessage = ({ post }: PostProps) => {
 
   const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
+  const quotelinkReply = useComment({ commentCid: parentCid });
   const isReply = parentCid;
-  const isReplyingToReply = postCid !== parentCid;
+  const isReplyingToReply = (postCid && postCid !== parentCid) || quotelinkReply?.postCid !== parentCid;
 
   const stateString = useStateString(post);
 
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
-
-  const quotelinkReply = useComment({ commentCid: parentCid });
 
   return (
     <blockquote className={styles.postMessage}>
