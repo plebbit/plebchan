@@ -216,5 +216,8 @@
   "links": "linkek",
   "avatar": "avatár",
   "token_address_whitelist": "Token cím (<1>csak fehérlista</1>)",
-  "token_id": "Token azonosító"
+  "token_id": "Token azonosító",
+  "nsfw_boards": "NSFW táblák",
+  "hide_gore_boards": "Gore táblák elrejtése",
+  "hide_adult_boards": "Felnőtt táblák elrejtése"
 }

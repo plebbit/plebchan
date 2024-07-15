@@ -30,14 +30,14 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
           )}
           {isInAllView && (
             <div className={styles.nsfwLabels}>
-              <div className={styles.categoryTitle}>NSFW Boards</div>
+              <div className={styles.categoryTitle}>{t('nsfw_boards')}</div>
               <label>
                 <input type='checkbox' checked={!showGoreBoards} onChange={(e) => setShowGoreBoards(!e.target.checked)} />
-                Hide Gore Boards
+                {t('hide_gore_boards')}
               </label>
               <label>
                 <input type='checkbox' checked={!showAdultBoards} onChange={(e) => setShowAdultBoards(!e.target.checked)} />
-                Hide Adult Boards
+                {t('hide_adult_boards')}
               </label>
             </div>
           )}

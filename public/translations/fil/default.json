@@ -216,5 +216,8 @@
   "links": "mga link",
   "avatar": "avatar",
   "token_address_whitelist": "Address ng token (<1>whitelist</1> lang)",
-  "token_id": "Token ID"
+  "token_id": "Token ID",
+  "nsfw_boards": "Mga NSFW Boards",
+  "hide_gore_boards": "Itago ang mga Gore Boards",
+  "hide_adult_boards": "Itago ang mga Adult Boards"
 }

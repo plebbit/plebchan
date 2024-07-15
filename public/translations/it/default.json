@@ -216,5 +216,8 @@
   "links": "link",
   "avatar": "avatar",
   "token_address_whitelist": "Indirizzo del token (solo se sulla <1>whitelist</1>)",
-  "token_id": "token id"
+  "token_id": "token id",
+  "nsfw_boards": "Bache NSFW",
+  "hide_gore_boards": "Nascondi tavole Gore",
+  "hide_adult_boards": "Nascondi tavole per adulti"
 }

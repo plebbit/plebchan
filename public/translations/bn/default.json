@@ -216,5 +216,8 @@
   "links": "লিঙ্কগুলি",
   "avatar": "অবতার",
   "token_address_whitelist": "টোকেন ঠিকানা (<1>সাফল্যবান</1> কেবল)",
-  "token_id": "টোকেন আইডি"
+  "token_id": "টোকেন আইডি",
+  "nsfw_boards": "এনএসএফডব্লিউ বোর্ডস",
+  "hide_gore_boards": "গর বোর্ডস লুকান",
+  "hide_adult_boards": "পুরুষ বোর্ডস লুকান"
 }

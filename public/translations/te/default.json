@@ -216,5 +216,8 @@
   "links": "లింక్లు",
   "avatar": "అవతార్",
   "token_address_whitelist": "టోకెన్ చిరునామా (<1>కేవలం వెలుపల్లి</1>)",
-  "token_id": "టోకెన్ ఐడి"
+  "token_id": "టోకెన్ ఐడి",
+  "nsfw_boards": "NSFW బోర్డ్లు",
+  "hide_gore_boards": "గోర్ బోర్డ్స్ దాచు",
+  "hide_adult_boards": "పురుషులు బోర్డ్లు దాచు"
 }

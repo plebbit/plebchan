@@ -216,5 +216,8 @@
   "links": "קישורים",
   "avatar": "אוואטר",
   "token_address_whitelist": "כתובת הטוקן (<1>רק רשימה לבנה</1>)",
-  "token_id": "מזהה טוקן"
+  "token_id": "מזהה טוקן",
+  "nsfw_boards": "גלריות NSFW",
+  "hide_gore_boards": "הסתר לוחות Gore",
+  "hide_adult_boards": "הסתר לוחות המבוגרים"
 }

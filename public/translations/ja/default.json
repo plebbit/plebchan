@@ -216,5 +216,8 @@
   "links": "リンク",
   "avatar": "アバター",
   "token_address_whitelist": "トークンアドレス（<1>ホワイトリスト</1>のみ）",
-  "token_id": "トークンID"
+  "token_id": "トークンID",
+  "nsfw_boards": "NSFWボード",
+  "hide_gore_boards": "ゴアボードを非表示にする",
+  "hide_adult_boards": "アダルトボードを非表示にする"
 }

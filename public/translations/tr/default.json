@@ -216,5 +216,8 @@
   "links": "bağlantılar",
   "avatar": "avatar",
   "token_address_whitelist": "Token adresi (<1>yalnızca beyaz liste</1>)",
-  "token_id": "Token kimliği"
+  "token_id": "Token kimliği",
+  "nsfw_boards": "NSFW Panoları",
+  "hide_gore_boards": "Gore Panolarını Gizle",
+  "hide_adult_boards": "Yetişkin Panolarını Gizle"
 }

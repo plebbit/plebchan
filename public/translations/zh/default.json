@@ -216,5 +216,8 @@
   "links": "链接",
   "avatar": "头像",
   "token_address_whitelist": "代币地址（<1>仅限白名单</1>）",
-  "token_id": "令牌ID"
+  "token_id": "令牌ID",
+  "nsfw_boards": "NSFW板块",
+  "hide_gore_boards": "隐藏Gore板块",
+  "hide_adult_boards": "隐藏成人板块"
 }
