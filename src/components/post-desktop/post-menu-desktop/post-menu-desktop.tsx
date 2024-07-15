@@ -192,7 +192,7 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
                 subplebbitAddress={subplebbitAddress}
                 onClose={handleClose}
               />
-              <BlockUserButton address={author?.address} />
+              {!isDescription && !isRules && <BlockUserButton address={author?.address} />}
               {(isInAllView || isInSubscriptionsView) && <BlockBoardButton address={subplebbitAddress} />}
             </div>
           </FloatingFocusManager>,

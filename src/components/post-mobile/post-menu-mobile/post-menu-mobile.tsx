@@ -145,8 +145,8 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
               {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={post.postCid} onClose={handleClose} />}
-              {cid && subplebbitAddress && <BlockUserButton address={author?.address} />}
-              {cid && subplebbitAddress && !isInBoardView && <BlockBoardButton address={subplebbitAddress} />}
+              {cid && subplebbitAddress && !isDescription && !isRules && <BlockUserButton address={author?.address} />}
+              {cid && subplebbitAddress && !isInBoardView && !isDescription && !isRules && <BlockBoardButton address={subplebbitAddress} />}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}
               <ViewOnButtons cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
             </div>
