@@ -216,5 +216,8 @@
   "links": "Σύνδεσμοι",
   "avatar": "εικόνα προφίλ",
   "token_address_whitelist": "Διεύθυνση του token (<1>μόνο λευκή λίστα</1>)",
-  "token_id": "Token ID"
+  "token_id": "Token ID",
+  "nsfw_boards": "Πινακίδες NSFW",
+  "hide_gore_boards": "Απόκρυψη των Gore Boards",
+  "hide_adult_boards": "Απόκρυψη των Adult Boards"
 }

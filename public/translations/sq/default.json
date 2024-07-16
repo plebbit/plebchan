@@ -216,5 +216,8 @@
   "links": "lidhje",
   "avatar": "avatar",
   "token_address_whitelist": "Adresa e tokenit (<1>vetëm lista e bardhë</1>)",
-  "token_id": "ID e tokenit"
+  "token_id": "ID e tokenit",
+  "nsfw_boards": "Bordet NSFW",
+  "hide_gore_boards": "Fshihet Gore Boards",
+  "hide_adult_boards": "Fshihet Adult Boards"
 }

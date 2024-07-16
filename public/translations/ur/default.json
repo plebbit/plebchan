@@ -216,5 +216,8 @@
   "links": "لنکس",
   "avatar": "اوتار",
   "token_address_whitelist": "ٹوکن کا پتا (<1>صرف سفید فہرست</1>)",
-  "token_id": "ٹوکن شناخت"
+  "token_id": "ٹوکن شناخت",
+  "nsfw_boards": "این ایس ایف ڈبلیو بورڈس",
+  "hide_gore_boards": "گور بورڈز چھپائیں",
+  "hide_adult_boards": "بالغ بورڈز چھپائیں"
 }

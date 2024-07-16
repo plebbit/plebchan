@@ -216,5 +216,8 @@
   "links": "liên kết",
   "avatar": "avatar",
   "token_address_whitelist": "Địa chỉ token (<1>chỉ danh sách trắng</1>)",
-  "token_id": "ID token"
+  "token_id": "ID token",
+  "nsfw_boards": "Các bảng NSFW",
+  "hide_gore_boards": "Ẩn Gore Boards",
+  "hide_adult_boards": "Ẩn Adult Boards"
 }

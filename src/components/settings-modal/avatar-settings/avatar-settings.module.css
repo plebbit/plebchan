@@ -1,9 +1,11 @@
 .avatar {
-  width: 70px;
-  height: 70px;
+  width: 64px;
+  height: 64px;
   border: 1px solid #aaa;
   background-color: var(--avatar-background-color, white);
   margin-left: 10px;
+  border-radius: 32px;
+  overflow: hidden;
 }
 
 .avatarPreview {
@@ -11,8 +13,8 @@
 }
 
 .avatar img {
-  width: 70px;
-  height: 70px;
+  width: 64px;
+  height: 64px;
 }
 
 .emptyAvatar {
@@ -22,7 +24,6 @@
   text-align: center;
   height: 100%;
   color: var(--avatar-text-color);
-  cursor: pointer;
 }
 
 .avatarSettingsForm {

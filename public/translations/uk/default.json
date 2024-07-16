@@ -216,5 +216,8 @@
   "links": "посилання",
   "avatar": "аватар",
   "token_address_whitelist": "Адреса токена (<1>тільки білий список</1>)",
-  "token_id": "Ідентифікатор токена"
+  "token_id": "Ідентифікатор токена",
+  "nsfw_boards": "NSFW дошки",
+  "hide_gore_boards": "Сховати дошки Gore",
+  "hide_adult_boards": "Сховати дошки для дорослих"
 }

@@ -216,5 +216,8 @@
   "links": "links",
   "avatar": "avatar",
   "token_address_whitelist": "Tokenadres (<1>alleen whitelist</1>)",
-  "token_id": "Token-ID"
+  "token_id": "Token-ID",
+  "nsfw_boards": "NSFW-boards",
+  "hide_gore_boards": "Gore Boards verbergen",
+  "hide_adult_boards": "Volwassenen Boards verbergen"
 }

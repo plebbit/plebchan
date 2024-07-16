@@ -216,5 +216,8 @@
   "links": "लिंक",
   "avatar": "अवतार",
   "token_address_whitelist": "टोकन पता (<1>केवल सफेद सूची</1>)",
-  "token_id": "टोकन आईडी"
+  "token_id": "टोकन आईडी",
+  "nsfw_boards": "एनएसएफडब्ल्यू बोर्ड्स",
+  "hide_gore_boards": "गोर बोर्ड्स छिपाएं",
+  "hide_adult_boards": "वयस्क बोर्ड्स छिपाएं"
 }

@@ -216,5 +216,8 @@
   "links": "tautan",
   "avatar": "avatar",
   "token_address_whitelist": "Alamat token (<1>hanya daftar putih</1>)",
-  "token_id": "ID token"
+  "token_id": "ID token",
+  "nsfw_boards": "Papan NSFW",
+  "hide_gore_boards": "Sembunyikan Papan Gore",
+  "hide_adult_boards": "Sembunyikan Papan Dewasa"
 }

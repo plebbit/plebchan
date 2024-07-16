@@ -128,15 +128,20 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         )}
         {!(isDescription || isRules) && (
           <span className={styles.postNumLink}>
-            <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-              c/
-            </Link>
-            {!cid ? (
-              <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+            {cid ? (
+              <>
+                <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                  c/
+                </Link>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
+                  {shortCid}
+                </span>
+              </>
             ) : (
-              <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
-                {shortCid}
-              </span>
+              <>
+                <span style={{ cursor: 'pointer' }}>c/</span>
+                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+              </>
             )}
           </span>
         )}
@@ -230,16 +235,15 @@ const PostMessage = ({ post }: PostProps) => {
 
   const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
 
+  const quotelinkReply = useComment({ commentCid: parentCid });
   const isReply = parentCid;
-  const isReplyingToReply = postCid !== parentCid;
+  const isReplyingToReply = (postCid && postCid !== parentCid) || quotelinkReply?.postCid !== parentCid;
 
   const stateString = useStateString(post);
 
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
-
-  const quotelinkReply = useComment({ commentCid: parentCid });
 
   return (
     <blockquote className={styles.postMessage}>
@@ -345,7 +349,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, pinned, postCid, replyCount, subplebbitAddress } = post || {};
+  const { author, cid, content, link, pinned, postCid, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -358,6 +362,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const replies = useReplies(post);
   const visiblelinksCount = useCountLinksInReplies(post, 5);
   const totalLinksCount = useCountLinksInReplies(post);
+  const replyCount = replies?.length;
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
@@ -392,7 +397,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           {!isHidden && !content && <div className={styles.spacer} />}
           {!isHidden && content && <PostMessage post={post} />}
         </div>
-        {!isHidden && !isDescription && !isRules && !isInPendingPostView && (repliesCount > 5 || (pinned && repliesCount > 0)) && !isInPostPageView && (
+        {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replyCount > 5 || (pinned && repliesCount > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
             <span
               className={`${showOmittedReplies[cid] ? styles.hideOmittedReplies : styles.showOmittedReplies} ${styles.omittedRepliesButtonWrapper}`}

@@ -118,15 +118,20 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           <Tooltip children={<span>{getFormattedDate(timestamp)}</span>} content={getFormattedTimeAgo(timestamp)} />{' '}
           {!(isDescription || isRules) && (
             <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-                c/
-              </Link>
-              {!cid ? (
-                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+              {cid ? (
+                <>
+                  <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                    c/
+                  </Link>
+                  <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
+                    {shortCid}
+                  </span>
+                </>
               ) : (
-                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
-                  {shortCid}
-                </span>
+                <>
+                  <span style={{ cursor: 'pointer' }}>c/</span>
+                  <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+                </>
               )}
             </span>
           )}
@@ -165,16 +170,15 @@ const PostMessageMobile = ({ post }: PostProps) => {
 
   const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) : content;
 
+  const quotelinkReply = useComment({ commentCid: parentCid });
   const isReply = parentCid;
-  const isReplyingToReply = postCid !== parentCid;
+  const isReplyingToReply = (postCid && postCid !== parentCid) || quotelinkReply?.postCid !== parentCid;
 
   const stateString = useStateString(post);
 
   const loadingString = stateString && (
     <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
   );
-
-  const quotelinkReply = useComment({ commentCid: parentCid });
 
   return (
     content && (

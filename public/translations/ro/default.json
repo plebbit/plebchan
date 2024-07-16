@@ -216,5 +216,8 @@
   "links": "linkuri",
   "avatar": "avatar",
   "token_address_whitelist": "Adresa tokenului (<1>doar lista albă</1>)",
-  "token_id": "ID token"
+  "token_id": "ID token",
+  "nsfw_boards": "Plăci NSFW",
+  "hide_gore_boards": "Ascundeți tablourile Gore",
+  "hide_adult_boards": "Ascundeți tablourile pentru adulți"
 }

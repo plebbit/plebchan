@@ -216,5 +216,8 @@
   "links": "لینک‌ها",
   "avatar": "آواتار",
   "token_address_whitelist": "آدرس توکن (<1>فقط سفیدپوشان</1>)",
-  "token_id": "شناسه توکن"
+  "token_id": "شناسه توکن",
+  "nsfw_boards": "بوردهای NSFW",
+  "hide_gore_boards": "پنهان کردن تخته های گور",
+  "hide_adult_boards": "پنهان کردن تخته های بزرگسالان"
 }

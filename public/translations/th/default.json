@@ -216,5 +216,8 @@
   "links": "ลิงก์",
   "avatar": "อวตาร์",
   "token_address_whitelist": "ที่อยู่โทเค็น (<1>รายชื่อที่ได้รับอนุญาตเท่านั้น</1>)",
-  "token_id": "รหัสโทเค็น"
+  "token_id": "รหัสโทเค็น",
+  "nsfw_boards": "กระดาน NSFW",
+  "hide_gore_boards": "ซ่อนกระดาน Gore",
+  "hide_adult_boards": "ซ่อนกระดานสำหรับผู้ใหญ่"
 }
