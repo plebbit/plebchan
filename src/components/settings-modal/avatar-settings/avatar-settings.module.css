@@ -24,7 +24,6 @@
   text-align: center;
   height: 100%;
   color: var(--avatar-text-color);
-  cursor: pointer;
 }
 
 .avatarSettingsForm {
