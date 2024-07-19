@@ -342,7 +342,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               )}
             </div>
-            {replyCount === undefined && (
+            {post?.replyCount === undefined && (
               <span className={styles.loadingString}>
                 <LoadingEllipsis string={t('loading_comments')} />
               </span>

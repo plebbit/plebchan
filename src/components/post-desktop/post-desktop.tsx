@@ -417,7 +417,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             )}
           </span>
         )}
-        {replyCount === undefined && (
+        {post?.replyCount === undefined && (
           <span className={styles.loadingString}>
             <LoadingEllipsis string={t('loading_comments')} />
           </span>
