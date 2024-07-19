@@ -1,7 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { PublishCommentOptions, setAccount, useAccount, useAccountComment, useComment, usePublishComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import {
+  Comment,
+  PublishCommentOptions,
+  setAccount,
+  useAccount,
+  useAccountComment,
+  useComment,
+  useEditedComment,
+  usePublishComment,
+  useSubplebbit,
+} from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
 import { getLinkMediaInfo } from '../../lib/utils/media-utils';
@@ -265,7 +275,14 @@ const PostForm = () => {
   const isInAllView = isAllView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
-  const comment = useComment({ commentCid: useParams().commentCid });
+  const post = useComment({ commentCid: useParams().commentCid });
+  let comment: Comment = post;
+  // handle pending mod or author edit
+  const { editedComment } = useEditedComment({ comment });
+  if (editedComment) {
+    comment = editedComment;
+  }
+
   const { deleted, locked, removed } = comment || {};
   const isThreadClosed = deleted || locked || removed || isInDescriptionView || isInRulesView;
 
