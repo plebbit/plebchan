@@ -505,14 +505,13 @@
 }
 
 .authorAvatar {
-  width: 32px;
-  height: 32px;
+  width: 22px;
+  height: 22px;
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
   display: inline-block;
-  vertical-align: middle;
-  border-radius: 16px;
+  vertical-align: top;
 }
 
 @media (max-width: 640px) {
@@ -531,7 +530,11 @@
   .loadingString {
     margin-top: 10px;
     margin-left: 5px;
-  } 
+  }
+
+  .authorAvatar {
+    vertical-align: middle;
+  }
 }
 
 @media (min-width: 640px) {

@@ -74,7 +74,11 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
           {!(isDescription || isRules) && (
             <>
-              {isReply && author?.avatar && <span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />}
+              {isReply && author?.avatar && (
+                <>
+                  <span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />{' '}
+                </>
+              )}
               (u/
               <Tooltip
                 children={
