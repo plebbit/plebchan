@@ -219,5 +219,7 @@
   "token_id": "تعريف الرمز",
   "nsfw_boards": "المجالس المخلة بالأدب",
   "hide_gore_boards": "إخفاء لوحات الجور",
-  "hide_adult_boards": "إخفاء لوحات الكبار"
+  "hide_adult_boards": "إخفاء لوحات الكبار",
+  "static_gif": "GIF ثابت",
+  "animated_gif": "GIF متحرك"
 }

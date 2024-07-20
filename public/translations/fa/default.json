@@ -219,5 +219,7 @@
   "token_id": "شناسه توکن",
   "nsfw_boards": "بوردهای NSFW",
   "hide_gore_boards": "پنهان کردن تخته های گور",
-  "hide_adult_boards": "پنهان کردن تخته های بزرگسالان"
+  "hide_adult_boards": "پنهان کردن تخته های بزرگسالان",
+  "static_gif": "GIF ثابت",
+  "animated_gif": "GIF متحرک"
 }

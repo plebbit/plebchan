@@ -219,5 +219,7 @@
   "token_id": "token id",
   "nsfw_boards": "Bache NSFW",
   "hide_gore_boards": "Nascondi tavole Gore",
-  "hide_adult_boards": "Nascondi tavole per adulti"
+  "hide_adult_boards": "Nascondi tavole per adulti",
+  "static_gif": "GIF Statica",
+  "animated_gif": "GIF Animata"
 }

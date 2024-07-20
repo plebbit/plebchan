@@ -219,5 +219,7 @@
   "token_id": "รหัสโทเค็น",
   "nsfw_boards": "กระดาน NSFW",
   "hide_gore_boards": "ซ่อนกระดาน Gore",
-  "hide_adult_boards": "ซ่อนกระดานสำหรับผู้ใหญ่"
+  "hide_adult_boards": "ซ่อนกระดานสำหรับผู้ใหญ่",
+  "static_gif": "GIF แบบคงที่",
+  "animated_gif": "GIF ที่เคลื่อนไหว"
 }

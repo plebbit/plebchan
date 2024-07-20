@@ -219,5 +219,7 @@
   "token_id": "トークンID",
   "nsfw_boards": "NSFWボード",
   "hide_gore_boards": "ゴアボードを非表示にする",
-  "hide_adult_boards": "アダルトボードを非表示にする"
+  "hide_adult_boards": "アダルトボードを非表示にする",
+  "static_gif": "静的GIF",
+  "animated_gif": "アニメーションGIF"
 }

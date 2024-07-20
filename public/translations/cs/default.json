@@ -219,5 +219,7 @@
   "token_id": "Token ID",
   "nsfw_boards": "NSFW desky",
   "hide_gore_boards": "Skrýt gore desky",
-  "hide_adult_boards": "Skrýt dospělé desky"
+  "hide_adult_boards": "Skrýt dospělé desky",
+  "static_gif": "Statický GIF",
+  "animated_gif": "Animovaný GIF"
 }

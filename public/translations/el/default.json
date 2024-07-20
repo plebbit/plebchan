@@ -219,5 +219,7 @@
   "token_id": "Token ID",
   "nsfw_boards": "Πινακίδες NSFW",
   "hide_gore_boards": "Απόκρυψη των Gore Boards",
-  "hide_adult_boards": "Απόκρυψη των Adult Boards"
+  "hide_adult_boards": "Απόκρυψη των Adult Boards",
+  "static_gif": "Στατικό GIF",
+  "animated_gif": "Κινούμενο GIF"
 }

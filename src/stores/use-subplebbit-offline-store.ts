@@ -44,7 +44,7 @@ const useSubplebbitOfflineStore = create<SubplebbitOfflineStore>((set) => ({
           },
         },
       }));
-    }, 7000);
+    }, 30000);
   },
 }));
 

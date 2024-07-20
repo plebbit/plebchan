@@ -219,5 +219,7 @@
   "token_id": "Ідентифікатор токена",
   "nsfw_boards": "NSFW дошки",
   "hide_gore_boards": "Сховати дошки Gore",
-  "hide_adult_boards": "Сховати дошки для дорослих"
+  "hide_adult_boards": "Сховати дошки для дорослих",
+  "static_gif": "Статичний GIF",
+  "animated_gif": "Анімований GIF"
 }

@@ -219,5 +219,7 @@
   "token_id": "ID do token",
   "nsfw_boards": "Quadros NSFW",
   "hide_gore_boards": "Ocultar Quadros Gore",
-  "hide_adult_boards": "Ocultar Quadros para Adultos"
+  "hide_adult_boards": "Ocultar Quadros para Adultos",
+  "static_gif": "GIF Estático",
+  "animated_gif": "GIF Animado"
 }

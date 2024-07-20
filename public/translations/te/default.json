@@ -219,5 +219,7 @@
   "token_id": "టోకెన్ ఐడి",
   "nsfw_boards": "NSFW బోర్డ్లు",
   "hide_gore_boards": "గోర్ బోర్డ్స్ దాచు",
-  "hide_adult_boards": "పురుషులు బోర్డ్లు దాచు"
+  "hide_adult_boards": "పురుషులు బోర్డ్లు దాచు",
+  "static_gif": "స్టాటిక్ GIF",
+  "animated_gif": "అనిమేటెడ్ GIF"
 }

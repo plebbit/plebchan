@@ -219,5 +219,7 @@
   "token_id": "토큰 ID",
   "nsfw_boards": "NSFW 게시판",
   "hide_gore_boards": "고어 게시판 숨기기",
-  "hide_adult_boards": "성인 게시판 숨기기"
+  "hide_adult_boards": "성인 게시판 숨기기",
+  "static_gif": "정적 GIF",
+  "animated_gif": "애니메이션 GIF"
 }

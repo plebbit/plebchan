@@ -74,7 +74,11 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
           {!(isDescription || isRules) && (
             <>
-              {isReply && author?.avatar && <span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />}
+              {isReply && author?.avatar && (
+                <>
+                  <span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />{' '}
+                </>
+              )}
               (u/
               <Tooltip
                 children={
@@ -342,7 +346,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               )}
             </div>
-            {replyCount === undefined && (
+            {post?.replyCount === undefined && (
               <span className={styles.loadingString}>
                 <LoadingEllipsis string={t('loading_comments')} />
               </span>

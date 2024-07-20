@@ -219,5 +219,7 @@
   "token_id": "ٹوکن شناخت",
   "nsfw_boards": "این ایس ایف ڈبلیو بورڈس",
   "hide_gore_boards": "گور بورڈز چھپائیں",
-  "hide_adult_boards": "بالغ بورڈز چھپائیں"
+  "hide_adult_boards": "بالغ بورڈز چھپائیں",
+  "static_gif": "اسٹیٹک GIF",
+  "animated_gif": "اینیمیٹڈ GIF"
 }

@@ -219,5 +219,7 @@
   "token_id": "ID token",
   "nsfw_boards": "Các bảng NSFW",
   "hide_gore_boards": "Ẩn Gore Boards",
-  "hide_adult_boards": "Ẩn Adult Boards"
+  "hide_adult_boards": "Ẩn Adult Boards",
+  "static_gif": "GIF Tĩnh",
+  "animated_gif": "GIF Hoạt Hình"
 }

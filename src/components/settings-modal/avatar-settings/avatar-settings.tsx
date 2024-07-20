@@ -31,7 +31,7 @@ const AvatarPreview = ({ avatar }: any) => {
       </div>
       {state !== 'succeeded' && account?.author?.avatar && (
         <div className={styles.state}>
-          {stateText} {error?.message}
+          {!error && stateText} {error && error?.message}
         </div>
       )}
     </>
