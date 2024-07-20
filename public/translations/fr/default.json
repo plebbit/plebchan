@@ -219,5 +219,7 @@
   "token_id": "Identifiant de jeton",
   "nsfw_boards": "Planches NSFW",
   "hide_gore_boards": "Masquer les tableaux Gore",
-  "hide_adult_boards": "Masquer les tableaux pour adultes"
+  "hide_adult_boards": "Masquer les tableaux pour adultes",
+  "static_gif": "GIF Statique",
+  "animated_gif": "GIF Animé"
 }

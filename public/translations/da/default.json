@@ -219,5 +219,7 @@
   "token_id": "Token ID",
   "nsfw_boards": "NSFW boards",
   "hide_gore_boards": "Skjul Gore Boards",
-  "hide_adult_boards": "Skjul Voksne Boards"
+  "hide_adult_boards": "Skjul Voksne Boards",
+  "static_gif": "Statisk GIF",
+  "animated_gif": "Animeret GIF"
 }

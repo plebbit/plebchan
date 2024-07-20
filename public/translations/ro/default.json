@@ -219,5 +219,7 @@
   "token_id": "ID token",
   "nsfw_boards": "Plăci NSFW",
   "hide_gore_boards": "Ascundeți tablourile Gore",
-  "hide_adult_boards": "Ascundeți tablourile pentru adulți"
+  "hide_adult_boards": "Ascundeți tablourile pentru adulți",
+  "static_gif": "GIF Static",
+  "animated_gif": "GIF Animat"
 }

@@ -219,5 +219,7 @@
   "token_id": "Token-id",
   "nsfw_boards": "NSFW-laudat",
   "hide_gore_boards": "Piilota Gore-laudat",
-  "hide_adult_boards": "Piilota Aikuisten lautat"
+  "hide_adult_boards": "Piilota Aikuisten lautat",
+  "static_gif": "Staattinen GIF",
+  "animated_gif": "Animoitu GIF"
 }

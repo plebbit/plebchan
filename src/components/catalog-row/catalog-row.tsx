@@ -79,8 +79,8 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
     thumbnailComponent = <img src={thumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
   } else if (type === 'iframe' && iframeThumbnail && !hasError) {
     thumbnailComponent = <img src={iframeThumbnail} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
-  } else if (type === 'gif' && gifFrameUrl && !hasError) {
-    thumbnailComponent = <img src={gifFrameUrl} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
+  } else if (type === 'gif' && !hasError) {
+    thumbnailComponent = <img src={gifFrameUrl || url} alt='' onLoad={handleLoad} onError={handleError} style={loadingStyle} />;
   } else if (type === 'audio') {
     thumbnailComponent = <audio src={url} controls />;
   }

@@ -219,5 +219,7 @@
   "token_id": "Identyfikator tokena",
   "nsfw_boards": "Deski NSFW",
   "hide_gore_boards": "Ukryj Gore Boards",
-  "hide_adult_boards": "Ukryj Adult Boards"
+  "hide_adult_boards": "Ukryj Adult Boards",
+  "static_gif": "Statyczny GIF",
+  "animated_gif": "Animowany GIF"
 }

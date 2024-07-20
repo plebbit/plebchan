@@ -219,5 +219,7 @@
   "token_id": "ID e tokenit",
   "nsfw_boards": "Bordet NSFW",
   "hide_gore_boards": "Fshihet Gore Boards",
-  "hide_adult_boards": "Fshihet Adult Boards"
+  "hide_adult_boards": "Fshihet Adult Boards",
+  "static_gif": "GIF Statik",
+  "animated_gif": "GIF i Animuar"
 }

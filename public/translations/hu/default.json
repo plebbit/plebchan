@@ -219,5 +219,7 @@
   "token_id": "Token azonosító",
   "nsfw_boards": "NSFW táblák",
   "hide_gore_boards": "Gore táblák elrejtése",
-  "hide_adult_boards": "Felnőtt táblák elrejtése"
+  "hide_adult_boards": "Felnőtt táblák elrejtése",
+  "static_gif": "Statikus GIF",
+  "animated_gif": "Animált GIF"
 }

@@ -219,5 +219,7 @@
   "token_id": "令牌ID",
   "nsfw_boards": "NSFW板块",
   "hide_gore_boards": "隐藏Gore板块",
-  "hide_adult_boards": "隐藏成人板块"
+  "hide_adult_boards": "隐藏成人板块",
+  "static_gif": "静态GIF",
+  "animated_gif": "动画GIF"
 }

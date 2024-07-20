@@ -219,5 +219,7 @@
   "token_id": "Token kimliği",
   "nsfw_boards": "NSFW Panoları",
   "hide_gore_boards": "Gore Panolarını Gizle",
-  "hide_adult_boards": "Yetişkin Panolarını Gizle"
+  "hide_adult_boards": "Yetişkin Panolarını Gizle",
+  "static_gif": "Statik GIF",
+  "animated_gif": "Animasyonlu GIF"
 }

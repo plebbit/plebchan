@@ -219,5 +219,7 @@
   "token_id": "ID token",
   "nsfw_boards": "Papan NSFW",
   "hide_gore_boards": "Sembunyikan Papan Gore",
-  "hide_adult_boards": "Sembunyikan Papan Dewasa"
+  "hide_adult_boards": "Sembunyikan Papan Dewasa",
+  "static_gif": "GIF Statis",
+  "animated_gif": "GIF Animasi"
 }

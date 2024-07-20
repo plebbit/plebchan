@@ -219,5 +219,7 @@
   "token_id": "ID de token",
   "nsfw_boards": "Tableros NSFW",
   "hide_gore_boards": "Ocultar tableros de gore",
-  "hide_adult_boards": "Ocultar tableros para adultos"
+  "hide_adult_boards": "Ocultar tableros para adultos",
+  "static_gif": "GIF Estático",
+  "animated_gif": "GIF Animado"
 }

@@ -219,5 +219,7 @@
   "token_id": "टोकन आयडी",
   "nsfw_boards": "NSFW बोर्ड्स",
   "hide_gore_boards": "गोर बोर्ड्स लपवा",
-  "hide_adult_boards": "वयस्क बोर्ड्स लपवा"
+  "hide_adult_boards": "वयस्क बोर्ड्स लपवा",
+  "static_gif": "स्थिर GIF",
+  "animated_gif": "एनिमेटेड GIF"
 }

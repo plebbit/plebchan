@@ -219,5 +219,7 @@
   "token_id": "מזהה טוקן",
   "nsfw_boards": "גלריות NSFW",
   "hide_gore_boards": "הסתר לוחות Gore",
-  "hide_adult_boards": "הסתר לוחות המבוגרים"
+  "hide_adult_boards": "הסתר לוחות המבוגרים",
+  "static_gif": "GIF סטטי",
+  "animated_gif": "GIF מונפש"
 }

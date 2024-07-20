@@ -68,6 +68,8 @@ const Thumbnail = ({ commentMediaInfo, isFloatingEmbed, post, setShowThumbnail }
     thumbnailComponent = iframeThumbnail ? <img src={iframeThumbnail} alt='' onClick={() => setShowThumbnail(false)} /> : null;
   } else if (type === 'gif' && gifFrameUrl) {
     thumbnailComponent = <img src={gifFrameUrl} alt='' onClick={() => setShowThumbnail(false)} />;
+  } else if (type === 'gif' && !gifFrameUrl) {
+    thumbnailComponent = <img src={url} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'audio') {
     thumbnailComponent = <audio src={url} controls />;
   }
@@ -145,7 +147,15 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
 const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { type, url } = commentMediaInfo || {};
+  const { url } = commentMediaInfo || {};
+  let type = commentMediaInfo?.type;
+  const gifFrameUrl = useFetchGifFirstFrame(url);
+
+  if (type === 'gif' && gifFrameUrl) {
+    type = 'animated gif';
+  } else if (type === 'gif' && !gifFrameUrl) {
+    type = 'static gif';
+  }
 
   return (
     <span className={styles.content}>

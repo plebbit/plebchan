@@ -25,6 +25,7 @@ import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import { create } from 'zustand';
 import _ from 'lodash';
+import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 
 interface ShowOmittedRepliesState {
   showOmittedReplies: Record<string, boolean>;
@@ -184,7 +185,17 @@ const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
   const { link, spoiler } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
-  const { type, url } = commentMediaInfo || {};
+
+  const { url } = commentMediaInfo || {};
+  let type = commentMediaInfo?.type;
+  const gifFrameUrl = useFetchGifFirstFrame(url);
+
+  if (type === 'gif' && gifFrameUrl !== null) {
+    type = 'animated gif';
+  } else if (type === 'gif' && gifFrameUrl === null) {
+    type = 'static gif';
+  }
+
   const embedUrl = url && new URL(url);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);

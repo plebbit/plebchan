@@ -219,5 +219,7 @@
   "token_id": "টোকেন আইডি",
   "nsfw_boards": "এনএসএফডব্লিউ বোর্ডস",
   "hide_gore_boards": "গর বোর্ডস লুকান",
-  "hide_adult_boards": "পুরুষ বোর্ডস লুকান"
+  "hide_adult_boards": "পুরুষ বোর্ডস লুকান",
+  "static_gif": "স্ট্যাটিক GIF",
+  "animated_gif": "অ্যানিমেটেড GIF"
 }

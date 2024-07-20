@@ -219,5 +219,7 @@
   "token_id": "token id",
   "nsfw_boards": "NSFW Boards",
   "hide_gore_boards": "Hide Gore Boards",
-  "hide_adult_boards": "Hide Adult Boards"
+  "hide_adult_boards": "Hide Adult Boards",
+  "static_gif": "Static GIF",
+  "animated_gif": "Animated GIF"
 }
