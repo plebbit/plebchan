@@ -285,7 +285,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, pinned, postCid, replyCount, subplebbitAddress } = post || {};
+  const { author, cid, content, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -306,6 +306,8 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
       replyRefs.current[replyIndex]?.scrollIntoView();
     }
   }, [location.pathname, replies, subplebbitAddress]);
+
+  const stateString = useStateString(post);
 
   return (
     <>
@@ -363,6 +365,13 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               ))}
           </div>
+          {stateString && stateString !== 'Failed' ? (
+            <div className={styles.stateString}>
+              <LoadingEllipsis string={stateString} />
+            </div>
+          ) : (
+            state === 'failed' && <span className={styles.error}>{t('failed')}</span>
+          )}
         </div>
       )}
     </>
