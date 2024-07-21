@@ -364,7 +364,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, pinned, postCid, subplebbitAddress } = post || {};
+  const { author, cid, content, link, pinned, postCid, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -390,6 +390,8 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
       replyRefs.current[replyIndex]?.scrollIntoView();
     }
   }, [location.pathname, replies, subplebbitAddress]);
+
+  const stateString = useStateString(post);
 
   return (
     <div className={styles.postDesktop}>
@@ -450,6 +452,14 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             </div>
           ))}
       </div>
+      {stateString && stateString !== 'Failed' ? (
+        <div className={styles.stateString}>
+          <br />
+          <LoadingEllipsis string={stateString} />
+        </div>
+      ) : (
+        state === 'failed' && <span className={styles.error}>{t('failed')}</span>
+      )}
     </div>
   );
 };
