@@ -3,11 +3,13 @@ import { useEffect } from 'react';
 import { Subplebbit } from '@plebbit/plebbit-react-hooks';
 import { getFormattedTimeAgo } from '../lib/utils/time-utils';
 import useSubplebbitOfflineStore from '../stores/use-subplebbit-offline-store';
+import useSubplebbitsLoadingStartTimestamps from './use-subplebbits-loading-start-timestamps-store';
 
 const useIsSubplebbitOffline = (subplebbit: Subplebbit) => {
   const { t } = useTranslation();
   const { address, state, updatedAt, updatingState } = subplebbit || {};
   const { subplebbitOfflineState, setSubplebbitOfflineState, initializesubplebbitOfflineState } = useSubplebbitOfflineStore();
+  const subplebbitsLoadingStartTimestamps = useSubplebbitsLoadingStartTimestamps([address]);
 
   useEffect(() => {
     if (address && !subplebbitOfflineState[address]) {
@@ -22,15 +24,13 @@ const useIsSubplebbitOffline = (subplebbit: Subplebbit) => {
   }, [address, state, updatedAt, updatingState, setSubplebbitOfflineState]);
 
   const subplebbitOfflineStore = subplebbitOfflineState[address] || { initialLoad: true };
+  const loadingStartTimestamp = subplebbitsLoadingStartTimestamps[0] || 0;
 
-  const isLoading =
-    updatingState === 'resolving-address' ||
-    (updatingState === 'stopped' && state === 'stopped' && !updatedAt) ||
-    (subplebbitOfflineStore.initialLoad && updatingState === 'fetching-ipns' && !updatedAt);
+  const isLoading = subplebbitOfflineStore.initialLoad && (!updatedAt || Date.now() / 1000 - updatedAt >= 60 * 60) && Date.now() / 1000 - loadingStartTimestamp < 30;
 
-  const isOffline =
-    !isLoading && ((updatedAt && updatedAt < Date.now() / 1000 - 60 * 60) || updatingState === 'failed' || (updatingState === 'fetching-ipns' && !updatedAt));
+  const isOffline = !isLoading && ((updatedAt && updatedAt < Date.now() / 1000 - 60 * 60) || (!updatedAt && Date.now() / 1000 - loadingStartTimestamp >= 30));
 
+  const isOnline = updatedAt && Date.now() / 1000 - updatedAt < 60 * 60;
   const offlineIconClass = isLoading ? 'yellowOfflineIcon' : isOffline ? 'redOfflineIcon' : '';
 
   const offlineTitle = isLoading
@@ -39,7 +39,7 @@ const useIsSubplebbitOffline = (subplebbit: Subplebbit) => {
     ? isOffline && t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })
     : t('subplebbit_offline_info');
 
-  return { isOffline, isOnlineStatusLoading: isLoading, offlineIconClass, offlineTitle };
+  return { isOffline: !isOnline && isOffline, isOnlineStatusLoading: !isOnline && isLoading, offlineIconClass, offlineTitle };
 };
 
 export default useIsSubplebbitOffline;
