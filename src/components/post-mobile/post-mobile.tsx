@@ -185,72 +185,70 @@ const PostMessageMobile = ({ post }: PostProps) => {
   );
 
   return (
-    content && (
-      <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
-        {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
-        {removed ? (
+    <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
+      {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+      {removed ? (
+        <Tooltip
+          children={<span className={styles.removedContent}>({t('this_post_was_removed')})</span>}
+          content={`${_.capitalize(t('reason'))}: "${reason}"`}
+          showTooltip={!!reason}
+        />
+      ) : deleted ? (
+        <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
+      ) : (
+        <>
+          {!showOriginal && <Markdown content={displayContent} />}
+          {edit && original?.content !== post?.content && (
+            <span className={styles.editedInfo}>
+              {showOriginal && <Markdown content={original?.content} />}
+              <br />
+              {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}{' '}
+              {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
+              {showOriginal ? (
+                <Trans
+                  i18nKey={'click_here_to_hide_original'}
+                  shouldUnescape={true}
+                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                />
+              ) : (
+                <Trans
+                  i18nKey={'click_here_to_show_original'}
+                  shouldUnescape={true}
+                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                />
+              )}
+            </span>
+          )}
+        </>
+      )}
+      {/* TODO: commentAuthor is not available outside of editedComment, update when available */}
+      {/* {banned && (
+        <span className={styles.removedContent}>
+          <br />
+          <br />
           <Tooltip
-            children={<span className={styles.removedContent}>({t('this_post_was_removed')})</span>}
-            content={`${_.capitalize(t('reason'))}: "${reason}"`}
-            showTooltip={!!reason}
+            children={`(${t('user_banned')})`}
+            content={`${t('ban_expires_at', {
+              address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
+              timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
+              interpolation: { escapeValue: false },
+            })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
           />
-        ) : deleted ? (
-          <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
-        ) : (
-          <>
-            {!showOriginal && <Markdown content={displayContent} />}
-            {edit && original?.content !== post?.content && (
-              <span className={styles.editedInfo}>
-                {showOriginal && <Markdown content={original?.content} />}
-                <br />
-                {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}{' '}
-                {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
-                {showOriginal ? (
-                  <Trans
-                    i18nKey={'click_here_to_hide_original'}
-                    shouldUnescape={true}
-                    components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
-                  />
-                ) : (
-                  <Trans
-                    i18nKey={'click_here_to_show_original'}
-                    shouldUnescape={true}
-                    components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
-                  />
-                )}
-              </span>
-            )}
-          </>
-        )}
-        {/* TODO: commentAuthor is not available outside of editedComment, update when available */}
-        {/* {banned && (
-          <span className={styles.removedContent}>
-            <br />
-            <br />
-            <Tooltip
-              children={`(${t('user_banned')})`}
-              content={`${t('ban_expires_at', {
-                address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
-                timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
-                interpolation: { escapeValue: false },
-              })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
-            />
-          </span>
-        )} */}
-        {!isReply && content.length > 1000 && !isInPostView && (
-          <span className={styles.abbr}>
-            <br />
-            <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
-          </span>
-        )}
-        {!cid && state === 'pending' && stateString !== 'Failed' && (
-          <>
-            <br />
-            {loadingString}
-          </>
-        )}
-      </blockquote>
-    )
+        </span>
+      )} */}
+      {!isReply && content.length > 1000 && !isInPostView && (
+        <span className={styles.abbr}>
+          <br />
+          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
+        </span>
+      )}
+      {!cid && state === 'pending' && stateString !== 'Failed' && (
+        <>
+          <br />
+          {loadingString}
+        </>
+      )}
+    </blockquote>
   );
 };
 
@@ -261,7 +259,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   if (editedComment) {
     post = editedComment;
   }
-  const { author, cid, content, postCid, subplebbitAddress } = post || {};
+  const { author, cid, postCid, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -275,7 +273,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
           data-post-cid={postCid}
         >
           <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
-          {content && !hidden && <PostMessageMobile post={post} />}
+          {!hidden && <PostMessageMobile post={post} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>

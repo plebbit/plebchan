@@ -341,7 +341,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     post = editedComment;
   }
 
-  const { author, cid, content, link, postCid, subplebbitAddress } = post || {};
+  const { author, cid, link, postCid, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -356,7 +356,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
       >
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
         {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
-        {content && !hidden && <PostMessage post={post} />}
+        {!hidden && <PostMessage post={post} />}
       </div>
     </div>
   );

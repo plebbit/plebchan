@@ -4,7 +4,6 @@
   border: 1px solid #aaa;
   background-color: var(--avatar-background-color, white);
   margin-left: 10px;
-  border-radius: 32px;
   overflow: hidden;
 }
 
