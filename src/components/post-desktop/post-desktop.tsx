@@ -256,8 +256,8 @@ const PostMessage = ({ post }: PostProps) => {
 
   const stateString = useStateString(post);
 
-  const loadingString = stateString && (
-    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  const loadingString = (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString || t('loading')} /> : stateString}</div>
   );
 
   return (
