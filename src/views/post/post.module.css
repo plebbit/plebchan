@@ -519,8 +519,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100vw - 28px);
-  width: 100vw;
 }
 
 @media (max-width: 640px) {
@@ -544,10 +542,6 @@
   .authorAvatar {
     vertical-align: middle;
   }
-
-  .stateString {
-    padding-left: 5px;
-  }
 }
 
 @media (min-width: 640px) {
@@ -567,9 +561,5 @@
 
   .replyMobile {
     display: none;
-  }
-
-  .stateString {
-    padding-top: 10px;
   }
 }

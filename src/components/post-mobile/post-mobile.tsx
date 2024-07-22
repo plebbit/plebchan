@@ -348,7 +348,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               )}
             </div>
-            {post?.replyCount === undefined && (
+            {post?.replyCount === undefined && !isInPendingPostView && (
               <span className={styles.loadingString}>
                 <LoadingEllipsis string={t('loading_comments')} />
               </span>
@@ -365,13 +365,14 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               ))}
           </div>
-          {stateString && stateString !== 'Failed' ? (
-            <div className={styles.stateString}>
-              <LoadingEllipsis string={stateString} />
-            </div>
-          ) : (
-            state === 'failed' && <span className={styles.error}>{t('failed')}</span>
-          )}
+          {!isInPendingPostView &&
+            (stateString && stateString !== 'Failed' ? (
+              <div className={styles.stateString}>
+                <LoadingEllipsis string={stateString} />
+              </div>
+            ) : (
+              state === 'failed' && <span className={styles.error}>{t('failed')}</span>
+            ))}
         </div>
       )}
     </>
