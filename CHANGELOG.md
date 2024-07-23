@@ -1,3 +1,51 @@
+## [0.2.4](https://github.com/plebbit/plebchan/compare/v0.2.3...v0.2.4) (2024-07-23)
+
+
+### Bug Fixes
+
+* "this thread is closed" didn't appear instantly after mod edit ([84abe90](https://github.com/plebbit/plebchan/commit/84abe902c455f1e9516ac7f6cda944ec532c9921))
+* **board title:** offline icon would appear in p/all and p/subscriptions ([38e60fd](https://github.com/plebbit/plebchan/commit/38e60fd797812756480c84d46fb81a4223efec9a))
+* **catalog post:** it was not possible to scroll past the floating post preview ([9960e40](https://github.com/plebbit/plebchan/commit/9960e400e822214377842cf43789a20c5324caf8))
+* **edit menu:** reason field would reset at menu close ([15462f1](https://github.com/plebbit/plebchan/commit/15462f14ede7b0b3920ae62305b2bc3b112476da))
+* **iframe:** background was white in tomorrow theme ([8d766cc](https://github.com/plebbit/plebchan/commit/8d766cc9e3b1bf668b02fcaa651678b4cb125b38))
+* **markdown:** bullet point lists were bugged ([9552938](https://github.com/plebbit/plebchan/commit/9552938b6de5fd3d860cca8c9335ce6f1487adbb))
+* **post menu:** block button was visible for description and rules ([4ffd750](https://github.com/plebbit/plebchan/commit/4ffd75010d53dbf068fd6e4040954a6902163d10))
+* **post:** failed replies would link to op ([44e518a](https://github.com/plebbit/plebchan/commit/44e518a3ad449bb2e6857634d0fffe04b622d919))
+* **post:** include pending replies in "x replies omitted" count ([01dacc8](https://github.com/plebbit/plebchan/commit/01dacc82705f0c9a6ef20fe53673de3c06c220e5))
+* **post:** pending reply to op would show quote link to op ([ec4ba55](https://github.com/plebbit/plebchan/commit/ec4ba550aa0950afd9374e9a6c17b26553682dff))
+* **post:** permalink (c/) of pending reply shouldn't link to anything ([3ddf26c](https://github.com/plebbit/plebchan/commit/3ddf26c93029cc60452d2aa3e13a752e3c4284fc))
+* **post:** remove "user was banned for this post" because it's only visible to mods at the moment ([89e19ad](https://github.com/plebbit/plebchan/commit/89e19adb5c4d3717fe4a785047aca2f790be4643))
+* **post:** reply quote link couldn't render in posts with link and no content ([ddb462b](https://github.com/plebbit/plebchan/commit/ddb462b95e7c00fc81f28234d12ce3909ede7dc8))
+* **replies:** a reply would not appear immediately if published to a reply that was just published ([3950f7b](https://github.com/plebbit/plebchan/commit/3950f7b8647df971e4e1bb4147838ae60e3166ac))
+* reply count was bugged ([6d6187e](https://github.com/plebbit/plebchan/commit/6d6187e531065f744dde8a16f14977112c418407))
+* **reply modal:** cursor would move to end of text while replying ([6430607](https://github.com/plebbit/plebchan/commit/6430607363419b695487942ec31ea071f4205912))
+* **spoiler:** spoiler image wasn't showing for iframes ([85aeb86](https://github.com/plebbit/plebchan/commit/85aeb860475a6efa223ec0e8b931671ca91a5edb))
+* **subplebbit stats:** stats box appeared even if stats are undefined ([811405d](https://github.com/plebbit/plebchan/commit/811405dea9d72ef41a115d7a0e110c57b1040f89))
+* **themes:** inherit selected theme in pending post page ([d66a0b8](https://github.com/plebbit/plebchan/commit/d66a0b8efe49f0401e04155e177f60d4493e289a))
+* **topbar:** empty brackets would show for sub category if empty ([a31beee](https://github.com/plebbit/plebchan/commit/a31beee6318047e3bed5f02820468360e6b3db5c))
+
+
+### Features
+
+* **board header:** add yellow offline icon for loading online status, red icon for offline status ([fe434cb](https://github.com/plebbit/plebchan/commit/fe434cb6343a6a00da1467c4b9094cb507a1fbef))
+* **post page:** add error line above post ([a234776](https://github.com/plebbit/plebchan/commit/a2347769e27145677388d01a462b2d93ab76be51))
+* **post page:** add reply count and link count in top row ([8d05db8](https://github.com/plebbit/plebchan/commit/8d05db8843748c297c1dbb4573e1547b51eb7d4a))
+* **post:** add 'loading comments' indicator ([a6a551a](https://github.com/plebbit/plebchan/commit/a6a551a25f4b0f14b3650ec13d016ec60146f636))
+* **post:** add avatars ([1e16068](https://github.com/plebbit/plebchan/commit/1e16068c3a18693dbf7bbd91e9c11f409d9673f1))
+* **post:** add loading state string ([954b158](https://github.com/plebbit/plebchan/commit/954b158704eced583cae4f689c74721d47e53081))
+* **post:** add support for static GIFs ([7253e4d](https://github.com/plebbit/plebchan/commit/7253e4d1a0edb20eed576826e1ce80d8169d9abf))
+* **post:** add tooltip to comment edit timestamp ([e716a45](https://github.com/plebbit/plebchan/commit/e716a45a3130bcfa8877a2b347012e6b63b4d261))
+* **post:** show loading state info ([7ff8af7](https://github.com/plebbit/plebchan/commit/7ff8af7fcd78f044d352fc74b67f7d3a712e5a7d))
+* **settings:** add avatar setting ([f2e4f14](https://github.com/plebbit/plebchan/commit/f2e4f14a33ac2d41e029f54ae05000f31468f8f8))
+* use red offline icon for subplebbits that are most likely offline (ipns record fails to update) ([9f75449](https://github.com/plebbit/plebchan/commit/9f7544936e9418ce99f562d6ccdd1a043adf2602))
+
+
+### Performance Improvements
+
+* **offline indicator:** improve reliability ([bd7c5ae](https://github.com/plebbit/plebchan/commit/bd7c5ae57912e54b7cf996952a291d7de2467cc6))
+
+
+
 ## [0.2.3](https://github.com/plebbit/plebchan/compare/v0.2.2...v0.2.3) (2024-07-03)
 
 
@@ -6,21 +54,28 @@
 * **board:** description and rules weren't visible on feed view ([4f312f6](https://github.com/plebbit/plebchan/commit/4f312f67c0354737d2fa37ee19e531990e880410))
 * **catalog filters:** filters changed their opposite value ([b3bfc7f](https://github.com/plebbit/plebchan/commit/b3bfc7fccc9f90dfd88d51a85629684c5caa58b0))
 * **catalog post:** floating post preview was not visible on mobile ([38e1c78](https://github.com/plebbit/plebchan/commit/38e1c7865417943329956e960a33b4fd50315692))
+* **edit menu:** banning wasn't working properly ([9ee2c6c](https://github.com/plebbit/plebchan/commit/9ee2c6c00e6ddff5da84f349cccbaf60208c3cd1))
 * **post mobile:** backlinks position was bugged ([6647f25](https://github.com/plebbit/plebchan/commit/6647f25bf88b54a11dfe64af2a56b2819e6c4d5a))
+* **post:** '0 replies omitted' appeared if all replies are removed or deleted ([76fc1dd](https://github.com/plebbit/plebchan/commit/76fc1dd2f19eb9046ffd9c93dc03e9e244f50104))
 * **post:** author edit reason was missing ([0783374](https://github.com/plebbit/plebchan/commit/0783374a30315d012aa0fffe76403f3658fbf98e))
+* **tooltip:** position could change from top to side ([7fce789](https://github.com/plebbit/plebchan/commit/7fce78909602b43c17fd60cab5c45d15a6179af4))
+* **topbar:** time filter would redirect to board home on mobile ([a662bb6](https://github.com/plebbit/plebchan/commit/a662bb6718e094022d4c3fa8fe222064bda697ae))
 
 
 ### Features
 
+* 'tomorrow' theme applies the browser's dark color scheme ([387851d](https://github.com/plebbit/plebchan/commit/387851d74352281c6f75f71f0c46ea552eaf4e57))
 * add FAQ page ([66cc23c](https://github.com/plebbit/plebchan/commit/66cc23c404f158c839bc1382aab2f0db3181a78a))
 * **board header:** add sub online status info to offline icon title ([5276f0a](https://github.com/plebbit/plebchan/commit/5276f0ad43a38afc90b0341c5e91c904efb8348b))
 * **catalog:** add 'you have blocked this board' message and unblock button ([d3c29fd](https://github.com/plebbit/plebchan/commit/d3c29fd6ece80c0293d5d757158373edec0912e6))
 * **catalog:** display error from subplebbit in feed (such as, 'address is incorrect') ([9495e98](https://github.com/plebbit/plebchan/commit/9495e98183e9852d6c3ca1b172150d247c4b18e9))
 * **homepage:** offline icons give info about the board online status ([c81c7b8](https://github.com/plebbit/plebchan/commit/c81c7b85f099c837a1bcb9f5cbf51e018c0bbd16))
+* **post:** add 'user was banned for this post' if user was banned by board to post in it ([f6c1fb4](https://github.com/plebbit/plebchan/commit/f6c1fb400b4950ec38c0414e993929ecc78e8bdf))
 * **post:** add post count and highlight functionality to u/address ([a6a41ed](https://github.com/plebbit/plebchan/commit/a6a41edd760a9b5f41302bd8008695f290a5c9e7))
 * **post:** add tooltips for title and display names that are too long ([505aed4](https://github.com/plebbit/plebchan/commit/505aed4c2467bc90e44a6f300c45af8af1f51525))
 * **post:** clicking "+" button next to "omitted replies" message shows all replies ([713739b](https://github.com/plebbit/plebchan/commit/713739b02f1572164f1923b48b4e4d19b0c48ebe))
 * **post:** clicking "+" button next to "omitted replies" message shows all replies ([d78ce84](https://github.com/plebbit/plebchan/commit/d78ce84db407cbb364e447fec7ec74e4741e08d7))
+* **post:** show edit reason as tooltip over red text ([1bccf87](https://github.com/plebbit/plebchan/commit/1bccf87750ceb32c8bcc016d6a92e2cba1fee438))
 * **reply modal:** greentext by selecting text ([972964d](https://github.com/plebbit/plebchan/commit/972964dedafea109f2674a0fffff58e461b59912))
 * **styles:** remember style selection per sfw or nsfw category, instead of single board ([06e1828](https://github.com/plebbit/plebchan/commit/06e18289a4d8b46f9b6e41d98d87aa16b02ceb68))
 
