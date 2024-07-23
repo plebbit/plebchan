@@ -505,22 +505,23 @@
 }
 
 .authorAvatar {
-  width: 22px;
-  height: 22px;
-  background-size: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 24px;
   display: inline-block;
-  vertical-align: top;
+  position: relative;
+  padding-right: 2px;
 }
 
+.authorAvatar img {
+  width: 24px;
+  max-height: 24px;
+  position: absolute;
+  bottom: -5px;
+}
 
 .stateString {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100vw - 28px);
-  width: 100vw;
 }
 
 @media (max-width: 640px) {
@@ -542,11 +543,13 @@
   }
 
   .authorAvatar {
-    vertical-align: middle;
+    width: 20px;
   }
 
-  .stateString {
-    padding-left: 5px;
+  .authorAvatar img {
+    width: 20px;
+    max-height: 20px;
+    bottom: -3px;
   }
 }
 
@@ -567,9 +570,5 @@
 
   .replyMobile {
     display: none;
-  }
-
-  .stateString {
-    padding-top: 10px;
   }
 }

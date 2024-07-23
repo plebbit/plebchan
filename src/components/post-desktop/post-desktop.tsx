@@ -102,9 +102,9 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         {!(isDescription || isRules) && (
           <>
             {isReply && author?.avatar && (
-              <>
-                <span className={styles.authorAvatar} style={{ backgroundImage: `url(${avatarImageUrl})` }} />{' '}
-              </>
+              <span className={styles.authorAvatar}>
+                <img src={avatarImageUrl} alt='' />
+              </span>
             )}
             (u/
             <Tooltip
@@ -256,8 +256,8 @@ const PostMessage = ({ post }: PostProps) => {
 
   const stateString = useStateString(post);
 
-  const loadingString = stateString && (
-    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString} /> : stateString}</div>
+  const loadingString = (
+    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString || t('loading')} /> : stateString}</div>
   );
 
   return (
@@ -341,7 +341,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     post = editedComment;
   }
 
-  const { author, cid, content, link, postCid, subplebbitAddress } = post || {};
+  const { author, cid, link, postCid, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -356,7 +356,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
       >
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
         {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
-        {content && !hidden && <PostMessage post={post} />}
+        {!hidden && <PostMessage post={post} />}
       </div>
     </div>
   );
@@ -434,7 +434,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             )}
           </span>
         )}
-        {post?.replyCount === undefined && (
+        {post?.replyCount === undefined && !isInPendingPostView && (
           <span className={styles.loadingString}>
             <LoadingEllipsis string={t('loading_comments')} />
           </span>
@@ -452,14 +452,15 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             </div>
           ))}
       </div>
-      {stateString && stateString !== 'Failed' ? (
-        <div className={styles.stateString}>
-          <br />
-          <LoadingEllipsis string={stateString} />
-        </div>
-      ) : (
-        state === 'failed' && <span className={styles.error}>{t('failed')}</span>
-      )}
+      {!isInPendingPostView &&
+        (stateString && stateString !== 'Failed' ? (
+          <div className={styles.stateString}>
+            <br />
+            <LoadingEllipsis string={stateString} />
+          </div>
+        ) : (
+          state === 'failed' && <span className={styles.error}>{t('failed')}</span>
+        ))}
     </div>
   );
 };

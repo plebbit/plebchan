@@ -86,10 +86,15 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
     if (ref) {
       textRef.current = ref;
       !isMobile && ref.focus();
-      const len = ref.value.length;
-      ref.setSelectionRange(len, len);
     }
   };
+
+  useEffect(() => {
+    if (textRef.current) {
+      const len = textRef.current.value.length;
+      textRef.current.setSelectionRange(len, len);
+    }
+  }, []);
 
   const contentPrefix = `c/${parentCid && Plebbit.getShortCid(parentCid)}\n`;
 
