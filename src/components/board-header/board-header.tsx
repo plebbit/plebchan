@@ -45,7 +45,9 @@ const BoardHeader = () => {
       )}
       <div className={styles.boardTitle}>
         {title || `p/${shortAddress || subplebbitAddress}`}
-        {(isOffline || isOnlineStatusLoading) && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
+        {(isOffline || isOnlineStatusLoading) && !isInAllView && !isInSubscriptionsView && (
+          <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />
+        )}
       </div>
       <div className={styles.boardSubtitle}>{subtitle}</div>
       <hr />
