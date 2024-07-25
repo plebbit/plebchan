@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Subplebbit } from '@plebbit/plebbit-react-hooks';
 import { getFormattedTimeAgo } from '../lib/utils/time-utils';
 import useSubplebbitOfflineStore from '../stores/use-subplebbit-offline-store';
-import useSubplebbitsLoadingStartTimestamps from './use-subplebbits-loading-start-timestamps-store';
+import useSubplebbitsLoadingStartTimestamps from '../stores/use-subplebbits-loading-start-timestamps-store';
 
 const useIsSubplebbitOffline = (subplebbit: Subplebbit) => {
   const { t } = useTranslation();
