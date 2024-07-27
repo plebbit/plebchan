@@ -124,6 +124,7 @@
   color: var(--catalog-post-preview-color);
   font-family: arial, helvetica, sans-serif;
   font-size: 10pt;
+  overflow: hidden;
 }
 
 .postPreview .postSubject {
