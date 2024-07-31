@@ -101,7 +101,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         </span>
         {!(isDescription || isRules) && (
           <>
-            {isReply && author?.avatar && (
+            {author?.avatar && (
               <span className={styles.authorAvatar}>
                 <img src={avatarImageUrl} alt='' />
               </span>
