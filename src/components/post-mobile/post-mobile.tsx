@@ -164,6 +164,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
   const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const [showOriginal, setShowOriginal] = useState(false);
@@ -244,7 +245,11 @@ const PostMessageMobile = ({ post }: PostProps) => {
       {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />
-          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
+          <Trans
+            i18nKey={'comment_too_long'}
+            shouldUnescape={true}
+            components={{ 1: <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} /> }}
+          />
         </span>
       )}
       {!cid && state === 'pending' && stateString !== 'Failed' && (
