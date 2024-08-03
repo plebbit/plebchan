@@ -23,6 +23,7 @@ import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './post-form.module.css';
 import _ from 'lodash';
 import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
+import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 
 type SubmitState = {
   subplebbitAddress: string | undefined;
@@ -71,7 +72,16 @@ const useSubmitStore = create<SubmitState>((set) => ({
 export const LinkTypePreviewer = ({ link }: { link: string }) => {
   const { t } = useTranslation();
   const mediaInfo = getLinkMediaInfo(link);
-  return isValidURL(link) ? mediaInfo?.type : t('invalid_url');
+  let type = mediaInfo?.type;
+  const gifFrameUrl = useFetchGifFirstFrame(mediaInfo?.url);
+
+  if (type === 'gif' && gifFrameUrl !== null) {
+    type = t('animated_gif');
+  } else if (type === 'gif' && gifFrameUrl === null) {
+    type = t('static_gif');
+  }
+
+  return isValidURL(link) ? type : t('invalid_url');
 };
 
 const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {

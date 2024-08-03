@@ -89,6 +89,7 @@
 
 .linkType {
   font-weight: normal;
+  text-transform: lowercase;
 }
 
 .linkField input[type="text"] {
