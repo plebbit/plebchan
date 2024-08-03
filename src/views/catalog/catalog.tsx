@@ -1,85 +1,25 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Comment, useAccount, Subplebbit, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useCatalogFeedRows from '../../hooks/use-catalog-feed-rows';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
-import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useWindowWidth from '../../hooks/use-window-width';
 import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
+import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
 import styles from './catalog.module.css';
-import _ from 'lodash';
-import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
-import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
-
-const useFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit) => {
-  const { t } = useTranslation();
-  const { address, createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
-  const { avatarUrl } = suggested || {};
-  const { showTextOnlyThreads } = useCatalogFiltersStore();
-
-  const location = useLocation();
-  const isInAllView = isAllView(location.pathname, useParams());
-  const multisub = useMultisubMetadata();
-
-  const feedWithDescriptionAndRules = useMemo(() => {
-    if (!isFeedLoaded) {
-      return []; // prevent rules and description from appearing while feed is loading
-    }
-
-    if (!description && !rules && !isInAllView) {
-      return feed;
-    }
-
-    const _feed = [...feed];
-    if ((description && description.length > 0 && (showTextOnlyThreads || (!showTextOnlyThreads && suggested?.avatarUrl))) || isInAllView) {
-      _feed.unshift({
-        isDescription: true,
-        subplebbitAddress: address,
-        timestamp: createdAt,
-        author: { displayName: `## ${t('board_mods')}` },
-        content: isInAllView ? multisub?.description : description,
-        link: avatarUrl,
-        title: t('welcome_to_board', { board: isInAllView ? multisub?.title : title || `p/${shortAddress}`, interpolation: { escapeValue: false } }),
-        pinned: true,
-        locked: true,
-      });
-    }
-    if (rules && rules.length > 0 && showTextOnlyThreads) {
-      _feed.unshift({
-        isRules: true,
-        subplebbitAddress: address,
-        timestamp: createdAt,
-        author: { displayName: `## ${t('board_mods')}` },
-        content: rules.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n'),
-        title: _.capitalize(t('rules')),
-        pinned: true,
-        locked: true,
-      });
-    }
-    return _feed;
-  }, [feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub, showTextOnlyThreads, suggested?.avatarUrl]);
-
-  const rows = useMemo(() => {
-    const rows = [];
-    for (let i = 0; i < feedWithDescriptionAndRules.length; i += columnCount) {
-      rows.push(feedWithDescriptionAndRules.slice(i, i + columnCount));
-    }
-    return rows;
-  }, [feedWithDescriptionAndRules, columnCount]);
-
-  return rows;
-};
 
 const catalogFilter = (comment: Comment) => {
   const commentMediaInfo = getCommentMediaInfo(comment);
@@ -212,7 +152,7 @@ const Catalog = () => {
 
   const isFeedLoaded = feed.length > 0 || state === 'failed';
 
-  const rows = useFeedRows(columnCount, feed, isFeedLoaded, subplebbit);
+  const rows = useCatalogFeedRows(columnCount, feed, isFeedLoaded, subplebbit);
 
   // save the last Virtuoso state to restore it when navigating back
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);

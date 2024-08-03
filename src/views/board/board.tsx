@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAccount, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './board.module.css';
@@ -19,6 +19,20 @@ import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
+
+// show account comments instantly in the feed instead of waiting for the next feed update, then hide them when they are in the feed
+const AccountCommentsNotYetInFeed = ({ subplebbitAddress, feed }: { subplebbitAddress: string; feed: any }) => {
+  const { accountComments } = useAccountComments();
+
+  const _feed = [...feed];
+
+  const filteredComments = accountComments.filter((comment) => {
+    const { cid, deleted, postCid, removed } = comment || {};
+    return !deleted && !removed && cid && cid === postCid && comment?.subplebbitAddress === subplebbitAddress && !_feed.some((post) => post.cid === cid);
+  });
+
+  return filteredComments.map((comment) => <Post key={comment.cid} post={comment} />);
+};
 
 const Board = () => {
   const { t } = useTranslation();
@@ -161,6 +175,7 @@ const Board = () => {
               title={title}
             />
           )}
+          {subplebbitAddress && <AccountCommentsNotYetInFeed subplebbitAddress={subplebbitAddress} feed={feed} />}
         </>
       )}
       <Virtuoso

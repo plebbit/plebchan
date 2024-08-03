@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAccountComments, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -383,6 +383,9 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const visiblelinksCount = useCountLinksInReplies(post, 5);
   const totalLinksCount = useCountLinksInReplies(post);
   const replyCount = replies?.length;
+  const { accountComments } = useAccountComments();
+  const isPostInAccountComments = accountComments?.find((comment) => comment.cid === cid);
+
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
@@ -439,7 +442,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             )}
           </span>
         )}
-        {post?.replyCount === undefined && !isInPendingPostView && (
+        {post?.replyCount === undefined && !isPostInAccountComments && !isInPendingPostView && (
           <span className={styles.loadingString}>
             <LoadingEllipsis string={t('loading_comments')} />
           </span>
