@@ -27,8 +27,16 @@ const AccountCommentsNotYetInFeed = ({ subplebbitAddress, feed }: { subplebbitAd
   const _feed = [...feed];
 
   const filteredComments = accountComments.filter((comment) => {
-    const { cid, deleted, postCid, removed } = comment || {};
-    return !deleted && !removed && cid && cid === postCid && comment?.subplebbitAddress === subplebbitAddress && !_feed.some((post) => post.cid === cid);
+    const { cid, deleted, postCid, removed, state } = comment || {};
+    return (
+      !deleted &&
+      !removed &&
+      state === 'succeeded' &&
+      cid &&
+      cid === postCid &&
+      comment?.subplebbitAddress === subplebbitAddress &&
+      !_feed.some((post) => post.cid === cid)
+    );
   });
 
   return filteredComments.map((comment) => <Post key={comment.cid} post={comment} />);

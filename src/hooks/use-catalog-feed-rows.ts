@@ -33,13 +33,14 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
 
     // show account comments instantly in the feed instead of waiting for the next feed update, then hide them when they are in the feed
     accountComments.forEach((comment) => {
-      const { cid, deleted, link, postCid, removed, subplebbitAddress } = comment || {};
+      const { cid, deleted, link, postCid, removed, state, subplebbitAddress } = comment || {};
       const commentMediaInfo = getCommentMediaInfo(comment);
       const isMediaShowed = getHasThumbnail(commentMediaInfo, link);
 
       if (
         !deleted &&
         !removed &&
+        state === 'succeeded' &&
         (!showTextOnlyThreads || (showTextOnlyThreads && !isMediaShowed)) &&
         cid &&
         cid === postCid &&
