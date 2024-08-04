@@ -31,29 +31,38 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
 
     const _feed = [...feed];
 
-    // show account comments instantly in the feed instead of waiting for the next feed update, then hide them when they are in the feed
-    accountComments.forEach((comment) => {
+    // show account comments instantly in the feed once published (cid defined), instead of waiting for the feed to update
+    const filteredComments = accountComments.filter((comment) => {
       const { cid, deleted, link, postCid, removed, state, subplebbitAddress } = comment || {};
       const commentMediaInfo = getCommentMediaInfo(comment);
       const isMediaShowed = getHasThumbnail(commentMediaInfo, link);
 
-      if (
+      return (
         !deleted &&
         !removed &&
         state === 'succeeded' &&
-        (!showTextOnlyThreads || (showTextOnlyThreads && !isMediaShowed)) &&
+        (showTextOnlyThreads || (!showTextOnlyThreads && isMediaShowed)) &&
         cid &&
         cid === postCid &&
         subplebbitAddress === address &&
         !_feed.some((feedItem) => feedItem.cid === cid)
-      ) {
-        _feed.unshift({
-          ...comment,
-          isAccountComment: true,
-        });
-      }
+      );
     });
 
+    // show newest account comment at the top of the feed but after pinned posts
+    const lastPinnedIndex = _feed.map((post) => post.pinned).lastIndexOf(true);
+    if (filteredComments.length > 0) {
+      _feed.splice(
+        lastPinnedIndex + 1,
+        0,
+        ...filteredComments.map((comment) => ({
+          ...comment,
+          isAccountComment: true,
+        })),
+      );
+    }
+
+    // add subplebbit description and rules as fake posts at the top of the feed
     if ((description && description.length > 0 && (showTextOnlyThreads || (!showTextOnlyThreads && suggested?.avatarUrl))) || isInAllView) {
       _feed.unshift({
         isDescription: true,
