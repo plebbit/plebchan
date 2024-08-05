@@ -5,8 +5,6 @@ interface ThemeState {
   themes: {
     nsfw: string;
     sfw: string;
-    all: string;
-    subscriptions: string;
   };
   currentTheme: string | null;
   setTheme: (category: keyof ThemeState['themes'], theme: string) => void;
@@ -23,8 +21,6 @@ const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'],
   themes: {
     nsfw: 'yotsuba',
     sfw: 'yotsuba-b',
-    all: 'yotsuba-b',
-    subscriptions: 'yotsuba-b',
   },
   currentTheme: null,
   setTheme: async (category, theme) => {
@@ -44,8 +40,6 @@ const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'],
     const themes: Record<keyof ThemeState['themes'], string> = {
       nsfw: 'yotsuba',
       sfw: 'yotsuba-b',
-      all: 'yotsuba-b',
-      subscriptions: 'yotsuba-b',
     };
     entries.forEach(([key, value]) => {
       themes[key] = value;

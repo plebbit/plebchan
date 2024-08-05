@@ -19,10 +19,8 @@ const useInitialTheme = () => {
 
   if (isInPendingPostView) {
     return currentTheme || 'yotsuba';
-  } else if (isInAllView) {
-    return getTheme('all') || 'yotsuba-b';
-  } else if (isInSubscriptionsView) {
-    return getTheme('subscriptions') || 'yotsuba-b';
+  } else if (isInAllView || isInSubscriptionsView) {
+    return getTheme('sfw') || 'yotsuba-b';
   } else if (isInHomeView || isInNotFoundView) {
     return 'yotsuba';
   } else if (subplebbitAddress) {
