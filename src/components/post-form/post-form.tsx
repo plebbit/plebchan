@@ -142,8 +142,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   };
 
-  const getAnonAddressForPost = async () => {
-    if (anonMode) {
+  const hasCalledAnonAddressRef = useRef(false);
+
+  const getAnonAddressForPost = useCallback(async () => {
+    if (anonMode && !hasCalledAnonAddressRef.current) {
+      hasCalledAnonAddressRef.current = true;
       const newSigner = (await getNewSigner()) || {};
       setSubmitStore({
         signer: newSigner,
@@ -153,7 +156,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         },
       });
     }
-  };
+  }, [anonMode, getNewSigner, setSubmitStore, displayName]);
 
   const onPublishPost = async () => {
     if (!title && !content && !link) {
@@ -165,9 +168,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       return;
     }
 
-    getAnonAddressForPost().then(() => {
-      publishComment();
-    });
+    publishComment();
   };
 
   const params = useParams();
@@ -194,8 +195,9 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const cid = params?.commentCid as string;
   const { setPublishReplyOptions, resetPublishReplyOptions, replyIndex, publishReply } = useReply({ cid, subplebbitAddress });
 
-  const getAnonAddressForReply = async () => {
-    if (anonMode) {
+  const getAnonAddressForReply = useCallback(async () => {
+    if (anonMode && !hasCalledAnonAddressRef.current) {
+      hasCalledAnonAddressRef.current = true;
       const existingSigner = getExistingSigner(address);
       if (existingSigner) {
         console.log('onPublishReply - existingSigner:', existingSigner);
@@ -207,7 +209,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
           },
         });
       } else {
-        const newSigner = (await getNewSigner()) || {};
+        const newSigner = await getNewSigner();
         setPublishReplyOptions({
           signer: newSigner,
           author: {
@@ -217,7 +219,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         });
       }
     }
-  };
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, displayName, anonMode]);
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -233,9 +235,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       return;
     }
 
-    getAnonAddressForReply().then(() => {
-      publishReply();
-    });
+    publishReply();
   };
 
   useEffect(() => {
@@ -245,6 +245,16 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       closeForm();
     }
   }, [replyIndex, resetPublishReplyOptions, closeForm]);
+
+  useEffect(() => {
+    if (anonMode) {
+      if (isInPostView) {
+        getAnonAddressForReply();
+      } else {
+        getAnonAddressForPost();
+      }
+    }
+  }, [anonMode, getAnonAddressForPost, getAnonAddressForReply, isInPostView]);
 
   return (
     <table className={styles.postFormTable}>

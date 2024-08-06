@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
@@ -37,29 +37,32 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
   const comment = useComment({ commentCid: postCid });
   const address = comment?.author?.address;
 
-  const getAnonAddressForReply = async () => {
-    if (anonMode) {
-      const existingSigner = getExistingSigner(address);
-      if (existingSigner) {
-        setPublishReplyOptions({
-          signer: existingSigner,
-          author: {
-            displayName,
-            address: existingSigner.address,
-          },
-        });
-      } else {
-        const newSigner = (await getNewSigner()) || {};
-        setPublishReplyOptions({
-          signer: newSigner,
-          author: {
-            displayName,
-            address: newSigner.address,
-          },
-        });
+  const hasCalledAnonAddressRef = useRef(false);
+
+  const getAnonAddressForReply = useCallback(async () => {
+    if (anonMode && !hasCalledAnonAddressRef.current) {
+      hasCalledAnonAddressRef.current = true;
+      let signer = getExistingSigner(address);
+      if (!signer) {
+        signer = await getNewSigner();
+        if (signer) {
+          setPublishReplyOptions({
+            signer,
+            author: {
+              displayName,
+              address: signer.address,
+            },
+          });
+        }
       }
     }
-  };
+  }, [anonMode, address, getExistingSigner, getNewSigner, displayName, setPublishReplyOptions]);
+
+  useEffect(() => {
+    if (anonMode) {
+      getAnonAddressForReply();
+    }
+  }, [anonMode, getAnonAddressForReply]);
 
   const onPublishReply = async () => {
     const currentContent = textRef.current?.value || '';
@@ -75,10 +78,8 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
       return;
     }
 
-    getAnonAddressForReply().then(() => {
-      publishReply();
-      closeModal();
-    });
+    publishReply();
+    closeModal();
   };
 
   const nodeRef = useRef<HTMLDivElement>(null);
