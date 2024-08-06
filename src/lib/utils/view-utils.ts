@@ -62,7 +62,7 @@ export const isHomeView = (pathname: string): boolean => {
 };
 
 export const isPendingPostView = (pathname: string, params: ParamsType): boolean => {
-  return pathname === `/profile/${params.accountCommentIndex}`;
+  return pathname === `/profile/${params.accountCommentIndex}` || pathname === `/profile/${params.accountCommentIndex}/settings`;
 };
 
 export const isPostPageView = (pathname: string, params: ParamsType): boolean => {

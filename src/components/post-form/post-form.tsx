@@ -256,13 +256,6 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   }, [anonMode, getAnonAddressForPost, getAnonAddressForReply, isInPostView]);
 
-  useEffect(() => {
-    if (subplebbitAddress) {
-      resetSubmitStore();
-      resetPublishReplyOptions();
-    }
-  }, [subplebbitAddress, resetSubmitStore, resetPublishReplyOptions]);
-
   return (
     <table className={styles.postFormTable}>
       <tbody>
