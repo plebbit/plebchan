@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 import { ChallengeVerification, Comment, PublishCommentOptions, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
@@ -7,16 +7,20 @@ import useChallengesStore from '../stores/use-challenges-store';
 type SetReplyStoreData = {
   subplebbitAddress: string;
   parentCid: string;
+  author: any | undefined;
   content: string | undefined;
   link: string | undefined;
-  spoiler: boolean;
+  signer: any | undefined;
+  spoiler: boolean | undefined;
 };
 
 type ReplyState = {
+  author: { [parentCid: string]: any | undefined };
   content: { [parentCid: string]: string | undefined };
   link: { [parentCid: string]: string | undefined };
+  signer: { [parentCid: string]: any | undefined };
   spoiler: { [parentCid: string]: boolean | undefined };
-  publishCommentOptions: PublishCommentOptions;
+  publishCommentOptions: { [parentCid: string]: PublishCommentOptions | undefined };
   setReplyStore: (data: SetReplyStoreData) => void;
   resetReplyStore: (parentCid: string) => void;
 };
@@ -24,16 +28,20 @@ type ReplyState = {
 const { addChallenge } = useChallengesStore.getState();
 
 const useReplyStore = create<ReplyState>((set) => ({
+  author: {},
   content: {},
   link: {},
+  signer: {},
   spoiler: {},
   publishCommentOptions: {},
   setReplyStore: (data: SetReplyStoreData) =>
     set((state) => {
-      const { subplebbitAddress, parentCid, content, link, spoiler } = data;
+      const { subplebbitAddress, parentCid, author, content, link, signer, spoiler } = data;
       const publishCommentOptions = {
         subplebbitAddress,
         parentCid,
+        author,
+        signer,
         content,
         link,
         spoiler,
@@ -47,6 +55,8 @@ const useReplyStore = create<ReplyState>((set) => ({
         },
       };
       return {
+        author: { ...state.author, [parentCid]: author },
+        signer: { ...state.signer, [parentCid]: signer },
         content: { ...state.content, [parentCid]: content },
         link: { ...state.link, [parentCid]: link },
         spoiler: { ...state.spoiler, [parentCid]: spoiler },
@@ -56,6 +66,8 @@ const useReplyStore = create<ReplyState>((set) => ({
 
   resetReplyStore: (parentCid) =>
     set((state) => ({
+      author: { ...state.author, [parentCid]: undefined },
+      signer: { ...state.signer, [parentCid]: undefined },
       content: { ...state.content, [parentCid]: undefined },
       link: { ...state.link, [parentCid]: undefined },
       spoiler: { ...state.spoiler, [parentCid]: undefined },
@@ -65,7 +77,9 @@ const useReplyStore = create<ReplyState>((set) => ({
 
 const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: string }) => {
   const parentCid = cid;
-  const { content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
+  const { author, signer, content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
+    author: state.author[parentCid],
+    signer: state.signer[parentCid],
     content: state.content[parentCid],
     link: state.link[parentCid],
     spoiler: state.spoiler[parentCid],
@@ -75,41 +89,27 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
   const setReplyStore = useReplyStore((state) => state.setReplyStore);
   const resetReplyStore = useReplyStore((state) => state.resetReplyStore);
 
-  const setContent = useMemo(
-    () => ({
-      content: (newContent: string) =>
-        setReplyStore({
-          subplebbitAddress,
-          parentCid,
-          content: newContent === '' ? undefined : newContent,
-          link: link || undefined,
-          spoiler: spoiler || false,
-        }),
-      link: (newLink: string) =>
-        setReplyStore({
-          subplebbitAddress,
-          parentCid,
-          content: content,
-          link: newLink || undefined,
-          spoiler: spoiler || false,
-        }),
-      spoiler: (newSpoiler: boolean) =>
-        setReplyStore({
-          subplebbitAddress,
-          parentCid,
-          content: content,
-          link: link || undefined,
-          spoiler: newSpoiler,
-        }),
-    }),
-    [subplebbitAddress, parentCid, setReplyStore, content, link, spoiler],
+  const setPublishReplyOptions = useCallback(
+    (options: Partial<SetReplyStoreData>) => {
+      setReplyStore({
+        subplebbitAddress,
+        parentCid,
+        author,
+        signer,
+        content,
+        link,
+        spoiler,
+        ...options,
+      });
+    },
+    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore],
   );
 
-  const resetContent = useMemo(() => () => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
+  const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
 
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
-  return { setContent, resetContent, replyIndex: index, publishReply: publishComment };
+  return { setPublishReplyOptions, resetPublishReplyOptions, replyIndex: index, publishReply: publishComment, setReplyStore };
 };
 
 export default useReply;

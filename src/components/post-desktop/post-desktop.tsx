@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAccountComments, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -101,7 +101,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         </span>
         {!(isDescription || isRules) && (
           <>
-            {isReply && author?.avatar && (
+            {author?.avatar && (
               <span className={styles.authorAvatar}>
                 <img src={avatarImageUrl} alt='' />
               </span>
@@ -138,7 +138,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                 <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                   c/
                 </Link>
-                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid)}>
                   {shortCid}
                 </span>
               </>
@@ -240,6 +240,7 @@ const PostMedia = ({ post }: PostProps) => {
 
 const PostMessage = ({ post }: PostProps) => {
   const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
@@ -320,7 +321,11 @@ const PostMessage = ({ post }: PostProps) => {
       {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />
-          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
+          <Trans
+            i18nKey={'comment_too_long'}
+            shouldUnescape={true}
+            components={{ 1: <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} /> }}
+          />
         </span>
       )}
       {!cid && state === 'pending' && stateString !== 'Failed' && (
@@ -378,6 +383,9 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const visiblelinksCount = useCountLinksInReplies(post, 5);
   const totalLinksCount = useCountLinksInReplies(post);
   const replyCount = replies?.length;
+  const { accountComments } = useAccountComments();
+  const isPostInAccountComments = accountComments?.find((comment) => comment.cid === cid);
+
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
@@ -434,7 +442,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             )}
           </span>
         )}
-        {post?.replyCount === undefined && !isInPendingPostView && (
+        {post?.replyCount === undefined && !isPostInAccountComments && !isInPendingPostView && (
           <span className={styles.loadingString}>
             <LoadingEllipsis string={t('loading_comments')} />
           </span>

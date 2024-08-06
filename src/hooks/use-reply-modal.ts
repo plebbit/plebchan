@@ -5,6 +5,7 @@ import useSelectedTextStore from '../stores/use-selected-text-store';
 const useReplyModal = () => {
   const [showReplyModal, setShowReplyModal] = useState(false);
   const [activeCid, setActiveCid] = useState<string | null>(null);
+  const [threadCid, setThreadCid] = useState<string | null>(null);
   const { resetSelectedText, setSelectedText } = useSelectedTextStore();
 
   // on mobile, the css position is absolute instead of fixed, so we need to calculate the top position
@@ -22,7 +23,7 @@ const useReplyModal = () => {
     text && setSelectedText(`>${text}\n`);
   };
 
-  const openReplyModal = (cid: string) => {
+  const openReplyModal = (parentCid: string, postCid: string) => {
     getSelectedText();
 
     if (isMobile) {
@@ -30,14 +31,15 @@ const useReplyModal = () => {
       setScrollY(currentScrollY);
     }
 
-    if (activeCid && activeCid !== cid) {
+    if (activeCid && activeCid !== parentCid) {
       return;
     }
-    setActiveCid(cid);
+    setActiveCid(parentCid);
+    setThreadCid(postCid);
     setShowReplyModal(true);
   };
 
-  return { activeCid, closeModal, openReplyModal, scrollY, showReplyModal };
+  return { activeCid, threadCid, closeModal, openReplyModal, scrollY, showReplyModal };
 };
 
 export default useReplyModal;

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAccount, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './board.module.css';
@@ -45,29 +45,68 @@ const Board = () => {
   const { sortType } = useSortingStore();
   const { timeFilterSeconds } = useTimeFilter();
 
-  const feedOptions: any = {
-    subplebbitAddresses,
-    sortType,
-    postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
-  };
-
-  if (isInAllView || isInSubscriptionsView) {
-    feedOptions.newerThan = timeFilterSeconds;
-  }
+  const feedOptions: any = useMemo(
+    () => ({
+      subplebbitAddresses,
+      sortType,
+      postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
+      ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
+    }),
+    [subplebbitAddresses, sortType, timeFilterSeconds, isInAllView, isInSubscriptionsView],
+  );
 
   const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);
+  const { accountComments } = useAccountComments();
+
+  const resetTriggeredRef = useRef(false);
 
   const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
   useEffect(() => {
     setResetFunction(reset);
-  }, [reset, setResetFunction]);
+  }, [reset, setResetFunction, feed]);
+
+  // show account comments instantly in the feed once published (cid defined), instead of waiting for the feed to update
+  const filteredComments = useMemo(
+    () =>
+      accountComments.filter((comment) => {
+        const { cid, deleted, postCid, removed, state } = comment || {};
+        return (
+          !deleted &&
+          !removed &&
+          state === 'succeeded' &&
+          cid &&
+          cid === postCid &&
+          comment?.subplebbitAddress === subplebbitAddress &&
+          !feed.some((post) => post.cid === cid)
+        );
+      }),
+    [accountComments, subplebbitAddress, feed],
+  );
+
+  // show newest account comment at the top of the feed but after pinned posts
+  const combinedFeed = useMemo(() => {
+    const newFeed = [...feed];
+    const lastPinnedIndex = newFeed.map((post) => post.pinned).lastIndexOf(true);
+    if (filteredComments.length > 0) {
+      newFeed.splice(lastPinnedIndex + 1, 0, ...filteredComments);
+    }
+    return newFeed;
+  }, [feed, filteredComments]);
+
+  useEffect(() => {
+    if (filteredComments.length > 0 && !resetTriggeredRef.current) {
+      reset();
+      resetTriggeredRef.current = true;
+    }
+  }, [filteredComments, reset]);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, error, rules, shortAddress, state, suggested } = subplebbit || {};
   const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
 
-  const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
+  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
+  const { blocked, unblock } = useBlock({ address: subplebbitAddress });
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
   const loadingString = (
     <div className={styles.stateString}>
@@ -75,6 +114,10 @@ const Board = () => {
         <span className='red'>{state}</span>
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
         t('not_subscribed_to_any_board')
+      ) : blocked ? (
+        'you have blocked this board'
+      ) : !hasMore && feed.length === 0 ? (
+        t('no_posts')
       ) : (
         <LoadingEllipsis string={loadingStateString} />
       )}
@@ -87,40 +130,8 @@ const Board = () => {
     </div>
   );
 
-  const { blocked, unblock } = useBlock({ address: subplebbitAddress });
-
   const Footer = () => {
-    let footerContent;
-    if (feed.length === 0) {
-      if (blocked) {
-        footerContent = 'you have blocked this board';
-      } else {
-        footerContent = t('no_posts');
-      }
-    }
-    if (hasMore || subplebbitAddresses.length === 0) {
-      footerContent = loadingString;
-    }
-    return (
-      <div className={styles.footer}>
-        {footerContent}
-        {blocked && (
-          <>
-            &nbsp;&nbsp;[
-            <span
-              className={styles.button}
-              onClick={() => {
-                unblock();
-                reset();
-              }}
-            >
-              Unblock
-            </span>
-            ]
-          </>
-        )}
-      </div>
-    );
+    return <div className={styles.footer}>{loadingString}</div>;
   };
 
   // save the last Virtuoso state to restore it when navigating back
@@ -147,8 +158,8 @@ const Board = () => {
   return (
     <div className={styles.content}>
       {location.pathname.endsWith('/settings') && <SettingsModal />}
-      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
-      {feed.length > 0 && (
+      {showReplyModal && activeCid && threadCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} postCid={threadCid} scrollY={scrollY} />}
+      {feed.length !== 0 ? (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
           {((description && description.length > 0) || isInAllView) && (
@@ -161,25 +172,44 @@ const Board = () => {
               title={title}
             />
           )}
-        </>
-      )}
-      <Virtuoso
-        increaseViewportBy={{ bottom: 1200, top: 1200 }}
-        totalCount={feed?.length || 0}
-        data={feed}
-        itemContent={(index, post) => {
-          const { deleted, locked, removed } = post || {};
-          const isThreadClosed = deleted || locked || removed;
+          <Virtuoso
+            increaseViewportBy={{ bottom: 1200, top: 1200 }}
+            totalCount={combinedFeed.length}
+            data={combinedFeed}
+            itemContent={(index, post) => {
+              const { deleted, locked, removed } = post || {};
+              const isThreadClosed = deleted || locked || removed;
 
-          return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
-        }}
-        useWindowScroll={true}
-        components={{ Footer }}
-        endReached={loadMore}
-        ref={virtuosoRef}
-        restoreStateFrom={lastVirtuosoState}
-        initialScrollTop={lastVirtuosoState?.scrollTop}
-      />
+              return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
+            }}
+            useWindowScroll={true}
+            components={{ Footer }}
+            endReached={loadMore}
+            ref={virtuosoRef}
+            restoreStateFrom={lastVirtuosoState}
+            initialScrollTop={lastVirtuosoState?.scrollTop}
+          />
+        </>
+      ) : (
+        <div className={styles.footer}>
+          {loadingString}
+          {blocked && (
+            <>
+              &nbsp;&nbsp;[
+              <span
+                className={styles.button}
+                onClick={() => {
+                  unblock();
+                  reset();
+                }}
+              >
+                Unblock
+              </span>
+              ]
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -74,7 +74,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
           {!(isDescription || isRules) && (
             <>
-              {isReply && author?.avatar && (
+              {author?.avatar && (
                 <span className={styles.authorAvatar}>
                   <img src={avatarImageUrl} alt='' />
                 </span>
@@ -127,7 +127,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                   <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                     c/
                   </Link>
-                  <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid)}>
+                  <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid)}>
                     {shortCid}
                   </span>
                 </>
@@ -164,6 +164,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
   const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const [showOriginal, setShowOriginal] = useState(false);
@@ -202,7 +203,12 @@ const PostMessageMobile = ({ post }: PostProps) => {
             <span className={styles.editedInfo}>
               {showOriginal && <Markdown content={original?.content} />}
               <br />
-              {t('comment_edited_at_timestamp', { timestamp: getFormattedDate(edit?.timestamp), interpolation: { escapeValue: false } })}{' '}
+              <Trans
+                i18nKey={'comment_edited_at_timestamp'}
+                values={{ timestamp: getFormattedDate(edit?.timestamp) }}
+                shouldUnescape={true}
+                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<></>} /> }}
+              />{' '}
               {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
               {showOriginal ? (
                 <Trans
@@ -239,7 +245,11 @@ const PostMessageMobile = ({ post }: PostProps) => {
       {!isReply && content.length > 1000 && !isInPostView && (
         <span className={styles.abbr}>
           <br />
-          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} />
+          <Trans
+            i18nKey={'comment_too_long'}
+            shouldUnescape={true}
+            components={{ 1: <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} /> }}
+          />
         </span>
       )}
       {!cid && state === 'pending' && stateString !== 'Failed' && (

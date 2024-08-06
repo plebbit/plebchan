@@ -44,10 +44,8 @@ const useTheme = (): [string, (theme: string) => void] => {
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
     let storedTheme = null;
-    if (isInAllView) {
-      storedTheme = getTheme('all');
-    } else if (isInSubscriptionsView) {
-      storedTheme = getTheme('subscriptions');
+    if (isInAllView || isInSubscriptionsView) {
+      storedTheme = getTheme('sfw');
     } else if (subplebbitAddress) {
       const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
       if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
@@ -67,10 +65,8 @@ const useTheme = (): [string, (theme: string) => void] => {
     const isInAllView = isAllView(location.pathname, params);
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-    if (isInAllView) {
-      await setThemeStore('all', newTheme);
-    } else if (isInSubscriptionsView) {
-      await setThemeStore('subscriptions', newTheme);
+    if (isInAllView || isInSubscriptionsView) {
+      await setThemeStore('sfw', newTheme);
     } else if (subplebbitAddress) {
       const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
       if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {

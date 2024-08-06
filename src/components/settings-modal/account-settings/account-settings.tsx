@@ -3,6 +3,21 @@ import { useTranslation } from 'react-i18next';
 import { createAccount, deleteAccount, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from '@plebbit/plebbit-react-hooks';
 import stringify from 'json-stringify-pretty-compact';
 import styles from './account-settings.module.css';
+import useAnonModeStore from '../../../stores/use-anon-mode-store';
+
+const AnonMode = () => {
+  const anonMode = useAnonModeStore((state) => state.anonMode);
+  const setAnonMode = useAnonModeStore((state) => state.setAnonMode);
+
+  return (
+    <div className={styles.anonMode}>
+      <label>
+        <input type='checkbox' checked={anonMode} onChange={(e) => setAnonMode(e.target.checked)} /> anon mode
+      </label>
+      <span className={styles.settingTip}>Automatically use a different user ID in each thread</span>
+    </div>
+  );
+};
 
 const AccountSettings = () => {
   const { t } = useTranslation();
@@ -167,7 +182,7 @@ const AccountSettings = () => {
       <textarea value={text} onChange={(e) => setText(e.target.value)} autoCorrect='off' autoComplete='off' spellCheck='false' />
       <div>
         <button onClick={saveAccount}>{t('save')}</button> <button onClick={() => setText(accountJson)}>{t('reset')}</button>{' '}
-        <button onClick={_importAccount}>{t('import')}</button> <button onClick={_exportAccount}>{t('export')}</button>{' '}
+        <button onClick={_importAccount}>{t('import')}</button> <button onClick={_exportAccount}>{t('export')}</button> <AnonMode />
         <button className={styles.deleteAccount} onClick={() => _deleteAccount(account?.name)}>
           {t('delete_account')}
         </button>

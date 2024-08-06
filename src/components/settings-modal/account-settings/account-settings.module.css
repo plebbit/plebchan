@@ -36,11 +36,32 @@
 }
 
 .deleteAccount {
-  color: red;
   display: block;
-  margin-top: 10px;
+}
+
+.deleteAccount:not(:disabled) {
+  color: red;
 }
 
 .setting .createAccount {
   margin-left: 5px;
+}
+
+.settingTip {
+  display: block;
+  font-size: 0.85em;
+  margin: 2px 0 10px 0;
+  padding-left: 19px;
+}
+
+.anonMode {
+  padding: 10px 0;
+}
+
+.anonMode label {
+  text-transform: capitalize;
+}
+
+.anonMode input[type="checkbox"] {
+  margin-right: 3px;
 }

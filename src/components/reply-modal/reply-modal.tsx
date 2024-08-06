@@ -1,29 +1,31 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
-import { setAccount, useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { setAccount, useAccount, useComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useSelectedTextStore from '../../stores/use-selected-text-store';
-import useReply from '../../hooks/use-reply';
+import usePublishReply from '../../hooks/use-publish-reply';
 import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './reply-modal.module.css';
 import { LinkTypePreviewer } from '../post-form';
 import _ from 'lodash';
+import useAnonMode from '../../hooks/use-anon-mode';
 
 interface ReplyModalProps {
   closeModal: () => void;
   parentCid: string;
+  postCid: string;
   scrollY: number;
 }
 
-const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
+const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps) => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
-  const { setContent, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
+  const { setPublishReplyOptions, publishReply } = usePublishReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
   const [url, setUrl] = useState('');
@@ -31,7 +33,38 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
   const urlRef = useRef<HTMLInputElement>(null);
   const { selectedText } = useSelectedTextStore();
 
-  const onPublishReply = () => {
+  const { anonMode, getNewSigner, getExistingSigner } = useAnonMode(postCid);
+  const comment = useComment({ commentCid: postCid });
+  const address = comment?.author?.address;
+
+  const hasCalledAnonAddressRef = useRef(false);
+
+  const getAnonAddressForReply = useCallback(async () => {
+    if (anonMode && !hasCalledAnonAddressRef.current) {
+      hasCalledAnonAddressRef.current = true;
+      let signer = getExistingSigner(address);
+      if (!signer) {
+        signer = await getNewSigner();
+        if (signer) {
+          setPublishReplyOptions({
+            signer,
+            author: {
+              displayName,
+              address: signer.address,
+            },
+          });
+        }
+      }
+    }
+  }, [anonMode, address, getExistingSigner, getNewSigner, displayName, setPublishReplyOptions]);
+
+  useEffect(() => {
+    if (anonMode) {
+      getAnonAddressForReply();
+    }
+  }, [anonMode, getAnonAddressForReply]);
+
+  const onPublishReply = async () => {
     const currentContent = textRef.current?.value || '';
     const currentUrl = urlRef.current?.value || '';
 
@@ -44,6 +77,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
       alert('The provided link is not a valid URL.');
       return;
     }
+
     publishReply();
     closeModal();
   };
@@ -109,7 +143,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
     // remove the prefix from the content to publish, and also add newlines for markdown
     const contentWithoutPrefix = e.target.value.slice(contentPrefix.length).replace(/\n/g, '\n\n');
     if (textRef.current && textRef.current.value !== contentWithoutPrefix) {
-      setContent.content(contentWithoutPrefix);
+      setPublishReplyOptions({ content: contentWithoutPrefix });
     }
   };
 
@@ -142,7 +176,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
             placeholder={_.capitalize(t('link'))}
             onChange={(e) => {
               setUrl(e.target.value);
-              setContent.link(e.target.value);
+              setPublishReplyOptions({ link: e.target.value });
             }}
           />
         </div>
@@ -169,7 +203,7 @@ const ReplyModal = ({ closeModal, parentCid, scrollY }: ReplyModalProps) => {
           <span className={styles.spoilerButton}>
             [
             <label>
-              <input type='checkbox' onChange={(e) => setContent.spoiler(e.target.checked)} />
+              <input type='checkbox' onChange={(e) => setPublishReplyOptions({ spoiler: e.target.checked })} />
               {_.capitalize(t('spoiler'))}?
             </label>
             ]
