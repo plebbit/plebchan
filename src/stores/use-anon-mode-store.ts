@@ -3,13 +3,13 @@ import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lr
 
 interface AnonModeState {
   anonMode: boolean;
-  threadSigners: { [key: string]: { privateKey: string; address: string } };
-  addressSigners: { [address: string]: { privateKey: string; address: string } };
+  threadSigners: { [key: string]: any };
+  addressSigners: { [address: string]: any };
   setAnonMode: (mode: boolean) => void;
-  setThreadSigner: (postCid: string, signer: { privateKey: string; address: string }) => void;
-  getThreadSigner: (postCid: string) => { privateKey: string; address: string } | undefined;
-  setAddressSigner: (signer: { privateKey: string; address: string }) => void;
-  getAddressSigner: (address: string) => { privateKey: string; address: string } | undefined;
+  setThreadSigner: (postCid: string, signer: any) => void;
+  getThreadSigner: (postCid: string) => any | undefined;
+  setAddressSigner: (signer: any) => void;
+  getAddressSigner: (address: string) => any | undefined;
 }
 
 const anonModeStore = localForageLru.createInstance({
@@ -22,14 +22,14 @@ const useAnonModeStore = create<AnonModeState>((set, get) => ({
   threadSigners: {},
   addressSigners: {},
   setAnonMode: (mode: boolean) => set({ anonMode: mode }),
-  setThreadSigner: (postCid: string, signer: { privateKey: string; address: string }) => {
+  setThreadSigner: (postCid: string, signer: any) => {
     set((state) => ({
       threadSigners: { ...state.threadSigners, [postCid]: signer },
     }));
     anonModeStore.setItem(postCid, signer);
   },
   getThreadSigner: (postCid: string) => get().threadSigners[postCid],
-  setAddressSigner: (signer: { privateKey: string; address: string }) => {
+  setAddressSigner: (signer: any) => {
     set((state) => ({
       addressSigners: { ...state.addressSigners, [signer.address]: signer },
     }));
@@ -39,9 +39,9 @@ const useAnonModeStore = create<AnonModeState>((set, get) => ({
 }));
 
 const initializeAnonModeStore = async () => {
-  const entries: [string, { privateKey: string; address: string }][] = await anonModeStore.entries();
-  const threadSigners: { [key: string]: { privateKey: string; address: string } } = {};
-  const addressSigners: { [key: string]: { privateKey: string; address: string } } = {};
+  const entries: [string, any][] = await anonModeStore.entries();
+  const threadSigners: { [key: string]: any } = {};
+  const addressSigners: { [key: string]: any } = {};
   entries.forEach(([key, value]) => {
     if (value.address) {
       addressSigners[value.address] = value;

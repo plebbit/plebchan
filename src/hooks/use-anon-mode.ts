@@ -21,9 +21,9 @@ const useAnonMode = (postCid?: string) => {
           const signer = await account?.plebbit.createSigner();
           if (signer) {
             if (postCid) {
-              setThreadSigner(postCid, { privateKey: signer.privateKey, address: signer.address });
+              setThreadSigner(postCid, signer);
             } else {
-              setAddressSigner({ privateKey: signer.privateKey, address: signer.address });
+              setAddressSigner(signer);
             }
           }
           return signer;

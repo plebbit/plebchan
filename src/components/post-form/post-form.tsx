@@ -200,7 +200,6 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       hasCalledAnonAddressRef.current = true;
       const existingSigner = getExistingSigner(address);
       if (existingSigner) {
-        console.log('onPublishReply - existingSigner:', existingSigner);
         setPublishReplyOptions({
           signer: existingSigner,
           author: {
