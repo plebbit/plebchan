@@ -8,7 +8,7 @@ import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useSelectedTextStore from '../../stores/use-selected-text-store';
-import useReply from '../../hooks/use-reply';
+import usePublishReply from '../../hooks/use-publish-reply';
 import useIsMobile from '../../hooks/use-is-mobile';
 import styles from './reply-modal.module.css';
 import { LinkTypePreviewer } from '../post-form';
@@ -25,7 +25,7 @@ interface ReplyModalProps {
 const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps) => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
-  const { setPublishReplyOptions, publishReply } = useReply({ cid: parentCid, subplebbitAddress });
+  const { setPublishReplyOptions, publishReply } = usePublishReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
   const [url, setUrl] = useState('');

@@ -18,7 +18,7 @@ import { getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import useReply from '../../hooks/use-reply';
+import usePublishReply from '../../hooks/use-publish-reply';
 import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './post-form.module.css';
 import _ from 'lodash';
@@ -193,7 +193,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   // in post page, publish a reply to the post
   const isInPostView = isPostPageView(location.pathname, params);
   const cid = params?.commentCid as string;
-  const { setPublishReplyOptions, resetPublishReplyOptions, replyIndex, publishReply } = useReply({ cid, subplebbitAddress });
+  const { setPublishReplyOptions, resetPublishReplyOptions, replyIndex, publishReply } = usePublishReply({ cid, subplebbitAddress });
 
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
@@ -255,6 +255,13 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       }
     }
   }, [anonMode, getAnonAddressForPost, getAnonAddressForReply, isInPostView]);
+
+  useEffect(() => {
+    if (subplebbitAddress) {
+      resetSubmitStore();
+      resetPublishReplyOptions();
+    }
+  }, [subplebbitAddress, resetSubmitStore, resetPublishReplyOptions]);
 
   return (
     <table className={styles.postFormTable}>
