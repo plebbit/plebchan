@@ -104,7 +104,7 @@ const Board = () => {
   const { createdAt, description, error, rules, shortAddress, state, suggested } = subplebbit || {};
   const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
 
-  const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
+  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
@@ -158,7 +158,7 @@ const Board = () => {
   return (
     <div className={styles.content}>
       {location.pathname.endsWith('/settings') && <SettingsModal />}
-      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
+      {showReplyModal && activeCid && threadCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} postCid={threadCid} scrollY={scrollY} />}
       {feed.length !== 0 ? (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}

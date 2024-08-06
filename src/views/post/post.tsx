@@ -22,7 +22,7 @@ export interface PostProps {
   roles?: Role[];
   showAllReplies?: boolean;
   showReplies?: boolean;
-  openReplyModal?: (cid: string) => void;
+  openReplyModal?: (parentCid: string, postCid: string) => void;
 }
 
 export const Post = ({ post, showAllReplies = false, showReplies = true, openReplyModal }: PostProps) => {
@@ -62,7 +62,7 @@ const PostPage = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
 
-  const { activeCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
+  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY } = useReplyModal();
 
   const comment = useComment({ commentCid });
 
@@ -91,7 +91,7 @@ const PostPage = () => {
   return (
     <div className={styles.content}>
       {isInSettigsView && <SettingsModal />}
-      {showReplyModal && activeCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} scrollY={scrollY} />}
+      {showReplyModal && activeCid && threadCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} postCid={threadCid} scrollY={scrollY} />}
       {/* TODO: remove this replyCount error once api supports scrolling replies pages */}
       {replyCount > 60 && <span className={styles.error}>Error: this thread has too many replies, some of them cannot be displayed right now.</span>}
       {error && <span className={styles.error}>Error: {error.message}</span>}

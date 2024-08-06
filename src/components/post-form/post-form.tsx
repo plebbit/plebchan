@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
@@ -24,8 +24,11 @@ import styles from './post-form.module.css';
 import _ from 'lodash';
 import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
+import useAnonMode from '../../hooks/use-anon-mode';
 
 type SubmitState = {
+  author: any | undefined;
+  signer: any | undefined;
   subplebbitAddress: string | undefined;
   title: string | undefined;
   content: string | undefined;
@@ -39,15 +42,19 @@ type SubmitState = {
 const { addChallenge } = useChallengesStore.getState();
 
 const useSubmitStore = create<SubmitState>((set) => ({
+  author: undefined,
+  signer: undefined,
   subplebbitAddress: undefined,
   title: undefined,
   content: undefined,
   link: undefined,
   spoiler: undefined,
   publishCommentOptions: {},
-  setSubmitStore: ({ subplebbitAddress, title, content, link, spoiler }) =>
+  setSubmitStore: ({ author, signer, subplebbitAddress, title, content, link, spoiler }) =>
     set((state) => {
       const nextState = { ...state };
+      if (author !== undefined) nextState.author = author;
+      if (signer !== undefined) nextState.signer = signer;
       if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
       if (title !== undefined) nextState.title = title || undefined;
       if (content !== undefined) nextState.content = content || undefined;
@@ -55,7 +62,13 @@ const useSubmitStore = create<SubmitState>((set) => ({
       if (spoiler !== undefined) nextState.spoiler = spoiler || undefined;
 
       nextState.publishCommentOptions = {
-        ...nextState,
+        author: nextState.author,
+        signer: nextState.signer,
+        subplebbitAddress: nextState.subplebbitAddress,
+        title: nextState.title,
+        content: nextState.content,
+        link: nextState.link,
+        spoiler: nextState.spoiler,
         onChallenge: (...args: any) => addChallenge(args),
         onChallengeVerification: alertChallengeVerificationFailed,
         onError: (error: Error) => {
@@ -66,7 +79,17 @@ const useSubmitStore = create<SubmitState>((set) => ({
       };
       return nextState;
     }),
-  resetSubmitStore: () => set({ subplebbitAddress: undefined, title: undefined, content: undefined, link: undefined, spoiler: undefined, publishCommentOptions: {} }),
+  resetSubmitStore: () =>
+    set({
+      author: undefined,
+      signer: undefined,
+      subplebbitAddress: undefined,
+      title: undefined,
+      content: undefined,
+      link: undefined,
+      spoiler: undefined,
+      publishCommentOptions: {},
+    }),
 }));
 
 export const LinkTypePreviewer = ({ link }: { link: string }) => {
@@ -84,10 +107,11 @@ export const LinkTypePreviewer = ({ link }: { link: string }) => {
   return isValidURL(link) ? type : t('invalid_url');
 };
 
-const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
+const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid: string }) => {
   const { t } = useTranslation();
   const account = useAccount();
-  const { displayName } = account?.author || {};
+  const author = account?.author || {};
+  const { displayName } = author || {};
   const [url, setUrl] = useState('');
   const { title, content, link, publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
   const { index, publishComment } = usePublishComment(publishCommentOptions);
@@ -102,6 +126,10 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
   const subscriptions = account?.subscriptions || [];
   const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
 
+  const { anonMode, getNewSigner, getExistingSigner } = useAnonMode(postCid);
+  const comment = useComment({ commentCid: postCid });
+  const address = comment?.author?.address;
+
   const resetFields = () => {
     if (textRef.current) {
       textRef.current.value = '';
@@ -114,17 +142,32 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
     }
   };
 
-  const onPublishPost = () => {
+  const getAnonAddressForPost = async () => {
+    if (anonMode) {
+      const newSigner = (await getNewSigner()) || {};
+      setSubmitStore({
+        signer: newSigner,
+        author: {
+          displayName,
+          address: newSigner.address,
+        },
+      });
+    }
+  };
+
+  const onPublishPost = async () => {
     if (!title && !content && !link) {
       alert(`Cannot post empty comment`);
       return;
     }
     if (link && !isValidURL(link)) {
-      alert(`Invalid link`);
+      alert('The provided link is not a valid URL.');
       return;
     }
 
-    publishComment();
+    getAnonAddressForPost().then(() => {
+      publishComment();
+    });
   };
 
   const params = useParams();
@@ -149,7 +192,32 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
   // in post page, publish a reply to the post
   const isInPostView = isPostPageView(location.pathname, params);
   const cid = params?.commentCid as string;
-  const { setContent, resetContent, replyIndex, publishReply } = useReply({ cid, subplebbitAddress });
+  const { setPublishReplyOptions, resetPublishReplyOptions, replyIndex, publishReply } = useReply({ cid, subplebbitAddress });
+
+  const getAnonAddressForReply = async () => {
+    if (anonMode) {
+      const existingSigner = getExistingSigner(address);
+      if (existingSigner) {
+        console.log('onPublishReply - existingSigner:', existingSigner);
+        setPublishReplyOptions({
+          signer: existingSigner,
+          author: {
+            displayName,
+            address: existingSigner.address,
+          },
+        });
+      } else {
+        const newSigner = (await getNewSigner()) || {};
+        setPublishReplyOptions({
+          signer: newSigner,
+          author: {
+            displayName,
+            address: newSigner.address,
+          },
+        });
+      }
+    }
+  };
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -164,16 +232,19 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
       alert('The provided link is not a valid URL.');
       return;
     }
-    publishReply();
+
+    getAnonAddressForReply().then(() => {
+      publishReply();
+    });
   };
 
   useEffect(() => {
     if (typeof replyIndex === 'number') {
-      resetContent();
+      resetPublishReplyOptions();
       resetFields();
       closeForm();
     }
-  }, [replyIndex, resetContent, closeForm]);
+  }, [replyIndex, resetPublishReplyOptions, closeForm]);
 
   return (
     <table className={styles.postFormTable}>
@@ -215,7 +286,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
               ref={textRef}
               onChange={(e) => {
                 const content = e.target.value.replace(/\n/g, '\n\n');
-                isInPostView ? setContent.content(content) : setSubmitStore({ content });
+                isInPostView ? setPublishReplyOptions({ content }) : setSubmitStore({ content });
               }}
             />
           </td>
@@ -231,7 +302,7 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
               ref={urlRef}
               onChange={(e) => {
                 setUrl(e.target.value);
-                isInPostView ? setContent.link(e.target.value) : setSubmitStore({ link: e.target.value });
+                isInPostView ? setPublishReplyOptions({ link: e.target.value }) : setSubmitStore({ link: e.target.value });
               }}
             />
             <span className={styles.linkType}> {url && <LinkTypePreviewer link={url} />}</span>
@@ -242,7 +313,10 @@ const PostFormTable = ({ closeForm }: { closeForm: () => void }) => {
           <td>
             [
             <label>
-              <input type='checkbox' onChange={(e) => (isInPostView ? setContent.spoiler(e.target.checked) : setSubmitStore({ spoiler: e.target.checked }))} />
+              <input
+                type='checkbox'
+                onChange={(e) => (isInPostView ? setPublishReplyOptions({ spoiler: e.target.checked }) : setSubmitStore({ spoiler: e.target.checked }))}
+              />
               {_.capitalize(t('spoiler'))}?
             </label>
             ]
@@ -293,7 +367,7 @@ const PostForm = () => {
     comment = editedComment;
   }
 
-  const { deleted, locked, removed } = comment || {};
+  const { deleted, locked, removed, postCid } = comment || {};
   const isThreadClosed = deleted || locked || removed || isInDescriptionView || isInRulesView;
 
   const [showForm, setShowForm] = useState(false);
@@ -320,7 +394,7 @@ const PostForm = () => {
             ]
           </div>
         ) : (
-          <PostFormTable closeForm={() => setShowForm(false)} />
+          <PostFormTable closeForm={() => setShowForm(false)} postCid={postCid} />
         )}
       </div>
       <div className={styles.postFormMobile}>
@@ -336,7 +410,7 @@ const PostForm = () => {
             <button className={`${styles.showFormButton} button`} onClick={() => setShowForm(showForm ? false : true)}>
               {showForm ? t('close_post_form') : isInPostView ? t('post_a_reply') : t('start_new_thread')}
             </button>
-            {showForm && <PostFormTable closeForm={() => setShowForm(false)} />}
+            {showForm && <PostFormTable closeForm={() => setShowForm(false)} postCid={postCid} />}
             <hr />
           </>
         )}
