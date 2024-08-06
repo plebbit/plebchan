@@ -33,8 +33,10 @@ const BoardLayout = () => {
     return <NotFound />;
   }
 
-  // force rerender of post form when navigating between pages
-  const key = `${subplebbitAddress}-${location.pathname}`;
+  // force rerender of post form when navigating between pages, except when opening settings modal in current view
+  const key = location.pathname.endsWith('/settings')
+    ? `${subplebbitAddress}-${location.pathname.replace(/\/settings$/, '')}`
+    : `${subplebbitAddress}-${location.pathname}`;
 
   return (
     <div className={styles.boardLayout}>
