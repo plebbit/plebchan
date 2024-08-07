@@ -28,7 +28,7 @@ import useAnonMode from '../../hooks/use-anon-mode';
 
 type SubmitState = {
   author: any | undefined;
-  signer: any | undefined;
+  signer?: any | undefined;
   subplebbitAddress: string | undefined;
   title: string | undefined;
   content: string | undefined;
@@ -61,9 +61,8 @@ const useSubmitStore = create<SubmitState>((set) => ({
       if (link !== undefined) nextState.link = link || undefined;
       if (spoiler !== undefined) nextState.spoiler = spoiler || undefined;
 
-      nextState.publishCommentOptions = {
+      const publishCommentOptions: PublishCommentOptions = {
         author: nextState.author,
-        signer: nextState.signer,
         subplebbitAddress: nextState.subplebbitAddress,
         title: nextState.title,
         content: nextState.content,
@@ -73,10 +72,15 @@ const useSubmitStore = create<SubmitState>((set) => ({
         onChallengeVerification: alertChallengeVerificationFailed,
         onError: (error: Error) => {
           console.error(error);
-          let errorMessage = error.message;
-          alert(errorMessage);
+          alert(error.message);
         },
       };
+
+      if (nextState.signer) {
+        publishCommentOptions.signer = nextState.signer;
+      }
+
+      nextState.publishCommentOptions = publishCommentOptions;
       return nextState;
     }),
   resetSubmitStore: () =>

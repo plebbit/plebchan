@@ -3,6 +3,7 @@ import { ChallengeVerification, Comment, PublishCommentOptions, usePublishCommen
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
 import useChallengesStore from '../stores/use-challenges-store';
+import useAnonMode from './use-anon-mode';
 
 type SetReplyStoreData = {
   subplebbitAddress: string;
@@ -10,7 +11,7 @@ type SetReplyStoreData = {
   author: any | undefined;
   content: string | undefined;
   link: string | undefined;
-  signer: any | undefined;
+  signer?: any | undefined;
   spoiler: boolean | undefined;
 };
 
@@ -41,7 +42,7 @@ const useReplyStore = create<ReplyState>((set) => ({
         subplebbitAddress,
         parentCid,
         author,
-        signer,
+        ...(data.signer ? { signer: data.signer } : {}),
         content,
         link,
         spoiler,
@@ -86,6 +87,8 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
     publishCommentOptions: state.publishCommentOptions[parentCid],
   }));
 
+  const { anonMode } = useAnonMode();
+
   const setReplyStore = useReplyStore((state) => state.setReplyStore);
   const resetReplyStore = useReplyStore((state) => state.resetReplyStore);
 
@@ -95,14 +98,14 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
         subplebbitAddress,
         parentCid,
         author,
-        signer,
         content,
         link,
         spoiler,
+        ...(anonMode ? { signer } : {}),
         ...options,
       });
     },
-    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore],
+    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
