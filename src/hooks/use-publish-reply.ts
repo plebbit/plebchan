@@ -8,7 +8,8 @@ import useAnonMode from './use-anon-mode';
 type SetReplyStoreData = {
   subplebbitAddress: string;
   parentCid: string;
-  author: any | undefined;
+  author?: any | undefined;
+  displayName?: string | undefined;
   content: string | undefined;
   link: string | undefined;
   signer?: any | undefined;
@@ -37,11 +38,12 @@ const useReplyStore = create<ReplyState>((set) => ({
   publishCommentOptions: {},
   setReplyStore: (data: SetReplyStoreData) =>
     set((state) => {
-      const { subplebbitAddress, parentCid, author, content, link, signer, spoiler } = data;
+      const { subplebbitAddress, parentCid, author, displayName, content, link, signer, spoiler } = data;
+      const updatedAuthor = displayName ? { ...author, displayName } : author;
       const publishCommentOptions = {
         subplebbitAddress,
         parentCid,
-        author,
+        ...(data.author ? { author: updatedAuthor } : {}),
         ...(data.signer ? { signer: data.signer } : {}),
         content,
         link,
@@ -56,7 +58,7 @@ const useReplyStore = create<ReplyState>((set) => ({
         },
       };
       return {
-        author: { ...state.author, [parentCid]: author },
+        author: { ...state.author, [parentCid]: updatedAuthor },
         signer: { ...state.signer, [parentCid]: signer },
         content: { ...state.content, [parentCid]: content },
         link: { ...state.link, [parentCid]: link },
@@ -97,7 +99,7 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
       setReplyStore({
         subplebbitAddress,
         parentCid,
-        author,
+        ...(anonMode ? { author } : {}),
         content,
         link,
         spoiler,
