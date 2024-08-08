@@ -27,8 +27,9 @@ import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useAnonMode from '../../hooks/use-anon-mode';
 
 type SubmitState = {
-  author: any | undefined;
-  signer: any | undefined;
+  author?: any | undefined;
+  displayName?: string | undefined;
+  signer?: any | undefined;
   subplebbitAddress: string | undefined;
   title: string | undefined;
   content: string | undefined;
@@ -50,10 +51,11 @@ const useSubmitStore = create<SubmitState>((set) => ({
   link: undefined,
   spoiler: undefined,
   publishCommentOptions: {},
-  setSubmitStore: ({ author, signer, subplebbitAddress, title, content, link, spoiler }) =>
+  setSubmitStore: ({ author, displayName, signer, subplebbitAddress, title, content, link, spoiler }) =>
     set((state) => {
+      const updatedAuthor = displayName ? { ...author, displayName } : author;
       const nextState = { ...state };
-      if (author !== undefined) nextState.author = author;
+      if (author !== undefined) nextState.author = updatedAuthor;
       if (signer !== undefined) nextState.signer = signer;
       if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
       if (title !== undefined) nextState.title = title || undefined;
@@ -61,9 +63,7 @@ const useSubmitStore = create<SubmitState>((set) => ({
       if (link !== undefined) nextState.link = link || undefined;
       if (spoiler !== undefined) nextState.spoiler = spoiler || undefined;
 
-      nextState.publishCommentOptions = {
-        author: nextState.author,
-        signer: nextState.signer,
+      const publishCommentOptions: PublishCommentOptions = {
         subplebbitAddress: nextState.subplebbitAddress,
         title: nextState.title,
         content: nextState.content,
@@ -73,10 +73,19 @@ const useSubmitStore = create<SubmitState>((set) => ({
         onChallengeVerification: alertChallengeVerificationFailed,
         onError: (error: Error) => {
           console.error(error);
-          let errorMessage = error.message;
-          alert(errorMessage);
+          alert(error.message);
         },
       };
+
+      if (nextState.signer) {
+        publishCommentOptions.signer = nextState.signer;
+      }
+
+      if (nextState.author) {
+        publishCommentOptions.author = nextState.author;
+      }
+
+      nextState.publishCommentOptions = publishCommentOptions;
       return nextState;
     }),
   resetSubmitStore: () =>
@@ -265,7 +274,10 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               type='text'
               placeholder={!displayName ? _.capitalize(t('anonymous')) : undefined}
               defaultValue={displayName || undefined}
-              onChange={(e) => setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } })}
+              onChange={(e) => {
+                setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } });
+                setSubmitStore({ displayName: e.target.value });
+              }}
             />
             {isInPostView && <button onClick={onPublishReply}>{t('post')}</button>}
           </td>

@@ -42,18 +42,24 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
       hasCalledAnonAddressRef.current = true;
-      let signer = getExistingSigner(address);
-      if (!signer) {
-        signer = await getNewSigner();
-        if (signer) {
-          setPublishReplyOptions({
-            signer,
-            author: {
-              displayName,
-              address: signer.address,
-            },
-          });
-        }
+      const existingSigner = getExistingSigner(address);
+      if (existingSigner) {
+        setPublishReplyOptions({
+          signer: existingSigner,
+          author: {
+            displayName,
+            address: existingSigner.address,
+          },
+        });
+      } else {
+        const newSigner = await getNewSigner();
+        setPublishReplyOptions({
+          signer: newSigner,
+          author: {
+            displayName,
+            address: newSigner.address,
+          },
+        });
       }
     }
   }, [anonMode, address, getExistingSigner, getNewSigner, displayName, setPublishReplyOptions]);
@@ -119,7 +125,9 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
   const setTextRef = (ref: HTMLTextAreaElement | null) => {
     if (ref) {
       textRef.current = ref;
-      !isMobile && ref.focus();
+      // if (!isMobile && !urlRef.current?.value) {
+      //   ref.focus();
+      // }
     }
   };
 
@@ -166,7 +174,10 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
             type='text'
             defaultValue={displayName}
             placeholder={displayName ? undefined : _.capitalize(t('name'))}
-            onChange={(e) => setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } })}
+            onChange={(e) => {
+              setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } });
+              setPublishReplyOptions({ displayName: e.target.value || undefined });
+            }}
           />
         </div>
         <div className={styles.link}>
@@ -176,7 +187,7 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
             placeholder={_.capitalize(t('link'))}
             onChange={(e) => {
               setUrl(e.target.value);
-              setPublishReplyOptions({ link: e.target.value });
+              setPublishReplyOptions({ link: e.target.value || undefined });
             }}
           />
         </div>

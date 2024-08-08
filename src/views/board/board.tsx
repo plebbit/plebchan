@@ -119,7 +119,7 @@ const Board = () => {
       ) : !hasMore && feed.length === 0 ? (
         t('no_posts')
       ) : (
-        <LoadingEllipsis string={loadingStateString} />
+        hasMore && <LoadingEllipsis string={loadingStateString} />
       )}
       {error && (
         <div className='red'>

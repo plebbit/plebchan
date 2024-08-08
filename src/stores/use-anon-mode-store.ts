@@ -21,7 +21,10 @@ const useAnonModeStore = create<AnonModeState>((set, get) => ({
   anonMode: true,
   threadSigners: {},
   addressSigners: {},
-  setAnonMode: (mode: boolean) => set({ anonMode: mode }),
+  setAnonMode: (mode: boolean) => {
+    set({ anonMode: mode });
+    anonModeStore.setItem('anonMode', mode); // Persist anonMode state
+  },
   setThreadSigner: (postCid: string, signer: any) => {
     set((state) => ({
       threadSigners: { ...state.threadSigners, [postCid]: signer },
@@ -42,18 +45,26 @@ const initializeAnonModeStore = async () => {
   const entries: [string, any][] = await anonModeStore.entries();
   const threadSigners: { [key: string]: any } = {};
   const addressSigners: { [key: string]: any } = {};
+  let anonMode = true; // Default value
+
   entries.forEach(([key, value]) => {
-    if (value.address) {
+    if (key === 'anonMode') {
+      anonMode = value;
+    } else if (value.address) {
       addressSigners[value.address] = value;
+    } else {
+      threadSigners[key] = value;
     }
-    threadSigners[key] = value;
   });
 
   useAnonModeStore.setState((state) => ({
+    anonMode, // Set the retrieved anonMode state
     threadSigners: { ...threadSigners, ...state.threadSigners },
     addressSigners: { ...addressSigners, ...state.addressSigners },
   }));
 };
+
+initializeAnonModeStore();
 
 initializeAnonModeStore();
 
