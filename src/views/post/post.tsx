@@ -91,7 +91,7 @@ const PostPage = () => {
   return (
     <div className={styles.content}>
       {isInSettigsView && <SettingsModal />}
-      {showReplyModal && activeCid && threadCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} postCid={threadCid} scrollY={scrollY} />}
+      {activeCid && threadCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} postCid={threadCid} scrollY={scrollY} showReplyModal={showReplyModal} />}
       {/* TODO: remove this replyCount error once api supports scrolling replies pages */}
       {replyCount > 60 && <span className={styles.error}>Error: this thread has too many replies, some of them cannot be displayed right now.</span>}
       {error && <span className={styles.error}>Error: {error.message}</span>}

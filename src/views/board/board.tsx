@@ -158,7 +158,7 @@ const Board = () => {
   return (
     <div className={styles.content}>
       {location.pathname.endsWith('/settings') && <SettingsModal />}
-      {showReplyModal && activeCid && threadCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} postCid={threadCid} scrollY={scrollY} />}
+      {activeCid && threadCid && <ReplyModal closeModal={closeModal} parentCid={activeCid} postCid={threadCid} scrollY={scrollY} showReplyModal={showReplyModal} />}
       {feed.length !== 0 ? (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}

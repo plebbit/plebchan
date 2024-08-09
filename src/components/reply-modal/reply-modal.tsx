@@ -17,12 +17,13 @@ import useAnonMode from '../../hooks/use-anon-mode';
 
 interface ReplyModalProps {
   closeModal: () => void;
+  showReplyModal: boolean;
   parentCid: string;
   postCid: string;
   scrollY: number;
 }
 
-const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps) => {
+const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY }: ReplyModalProps) => {
   const { t } = useTranslation();
   const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
   const { setPublishReplyOptions, publishReply } = usePublishReply({ cid: parentCid, subplebbitAddress });
@@ -122,14 +123,15 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
       )
     : `The subplebbit might be offline and publishing might fail.`;
 
-  const setTextRef = (ref: HTMLTextAreaElement | null) => {
-    if (ref) {
-      textRef.current = ref;
-      // if (!isMobile && !urlRef.current?.value) {
-      //   ref.focus();
-      // }
+  useEffect(() => {
+    if (showReplyModal && !isMobile) {
+      setTimeout(() => {
+        if (textRef.current) {
+          textRef.current.focus();
+        }
+      }, 0);
     }
-  };
+  }, [showReplyModal, isMobile]);
 
   useEffect(() => {
     if (textRef.current) {
@@ -196,7 +198,7 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
             cols={48}
             rows={4}
             wrap='soft'
-            ref={setTextRef}
+            ref={textRef}
             spellCheck={false}
             defaultValue={contentPrefix + selectedText}
             onInput={handleContentInput}
@@ -227,12 +229,15 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
     </div>
   );
 
-  return isMobile ? (
-    modalContent
-  ) : (
-    <Draggable handle='.replyModalHandle' nodeRef={nodeRef}>
-      {modalContent}
-    </Draggable>
+  return (
+    showReplyModal &&
+    (isMobile ? (
+      modalContent
+    ) : (
+      <Draggable handle='.replyModalHandle' nodeRef={nodeRef}>
+        {modalContent}
+      </Draggable>
+    ))
   );
 };
 
