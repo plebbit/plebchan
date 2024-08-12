@@ -18,8 +18,10 @@ interface PopularThreadProps {
 }
 
 const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThreadProps) => {
-  const { cid, content, subplebbitAddress, title } = post || {};
+  const { cid, subplebbitAddress, title } = post || {};
   const commentMediaInfo = getCommentMediaInfo(post);
+
+  let content = post?.content?.replace(/\n\n/g, '\n');
 
   return (
     <div className={styles.popularThread} key={cid}>
