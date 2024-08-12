@@ -239,8 +239,7 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
-  const { isDescription, isRules } = post || {}; // custom properties, not from api
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state } = post || {};
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
@@ -249,7 +248,8 @@ const PostMessage = ({ post }: PostProps) => {
   const isInPostView = isPostPageView(location.pathname, params);
   const [showOriginal, setShowOriginal] = useState(false);
 
-  const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
+  const [showFullComment, setShowFullComment] = useState(false);
+  const displayContent = content && !isInPostView && content.length > 1000 && !showFullComment ? content.slice(0, 1000) : content;
 
   const quotelinkReply = useComment({ commentCid: parentCid });
   const isReply = parentCid;
@@ -318,14 +318,10 @@ const PostMessage = ({ post }: PostProps) => {
           />
         </span>
       )} */}
-      {!isReply && content.length > 1000 && !isInPostView && (
+      {content?.length > 1000 && !isInPostView && !showFullComment && (
         <span className={styles.abbr}>
           <br />
-          <Trans
-            i18nKey={'comment_too_long'}
-            shouldUnescape={true}
-            components={{ 1: <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} /> }}
-          />
+          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <span onClick={() => setShowFullComment(true)} /> }} />
         </span>
       )}
       {!cid && state === 'pending' && stateString !== 'Failed' && (
