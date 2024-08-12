@@ -48,7 +48,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY }:
         setPublishReplyOptions({
           signer: existingSigner,
           author: {
-            displayName,
             address: existingSigner.address,
           },
         });
@@ -57,13 +56,12 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY }:
         setPublishReplyOptions({
           signer: newSigner,
           author: {
-            displayName,
             address: newSigner.address,
           },
         });
       }
     }
-  }, [anonMode, address, getExistingSigner, getNewSigner, displayName, setPublishReplyOptions]);
+  }, [anonMode, address, getExistingSigner, getNewSigner, setPublishReplyOptions]);
 
   useEffect(() => {
     if (anonMode) {
@@ -89,10 +87,17 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY }:
     closeModal();
   };
 
+  const hasSetInitialDisplayName = useRef(false);
+  useEffect(() => {
+    if (!hasSetInitialDisplayName.current && displayName) {
+      setPublishReplyOptions({ displayName });
+      hasSetInitialDisplayName.current = true;
+    }
+  }, [displayName, setPublishReplyOptions]);
+
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
-  // on mobile, the position is absolute instead of fixed, so we need to calculate the top position
   useEffect(() => {
     if (nodeRef.current && isMobile) {
       const viewportHeight = window.innerHeight;
@@ -150,7 +155,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY }:
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    // remove the prefix from the content to publish, and also add newlines for markdown
     const contentWithoutPrefix = e.target.value.slice(contentPrefix.length).replace(/\n/g, '\n\n');
     if (textRef.current && textRef.current.value !== contentWithoutPrefix) {
       setPublishReplyOptions({ content: contentWithoutPrefix });
