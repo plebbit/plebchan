@@ -184,7 +184,7 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
-              {!isInPostPageView && !isDescription && !isRules && (
+              {!(isInPostPageView && postCid === cid) && !isDescription && !isRules && (
                 <div
                   className={styles.postMenuItem}
                   onClick={() => {
