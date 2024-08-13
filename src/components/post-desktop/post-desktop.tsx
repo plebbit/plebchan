@@ -5,6 +5,7 @@ import { Comment, useAccount, useAccountComments, useAuthorAvatar, useComment, u
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
+import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -71,6 +72,9 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
+  const userIDBackgroundColor = hashStringToColor(shortAddress || accountShortAddress);
+  const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
+
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />}
@@ -106,10 +110,15 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                 <img src={avatarImageUrl} alt='' />
               </span>
             )}
-            (u/
+            (ID: {''}
             <Tooltip
               children={
-                <span title={t('highlight_posts')} className={styles.userAddress} onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}>
+                <span
+                  title={t('highlight_posts')}
+                  className={styles.userAddress}
+                  onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
+                  style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
+                >
                   {shortAddress || accountShortAddress}
                 </span>
               }

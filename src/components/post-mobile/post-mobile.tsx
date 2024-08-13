@@ -5,6 +5,7 @@ import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } fr
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
@@ -52,6 +53,9 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
+  const userIDBackgroundColor = hashStringToColor(shortAddress || accountShortAddress);
+  const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
+
   return (
     <>
       <div className={styles.postInfo}>
@@ -79,10 +83,15 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                   <img src={avatarImageUrl} alt='' />
                 </span>
               )}
-              (u/
+              (ID: {''}
               <Tooltip
                 children={
-                  <span title={t('highlight_posts')} className={styles.userAddress} onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}>
+                  <span
+                    title={t('highlight_posts')}
+                    className={styles.userAddress}
+                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
+                    style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
+                  >
                     {shortAddress || accountShortAddress}
                   </span>
                 }

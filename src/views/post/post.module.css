@@ -73,11 +73,14 @@
 }
 
 .userAddress {
+  padding: 0 5px;
+  border-radius: 6px;
+  font-size: 0.8em;
   cursor: pointer;
 }
 
-.postDesktop .userAddress:hover {
-  color: var(--button-desktop-text-color-hover);
+.userAddress:hover {
+  color: var(--post-quotelink-text-color-hover) !important;
 }
 
 .postDesktop .subject {
