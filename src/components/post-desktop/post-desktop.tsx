@@ -447,11 +447,6 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             )}
           </span>
         )}
-        {post?.replyCount === undefined && !isPostInAccountComments && !isInPendingPostView && (
-          <span className={styles.loadingString}>
-            <LoadingEllipsis string={t('loading_comments')} />
-          </span>
-        )}
         {!isHidden &&
           !(pinned && !isInPostPageView && !showOmittedReplies[cid]) &&
           !isInPendingPostView &&

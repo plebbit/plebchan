@@ -361,11 +361,6 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               )}
             </div>
-            {post?.replyCount === undefined && !isInPendingPostView && (
-              <span className={styles.loadingString}>
-                <LoadingEllipsis string={t('loading_comments')} />
-              </span>
-            )}
             {!(pinned && !isInPostView) &&
               !isInPendingPostView &&
               !isDescription &&
