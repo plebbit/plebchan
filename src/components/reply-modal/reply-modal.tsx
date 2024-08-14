@@ -21,11 +21,11 @@ interface ReplyModalProps {
   parentCid: string;
   postCid: string;
   scrollY: number;
+  subplebbitAddress: string;
 }
 
-const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY }: ReplyModalProps) => {
+const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, subplebbitAddress }: ReplyModalProps) => {
   const { t } = useTranslation();
-  const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
   const { setPublishReplyOptions, publishReply } = usePublishReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
