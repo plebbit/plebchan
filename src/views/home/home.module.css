@@ -158,7 +158,7 @@
   content: '✔ ';
 }
 
-.list a {
+.list, .subplebbit a {
   color: var(--homepage-box-link-text-color);
   text-decoration: var(--homepage-box-link-text-decoration);
 }
@@ -193,6 +193,12 @@
   padding-bottom: 0;
   line-height: 130%;
   display: table;
+}
+
+.boardsBoxContent .subplebbit {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .boardsBoxContent .column {
