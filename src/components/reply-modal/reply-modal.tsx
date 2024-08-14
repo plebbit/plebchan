@@ -17,14 +17,15 @@ import useAnonMode from '../../hooks/use-anon-mode';
 
 interface ReplyModalProps {
   closeModal: () => void;
+  showReplyModal: boolean;
   parentCid: string;
   postCid: string;
   scrollY: number;
+  subplebbitAddress: string;
 }
 
-const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps) => {
+const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, subplebbitAddress }: ReplyModalProps) => {
   const { t } = useTranslation();
-  const { subplebbitAddress } = useParams() as { subplebbitAddress: string };
   const { setPublishReplyOptions, publishReply } = usePublishReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
@@ -47,7 +48,6 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
         setPublishReplyOptions({
           signer: existingSigner,
           author: {
-            displayName,
             address: existingSigner.address,
           },
         });
@@ -56,13 +56,12 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
         setPublishReplyOptions({
           signer: newSigner,
           author: {
-            displayName,
             address: newSigner.address,
           },
         });
       }
     }
-  }, [anonMode, address, getExistingSigner, getNewSigner, displayName, setPublishReplyOptions]);
+  }, [anonMode, address, getExistingSigner, getNewSigner, setPublishReplyOptions]);
 
   useEffect(() => {
     if (anonMode) {
@@ -88,10 +87,17 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
     closeModal();
   };
 
+  const hasSetInitialDisplayName = useRef(false);
+  useEffect(() => {
+    if (!hasSetInitialDisplayName.current && displayName) {
+      setPublishReplyOptions({ displayName });
+      hasSetInitialDisplayName.current = true;
+    }
+  }, [displayName, setPublishReplyOptions]);
+
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
-  // on mobile, the position is absolute instead of fixed, so we need to calculate the top position
   useEffect(() => {
     if (nodeRef.current && isMobile) {
       const viewportHeight = window.innerHeight;
@@ -122,14 +128,15 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
       )
     : `The subplebbit might be offline and publishing might fail.`;
 
-  const setTextRef = (ref: HTMLTextAreaElement | null) => {
-    if (ref) {
-      textRef.current = ref;
-      // if (!isMobile && !urlRef.current?.value) {
-      //   ref.focus();
-      // }
+  useEffect(() => {
+    if (showReplyModal && !isMobile) {
+      setTimeout(() => {
+        if (textRef.current) {
+          textRef.current.focus();
+        }
+      }, 0);
     }
-  };
+  }, [showReplyModal, isMobile]);
 
   useEffect(() => {
     if (textRef.current) {
@@ -148,7 +155,6 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    // remove the prefix from the content to publish, and also add newlines for markdown
     const contentWithoutPrefix = e.target.value.slice(contentPrefix.length).replace(/\n/g, '\n\n');
     if (textRef.current && textRef.current.value !== contentWithoutPrefix) {
       setPublishReplyOptions({ content: contentWithoutPrefix });
@@ -196,7 +202,7 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
             cols={48}
             rows={4}
             wrap='soft'
-            ref={setTextRef}
+            ref={textRef}
             spellCheck={false}
             defaultValue={contentPrefix + selectedText}
             onInput={handleContentInput}
@@ -227,12 +233,15 @@ const ReplyModal = ({ closeModal, parentCid, postCid, scrollY }: ReplyModalProps
     </div>
   );
 
-  return isMobile ? (
-    modalContent
-  ) : (
-    <Draggable handle='.replyModalHandle' nodeRef={nodeRef}>
-      {modalContent}
-    </Draggable>
+  return (
+    showReplyModal &&
+    (isMobile ? (
+      modalContent
+    ) : (
+      <Draggable handle='.replyModalHandle' nodeRef={nodeRef}>
+        {modalContent}
+      </Draggable>
+    ))
   );
 };
 

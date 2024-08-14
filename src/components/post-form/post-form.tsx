@@ -160,12 +160,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       setSubmitStore({
         signer: newSigner,
         author: {
-          displayName,
           address: newSigner.address,
         },
       });
     }
-  }, [anonMode, getNewSigner, setSubmitStore, displayName]);
+  }, [anonMode, getNewSigner, setSubmitStore]);
 
   const onPublishPost = async () => {
     if (!title && !content && !link) {
@@ -212,7 +211,6 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         setPublishReplyOptions({
           signer: existingSigner,
           author: {
-            displayName,
             address: existingSigner.address,
           },
         });
@@ -221,13 +219,12 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         setPublishReplyOptions({
           signer: newSigner,
           author: {
-            displayName,
             address: newSigner.address,
           },
         });
       }
     }
-  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, displayName, anonMode]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode]);
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -245,6 +242,14 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
 
     publishReply();
   };
+
+  const hasSetInitialDisplayName = useRef(false);
+  useEffect(() => {
+    if (!hasSetInitialDisplayName.current && displayName) {
+      setPublishReplyOptions({ displayName });
+      hasSetInitialDisplayName.current = true;
+    }
+  }, [displayName, setPublishReplyOptions]);
 
   useEffect(() => {
     if (typeof replyIndex === 'number') {
@@ -276,7 +281,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               defaultValue={displayName || undefined}
               onChange={(e) => {
                 setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } });
-                setSubmitStore({ displayName: e.target.value });
+                if (isInPostView) {
+                  setPublishReplyOptions({ displayName: e.target.value });
+                } else {
+                  setSubmitStore({ displayName: e.target.value });
+                }
               }}
             />
             {isInPostView && <button onClick={onPublishReply}>{t('post')}</button>}

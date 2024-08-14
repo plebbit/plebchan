@@ -9,7 +9,7 @@ import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-uti
 import useEditCommentPrivileges from '../../../hooks/use-author-privileges';
 import useHide from '../../../hooks/use-hide';
 import EditMenu from '../../edit-menu/edit-menu';
-import { isBoardView, isPostPageView } from '../../../lib/utils/view-utils';
+import { isAllView, isBoardView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
 import { useLocation, useParams } from 'react-router-dom';
 
 interface PostMenuMobileProps {
@@ -57,7 +57,25 @@ const ImageSearchButtons = ({ url, onClose }: { url: string; onClose: () => void
 
 const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuMobileProps) => {
   const { t } = useTranslation();
-  const viewOnOtherClientLink = `p/${subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
+  const location = useLocation();
+  const params = useParams();
+  const isInAllView = isAllView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+
+  const getViewOnOtherClientLink = () => {
+    if (isDescription || isRules) {
+      if (isInAllView || isInSubscriptionsView) {
+        return `${isInAllView ? 'all' : isInSubscriptionsView && 'subscriptions'}`;
+      } else {
+        return `${subplebbitAddress}/${isDescription ? 'description' : isRules && 'rules'}`;
+      }
+    } else {
+      return `${subplebbitAddress}/c/${cid}`;
+    }
+  };
+
+  const viewOnOtherClientLink = getViewOnOtherClientLink();
+
   return (
     <div onClick={onClose}>
       <a href={`https://seedit.eth.limo/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>

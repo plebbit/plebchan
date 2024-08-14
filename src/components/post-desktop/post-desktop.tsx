@@ -5,6 +5,7 @@ import { Comment, useAccount, useAccountComments, useAuthorAvatar, useComment, u
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
+import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -71,6 +72,9 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
+  const userIDBackgroundColor = hashStringToColor(shortAddress || accountShortAddress);
+  const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
+
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />}
@@ -106,10 +110,15 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                 <img src={avatarImageUrl} alt='' />
               </span>
             )}
-            (u/
+            (ID: {''}
             <Tooltip
               children={
-                <span title={t('highlight_posts')} className={styles.userAddress} onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}>
+                <span
+                  title={t('highlight_posts')}
+                  className={styles.userAddress}
+                  onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
+                  style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
+                >
                   {shortAddress || accountShortAddress}
                 </span>
               }
@@ -138,7 +147,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                 <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                   c/
                 </Link>
-                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid)}>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
                   {shortCid}
                 </span>
               </>
@@ -239,8 +248,7 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state, subplebbitAddress } = post || {};
-  const { isDescription, isRules } = post || {}; // custom properties, not from api
+  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state } = post || {};
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
@@ -249,7 +257,8 @@ const PostMessage = ({ post }: PostProps) => {
   const isInPostView = isPostPageView(location.pathname, params);
   const [showOriginal, setShowOriginal] = useState(false);
 
-  const displayContent = content && !isInPostView && content.length > 1000 ? content?.slice(0, 1000) + '(...)' : content;
+  const [showFullComment, setShowFullComment] = useState(false);
+  const displayContent = content && !isInPostView && content.length > 1000 && !showFullComment ? content.slice(0, 1000) : content;
 
   const quotelinkReply = useComment({ commentCid: parentCid });
   const isReply = parentCid;
@@ -318,14 +327,10 @@ const PostMessage = ({ post }: PostProps) => {
           />
         </span>
       )} */}
-      {!isReply && content.length > 1000 && !isInPostView && (
+      {content?.length > 1000 && !isInPostView && !showFullComment && (
         <span className={styles.abbr}>
           <br />
-          <Trans
-            i18nKey={'comment_too_long'}
-            shouldUnescape={true}
-            components={{ 1: <Link to={`/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`} /> }}
-          />
+          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <span onClick={() => setShowFullComment(true)} /> }} />
         </span>
       )}
       {!cid && state === 'pending' && stateString !== 'Failed' && (

@@ -73,7 +73,20 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
 const ViewOnButton = ({ cid, isDescription, isInAllView, isInSubscriptionsView, isRules, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
   const { t } = useTranslation();
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
-  const viewOnOtherClientLink = `p/${isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress}${isDescription || isRules ? '' : `/c/${cid}`}`;
+
+  const getViewOnOtherClientLink = () => {
+    if (isDescription || isRules) {
+      if (isInAllView || isInSubscriptionsView) {
+        return `${isInAllView ? 'all' : isInSubscriptionsView && 'subscriptions'}`;
+      } else {
+        return `${subplebbitAddress}/${isDescription ? 'description' : isRules && 'rules'}`;
+      }
+    } else {
+      return `${subplebbitAddress}/c/${cid}`;
+    }
+  };
+
+  const viewOnOtherClientLink = getViewOnOtherClientLink();
 
   const { refs, floatingStyles } = useFloating({
     placement: 'right-start',
@@ -91,10 +104,10 @@ const ViewOnButton = ({ cid, isDescription, isInAllView, isInSubscriptionsView, 
       {_.capitalize(t('view_on'))} »
       {isClientRedirectMenuOpen && (
         <div ref={refs.setFloating} style={floatingStyles} className={styles.dropdownMenu}>
-          <a href={`https://seedit.eth.limo/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
+          <a href={`https://seedit.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
             <div className={styles.postMenuItem}>Seedit</div>
           </a>
-          <a href={`https://plebones.eth.limo/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
+          <a href={`https://plebones.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
             <div className={styles.postMenuItem}>Plebones</div>
           </a>
         </div>
@@ -171,7 +184,7 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
-              {!isInPostPageView && !isDescription && !isRules && (
+              {!(isInPostPageView && postCid === cid) && !isDescription && !isRules && (
                 <div
                   className={styles.postMenuItem}
                   onClick={() => {

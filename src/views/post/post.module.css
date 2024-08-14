@@ -73,11 +73,14 @@
 }
 
 .userAddress {
+  padding: 0 5px;
+  border-radius: 6px;
+  font-size: 0.8em;
   cursor: pointer;
 }
 
-.postDesktop .userAddress:hover {
-  color: var(--button-desktop-text-color-hover);
+.userAddress:hover {
+  color: var(--post-quotelink-text-color-hover) !important;
 }
 
 .postDesktop .subject {
@@ -164,12 +167,13 @@
   font-size: var(--post-mobile-abbr-font-size);
 }
 
-.postDesktop .abbr a {
+.postDesktop .abbr a, .postDesktop .abbr span {
   color: var(--post-link-text-color);
   text-decoration: var(--post-content-link-text-decoration);
 }
 
-.postDesktop .abbr a:hover {
+.postDesktop .abbr a:hover, .postDesktop .abbr span:hover {
+  cursor: pointer;
   color: var(--post-link-text-color-hover);
   text-decoration: var(--post-content-link-text-decoration-hover);
 }
@@ -344,13 +348,14 @@
   font-size: var(--post-mobile-abbr-font-size);
 }
 
-.postMobile .abbr a {
+.postMobile .abbr a, .postMobile .abbr span {
   color: var(--post-link-text-color);
   text-decoration: var(--post-content-link-text-decoration);
 
 }
 
-.postMobile .abbr a:hover {
+.postMobile .abbr a:hover, .postMobile .abbr span:hover {
+  cursor: pointer;
   color: var(--post-link-text-color-hover);
   text-decoration: var(--post-content-link-text-decoration-hover);
 }

@@ -36,15 +36,21 @@ const useReplyStore = create<ReplyState>((set) => ({
   signer: {},
   spoiler: {},
   publishCommentOptions: {},
+
   setReplyStore: (data: SetReplyStoreData) =>
     set((state) => {
       const { subplebbitAddress, parentCid, author, displayName, content, link, signer, spoiler } = data;
-      const updatedAuthor = displayName ? { ...author, displayName } : author;
+
+      const updatedAuthor = {
+        ...(state.author[parentCid] || author),
+        ...(displayName ? { displayName } : {}),
+      };
+
       const publishCommentOptions = {
         subplebbitAddress,
         parentCid,
-        ...(data.author ? { author: updatedAuthor } : {}),
-        ...(data.signer ? { signer: data.signer } : {}),
+        ...(updatedAuthor ? { author: updatedAuthor } : {}),
+        ...(signer ? { signer } : {}),
         content,
         link,
         spoiler,
@@ -57,11 +63,12 @@ const useReplyStore = create<ReplyState>((set) => ({
           alert(error.message);
         },
       };
+
       return {
         author: { ...state.author, [parentCid]: updatedAuthor },
-        signer: { ...state.signer, [parentCid]: signer },
         content: { ...state.content, [parentCid]: content },
         link: { ...state.link, [parentCid]: link },
+        signer: { ...state.signer, [parentCid]: signer },
         spoiler: { ...state.spoiler, [parentCid]: spoiler },
         publishCommentOptions: { ...state.publishCommentOptions, [parentCid]: publishCommentOptions },
       };
@@ -70,9 +77,9 @@ const useReplyStore = create<ReplyState>((set) => ({
   resetReplyStore: (parentCid) =>
     set((state) => ({
       author: { ...state.author, [parentCid]: undefined },
-      signer: { ...state.signer, [parentCid]: undefined },
       content: { ...state.content, [parentCid]: undefined },
       link: { ...state.link, [parentCid]: undefined },
+      signer: { ...state.signer, [parentCid]: undefined },
       spoiler: { ...state.spoiler, [parentCid]: undefined },
       publishCommentOptions: { ...state.publishCommentOptions, [parentCid]: undefined },
     })),
@@ -80,8 +87,9 @@ const useReplyStore = create<ReplyState>((set) => ({
 
 const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: string }) => {
   const parentCid = cid;
-  const { author, signer, content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
+  const { author, displayName, signer, content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
     author: state.author[parentCid],
+    displayName: state.author[parentCid]?.displayName,
     signer: state.signer[parentCid],
     content: state.content[parentCid],
     link: state.link[parentCid],
@@ -99,6 +107,7 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
       setReplyStore({
         subplebbitAddress,
         parentCid,
+        ...(anonMode ? { displayName } : {}),
         ...(anonMode ? { author } : {}),
         content,
         link,
@@ -107,7 +116,7 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
         ...options,
       });
     },
-    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode],
+    [subplebbitAddress, parentCid, author, displayName, signer, content, link, spoiler, setReplyStore, anonMode],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
