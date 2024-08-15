@@ -44,6 +44,7 @@ const { addChallenge } = useChallengesStore.getState();
 
 const useSubmitStore = create<SubmitState>((set) => ({
   author: undefined,
+  displayName: undefined,
   signer: undefined,
   subplebbitAddress: undefined,
   title: undefined,
@@ -91,6 +92,7 @@ const useSubmitStore = create<SubmitState>((set) => ({
   resetSubmitStore: () =>
     set({
       author: undefined,
+      displayName: undefined,
       signer: undefined,
       subplebbitAddress: undefined,
       title: undefined,
@@ -154,17 +156,28 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const hasCalledAnonAddressRef = useRef(false);
 
   const getAnonAddressForPost = useCallback(async () => {
-    if (anonMode && !hasCalledAnonAddressRef.current) {
-      hasCalledAnonAddressRef.current = true;
-      const newSigner = (await getNewSigner()) || {};
+    if (anonMode) {
+      if (!hasCalledAnonAddressRef.current) {
+        hasCalledAnonAddressRef.current = true;
+        const newSigner = (await getNewSigner()) || {};
+        setSubmitStore({
+          signer: newSigner,
+          author: {
+            address: newSigner.address,
+            displayName: account?.author?.displayName,
+          },
+        });
+      }
+    } else {
       setSubmitStore({
-        signer: newSigner,
+        signer: undefined,
         author: {
-          address: newSigner.address,
+          address: account?.author?.address,
+          displayName: account?.author?.displayName,
         },
       });
     }
-  }, [anonMode, getNewSigner, setSubmitStore]);
+  }, [anonMode, getNewSigner, account, setSubmitStore]);
 
   const onPublishPost = async () => {
     if (!title && !content && !link) {
@@ -174,6 +187,16 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     if (link && !isValidURL(link)) {
       alert('The provided link is not a valid URL.');
       return;
+    }
+
+    if (!anonMode) {
+      setSubmitStore({
+        signer: undefined,
+        author: {
+          address: account?.author?.address,
+          displayName: account?.author?.displayName,
+        },
+      });
     }
 
     publishComment();
