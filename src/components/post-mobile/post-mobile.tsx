@@ -374,7 +374,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               ))}
           </div>
           {!isInPendingPostView &&
-            (stateString && stateString !== 'Failed' ? (
+            (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (
               <div className={styles.stateString}>
                 <LoadingEllipsis string={stateString} />
               </div>

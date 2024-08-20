@@ -459,7 +459,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           ))}
       </div>
       {!isInPendingPostView &&
-        (stateString && stateString !== 'Failed' ? (
+        (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (
           <div className={styles.stateString}>
             <br />
             <LoadingEllipsis string={stateString} />
