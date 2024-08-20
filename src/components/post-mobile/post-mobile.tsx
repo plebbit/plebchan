@@ -137,7 +137,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                     c/
                   </Link>
                   <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
-                    {shortCid}
+                    {shortCid.slice(0, -4)}
                   </span>
                 </>
               ) : (
