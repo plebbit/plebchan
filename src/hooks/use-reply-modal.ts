@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import useIsMobile from './use-is-mobile';
 import useSelectedTextStore from '../stores/use-selected-text-store';
 
@@ -13,11 +13,11 @@ const useReplyModal = () => {
   const isMobile = useIsMobile();
   const [scrollY, setScrollY] = useState<number>(0);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     resetSelectedText();
     setActiveCid(null);
     setShowReplyModal(false);
-  };
+  }, [resetSelectedText, setActiveCid, setShowReplyModal]);
 
   const getSelectedText = () => {
     let text = document.getSelection()?.toString();

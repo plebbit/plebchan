@@ -26,7 +26,7 @@ interface ReplyModalProps {
 
 const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, subplebbitAddress }: ReplyModalProps) => {
   const { t } = useTranslation();
-  const { setPublishReplyOptions, publishReply } = usePublishReply({ cid: parentCid, subplebbitAddress });
+  const { setPublishReplyOptions, publishReply, resetPublishReplyOptions, replyIndex } = usePublishReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
   const [url, setUrl] = useState('');
@@ -69,7 +69,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     }
   }, [anonMode, getAnonAddressForReply]);
 
-  const onPublishReply = async () => {
+  const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
     const currentUrl = urlRef.current?.value || '';
 
@@ -84,8 +84,14 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     }
 
     publishReply();
-    closeModal();
   };
+
+  useEffect(() => {
+    if (typeof replyIndex === 'number') {
+      resetPublishReplyOptions();
+      closeModal();
+    }
+  }, [replyIndex, resetPublishReplyOptions, closeModal]);
 
   const hasSetInitialDisplayName = useRef(false);
   useEffect(() => {
