@@ -64,17 +64,17 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
             {displayName ? (
               displayName.length <= 20 ? (
-                <span className={styles.name}>{displayName}</span>
+                displayName
               ) : (
                 <Tooltip
-                  children={<span className={styles.name}>{displayName.slice(0, 20) + '(...)'}</span>}
+                  children={displayName.slice(0, 20) + '(...)'}
                   content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + `... ${t('display_name_too_long')}`}
                 />
               )
             ) : (
               _.capitalize(t('anonymous'))
             )}
-            {authorRole && ` ## Board ${authorRole}`}{' '}
+            <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>
           </span>
           {!(isDescription || isRules) && (
             <>

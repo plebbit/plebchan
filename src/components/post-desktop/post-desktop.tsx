@@ -101,7 +101,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           ) : (
             _.capitalize(t('anonymous'))
           )}
-          {authorRole && ` ## Board ${authorRole}`}{' '}
+          <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>
         </span>
         {!(isDescription || isRules) && (
           <>

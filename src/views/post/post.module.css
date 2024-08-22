@@ -430,7 +430,6 @@
 
 .capcodeMod {
   color: var(--post-capcode-mod-text-color) !important;
-  text-transform: capitalize;
 }
 
 .pendingCid {
