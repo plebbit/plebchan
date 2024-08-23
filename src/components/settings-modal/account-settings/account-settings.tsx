@@ -12,15 +12,7 @@ const AnonMode = () => {
   return (
     <div className={styles.anonMode}>
       <label>
-        <input
-          type='checkbox'
-          checked={anonMode}
-          onChange={(e) => {
-            setAnonMode(e.target.checked);
-            window.location.reload();
-          }}
-        />{' '}
-        anon mode
+        <input type='checkbox' checked={anonMode} onChange={(e) => setAnonMode(e.target.checked)} /> anon mode
       </label>
       <span className={styles.settingTip}>Automatically use a different user ID in each thread</span>
     </div>
