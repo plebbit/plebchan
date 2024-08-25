@@ -39,7 +39,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const address = comment?.author?.address;
 
   const hasCalledAnonAddressRef = useRef(false);
-
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
       hasCalledAnonAddressRef.current = true;
@@ -49,6 +48,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
           signer: existingSigner,
           author: {
             address: existingSigner.address,
+            displayName: displayName || undefined,
           },
         });
       } else {
@@ -57,17 +57,12 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
           signer: newSigner,
           author: {
             address: newSigner.address,
+            displayName: displayName || undefined,
           },
         });
       }
     }
-  }, [anonMode, address, getExistingSigner, getNewSigner, setPublishReplyOptions]);
-
-  useEffect(() => {
-    if (anonMode) {
-      getAnonAddressForReply();
-    }
-  }, [anonMode, getAnonAddressForReply]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -87,19 +82,17 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   };
 
   useEffect(() => {
+    if (anonMode) {
+      getAnonAddressForReply();
+    }
+  }, [anonMode, getAnonAddressForReply]);
+
+  useEffect(() => {
     if (typeof replyIndex === 'number') {
       resetPublishReplyOptions();
       closeModal();
     }
   }, [replyIndex, resetPublishReplyOptions, closeModal]);
-
-  const hasSetInitialDisplayName = useRef(false);
-  useEffect(() => {
-    if (!hasSetInitialDisplayName.current && displayName) {
-      setPublishReplyOptions({ displayName });
-      hasSetInitialDisplayName.current = true;
-    }
-  }, [displayName, setPublishReplyOptions]);
 
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();

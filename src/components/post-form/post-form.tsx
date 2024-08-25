@@ -266,14 +266,6 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     publishReply();
   };
 
-  const hasSetInitialDisplayName = useRef(false);
-  useEffect(() => {
-    if (!hasSetInitialDisplayName.current && displayName) {
-      setPublishReplyOptions({ displayName });
-      hasSetInitialDisplayName.current = true;
-    }
-  }, [displayName, setPublishReplyOptions]);
-
   useEffect(() => {
     if (typeof replyIndex === 'number') {
       resetPublishReplyOptions();
