@@ -26,7 +26,7 @@ interface ReplyModalProps {
 
 const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, subplebbitAddress }: ReplyModalProps) => {
   const { t } = useTranslation();
-  const { setPublishReplyOptions, publishReply } = usePublishReply({ cid: parentCid, subplebbitAddress });
+  const { setPublishReplyOptions, publishReply, resetPublishReplyOptions, replyIndex } = usePublishReply({ cid: parentCid, subplebbitAddress });
   const account = useAccount();
   const { displayName } = account?.author || {};
   const [url, setUrl] = useState('');
@@ -39,7 +39,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const address = comment?.author?.address;
 
   const hasCalledAnonAddressRef = useRef(false);
-
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
       hasCalledAnonAddressRef.current = true;
@@ -49,6 +48,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
           signer: existingSigner,
           author: {
             address: existingSigner.address,
+            displayName: displayName || undefined,
           },
         });
       } else {
@@ -57,19 +57,14 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
           signer: newSigner,
           author: {
             address: newSigner.address,
+            displayName: displayName || undefined,
           },
         });
       }
     }
-  }, [anonMode, address, getExistingSigner, getNewSigner, setPublishReplyOptions]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
-  useEffect(() => {
-    if (anonMode) {
-      getAnonAddressForReply();
-    }
-  }, [anonMode, getAnonAddressForReply]);
-
-  const onPublishReply = async () => {
+  const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
     const currentUrl = urlRef.current?.value || '';
 
@@ -84,16 +79,20 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     }
 
     publishReply();
-    closeModal();
   };
 
-  const hasSetInitialDisplayName = useRef(false);
   useEffect(() => {
-    if (!hasSetInitialDisplayName.current && displayName) {
-      setPublishReplyOptions({ displayName });
-      hasSetInitialDisplayName.current = true;
+    if (anonMode) {
+      getAnonAddressForReply();
     }
-  }, [displayName, setPublishReplyOptions]);
+  }, [anonMode, getAnonAddressForReply]);
+
+  useEffect(() => {
+    if (typeof replyIndex === 'number') {
+      resetPublishReplyOptions();
+      closeModal();
+    }
+  }, [replyIndex, resetPublishReplyOptions, closeModal]);
 
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();

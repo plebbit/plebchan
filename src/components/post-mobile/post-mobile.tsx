@@ -24,7 +24,7 @@ import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, link, locked, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, deleted, link, locked, parentCid, pinned, postCid, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, shortAddress } = author || {};
@@ -61,43 +61,55 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
       <div className={styles.postInfo}>
         <PostMenuMobile post={post} />
         <span className={styles.nameBlock}>
-          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-            {displayName ? (
+          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
+            {removed ? (
+              _.capitalize(t('removed'))
+            ) : deleted ? (
+              _.capitalize(t('deleted'))
+            ) : displayName ? (
               displayName.length <= 20 ? (
-                <span className={styles.name}>{displayName}</span>
+                displayName
               ) : (
                 <Tooltip
-                  children={<span className={styles.name}>{displayName.slice(0, 20) + '(...)'}</span>}
+                  children={displayName.slice(0, 20) + '(...)'}
                   content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + `... ${t('display_name_too_long')}`}
                 />
               )
             ) : (
               _.capitalize(t('anonymous'))
             )}
-            {authorRole && ` ## Board ${authorRole}`}{' '}
+            {!(deleted || removed) && <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>}
           </span>
           {!(isDescription || isRules) && (
             <>
-              {author?.avatar && (
+              {author?.avatar && !(deleted || removed) ? (
                 <span className={styles.authorAvatar}>
                   <img src={avatarImageUrl} alt='' />
                 </span>
+              ) : (
+                ' '
               )}
               (ID: {''}
-              <Tooltip
-                children={
-                  <span
-                    title={t('highlight_posts')}
-                    className={styles.userAddress}
-                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
-                    style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
-                  >
-                    {shortAddress || accountShortAddress}
-                  </span>
-                }
-                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
-                showTooltip={isInPostPageView || postReplyCount < 6}
-              />
+              {removed ? (
+                _.lowerCase(t('removed'))
+              ) : deleted ? (
+                _.lowerCase(t('deleted'))
+              ) : (
+                <Tooltip
+                  children={
+                    <span
+                      title={t('highlight_posts')}
+                      className={styles.userAddress}
+                      onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
+                      style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
+                    >
+                      {shortAddress || accountShortAddress}
+                    </span>
+                  }
+                  content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
+                  showTooltip={isInPostPageView || postReplyCount < 6}
+                />
+              )}
               ){' '}
             </>
           )}
@@ -137,7 +149,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                     c/
                   </Link>
                   <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
-                    {shortCid}
+                    {shortCid.slice(0, -4)}
                   </span>
                 </>
               ) : (
@@ -204,7 +216,11 @@ const PostMessageMobile = ({ post }: PostProps) => {
           showTooltip={!!reason}
         />
       ) : deleted ? (
-        <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
+        <Tooltip
+          children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>}
+          content={reason && `${t('reason')}: ${reason}`}
+          showTooltip={!!reason}
+        />
       ) : (
         <>
           {!showOriginal && <Markdown content={displayContent} />}
@@ -361,11 +377,6 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 </div>
               )}
             </div>
-            {post?.replyCount === undefined && !isInPendingPostView && (
-              <span className={styles.loadingString}>
-                <LoadingEllipsis string={t('loading_comments')} />
-              </span>
-            )}
             {!(pinned && !isInPostView) &&
               !isInPendingPostView &&
               !isDescription &&
@@ -379,7 +390,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               ))}
           </div>
           {!isInPendingPostView &&
-            (stateString && stateString !== 'Failed' ? (
+            (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (
               <div className={styles.stateString}>
                 <LoadingEllipsis string={stateString} />
               </div>

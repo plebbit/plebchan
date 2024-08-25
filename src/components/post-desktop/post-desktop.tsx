@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAccountComments, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -46,7 +46,7 @@ const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
 
 const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, locked, pinned, parentCid, postCid, replyCount, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, deleted, locked, pinned, parentCid, postCid, removed, replyCount, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const replies = useReplies(post);
   const { address, shortAddress } = author || {};
@@ -72,7 +72,8 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
-  const userIDBackgroundColor = hashStringToColor(shortAddress || accountShortAddress);
+  const userID = shortAddress || accountShortAddress;
+  const userIDBackgroundColor = hashStringToColor(userID);
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   return (
@@ -88,8 +89,12 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           />
         ))}
       <span className={styles.nameBlock}>
-        <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-          {displayName ? (
+        <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
+          {deleted ? (
+            _.capitalize(t('deleted'))
+          ) : removed ? (
+            _.capitalize(t('removed'))
+          ) : displayName ? (
             displayName.length <= 20 ? (
               displayName
             ) : (
@@ -101,30 +106,38 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           ) : (
             _.capitalize(t('anonymous'))
           )}
-          {authorRole && ` ## Board ${authorRole}`}{' '}
+          {!(deleted || removed) && <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>}
         </span>
         {!(isDescription || isRules) && (
           <>
-            {author?.avatar && (
+            {author?.avatar && !(deleted || removed) ? (
               <span className={styles.authorAvatar}>
                 <img src={avatarImageUrl} alt='' />
               </span>
+            ) : (
+              ' '
             )}
-            (ID: {''}
-            <Tooltip
-              children={
-                <span
-                  title={t('highlight_posts')}
-                  className={styles.userAddress}
-                  onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
-                  style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
-                >
-                  {shortAddress || accountShortAddress}
-                </span>
-              }
-              content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
-              showTooltip={isInPostPageView || showOmittedReplies[postCid] || (postReplyCount < 6 && !pinned)}
-            />
+            (ID:{' '}
+            {deleted ? (
+              t('deleted')
+            ) : removed ? (
+              t('removed')
+            ) : (
+              <Tooltip
+                children={
+                  <span
+                    title={t('highlight_posts')}
+                    className={styles.userAddress}
+                    onClick={() => handleUserAddressClick(userID, postCid)}
+                    style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
+                  >
+                    {userID}
+                  </span>
+                }
+                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
+                showTooltip={isInPostPageView || showOmittedReplies[postCid] || (postReplyCount < 6 && !pinned)}
+              />
+            )}
             ){' '}
           </>
         )}
@@ -280,7 +293,11 @@ const PostMessage = ({ post }: PostProps) => {
           showTooltip={!!reason}
         />
       ) : deleted ? (
-        <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
+        <Tooltip
+          children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>}
+          content={reason && `${t('reason')}: ${reason}`}
+          showTooltip={!!reason}
+        />
       ) : (
         <>
           {!showOriginal && <Markdown content={displayContent} />}
@@ -388,8 +405,6 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const visiblelinksCount = useCountLinksInReplies(post, 5);
   const totalLinksCount = useCountLinksInReplies(post);
   const replyCount = replies?.length;
-  const { accountComments } = useAccountComments();
-  const isPostInAccountComments = accountComments?.find((comment) => comment.cid === cid);
 
   const repliesCount = pinned ? replyCount : replyCount - 5;
   const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
@@ -447,11 +462,6 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             )}
           </span>
         )}
-        {post?.replyCount === undefined && !isPostInAccountComments && !isInPendingPostView && (
-          <span className={styles.loadingString}>
-            <LoadingEllipsis string={t('loading_comments')} />
-          </span>
-        )}
         {!isHidden &&
           !(pinned && !isInPostPageView && !showOmittedReplies[cid]) &&
           !isInPendingPostView &&
@@ -466,7 +476,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           ))}
       </div>
       {!isInPendingPostView &&
-        (stateString && stateString !== 'Failed' ? (
+        (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (
           <div className={styles.stateString}>
             <br />
             <LoadingEllipsis string={stateString} />

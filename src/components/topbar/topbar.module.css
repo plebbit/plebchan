@@ -72,7 +72,7 @@
 
 .boardSelect {
   float: left;
-  color: var(--homepage-box-link-text-color);
+  color: var(--body-font-color);
 }
 
 .pageJump {
