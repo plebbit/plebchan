@@ -16,6 +16,10 @@
   margin: 0;
 }
 
+.markdown ol, .markdown ul {
+  padding-left: 1em;
+}
+
 .embedButton {
   color: var(--button-desktop-text-color);
   text-transform: capitalize;
