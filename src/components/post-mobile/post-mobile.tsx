@@ -24,7 +24,7 @@ import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, link, locked, parentCid, pinned, postCid, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, deleted, link, locked, parentCid, pinned, postCid, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, shortAddress } = author || {};
@@ -61,8 +61,12 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
       <div className={styles.postInfo}>
         <PostMenuMobile post={post} />
         <span className={styles.nameBlock}>
-          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && styles.capcodeMod}`}>
-            {displayName ? (
+          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
+            {removed ? (
+              _.capitalize(t('removed'))
+            ) : deleted ? (
+              _.capitalize(t('deleted'))
+            ) : displayName ? (
               displayName.length <= 20 ? (
                 displayName
               ) : (
@@ -74,30 +78,38 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
             ) : (
               _.capitalize(t('anonymous'))
             )}
-            <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>
+            {!(deleted || removed) && <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>}
           </span>
           {!(isDescription || isRules) && (
             <>
-              {author?.avatar && (
+              {author?.avatar && !(deleted || removed) ? (
                 <span className={styles.authorAvatar}>
                   <img src={avatarImageUrl} alt='' />
                 </span>
+              ) : (
+                ' '
               )}
               (ID: {''}
-              <Tooltip
-                children={
-                  <span
-                    title={t('highlight_posts')}
-                    className={styles.userAddress}
-                    onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
-                    style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
-                  >
-                    {shortAddress || accountShortAddress}
-                  </span>
-                }
-                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
-                showTooltip={isInPostPageView || postReplyCount < 6}
-              />
+              {removed ? (
+                _.lowerCase(t('removed'))
+              ) : deleted ? (
+                _.lowerCase(t('deleted'))
+              ) : (
+                <Tooltip
+                  children={
+                    <span
+                      title={t('highlight_posts')}
+                      className={styles.userAddress}
+                      onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
+                      style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
+                    >
+                      {shortAddress || accountShortAddress}
+                    </span>
+                  }
+                  content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
+                  showTooltip={isInPostPageView || postReplyCount < 6}
+                />
+              )}
               ){' '}
             </>
           )}
@@ -204,7 +216,11 @@ const PostMessageMobile = ({ post }: PostProps) => {
           showTooltip={!!reason}
         />
       ) : deleted ? (
-        <Tooltip children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>} content={reason && `${t('reason')}: ${reason}`} />
+        <Tooltip
+          children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>}
+          content={reason && `${t('reason')}: ${reason}`}
+          showTooltip={!!reason}
+        />
       ) : (
         <>
           {!showOriginal && <Markdown content={displayContent} />}
