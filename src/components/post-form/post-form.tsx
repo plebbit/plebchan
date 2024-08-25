@@ -164,7 +164,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
           signer: newSigner,
           author: {
             address: newSigner.address,
-            displayName: account?.author?.displayName,
+            displayName: displayName || undefined,
           },
         });
       }
@@ -173,11 +173,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         signer: undefined,
         author: {
           address: account?.author?.address,
-          displayName: account?.author?.displayName,
+          displayName: displayName || undefined,
         },
       });
     }
-  }, [anonMode, getNewSigner, account, setSubmitStore]);
+  }, [anonMode, getNewSigner, account, setSubmitStore, displayName]);
 
   const onPublishPost = async () => {
     if (!title && !content && !link) {
@@ -187,16 +187,6 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     if (link && !isValidURL(link)) {
       alert('The provided link is not a valid URL.');
       return;
-    }
-
-    if (!anonMode) {
-      setSubmitStore({
-        signer: undefined,
-        author: {
-          address: account?.author?.address,
-          displayName: account?.author?.displayName,
-        },
-      });
     }
 
     publishComment();
@@ -235,6 +225,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
           signer: existingSigner,
           author: {
             address: existingSigner.address,
+            displayName: displayName || undefined,
           },
         });
       } else {
@@ -243,11 +234,12 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
           signer: newSigner,
           author: {
             address: newSigner.address,
+            displayName: displayName || undefined,
           },
         });
       }
     }
-  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
@@ -297,9 +289,9 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               onChange={(e) => {
                 setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } });
                 if (isInPostView) {
-                  setPublishReplyOptions({ displayName: e.target.value });
+                  setPublishReplyOptions({ displayName: e.target.value || undefined });
                 } else {
-                  setSubmitStore({ displayName: e.target.value });
+                  setSubmitStore({ displayName: e.target.value || undefined });
                 }
               }}
             />
