@@ -62,8 +62,6 @@ const useReplyStore = create<ReplyState>((set) => ({
         },
       };
 
-      console.log('Final publishCommentOptions:', publishCommentOptions);
-
       return {
         author: { ...state.author, [parentCid]: updatedAuthor },
         displayName: { ...state.displayName, [parentCid]: displayName },
@@ -117,16 +115,12 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
         signer: anonMode ? signer || options.signer : undefined,
       };
 
-      console.log('Final options to set in state:', newOptions);
-
       setReplyStore(newOptions as SetReplyStoreData);
     },
     [subplebbitAddress, parentCid, author, displayName, signer, content, link, spoiler, setReplyStore, anonMode],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
-
-  console.log('Final options before publishing', publishCommentOptions);
 
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
