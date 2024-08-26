@@ -18,7 +18,6 @@ import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
 import { timeFilterNames } from './hooks/use-time-filter';
 import useTheme from './hooks/use-theme';
-import useInitialTheme from './hooks/use-initial-theme';
 
 const BoardLayout = () => {
   const { accountCommentIndex, subplebbitAddress, timeFilterName } = useParams();

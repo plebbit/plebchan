@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useMemo } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useThemeStore from '../stores/use-theme-store';
 import useDefaultSubplebbits from './use-default-subplebbits';
@@ -18,9 +18,7 @@ const useInitialTheme = () => {
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
 
-  let initialTheme = 'yotsuba';
-
-  useEffect(() => {
+  const initialTheme = useMemo(() => {
     let theme = 'yotsuba';
 
     if (isInPendingPostView) {
@@ -38,7 +36,7 @@ const useInitialTheme = () => {
       }
     }
 
-    initialTheme = theme;
+    return theme;
   }, [isInPendingPostView, isInAllView, isInSubscriptionsView, isInHomeView, isInNotFoundView, subplebbitAddress, getTheme, currentTheme, subplebbits]);
 
   return initialTheme;
