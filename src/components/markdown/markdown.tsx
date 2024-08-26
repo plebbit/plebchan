@@ -159,7 +159,7 @@ const Markdown = ({ content, title }: MarkdownProps) => {
         </span>
       )}
       <ReactMarkdown
-        children={content}
+        children={content.replace(/\n/g, '\n\n')} // single newlines would be rendered as spaces
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
