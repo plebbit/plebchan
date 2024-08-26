@@ -62,7 +62,14 @@ const BoardLayout = () => {
 };
 
 const GlobalLayout = () => {
-  useTheme();
+  const [theme] = useTheme();
+
+  useEffect(() => {
+    document.body.classList.add(theme);
+    return () => {
+      document.body.classList.remove(theme);
+    };
+  }, [theme]);
 
   return (
     <>
@@ -73,12 +80,6 @@ const GlobalLayout = () => {
 };
 
 const App = () => {
-  const initialTheme = useInitialTheme();
-
-  useEffect(() => {
-    document.body.classList.add(initialTheme);
-  }, [initialTheme]);
-
   return (
     <div className={styles.app}>
       <Routes>

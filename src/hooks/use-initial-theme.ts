@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useThemeStore from '../stores/use-theme-store';
 import useDefaultSubplebbits from './use-default-subplebbits';
@@ -17,20 +18,30 @@ const useInitialTheme = () => {
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
 
-  if (isInPendingPostView) {
-    return currentTheme || 'yotsuba';
-  } else if (isInAllView || isInSubscriptionsView) {
-    return getTheme('sfw') || 'yotsuba-b';
-  } else if (isInHomeView || isInNotFoundView) {
-    return 'yotsuba';
-  } else if (subplebbitAddress) {
-    const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
-    if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
-      return getTheme('nsfw') || 'yotsuba';
+  let initialTheme = 'yotsuba';
+
+  useEffect(() => {
+    let theme = 'yotsuba';
+
+    if (isInPendingPostView) {
+      theme = currentTheme || 'yotsuba';
+    } else if (isInAllView || isInSubscriptionsView) {
+      theme = getTheme('sfw') || 'yotsuba-b';
+    } else if (isInHomeView || isInNotFoundView) {
+      theme = 'yotsuba';
+    } else if (subplebbitAddress) {
+      const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
+      if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
+        theme = getTheme('nsfw') || 'yotsuba';
+      } else {
+        theme = getTheme('sfw') || 'yotsuba-b';
+      }
     }
-    return getTheme('sfw') || 'yotsuba-b';
-  }
-  return 'yotsuba';
+
+    initialTheme = theme;
+  }, [isInPendingPostView, isInAllView, isInSubscriptionsView, isInHomeView, isInNotFoundView, subplebbitAddress, getTheme, currentTheme, subplebbits]);
+
+  return initialTheme;
 };
 
 export default useInitialTheme;
