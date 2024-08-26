@@ -24,15 +24,15 @@ const useInitialTheme = () => {
     if (isInPendingPostView) {
       theme = currentTheme || 'yotsuba';
     } else if (isInAllView || isInSubscriptionsView) {
-      theme = getTheme('sfw') || 'yotsuba-b';
+      theme = getTheme('sfw', false) || 'yotsuba-b'; // Add 'false' parameter
     } else if (isInHomeView || isInNotFoundView) {
       theme = 'yotsuba';
     } else if (subplebbitAddress) {
       const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
       if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
-        theme = getTheme('nsfw') || 'yotsuba';
+        theme = getTheme('nsfw', false) || 'yotsuba'; // Add 'false' parameter
       } else {
-        theme = getTheme('sfw') || 'yotsuba-b';
+        theme = getTheme('sfw', false) || 'yotsuba-b'; // Add 'false' parameter
       }
     }
 

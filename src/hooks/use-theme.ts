@@ -24,7 +24,7 @@ const useTheme = (): [string, (theme: string) => void] => {
   const subplebbits = useDefaultSubplebbits();
 
   const initialTheme = useInitialTheme();
-  const [userSetTheme, setUserSetTheme] = useState<string | null>(null);
+  const [currentTheme, setCurrentTheme] = useState(initialTheme);
 
   const getCurrentTheme = useCallback(() => {
     const subplebbitAddress = params?.subplebbitAddress;
@@ -33,13 +33,13 @@ const useTheme = (): [string, (theme: string) => void] => {
 
     let storedTheme = null;
     if (isInAllView || isInSubscriptionsView) {
-      storedTheme = getTheme('sfw');
+      storedTheme = getTheme('sfw', false);
     } else if (subplebbitAddress) {
       const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
       if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
-        storedTheme = getTheme('nsfw');
+        storedTheme = getTheme('nsfw', false);
       } else {
-        storedTheme = getTheme('sfw');
+        storedTheme = getTheme('sfw', false);
       }
     }
 
@@ -47,14 +47,16 @@ const useTheme = (): [string, (theme: string) => void] => {
   }, [location.pathname, params, getTheme, subplebbits, initialTheme]);
 
   useEffect(() => {
-    const initializeTheme = async () => {
-      await loadThemes();
-      const currentTheme = getCurrentTheme();
-      updateThemeClass(currentTheme);
-    };
+    const newTheme = getCurrentTheme();
+    if (newTheme !== currentTheme) {
+      setCurrentTheme(newTheme);
+      updateThemeClass(newTheme);
+    }
+  }, [getCurrentTheme, currentTheme]);
 
-    initializeTheme();
-  }, [loadThemes, getCurrentTheme]);
+  useEffect(() => {
+    loadThemes();
+  }, [loadThemes]);
 
   const setSubplebbitTheme = useCallback(
     async (newTheme: string) => {
@@ -73,13 +75,11 @@ const useTheme = (): [string, (theme: string) => void] => {
         }
       }
 
-      setUserSetTheme(newTheme);
+      setCurrentTheme(newTheme);
       updateThemeClass(newTheme);
     },
     [location.pathname, params, setThemeStore, subplebbits],
   );
-
-  const currentTheme = userSetTheme || getCurrentTheme();
 
   return [currentTheme, setSubplebbitTheme];
 };
