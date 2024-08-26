@@ -151,10 +151,13 @@ const Markdown = ({ content, title }: MarkdownProps) => {
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
-  // retain empty lines
   const processedContent = useMemo(() => {
     let md = content;
+    // Preserve newlines in code blocks
     md = md.replace(/```[\s\S]*?```/g, (m) => m.replace(/\n/g, '\n '));
+    // Add an extra newline after blockquote lines
+    md = md.replace(/^(>.*)\n(?!>)/gm, '$1\n\n');
+    // Retain empty lines
     md = md.replace(/(?<=\n\n)(?![*-])\n/g, '&nbsp;\n ');
     return md;
   }, [content]);
