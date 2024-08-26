@@ -37,6 +37,7 @@
     "react-scripts": "5.0.1",
     "react-virtuoso": "4.7.8",
     "rehype-sanitize": "5.0.1",
+    "remark-breaks": "4.0.0",
     "remark-gfm": "3.0.1",
     "remark-supersub": "1.0.0",
     "tcp-port-used": "1.0.2",
