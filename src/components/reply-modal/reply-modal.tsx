@@ -154,7 +154,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const contentWithoutPrefix = e.target.value.slice(contentPrefix.length).replace(/\n/g, '\n\n');
+    const contentWithoutPrefix = e.target.value.slice(contentPrefix.length);
     if (textRef.current && textRef.current.value !== contentWithoutPrefix) {
       setPublishReplyOptions({ content: contentWithoutPrefix });
     }

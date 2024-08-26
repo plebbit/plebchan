@@ -322,7 +322,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               wrap='soft'
               ref={textRef}
               onChange={(e) => {
-                const content = e.target.value.replace(/\n/g, '\n\n');
+                const content = e.target.value;
                 isInPostView ? setPublishReplyOptions({ content }) : setSubmitStore({ content });
               }}
             />

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import supersub from 'remark-supersub';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
@@ -128,7 +129,7 @@ interface MarkdownProps {
 }
 
 const Markdown = ({ content, title }: MarkdownProps) => {
-  const remarkPlugins: any[] = [[supersub]];
+  const remarkPlugins: any[] = [[remarkBreaks, supersub]];
 
   if (content && content.length <= MAX_LENGTH_FOR_GFM) {
     remarkPlugins.push([remarkGfm, { singleTilde: false }]);
@@ -150,6 +151,14 @@ const Markdown = ({ content, title }: MarkdownProps) => {
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
+  // retain empty lines
+  const processedContent = useMemo(() => {
+    let md = content;
+    md = md.replace(/```[\s\S]*?```/g, (m) => m.replace(/\n/g, '\n '));
+    md = md.replace(/(?<=\n\n)(?![*-])\n/g, '&nbsp;\n ');
+    return md;
+  }, [content]);
+
   return (
     <span className={styles.markdown}>
       {isInCatalogView && title && (
@@ -159,7 +168,7 @@ const Markdown = ({ content, title }: MarkdownProps) => {
         </span>
       )}
       <ReactMarkdown
-        children={content.replace(/\n/g, '\n\n')} // single newlines would be rendered as spaces
+        children={processedContent}
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
