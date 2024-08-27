@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import supersub from 'remark-supersub';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
@@ -129,7 +128,7 @@ interface MarkdownProps {
 }
 
 const Markdown = ({ content, title }: MarkdownProps) => {
-  const remarkPlugins: any[] = [[remarkBreaks, supersub]];
+  const remarkPlugins: any[] = [[supersub]];
 
   if (content && content.length <= MAX_LENGTH_FOR_GFM) {
     remarkPlugins.push([remarkGfm, { singleTilde: false }]);
@@ -151,19 +150,6 @@ const Markdown = ({ content, title }: MarkdownProps) => {
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
-  const processedContent = useMemo(() => {
-    let md = content;
-    if (md) {
-      // Preserve newlines in code blocks
-      md = md.replace(/```[\s\S]*?```/g, (m) => m.replace(/\n/g, '\n '));
-      // Add an extra newline after blockquote lines
-      md = md.replace(/^(>.*)\n(?!>)/gm, '$1\n\n');
-      // Retain empty lines
-      md = md.replace(/(?<=\n\n)(?![*-])\n/g, '&nbsp;\n ');
-    }
-    return md;
-  }, [content]);
-
   return (
     <span className={styles.markdown}>
       {isInCatalogView && title && (
@@ -173,7 +159,7 @@ const Markdown = ({ content, title }: MarkdownProps) => {
         </span>
       )}
       <ReactMarkdown
-        children={processedContent}
+        children={content}
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{

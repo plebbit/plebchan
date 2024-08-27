@@ -15,6 +15,7 @@ import {
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
 import { getLinkMediaInfo } from '../../lib/utils/media-utils';
+import { formatMarkdown } from '../../lib/utils/post-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
@@ -241,6 +242,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const formattedContent = formatMarkdown(e.target.value);
+    isInPostView ? setPublishReplyOptions({ content: formattedContent }) : setSubmitStore({ content: formattedContent });
+  };
+
   const onPublishReply = () => {
     const currentContent = textRef.current?.value || '';
     const currentUrl = urlRef.current?.value || '';
@@ -316,16 +322,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         <tr>
           <td>{t('comment')}</td>
           <td>
-            <textarea
-              cols={48}
-              rows={4}
-              wrap='soft'
-              ref={textRef}
-              onChange={(e) => {
-                const content = e.target.value;
-                isInPostView ? setPublishReplyOptions({ content }) : setSubmitStore({ content });
-              }}
-            />
+            <textarea cols={48} rows={4} wrap='soft' ref={textRef} onChange={handleContentChange} />
           </td>
         </tr>
         <tr>

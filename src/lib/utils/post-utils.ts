@@ -20,3 +20,14 @@ export function getTextColorForBackground(rgb: string): string {
   const brightness = r * 0.299 + g * 0.587 + b * 0.114;
   return brightness > 125 ? 'black' : 'white';
 }
+
+export const formatMarkdown = (content: string): string => {
+  let md = content;
+  if (md) {
+    // Replace single newline with "/n&nbsp;/n" if followed by a newline
+    md = md.replace(/\n(?=\n)/g, '\n&nbsp;\n');
+    // Replace single newline with double newline if between two characters
+    md = md.replace(/\n(?=\S)/g, '\n\n');
+  }
+  return md;
+};
