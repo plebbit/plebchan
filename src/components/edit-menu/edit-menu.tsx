@@ -146,7 +146,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   </div>
                   {isContentEditorOpen && (
                     <div>
-                      <textarea className={styles.editTextarea} value={publishCommentEditOptions.content ?? ''} onChange={handleContentChange} />
+                      <textarea className={styles.editTextarea} defaultValue={publishCommentEditOptions.content ?? ''} onChange={handleContentChange} />
                     </div>
                   )}
                 </>
