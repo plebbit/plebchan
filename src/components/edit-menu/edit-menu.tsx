@@ -144,7 +144,6 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                         className={styles.editTextarea}
                         value={publishCommentEditOptions.content ?? ''}
                         onChange={(e) => setPublishCommentEditOptions((state) => ({ ...state, content: e.target.value }))}
-                        autoFocus={true}
                       />
                     </div>
                   )}
