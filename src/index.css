@@ -30,6 +30,10 @@ hr {
   text-transform: capitalize;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 .red {
   color: red !important;
 }

@@ -262,7 +262,7 @@ const PostMedia = ({ post }: PostProps) => {
 
 const PostMessage = ({ post }: PostProps) => {
   const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state } = post || {};
-  // TODO: commentAuthor is not available outside of editedComment, update when available
+  // TODO: commentAuthor is not yet available outside of editedComment, wait for API to be updated
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
   const params = useParams();
@@ -287,17 +287,25 @@ const PostMessage = ({ post }: PostProps) => {
     <blockquote className={styles.postMessage}>
       {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
-        <Tooltip
-          children={<span className={styles.removedContent}>({t('this_post_was_removed')})</span>}
-          content={`${_.capitalize(t('reason'))}: "${reason}"`}
-          showTooltip={!!reason}
-        />
+        reason ? (
+          <>
+            <span className={styles.redEditMessage}>({t('this_post_was_removed')})</span>
+            <br />
+            <br />
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+          </>
+        ) : (
+          <span className={styles.grayEditMessage}>{_.capitalize(t('this_post_was_removed'))}.</span>
+        )
       ) : deleted ? (
-        <Tooltip
-          children={<span className={styles.deletedContent}>{t('user_deleted_this_post')}</span>}
-          content={reason && `${t('reason')}: ${reason}`}
-          showTooltip={!!reason}
-        />
+        reason ? (
+          <>
+            <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>{' '}
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+          </>
+        ) : (
+          <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>
+        )
       ) : (
         <>
           {!showOriginal && <Markdown content={displayContent} />}
@@ -329,7 +337,7 @@ const PostMessage = ({ post }: PostProps) => {
           )}
         </>
       )}
-      {/* TODO: commentAuthor is not available outside of editedComment, update when available */}
+      {/* TODO: commentAuthor is not yet available outside of editedComment, wait for API to be updated */}
       {/* {banned && (
         <span className={styles.removedContent}>
           <br />

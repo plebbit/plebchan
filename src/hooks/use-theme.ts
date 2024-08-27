@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
@@ -24,63 +24,64 @@ const useTheme = (): [string, (theme: string) => void] => {
   const subplebbits = useDefaultSubplebbits();
 
   const initialTheme = useInitialTheme();
-  const [theme, setLocalTheme] = useState<string>(() => initialTheme);
-  const [themesLoaded, setThemesLoaded] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState(initialTheme);
 
-  useEffect(() => {
-    const loadAndApplyThemes = async () => {
-      await loadThemes();
-      setThemesLoaded(true);
-    };
-
-    loadAndApplyThemes();
-  }, [loadThemes]);
-
-  useEffect(() => {
-    if (!themesLoaded) return;
-
+  const getCurrentTheme = useCallback(() => {
     const subplebbitAddress = params?.subplebbitAddress;
     const isInAllView = isAllView(location.pathname, params);
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
     let storedTheme = null;
     if (isInAllView || isInSubscriptionsView) {
-      storedTheme = getTheme('sfw');
+      storedTheme = getTheme('sfw', false);
     } else if (subplebbitAddress) {
       const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
       if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
-        storedTheme = getTheme('nsfw');
+        storedTheme = getTheme('nsfw', false);
       } else {
-        storedTheme = getTheme('sfw');
+        storedTheme = getTheme('sfw', false);
       }
     }
 
-    const themeToSet = storedTheme || initialTheme;
-    setLocalTheme(themeToSet);
-    updateThemeClass(themeToSet);
-  }, [initialTheme, location.pathname, params, getTheme, themesLoaded, subplebbits]);
+    return storedTheme || initialTheme;
+  }, [location.pathname, params, getTheme, subplebbits, initialTheme]);
 
-  const setSubplebbitTheme = async (newTheme: string) => {
-    const subplebbitAddress = params?.subplebbitAddress;
-    const isInAllView = isAllView(location.pathname, params);
-    const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+  useEffect(() => {
+    const newTheme = getCurrentTheme();
+    if (newTheme !== currentTheme) {
+      setCurrentTheme(newTheme);
+      updateThemeClass(newTheme);
+    }
+  }, [getCurrentTheme, currentTheme]);
 
-    if (isInAllView || isInSubscriptionsView) {
-      await setThemeStore('sfw', newTheme);
-    } else if (subplebbitAddress) {
-      const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
-      if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
-        await setThemeStore('nsfw', newTheme);
-      } else {
+  useEffect(() => {
+    loadThemes();
+  }, [loadThemes]);
+
+  const setSubplebbitTheme = useCallback(
+    async (newTheme: string) => {
+      const subplebbitAddress = params?.subplebbitAddress;
+      const isInAllView = isAllView(location.pathname, params);
+      const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+
+      if (isInAllView || isInSubscriptionsView) {
         await setThemeStore('sfw', newTheme);
+      } else if (subplebbitAddress) {
+        const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
+        if (subplebbit && subplebbit.tags && subplebbit.tags.some((tag) => nsfwTags.includes(tag))) {
+          await setThemeStore('nsfw', newTheme);
+        } else {
+          await setThemeStore('sfw', newTheme);
+        }
       }
-    }
 
-    setLocalTheme(newTheme);
-    updateThemeClass(newTheme);
-  };
+      setCurrentTheme(newTheme);
+      updateThemeClass(newTheme);
+    },
+    [location.pathname, params, setThemeStore, subplebbits],
+  );
 
-  return [theme, setSubplebbitTheme];
+  return [currentTheme, setSubplebbitTheme];
 };
 
 export default useTheme;

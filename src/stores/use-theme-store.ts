@@ -8,7 +8,7 @@ interface ThemeState {
   };
   currentTheme: string | null;
   setTheme: (category: keyof ThemeState['themes'], theme: string) => void;
-  getTheme: (category: keyof ThemeState['themes']) => string | null;
+  getTheme: (category: keyof ThemeState['themes'], updateCurrentTheme?: boolean) => string | null;
   loadThemes: () => Promise<void>;
 }
 
@@ -29,10 +29,12 @@ const useThemeStore = create<ThemeState>((set: StoreApi<ThemeState>['setState'],
     await themeStore.setItem(category, theme);
     set({ themes: updatedThemes, currentTheme: theme });
   },
-  getTheme: (category) => {
+  getTheme: (category, updateCurrentTheme = true) => {
     const currentThemes = get().themes;
     const theme = currentThemes[category] || null;
-    set({ currentTheme: theme });
+    if (updateCurrentTheme) {
+      set({ currentTheme: theme });
+    }
     return theme;
   },
   loadThemes: async () => {

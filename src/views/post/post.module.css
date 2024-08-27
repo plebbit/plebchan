@@ -441,13 +441,14 @@
   cursor: pointer;
 }
 
-.removedContent, .deletedContent {
+.redEditMessage {
+  text-transform: uppercase;
   font-weight: 700;
   color: red;
 }
 
-.removedContent {
-  text-transform: uppercase;
+.grayEditMessage {
+  color: var(--post-mobile-abbr-text-color);
 }
 
 .backlink, .backlinkHash {

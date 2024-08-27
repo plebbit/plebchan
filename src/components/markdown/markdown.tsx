@@ -168,12 +168,7 @@ const Markdown = ({ content, title }: MarkdownProps) => {
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
           source: ({ src }) => <span>{src}</span>,
-          hr: () =>
-            !isInCatalogView && (
-              <div className={styles.hrWrapper}>
-                <hr />
-              </div>
-            ),
+          hr: () => null,
           a: ({ href, children }) => {
             if (href && !isInCatalogView) {
               const linkMediaInfo = getLinkMediaInfo(href);

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
 import { setAccount, useAccount, useComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import { formatMarkdown } from '../../lib/utils/post-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -154,9 +155,10 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const contentWithoutPrefix = e.target.value.slice(contentPrefix.length).replace(/\n/g, '\n\n');
-    if (textRef.current && textRef.current.value !== contentWithoutPrefix) {
-      setPublishReplyOptions({ content: contentWithoutPrefix });
+    const contentWithoutPrefix = e.target.value.slice(contentPrefix.length);
+    const formattedContent = formatMarkdown(contentWithoutPrefix);
+    if (textRef.current && textRef.current.value !== formattedContent) {
+      setPublishReplyOptions({ content: formattedContent });
     }
   };
 

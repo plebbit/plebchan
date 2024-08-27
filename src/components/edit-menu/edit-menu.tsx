@@ -4,6 +4,7 @@ import { autoUpdate, flip, FloatingFocusManager, offset, shift, useClick, useDis
 import { Comment, PublishCommentEditOptions, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
+import { formatMarkdown } from '../../lib/utils/post-utils';
 import useChallengesStore from '../../stores/use-challenges-store';
 import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -113,6 +114,11 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
     setIsEditMenuOpen(false);
   };
 
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const formattedContent = formatMarkdown(e.target.value);
+    setPublishCommentEditOptions((state) => ({ ...state, content: formattedContent }));
+  };
+
   return (
     <>
       <span className={`${styles.checkbox} ${isReply && styles.replyCheckbox}`} ref={refs.setReference} {...(cid && getReferenceProps())}>
@@ -140,12 +146,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   </div>
                   {isContentEditorOpen && (
                     <div>
-                      <textarea
-                        className={styles.editTextarea}
-                        value={publishCommentEditOptions.content ?? ''}
-                        onChange={(e) => setPublishCommentEditOptions((state) => ({ ...state, content: e.target.value }))}
-                        autoFocus={true}
-                      />
+                      <textarea className={styles.editTextarea} defaultValue={publishCommentEditOptions.content ?? ''} onChange={handleContentChange} />
                     </div>
                   )}
                 </>
