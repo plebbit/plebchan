@@ -4,7 +4,6 @@ import { autoUpdate, FloatingFocusManager, offset, shift, useClick, useDismiss, 
 import { Comment, PublishCommentEditOptions, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
-import { formatMarkdown } from '../../lib/utils/post-utils';
 import useChallengesStore from '../../stores/use-challenges-store';
 import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
