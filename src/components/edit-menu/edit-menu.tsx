@@ -114,11 +114,6 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
     setIsEditMenuOpen(false);
   };
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const formattedContent = formatMarkdown(e.target.value);
-    setPublishCommentEditOptions((state) => ({ ...state, content: formattedContent }));
-  };
-
   return (
     <>
       <span className={`${styles.checkbox} ${isReply && styles.replyCheckbox}`} ref={refs.setReference} {...(cid && getReferenceProps())}>
@@ -146,7 +141,11 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   </div>
                   {isContentEditorOpen && (
                     <div>
-                      <textarea className={styles.editTextarea} defaultValue={publishCommentEditOptions.content ?? ''} onChange={handleContentChange} />
+                      <textarea
+                        className={styles.editTextarea}
+                        defaultValue={publishCommentEditOptions.content ?? ''}
+                        onChange={(e) => setPublishCommentEditOptions((state) => ({ ...state, content: e.target.value }))}
+                      />
                     </div>
                   )}
                 </>
