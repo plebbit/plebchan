@@ -90,7 +90,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
     placement: 'bottom-start',
     open: isEditMenuOpen,
     onOpenChange: setIsEditMenuOpen,
-    middleware: [offset(2), flip({ fallbackAxisSideDirection: 'end' }), shift()],
+    middleware: [offset(2), shift()],
     whileElementsMounted: autoUpdate,
   });
 
