@@ -180,8 +180,12 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   }, [anonMode, getNewSigner, account, setSubmitStore, displayName]);
 
-  const onPublishPost = async () => {
-    if (!title && !content && !link) {
+  const onPublishPost = () => {
+    const currentTitle = subjectRef.current?.value.trim() || '';
+    const currentContent = textRef.current?.value.trim() || '';
+    const currentUrl = urlRef.current?.value.trim() || '';
+
+    if (!currentTitle && !currentContent && !currentUrl) {
       alert(`Cannot post empty comment`);
       return;
     }
@@ -248,10 +252,10 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   };
 
   const onPublishReply = () => {
-    const currentContent = textRef.current?.value || '';
-    const currentUrl = urlRef.current?.value || '';
+    const currentContent = textRef.current?.value.trim() || '';
+    const currentUrl = urlRef.current?.value.trim() || '';
 
-    if (!currentContent.trim() && !currentUrl) {
+    if (!currentContent && !currentUrl) {
       alert(`Cannot post empty comment`);
       return;
     }
