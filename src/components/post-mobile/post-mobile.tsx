@@ -162,7 +162,9 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           )}
         </span>
       </div>
-      {(hasThumbnail || link) && <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />}
+      {(hasThumbnail || link) && !(deleted || removed) && (
+        <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
+      )}
     </>
   );
 };
