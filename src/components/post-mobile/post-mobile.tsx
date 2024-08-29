@@ -141,25 +141,22 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
             </div>
           )}
           <Tooltip children={<span>{getFormattedDate(timestamp)}</span>} content={getFormattedTimeAgo(timestamp)} />{' '}
-          {!(isDescription || isRules) && (
-            <span className={styles.postNumLink}>
-              {cid ? (
-                <>
-                  <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-                    c/
-                  </Link>
-                  <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
-                    {shortCid.slice(0, -4)}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span style={{ cursor: 'pointer' }}>c/</span>
-                  <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
-                </>
-              )}
-            </span>
-          )}
+          {!(isDescription || isRules) &&
+            (cid ? (
+              <span className={styles.postNumLink}>
+                <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                  c/
+                </Link>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
+                  {shortCid.slice(0, -4)}
+                </span>
+              </span>
+            ) : (
+              <>
+                <span>c/</span>
+                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+              </>
+            ))}
         </span>
       </div>
       {(hasThumbnail || link) && !(deleted || removed) && (

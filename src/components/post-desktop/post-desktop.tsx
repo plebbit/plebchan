@@ -153,25 +153,22 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
             <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>{' '}
           </span>
         )}
-        {!(isDescription || isRules) && (
-          <span className={styles.postNumLink}>
-            {cid ? (
-              <>
-                <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-                  c/
-                </Link>
-                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
-                  {shortCid}
-                </span>
-              </>
-            ) : (
-              <>
-                <span style={{ cursor: 'pointer' }}>c/</span>
-                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
-              </>
-            )}
-          </span>
-        )}
+        {!(isDescription || isRules) &&
+          (cid ? (
+            <span className={styles.postNumLink}>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                c/
+              </Link>
+              <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
+                {shortCid}
+              </span>
+            </span>
+          ) : (
+            <>
+              <span>c/</span>
+              <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+            </>
+          ))}
         {pinned && (
           <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
             <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
