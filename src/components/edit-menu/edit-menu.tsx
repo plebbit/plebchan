@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
 import { Comment, PublishCommentEditOptions, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
@@ -100,6 +100,13 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
 
   const headingId = useId();
+
+  useEffect(() => {
+    setPublishCommentEditOptions((prevOptions) => ({
+      ...prevOptions,
+      commentCid: cid,
+    }));
+  }, [cid]);
 
   const _publishCommentEdit = async () => {
     try {
