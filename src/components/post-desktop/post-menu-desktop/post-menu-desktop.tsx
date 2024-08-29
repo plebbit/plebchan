@@ -165,6 +165,12 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
   const headingId = useId();
 
+  const handleMenuClick = () => {
+    if (cid) {
+      setMenuBtnRotated((prev) => !prev);
+    }
+  };
+
   const handleClose = () => setMenuBtnRotated(false);
 
   return (
@@ -173,13 +179,14 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
         <span
           className={isInCatalogView ? styles.postMenuBtnCatalog : styles.postMenuBtn}
           title='Post menu'
-          onClick={() => setMenuBtnRotated((prev) => !prev)}
-          style={{ transform: menuBtnRotated ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          onClick={handleMenuClick}
+          style={{ transform: menuBtnRotated && cid ? 'rotate(90deg)' : 'rotate(0deg)' }}
         >
           ▶
         </span>
       </span>
       {menuBtnRotated &&
+        cid &&
         createPortal(
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
