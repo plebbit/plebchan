@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAccountComment, useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
-import styles from './subplebbit-stats.module.css';
 import { Trans, useTranslation } from 'react-i18next';
+import { useAccountComment, useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitStatsVisibilityStore from '../../stores/use-subplebbit-stats-visibility-store';
 import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
+import styles from './subplebbit-stats.module.css';
 
 const SubplebbitStats = () => {
   const { t } = useTranslation();
@@ -16,7 +16,8 @@ const SubplebbitStats = () => {
   const { address, createdAt } = subplebbit || {};
 
   const stats = useSubplebbitStats({ subplebbitAddress: address });
-  const [showStats, setShowStats] = useState(true);
+  const { hiddenStats, toggleVisibility } = useSubplebbitStatsVisibilityStore();
+  const isHidden = hiddenStats[address];
 
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
@@ -44,7 +45,7 @@ const SubplebbitStats = () => {
             </td>
           </tr>
         </thead>
-        {showStats && (
+        {!isHidden && (
           <tbody>
             <tr>
               <td>
@@ -93,8 +94,8 @@ const SubplebbitStats = () => {
           <tr>
             <td colSpan={2}>
               [
-              <span className={styles.hideButton} onClick={() => setShowStats(!showStats)}>
-                {showStats ? t('hide') : t('show_stats')}
+              <span className={styles.hideButton} onClick={() => toggleVisibility(address)}>
+                {isHidden ? t('show_stats') : t('hide')}
               </span>
               ]
             </td>
