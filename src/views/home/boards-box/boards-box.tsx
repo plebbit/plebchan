@@ -9,11 +9,10 @@ import { nsfwTags } from '../home';
 import BoxModal from '../box-modal';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 
-const Board = ({ subplebbit, subplebbits }: { subplebbit: Subplebbit; subplebbits: any }) => {
+const Board = ({ subplebbit, subplebbits, useCatalog }: { subplebbit: Subplebbit; subplebbits: any; useCatalog?: boolean }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit || {};
   const nsfwTag = tags.find((tag: string) => nsfwTags.includes(tag));
-  const { useCatalog } = useHomeFiltersStore();
 
   const boardLink = useCatalog ? `/p/${address}/catalog` : `/p/${address}`;
 
@@ -36,6 +35,8 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
   const { accountSubplebbits } = useAccountSubplebbits();
   const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
   const { showNsfwBoardsOnly, showWorksafeBoardsOnly } = useHomeFiltersStore();
+
+  const { useCatalog } = useHomeFiltersStore();
 
   const filterSubs = (subs: Subplebbit[], includeTags: string[], excludeTags: string[] = []) =>
     subs.filter((sub) => includeTags.every((tag) => sub.tags?.includes(tag)) && excludeTags.every((tag) => !sub.tags?.includes(tag)));
@@ -72,10 +73,10 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
           <h3>Multiboards</h3>
           <div className={styles.list}>
             <div className={styles.subplebbit}>
-              <Link to='/p/all'>{multisubMetadata?.title || 'All'}</Link>
+              <Link to={useCatalog ? '/p/all/catalog' : '/p/all'}>{multisubMetadata?.title || 'All'}</Link>
             </div>
             <div className={styles.subplebbit}>
-              <Link to='/p/subscriptions'>Subscriptions</Link>
+              <Link to={useCatalog ? '/p/subscriptions/catalog' : '/p/subscriptions'}>Subscriptions</Link>
             </div>
           </div>
           {plebbitSubs.length > 0 && (
@@ -139,7 +140,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
             {subscriptions.length > 0
               ? subscriptions.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
+                    <Link to={useCatalog ? `/p/${address}/catalog` : `/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
                   </div>
                 ))
               : t('not_subscribed')}
@@ -149,7 +150,7 @@ const BoardsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebb
             {accountSubplebbitAddresses.length > 0
               ? accountSubplebbitAddresses.map((address: string, index: number) => (
                   <div className={styles.subplebbit} key={index}>
-                    <Link to={`/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
+                    <Link to={useCatalog ? `/p/${address}/catalog` : `/p/${address}`}>p/{address && Plebbit.getShortAddress(address)}</Link>
                   </div>
                 ))
               : t('not_moderating')}
