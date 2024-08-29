@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
+import useTheme from './hooks/use-theme';
+import { timeFilterNames } from './hooks/use-time-filter';
 import styles from './app.module.css';
 import Board from './views/board';
 import Catalog from './views/catalog';
@@ -16,8 +19,6 @@ import ChallengeModal from './components/challenge-modal';
 import PostForm from './components/post-form';
 import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
-import { timeFilterNames } from './hooks/use-time-filter';
-import useTheme from './hooks/use-theme';
 
 const BoardLayout = () => {
   const { accountCommentIndex, subplebbitAddress, timeFilterName } = useParams();
@@ -25,8 +26,9 @@ const BoardLayout = () => {
   const isMobile = useIsMobile();
   const isInAllView = isAllView(location.pathname, useParams());
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const pendingPost = useAccountComment({ commentIndex: accountCommentIndex ? parseInt(accountCommentIndex) : undefined });
 
-  const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(parseInt(accountCommentIndex)) && parseInt(accountCommentIndex) >= 0);
+  const isValidAccountCommentIndex = !accountCommentIndex || (!isNaN(Number(accountCommentIndex)) && Number(accountCommentIndex) >= 0);
 
   if (!isValidAccountCommentIndex || (timeFilterName && !timeFilterNames.includes(timeFilterName))) {
     return <NotFound />;
@@ -42,13 +44,13 @@ const BoardLayout = () => {
       <TopBar />
       <BoardHeader />
       {isMobile
-        ? (subplebbitAddress || isInAllView || isInSubscriptionsView) && (
+        ? (subplebbitAddress || isInAllView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (
             <>
               <PostForm key={key} />
               <MobileBoardButtons />
             </>
           )
-        : (subplebbitAddress || isInAllView || isInSubscriptionsView) && (
+        : (subplebbitAddress || isInAllView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (
             <>
               <PostForm key={key} />
               {!(isInAllView || isInSubscriptionsView) && <SubplebbitStats />}
