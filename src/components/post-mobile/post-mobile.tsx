@@ -8,6 +8,8 @@ import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-util
 import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useAnonModeStore from '../../stores/use-anon-mode-store';
+import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
@@ -44,9 +46,12 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
 
   const isReply = parentCid;
 
-  // pending reply by account is not yet published
+  // comment.author.shortAddress is undefined while the comment publishing state is pending, use account instead
+  // in anon mode, use the newly generated signer.address instead, which will be comment.author.address
+  const { anonMode } = useAnonMode();
+  const { currentAnonSignerAddress } = useAnonModeStore();
   const account = useAccount();
-  const accountShortAddress = account?.author?.shortAddress;
+  const accountShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
 
   const stateString = useStateString(post);
 

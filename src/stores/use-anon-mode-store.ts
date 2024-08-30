@@ -10,6 +10,8 @@ interface AnonModeState {
   getThreadSigner: (postCid: string) => any | undefined;
   setAddressSigner: (signer: any) => void;
   getAddressSigner: (address: string) => any | undefined;
+  currentAnonSignerAddress: string | null;
+  setCurrentAnonSignerAddress: (address: string | null) => void;
 }
 
 const anonModeStore = localForageLru.createInstance({
@@ -39,6 +41,11 @@ const useAnonModeStore = create<AnonModeState>((set, get) => ({
     anonModeStore.setItem(signer.address, signer);
   },
   getAddressSigner: (address: string) => get().addressSigners[address],
+  currentAnonSignerAddress: null,
+  setCurrentAnonSignerAddress: (address: string | null) => {
+    set({ currentAnonSignerAddress: address });
+    anonModeStore.setItem('currentAnonSignerAddress', address);
+  },
 }));
 
 const initializeAnonModeStore = async () => {
@@ -57,10 +64,13 @@ const initializeAnonModeStore = async () => {
     }
   });
 
+  const currentAnonSignerAddress = await anonModeStore.getItem('currentAnonSignerAddress');
+
   useAnonModeStore.setState((state) => ({
     anonMode, // Set the retrieved anonMode state
     threadSigners: { ...threadSigners, ...state.threadSigners },
     addressSigners: { ...addressSigners, ...state.addressSigners },
+    currentAnonSignerAddress: currentAnonSignerAddress || null,
   }));
 };
 

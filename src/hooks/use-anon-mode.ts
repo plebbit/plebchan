@@ -2,12 +2,13 @@ import { useAccount } from '@plebbit/plebbit-react-hooks';
 import useAnonModeStore from '../stores/use-anon-mode-store';
 
 const useAnonMode = (postCid?: string) => {
-  const { anonMode, threadSigners, setThreadSigner, setAddressSigner, getAddressSigner } = useAnonModeStore((state) => ({
+  const { anonMode, threadSigners, setThreadSigner, setAddressSigner, getAddressSigner, setCurrentAnonSignerAddress } = useAnonModeStore((state) => ({
     anonMode: state.anonMode,
     threadSigners: state.threadSigners,
     setThreadSigner: state.setThreadSigner,
     setAddressSigner: state.setAddressSigner,
     getAddressSigner: state.getAddressSigner,
+    setCurrentAnonSignerAddress: state.setCurrentAnonSignerAddress,
   }));
 
   const threadSigner = postCid ? threadSigners[postCid] : undefined;
@@ -25,6 +26,7 @@ const useAnonMode = (postCid?: string) => {
             } else {
               setAddressSigner(signer);
             }
+            setCurrentAnonSignerAddress(signer.address);
           }
           return signer;
         } catch (error) {
@@ -33,6 +35,7 @@ const useAnonMode = (postCid?: string) => {
       } else {
         try {
           const signer = await account?.plebbit.createSigner({ type: 'ed25519', privateKey: threadSigner?.privateKey });
+          setCurrentAnonSignerAddress(signer.address);
           return signer;
         } catch (error) {
           console.error('Failed to retrieve anonymous signer:', error);
@@ -43,7 +46,11 @@ const useAnonMode = (postCid?: string) => {
   };
 
   const getExistingSigner = (address: string) => {
-    return getAddressSigner(address);
+    const signer = getAddressSigner(address);
+    if (signer) {
+      setCurrentAnonSignerAddress(signer.address);
+    }
+    return signer;
   };
 
   return { anonMode, getNewSigner, getExistingSigner };
