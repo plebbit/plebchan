@@ -148,16 +148,23 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
   const headingId = useId();
 
+  const handleMenuClick = () => {
+    if (cid) {
+      setIsMenuOpen((prev) => !prev);
+    }
+  };
+
   const handleClose = () => setIsMenuOpen(false);
 
   const isInBoardView = isBoardView(useLocation().pathname, useParams());
 
   return (
     <>
-      <span className={styles.postMenuBtn} title='Post menu' onClick={() => setIsMenuOpen((prev) => !prev)} ref={refs.setReference} {...getReferenceProps()}>
+      <span className={styles.postMenuBtn} title='Post menu' onClick={handleMenuClick} ref={refs.setReference} {...getReferenceProps()}>
         ...
       </span>
       {isMenuOpen &&
+        cid &&
         createPortal(
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
@@ -171,7 +178,7 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
           </FloatingFocusManager>,
           document.body,
         )}
-      {(isAccountMod || isAccountCommentAuthor) && (
+      {(isAccountMod || isAccountCommentAuthor) && cid && (
         <span className={styles.checkbox}>
           <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />
         </span>

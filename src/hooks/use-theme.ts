@@ -15,7 +15,7 @@ const updateThemeClass = (newTheme: string) => {
   }
 };
 
-const useTheme = (): [string, (theme: string) => void] => {
+const useTheme = (pendingPostSubplebbitAddress?: string): [string, (theme: string) => void] => {
   const location = useLocation();
   const params = useParams<{ subplebbitAddress: string }>();
   const setThemeStore = useThemeStore((state) => state.setTheme);
@@ -23,7 +23,7 @@ const useTheme = (): [string, (theme: string) => void] => {
   const loadThemes = useThemeStore((state) => state.loadThemes);
   const subplebbits = useDefaultSubplebbits();
 
-  const initialTheme = useInitialTheme();
+  const initialTheme = useInitialTheme(pendingPostSubplebbitAddress);
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
 
   const getCurrentTheme = useCallback(() => {

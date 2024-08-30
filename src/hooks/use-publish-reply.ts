@@ -87,7 +87,7 @@ const useReplyStore = create<ReplyState>((set) => ({
 
 const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: string }) => {
   const parentCid = cid;
-  const { author, displayName, signer, content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
+  const { author, signer, content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
     author: state.author[parentCid],
     displayName: state.displayName[parentCid],
     signer: state.signer[parentCid],
@@ -107,17 +107,29 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
       const newOptions: Partial<SetReplyStoreData> = {
         subplebbitAddress,
         parentCid,
-        content: options.content || content,
-        displayName: options.displayName || displayName,
-        link: options.link || link,
+        content: options.content ?? content,
+        link: options.link ?? link,
         spoiler: options.spoiler ?? spoiler,
-        author: anonMode ? signer?.author || options.author || author || { displayName } : undefined,
         signer: anonMode ? signer || options.signer : undefined,
       };
 
+      if ('displayName' in options) {
+        newOptions.displayName = options.displayName;
+      }
+
+      if (anonMode) {
+        const currentAuthor = signer?.author || author || {};
+        newOptions.author = {
+          ...currentAuthor,
+          ...('displayName' in options && { displayName: options.displayName }),
+        };
+      } else {
+        newOptions.author = undefined;
+      }
+
       setReplyStore(newOptions as SetReplyStoreData);
     },
-    [subplebbitAddress, parentCid, author, displayName, signer, content, link, spoiler, setReplyStore, anonMode],
+    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);

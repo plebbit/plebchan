@@ -153,25 +153,22 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
             <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>{' '}
           </span>
         )}
-        {!(isDescription || isRules) && (
-          <span className={styles.postNumLink}>
-            {cid ? (
-              <>
-                <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-                  c/
-                </Link>
-                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
-                  {shortCid}
-                </span>
-              </>
-            ) : (
-              <>
-                <span style={{ cursor: 'pointer' }}>c/</span>
-                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
-              </>
-            )}
-          </span>
-        )}
+        {!(isDescription || isRules) &&
+          (cid ? (
+            <span className={styles.postNumLink}>
+              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                c/
+              </Link>
+              <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
+                {shortCid}
+              </span>
+            </span>
+          ) : (
+            <>
+              <span>c/</span>
+              <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+            </>
+          ))}
         {pinned && (
           <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
             <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
@@ -187,6 +184,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
             [
             <Link
               to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}
+              onClick={(e) => !cid && e.preventDefault()}
             >
               {_.capitalize(t('reply'))}
             </Link>
@@ -376,7 +374,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     post = editedComment;
   }
 
-  const { author, cid, link, postCid, subplebbitAddress } = post || {};
+  const { author, cid, deleted, link, postCid, removed, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -390,7 +388,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
         data-post-cid={postCid}
       >
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
-        {link && !hidden && isValidURL(link) && <PostMedia post={post} />}
+        {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
         {!hidden && <PostMessage post={post} />}
       </div>
     </div>
@@ -399,7 +397,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, link, pinned, postCid, state, subplebbitAddress } = post || {};
+  const { author, cid, content, deleted, link, pinned, postCid, removed, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -445,7 +443,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           </span>
         )}
         <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
-          {link && !isHidden && isValidURL(link) && <PostMedia post={post} />}
+          {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
           <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && <div className={styles.spacer} />}
           {!isHidden && content && <PostMessage post={post} />}

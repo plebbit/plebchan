@@ -267,11 +267,9 @@ export const DesktopBoardButtons = () => {
             <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
             ] [
             <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />]
-            {isInPostView && (
-              <span className={styles.rightSideButtons}>
-                <PostPageStats />
-              </span>
-            )}
+            <span className={styles.rightSideButtons}>
+              <PostPageStats />
+            </span>
           </>
         ) : (
           <>

@@ -66,10 +66,10 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
   const onPublishReply = () => {
-    const currentContent = textRef.current?.value || '';
-    const currentUrl = urlRef.current?.value || '';
+    const currentContent = textRef.current?.value.slice(contentPrefix.length).trim() || '';
+    const currentUrl = urlRef.current?.value.trim() || '';
 
-    if (!currentContent.trim() && !currentUrl) {
+    if (!currentContent && !currentUrl) {
       alert(`Cannot post empty comment`);
       return;
     }

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import { Comment, useAccountComments } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils';
 
@@ -9,24 +9,45 @@ const useReplies = (comment: Comment) => {
   // generate a Set of CIDs from flattened replies for quick lookup
   const replyCids = useMemo(() => new Set(flattenedReplies.map((reply) => reply?.cid)), [flattenedReplies]);
 
-  // filter against the original comment's CID and all CIDs in flattened replies
-  const filter = useCallback(
-    (accountComment: Comment) => {
-      const parentCid = accountComment.parentCid;
-      return parentCid === (comment?.cid || 'n/a') || replyCids.has(parentCid);
+  const [filteredAccountComments, setFilteredAccountComments] = useState<Comment[]>([]);
+
+  const getPostCid = useCallback(
+    (accountComment: Comment, allComments: Comment[]): string | null => {
+      if (accountComment.parentCid === comment?.cid) {
+        return comment?.cid;
+      }
+      const parent = allComments.find((c) => c.cid === accountComment.parentCid);
+      if (!parent) {
+        return null;
+      }
+      return getPostCid(parent, allComments);
     },
-    [comment?.cid, replyCids],
+    [comment?.cid],
   );
 
-  const { accountComments } = useAccountComments({ filter });
+  const { accountComments } = useAccountComments();
+
+  useEffect(() => {
+    const filterComments = (comments: Comment[]) => {
+      return comments.filter((accountComment) => {
+        const parentCid = accountComment.parentCid;
+        if (parentCid === (comment?.cid || 'n/a') || replyCids.has(parentCid)) {
+          return true;
+        }
+        return getPostCid(accountComment, comments) === comment?.cid;
+      });
+    };
+
+    setFilteredAccountComments(filterComments(accountComments));
+  }, [accountComments, comment?.cid, replyCids, getPostCid]);
 
   // the account's replies have a delay before getting published, so get them locally from accountComments instead
   const accountRepliesNotYetPublished = useMemo(() => {
     const replies = flattenedReplies || [];
     const replyCids = new Set(replies.map((reply: Comment) => reply?.cid));
     // filter out the account comments already in comment.replies, so they don't appear twice
-    return accountComments.filter((accountReply) => !replyCids.has(accountReply?.cid));
-  }, [flattenedReplies, accountComments]);
+    return filteredAccountComments.filter((accountReply) => !replyCids.has(accountReply?.cid));
+  }, [flattenedReplies, filteredAccountComments]);
 
   const repliesAndNotYetPublishedReplies = useMemo(() => {
     const repliesSortedByPinnedAndTimestamp = [...accountRepliesNotYetPublished.reverse(), ...(flattenedReplies || [])];
