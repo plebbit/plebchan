@@ -125,7 +125,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const author = account?.author || {};
   const { displayName } = author || {};
   const [url, setUrl] = useState('');
-  const { title, content, link, publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
+  const { link, publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
