@@ -66,6 +66,4 @@ const initializeAnonModeStore = async () => {
 
 initializeAnonModeStore();
 
-initializeAnonModeStore();
-
 export default useAnonModeStore;
