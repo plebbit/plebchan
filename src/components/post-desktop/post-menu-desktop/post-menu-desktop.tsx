@@ -180,13 +180,13 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
           className={isInCatalogView ? styles.postMenuBtnCatalog : styles.postMenuBtn}
           title='Post menu'
           onClick={handleMenuClick}
-          style={{ transform: menuBtnRotated && cid ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          style={{ transform: menuBtnRotated && (cid || isDescription || isRules) ? 'rotate(90deg)' : 'rotate(0deg)' }}
         >
           ▶
         </span>
       </span>
       {menuBtnRotated &&
-        cid &&
+        (cid || isDescription || isRules) &&
         createPortal(
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>

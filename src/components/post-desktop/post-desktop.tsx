@@ -190,7 +190,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
             [
             <Link
               to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}
-              onClick={(e) => !cid && e.preventDefault()}
+              onClick={(e) => !cid && !isDescription && !isRules && e.preventDefault()}
             >
               {_.capitalize(t('reply'))}
             </Link>
