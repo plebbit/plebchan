@@ -204,7 +204,7 @@
   "by": "tarafından",
   "last_reply_by": "Son cevap",
   "showing_all_replies": "Tüm yanıtlar gösteriliyor.",
-  "highlight_posts": "Bu kullanıcı adresinden gelen gönderileri vurgula",
+  "highlight_posts": "Bu ID ile gönderileri vurgula",
   "display_name_too_long": "görünen adı çok uzun",
   "title_too_long": "başlık çok uzun",
   "1_post_by_this_id": "Bu ID ile 1 gönderi",

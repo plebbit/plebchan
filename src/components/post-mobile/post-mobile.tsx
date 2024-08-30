@@ -51,14 +51,14 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const { anonMode } = useAnonMode();
   const { currentAnonSignerAddress } = useAnonModeStore();
   const account = useAccount();
-  const accountShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
+  const pendingShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
 
   const stateString = useStateString(post);
 
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
-  const userIDBackgroundColor = hashStringToColor(shortAddress || accountShortAddress);
+  const userIDBackgroundColor = hashStringToColor(shortAddress || pendingShortAddress);
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   return (
@@ -105,10 +105,10 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                     <span
                       title={t('highlight_posts')}
                       className={styles.userAddress}
-                      onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
+                      onClick={() => handleUserAddressClick(shortAddress || pendingShortAddress, postCid)}
                       style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
                     >
-                      {shortAddress || accountShortAddress}
+                      {shortAddress || pendingShortAddress}
                     </span>
                   }
                   content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
