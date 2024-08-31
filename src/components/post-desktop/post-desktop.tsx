@@ -424,15 +424,6 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
 
-  // scroll to reply if pathname is reply permalink (backlink)
-  const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
-  useEffect(() => {
-    const replyIndex = replies.findIndex((reply) => location.pathname === `/p/${subplebbitAddress}/c/${reply?.cid}`);
-    if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
-      replyRefs.current[replyIndex]?.scrollIntoView();
-    }
-  }, [location.pathname, replies, subplebbitAddress]);
-
   const stateString = useStateString(post);
 
   return (
@@ -484,7 +475,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           replies &&
           showReplies &&
           (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
-            <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+            <div key={index} className={styles.replyContainer}>
               <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} postReplyCount={replyCount} />
             </div>
           ))}

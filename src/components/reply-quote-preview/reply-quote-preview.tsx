@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Comment, useAccount } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -88,6 +88,19 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
     };
   }, [update]);
 
+  const navigate = useNavigate();
+
+  const handleClick = (e: React.MouseEvent, cid: string | undefined, subplebbitAddress: string | undefined) => {
+    e.preventDefault();
+    if (cid && subplebbitAddress) {
+      navigate(`/p/${subplebbitAddress}/c/${cid}`);
+      setTimeout(() => {
+        const element = document.querySelector(`[data-cid="${cid}"]`);
+        element?.scrollIntoView();
+      }, 100);
+    }
+  };
+
   const handleMouseOver = (cid: string | undefined) => {
     if (!cid) return;
 
@@ -114,6 +127,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         ref={refs.setReference}
         onMouseOver={() => handleMouseOver(backlinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(backlinkReply?.cid)}
+        onClick={(e) => handleClick(e, backlinkReply?.cid, backlinkReply?.subplebbitAddress)}
       >
         c/{backlinkReply?.shortCid}
       </Link>
@@ -138,6 +152,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         className={styles.quoteLink}
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
+        onClick={(e) => handleClick(e, quotelinkReply?.cid, quotelinkReply?.subplebbitAddress)}
       >
         {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
         {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
@@ -174,6 +189,19 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
     };
   }, [update]);
 
+  const navigate = useNavigate();
+
+  const handleClick = (e: React.MouseEvent, cid: string | undefined, subplebbitAddress: string | undefined) => {
+    e.preventDefault();
+    if (cid && subplebbitAddress) {
+      navigate(`/p/${subplebbitAddress}/c/${cid}`);
+      setTimeout(() => {
+        const element = document.querySelector(`[data-cid="${cid}"]`);
+        element?.scrollIntoView();
+      }, 100);
+    }
+  };
+
   const handleMouseOver = (cid: string | undefined) => {
     if (!cid) return;
 
@@ -203,7 +231,12 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         {backlinkReply?.shortCid && `c/${backlinkReply?.shortCid}`}
       </span>
       {backlinkReply?.shortCid && (
-        <Link to={`/p/${backlinkReply?.subplebbitAddress}/c/${backlinkReply?.cid}`} className={styles.backlinkHash}>
+        <Link
+          to={`/p/${backlinkReply?.subplebbitAddress}/c/${backlinkReply?.cid}`}
+          className={styles.backlinkHash}
+          onClick={(e) => handleClick(e, backlinkReply?.cid, backlinkReply?.subplebbitAddress)}
+        >
+          {' '}
           #
         </Link>
       )}
@@ -232,7 +265,11 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
       </span>
       {quotelinkReply?.shortCid && (
-        <Link className={styles.quoteLink} to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}>
+        <Link
+          className={styles.quoteLink}
+          to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}
+          onClick={(e) => handleClick(e, quotelinkReply?.cid, quotelinkReply?.subplebbitAddress)}
+        >
           {' '}
           #
         </Link>
