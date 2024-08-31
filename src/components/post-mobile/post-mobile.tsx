@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
@@ -48,7 +48,7 @@ const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
 
 const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, deleted, locked, pinned, parentCid, postCid, removed, replyCount, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, deleted, locked, pinned, parentCid, postCid, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const replies = useReplies(post);
   const { address, shortAddress } = author || {};
