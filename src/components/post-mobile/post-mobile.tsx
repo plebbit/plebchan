@@ -172,15 +172,17 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
 };
 
 const ReplyBacklinks = ({ post }: PostProps) => {
-  const { cid, parentCid, replyCount } = post || {};
+  const { cid, parentCid } = post || {};
   const replies = useReplies(post);
 
   return (
-    replyCount > 0 &&
+    cid &&
     parentCid &&
     replies && (
       <div className={styles.mobileReplyBacklinks}>
-        {replies.map((reply: Comment, index: number) => reply?.parentCid === cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />)}
+        {replies.map(
+          (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+        )}
       </div>
     )
   );

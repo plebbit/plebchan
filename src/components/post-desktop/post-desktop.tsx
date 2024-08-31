@@ -199,10 +199,12 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         )}
       </span>
       <PostMenuDesktop post={post} />
-      {replyCount > 0 &&
+      {cid &&
         parentCid &&
         replies &&
-        replies.map((reply: Comment, index: number) => reply?.parentCid === cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />)}
+        replies.map(
+          (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+        )}
     </div>
   );
 };

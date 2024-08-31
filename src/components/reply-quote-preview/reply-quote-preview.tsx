@@ -139,7 +139,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
-        {`c/${quotelinkReply?.shortCid}`}
+        {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
         {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
       </Link>
       <br />
@@ -200,11 +200,13 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseOver={() => handleMouseOver(backlinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(backlinkReply?.cid)}
       >
-        c/{backlinkReply?.shortCid}{' '}
+        {backlinkReply?.shortCid && `c/${backlinkReply?.shortCid}`}
       </span>
-      <Link to={`/p/${backlinkReply?.subplebbitAddress}/c/${backlinkReply?.cid}`} className={styles.backlinkHash}>
-        #
-      </Link>
+      {backlinkReply?.shortCid && (
+        <Link to={`/p/${backlinkReply?.subplebbitAddress}/c/${backlinkReply?.cid}`} className={styles.backlinkHash}>
+          #
+        </Link>
+      )}
       {hoveredCid === backlinkReply?.cid &&
         outOfViewCid === backlinkReply?.cid &&
         createPortal(
@@ -226,14 +228,15 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
-        c/{quotelinkReply?.shortCid}
+        {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
         {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
       </span>
-      <Link className={styles.quoteLink} to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}>
-        {' '}
-        #
-      </Link>
-      <br />
+      {quotelinkReply?.shortCid && (
+        <Link className={styles.quoteLink} to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}>
+          {' '}
+          #
+        </Link>
+      )}
       {hoveredCid === quotelinkReply?.cid &&
         outOfViewCid === quotelinkReply?.cid &&
         createPortal(
