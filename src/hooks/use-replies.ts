@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback } from 'react';
 import { Comment, useAccountComments } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils';
 
@@ -9,7 +9,7 @@ const useReplies = (comment: Comment) => {
   // generate a Set of CIDs from flattened replies for quick lookup
   const replyCids = useMemo(() => new Set(flattenedReplies.map((reply) => reply?.cid)), [flattenedReplies]);
 
-  const [filteredAccountComments, setFilteredAccountComments] = useState<Comment[]>([]);
+  const { accountComments } = useAccountComments();
 
   const getPostCid = useCallback(
     (accountComment: Comment, allComments: Comment[]): string | null => {
@@ -25,9 +25,7 @@ const useReplies = (comment: Comment) => {
     [comment?.cid],
   );
 
-  const { accountComments } = useAccountComments();
-
-  useEffect(() => {
+  const filteredAccountComments = useMemo(() => {
     const filterComments = (comments: Comment[]) => {
       return comments.filter((accountComment) => {
         const parentCid = accountComment.parentCid;
@@ -38,7 +36,7 @@ const useReplies = (comment: Comment) => {
       });
     };
 
-    setFilteredAccountComments(filterComments(accountComments));
+    return filterComments(accountComments);
   }, [accountComments, comment?.cid, replyCids, getPostCid]);
 
   // the account's replies have a delay before getting published, so get them locally from accountComments instead
