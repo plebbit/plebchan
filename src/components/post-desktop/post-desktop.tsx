@@ -298,7 +298,7 @@ const PostMessage = ({ post }: PostProps) => {
             <span className={styles.redEditMessage}>({t('this_post_was_removed')})</span>
             <br />
             <br />
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
           </>
         ) : (
           <span className={styles.grayEditMessage}>{_.capitalize(t('this_post_was_removed'))}.</span>
@@ -307,7 +307,7 @@ const PostMessage = ({ post }: PostProps) => {
         reason ? (
           <>
             <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>{' '}
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
           </>
         ) : (
           <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>
