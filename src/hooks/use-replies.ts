@@ -32,12 +32,13 @@ const useReplies = (comment: Comment) => {
         if (parentCid === (comment?.cid || 'n/a') || replyCids.has(parentCid)) {
           return true;
         }
-        return getPostCid(accountComment, comments) === comment?.cid;
+        // Changed this line to compare with comment?.parentCid instead of comment?.cid
+        return getPostCid(accountComment, comments) === comment?.parentCid;
       });
     };
 
     return filterComments(accountComments);
-  }, [accountComments, comment?.cid, replyCids, getPostCid]);
+  }, [accountComments, comment?.cid, comment?.parentCid, replyCids, getPostCid]);
 
   // the account's replies have a delay before getting published, so get them locally from accountComments instead
   const accountRepliesNotYetPublished = useMemo(() => {
