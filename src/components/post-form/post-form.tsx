@@ -113,7 +113,7 @@ export const LinkTypePreviewer = ({ link }: { link: string }) => {
   if (type === 'gif' && gifFrameUrl !== null) {
     type = t('animated_gif');
   } else if (type === 'gif' && gifFrameUrl === null) {
-    type = t('static_gif');
+    type = t('gif');
   }
 
   return isValidURL(link) ? type : t('invalid_url');
