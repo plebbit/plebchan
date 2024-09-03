@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 import { Comment, useAccountComments } from '@plebbit/plebbit-react-hooks';
 import { flattenCommentsPages } from '@plebbit/plebbit-react-hooks/dist/lib/utils';
 
@@ -11,34 +11,24 @@ const useReplies = (comment: Comment) => {
 
   const { accountComments } = useAccountComments();
 
-  const getPostCid = useCallback(
-    (accountComment: Comment, allComments: Comment[]): string | null => {
-      if (accountComment.parentCid === comment?.cid) {
-        return comment?.cid;
-      }
-      const parent = allComments.find((c) => c.cid === accountComment.parentCid);
-      if (!parent) {
-        return null;
-      }
-      return getPostCid(parent, allComments);
-    },
-    [comment?.cid],
-  );
-
   const filteredAccountComments = useMemo(() => {
-    const filterComments = (comments: Comment[]) => {
-      return comments.filter((accountComment) => {
-        const parentCid = accountComment.parentCid;
-        if (parentCid === (comment?.cid || 'n/a') || replyCids.has(parentCid)) {
+    const commentMap = new Map(accountComments.map((c) => [c.cid, c]));
+
+    return accountComments.filter((accountComment) => {
+      let currentCid = accountComment.parentCid;
+      while (currentCid && currentCid !== comment?.cid) {
+        if (replyCids.has(currentCid)) {
           return true;
         }
-        // Changed this line to compare with comment?.parentCid instead of comment?.cid
-        return getPostCid(accountComment, comments) === comment?.parentCid;
-      });
-    };
-
-    return filterComments(accountComments);
-  }, [accountComments, comment?.cid, comment?.parentCid, replyCids, getPostCid]);
+        const parent = commentMap.get(currentCid);
+        if (!parent) {
+          return false;
+        }
+        currentCid = parent.parentCid;
+      }
+      return currentCid === comment?.cid;
+    });
+  }, [accountComments, comment?.cid, replyCids]);
 
   // the account's replies have a delay before getting published, so get them locally from accountComments instead
   const accountRepliesNotYetPublished = useMemo(() => {
