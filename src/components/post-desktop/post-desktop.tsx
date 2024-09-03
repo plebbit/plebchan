@@ -10,10 +10,12 @@ import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-util
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useAnonModeStore from '../../stores/use-anon-mode-store';
+import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
 import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
@@ -28,7 +30,6 @@ import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import { create } from 'zustand';
 import _ from 'lodash';
-import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 
 interface ShowOmittedRepliesState {
   showOmittedReplies: Record<string, boolean>;
@@ -59,6 +60,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const isReply = parentCid;
   const { showOmittedReplies } = useShowOmittedReplies();
   const { imageUrl: avatarImageUrl } = useAuthorAvatar({ author });
+  const { hideAvatars } = useAvatarVisibilityStore();
 
   const params = useParams();
   const location = useLocation();
@@ -116,7 +118,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         </span>
         {!(isDescription || isRules) && (
           <>
-            {author?.avatar && !(deleted || removed) ? (
+            {author?.avatar && !(deleted || removed) && !hideAvatars ? (
               <span className={styles.authorAvatar}>
                 <img src={avatarImageUrl} alt='' />
               </span>

@@ -25,3 +25,7 @@
 .interfaceSettings {
   margin-bottom: 10px;
 }
+
+.setting input[type="checkbox"] {
+  margin-right: 2px;
+}

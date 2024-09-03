@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import useTheme from '../../../hooks/use-theme';
 import styles from './interface-settings.module.css';
 import packageJson from '../../../../package.json';
+import useAvatarVisibilityStore from '../../../stores/use-avatar-visibility-store';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -107,6 +108,11 @@ const InterfaceLanguage = () => {
 
 const InterfaceSettings = () => {
   const { t } = useTranslation();
+  const { hideAvatars, setHideAvatars } = useAvatarVisibilityStore();
+
+  const handleHideAvatarsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHideAvatars(e.target.checked);
+  };
 
   return (
     <div className={styles.interfaceSettings}>
@@ -129,6 +135,11 @@ const InterfaceSettings = () => {
       </div>
       <div className={styles.setting}>
         {t('interface_language')}: <InterfaceLanguage />
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' checked={hideAvatars} onChange={handleHideAvatarsChange} /> {t('hide_avatars')}
+        </label>
       </div>
     </div>
   );

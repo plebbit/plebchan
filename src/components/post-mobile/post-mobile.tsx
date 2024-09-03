@@ -9,6 +9,7 @@ import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/po
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useAnonModeStore from '../../stores/use-anon-mode-store';
+import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
 import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
@@ -33,6 +34,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const displayName = author?.displayName?.trim();
   const authorRole = roles?.[address]?.role;
   const { imageUrl: avatarImageUrl } = useAuthorAvatar({ author });
+  const { hideAvatars } = useAvatarVisibilityStore();
 
   const params = useParams();
   const location = useLocation();
@@ -87,7 +89,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
           {!(isDescription || isRules) && (
             <>
-              {author?.avatar && !(deleted || removed) ? (
+              {author?.avatar && !(deleted || removed) && !hideAvatars ? (
                 <span className={styles.authorAvatar}>
                   <img src={avatarImageUrl} alt='' />
                 </span>
