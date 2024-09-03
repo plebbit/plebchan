@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
-import { Comment, PublishCommentEditOptions, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
+import { Comment, PublishCommentEditOptions, useAccount, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
 import useChallengesStore from '../../stores/use-challenges-store';
 import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
+import useAnonMode from '../../hooks/use-anon-mode';
 
 const { addChallenge } = useChallengesStore.getState();
 
@@ -31,32 +32,65 @@ const timestampToDays = (timestamp: number) => {
 const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, post }: EditMenuProps) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { cid, commentAuthor, content, deleted, locked, parentCid, pinned, reason, removed, spoiler, subplebbitAddress } = post || {};
+  const { author, cid, commentAuthor, content, deleted, locked, parentCid, pinned, reason, removed, spoiler, subplebbitAddress } = post || {};
   const isReply = parentCid;
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const [isContentEditorOpen, setIsContentEditorOpen] = useState(false);
 
-  const defaultPublishEditOptions: PublishCommentEditOptions = {
-    commentAuthor: isAccountMod && !isAccountCommentAuthor ? commentAuthor : undefined,
-    commentCid: cid,
-    content: isAccountCommentAuthor ? content : undefined,
-    deleted: isAccountCommentAuthor ? deleted : undefined,
-    locked: isAccountMod ? locked : undefined,
-    pinned: isAccountMod ? pinned : undefined,
-    reason,
-    removed: isAccountMod ? removed : undefined,
-    spoiler,
-    subplebbitAddress,
-    onChallenge: (...args: any) => addChallenge([...args, post]),
-    onChallengeVerification: alertChallengeVerificationFailed,
-    onError: (error: Error) => {
-      console.warn(error);
-      alert('Comment edit failed. ' + error.message);
-    },
-  };
+  const { getExistingSigner } = useAnonMode(post?.postCid);
 
-  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState(defaultPublishEditOptions);
+  const account = useAccount();
+  const [signer, setSigner] = useState<any>(account?.signer);
+
+  const checkSigner = useCallback(async () => {
+    if (isAccountCommentAuthor && post?.author?.address !== account?.author?.address) {
+      const existingSigner = getExistingSigner(post?.author?.address);
+      if (existingSigner) {
+        setSigner(existingSigner);
+      }
+    } else {
+      setSigner(null);
+    }
+  }, [isAccountCommentAuthor, post?.author?.address, getExistingSigner, account?.author?.address]);
+
+  useEffect(() => {
+    checkSigner();
+  }, [checkSigner]);
+
+  const defaultPublishEditOptions = useMemo(() => {
+    return {
+      commentAuthor: isAccountMod && !isAccountCommentAuthor ? commentAuthor : undefined,
+      commentCid: cid,
+      content: isAccountCommentAuthor ? content : undefined,
+      deleted: isAccountCommentAuthor ? deleted ?? false : undefined,
+      locked: isAccountMod ? locked ?? false : undefined,
+      pinned: isAccountMod ? pinned ?? false : undefined,
+      reason,
+      removed: isAccountMod ? removed ?? false : undefined,
+      spoiler: spoiler ?? false,
+      subplebbitAddress,
+      signer: signer,
+      author: signer
+        ? {
+            address: signer.address,
+            displayName: post?.author?.displayName,
+          }
+        : author,
+      onChallenge: (...args: any) => addChallenge([...args, post]),
+      onChallengeVerification: alertChallengeVerificationFailed,
+      onError: (error: Error) => {
+        console.warn(error);
+        alert('Comment edit failed. ' + error.message);
+      },
+    };
+  }, [isAccountMod, isAccountCommentAuthor, commentAuthor, cid, content, deleted, locked, pinned, reason, removed, spoiler, subplebbitAddress, signer, post]);
+
+  const [publishCommentEditOptions, setPublishCommentEditOptions] = useState<PublishCommentEditOptions>(defaultPublishEditOptions);
   const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  useEffect(() => {
+    setPublishCommentEditOptions(defaultPublishEditOptions);
+  }, [defaultPublishEditOptions]);
 
   const [banDuration, setBanDuration] = useState(() =>
     publishCommentEditOptions.commentAuthor?.banExpiresAt ? timestampToDays(publishCommentEditOptions.commentAuthor.banExpiresAt) : 1,
@@ -100,13 +134,6 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
 
   const headingId = useId();
-
-  useEffect(() => {
-    setPublishCommentEditOptions((prevOptions) => ({
-      ...prevOptions,
-      commentCid: cid,
-    }));
-  }, [cid]);
 
   const _publishCommentEdit = async () => {
     try {
@@ -161,7 +188,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   <div className={styles.menuItem}>
                     <label>
                       [
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed} type='checkbox' id='removed' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed ?? false} type='checkbox' id='removed' />
                       {_.capitalize(t('remove'))}?]
                     </label>
                   </div>
@@ -169,7 +196,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                     <div className={styles.menuItem}>
                       [
                       <label>
-                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked} type='checkbox' id='locked' />
+                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked ?? false} type='checkbox' id='locked' />
                         {_.capitalize(t('close_thread'))}?
                       </label>
                       ]
@@ -178,7 +205,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler} type='checkbox' id='spoiler' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler ?? false} type='checkbox' id='spoiler' />
                       {_.capitalize(t('spoiler'))}?
                     </label>
                     ]
@@ -186,7 +213,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned} type='checkbox' id='pinned' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned ?? false} type='checkbox' id='pinned' />
                       {_.capitalize(t('sticky'))}?
                     </label>
                     ]
