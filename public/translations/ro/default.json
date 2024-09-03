@@ -224,5 +224,7 @@
   "animated_gif": "GIF Animat",
   "hide_avatars": "Ascunde avatarele",
   "anon_mode": "Mod anonim",
-  "anon_mode_description": "Utilizați automat un ID de utilizator diferit în fiecare fir"
+  "anon_mode_description": "Utilizați automat un ID de utilizator diferit în fiecare fir",
+  "pending": "În așteptare",
+  "failed": "Eșuat"
 }

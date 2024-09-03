@@ -224,5 +224,7 @@
   "animated_gif": "GIF Hoạt Hình",
   "hide_avatars": "Ẩn avatar",
   "anon_mode": "Chế độ ẩn danh",
-  "anon_mode_description": "Tự động sử dụng ID người dùng khác nhau trong mỗi chủ đề"
+  "anon_mode_description": "Tự động sử dụng ID người dùng khác nhau trong mỗi chủ đề",
+  "pending": "Đang chờ",
+  "failed": "Thất bại"
 }

@@ -224,5 +224,7 @@
   "animated_gif": "Animated GIF",
   "hide_avatars": "Hide avatars",
   "anon_mode": "Anon mode",
-  "anon_mode_description": "Automatically use a different user ID in each thread"
+  "anon_mode_description": "Automatically use a different user ID in each thread",
+  "pending": "Pending",
+  "failed": "Failed"
 }

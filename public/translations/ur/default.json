@@ -224,5 +224,7 @@
   "animated_gif": "اینیمیٹڈ GIF",
   "hide_avatars": "اوٹار چھپائیں",
   "anon_mode": "خفیہ موڈ",
-  "anon_mode_description": "ہر تھریڈ میں خود بخود مختلف صارف آئی ڈی کا استعمال کریں"
+  "anon_mode_description": "ہر تھریڈ میں خود بخود مختلف صارف آئی ڈی کا استعمال کریں",
+  "pending": "منتظر",
+  "failed": "ناکام"
 }

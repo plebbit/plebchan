@@ -224,5 +224,7 @@
   "animated_gif": "GIF Animé",
   "hide_avatars": "Masquer les avatars",
   "anon_mode": "Mode anonyme",
-  "anon_mode_description": "Utilisez automatiquement un identifiant utilisateur différent dans chaque fil"
+  "anon_mode_description": "Utilisez automatiquement un identifiant utilisateur différent dans chaque fil",
+  "pending": "En attente",
+  "failed": "Échoué"
 }

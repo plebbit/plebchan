@@ -224,5 +224,7 @@
   "animated_gif": "Animowany GIF",
   "hide_avatars": "Ukryj awatary",
   "anon_mode": "Tryb anonimowy",
-  "anon_mode_description": "Automatycznie używaj innego identyfikatora użytkownika w każdym wątku"
+  "anon_mode_description": "Automatycznie używaj innego identyfikatora użytkownika w każdym wątku",
+  "pending": "Oczekujące",
+  "failed": "Nieudane"
 }

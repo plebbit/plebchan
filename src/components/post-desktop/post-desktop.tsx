@@ -174,7 +174,9 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           ) : (
             <>
               <span>c/</span>
-              <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : state === 'pending' ? 'Pending' : ''}</span>
+              <span className={styles.pendingCid}>
+                {state === 'failed' || stateString === 'Failed' ? _.capitalize(t('failed')) : state === 'pending' ? _.capitalize(t('pending')) : ''}
+              </span>
             </>
           ))}
         {pinned && (

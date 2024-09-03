@@ -224,5 +224,7 @@
   "animated_gif": "Geanimeerde GIF",
   "hide_avatars": "Avatars verbergen",
   "anon_mode": "Anoniem modus",
-  "anon_mode_description": "Gebruik automatisch een ander gebruikers-ID in elk thread"
+  "anon_mode_description": "Gebruik automatisch een ander gebruikers-ID in elk thread",
+  "pending": "In afwachting",
+  "failed": "Mislukt"
 }

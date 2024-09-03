@@ -224,5 +224,7 @@
   "animated_gif": "애니메이션 GIF",
   "hide_avatars": "아바타 숨기기",
   "anon_mode": "익명 모드",
-  "anon_mode_description": "각 스레드에서 자동으로 다른 사용자 ID를 사용합니다"
+  "anon_mode_description": "각 스레드에서 자동으로 다른 사용자 ID를 사용합니다",
+  "pending": "대기 중",
+  "failed": "실패"
 }

@@ -224,5 +224,7 @@
   "animated_gif": "Animerad GIF",
   "hide_avatars": "Dölj avatarer",
   "anon_mode": "Anonymt läge",
-  "anon_mode_description": "Använd automatiskt ett annat användar-ID i varje tråd"
+  "anon_mode_description": "Använd automatiskt ett annat användar-ID i varje tråd",
+  "pending": "Väntande",
+  "failed": "Misslyckades"
 }

@@ -224,5 +224,7 @@
   "animated_gif": "Animasyonlu GIF",
   "hide_avatars": "Avatarları gizle",
   "anon_mode": "Gizli mod",
-  "anon_mode_description": "Her iplikte otomatik olarak farklı bir kullanıcı ID'si kullanın"
+  "anon_mode_description": "Her iplikte otomatik olarak farklı bir kullanıcı ID'si kullanın",
+  "pending": "Beklemede",
+  "failed": "Başarısız"
 }

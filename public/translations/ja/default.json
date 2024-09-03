@@ -224,5 +224,7 @@
   "animated_gif": "アニメーションGIF",
   "hide_avatars": "アバターを隠す",
   "anon_mode": "匿名モード",
-  "anon_mode_description": "各スレッドで自動的に異なるユーザーIDを使用します"
+  "anon_mode_description": "各スレッドで自動的に異なるユーザーIDを使用します",
+  "pending": "保留中",
+  "failed": "失敗"
 }
