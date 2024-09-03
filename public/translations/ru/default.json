@@ -221,5 +221,8 @@
   "hide_gore_boards": "Скрыть доски Gore",
   "hide_adult_boards": "Скрыть доски для взрослых",
   "static_gif": "Статичный GIF",
-  "animated_gif": "Анимированный GIF"
+  "animated_gif": "Анимированный GIF",
+  "hide_avatars": "Скрыть аватары",
+  "anon_mode": "Анонимный режим",
+  "anon_mode_description": "Автоматически используйте другой идентификатор пользователя в каждом потоке"
 }

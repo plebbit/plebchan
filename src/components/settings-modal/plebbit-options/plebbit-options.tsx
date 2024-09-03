@@ -230,7 +230,7 @@ const PlebbitOptions = () => {
         </span>
       </div>
       <div className={styles.category}>
-        <span className={styles.categoryTitle}>node rpc:</span>
+        <span className={styles.categoryTitle}>node RPC:</span>
         <span className={styles.categorySettings}>
           <PlebbitRPCSettings plebbitRpcRef={plebbitRpcRef} />
         </span>

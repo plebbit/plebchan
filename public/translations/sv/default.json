@@ -221,5 +221,8 @@
   "hide_gore_boards": "Dölj Gore Boards",
   "hide_adult_boards": "Dölj vuxna Boards",
   "static_gif": "Statisk GIF",
-  "animated_gif": "Animerad GIF"
+  "animated_gif": "Animerad GIF",
+  "hide_avatars": "Dölj avatarer",
+  "anon_mode": "Anonymt läge",
+  "anon_mode_description": "Använd automatiskt ett annat användar-ID i varje tråd"
 }

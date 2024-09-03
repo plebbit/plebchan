@@ -221,5 +221,8 @@
   "hide_gore_boards": "Sembunyikan Papan Gore",
   "hide_adult_boards": "Sembunyikan Papan Dewasa",
   "static_gif": "GIF Statis",
-  "animated_gif": "GIF Animasi"
+  "animated_gif": "GIF Animasi",
+  "hide_avatars": "Sembunyikan avatar",
+  "anon_mode": "Mode anonim",
+  "anon_mode_description": "Secara otomatis gunakan ID pengguna yang berbeda di setiap utas"
 }

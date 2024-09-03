@@ -221,5 +221,8 @@
   "hide_gore_boards": "गोर बोर्ड्स छिपाएं",
   "hide_adult_boards": "वयस्क बोर्ड्स छिपाएं",
   "static_gif": "स्थिर GIF",
-  "animated_gif": "एनिमेटेड GIF"
+  "animated_gif": "एनिमेटेड GIF",
+  "hide_avatars": "अवतार छिपाएँ",
+  "anon_mode": "अनाम मोड",
+  "anon_mode_description": "प्रत्येक थ्रेड में स्वचालित रूप से एक अलग उपयोगकर्ता आईडी का उपयोग करें"
 }

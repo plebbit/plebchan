@@ -221,5 +221,8 @@
   "hide_gore_boards": "Piilota Gore-laudat",
   "hide_adult_boards": "Piilota Aikuisten lautat",
   "static_gif": "Staattinen GIF",
-  "animated_gif": "Animoitu GIF"
+  "animated_gif": "Animoitu GIF",
+  "hide_avatars": "Piilota avatarit",
+  "anon_mode": "Anonyymi tila",
+  "anon_mode_description": "Käytä automaattisesti eri käyttäjä-ID:tä jokaisessa keskustelussa"
 }

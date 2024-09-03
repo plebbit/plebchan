@@ -221,5 +221,8 @@
   "hide_gore_boards": "Gore táblák elrejtése",
   "hide_adult_boards": "Felnőtt táblák elrejtése",
   "static_gif": "Statikus GIF",
-  "animated_gif": "Animált GIF"
+  "animated_gif": "Animált GIF",
+  "hide_avatars": "Avatarok elrejtése",
+  "anon_mode": "Anonim mód",
+  "anon_mode_description": "Automatikusan használjon más felhasználói azonosítót minden szálban"
 }

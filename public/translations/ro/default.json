@@ -221,5 +221,8 @@
   "hide_gore_boards": "Ascundeți tablourile Gore",
   "hide_adult_boards": "Ascundeți tablourile pentru adulți",
   "static_gif": "GIF Static",
-  "animated_gif": "GIF Animat"
+  "animated_gif": "GIF Animat",
+  "hide_avatars": "Ascunde avatarele",
+  "anon_mode": "Mod anonim",
+  "anon_mode_description": "Utilizați automat un ID de utilizator diferit în fiecare fir"
 }

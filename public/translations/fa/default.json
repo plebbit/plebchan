@@ -221,5 +221,8 @@
   "hide_gore_boards": "پنهان کردن تخته های گور",
   "hide_adult_boards": "پنهان کردن تخته های بزرگسالان",
   "static_gif": "GIF ثابت",
-  "animated_gif": "GIF متحرک"
+  "animated_gif": "GIF متحرک",
+  "hide_avatars": "پنهان کردن آواتارها",
+  "anon_mode": "حالت ناشناس",
+  "anon_mode_description": "به طور خودکار از یک شناسه کاربری متفاوت در هر موضوع استفاده کنید"
 }

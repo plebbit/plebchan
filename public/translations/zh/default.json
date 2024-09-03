@@ -221,5 +221,8 @@
   "hide_gore_boards": "隐藏Gore板块",
   "hide_adult_boards": "隐藏成人板块",
   "static_gif": "静态GIF",
-  "animated_gif": "动画GIF"
+  "animated_gif": "动画GIF",
+  "hide_avatars": "隐藏头像",
+  "anon_mode": "匿名模式",
+  "anon_mode_description": "在每个线程中自动使用不同的用户 ID"
 }

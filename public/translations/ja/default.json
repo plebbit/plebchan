@@ -221,5 +221,8 @@
   "hide_gore_boards": "ゴアボードを非表示にする",
   "hide_adult_boards": "アダルトボードを非表示にする",
   "static_gif": "静的GIF",
-  "animated_gif": "アニメーションGIF"
+  "animated_gif": "アニメーションGIF",
+  "hide_avatars": "アバターを隠す",
+  "anon_mode": "匿名モード",
+  "anon_mode_description": "各スレッドで自動的に異なるユーザーIDを使用します"
 }

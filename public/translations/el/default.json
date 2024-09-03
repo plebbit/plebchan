@@ -221,5 +221,8 @@
   "hide_gore_boards": "Απόκρυψη των Gore Boards",
   "hide_adult_boards": "Απόκρυψη των Adult Boards",
   "static_gif": "Στατικό GIF",
-  "animated_gif": "Κινούμενο GIF"
+  "animated_gif": "Κινούμενο GIF",
+  "hide_avatars": "Απόκρυψη avatars",
+  "anon_mode": "Λειτουργία ανωνυμίας",
+  "anon_mode_description": "Χρησιμοποιήστε αυτόματα διαφορετικό αναγνωριστικό χρήστη σε κάθε νήμα"
 }

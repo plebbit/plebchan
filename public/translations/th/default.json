@@ -221,5 +221,8 @@
   "hide_gore_boards": "ซ่อนกระดาน Gore",
   "hide_adult_boards": "ซ่อนกระดานสำหรับผู้ใหญ่",
   "static_gif": "GIF แบบคงที่",
-  "animated_gif": "GIF ที่เคลื่อนไหว"
+  "animated_gif": "GIF ที่เคลื่อนไหว",
+  "hide_avatars": "ซ่อนอวาตาร์",
+  "anon_mode": "โหมดนิรนาม",
+  "anon_mode_description": "ใช้ ID ผู้ใช้ที่แตกต่างกันโดยอัตโนมัติในแต่ละเธรด"
 }

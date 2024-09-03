@@ -221,5 +221,8 @@
   "hide_gore_boards": "Hide Gore Boards",
   "hide_adult_boards": "Hide Adult Boards",
   "static_gif": "Static GIF",
-  "animated_gif": "Animated GIF"
+  "animated_gif": "Animated GIF",
+  "hide_avatars": "Hide avatars",
+  "anon_mode": "Anon mode",
+  "anon_mode_description": "Automatically use a different user ID in each thread"
 }

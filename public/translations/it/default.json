@@ -221,5 +221,8 @@
   "hide_gore_boards": "Nascondi tavole Gore",
   "hide_adult_boards": "Nascondi tavole per adulti",
   "static_gif": "GIF Statica",
-  "animated_gif": "GIF Animata"
+  "animated_gif": "GIF Animata",
+  "hide_avatars": "Nascondi avatar",
+  "anon_mode": "Modalità anonima",
+  "anon_mode_description": "Usa automaticamente un ID utente diverso in ogni thread"
 }

@@ -6,15 +6,16 @@ import styles from './account-settings.module.css';
 import useAnonModeStore from '../../../stores/use-anon-mode-store';
 
 const AnonMode = () => {
+  const { t } = useTranslation();
   const anonMode = useAnonModeStore((state) => state.anonMode);
   const setAnonMode = useAnonModeStore((state) => state.setAnonMode);
 
   return (
     <div className={styles.anonMode}>
       <label>
-        <input type='checkbox' checked={anonMode} onChange={(e) => setAnonMode(e.target.checked)} /> anon mode
+        <input type='checkbox' checked={anonMode} onChange={(e) => setAnonMode(e.target.checked)} /> {t('anon_mode')}
       </label>
-      <span className={styles.settingTip}>Automatically use a different user ID in each thread</span>
+      <span className={styles.settingTip}>{t('anon_mode_description')}</span>
     </div>
   );
 };

@@ -221,5 +221,8 @@
   "hide_gore_boards": "إخفاء لوحات الجور",
   "hide_adult_boards": "إخفاء لوحات الكبار",
   "static_gif": "GIF ثابت",
-  "animated_gif": "GIF متحرك"
+  "animated_gif": "GIF متحرك",
+  "hide_avatars": "إخفاء الصور الرمزية",
+  "anon_mode": "وضع مجهول",
+  "anon_mode_description": "يتم استخدام معرف مستخدم مختلف تلقائيًا في كل موضوع"
 }

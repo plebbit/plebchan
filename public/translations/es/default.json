@@ -221,5 +221,8 @@
   "hide_gore_boards": "Ocultar tableros de gore",
   "hide_adult_boards": "Ocultar tableros para adultos",
   "static_gif": "GIF Estático",
-  "animated_gif": "GIF Animado"
+  "animated_gif": "GIF Animado",
+  "hide_avatars": "Ocultar avatares",
+  "anon_mode": "Modo anónimo",
+  "anon_mode_description": "Utiliza automáticamente un ID de usuario diferente en cada hilo"
 }

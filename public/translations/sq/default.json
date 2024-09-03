@@ -221,5 +221,8 @@
   "hide_gore_boards": "Fshihet Gore Boards",
   "hide_adult_boards": "Fshihet Adult Boards",
   "static_gif": "GIF Statik",
-  "animated_gif": "GIF i Animuar"
+  "animated_gif": "GIF i Animuar",
+  "hide_avatars": "Fsheh avatarët",
+  "anon_mode": "Mënyra anonime",
+  "anon_mode_description": "Përdorni automatikisht një ID përdoruesi të ndryshëm në çdo temë"
 }

@@ -221,5 +221,8 @@
   "hide_gore_boards": "گور بورڈز چھپائیں",
   "hide_adult_boards": "بالغ بورڈز چھپائیں",
   "static_gif": "اسٹیٹک GIF",
-  "animated_gif": "اینیمیٹڈ GIF"
+  "animated_gif": "اینیمیٹڈ GIF",
+  "hide_avatars": "اوٹار چھپائیں",
+  "anon_mode": "خفیہ موڈ",
+  "anon_mode_description": "ہر تھریڈ میں خود بخود مختلف صارف آئی ڈی کا استعمال کریں"
 }

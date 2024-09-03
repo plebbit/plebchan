@@ -221,5 +221,8 @@
   "hide_gore_boards": "Gore-Boards ausblenden",
   "hide_adult_boards": "Erwachsenen-Boards ausblenden",
   "static_gif": "Statisches GIF",
-  "animated_gif": "Animiertes GIF"
+  "animated_gif": "Animiertes GIF",
+  "hide_avatars": "Avatare ausblenden",
+  "anon_mode": "Anonymer Modus",
+  "anon_mode_description": "Verwenden Sie automatisch eine andere Benutzer-ID in jedem Thread"
 }

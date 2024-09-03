@@ -221,5 +221,8 @@
   "hide_gore_boards": "Gore Boards verbergen",
   "hide_adult_boards": "Volwassenen Boards verbergen",
   "static_gif": "Statische GIF",
-  "animated_gif": "Geanimeerde GIF"
+  "animated_gif": "Geanimeerde GIF",
+  "hide_avatars": "Avatars verbergen",
+  "anon_mode": "Anoniem modus",
+  "anon_mode_description": "Gebruik automatisch een ander gebruikers-ID in elk thread"
 }
