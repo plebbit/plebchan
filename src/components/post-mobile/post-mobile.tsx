@@ -180,7 +180,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
   return (
     cid &&
     parentCid &&
-    replies && (
+    replies.length > 0 && (
       <div className={styles.mobileReplyBacklinks}>
         {replies.map(
           (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
