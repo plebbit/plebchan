@@ -3,7 +3,6 @@
 }
 
 .setting {
-  text-transform: capitalize;
   margin-left: 10px;
   margin-top: 10px;
 }
@@ -24,4 +23,8 @@
 
 .interfaceSettings {
   margin-bottom: 10px;
+}
+
+.setting input[type="checkbox"] {
+  margin-right: 2px;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
@@ -9,9 +9,13 @@ import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/po
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useAnonModeStore from '../../stores/use-anon-mode-store';
+import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
+import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
+import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
@@ -26,7 +30,6 @@ import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import { create } from 'zustand';
 import _ from 'lodash';
-import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 
 interface ShowOmittedRepliesState {
   showOmittedReplies: Record<string, boolean>;
@@ -46,7 +49,7 @@ const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
 
 const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, deleted, locked, pinned, parentCid, postCid, removed, replyCount, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, deleted, locked, pinned, parentCid, postCid, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const replies = useReplies(post);
   const { address, shortAddress } = author || {};
@@ -57,6 +60,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const isReply = parentCid;
   const { showOmittedReplies } = useShowOmittedReplies();
   const { imageUrl: avatarImageUrl } = useAuthorAvatar({ author });
+  const { hideAvatars } = useAvatarVisibilityStore();
 
   const params = useParams();
   const location = useLocation();
@@ -64,15 +68,19 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
+  // comment.author.shortAddress is undefined while the comment publishing state is pending, use account instead
+  // in anon mode, use the newly generated signer.address instead, which will be comment.author.address
+  const { anonMode } = useAnonMode();
+  const { currentAnonSignerAddress } = useAnonModeStore();
   const account = useAccount();
-  const accountShortAddress = account?.author?.shortAddress; // if reply by account is pending, it doesn't have an author yet
+  const pendingShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
 
   const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
 
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
-  const userID = shortAddress || accountShortAddress;
+  const userID = shortAddress || pendingShortAddress;
   const userIDBackgroundColor = hashStringToColor(userID);
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
@@ -110,7 +118,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         </span>
         {!(isDescription || isRules) && (
           <>
-            {author?.avatar && !(deleted || removed) ? (
+            {author?.avatar && !(deleted || removed) && !hideAvatars ? (
               <span className={styles.authorAvatar}>
                 <img src={avatarImageUrl} alt='' />
               </span>
@@ -166,7 +174,9 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           ) : (
             <>
               <span>c/</span>
-              <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+              <span className={styles.pendingCid}>
+                {state === 'failed' || stateString === 'Failed' ? _.capitalize(t('failed')) : state === 'pending' ? _.capitalize(t('pending')) : ''}
+              </span>
             </>
           ))}
         {pinned && (
@@ -184,7 +194,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
             [
             <Link
               to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}
-              onClick={(e) => !cid && e.preventDefault()}
+              onClick={(e) => !cid && !isDescription && !isRules && e.preventDefault()}
             >
               {_.capitalize(t('reply'))}
             </Link>
@@ -193,10 +203,12 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
         )}
       </span>
       <PostMenuDesktop post={post} />
-      {replyCount > 0 &&
+      {cid &&
         parentCid &&
         replies &&
-        replies.map((reply: Comment, index: number) => reply?.parentCid === cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />)}
+        replies.map(
+          (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+        )}
     </div>
   );
 };
@@ -290,7 +302,7 @@ const PostMessage = ({ post }: PostProps) => {
             <span className={styles.redEditMessage}>({t('this_post_was_removed')})</span>
             <br />
             <br />
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
           </>
         ) : (
           <span className={styles.grayEditMessage}>{_.capitalize(t('this_post_was_removed'))}.</span>
@@ -299,7 +311,7 @@ const PostMessage = ({ post }: PostProps) => {
         reason ? (
           <>
             <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>{' '}
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
           </>
         ) : (
           <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>
@@ -416,15 +428,6 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
 
-  // scroll to reply if pathname is reply permalink (backlink)
-  const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
-  useEffect(() => {
-    const replyIndex = replies.findIndex((reply) => location.pathname === `/p/${subplebbitAddress}/c/${reply?.cid}`);
-    if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
-      replyRefs.current[replyIndex]?.scrollIntoView();
-    }
-  }, [location.pathname, replies, subplebbitAddress]);
-
   const stateString = useStateString(post);
 
   return (
@@ -476,7 +479,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           replies &&
           showReplies &&
           (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
-            <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+            <div key={index} className={styles.replyContainer}>
               <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} postReplyCount={replyCount} />
             </div>
           ))}

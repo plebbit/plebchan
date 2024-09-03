@@ -204,7 +204,7 @@
   "by": "af",
   "last_reply_by": "Seneste svar fra",
   "showing_all_replies": "Viser alle svar.",
-  "highlight_posts": "Fremhæv indlæg fra denne brugeradresse",
+  "highlight_posts": "Fremhæv indlæg fra denne ID",
   "display_name_too_long": "Visningsnavn for langt",
   "title_too_long": "Titel for lang",
   "1_post_by_this_id": "1 post med dette ID",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Skjul Gore Boards",
   "hide_adult_boards": "Skjul Voksne Boards",
   "static_gif": "Statisk GIF",
-  "animated_gif": "Animeret GIF"
+  "animated_gif": "Animeret GIF",
+  "hide_avatars": "Skjul avatarer",
+  "anon_mode": "Anonim tilstand",
+  "anon_mode_description": "Brug automatisk en anden bruger-ID i hver tråd",
+  "pending": "Afventer",
+  "failed": "Mislykkedes"
 }

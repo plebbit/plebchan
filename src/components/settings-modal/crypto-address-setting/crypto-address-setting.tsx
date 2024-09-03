@@ -117,7 +117,7 @@ const CryptoAddressSetting = () => {
         </button>
         {showCryptoAddressInfo && (
           <div className={styles.cryptoAddressInfo}>
-            steps to set a .eth user address:
+            steps to set a .eth address as your ID:
             <br />
             <ol>
               <li>
@@ -130,7 +130,7 @@ const CryptoAddressSetting = () => {
               <li>once you own the address, go to its page, click on "records", then "edit records"</li>
               <li>add a new text record with name "plebbit-author-address" and value: {account?.signer?.address}</li>
             </ol>
-            steps to set a .sol user address:
+            steps to set a .sol address as your ID:
             <br />
             <ol>
               <li>

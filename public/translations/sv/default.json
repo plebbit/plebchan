@@ -204,7 +204,7 @@
   "by": "av",
   "last_reply_by": "Senaste svar av",
   "showing_all_replies": "Visar alla svar.",
-  "highlight_posts": "Markera inlägg från denna användaradress",
+  "highlight_posts": "Markera inlägg med detta ID",
   "display_name_too_long": "visningsnamn för långt",
   "title_too_long": "titel för långt",
   "1_post_by_this_id": "1 inlägg med detta ID",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Dölj Gore Boards",
   "hide_adult_boards": "Dölj vuxna Boards",
   "static_gif": "Statisk GIF",
-  "animated_gif": "Animerad GIF"
+  "animated_gif": "Animerad GIF",
+  "hide_avatars": "Dölj avatarer",
+  "anon_mode": "Anonymt läge",
+  "anon_mode_description": "Använd automatiskt ett annat användar-ID i varje tråd",
+  "pending": "Väntande",
+  "failed": "Misslyckades"
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
@@ -8,6 +8,9 @@ import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-util
 import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useAnonModeStore from '../../stores/use-anon-mode-store';
+import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
+import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
@@ -31,6 +34,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const displayName = author?.displayName?.trim();
   const authorRole = roles?.[address]?.role;
   const { imageUrl: avatarImageUrl } = useAuthorAvatar({ author });
+  const { hideAvatars } = useAvatarVisibilityStore();
 
   const params = useParams();
   const location = useLocation();
@@ -44,16 +48,19 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
 
   const isReply = parentCid;
 
-  // pending reply by account is not yet published
+  // comment.author.shortAddress is undefined while the comment publishing state is pending, use account instead
+  // in anon mode, use the newly generated signer.address instead, which will be comment.author.address
+  const { anonMode } = useAnonMode();
+  const { currentAnonSignerAddress } = useAnonModeStore();
   const account = useAccount();
-  const accountShortAddress = account?.author?.shortAddress;
+  const pendingShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
 
   const stateString = useStateString(post);
 
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
-  const userIDBackgroundColor = hashStringToColor(shortAddress || accountShortAddress);
+  const userIDBackgroundColor = hashStringToColor(shortAddress || pendingShortAddress);
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   return (
@@ -82,7 +89,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
           {!(isDescription || isRules) && (
             <>
-              {author?.avatar && !(deleted || removed) ? (
+              {author?.avatar && !(deleted || removed) && !hideAvatars ? (
                 <span className={styles.authorAvatar}>
                   <img src={avatarImageUrl} alt='' />
                 </span>
@@ -100,10 +107,10 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                     <span
                       title={t('highlight_posts')}
                       className={styles.userAddress}
-                      onClick={() => handleUserAddressClick(shortAddress || accountShortAddress, postCid)}
+                      onClick={() => handleUserAddressClick(shortAddress || pendingShortAddress, postCid)}
                       style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
                     >
-                      {shortAddress || accountShortAddress}
+                      {shortAddress || pendingShortAddress}
                     </span>
                   }
                   content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
@@ -154,7 +161,9 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
             ) : (
               <>
                 <span>c/</span>
-                <span className={styles.pendingCid}>{state === 'failed' || stateString === 'Failed' ? 'Failed' : 'Pending'}</span>
+                <span className={styles.pendingCid}>
+                  {state === 'failed' || stateString === 'Failed' ? _.capitalize(t('failed')) : state === 'pending' ? _.capitalize(t('pending')) : ''}
+                </span>
               </>
             ))}
         </span>
@@ -167,15 +176,17 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
 };
 
 const ReplyBacklinks = ({ post }: PostProps) => {
-  const { cid, parentCid, replyCount } = post || {};
+  const { cid, parentCid } = post || {};
   const replies = useReplies(post);
 
   return (
-    replyCount > 0 &&
+    cid &&
     parentCid &&
-    replies && (
+    replies.length > 0 && (
       <div className={styles.mobileReplyBacklinks}>
-        {replies.map((reply: Comment, index: number) => reply?.parentCid === cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />)}
+        {replies.map(
+          (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+        )}
       </div>
     )
   );
@@ -214,7 +225,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
             <span className={styles.redEditMessage}>({t('this_post_was_removed')})</span>
             <br />
             <br />
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
           </>
         ) : (
           <span className={styles.grayEditMessage}>{_.capitalize(t('this_post_was_removed'))}.</span>
@@ -223,7 +234,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
         reason ? (
           <>
             <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>{' '}
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}.</span>
+            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
           </>
         ) : (
           <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>
@@ -334,15 +345,6 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
   const isInPostPageView = isPostPageView(location.pathname, params);
   const { hidden, unhide } = useHide({ cid });
 
-  // scroll to reply if pathname is reply permalink (backlink)
-  const replyRefs = useRef<(HTMLDivElement | null)[]>([]);
-  useEffect(() => {
-    const replyIndex = replies.findIndex((reply) => location.pathname === `/p/${subplebbitAddress}/c/${reply?.cid}`);
-    if (replyIndex !== -1 && replyRefs.current[replyIndex]) {
-      replyRefs.current[replyIndex]?.scrollIntoView();
-    }
-  }, [location.pathname, replies, subplebbitAddress]);
-
   const stateString = useStateString(post);
 
   return (
@@ -391,7 +393,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               replies &&
               showReplies &&
               (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-                <div key={index} className={styles.replyContainer} ref={(el) => (replyRefs.current[index] = el)}>
+                <div key={index} className={styles.replyContainer}>
                   <Reply openReplyModal={openReplyModal} postReplyCount={replyCount} reply={reply} roles={roles} />
                 </div>
               ))}

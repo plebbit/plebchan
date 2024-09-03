@@ -204,7 +204,7 @@
   "by": "ni",
   "last_reply_by": "Huling sagot ni",
   "showing_all_replies": "Nagpapakita ng lahat ng mga sagot.",
-  "highlight_posts": "I-highlight ang mga post mula sa user address na ito",
+  "highlight_posts": "I-highlight ang mga post gamit ang ID na ito",
   "display_name_too_long": "ang display name ay masyadong mahaba",
   "title_too_long": "ang pamagat ay masyadong mahaba",
   "1_post_by_this_id": "1 post sa pamamagitan ng ID na ito",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Itago ang mga Gore Boards",
   "hide_adult_boards": "Itago ang mga Adult Boards",
   "static_gif": "Static GIF",
-  "animated_gif": "Animated GIF"
+  "animated_gif": "Animated GIF",
+  "hide_avatars": "Itago ang mga avatar",
+  "anon_mode": "Anong mode",
+  "anon_mode_description": "Awtomatikong gamitin ang ibang user ID sa bawat thread",
+  "pending": "Naghihintay",
+  "failed": "Nabigo"
 }

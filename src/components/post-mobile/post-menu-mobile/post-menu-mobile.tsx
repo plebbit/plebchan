@@ -164,7 +164,7 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
         ...
       </span>
       {isMenuOpen &&
-        cid &&
+        (cid || isDescription || isRules) &&
         createPortal(
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>

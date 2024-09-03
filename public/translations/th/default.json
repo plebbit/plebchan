@@ -204,7 +204,7 @@
   "by": "โดย",
   "last_reply_by": "การตอบคำถามล่าสุดโดย",
   "showing_all_replies": "กำลังแสดงคำตอบทั้งหมด",
-  "highlight_posts": "เน้นโพสต์โดยที่อยู่ผู้ใช้นี้",
+  "highlight_posts": "เน้นโพสต์โดย ID นี้",
   "display_name_too_long": "ชื่อที่แสดงนามสกุลยาวเกินไป",
   "title_too_long": "ชื่อเรื่องยาวเกินไป",
   "1_post_by_this_id": "1 โพสต์โดย ID นี้",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "ซ่อนกระดาน Gore",
   "hide_adult_boards": "ซ่อนกระดานสำหรับผู้ใหญ่",
   "static_gif": "GIF แบบคงที่",
-  "animated_gif": "GIF ที่เคลื่อนไหว"
+  "animated_gif": "GIF ที่เคลื่อนไหว",
+  "hide_avatars": "ซ่อนอวาตาร์",
+  "anon_mode": "โหมดนิรนาม",
+  "anon_mode_description": "ใช้ ID ผู้ใช้ที่แตกต่างกันโดยอัตโนมัติในแต่ละเธรด",
+  "pending": "รอดำเนินการ",
+  "failed": "ล้มเหลว"
 }

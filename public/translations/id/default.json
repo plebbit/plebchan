@@ -204,7 +204,7 @@
   "by": "oleh",
   "last_reply_by": "Balasan terakhir oleh",
   "showing_all_replies": "Menampilkan semua balasan.",
-  "highlight_posts": "Sorot posting dari alamat pengguna ini",
+  "highlight_posts": "Sorot pos dengan ID ini",
   "display_name_too_long": "nama tampilan terlalu panjang",
   "title_too_long": "judul terlalu panjang",
   "1_post_by_this_id": "1 pos dengan ID ini",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Sembunyikan Papan Gore",
   "hide_adult_boards": "Sembunyikan Papan Dewasa",
   "static_gif": "GIF Statis",
-  "animated_gif": "GIF Animasi"
+  "animated_gif": "GIF Animasi",
+  "hide_avatars": "Sembunyikan avatar",
+  "anon_mode": "Mode anonim",
+  "anon_mode_description": "Secara otomatis gunakan ID pengguna yang berbeda di setiap utas",
+  "pending": "Tertunda",
+  "failed": "Gagal"
 }

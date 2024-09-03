@@ -204,7 +204,7 @@
   "by": "দ্বারা",
   "last_reply_by": "শেষ উত্তর দেননি",
   "showing_all_replies": "সব উত্তর দেখাচ্ছি।",
-  "highlight_posts": "এই ব্যবহারকারী ঠিকানা দ্বারা পোস্টগুলি হাইলাইট করুন",
+  "highlight_posts": "এই আইডি দ্বারা পোস্ট হাইলাইট করুন",
   "display_name_too_long": "প্রদর্শনী নাম অত্যন্ত দীর্ঘ",
   "title_too_long": "শিরোনাম অত্যন্ত দীর্ঘ",
   "1_post_by_this_id": "এই আইডি দ্বারা 1 পোস্ট",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "গর বোর্ডস লুকান",
   "hide_adult_boards": "পুরুষ বোর্ডস লুকান",
   "static_gif": "স্ট্যাটিক GIF",
-  "animated_gif": "অ্যানিমেটেড GIF"
+  "animated_gif": "অ্যানিমেটেড GIF",
+  "hide_avatars": "অ্যাভাটার লুকান",
+  "anon_mode": "অজ্ঞাত মোড",
+  "anon_mode_description": "প্রতিটি থ্রেডে স্বয়ংক্রিয়ভাবে একটি ভিন্ন ব্যবহারকারীর আইডি ব্যবহার করুন",
+  "pending": "অপেক্ষমাণ",
+  "failed": "ব্যর্থ"
 }

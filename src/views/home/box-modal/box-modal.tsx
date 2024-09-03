@@ -7,6 +7,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
   const { t } = useTranslation();
   const [showFilterModal, setShowFilterModal] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLSpanElement>(null);
 
   const {
     showNsfwBoardsOnly,
@@ -23,11 +24,11 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
 
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node) && buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
         setShowFilterModal(false);
       }
     },
-    [modalRef, setShowFilterModal],
+    [modalRef, buttonRef, setShowFilterModal],
   );
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const BoxModal = ({ isBoardsBoxModal }: { isBoardsBoxModal: boolean }) => {
 
   return (
     <>
-      <span ref={modalRef} onClick={() => setShowFilterModal(true)}>
+      <span ref={buttonRef} onClick={() => !showFilterModal && setShowFilterModal(true)}>
         {isBoardsBoxModal ? t('filter') : t('options')} ▼
       </span>
       {showFilterModal && (

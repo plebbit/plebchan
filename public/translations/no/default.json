@@ -204,7 +204,7 @@
   "by": "av",
   "last_reply_by": "Siste svar fra",
   "showing_all_replies": "Viser alle svar.",
-  "highlight_posts": "Fremhev innlegg fra denne brukeradressen",
+  "highlight_posts": "Uthev innlegg med denne ID-en",
   "display_name_too_long": "visningsnavn for langt",
   "title_too_long": "tittel for lang",
   "1_post_by_this_id": "1 post med denne ID-en",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Skjul Gore Boards",
   "hide_adult_boards": "Skjul voksne Boards",
   "static_gif": "Statisk GIF",
-  "animated_gif": "Animasjons GIF"
+  "animated_gif": "Animasjons GIF",
+  "hide_avatars": "Skjul avatarer",
+  "anon_mode": "Anonim modus",
+  "anon_mode_description": "Bruk automatisk en annen bruker-ID i hver tråd",
+  "pending": "Venter",
+  "failed": "Feilet"
 }

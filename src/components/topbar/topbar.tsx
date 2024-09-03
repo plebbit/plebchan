@@ -85,7 +85,8 @@ const TopBarDesktop = () => {
         {renderSubplebbits(projectsSubs)}
         {renderSubplebbits(interestsSubs)}
         {renderSubplebbits(randomSubs)}
-        {renderSubplebbits(internationalSubs)}[
+        {renderSubplebbits(internationalSubs)}
+        {/* [
         <Link
           to='boards/create'
           onClick={(e) => {
@@ -105,7 +106,7 @@ const TopBarDesktop = () => {
         >
           Vote
         </Link>
-        ]
+        ] */}
       </span>
       <span className={styles.navTopRight}>
         [<Link to={!location.pathname.endsWith('settings') ? location.pathname.replace(/\/$/, '') + '/settings' : location.pathname}>{t('settings')}</Link>] [

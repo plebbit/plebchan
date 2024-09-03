@@ -204,7 +204,7 @@
   "by": "tarafından",
   "last_reply_by": "Son cevap",
   "showing_all_replies": "Tüm yanıtlar gösteriliyor.",
-  "highlight_posts": "Bu kullanıcı adresinden gelen gönderileri vurgula",
+  "highlight_posts": "Bu ID ile gönderileri vurgula",
   "display_name_too_long": "görünen adı çok uzun",
   "title_too_long": "başlık çok uzun",
   "1_post_by_this_id": "Bu ID ile 1 gönderi",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Gore Panolarını Gizle",
   "hide_adult_boards": "Yetişkin Panolarını Gizle",
   "static_gif": "Statik GIF",
-  "animated_gif": "Animasyonlu GIF"
+  "animated_gif": "Animasyonlu GIF",
+  "hide_avatars": "Avatarları gizle",
+  "anon_mode": "Gizli mod",
+  "anon_mode_description": "Her iplikte otomatik olarak farklı bir kullanıcı ID'si kullanın",
+  "pending": "Beklemede",
+  "failed": "Başarısız"
 }

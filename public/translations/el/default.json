@@ -204,7 +204,7 @@
   "by": "από",
   "last_reply_by": "Τελευταία απάντηση από",
   "showing_all_replies": "Εμφανίζονται όλες οι απαντήσεις.",
-  "highlight_posts": "Επισήμανση δημοσιεύσεων από αυτήν τη διεύθυνση χρήστη",
+  "highlight_posts": "Επισήμανση αναρτήσεων με αυτήν την ταυτότητα",
   "display_name_too_long": "Το όνομα εμφάνισης είναι πολύ μεγάλο",
   "title_too_long": "Το τίτλος είναι πολύ μεγάλος",
   "1_post_by_this_id": "1 ανάρτηση με αυτό το ID",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Απόκρυψη των Gore Boards",
   "hide_adult_boards": "Απόκρυψη των Adult Boards",
   "static_gif": "Στατικό GIF",
-  "animated_gif": "Κινούμενο GIF"
+  "animated_gif": "Κινούμενο GIF",
+  "hide_avatars": "Απόκρυψη avatars",
+  "anon_mode": "Λειτουργία ανωνυμίας",
+  "anon_mode_description": "Χρησιμοποιήστε αυτόματα διαφορετικό αναγνωριστικό χρήστη σε κάθε νήμα",
+  "pending": "Σε εκκρεμότητα",
+  "failed": "Απέτυχε"
 }

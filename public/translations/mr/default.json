@@ -204,7 +204,7 @@
   "by": "व्यक्ती",
   "last_reply_by": "शेवटचा प्रतिसाद व्यक्ती",
   "showing_all_replies": "सर्व प्रतिसाद दाखवत आहे.",
-  "highlight_posts": "या वापरकर्त्याच्या पत्त्यापासून पोस्ट्स हायलाइट करा",
+  "highlight_posts": "या ID द्वारे पोस्ट हायलाइट करा",
   "display_name_too_long": "डिस्प्ले नाम खूप लांब आहे",
   "title_too_long": "शीर्षक खूप लांब आहे",
   "1_post_by_this_id": "या ID वर 1 पोस्ट",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "गोर बोर्ड्स लपवा",
   "hide_adult_boards": "वयस्क बोर्ड्स लपवा",
   "static_gif": "स्थिर GIF",
-  "animated_gif": "एनिमेटेड GIF"
+  "animated_gif": "एनिमेटेड GIF",
+  "hide_avatars": "अवतार लपवा",
+  "anon_mode": "अनाम मोड",
+  "anon_mode_description": "प्रत्येक थ्रेडमध्ये स्वयंचलितपणे वेगळा वापरकर्ता ID वापरा",
+  "pending": "प्रलंबित",
+  "failed": "असफल"
 }

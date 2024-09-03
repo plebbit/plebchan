@@ -204,7 +204,7 @@
   "by": "kirjoittanut",
   "last_reply_by": "Viimeisin vastaus",
   "showing_all_replies": "Näytetään kaikki vastaukset.",
-  "highlight_posts": "Korosta tämän käyttäjän osoitteen viestit",
+  "highlight_posts": "Korosta postauksia tällä ID:llä",
   "display_name_too_long": "Näyttönimi liian pitkä",
   "title_too_long": "Otsikko on liian pitkä",
   "1_post_by_this_id": "1 viesti tällä tunnuksella",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Piilota Gore-laudat",
   "hide_adult_boards": "Piilota Aikuisten lautat",
   "static_gif": "Staattinen GIF",
-  "animated_gif": "Animoitu GIF"
+  "animated_gif": "Animoitu GIF",
+  "hide_avatars": "Piilota avatarit",
+  "anon_mode": "Anonyymi tila",
+  "anon_mode_description": "Käytä automaattisesti eri käyttäjä-ID:tä jokaisessa keskustelussa",
+  "pending": "Odottaa",
+  "failed": "Epäonnistui"
 }

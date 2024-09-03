@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useAvatarVisibilityStore from '../../../stores/use-avatar-visibility-store';
 import useTheme from '../../../hooks/use-theme';
-import styles from './interface-settings.module.css';
 import packageJson from '../../../../package.json';
+import styles from './interface-settings.module.css';
+import _ from 'lodash';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -107,11 +109,16 @@ const InterfaceLanguage = () => {
 
 const InterfaceSettings = () => {
   const { t } = useTranslation();
+  const { hideAvatars, setHideAvatars } = useAvatarVisibilityStore();
+
+  const handleHideAvatarsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHideAvatars(e.target.checked);
+  };
 
   return (
     <div className={styles.interfaceSettings}>
       <div className={styles.version}>
-        {t('version')}:{' '}
+        {_.capitalize(t('version'))}:{' '}
         <a href={`https://github.com/plebbit/plebchan/releases/tag/v${packageJson.version}`} target='_blank' rel='noopener noreferrer'>
           {packageJson.version}
         </a>
@@ -122,13 +129,18 @@ const InterfaceSettings = () => {
         )}
       </div>
       <div className={styles.setting}>
-        {t('update')}: <CheckForUpdates />
+        {_.capitalize(t('update'))}: <CheckForUpdates />
       </div>
       <div className={styles.setting}>
-        {t('style')}: <Style />
+        {_.capitalize(t('style'))}: <Style />
       </div>
       <div className={styles.setting}>
-        {t('interface_language')}: <InterfaceLanguage />
+        {_.capitalize(t('interface_language'))}: <InterfaceLanguage />
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' checked={hideAvatars} onChange={handleHideAvatarsChange} /> {_.capitalize(t('hide_avatars'))}
+        </label>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import useIsMobile from '../../hooks/use-is-mobile';
 import CommentMedia from '../comment-media';
 import styles from './markdown.module.css';
 import { useLocation, useParams } from 'react-router-dom';
+import { canEmbed } from '../embed';
 
 interface ContentLinkEmbedProps {
   children: any;
@@ -86,13 +87,15 @@ const ContentLinkEmbed = ({ children, href, linkMediaInfo }: ContentLinkEmbedPro
           <CommentMedia isReply={false} setShowThumbnail={setShowMedia} commentMediaInfo={linkMediaInfo} showThumbnail={false} />
         </>
       )}
-      <FloatingPortal>
-        {isOpen && !isMobile && (
-          <div className={styles.floatingEmbed} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
-            <CommentMedia isReply={false} isFloatingEmbed={true} setShowThumbnail={setShowMedia} commentMediaInfo={linkMediaInfo} showThumbnail={true} />
-          </div>
-        )}
-      </FloatingPortal>
+      {getHasThumbnail(linkMediaInfo, href) && (
+        <FloatingPortal>
+          {isOpen && !isMobile && (
+            <div className={styles.floatingEmbed} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+              <CommentMedia isReply={false} isFloatingEmbed={true} setShowThumbnail={setShowMedia} commentMediaInfo={linkMediaInfo} showThumbnail={true} />
+            </div>
+          )}
+        </FloatingPortal>
+      )}
     </>
   );
 };
@@ -172,7 +175,8 @@ const Markdown = ({ content, title }: MarkdownProps) => {
           a: ({ href, children }) => {
             if (href && !isInCatalogView) {
               const linkMediaInfo = getLinkMediaInfo(href);
-              if (getHasThumbnail(linkMediaInfo, href)) {
+              const embedUrl = new URL(href);
+              if (canEmbed(embedUrl) || getHasThumbnail(linkMediaInfo, href)) {
                 return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
               } else {
                 return (

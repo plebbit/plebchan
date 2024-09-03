@@ -204,7 +204,7 @@
   "by": "کے ذریعے",
   "last_reply_by": "آخری جواب دیا گیا",
   "showing_all_replies": "تمام جوابات دکھا رہا ہے۔",
-  "highlight_posts": "اس صارف ایڈریس کے ذریعے پوسٹس کو ہائی لائٹ کریں",
+  "highlight_posts": "اس ID کے ذریعہ پوسٹس کو نمایاں کریں",
   "display_name_too_long": "ڈسپلے نام بہت لمبا ہے",
   "title_too_long": "عنوان بہت لمبا ہے",
   "1_post_by_this_id": "اس آئی ڈی پر 1 پوسٹ",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "گور بورڈز چھپائیں",
   "hide_adult_boards": "بالغ بورڈز چھپائیں",
   "static_gif": "اسٹیٹک GIF",
-  "animated_gif": "اینیمیٹڈ GIF"
+  "animated_gif": "اینیمیٹڈ GIF",
+  "hide_avatars": "اوٹار چھپائیں",
+  "anon_mode": "خفیہ موڈ",
+  "anon_mode_description": "ہر تھریڈ میں خود بخود مختلف صارف آئی ڈی کا استعمال کریں",
+  "pending": "منتظر",
+  "failed": "ناکام"
 }

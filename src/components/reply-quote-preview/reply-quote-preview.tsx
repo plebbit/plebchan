@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Comment, useAccount } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -88,6 +88,19 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
     };
   }, [update]);
 
+  const navigate = useNavigate();
+
+  const handleClick = (e: React.MouseEvent, cid: string | undefined, subplebbitAddress: string | undefined) => {
+    e.preventDefault();
+    if (cid && subplebbitAddress) {
+      navigate(`/p/${subplebbitAddress}/c/${cid}`);
+      setTimeout(() => {
+        const element = document.querySelector(`[data-cid="${cid}"]`);
+        element?.scrollIntoView();
+      }, 100);
+    }
+  };
+
   const handleMouseOver = (cid: string | undefined) => {
     if (!cid) return;
 
@@ -114,6 +127,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         ref={refs.setReference}
         onMouseOver={() => handleMouseOver(backlinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(backlinkReply?.cid)}
+        onClick={(e) => handleClick(e, backlinkReply?.cid, backlinkReply?.subplebbitAddress)}
       >
         c/{backlinkReply?.shortCid}
       </Link>
@@ -138,8 +152,9 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         className={styles.quoteLink}
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
+        onClick={(e) => handleClick(e, quotelinkReply?.cid, quotelinkReply?.subplebbitAddress)}
       >
-        {`c/${quotelinkReply?.shortCid}`}
+        {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
         {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
       </Link>
       <br />
@@ -174,6 +189,19 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
     };
   }, [update]);
 
+  const navigate = useNavigate();
+
+  const handleClick = (e: React.MouseEvent, cid: string | undefined, subplebbitAddress: string | undefined) => {
+    e.preventDefault();
+    if (cid && subplebbitAddress) {
+      navigate(`/p/${subplebbitAddress}/c/${cid}`);
+      setTimeout(() => {
+        const element = document.querySelector(`[data-cid="${cid}"]`);
+        element?.scrollIntoView();
+      }, 100);
+    }
+  };
+
   const handleMouseOver = (cid: string | undefined) => {
     if (!cid) return;
 
@@ -200,11 +228,18 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseOver={() => handleMouseOver(backlinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(backlinkReply?.cid)}
       >
-        c/{backlinkReply?.shortCid}{' '}
+        {backlinkReply?.shortCid && `c/${backlinkReply?.shortCid}`}
       </span>
-      <Link to={`/p/${backlinkReply?.subplebbitAddress}/c/${backlinkReply?.cid}`} className={styles.backlinkHash}>
-        #
-      </Link>
+      {backlinkReply?.shortCid && (
+        <Link
+          to={`/p/${backlinkReply?.subplebbitAddress}/c/${backlinkReply?.cid}`}
+          className={styles.backlinkHash}
+          onClick={(e) => handleClick(e, backlinkReply?.cid, backlinkReply?.subplebbitAddress)}
+        >
+          {' '}
+          #
+        </Link>
+      )}
       {hoveredCid === backlinkReply?.cid &&
         outOfViewCid === backlinkReply?.cid &&
         createPortal(
@@ -226,14 +261,19 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
-        c/{quotelinkReply?.shortCid}
+        {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
         {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
       </span>
-      <Link className={styles.quoteLink} to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}>
-        {' '}
-        #
-      </Link>
-      <br />
+      {quotelinkReply?.shortCid && (
+        <Link
+          className={styles.quoteLink}
+          to={`/p/${quotelinkReply?.subplebbitAddress}/c/${quotelinkReply?.cid}`}
+          onClick={(e) => handleClick(e, quotelinkReply?.cid, quotelinkReply?.subplebbitAddress)}
+        >
+          {' '}
+          #
+        </Link>
+      )}
       {hoveredCid === quotelinkReply?.cid &&
         outOfViewCid === quotelinkReply?.cid &&
         createPortal(

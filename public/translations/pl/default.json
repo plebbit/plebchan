@@ -204,7 +204,7 @@
   "by": "przez",
   "last_reply_by": "Ostatnia odpowiedź od",
   "showing_all_replies": "Wyświetlanie wszystkich odpowiedzi.",
-  "highlight_posts": "Wyróżnij posty z tego adresu użytkownika",
+  "highlight_posts": "Wyróżnij posty według tego ID",
   "display_name_too_long": "nazwa wyświetlana jest zbyt długa",
   "title_too_long": "tytuł jest zbyt długi",
   "1_post_by_this_id": "1 post z tym identyfikatorem",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Ukryj Gore Boards",
   "hide_adult_boards": "Ukryj Adult Boards",
   "static_gif": "Statyczny GIF",
-  "animated_gif": "Animowany GIF"
+  "animated_gif": "Animowany GIF",
+  "hide_avatars": "Ukryj awatary",
+  "anon_mode": "Tryb anonimowy",
+  "anon_mode_description": "Automatycznie używaj innego identyfikatora użytkownika w każdym wątku",
+  "pending": "Oczekujące",
+  "failed": "Nieudane"
 }

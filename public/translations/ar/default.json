@@ -204,7 +204,7 @@
   "by": "بواسطة",
   "last_reply_by": "آخر رد بواسطة",
   "showing_all_replies": "عرض جميع الردود.",
-  "highlight_posts": "تسليط الضوء على المشاركات من خلال هذا العنوان للمستخدم",
+  "highlight_posts": "تمييز المشاركات بواسطة هذا المعرف",
   "display_name_too_long": "اسم العرض طويل جداً",
   "title_too_long": "العنوان طويل جداً",
   "1_post_by_this_id": "مشاركة واحدة بهذا المعرف",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "إخفاء لوحات الجور",
   "hide_adult_boards": "إخفاء لوحات الكبار",
   "static_gif": "GIF ثابت",
-  "animated_gif": "GIF متحرك"
+  "animated_gif": "GIF متحرك",
+  "hide_avatars": "إخفاء الصور الرمزية",
+  "anon_mode": "وضع مجهول",
+  "anon_mode_description": "يتم استخدام معرف مستخدم مختلف تلقائيًا في كل موضوع",
+  "pending": "قيد الانتظار",
+  "failed": "فشل"
 }

@@ -62,6 +62,7 @@
 
 .editTextarea {
   width: calc(100% - 12px);
+  height: 100px;
   margin-left: 3px;
   font-family: inherit;
 }

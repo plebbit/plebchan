@@ -204,7 +204,7 @@
   "by": "bởi",
   "last_reply_by": "Trả lời cuối cùng bởi",
   "showing_all_replies": "Đang hiển thị tất cả các phản hồi.",
-  "highlight_posts": "Đánh dấu bài đăng từ địa chỉ người dùng này",
+  "highlight_posts": "Nổi bật các bài viết bằng ID này",
   "display_name_too_long": "tên hiển thị quá dài",
   "title_too_long": "tiêu đề quá dài",
   "1_post_by_this_id": "1 bài đăng bởi ID này",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "Ẩn Gore Boards",
   "hide_adult_boards": "Ẩn Adult Boards",
   "static_gif": "GIF Tĩnh",
-  "animated_gif": "GIF Hoạt Hình"
+  "animated_gif": "GIF Hoạt Hình",
+  "hide_avatars": "Ẩn avatar",
+  "anon_mode": "Chế độ ẩn danh",
+  "anon_mode_description": "Tự động sử dụng ID người dùng khác nhau trong mỗi chủ đề",
+  "pending": "Đang chờ",
+  "failed": "Thất bại"
 }

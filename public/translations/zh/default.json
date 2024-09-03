@@ -204,7 +204,7 @@
   "by": "由...发布",
   "last_reply_by": "最后回复者",
   "showing_all_replies": "显示所有回复。",
-  "highlight_posts": "突出显示此用户地址的帖子",
+  "highlight_posts": "高亮显示此 ID 的帖子",
   "display_name_too_long": "显示名称太长",
   "title_too_long": "标题太长",
   "1_post_by_this_id": "此ID的1篇帖子",
@@ -221,5 +221,10 @@
   "hide_gore_boards": "隐藏Gore板块",
   "hide_adult_boards": "隐藏成人板块",
   "static_gif": "静态GIF",
-  "animated_gif": "动画GIF"
+  "animated_gif": "动画GIF",
+  "hide_avatars": "隐藏头像",
+  "anon_mode": "匿名模式",
+  "anon_mode_description": "在每个线程中自动使用不同的用户 ID",
+  "pending": "待处理",
+  "failed": "失败"
 }
