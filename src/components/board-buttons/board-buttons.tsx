@@ -95,7 +95,7 @@ const SortOptions = () => {
   };
   return (
     <>
-      <span className='capitalize'>{t('sort_by')}</span>:&nbsp;
+      <span>{t('sort_by')}</span>:&nbsp;
       <select className='capitalize' value={sortType} onChange={handleSortChange}>
         <option value='active'>{t('bump_order')}</option>
         <option value='new'>{t('creation_date')}</option>
@@ -110,7 +110,7 @@ const ImageSizeOptions = () => {
 
   return (
     <>
-      <span className='capitalize'>{t('image_size')}:</span>&nbsp;
+      <span>{t('image_size')}:</span>&nbsp;
       <select className='capitalize' value={imageSize} onChange={(e) => setImageSize(e.target.value as 'Small' | 'Large')}>
         <option value='Small'>{t('small')}</option>
         <option value='Large'>{t('large')}</option>
@@ -125,7 +125,7 @@ const ShowOPCommentOption = () => {
 
   return (
     <>
-      <span className='capitalize'>{t('show_op_comment')}:</span>&nbsp;
+      <span>{t('show_op_comment')}:</span>&nbsp;
       <select className='capitalize' value={showOPComment ? 'On' : 'Off'} onChange={(e) => setShowOPComment(e.target.value === 'On')}>
         <option value='Off'>{t('off')}</option>
         <option value='On'>{t('on')}</option>
@@ -159,7 +159,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
     <>
       {!isTopbar ? (
         <>
-          <span className='capitalize'>{t('newer_than')}</span>:&nbsp;
+          <span>{t('newer_than')}</span>:&nbsp;
         </>
       ) : (
         <> </>

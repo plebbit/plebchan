@@ -29,10 +29,8 @@
 }
 
 .desktopBoardButtons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Ensure elements are spaced out properly */
   padding-right: 5px;
+  text-transform: capitalize;
 }
 
 .desktopBoardButtons::after {
@@ -42,7 +40,7 @@
 }
 
 .desktopBoardButtons .rightSideButtons {
-  margin-left: auto; /* Push the right-side buttons to the right */
+  float: right;
   display: flex;
   align-items: center;
 }

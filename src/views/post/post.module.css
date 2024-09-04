@@ -303,13 +303,16 @@
   padding: 0 13px;
 }
 
+.postMobile .nameBlock .subjectWrapper {
+  display: block;
+}
+
 .postMobile .nameBlock .subject {
   color: var(--post-mobile-subject-text-color);
   font-weight: var(--post-mobile-subject-font-weight);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: block;
 }
 
 .postMobile .dateTimePostNum {

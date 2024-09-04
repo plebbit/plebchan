@@ -13,7 +13,6 @@ import useAnonModeStore from '../../stores/use-anon-mode-store';
 import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
 import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
-import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
@@ -75,8 +74,6 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const account = useAccount();
   const pendingShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
 
-  const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: address, subplebbitAddress });
-
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
@@ -86,7 +83,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
 
   return (
     <div className={styles.postInfo}>
-      {!isHidden && <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />}
+      {!isHidden && <EditMenu post={post} />}
       {title &&
         (title.length <= 75 ? (
           <span className={styles.subject}>{title} </span>

@@ -1,5 +1,6 @@
 import { useAccount } from '@plebbit/plebbit-react-hooks';
 import useAnonModeStore from '../stores/use-anon-mode-store';
+import { useCallback, useMemo } from 'react';
 
 const useAnonMode = (postCid?: string) => {
   const { anonMode, threadSigners, setThreadSigner, setAddressSigner, getAddressSigner, setCurrentAnonSignerAddress } = useAnonModeStore((state) => ({
@@ -11,11 +12,11 @@ const useAnonMode = (postCid?: string) => {
     setCurrentAnonSignerAddress: state.setCurrentAnonSignerAddress,
   }));
 
-  const threadSigner = postCid ? threadSigners[postCid] : undefined;
+  const threadSigner = useMemo(() => (postCid ? threadSigners[postCid] : undefined), [postCid, threadSigners]);
 
   const account = useAccount();
 
-  const getNewSigner = async () => {
+  const getNewSigner = useCallback(async () => {
     if (anonMode) {
       if (!postCid || !threadSigner) {
         try {
@@ -43,15 +44,18 @@ const useAnonMode = (postCid?: string) => {
       }
     }
     return null;
-  };
+  }, [anonMode, postCid, threadSigner, account, setThreadSigner, setAddressSigner, setCurrentAnonSignerAddress]);
 
-  const getExistingSigner = (address: string) => {
-    const signer = getAddressSigner(address);
-    if (signer) {
-      setCurrentAnonSignerAddress(signer.address);
-    }
-    return signer;
-  };
+  const getExistingSigner = useCallback(
+    (address: string) => {
+      const signer = getAddressSigner(address);
+      if (signer) {
+        setCurrentAnonSignerAddress(signer.address);
+      }
+      return signer;
+    },
+    [getAddressSigner, setCurrentAnonSignerAddress],
+  );
 
   return { anonMode, getNewSigner, getExistingSigner };
 };

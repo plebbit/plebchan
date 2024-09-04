@@ -130,15 +130,18 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
               <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
             </span>
           )}
-          {title &&
-            (title.length <= 30 ? (
-              <span className={styles.subject}>{title}</span>
-            ) : (
-              <Tooltip
-                children={<span className={styles.subject}>{title.slice(0, 30) + '(...)'}</span>}
-                content={title.length < 1000 ? title : title.slice(0, 1000) + `... ${t('title_too_long')}`}
-              />
-            ))}
+          {title && (
+            <span className={styles.subjectWrapper}>
+              {title.length <= 30 ? (
+                <span className={styles.subject}>{title}</span>
+              ) : (
+                <Tooltip
+                  children={<span className={styles.subject}>{title.slice(0, 30) + '(...)'}</span>}
+                  content={title.length < 1000 ? title : title.slice(0, 1000) + `... ${t('title_too_long')}`}
+                />
+              )}
+            </span>
+          )}
         </span>
         <span className={styles.dateTimePostNum}>
           {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
