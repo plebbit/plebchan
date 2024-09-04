@@ -8,15 +8,10 @@ import useChallengesStore from '../../stores/use-challenges-store';
 import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
 import useAnonMode from '../../hooks/use-anon-mode';
+import useAuthorPrivileges from '../../hooks/use-author-privileges';
+import useAnonModeStore from '../../stores/use-anon-mode-store';
 
 const { addChallenge } = useChallengesStore.getState();
-
-type EditMenuProps = {
-  isAccountMod?: boolean;
-  isAccountCommentAuthor?: boolean;
-  isCommentAuthorMod?: boolean;
-  post: Comment;
-};
 
 const daysToTimestampInSeconds = (days: number) => {
   const now = new Date();
@@ -29,29 +24,55 @@ const timestampToDays = (timestamp: number) => {
   return Math.max(1, Math.floor((timestamp - now) / (24 * 60 * 60)));
 };
 
-const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, post }: EditMenuProps) => {
+const EditMenu = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { author, cid, commentAuthor, content, deleted, locked, parentCid, pinned, reason, removed, spoiler, subplebbitAddress } = post || {};
+  const { author, cid, commentAuthor, content, deleted, locked, parentCid, pinned, postCid, reason, removed, spoiler, subplebbitAddress } = post || {};
   const isReply = parentCid;
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const [isContentEditorOpen, setIsContentEditorOpen] = useState(false);
 
-  const { getExistingSigner } = useAnonMode(post?.postCid);
-
   const account = useAccount();
+  const { getNewSigner, getExistingSigner } = useAnonMode(post?.postCid);
+  const { getThreadSigner } = useAnonModeStore();
+
   const [signer, setSigner] = useState<any>(account?.signer);
 
+  const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useAuthorPrivileges({
+    commentAuthorAddress: author?.address,
+    subplebbitAddress,
+    postCid,
+  });
+
   const checkSigner = useCallback(async () => {
-    if (isAccountCommentAuthor && post?.author?.address !== account?.author?.address) {
-      const existingSigner = getExistingSigner(post?.author?.address);
-      if (existingSigner) {
-        setSigner(existingSigner);
+    if (isAccountCommentAuthor) {
+      if (author?.address !== account?.author?.address) {
+        // Check for existing thread signer first
+        const threadSigner = getThreadSigner(postCid);
+        if (threadSigner && threadSigner.address === author?.address) {
+          setSigner(threadSigner);
+          return;
+        }
+
+        // If no thread signer, check for existing address signer
+        const existingSigner = getExistingSigner(author?.address);
+        if (existingSigner) {
+          setSigner(existingSigner);
+          return;
+        }
+
+        // If no existing signer, create a new one
+        const newSigner = await getNewSigner();
+        if (newSigner) {
+          setSigner(newSigner);
+        }
+      } else {
+        setSigner(account?.signer);
       }
     } else {
       setSigner(null);
     }
-  }, [isAccountCommentAuthor, post?.author?.address, getExistingSigner, account?.author?.address]);
+  }, [isAccountCommentAuthor, author?.address, postCid, account?.author?.address, account?.signer, getThreadSigner, getExistingSigner, getNewSigner]);
 
   useEffect(() => {
     checkSigner();
@@ -59,7 +80,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
 
   const defaultPublishEditOptions = useMemo(() => {
     return {
-      commentAuthor: isAccountMod && !isAccountCommentAuthor ? commentAuthor : undefined,
+      commentAuthor: !isCommentAuthorMod && isAccountMod && !isAccountCommentAuthor ? commentAuthor : undefined,
       commentCid: cid,
       content: isAccountCommentAuthor ? content : undefined,
       deleted: isAccountCommentAuthor ? deleted ?? false : undefined,
@@ -69,13 +90,6 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
       removed: isAccountMod ? removed ?? false : undefined,
       spoiler: spoiler ?? false,
       subplebbitAddress,
-      signer: signer,
-      author: signer
-        ? {
-            address: signer.address,
-            displayName: post?.author?.displayName,
-          }
-        : author,
       onChallenge: (...args: any) => addChallenge([...args, post]),
       onChallengeVerification: alertChallengeVerificationFailed,
       onError: (error: Error) => {
@@ -83,10 +97,58 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
         alert('Comment edit failed. ' + error.message);
       },
     };
-  }, [isAccountMod, isAccountCommentAuthor, commentAuthor, cid, content, deleted, locked, pinned, reason, removed, spoiler, subplebbitAddress, signer, post]);
+  }, [isAccountMod, isAccountCommentAuthor, commentAuthor, cid, content, deleted, locked, pinned, reason, removed, spoiler, subplebbitAddress, post, isCommentAuthorMod]);
 
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState<PublishCommentEditOptions>(defaultPublishEditOptions);
-  const { publishCommentEdit } = usePublishCommentEdit(publishCommentEditOptions);
+
+  const authorEditOptions = useMemo<PublishCommentEditOptions>(
+    () => ({
+      commentCid: cid,
+      subplebbitAddress,
+      signer,
+      author:
+        signer && signer.address === author?.address
+          ? {
+              address: signer.address,
+              displayName: post?.author?.displayName,
+            }
+          : account?.author,
+      content: publishCommentEditOptions.content,
+      deleted: publishCommentEditOptions.deleted,
+      reason: publishCommentEditOptions.reason,
+      spoiler: publishCommentEditOptions.spoiler,
+      onChallenge: (...args: any) => addChallenge([...args, post]),
+      onChallengeVerification: alertChallengeVerificationFailed,
+      onError: (error: Error) => {
+        console.warn(error);
+        alert('Comment edit failed. ' + error.message);
+      },
+    }),
+    [publishCommentEditOptions, cid, subplebbitAddress, signer, post, account?.author, author?.address],
+  );
+
+  const modEditOptions = useMemo<PublishCommentEditOptions>(
+    () => ({
+      commentCid: cid,
+      subplebbitAddress,
+      locked: parentCid === undefined ? publishCommentEditOptions.locked : undefined,
+      pinned: publishCommentEditOptions.pinned,
+      removed: publishCommentEditOptions.removed,
+      reason: publishCommentEditOptions.reason,
+      commentAuthor: !isCommentAuthorMod ? publishCommentEditOptions.commentAuthor : undefined,
+      author: account?.author,
+      onChallenge: (...args: any) => addChallenge([...args, post]),
+      onChallengeVerification: alertChallengeVerificationFailed,
+      onError: (error: Error) => {
+        console.warn(error);
+        alert('Comment edit failed. ' + error.message);
+      },
+    }),
+    [publishCommentEditOptions, cid, subplebbitAddress, isCommentAuthorMod, post, account?.author, parentCid],
+  );
+
+  const { publishCommentEdit: publishAuthorEdit } = usePublishCommentEdit(authorEditOptions);
+  const { publishCommentEdit: publishModEdit } = usePublishCommentEdit(modEditOptions);
 
   useEffect(() => {
     setPublishCommentEditOptions(defaultPublishEditOptions);
@@ -117,8 +179,6 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
     }));
   };
 
-  const onReason = (e: React.ChangeEvent<HTMLInputElement>) => setPublishCommentEditOptions((state) => ({ ...state, reason: e.target.value }));
-
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
     open: isEditMenuOpen,
@@ -137,7 +197,14 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
 
   const _publishCommentEdit = async () => {
     try {
-      await publishCommentEdit();
+      if (isAccountCommentAuthor && isAccountMod) {
+        await publishAuthorEdit();
+        await publishModEdit();
+      } else if (isAccountCommentAuthor) {
+        await publishAuthorEdit();
+      } else if (isAccountMod) {
+        await publishModEdit();
+      }
     } catch (error) {
       if (error instanceof Error) {
         console.warn(error);
@@ -176,8 +243,11 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                     <div>
                       <textarea
                         className={styles.editTextarea}
-                        defaultValue={publishCommentEditOptions.content ?? ''}
-                        onChange={(e) => setPublishCommentEditOptions((state) => ({ ...state, content: e.target.value }))}
+                        value={publishCommentEditOptions.content || ''}
+                        onChange={(e) => {
+                          const newContent = e.target.value;
+                          setPublishCommentEditOptions((state) => ({ ...state, content: newContent }));
+                        }}
                       />
                     </div>
                   )}
@@ -218,7 +288,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                     </label>
                     ]
                   </div>
-                  {!isCommentAuthorMod && (
+                  {!isCommentAuthorMod && isAccountMod && !isAccountCommentAuthor && (
                     <div className={styles.menuItem}>
                       [
                       <label>
@@ -227,7 +297,7 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
                           i18nKey='ban_user_for'
                           shouldUnescape={true}
                           components={{
-                            1: <input className={styles.banInput} onChange={onBanDurationChange} type='number' min={1} max={100} value={banDuration} />,
+                            1: <input className={styles.banInput} onChange={onBanDurationChange} type='number' min={1} max={100} value={banDuration || ''} />,
                           }}
                         />
                         ?
@@ -239,7 +309,15 @@ const EditMenu = ({ isAccountMod, isAccountCommentAuthor, isCommentAuthorMod, po
               )}
               <div className={`${styles.menuItem} ${styles.menuReason}`}>
                 {_.capitalize(t('reason'))}? ({t('optional')})
-                <input type='text' onChange={onReason} value={publishCommentEditOptions.reason} size={14} />
+                <input
+                  type='text'
+                  value={publishCommentEditOptions.reason || ''}
+                  onChange={(e) => {
+                    const newReason = e.target.value;
+                    setPublishCommentEditOptions((state) => ({ ...state, reason: newReason }));
+                  }}
+                  size={14}
+                />
               </div>
               <div className={styles.bottom}>
                 <button className={isMobile ? 'button' : ''} onClick={_publishCommentEdit}>

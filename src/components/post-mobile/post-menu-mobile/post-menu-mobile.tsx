@@ -130,8 +130,8 @@ const BlockBoardButton = ({ address }: { address: string }) => {
 };
 
 const PostMenuMobile = ({ post }: { post: Comment }) => {
-  const { author, cid, isDescription, isRules, link, parentCid, subplebbitAddress } = post || {};
-  const { isCommentAuthorMod, isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: author?.address, subplebbitAddress });
+  const { author, cid, isDescription, isRules, link, parentCid, postCid, subplebbitAddress } = post || {};
+  const { isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: author?.address, subplebbitAddress });
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -169,7 +169,7 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
           <FloatingFocusManager context={context} modal={false}>
             <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
               {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
-              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={post.postCid} onClose={handleClose} />}
+              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={postCid} onClose={handleClose} />}
               {cid && subplebbitAddress && !isDescription && !isRules && <BlockUserButton address={author?.address} />}
               {cid && subplebbitAddress && !isInBoardView && !isDescription && !isRules && <BlockBoardButton address={subplebbitAddress} />}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}
@@ -180,7 +180,7 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
         )}
       {(isAccountMod || isAccountCommentAuthor) && cid && (
         <span className={styles.checkbox}>
-          <EditMenu isAccountCommentAuthor={isAccountCommentAuthor} isAccountMod={isAccountMod} isCommentAuthorMod={isCommentAuthorMod} post={post} />
+          <EditMenu post={post} />
         </span>
       )}
     </>
