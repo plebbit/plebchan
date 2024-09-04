@@ -30,6 +30,7 @@
 
 .desktopBoardButtons {
   padding-right: 5px;
+  text-transform: capitalize;
 }
 
 .desktopBoardButtons::after {
@@ -40,6 +41,8 @@
 
 .desktopBoardButtons .rightSideButtons {
   float: right;
+  display: flex;
+  align-items: center;
 }
 
 .desktopBoardButtons .rightSideButtons select {
