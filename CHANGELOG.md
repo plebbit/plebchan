@@ -1,3 +1,58 @@
+## [0.2.5](https://github.com/plebbit/plebchan/compare/v0.2.4...v0.2.5) (2024-09-04)
+
+
+### Bug Fixes
+
+* **board buttons:** buttons would wrap incorrectly on small window width ([385acb0](https://github.com/plebbit/plebchan/commit/385acb08fd24eff3dac4d1f029817ceb28597f4e))
+* **catalog post preview:** special characters were able to overflow ([48b55ed](https://github.com/plebbit/plebchan/commit/48b55ed972e8d20d108086175b7838f43d2983a6))
+* **edit menu:** checkbox would appear dark in floating post from quote ([c354d72](https://github.com/plebbit/plebchan/commit/c354d72e0ac561291a44822ad9f84e7d8c02059b))
+* **edit menu:** couldn't edit post content if post was just published ([9543f16](https://github.com/plebbit/plebchan/commit/9543f16f683d2d90041edab895a571d30a30baae))
+* **edit menu:** modal position would bug out when resizing textarea to edit post content ([4858cea](https://github.com/plebbit/plebchan/commit/4858ceadc98ee367c1d81a59dce67a4c78b3df10))
+* **edit menu:** remove autofocus, it caused auto scroll ([e9c7e86](https://github.com/plebbit/plebchan/commit/e9c7e868f245ec803823ca372d848debf96d9376))
+* **edit menu:** textarea to edit content was too small ([d52c29f](https://github.com/plebbit/plebchan/commit/d52c29f78148fa2641c5abadd3856a10e4ae492d))
+* **home:** "use catalog" button didn't work for some addresses ([5c846fc](https://github.com/plebbit/plebchan/commit/5c846fcdc8a23ead278868c92bc6c9443ea231c8))
+* **home:** options modal flickered when clicked twice ([30b9152](https://github.com/plebbit/plebchan/commit/30b91521b9a3e4daef86f696b18addb7149bcff8))
+* **markdown:** don't allow horizontal lines, they look confusing inside of post content ([1eb64ed](https://github.com/plebbit/plebchan/commit/1eb64ede3dfba50b9e77d47c9c4dd7f8d3db4c5d))
+* **markdown:** single returns would be rendered as spaces ([495e9e2](https://github.com/plebbit/plebchan/commit/495e9e25b5f5cdb19661318f552d1b2908fba987))
+* **markdown:** users couldn't include empty lines in the post content ([38790a2](https://github.com/plebbit/plebchan/commit/38790a25966aea4217550d76ef1766bd2c5abefd))
+* **pending post page:** opening settings would change theme ([5095e0e](https://github.com/plebbit/plebchan/commit/5095e0e3b9cc27b0a998a4bd646a613e69f6a0e5))
+* **pending post:** "[Reply]" button and post menu shouldn't be clickable ([0cb386c](https://github.com/plebbit/plebchan/commit/0cb386cf662a570c3dd5772ec50bdbba56243618))
+* **popular threads box:** in each post content, one return would appear as two returns (empty lines) ([cfe8686](https://github.com/plebbit/plebchan/commit/cfe8686d94c6ad0df05fe6a240ef25b1840429be))
+* **post form:** opening settings would close post form ([17f57a1](https://github.com/plebbit/plebchan/commit/17f57a1d7d0fa47aa6f5fa97c803063734615173))
+* **post form:** user could post empty comment using spaces ([3d2d510](https://github.com/plebbit/plebchan/commit/3d2d510259b0e7ac4bcfecdff872d928a550709c))
+* **post menu:** 'hide post' button wasn't appearing in thread page on desktop ([f7bab7c](https://github.com/plebbit/plebchan/commit/f7bab7c83e92b24220c8244f4e1f7d0754ebb1a7))
+* **post menu:** 'view on (client)' link was broken on multisubs ([25722d7](https://github.com/plebbit/plebchan/commit/25722d74a3e048c03d69d924a644886fdb70310f))
+* **post mobile:** tooltip for title wasn't centered ([ca0020f](https://github.com/plebbit/plebchan/commit/ca0020f2c5d360d1e77a4bfcc716bf162a1c9174))
+* **post:** 'comment too long' link was broken for description and rules ([2ab7197](https://github.com/plebbit/plebchan/commit/2ab71978a7329fd0d58e0ce028332cd25b65c931))
+* **post:** "c/" was clickable while post is pending ([74ddae0](https://github.com/plebbit/plebchan/commit/74ddae0ed7a9fc9b1724355d076dbdb13107c861))
+* **post:** "c/Pending" could appear on first render ([2590a9c](https://github.com/plebbit/plebchan/commit/2590a9c096657ce53d016f3570189a2bc7085930))
+* **post:** clicking the quotelink or backlink to a reply wouldn't scroll to the reply more than once in a row ([e1422d0](https://github.com/plebbit/plebchan/commit/e1422d005419f21ddf039c76021156679146dc91))
+* **post:** deleted or removed comments still showed display name, avatar, role and ID ([b7e443d](https://github.com/plebbit/plebchan/commit/b7e443d7d3d1e7c9e79b5996e34ae856057253fc))
+* **post:** don't show link if comment is removed or deleted ([068c30a](https://github.com/plebbit/plebchan/commit/068c30a3222877c816b22601920c0d03a18b7c18))
+* **post:** edited timestamp showed html on mobile ([ba49060](https://github.com/plebbit/plebchan/commit/ba4906058db17c474308c501ea756ee504140f6d))
+* **post:** reply backlink didn't appear in post info immediately after replying to it ([0f6b922](https://github.com/plebbit/plebchan/commit/0f6b9225165983986771a712787c30f5a5215c8d))
+* **post:** some gifs would appear animated before expanded ([5a56016](https://github.com/plebbit/plebchan/commit/5a56016c85bf5f7ac78af8ce3783e71c1eb8181b))
+* **replymodal:** replying didn't work from multiboard feeds (p/all, p/subscriptions) ([f6548cc](https://github.com/plebbit/plebchan/commit/f6548cc2b826ba4b80d9d7511df17891408e016a))
+* **theme:** changing theme in sfw sub wouldn't change it for p/all and p/subscriptions. it should because sfw is the default ([f06c50e](https://github.com/plebbit/plebchan/commit/f06c50ef33a3b5fc82c8532c144fd87e7be291d4))
+* **theme:** theme changed incorrectly in pending post page ([4e390a9](https://github.com/plebbit/plebchan/commit/4e390a9fc573610ae76249b9126a42d85b442a87))
+* **use-replies:** a reply to a newly-published reply wouldn't render until propagated ([a698b22](https://github.com/plebbit/plebchan/commit/a698b222f8a22bf3a4e5850cd5328b81cebbbdfa))
+
+
+### Features
+
+* **board stats:** remember hide/show choice per subplebbit ([d482d32](https://github.com/plebbit/plebchan/commit/d482d3246744b0d7701888fa0ce18433d7798381))
+* **feed:** show account comments instantly in the feed once published, instead of waiting for the feed to update ([8598d10](https://github.com/plebbit/plebchan/commit/8598d1056ee9b08cb146b129356c28c14a8ec79a))
+* **markdown:** when the user is publishing a comment, automatically format it to follow markdown rules ([c521ccb](https://github.com/plebbit/plebchan/commit/c521ccbc2ebf2d4d67889a28733d07eab4b8fa7b))
+* **pending post:** show board navigation, stats and post form ([cdee29e](https://github.com/plebbit/plebchan/commit/cdee29e94ffa7cb616aacd34719114d384e60278))
+* **post form:** add link media info for static or animated gifs ([4103fab](https://github.com/plebbit/plebchan/commit/4103fabb12c2b7f57c6c07808af4b7c213408852))
+* **post:** add button to show full comment when it's too long ([99a2197](https://github.com/plebbit/plebchan/commit/99a219733c65138616976fd3f3f71a6b90199909))
+* **post:** add user ID with color specific to user address ([8dfe209](https://github.com/plebbit/plebchan/commit/8dfe2098ce14e77898805093b5ce28c610f1b098))
+* **post:** show embed of link in post content even if it doesn't have a thumbnail ([09a1441](https://github.com/plebbit/plebchan/commit/09a14416c8bcbd722ebeb3bbc0b158bf12c1190b))
+* **settings:** add anon mode - automatically use a different user ID in each thread ([db67a94](https://github.com/plebbit/plebchan/commit/db67a9452c048c5abc954cbae345269495ab6c65))
+* **settings:** add option to hide avatars ([5b7acbc](https://github.com/plebbit/plebchan/commit/5b7acbc5689d9cebee10d0ba8661227c9996b3cf))
+
+
+
 ## [0.2.4](https://github.com/plebbit/plebchan/compare/v0.2.3...v0.2.4) (2024-07-23)
 
 
@@ -7,6 +62,7 @@
 * **board title:** offline icon would appear in p/all and p/subscriptions ([38e60fd](https://github.com/plebbit/plebchan/commit/38e60fd797812756480c84d46fb81a4223efec9a))
 * **catalog post:** it was not possible to scroll past the floating post preview ([9960e40](https://github.com/plebbit/plebchan/commit/9960e400e822214377842cf43789a20c5324caf8))
 * **edit menu:** reason field would reset at menu close ([15462f1](https://github.com/plebbit/plebchan/commit/15462f14ede7b0b3920ae62305b2bc3b112476da))
+* **electron:** download url redirect status code changed ([c63b950](https://github.com/plebbit/plebchan/commit/c63b9507dec80626d22dbeb7d5663ea647b0358f))
 * **iframe:** background was white in tomorrow theme ([8d766cc](https://github.com/plebbit/plebchan/commit/8d766cc9e3b1bf668b02fcaa651678b4cb125b38))
 * **markdown:** bullet point lists were bugged ([9552938](https://github.com/plebbit/plebchan/commit/9552938b6de5fd3d860cca8c9335ce6f1487adbb))
 * **post menu:** block button was visible for description and rules ([4ffd750](https://github.com/plebbit/plebchan/commit/4ffd75010d53dbf068fd6e4040954a6902163d10))
