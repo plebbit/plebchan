@@ -53,7 +53,9 @@ const Thumbnail = ({ commentMediaInfo, isFloatingEmbed, post, setShowThumbnail }
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, url);
 
-  if (type === 'image') {
+  if (type === 'gif' && gifFrameUrl) {
+    thumbnailComponent = <img src={gifFrameUrl} alt='' onClick={() => setShowThumbnail(false)} />;
+  } else if (type === 'image') {
     thumbnailComponent = <img src={url} alt='' onError={handleError} onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'video') {
     thumbnailComponent = thumbnail ? (
@@ -66,10 +68,6 @@ const Thumbnail = ({ commentMediaInfo, isFloatingEmbed, post, setShowThumbnail }
     thumbnailComponent = <img src={thumbnail} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'iframe') {
     thumbnailComponent = iframeThumbnail ? <img src={iframeThumbnail} alt='' onClick={() => setShowThumbnail(false)} /> : null;
-  } else if (type === 'gif' && gifFrameUrl) {
-    thumbnailComponent = <img src={gifFrameUrl} alt='' onClick={() => setShowThumbnail(false)} />;
-  } else if (type === 'gif' && !gifFrameUrl) {
-    thumbnailComponent = <img src={url} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'audio') {
     thumbnailComponent = <audio src={url} controls />;
   }
