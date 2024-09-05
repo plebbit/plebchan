@@ -226,5 +226,9 @@
   "anon_mode": "Anon mode",
   "anon_mode_description": "Automatically use a different user ID in each thread",
   "pending": "Pending",
-  "failed": "Failed"
+  "failed": "Failed",
+  "add": "Add",
+  "pattern": "Pattern",
+  "enable": "Enable",
+  "order": "Order"
 }

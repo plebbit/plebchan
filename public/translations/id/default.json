@@ -226,5 +226,9 @@
   "anon_mode": "Mode anonim",
   "anon_mode_description": "Secara otomatis gunakan ID pengguna yang berbeda di setiap utas",
   "pending": "Tertunda",
-  "failed": "Gagal"
+  "failed": "Gagal",
+  "add": "Tambahkan",
+  "pattern": "Pola",
+  "enable": "Aktifkan",
+  "order": "Urutan"
 }

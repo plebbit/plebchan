@@ -226,5 +226,9 @@
   "anon_mode": "Mënyra anonime",
   "anon_mode_description": "Përdorni automatikisht një ID përdoruesi të ndryshëm në çdo temë",
   "pending": "Në pritje",
-  "failed": "Dështuar"
+  "failed": "Dështuar",
+  "add": "Shto",
+  "pattern": "Model",
+  "enable": "Aktivizo",
+  "order": "Rendit"
 }

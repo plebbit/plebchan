@@ -41,10 +41,10 @@ const FiltersTable = () => {
     <table className={styles.filtersTable}>
       <thead>
         <tr>
-          <th>Order</th>
-          <th>On</th>
-          <th>Pattern</th>
-          <th>Delete</th>
+          <th>{t('order')}</th>
+          <th>{t('enable')}</th>
+          <th>{t('pattern')}</th>
+          <th>{t('delete')}</th>
         </tr>
       </thead>
       <tbody>
@@ -64,7 +64,14 @@ const FiltersTable = () => {
               />
             </td>
             <td>
-              <input type='text' value={item.text} onChange={(e) => updateLocalFilterItem(index, { ...item, text: e.target.value })} />
+              <input
+                type='text'
+                autoCorrect='off'
+                autoComplete='off'
+                spellCheck='false'
+                value={item.text}
+                onChange={(e) => updateLocalFilterItem(index, { ...item, text: e.target.value })}
+              />
             </td>
             <td>
               <span className={styles.deleteButton} onClick={() => removeLocalFilterItem(index)}>

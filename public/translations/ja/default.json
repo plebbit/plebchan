@@ -226,5 +226,9 @@
   "anon_mode": "匿名モード",
   "anon_mode_description": "各スレッドで自動的に異なるユーザーIDを使用します",
   "pending": "保留中",
-  "failed": "失敗"
+  "failed": "失敗",
+  "add": "追加",
+  "pattern": "パターン",
+  "enable": "有効にする",
+  "order": "順序"
 }

@@ -226,5 +226,9 @@
   "anon_mode": "Anonymer Modus",
   "anon_mode_description": "Verwenden Sie automatisch eine andere Benutzer-ID in jedem Thread",
   "pending": "Ausstehend",
-  "failed": "Fehlgeschlagen"
+  "failed": "Fehlgeschlagen",
+  "add": "Hinzufügen",
+  "pattern": "Muster",
+  "enable": "Aktivieren",
+  "order": "Reihenfolge"
 }

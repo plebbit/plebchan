@@ -226,5 +226,9 @@
   "anon_mode": "Mod anonim",
   "anon_mode_description": "Utilizați automat un ID de utilizator diferit în fiecare fir",
   "pending": "În așteptare",
-  "failed": "Eșuat"
+  "failed": "Eșuat",
+  "add": "Adaugă",
+  "pattern": "Model",
+  "enable": "Activare",
+  "order": "Ordine"
 }

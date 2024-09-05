@@ -226,5 +226,9 @@
   "anon_mode": "Anong mode",
   "anon_mode_description": "Awtomatikong gamitin ang ibang user ID sa bawat thread",
   "pending": "Naghihintay",
-  "failed": "Nabigo"
+  "failed": "Nabigo",
+  "add": "Idagdag",
+  "pattern": "Pattern",
+  "enable": "I-enable",
+  "order": "Kaayusan"
 }
