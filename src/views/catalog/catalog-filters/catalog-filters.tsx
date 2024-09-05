@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView } from '../../../lib/utils/view-utils';
@@ -8,32 +8,30 @@ import styles from './catalog-filters.module.css';
 const FiltersTable = () => {
   const { t } = useTranslation();
   const { filterItems, saveAndApplyFilters } = useCatalogFiltersStore();
-  const [localFilterItems, setLocalFilterItems] = useState<any[]>([]);
 
-  useEffect(() => {
-    setLocalFilterItems(filterItems);
-  }, [filterItems]);
+  const [localFilterItems, setLocalFilterItems] = useState(filterItems);
 
   const handleAddFilter = useCallback(() => {
-    setLocalFilterItems([...localFilterItems, { text: '', enabled: true }]);
-  }, [localFilterItems]);
+    setLocalFilterItems((prev) => [...prev, { text: '', enabled: true }]);
+  }, []);
 
   const handleSave = useCallback(() => {
-    saveAndApplyFilters(localFilterItems);
+    const nonEmptyFilters = localFilterItems.filter((item) => item.text.trim() !== '');
+    saveAndApplyFilters(nonEmptyFilters);
   }, [saveAndApplyFilters, localFilterItems]);
 
   const updateLocalFilterItem = useCallback((index: number, item: any) => {
-    setLocalFilterItems((items) => items.map((f, i) => (i === index ? item : f)));
+    setLocalFilterItems((prev) => prev.map((f, i) => (i === index ? item : f)));
   }, []);
 
   const removeLocalFilterItem = useCallback((index: number) => {
-    setLocalFilterItems((items) => items.filter((_, i) => i !== index));
+    setLocalFilterItems((prev) => prev.filter((_, i) => i !== index));
   }, []);
 
   const moveLocalFilterItemUp = useCallback((index: number) => {
     if (index === 0) return;
-    setLocalFilterItems((items) => {
-      const newItems = [...items];
+    setLocalFilterItems((prev) => {
+      const newItems = [...prev];
       [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
       return newItems;
     });
@@ -134,7 +132,7 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
             </div>
           )}
         </div>
-        <FiltersTable />
+        {isInCatalogView && <FiltersTable />}
       </div>
     </>
   );

@@ -140,9 +140,13 @@
   margin: 0 2px;
   padding: 1px;
   outline: none;
-  border: 1px solid #aaa;
+  border: var(--reply-modal-field-input-border, revert);
   font-size: 11px;
-  width: 180px;
+  width: 200px;
+}
+
+.filtersTable input[type='text']:focus {
+  border: var(--reply-modal-field-input-border-focus, revert);
 }
 
 .filtersTable span {

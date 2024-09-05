@@ -22,7 +22,7 @@ interface CatalogFiltersStore {
 
 const useCatalogFiltersStore = create(
   persist<CatalogFiltersStore>(
-    (set, get) => ({
+    (set) => ({
       showTextOnlyThreads: false,
       setShowTextOnlyThreads: (value: boolean) => set({ showTextOnlyThreads: value }),
       showAdultBoards: false,
@@ -32,11 +32,13 @@ const useCatalogFiltersStore = create(
       filterText: '',
       setFilterText: (value: string) => set({ filterText: value }),
       filterItems: [],
-      setFilterItems: (items: FilterItem[]) => set({ filterItems: items }),
+      setFilterItems: (items: FilterItem[]) => {
+        const nonEmptyItems = items.filter((item) => item.text.trim() !== '');
+        set({ filterItems: nonEmptyItems });
+      },
       saveAndApplyFilters: (items: FilterItem[]) => {
-        set({ filterItems: items });
-        console.log('Filters saved and applied:', items);
-        // Example: refreshCatalog();
+        const nonEmptyItems = items.filter((item) => item.text.trim() !== '');
+        set({ filterItems: nonEmptyItems });
       },
     }),
     {
