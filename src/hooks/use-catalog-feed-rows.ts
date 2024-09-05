@@ -63,7 +63,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
     }
 
     // add subplebbit description and rules as fake posts at the top of the feed
-    if ((description && description.length > 0 && (showTextOnlyThreads || (!showTextOnlyThreads && suggested?.avatarUrl))) || isInAllView) {
+    if ((description && description.length > 0 && (showTextOnlyThreads || (!showTextOnlyThreads && suggested?.avatarUrl))) || (isInAllView && showTextOnlyThreads)) {
       _feed.unshift({
         isDescription: true,
         subplebbitAddress: address,
