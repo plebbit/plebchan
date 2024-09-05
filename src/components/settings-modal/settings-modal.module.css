@@ -18,12 +18,16 @@
 
 .settingsModal input[type='text'] {
   outline: none;
-  border: 1px solid #aaa;
+  border: var(--reply-modal-field-input-border, revert);
   padding: 2px 4px 3px;
 }
 
+.settingsModal textarea {
+  border: var(--reply-modal-field-input-border, revert) !important;
+}
+
 .settingsModal input[type="text"]:focus, .settingsModal textarea:focus {
-  border: var(--reply-modal-field-input-border-focus, revert);
+  border: var(--reply-modal-field-input-border-focus, revert) !important;
 }
 
 .settingsModal {
