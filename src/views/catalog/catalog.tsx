@@ -21,10 +21,19 @@ import styles from './catalog.module.css';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const catalogFilter = (comment: Comment) => {
+const threadsWithImagesFilter = (comment: Comment) => {
   const commentMediaInfo = getCommentMediaInfo(comment);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, comment?.link);
   return hasThumbnail;
+};
+
+const textFilter = (comment: Comment, filterText: string) => {
+  if (!filterText) return true;
+  const filterWords = filterText.toLowerCase().split(/\s+/);
+  const titleWords = comment?.title?.toLowerCase().split(/\s+/) || [];
+  const contentWords = comment?.content?.toLowerCase().split(/\s+/) || [];
+
+  return !filterWords.every((filterWord) => titleWords.includes(filterWord) || contentWords.includes(filterWord));
 };
 
 const Catalog = () => {
@@ -34,7 +43,7 @@ const Catalog = () => {
 
   const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbits = useDefaultSubplebbits();
-  const { showAdultBoards, showGoreBoards } = useCatalogFiltersStore();
+  const { showAdultBoards, showGoreBoards, showTextOnlyThreads, filterText } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -72,15 +81,22 @@ const Catalog = () => {
   const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
 
   const { timeFilterSeconds } = useTimeFilter();
-  const { showTextOnlyThreads } = useCatalogFiltersStore();
   const { sortType } = useSortingStore();
 
-  const feedOptions: any = {
-    subplebbitAddresses,
-    sortType,
-    postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-    filter: !showTextOnlyThreads && catalogFilter,
-  };
+  const feedOptions: any = useMemo(
+    () => ({
+      subplebbitAddresses,
+      sortType,
+      postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
+      filter: (comment: Comment) => {
+        if (!showTextOnlyThreads && !threadsWithImagesFilter(comment)) {
+          return false;
+        }
+        return textFilter(comment, filterText);
+      },
+    }),
+    [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, showTextOnlyThreads, filterText],
+  );
 
   if (isInAllView || isInSubscriptionsView) {
     feedOptions.newerThan = timeFilterSeconds;

@@ -84,7 +84,7 @@
 }
 
 .filters label {
-  display: block;
+  display: inline-block;
   margin-bottom: 7px;
 }
 
@@ -100,4 +100,63 @@
 
 .paddingBottom {
   padding-bottom: 5px;
+}
+
+.saveButton {
+  margin-left: 5px;
+}
+
+.filtersTable {
+  width: 100%;
+  border-spacing: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+}
+
+.filtersTable th {
+  text-align: center;
+  font-weight: 700;
+  font-size: 11px;
+  min-width: 20px;
+}
+
+.filtersTable tbody td {
+  padding: 8px 0 0;
+}
+
+.filtersTable td {
+  text-align: center;
+  margin: 0;
+  font-size: 10pt;
+}
+
+.filtersTable input[type='checkbox'] {
+  display: inline-block;
+  margin: auto;
+}
+
+.filtersTable input[type='text'] {
+  margin: 0 2px;
+  padding: 1px;
+  outline: none;
+  border: 1px solid #aaa;
+  font-size: 11px;
+  width: 180px;
+}
+
+.filtersTable span {
+  cursor: pointer;
+}
+
+.filtersTable tfoot td {
+  padding-top: 20px;
+}
+
+.addButton {
+  float: left;
+}
+
+.saveButton {
+  float: right;
 }
