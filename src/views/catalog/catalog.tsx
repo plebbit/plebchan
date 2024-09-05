@@ -27,13 +27,17 @@ const threadsWithImagesFilter = (comment: Comment) => {
   return hasThumbnail;
 };
 
-const textFilter = (comment: Comment, filterText: string) => {
-  if (!filterText) return true;
-  const filterWords = filterText.toLowerCase().split(/\s+/);
-  const titleWords = comment?.title?.toLowerCase().split(/\s+/) || [];
-  const contentWords = comment?.content?.toLowerCase().split(/\s+/) || [];
+const textFilter = (comment: Comment, filterItems: any[]) => {
+  if (!filterItems) return true;
+  if (filterItems.length === 0) return true;
+  const titleLower = comment?.title?.toLowerCase() || '';
+  const contentLower = comment?.content?.toLowerCase() || '';
 
-  return !filterWords.every((filterWord) => titleWords.includes(filterWord) || contentWords.includes(filterWord));
+  return filterItems.every((item) => {
+    if (!item.enabled) return true;
+    const pattern = item.text.toLowerCase();
+    return !(titleLower.includes(pattern) || contentLower.includes(pattern));
+  });
 };
 
 const Catalog = () => {
@@ -43,7 +47,7 @@ const Catalog = () => {
 
   const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbits = useDefaultSubplebbits();
-  const { showAdultBoards, showGoreBoards, showTextOnlyThreads, filterText } = useCatalogFiltersStore();
+  const { showAdultBoards, showGoreBoards, showTextOnlyThreads, filterItems } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -92,10 +96,10 @@ const Catalog = () => {
         if (!showTextOnlyThreads && !threadsWithImagesFilter(comment)) {
           return false;
         }
-        return textFilter(comment, filterText);
+        return textFilter(comment, filterItems);
       },
     }),
-    [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, showTextOnlyThreads, filterText],
+    [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, showTextOnlyThreads, filterItems],
   );
 
   if (isInAllView || isInSubscriptionsView) {

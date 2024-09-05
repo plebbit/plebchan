@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView } from '../../../lib/utils/view-utils';
@@ -7,8 +7,37 @@ import styles from './catalog-filters.module.css';
 
 const FiltersTable = () => {
   const { t } = useTranslation();
-  const { filterText, setFilterText } = useCatalogFiltersStore();
-  const [localFilterText, setLocalFilterText] = useState(filterText);
+  const { filterItems, saveAndApplyFilters } = useCatalogFiltersStore();
+  const [localFilterItems, setLocalFilterItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    setLocalFilterItems(filterItems);
+  }, [filterItems]);
+
+  const handleAddFilter = useCallback(() => {
+    setLocalFilterItems([...localFilterItems, { text: '', enabled: true }]);
+  }, [localFilterItems]);
+
+  const handleSave = useCallback(() => {
+    saveAndApplyFilters(localFilterItems);
+  }, [saveAndApplyFilters, localFilterItems]);
+
+  const updateLocalFilterItem = useCallback((index: number, item: any) => {
+    setLocalFilterItems((items) => items.map((f, i) => (i === index ? item : f)));
+  }, []);
+
+  const removeLocalFilterItem = useCallback((index: number) => {
+    setLocalFilterItems((items) => items.filter((_, i) => i !== index));
+  }, []);
+
+  const moveLocalFilterItemUp = useCallback((index: number) => {
+    if (index === 0) return;
+    setLocalFilterItems((items) => {
+      const newItems = [...items];
+      [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
+      return newItems;
+    });
+  }, []);
 
   return (
     <table className={styles.filtersTable}>
@@ -21,26 +50,41 @@ const FiltersTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <span className={styles.orderButton}>↑</span>
-          </td>
-          <td>
-            <input type='checkbox' className={styles.onCheckbox} />
-          </td>
-          <td>
-            <input type='text' onChange={(e) => setLocalFilterText(e.target.value)} value={localFilterText} />
-          </td>
-          <td>
-            <span className={styles.deleteButton}>×</span>
-          </td>
-        </tr>
+        {localFilterItems.map((item, index) => (
+          <tr key={index}>
+            <td>
+              <span className={styles.orderButton} onClick={() => moveLocalFilterItemUp(index)}>
+                ↑
+              </span>
+            </td>
+            <td>
+              <input
+                type='checkbox'
+                className={styles.onCheckbox}
+                checked={item.enabled}
+                onChange={(e) => updateLocalFilterItem(index, { ...item, enabled: e.target.checked })}
+              />
+            </td>
+            <td>
+              <input type='text' value={item.text} onChange={(e) => updateLocalFilterItem(index, { ...item, text: e.target.value })} />
+            </td>
+            <td>
+              <span className={styles.deleteButton} onClick={() => removeLocalFilterItem(index)}>
+                ×
+              </span>
+            </td>
+          </tr>
+        ))}
       </tbody>
       <tfoot>
         <tr>
-          <td colSpan={9}>
-            <button className={styles.addButton}>Add</button>
-            <button className={styles.saveButton}>Save</button>
+          <td colSpan={4}>
+            <button className={styles.addButton} onClick={handleAddFilter}>
+              {t('add')}
+            </button>
+            <button className={styles.saveButton} onClick={handleSave}>
+              {t('save')}
+            </button>
           </td>
         </tr>
       </tfoot>
@@ -89,8 +133,8 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
               </div>
             </div>
           )}
-          <FiltersTable />
         </div>
+        <FiltersTable />
       </div>
     </>
   );
