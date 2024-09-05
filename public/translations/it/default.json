@@ -226,5 +226,9 @@
   "anon_mode": "Modalità anonima",
   "anon_mode_description": "Usa automaticamente un ID utente diverso in ogni thread",
   "pending": "In attesa",
-  "failed": "Fallito"
+  "failed": "Fallito",
+  "add": "Aggiungi",
+  "pattern": "Modello",
+  "enable": "Abilita",
+  "order": "Ordine"
 }

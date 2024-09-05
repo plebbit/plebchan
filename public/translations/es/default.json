@@ -226,5 +226,9 @@
   "anon_mode": "Modo anónimo",
   "anon_mode_description": "Utiliza automáticamente un ID de usuario diferente en cada hilo",
   "pending": "Pendiente",
-  "failed": "Fallido"
+  "failed": "Fallido",
+  "add": "Añadir",
+  "pattern": "Patrón",
+  "enable": "Habilitar",
+  "order": "Orden"
 }

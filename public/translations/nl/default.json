@@ -226,5 +226,9 @@
   "anon_mode": "Anoniem modus",
   "anon_mode_description": "Gebruik automatisch een ander gebruikers-ID in elk thread",
   "pending": "In afwachting",
-  "failed": "Mislukt"
+  "failed": "Mislukt",
+  "add": "Toevoegen",
+  "pattern": "Patroon",
+  "enable": "Inschakelen",
+  "order": "Volgorde"
 }

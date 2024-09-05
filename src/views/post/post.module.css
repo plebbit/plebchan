@@ -328,6 +328,7 @@
 .postMobile .postMessage {
   padding: 10px;
   font-size: var(--post-mobile-content-font-size);
+  word-break: break-word;
 }
 
 .postMobile .postLink {

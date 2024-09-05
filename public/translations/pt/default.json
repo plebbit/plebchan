@@ -226,5 +226,9 @@
   "anon_mode": "Modo anônimo",
   "anon_mode_description": "Use automaticamente um ID de usuário diferente em cada thread",
   "pending": "Pendente",
-  "failed": "Falhou"
+  "failed": "Falhou",
+  "add": "Adicionar",
+  "pattern": "Padrão",
+  "enable": "Ativar",
+  "order": "Ordem"
 }

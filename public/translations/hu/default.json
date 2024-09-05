@@ -226,5 +226,9 @@
   "anon_mode": "Anonim mód",
   "anon_mode_description": "Automatikusan használjon más felhasználói azonosítót minden szálban",
   "pending": "Függőben",
-  "failed": "Sikertelen"
+  "failed": "Sikertelen",
+  "add": "Hozzáad",
+  "pattern": "Minta",
+  "enable": "Engedélyez",
+  "order": "Rendelés"
 }

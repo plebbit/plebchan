@@ -1,4 +1,10 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+interface FilterItem {
+  text: string;
+  enabled: boolean;
+}
 
 interface CatalogFiltersStore {
   showAdultBoards: boolean;
@@ -7,24 +13,38 @@ interface CatalogFiltersStore {
   setShowGoreBoards: (value: boolean) => void;
   showTextOnlyThreads: boolean;
   setShowTextOnlyThreads: (value: boolean) => void;
+  filterText: string;
+  setFilterText: (value: string) => void;
+  filterItems: FilterItem[];
+  setFilterItems: (items: FilterItem[]) => void; // New method to set all filter items at once
+  saveAndApplyFilters: (items: FilterItem[]) => void; // Updated to accept items
 }
 
-const useCatalogFiltersStore = create<CatalogFiltersStore>((set) => ({
-  showTextOnlyThreads: localStorage.getItem('showTextOnlyThreads') === 'true' ? true : false,
-  setShowTextOnlyThreads: (value: boolean) => {
-    set({ showTextOnlyThreads: value });
-    localStorage.setItem('showTextOnlyThreads', value.toString());
-  },
-  showAdultBoards: localStorage.getItem('showAdultBoards') === 'true' ? true : false,
-  setShowAdultBoards: (value: boolean) => {
-    set({ showAdultBoards: value });
-    localStorage.setItem('showAdultBoards', value.toString());
-  },
-  showGoreBoards: localStorage.getItem('showGoreBoards') === 'true' ? true : false,
-  setShowGoreBoards: (value: boolean) => {
-    set({ showGoreBoards: value });
-    localStorage.setItem('showGoreBoards', value.toString());
-  },
-}));
+const useCatalogFiltersStore = create(
+  persist<CatalogFiltersStore>(
+    (set) => ({
+      showTextOnlyThreads: false,
+      setShowTextOnlyThreads: (value: boolean) => set({ showTextOnlyThreads: value }),
+      showAdultBoards: false,
+      setShowAdultBoards: (value: boolean) => set({ showAdultBoards: value }),
+      showGoreBoards: false,
+      setShowGoreBoards: (value: boolean) => set({ showGoreBoards: value }),
+      filterText: '',
+      setFilterText: (value: string) => set({ filterText: value }),
+      filterItems: [],
+      setFilterItems: (items: FilterItem[]) => {
+        const nonEmptyItems = items.filter((item) => item.text.trim() !== '');
+        set({ filterItems: nonEmptyItems });
+      },
+      saveAndApplyFilters: (items: FilterItem[]) => {
+        const nonEmptyItems = items.filter((item) => item.text.trim() !== '');
+        set({ filterItems: nonEmptyItems });
+      },
+    }),
+    {
+      name: 'catalog-filters-storage',
+    },
+  ),
+);
 
 export default useCatalogFiltersStore;

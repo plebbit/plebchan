@@ -226,5 +226,9 @@
   "anon_mode": "Anonim modus",
   "anon_mode_description": "Bruk automatisk en annen bruker-ID i hver tråd",
   "pending": "Venter",
-  "failed": "Feilet"
+  "failed": "Feilet",
+  "add": "Legg til",
+  "pattern": "Mønster",
+  "enable": "Aktiver",
+  "order": "Rekkefølge"
 }
