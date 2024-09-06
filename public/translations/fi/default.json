@@ -230,5 +230,6 @@
   "add": "Lisää",
   "pattern": "Malli",
   "enable": "Ota käyttöön",
-  "order": "Järjestys"
+  "order": "Järjestys",
+  "text": "Teksti"
 }

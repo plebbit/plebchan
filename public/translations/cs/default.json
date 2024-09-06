@@ -230,5 +230,6 @@
   "add": "Přidat",
   "pattern": "Vzor",
   "enable": "Povolit",
-  "order": "Pořadí"
+  "order": "Pořadí",
+  "text": "Text"
 }

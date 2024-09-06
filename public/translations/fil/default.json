@@ -230,5 +230,6 @@
   "add": "Idagdag",
   "pattern": "Pattern",
   "enable": "I-enable",
-  "order": "Kaayusan"
+  "order": "Kaayusan",
+  "text": "Teksto"
 }

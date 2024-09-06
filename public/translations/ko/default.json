@@ -230,5 +230,6 @@
   "add": "추가",
   "pattern": "패턴",
   "enable": "사용",
-  "order": "순서"
+  "order": "순서",
+  "text": "텍스트"
 }

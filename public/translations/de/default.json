@@ -230,5 +230,6 @@
   "add": "Hinzufügen",
   "pattern": "Muster",
   "enable": "Aktivieren",
-  "order": "Reihenfolge"
+  "order": "Reihenfolge",
+  "text": "Text"
 }

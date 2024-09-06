@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './settings-modal.module.css';
 import AccountSettings from './account-settings';
@@ -12,10 +12,12 @@ import PlebbitOptions from './plebbit-options';
 
 const SettingsModal = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const closeModal = () => {
-    navigate(-1);
+    const newPath = location.pathname.replace(/\/settings$/, '');
+    navigate(newPath);
   };
 
   const [showInterfaceSettings, setShowInterfaceSettings] = useState(false);
