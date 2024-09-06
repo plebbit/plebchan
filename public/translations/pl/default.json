@@ -230,5 +230,6 @@
   "add": "Dodaj",
   "pattern": "Wzór",
   "enable": "Włącz",
-  "order": "Kolejność"
+  "order": "Kolejność",
+  "text": "Tekst"
 }

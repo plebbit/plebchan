@@ -230,5 +230,6 @@
   "add": "Adaugă",
   "pattern": "Model",
   "enable": "Activare",
-  "order": "Ordine"
+  "order": "Ordine",
+  "text": "Text"
 }

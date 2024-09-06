@@ -230,5 +230,6 @@
   "add": "Ekle",
   "pattern": "Desen",
   "enable": "Etkinleştir",
-  "order": "Sıra"
+  "order": "Sıra",
+  "text": "Metin"
 }

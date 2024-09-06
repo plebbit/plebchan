@@ -43,7 +43,7 @@ const FiltersTable = () => {
         <tr>
           <th>{t('order')}</th>
           <th>{t('enable')}</th>
-          <th>{t('pattern')}</th>
+          <th>{t('text')}</th>
           <th>{t('delete')}</th>
         </tr>
       </thead>

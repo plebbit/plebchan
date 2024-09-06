@@ -230,5 +230,6 @@
   "add": "Toevoegen",
   "pattern": "Patroon",
   "enable": "Inschakelen",
-  "order": "Volgorde"
+  "order": "Volgorde",
+  "text": "Tekst"
 }

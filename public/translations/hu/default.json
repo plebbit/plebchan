@@ -230,5 +230,6 @@
   "add": "Hozzáad",
   "pattern": "Minta",
   "enable": "Engedélyez",
-  "order": "Rendelés"
+  "order": "Rendelés",
+  "text": "Szöveg"
 }

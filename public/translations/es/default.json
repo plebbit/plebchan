@@ -230,5 +230,6 @@
   "add": "Añadir",
   "pattern": "Patrón",
   "enable": "Habilitar",
-  "order": "Orden"
+  "order": "Orden",
+  "text": "Texto"
 }

@@ -230,5 +230,6 @@
   "add": "Tilføj",
   "pattern": "Mønster",
   "enable": "Aktiver",
-  "order": "Rækkefølge"
+  "order": "Rækkefølge",
+  "text": "Tekst"
 }

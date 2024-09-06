@@ -230,5 +230,6 @@
   "add": "Shto",
   "pattern": "Model",
   "enable": "Aktivizo",
-  "order": "Rendit"
+  "order": "Rendit",
+  "text": "Tekst"
 }

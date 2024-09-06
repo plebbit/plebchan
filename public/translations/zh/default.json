@@ -230,5 +230,6 @@
   "add": "添加",
   "pattern": "模式",
   "enable": "启用",
-  "order": "顺序"
+  "order": "顺序",
+  "text": "文本"
 }

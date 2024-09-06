@@ -230,5 +230,6 @@
   "add": "Ajouter",
   "pattern": "Modèle",
   "enable": "Activer",
-  "order": "Ordre"
+  "order": "Ordre",
+  "text": "Texte"
 }

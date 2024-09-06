@@ -230,5 +230,6 @@
   "add": "Lägg till",
   "pattern": "Mönster",
   "enable": "Aktivera",
-  "order": "Ordning"
+  "order": "Ordning",
+  "text": "Text"
 }
