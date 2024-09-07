@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
@@ -229,6 +229,8 @@ const PostMedia = ({ post }: PostProps) => {
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
+  const mediaDimensions = getMediaDimensions(commentMediaInfo);
+
   return (
     <div className={styles.file}>
       <div className={styles.fileText}>
@@ -236,7 +238,8 @@ const PostMedia = ({ post }: PostProps) => {
         <a href={url} target='_blank' rel='noopener noreferrer'>
           {spoiler ? _.capitalize(t('spoiler')) : url && url.length > 30 ? url.slice(0, 30) + '...' : url}
         </a>{' '}
-        ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
+        ({type && _.lowerCase(getDisplayMediaInfoType(type, t))}
+        {mediaDimensions && `, ${mediaDimensions}`})
         {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
           <span>
             {' '}
