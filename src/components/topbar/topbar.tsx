@@ -85,28 +85,27 @@ const TopBarDesktop = () => {
         {renderSubplebbits(projectsSubs)}
         {renderSubplebbits(interestsSubs)}
         {renderSubplebbits(randomSubs)}
-        {renderSubplebbits(internationalSubs)}
-        {/* [
+        {renderSubplebbits(internationalSubs)}[
         <Link
+          className={styles.disabledButton}
           to='boards/create'
           onClick={(e) => {
             e.preventDefault();
-            alert('work in progress');
           }}
         >
           Create
         </Link>
         ] [
         <Link
+          className={styles.disabledButton}
           to='boards'
           onClick={(e) => {
             e.preventDefault();
-            alert('work in progress');
           }}
         >
           Vote
         </Link>
-        ] */}
+        ]
       </span>
       <span className={styles.navTopRight}>
         [<Link to={!location.pathname.endsWith('settings') ? location.pathname.replace(/\/$/, '') + '/settings' : location.pathname}>{t('settings')}</Link>] [
