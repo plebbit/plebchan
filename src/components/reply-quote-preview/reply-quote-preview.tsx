@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { Comment, useAccount } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, shift, size, autoUpdate, Placement } from '@floating-ui/react';
+import useAnonModeStore from '../../stores/use-anon-mode-store';
 import useIsMobile from '../../hooks/use-is-mobile';
 import styles from '../../views/post/post.module.css';
 import { Post } from '../../views/post';
@@ -143,6 +144,8 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
   );
 
   const account = useAccount();
+  const { getThreadSigner } = useAnonModeStore();
+  const threadSigner = quotelinkReply?.postCid ? getThreadSigner(quotelinkReply?.postCid) : null;
 
   const replyQuotelink = (
     <>
@@ -155,7 +158,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         onClick={(e) => handleClick(e, quotelinkReply?.cid, quotelinkReply?.subplebbitAddress)}
       >
         {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
-        {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
+        {(quotelinkReply?.author?.address === account?.author?.address || quotelinkReply?.author?.address === threadSigner?.address) && ' (You)'}
       </Link>
       <br />
       {hoveredCid === quotelinkReply?.cid &&
@@ -252,6 +255,8 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
   );
 
   const account = useAccount();
+  const { getThreadSigner } = useAnonModeStore();
+  const threadSigner = quotelinkReply?.postCid ? getThreadSigner(quotelinkReply?.postCid) : null;
 
   const replyQuotelink = (
     <>
@@ -262,7 +267,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
         {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
-        {quotelinkReply?.author?.address === account?.author?.address && ' (You)'}
+        {(quotelinkReply?.author?.address === account?.author?.address || quotelinkReply?.author?.address === threadSigner?.address) && ' (You)'}
       </span>
       {quotelinkReply?.shortCid && (
         <Link
