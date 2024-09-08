@@ -160,6 +160,7 @@
 
 .postDesktop .postMessage, .replyDesktop .postMessage {
   padding: 1em 40px;
+  overflow: hidden;
 }
 
 .postDesktop .abbr {
@@ -328,6 +329,7 @@
 .postMobile .postMessage {
   padding: 10px;
   font-size: var(--post-mobile-content-font-size);
+  overflow: hidden;
   word-break: break-word;
 }
 
