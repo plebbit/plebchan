@@ -11,6 +11,7 @@ import styles from './board-buttons.module.css';
 import Tooltip from '../tooltip';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import _ from 'lodash';
+import useIsMobile from '../../hooks/use-is-mobile';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -82,6 +83,49 @@ const RefreshButton = () => {
     <button className='button' onClick={() => reset && reset()}>
       {t('refresh')}
     </button>
+  );
+};
+
+const UpdateButton = () => {
+  const { t } = useTranslation();
+  const isMobile = useIsMobile();
+
+  return (
+    <>
+      {/* TODO: Implement update button once available in API  */}
+      {isMobile ? (
+        <button className={`button ${styles.disabledButton}`} disabled>
+          {t('update')}
+        </button>
+      ) : (
+        <button className={`button ${styles.disabledButton}`} disabled>
+          {t('update')}
+        </button>
+      )}
+    </>
+  );
+};
+
+const AutoButton = () => {
+  const { t } = useTranslation();
+  const isMobile = useIsMobile();
+
+  return (
+    <>
+      {isMobile ? (
+        <button className='button'>
+          <label>
+            <input type='checkbox' className={styles.autoCheckbox} checked disabled />
+            {t('Auto')}
+          </label>
+        </button>
+      ) : (
+        <label>
+          {' '}
+          <input type='checkbox' className={styles.autoCheckbox} checked disabled /> {t('Auto')}
+        </label>
+      )}
+    </>
   );
 };
 
@@ -194,6 +238,10 @@ export const MobileBoardButtons = () => {
           <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
           <SubscribeButton address={subplebbitAddress} />
+          <div className={styles.secondRow}>
+            <UpdateButton />
+            <AutoButton />
+          </div>
         </>
       ) : (
         <>
@@ -266,7 +314,10 @@ export const DesktopBoardButtons = () => {
             [
             <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
             ] [
-            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />]
+            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />] [
+            <UpdateButton />
+            ] [
+            <AutoButton />]
             <span className={styles.rightSideButtons}>
               <PostPageStats />
             </span>
