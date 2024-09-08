@@ -5,6 +5,7 @@ import useThemeStore from '../stores/use-theme-store';
 import useDefaultSubplebbits from './use-default-subplebbits';
 import useInitialTheme from './use-initial-theme';
 import { nsfwTags } from '../views/home/home';
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 
 const themeClasses = ['yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon'];
 
@@ -15,9 +16,14 @@ const updateThemeClass = (newTheme: string) => {
   }
 };
 
-const useTheme = (pendingPostSubplebbitAddress?: string): [string, (theme: string) => void] => {
+const useTheme = (): [string, (theme: string) => void] => {
   const location = useLocation();
   const params = useParams<{ subplebbitAddress: string }>();
+  const pendingPostParams = useParams<{ accountCommentIndex?: string }>();
+  const pendingPostCommentIndex = pendingPostParams?.accountCommentIndex ? parseInt(pendingPostParams.accountCommentIndex) : undefined;
+  const pendingPost = useAccountComment({ commentIndex: pendingPostCommentIndex });
+  const pendingPostSubplebbitAddress = pendingPost?.subplebbitAddress;
+
   const setThemeStore = useThemeStore((state) => state.setTheme);
   const getTheme = useThemeStore((state) => state.getTheme);
   const loadThemes = useThemeStore((state) => state.loadThemes);
@@ -27,7 +33,7 @@ const useTheme = (pendingPostSubplebbitAddress?: string): [string, (theme: strin
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
 
   const getCurrentTheme = useCallback(() => {
-    const subplebbitAddress = params?.subplebbitAddress;
+    const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
     const isInAllView = isAllView(location.pathname, params);
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
@@ -44,7 +50,7 @@ const useTheme = (pendingPostSubplebbitAddress?: string): [string, (theme: strin
     }
 
     return storedTheme || initialTheme;
-  }, [location.pathname, params, getTheme, subplebbits, initialTheme]);
+  }, [location.pathname, params, getTheme, subplebbits, initialTheme, pendingPostSubplebbitAddress]);
 
   useEffect(() => {
     const newTheme = getCurrentTheme();
@@ -60,7 +66,7 @@ const useTheme = (pendingPostSubplebbitAddress?: string): [string, (theme: strin
 
   const setSubplebbitTheme = useCallback(
     async (newTheme: string) => {
-      const subplebbitAddress = params?.subplebbitAddress;
+      const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
       const isInAllView = isAllView(location.pathname, params);
       const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
@@ -78,7 +84,7 @@ const useTheme = (pendingPostSubplebbitAddress?: string): [string, (theme: strin
       setCurrentTheme(newTheme);
       updateThemeClass(newTheme);
     },
-    [location.pathname, params, setThemeStore, subplebbits],
+    [location.pathname, params, setThemeStore, subplebbits, pendingPostSubplebbitAddress],
   );
 
   return [currentTheme, setSubplebbitTheme];

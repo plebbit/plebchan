@@ -4,7 +4,6 @@ import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { isSettingsView } from '../../lib/utils/view-utils';
 import { Post } from '../post';
 import SettingsModal from '../../components/settings-modal';
-import useTheme from '../../hooks/use-theme';
 
 const PendingPost = () => {
   const { accountCommentIndex } = useParams<{ accountCommentIndex?: string }>();
@@ -14,8 +13,6 @@ const PendingPost = () => {
   const location = useLocation();
   const params = useParams();
   const isInSettingsView = isSettingsView(location.pathname, params);
-
-  useTheme(post?.subplebbitAddress);
 
   useEffect(() => window.scrollTo(0, 0), []);
 
