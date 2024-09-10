@@ -12,6 +12,8 @@ import Tooltip from '../tooltip';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
+import { useEffect } from 'react';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -231,6 +233,14 @@ export const MobileBoardButtons = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
+  const { filteredCount, resetFilteredCount } = useCatalogFiltersStore();
+
+  useEffect(() => {
+    if (subplebbitAddress) {
+      resetFilteredCount();
+    }
+  }, [subplebbitAddress, resetFilteredCount]);
+
   return (
     <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
       {isInPostView || isInPendingPostPage ? (
@@ -252,6 +262,12 @@ export const MobileBoardButtons = () => {
           )}
           {!(isInAllView || isInSubscriptionsView) && <SubscribeButton address={subplebbitAddress} />}
           <RefreshButton />
+          {isInCatalogView && filteredCount > 0 && (
+            <span className={styles.filteredThreadsCount}>
+              {' '}
+              — Filtered threads: <strong>{filteredCount}</strong>
+            </span>
+          )}
           {isInCatalogView && (
             <>
               <hr />
@@ -305,6 +321,14 @@ export const DesktopBoardButtons = () => {
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
+  const { filteredCount, resetFilteredCount } = useCatalogFiltersStore();
+
+  useEffect(() => {
+    if (subplebbitAddress) {
+      resetFilteredCount();
+    }
+  }, [subplebbitAddress, resetFilteredCount]);
+
   return (
     <>
       <hr />
@@ -336,6 +360,12 @@ export const DesktopBoardButtons = () => {
               </>
             )}
             [<RefreshButton />]
+            {isInCatalogView && filteredCount > 0 && (
+              <span className={styles.filteredThreadsCount}>
+                {' '}
+                — Filtered threads: <strong>{filteredCount}</strong>
+              </span>
+            )}
             <span className={styles.rightSideButtons}>
               {isInCatalogView && (
                 <>

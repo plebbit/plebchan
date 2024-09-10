@@ -23,6 +23,8 @@ interface CatalogFiltersStore {
   filter: ((comment: Comment) => boolean) | undefined;
   updateFilter: () => void;
   initializeFilter: () => void;
+  filteredCount: number;
+  resetFilteredCount: () => void;
 }
 
 const useCatalogFiltersStore = create(
@@ -30,7 +32,7 @@ const useCatalogFiltersStore = create(
     (set, get) => ({
       showTextOnlyThreads: false,
       setShowTextOnlyThreads: (value: boolean) => {
-        set({ showTextOnlyThreads: value });
+        set({ showTextOnlyThreads: value, filteredCount: 0 });
         get().updateFilter();
       },
       showAdultBoards: false,
@@ -46,33 +48,47 @@ const useCatalogFiltersStore = create(
       },
       saveAndApplyFilters: (items: FilterItem[]) => {
         const nonEmptyItems = items.filter((item) => item.text.trim() !== '');
-        set({ filterItems: nonEmptyItems });
+        set({ filterItems: nonEmptyItems, filteredCount: 0 });
         get().updateFilter();
       },
       filter: undefined,
-      updateFilter: () =>
+      updateFilter: () => {
+        const filteredCids = new Set<string>();
         set((state) => ({
           filter: (comment: Comment) => {
             const { showTextOnlyThreads, filterItems } = state;
-            if (!showTextOnlyThreads && !getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
-              return false;
+
+            const shouldShow = (() => {
+              if (!showTextOnlyThreads && !getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
+                return false;
+              }
+
+              const title = comment?.title?.toLowerCase() || '';
+              const content = comment?.content?.toLowerCase() || '';
+
+              return !filterItems
+                .filter((item) => item.enabled)
+                .some((item) => {
+                  const text = item.text.toLowerCase();
+                  return title.includes(text) || content.includes(text);
+                });
+            })();
+
+            if (!shouldShow && !filteredCids.has(comment.cid)) {
+              filteredCids.add(comment.cid);
+              set((state) => ({ filteredCount: state.filteredCount + 1 }));
             }
 
-            const title = comment?.title?.toLowerCase() || '';
-            const content = comment?.content?.toLowerCase() || '';
-
-            return !filterItems
-              .filter((item) => item.enabled)
-              .some((item) => {
-                const text = item.text.toLowerCase();
-                return title.includes(text) || content.includes(text);
-              });
+            return shouldShow;
           },
-        })),
+        }));
+      },
       initializeFilter: () => {
         const { updateFilter } = get();
         updateFilter();
       },
+      filteredCount: 0,
+      resetFilteredCount: () => set({ filteredCount: 0 }),
     }),
     {
       name: 'catalog-filters-storage',
