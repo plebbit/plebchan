@@ -231,5 +231,6 @@
   "pattern": "Wzór",
   "enable": "Włącz",
   "order": "Kolejność",
-  "text": "Tekst"
+  "text": "Tekst",
+  "filtered_threads": "Filtrowane wątki"
 }

@@ -11,6 +11,32 @@
   margin: 5px 2px;
 }
 
+.mobileBoardButtons .secondRow {
+  margin-top: -5px;
+  padding-bottom: 20px;
+}
+
+.mobileBoardButtons {
+  margin-top: -3px;
+}
+
+.mobileBoardButtons .autoCheckbox {
+  margin: 0 3px 0 0;
+  position: relative;
+  top: -2px;
+  border-radius: 0;
+  height: 10px;
+  width: 10px;
+}
+
+.disabledButton {
+  opacity: 0.5 !important;
+}
+
+.disabledButton:hover {
+  cursor: not-allowed !important;
+}
+
 .mobileBoardButtons a, .desktopBoardButtons a {
   all: unset;
 }
@@ -51,6 +77,20 @@
 
 .mobileCatalogOptionsPadding {
   padding-top: 15px;
+}
+
+.filteredThreadsCount {
+  text-transform: none !important;
+}
+
+.mobileBoardButtons {
+  text-transform: capitalize;
+}
+
+.mobileBoardButtons .filteredThreadsCount {
+  display: block;
+  margin-top: 3px;
+  margin-bottom: 15px;
 }
 
 @media (max-width: 640px) {

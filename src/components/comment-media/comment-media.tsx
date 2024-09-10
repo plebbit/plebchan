@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import styles from './comment-media.module.css';
-import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
+import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { getHostname } from '../../lib/utils/url-utils';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -109,6 +109,7 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   const { thumbnail, type, url } = commentMediaInfo || {};
   const isMobile = useIsMobile();
   const mediaClass = isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp;
+  const mediaDimensions = getMediaDimensions(commentMediaInfo);
 
   return (
     <span className={mediaClass}>
@@ -128,7 +129,8 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
           <a href={url} target='_blank' rel='noopener noreferrer'>
             {url && url.length > 30 ? url.slice(0, 30) + '...' : url}
           </a>{' '}
-          ({getDisplayMediaInfoType(type, t)})
+          ({getDisplayMediaInfoType(type, t)}
+          {mediaDimensions && `, ${mediaDimensions}`})
         </div>
       )}
       {isMobile && (type === 'iframe' || type === 'video' || type === 'audio') && (

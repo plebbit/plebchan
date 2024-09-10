@@ -231,5 +231,6 @@
   "pattern": "Mønster",
   "enable": "Aktiver",
   "order": "Rækkefølge",
-  "text": "Tekst"
+  "text": "Tekst",
+  "filtered_threads": "Filtrerede tråde"
 }

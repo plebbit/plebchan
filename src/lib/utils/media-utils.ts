@@ -9,6 +9,7 @@ export interface CommentMediaInfo {
   type: string;
   thumbnail?: string;
   patternThumbnailUrl?: string;
+  post?: Comment;
 }
 
 export const getDisplayMediaInfoType = (type: string, t: any) => {
@@ -106,8 +107,46 @@ export const getCommentMediaInfo = (comment: Comment): CommentMediaInfo | undefi
   }
   const linkInfo = comment.link ? getLinkMediaInfo(comment.link) : undefined;
   if (linkInfo) {
-    linkInfo.thumbnail = comment.thumbnailUrl || linkInfo.thumbnail;
-    return linkInfo;
+    return {
+      ...linkInfo,
+      thumbnail: comment.thumbnailUrl || linkInfo.thumbnail,
+      post: comment,
+    };
   }
   return;
+};
+
+export const getMediaDimensions = (commentMediaInfo: CommentMediaInfo | undefined): string => {
+  if (!commentMediaInfo) return '';
+
+  const { type, url, post } = commentMediaInfo;
+
+  if (type === 'iframe' && url) {
+    const embedUrl = new URL(url);
+    if (canEmbed(embedUrl)) {
+      // hardcoded dimensions from embed.module.css
+      if (embedUrl.hostname.includes('youtube.com') || embedUrl.hostname.includes('youtu.be')) {
+        return '800x450';
+      } else if (embedUrl.hostname.includes('instagram.com')) {
+        return '360x420';
+      } else if (embedUrl.hostname.includes('reddit.com')) {
+        return '500x520';
+      } else if (embedUrl.hostname.includes('tiktok.com')) {
+        return '400x780';
+      } else if (embedUrl.hostname.includes('x.com') || embedUrl.hostname.includes('twitter.com')) {
+        return '550x580';
+      } else if (embedUrl.hostname.includes('soundcloud.com')) {
+        return '700x166';
+      }
+    }
+  } else if (type === 'audio') {
+    return '700x240'; // hardcoded dimensions from embed.module.css
+  } else if (type === 'image' || type === 'video' || type === 'gif') {
+    // media dimensions calculated by API
+    if (post?.linkWidth && post?.linkHeight) {
+      return `${post.linkWidth}x${post.linkHeight}`;
+    }
+  }
+
+  return '';
 };

@@ -9,6 +9,7 @@
   white-space: pre-line;
   max-width: 400px;
   color: #fff;
+  overflow: hidden;
   text-align: center;
 }
 

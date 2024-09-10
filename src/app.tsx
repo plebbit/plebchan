@@ -46,8 +46,8 @@ const BoardLayout = () => {
       {isMobile
         ? (subplebbitAddress || isInAllView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (
             <>
-              <PostForm key={key} />
               <MobileBoardButtons />
+              <PostForm key={key} />
             </>
           )
         : (subplebbitAddress || isInAllView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (

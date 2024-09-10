@@ -231,5 +231,6 @@
   "pattern": "Pattern",
   "enable": "I-enable",
   "order": "Kaayusan",
-  "text": "Teksto"
+  "text": "Teksto",
+  "filtered_threads": "Na-filter na mga thread"
 }

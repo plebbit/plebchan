@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
@@ -16,6 +16,7 @@ import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
+import usePostCidForPendingPost from '../../hooks/use-post-cid';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
@@ -70,9 +71,11 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   // comment.author.shortAddress is undefined while the comment publishing state is pending, use account instead
   // in anon mode, use the newly generated signer.address instead, which will be comment.author.address
   const { anonMode } = useAnonMode();
-  const { currentAnonSignerAddress } = useAnonModeStore();
+  const { getThreadSigner, currentAnonSignerAddress } = useAnonModeStore();
+  const postCidForSigner = usePostCidForPendingPost(parentCid);
+  const anonSignerAddress = postCidForSigner ? getThreadSigner(postCidForSigner)?.address || currentAnonSignerAddress : null;
   const account = useAccount();
-  const pendingShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
+  const pendingShortAddress = anonMode ? anonSignerAddress && Plebbit.getShortAddress(anonSignerAddress) : account?.author?.shortAddress;
 
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
@@ -229,6 +232,8 @@ const PostMedia = ({ post }: PostProps) => {
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
+  const mediaDimensions = getMediaDimensions(commentMediaInfo);
+
   return (
     <div className={styles.file}>
       <div className={styles.fileText}>
@@ -236,7 +241,8 @@ const PostMedia = ({ post }: PostProps) => {
         <a href={url} target='_blank' rel='noopener noreferrer'>
           {spoiler ? _.capitalize(t('spoiler')) : url && url.length > 30 ? url.slice(0, 30) + '...' : url}
         </a>{' '}
-        ({type && _.lowerCase(getDisplayMediaInfoType(type, t))})
+        ({type && _.lowerCase(getDisplayMediaInfoType(type, t))}
+        {mediaDimensions && `, ${mediaDimensions}`})
         {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
           <span>
             {' '}

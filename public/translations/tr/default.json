@@ -231,5 +231,6 @@
   "pattern": "Desen",
   "enable": "Etkinleştir",
   "order": "Sıra",
-  "text": "Metin"
+  "text": "Metin",
+  "filtered_threads": "Filtrelenmiş başlıklar"
 }

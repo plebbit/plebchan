@@ -231,5 +231,6 @@
   "pattern": "תבנית",
   "enable": "הפעל",
   "order": "סדר",
-  "text": "טקסט"
+  "text": "טקסט",
+  "filtered_threads": "אשכולות ממוינים"
 }

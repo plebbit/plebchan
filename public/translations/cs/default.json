@@ -231,5 +231,6 @@
   "pattern": "Vzor",
   "enable": "Povolit",
   "order": "Pořadí",
-  "text": "Text"
+  "text": "Text",
+  "filtered_threads": "Filtr threads"
 }

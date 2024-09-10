@@ -231,5 +231,6 @@
   "pattern": "패턴",
   "enable": "사용",
   "order": "순서",
-  "text": "텍스트"
+  "text": "텍스트",
+  "filtered_threads": "필터링된 스레드"
 }

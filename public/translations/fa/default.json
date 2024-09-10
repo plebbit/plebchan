@@ -231,5 +231,6 @@
   "pattern": "الگو",
   "enable": "فعال کردن",
   "order": "ترتیب",
-  "text": "متن"
+  "text": "متن",
+  "filtered_threads": "رشته‌های فیلتر شده"
 }

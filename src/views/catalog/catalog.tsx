@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Comment, useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
-import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogFeedRows from '../../hooks/use-catalog-feed-rows';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
@@ -21,25 +20,6 @@ import styles from './catalog.module.css';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const threadsWithImagesFilter = (comment: Comment) => {
-  const commentMediaInfo = getCommentMediaInfo(comment);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, comment?.link);
-  return hasThumbnail;
-};
-
-const textFilter = (comment: Comment, filterItems: any[]) => {
-  if (!filterItems) return true;
-  if (filterItems.length === 0) return true;
-  const titleLower = comment?.title?.toLowerCase() || '';
-  const contentLower = comment?.content?.toLowerCase() || '';
-
-  return filterItems.every((item) => {
-    if (!item.enabled) return true;
-    const pattern = item.text.toLowerCase();
-    return !(titleLower.includes(pattern) || contentLower.includes(pattern));
-  });
-};
-
 const Catalog = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -47,7 +27,7 @@ const Catalog = () => {
 
   const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbits = useDefaultSubplebbits();
-  const { showAdultBoards, showGoreBoards, showTextOnlyThreads, filterItems } = useCatalogFiltersStore();
+  const { filter, showAdultBoards, showGoreBoards } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -80,31 +60,25 @@ const Catalog = () => {
   const columnWidth = imageSize === 'Large' ? 270 : 180;
 
   const columnCount = Math.floor(useWindowWidth() / columnWidth);
-  // postPerPage based on columnCount for optimized feed, dont change value after first render
-  // eslint-disable-next-line
-  const postsPerPage = useMemo(() => (columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25), []);
+  const postsPerPage = columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25;
 
   const { timeFilterSeconds } = useTimeFilter();
   const { sortType } = useSortingStore();
 
-  const feedOptions: any = useMemo(
-    () => ({
+  const feedOptions = useMemo(() => {
+    const options: any = {
       subplebbitAddresses,
       sortType,
       postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-      filter: (comment: Comment) => {
-        if (!showTextOnlyThreads && !threadsWithImagesFilter(comment)) {
-          return false;
-        }
-        return textFilter(comment, filterItems);
-      },
-    }),
-    [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, showTextOnlyThreads, filterItems],
-  );
+      filter,
+    };
 
-  if (isInAllView || isInSubscriptionsView) {
-    feedOptions.newerThan = timeFilterSeconds;
-  }
+    if (isInAllView || isInSubscriptionsView) {
+      options.newerThan = timeFilterSeconds;
+    }
+
+    return options;
+  }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, filter]);
 
   const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);
 

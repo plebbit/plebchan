@@ -231,5 +231,6 @@
   "pattern": "Muster",
   "enable": "Aktivieren",
   "order": "Reihenfolge",
-  "text": "Text"
+  "text": "Text",
+  "filtered_threads": "Gefilterte Threads"
 }

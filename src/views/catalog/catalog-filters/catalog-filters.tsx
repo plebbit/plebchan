@@ -5,37 +5,53 @@ import { isAllView, isCatalogView } from '../../../lib/utils/view-utils';
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import styles from './catalog-filters.module.css';
 
-const FiltersTable = () => {
+const FiltersTable = ({
+  localFilterItems,
+  setLocalFilterItems,
+  onSave,
+}: {
+  localFilterItems: any[];
+  setLocalFilterItems: React.Dispatch<React.SetStateAction<any[]>>;
+  onSave: () => void;
+}) => {
   const { t } = useTranslation();
-  const { filterItems, saveAndApplyFilters } = useCatalogFiltersStore();
-
-  const [localFilterItems, setLocalFilterItems] = useState(filterItems);
+  const { saveAndApplyFilters } = useCatalogFiltersStore();
 
   const handleAddFilter = useCallback(() => {
     setLocalFilterItems((prev) => [...prev, { text: '', enabled: true }]);
-  }, []);
+  }, [setLocalFilterItems]);
 
   const handleSave = useCallback(() => {
     const nonEmptyFilters = localFilterItems.filter((item) => item.text.trim() !== '');
     saveAndApplyFilters(nonEmptyFilters);
-  }, [saveAndApplyFilters, localFilterItems]);
+    onSave();
+  }, [saveAndApplyFilters, localFilterItems, onSave]);
 
-  const updateLocalFilterItem = useCallback((index: number, item: any) => {
-    setLocalFilterItems((prev) => prev.map((f, i) => (i === index ? item : f)));
-  }, []);
+  const updateLocalFilterItem = useCallback(
+    (index: number, item: any) => {
+      setLocalFilterItems((prev) => prev.map((f, i) => (i === index ? item : f)));
+    },
+    [setLocalFilterItems],
+  );
 
-  const removeLocalFilterItem = useCallback((index: number) => {
-    setLocalFilterItems((prev) => prev.filter((_, i) => i !== index));
-  }, []);
+  const removeLocalFilterItem = useCallback(
+    (index: number) => {
+      setLocalFilterItems((prev) => prev.filter((_, i) => i !== index));
+    },
+    [setLocalFilterItems],
+  );
 
-  const moveLocalFilterItemUp = useCallback((index: number) => {
-    if (index === 0) return;
-    setLocalFilterItems((prev) => {
-      const newItems = [...prev];
-      [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
-      return newItems;
-    });
-  }, []);
+  const moveLocalFilterItemUp = useCallback(
+    (index: number) => {
+      if (index === 0) return;
+      setLocalFilterItems((prev) => {
+        const newItems = [...prev];
+        [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
+        return newItems;
+      });
+    },
+    [setLocalFilterItems],
+  );
 
   return (
     <table className={styles.filtersTable}>
@@ -99,11 +115,37 @@ const FiltersTable = () => {
 
 const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation();
-  const { showAdultBoards, setShowAdultBoards, showGoreBoards, setShowGoreBoards, showTextOnlyThreads, setShowTextOnlyThreads } = useCatalogFiltersStore();
+  const { showAdultBoards, setShowAdultBoards, showGoreBoards, setShowGoreBoards, showTextOnlyThreads, setShowTextOnlyThreads, filterItems, saveAndApplyFilters } =
+    useCatalogFiltersStore();
+
+  const [localShowAdultBoards, setLocalShowAdultBoards] = useState(showAdultBoards);
+  const [localShowGoreBoards, setLocalShowGoreBoards] = useState(showGoreBoards);
+  const [localShowTextOnlyThreads, setLocalShowTextOnlyThreads] = useState(showTextOnlyThreads);
+  const [localFilterItems, setLocalFilterItems] = useState(filterItems);
+
   const location = useLocation();
   const params = useParams();
   const isInCatalogView = isCatalogView(location.pathname, params);
   const isInAllView = isAllView(location.pathname, params);
+
+  const handleSave = useCallback(() => {
+    setShowAdultBoards(localShowAdultBoards);
+    setShowGoreBoards(localShowGoreBoards);
+    setShowTextOnlyThreads(localShowTextOnlyThreads);
+    const nonEmptyFilters = localFilterItems.filter((item) => item.text.trim() !== '');
+    saveAndApplyFilters(nonEmptyFilters);
+    closeModal();
+  }, [
+    localShowAdultBoards,
+    localShowGoreBoards,
+    localShowTextOnlyThreads,
+    localFilterItems,
+    setShowAdultBoards,
+    setShowGoreBoards,
+    setShowTextOnlyThreads,
+    saveAndApplyFilters,
+    closeModal,
+  ]);
 
   return (
     <>
@@ -117,7 +159,7 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
           {isInCatalogView && (
             <div>
               <label className='capitalize'>
-                <input type='checkbox' checked={!showTextOnlyThreads} onChange={(e) => setShowTextOnlyThreads(!e.target.checked)} />
+                <input type='checkbox' checked={!localShowTextOnlyThreads} onChange={(e) => setLocalShowTextOnlyThreads(!e.target.checked)} />
                 {t('hide_threads_without_images')}
               </label>
             </div>
@@ -126,20 +168,20 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
             <div className={styles.nsfwLabels}>
               <div>
                 <label>
-                  <input type='checkbox' checked={!showGoreBoards} onChange={(e) => setShowGoreBoards(!e.target.checked)} />
+                  <input type='checkbox' checked={!localShowGoreBoards} onChange={(e) => setLocalShowGoreBoards(!e.target.checked)} />
                   hide gore content
                 </label>
               </div>
               <div>
                 <label>
-                  <input type='checkbox' checked={!showAdultBoards} onChange={(e) => setShowAdultBoards(!e.target.checked)} />
+                  <input type='checkbox' checked={!localShowAdultBoards} onChange={(e) => setLocalShowAdultBoards(!e.target.checked)} />
                   hide adult content
                 </label>
               </div>
             </div>
           )}
         </div>
-        {isInCatalogView && <FiltersTable />}
+        {isInCatalogView && <FiltersTable localFilterItems={localFilterItems} setLocalFilterItems={setLocalFilterItems} onSave={handleSave} />}
       </div>
     </>
   );

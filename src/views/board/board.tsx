@@ -168,19 +168,19 @@ const Board = () => {
           subplebbitAddress={postSubplebbitAddress}
         />
       )}
+      {((description && description.length > 0) || isInAllView) && (
+        <SubplebbitDescription
+          avatarUrl={suggested?.avatarUrl}
+          subplebbitAddress={subplebbitAddress}
+          createdAt={createdAt}
+          description={description}
+          shortAddress={shortAddress}
+          title={title}
+        />
+      )}
       {feed.length !== 0 ? (
         <>
           {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-          {((description && description.length > 0) || isInAllView) && (
-            <SubplebbitDescription
-              avatarUrl={suggested?.avatarUrl}
-              subplebbitAddress={subplebbitAddress}
-              createdAt={createdAt}
-              description={description}
-              shortAddress={shortAddress}
-              title={title}
-            />
-          )}
           <Virtuoso
             increaseViewportBy={{ bottom: 1200, top: 1200 }}
             totalCount={combinedFeed.length}

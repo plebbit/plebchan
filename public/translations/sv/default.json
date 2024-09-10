@@ -231,5 +231,6 @@
   "pattern": "Mönster",
   "enable": "Aktivera",
   "order": "Ordning",
-  "text": "Text"
+  "text": "Text",
+  "filtered_threads": "Filtrerade trådar"
 }

@@ -231,5 +231,6 @@
   "pattern": "Minta",
   "enable": "Engedélyez",
   "order": "Rendelés",
-  "text": "Szöveg"
+  "text": "Szöveg",
+  "filtered_threads": "Szűrt szálak"
 }

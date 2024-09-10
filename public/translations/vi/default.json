@@ -231,5 +231,6 @@
   "pattern": "Mẫu",
   "enable": "Kích hoạt",
   "order": "Thứ tự",
-  "text": "Văn bản"
+  "text": "Văn bản",
+  "filtered_threads": "Các chủ đề đã lọc"
 }
