@@ -14,6 +14,7 @@ import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
+import usePostCidForPendingPost from '../../hooks/use-post-cid';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
@@ -51,9 +52,11 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   // comment.author.shortAddress is undefined while the comment publishing state is pending, use account instead
   // in anon mode, use the newly generated signer.address instead, which will be comment.author.address
   const { anonMode } = useAnonMode();
-  const { currentAnonSignerAddress } = useAnonModeStore();
+  const { getThreadSigner, currentAnonSignerAddress } = useAnonModeStore();
+  const postCidForSigner = usePostCidForPendingPost(parentCid);
+  const anonSignerAddress = postCidForSigner ? getThreadSigner(postCidForSigner)?.address || currentAnonSignerAddress : null;
   const account = useAccount();
-  const pendingShortAddress = anonMode ? currentAnonSignerAddress && Plebbit.getShortAddress(currentAnonSignerAddress) : account?.author?.shortAddress;
+  const pendingShortAddress = anonMode ? anonSignerAddress && Plebbit.getShortAddress(anonSignerAddress) : account?.author?.shortAddress;
 
   const stateString = useStateString(post);
 
