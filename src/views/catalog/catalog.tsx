@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useRef, useCallback } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Comment, useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
-import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogFeedRows from '../../hooks/use-catalog-feed-rows';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
@@ -28,7 +27,7 @@ const Catalog = () => {
 
   const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbits = useDefaultSubplebbits();
-  const { showAdultBoards, showGoreBoards } = useCatalogFiltersStore();
+  const { filter, showAdultBoards, showGoreBoards } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -57,27 +56,6 @@ const Catalog = () => {
     return [subplebbitAddress];
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbits, subscriptions, showAdultBoards, showGoreBoards]);
 
-  const { showTextOnlyThreads, filterItems } = useCatalogFiltersStore();
-
-  const filter = useCallback(
-    (comment: Comment) => {
-      if (!showTextOnlyThreads && !getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
-        return false;
-      }
-
-      const title = comment?.title?.toLowerCase() || '';
-      const content = comment?.content?.toLowerCase() || '';
-
-      return !filterItems
-        .filter((item) => item.enabled)
-        .some((item) => {
-          const text = item.text.toLowerCase();
-          return title.includes(text) || content.includes(text);
-        });
-    },
-    [filterItems, showTextOnlyThreads],
-  );
-
   const { imageSize } = useCatalogStyleStore();
   const columnWidth = imageSize === 'Large' ? 270 : 180;
 
@@ -87,16 +65,20 @@ const Catalog = () => {
   const { timeFilterSeconds } = useTimeFilter();
   const { sortType } = useSortingStore();
 
-  const feedOptions: any = {
-    subplebbitAddresses,
-    sortType,
-    postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-    filter,
-  };
+  const feedOptions = useMemo(() => {
+    const options: any = {
+      subplebbitAddresses,
+      sortType,
+      postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
+      filter,
+    };
 
-  if (isInAllView || isInSubscriptionsView) {
-    feedOptions.newerThan = timeFilterSeconds;
-  }
+    if (isInAllView || isInSubscriptionsView) {
+      options.newerThan = timeFilterSeconds;
+    }
+
+    return options;
+  }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, filter]);
 
   const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);
 
