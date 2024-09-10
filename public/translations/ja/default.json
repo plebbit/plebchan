@@ -231,5 +231,6 @@
   "pattern": "パターン",
   "enable": "有効にする",
   "order": "順序",
-  "text": "テキスト"
+  "text": "テキスト",
+  "filtered_threads": "フィルタリングされたスレッド"
 }

@@ -231,5 +231,6 @@
   "pattern": "Pola",
   "enable": "Aktifkan",
   "order": "Urutan",
-  "text": "Teks"
+  "text": "Teks",
+  "filtered_threads": "Thread yang difilter"
 }

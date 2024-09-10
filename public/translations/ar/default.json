@@ -231,5 +231,6 @@
   "pattern": "نمط",
   "enable": "تفعيل",
   "order": "ترتيب",
-  "text": "نص"
+  "text": "نص",
+  "filtered_threads": "المواضيع المفلترة"
 }

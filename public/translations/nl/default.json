@@ -231,5 +231,6 @@
   "pattern": "Patroon",
   "enable": "Inschakelen",
   "order": "Volgorde",
-  "text": "Tekst"
+  "text": "Tekst",
+  "filtered_threads": "Gefilterde threads"
 }

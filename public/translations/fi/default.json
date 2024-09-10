@@ -231,5 +231,6 @@
   "pattern": "Malli",
   "enable": "Ota käyttöön",
   "order": "Järjestys",
-  "text": "Teksti"
+  "text": "Teksti",
+  "filtered_threads": "Suodatetut ketjut"
 }

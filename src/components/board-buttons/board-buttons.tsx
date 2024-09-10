@@ -222,6 +222,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
 };
 
 export const MobileBoardButtons = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
   const isInAllView = isAllView(location.pathname, params);
@@ -265,7 +266,7 @@ export const MobileBoardButtons = () => {
           {isInCatalogView && filteredCount > 0 && (
             <span className={styles.filteredThreadsCount}>
               {' '}
-              — Filtered threads: <strong>{filteredCount}</strong>
+              — {t('filtered_threads')}: <strong>{filteredCount}</strong>
             </span>
           )}
           {isInCatalogView && (
@@ -311,6 +312,7 @@ const PostPageStats = () => {
 };
 
 export const DesktopBoardButtons = () => {
+  const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
@@ -363,7 +365,7 @@ export const DesktopBoardButtons = () => {
             {isInCatalogView && filteredCount > 0 && (
               <span className={styles.filteredThreadsCount}>
                 {' '}
-                — Filtered threads: <strong>{filteredCount}</strong>
+                — {t('filtered_threads')}: <strong>{filteredCount}</strong>
               </span>
             )}
             <span className={styles.rightSideButtons}>

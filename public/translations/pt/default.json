@@ -231,5 +231,6 @@
   "pattern": "Padrão",
   "enable": "Ativar",
   "order": "Ordem",
-  "text": "Texto"
+  "text": "Texto",
+  "filtered_threads": "Threads filtrados"
 }

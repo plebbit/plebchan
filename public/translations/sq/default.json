@@ -231,5 +231,6 @@
   "pattern": "Model",
   "enable": "Aktivizo",
   "order": "Rendit",
-  "text": "Tekst"
+  "text": "Tekst",
+  "filtered_threads": "Tema të filtruar"
 }

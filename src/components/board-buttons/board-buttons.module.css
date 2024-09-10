@@ -83,6 +83,10 @@
   text-transform: none !important;
 }
 
+.mobileBoardButtons {
+  text-transform: capitalize;
+}
+
 .mobileBoardButtons .filteredThreadsCount {
   display: block;
   margin-top: 3px;
