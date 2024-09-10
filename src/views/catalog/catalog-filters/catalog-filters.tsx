@@ -5,7 +5,7 @@ import { isAllView, isCatalogView } from '../../../lib/utils/view-utils';
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import styles from './catalog-filters.module.css';
 
-const FiltersTable = () => {
+const FiltersTable = ({ onSave }: { onSave: () => void }) => {
   const { t } = useTranslation();
   const { filterItems, saveAndApplyFilters } = useCatalogFiltersStore();
 
@@ -18,7 +18,8 @@ const FiltersTable = () => {
   const handleSave = useCallback(() => {
     const nonEmptyFilters = localFilterItems.filter((item) => item.text.trim() !== '');
     saveAndApplyFilters(nonEmptyFilters);
-  }, [saveAndApplyFilters, localFilterItems]);
+    onSave();
+  }, [saveAndApplyFilters, localFilterItems, onSave]);
 
   const updateLocalFilterItem = useCallback((index: number, item: any) => {
     setLocalFilterItems((prev) => prev.map((f, i) => (i === index ? item : f)));
@@ -139,7 +140,7 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
             </div>
           )}
         </div>
-        {isInCatalogView && <FiltersTable />}
+        {isInCatalogView && <FiltersTable onSave={closeModal} />}
       </div>
     </>
   );
