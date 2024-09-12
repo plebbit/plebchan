@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { useTranslation } from 'react-i18next';
 import styles from './board.module.css';
@@ -17,13 +17,23 @@ import ReplyModal from '../../components/reply-modal';
 import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
+import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
+
+const threadsWithoutImagesFilter = (comment: Comment) => {
+  if (!getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
+    return false;
+  }
+  return true;
+};
 
 const Board = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
+  const { hideThreadsWithoutImages } = useInterfaceSettingsStore();
 
   const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
@@ -51,8 +61,9 @@ const Board = () => {
       sortType,
       postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
       ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
+      filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
     }),
-    [subplebbitAddresses, sortType, timeFilterSeconds, isInAllView, isInSubscriptionsView],
+    [subplebbitAddresses, sortType, timeFilterSeconds, isInAllView, isInSubscriptionsView, hideThreadsWithoutImages],
   );
 
   const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);

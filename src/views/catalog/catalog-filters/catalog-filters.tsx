@@ -1,7 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { isAllView, isCatalogView } from '../../../lib/utils/view-utils';
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import styles from './catalog-filters.module.css';
 
@@ -100,11 +98,6 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
 
 const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation();
-  const { showAdultBoards, setShowAdultBoards, showGoreBoards, setShowGoreBoards, showTextOnlyThreads, setShowTextOnlyThreads } = useCatalogFiltersStore();
-  const location = useLocation();
-  const params = useParams();
-  const isInCatalogView = isCatalogView(location.pathname, params);
-  const isInAllView = isAllView(location.pathname, params);
 
   return (
     <>
@@ -114,33 +107,7 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
           <span className={styles.title}>{t('filters')}</span>
           <span className={styles.closeButton} title='close' onClick={closeModal} />
         </div>
-        <div className={styles.filters}>
-          {isInCatalogView && (
-            <div>
-              <label className='capitalize'>
-                <input type='checkbox' checked={!showTextOnlyThreads} onChange={(e) => setShowTextOnlyThreads(!e.target.checked)} />
-                {t('hide_threads_without_images')}
-              </label>
-            </div>
-          )}
-          {isInAllView && (
-            <div className={styles.nsfwLabels}>
-              <div>
-                <label>
-                  <input type='checkbox' checked={!showGoreBoards} onChange={(e) => setShowGoreBoards(!e.target.checked)} />
-                  hide gore content
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type='checkbox' checked={!showAdultBoards} onChange={(e) => setShowAdultBoards(!e.target.checked)} />
-                  hide adult content
-                </label>
-              </div>
-            </div>
-          )}
-        </div>
-        {isInCatalogView && <FiltersTable onSave={closeModal} />}
+        <FiltersTable onSave={closeModal} />
       </div>
     </>
   );
