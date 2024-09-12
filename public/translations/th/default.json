@@ -224,7 +224,7 @@
   "animated_gif": "GIF ที่เคลื่อนไหว",
   "hide_avatars": "ซ่อนอวาตาร์",
   "anon_mode": "โหมดนิรนาม",
-  "anon_mode_description": "ใช้ ID ผู้ใช้ที่แตกต่างกันโดยอัตโนมัติในแต่ละเธรด",
+  "anon_mode_description": "ใช้ ID ผู้ใช้ที่แตกต่างกันในแต่ละกระทู้",
   "pending": "รอดำเนินการ",
   "failed": "ล้มเหลว",
   "add": "เพิ่ม",

@@ -224,7 +224,7 @@
   "animated_gif": "动画GIF",
   "hide_avatars": "隐藏头像",
   "anon_mode": "匿名模式",
-  "anon_mode_description": "在每个线程中自动使用不同的用户 ID",
+  "anon_mode_description": "在每个线程中使用不同的用户 ID",
   "pending": "待处理",
   "failed": "失败",
   "add": "添加",
