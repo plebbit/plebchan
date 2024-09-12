@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import styles from './catalog-filters.module.css';
@@ -8,9 +8,16 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
   const { filterItems, saveAndApplyFilters } = useCatalogFiltersStore();
 
   const [localFilterItems, setLocalFilterItems] = useState(filterItems);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleAddFilter = useCallback(() => {
-    setLocalFilterItems((prev) => [...prev, { text: '', enabled: true }]);
+    setLocalFilterItems((prev) => {
+      const newIndex = prev.length;
+      setTimeout(() => {
+        inputRefs.current[newIndex]?.focus();
+      }, 0);
+      return [...prev, { text: '', enabled: true }];
+    });
   }, []);
 
   const handleSave = useCallback(() => {
@@ -70,6 +77,7 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
                 spellCheck='false'
                 value={item.text}
                 onChange={(e) => updateLocalFilterItem(index, { ...item, text: e.target.value })}
+                ref={(el) => (inputRefs.current[index] = el)}
               />
             </td>
             <td>
