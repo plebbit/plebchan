@@ -379,7 +379,7 @@ export const DesktopBoardButtons = () => {
               {(isInAllView || isInSubscriptionsView) && (
                 <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
               )}
-              {(isInCatalogView || isInAllView || isInSubscriptionsView) && (
+              {isInCatalogView && (
                 <>
                   [
                   <CatalogFilters />]
