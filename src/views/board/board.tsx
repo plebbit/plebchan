@@ -86,6 +86,7 @@ const Board = () => {
           !removed &&
           state === 'succeeded' &&
           cid &&
+          (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(comment), comment?.link) : true) &&
           cid === postCid &&
           comment?.subplebbitAddress === subplebbitAddress &&
           !feed.some((post) => post.cid === cid)
