@@ -26,7 +26,7 @@ const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress
     author: { displayName: `## ${t('board_mods')}` },
     content: isInAllView ? multisubMetadata?.description : description,
     link: avatarUrl,
-    replyCount: 0,
+    replyCount: 1,
     title: t('welcome_to_board', {
       board: isInAllView ? multisubMetadata?.title : title || `p/${shortAddress}`,
       interpolation: { escapeValue: false },

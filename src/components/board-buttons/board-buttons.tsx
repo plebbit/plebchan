@@ -293,19 +293,18 @@ const PostPageStats = () => {
   const params = useParams();
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
-  const isInRulesView = isRulesView(location.pathname, params);
 
   const comment = useComment({ commentCid: params?.commentCid });
   const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);
 
-  const displayReplyCount = replyCount !== undefined ? replyCount.toString() : '?';
-  const replyCountTooltip = replyCount !== undefined ? _.capitalize(t('replies')) : t('loading');
+  const displayReplyCount = replyCount !== undefined ? replyCount.toString() : isInDescriptionView ? 1 : '?';
+  const replyCountTooltip = replyCount !== undefined || isInDescriptionView ? _.capitalize(t('replies')) : t('loading');
 
   return (
     <span>
-      {(pinned || isInDescriptionView || isInRulesView) && `${_.capitalize(t('sticky'))} / `}
-      {(closed || isInDescriptionView || isInRulesView) && `${_.capitalize(t('closed'))} / `}
+      {(pinned || isInDescriptionView) && `${_.capitalize(t('sticky'))} / `}
+      {(closed || isInDescriptionView) && `${_.capitalize(t('closed'))} / `}
       <Tooltip children={displayReplyCount} content={replyCountTooltip} /> / <Tooltip children={linkCount?.toString()} content={_.capitalize(t('links'))} />
     </span>
   );

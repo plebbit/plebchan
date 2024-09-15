@@ -77,7 +77,8 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
       });
     }
 
-    if (rules && rules.length > 0) {
+    // rules are shown in description thread if both are set
+    if (rules && rules.length > 0 && !description) {
       _feed.unshift({
         isRules: true,
         subplebbitAddress: address,

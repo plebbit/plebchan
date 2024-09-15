@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
@@ -30,6 +30,8 @@ import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import { create } from 'zustand';
 import _ from 'lodash';
+import SubplebbitRules from '../subplebbit-rules';
+import subplebbitRules from '../subplebbit-rules';
 
 interface ShowOmittedRepliesState {
   showOmittedReplies: Record<string, boolean>;
@@ -274,7 +276,7 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state } = post || {};
+  const { cid, content, deleted, edit, isRules, original, parentCid, postCid, reason, removed, state } = post || {};
   // TODO: commentAuthor is not yet available outside of editedComment, wait for API to be updated
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const { t } = useTranslation();
@@ -297,7 +299,7 @@ const PostMessage = ({ post }: PostProps) => {
   );
 
   return (
-    <blockquote className={styles.postMessage}>
+    <blockquote className={`${styles.postMessage} ${isRules && styles.rulesMessage}`}>
       {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         reason ? (
@@ -433,6 +435,17 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
 
   const stateString = useStateString(post);
 
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+
+  const subplebbitRulesReply = {
+    isRules: true,
+    subplebbitAddress,
+    timestamp: subplebbit?.createdAt,
+    author: { displayName: `## ${t('board_mods')}` },
+    content: `${subplebbit?.rules?.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n')}`,
+    replyCount: 0,
+  };
+
   return (
     <div className={styles.postDesktop}>
       {showReplies ? (
@@ -477,8 +490,6 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         {!isHidden &&
           !(pinned && !isInPostPageView && !showOmittedReplies[cid]) &&
           !isInPendingPostView &&
-          !isDescription &&
-          !isRules &&
           replies &&
           showReplies &&
           (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
@@ -486,6 +497,11 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
               <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} postReplyCount={replyCount} />
             </div>
           ))}
+        {isDescription && subplebbit?.rules && subplebbit?.rules.length > 0 && (
+          <div className={styles.replyContainer}>
+            <Reply reply={subplebbitRulesReply} />
+          </div>
+        )}
       </div>
       {!isInPendingPostView &&
         (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (

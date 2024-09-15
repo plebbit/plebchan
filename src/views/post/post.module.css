@@ -163,6 +163,10 @@
   overflow: hidden;
 }
 
+.rulesMessage {
+  font-weight: 700 !important;
+}
+
 .postDesktop .abbr {
   color: var(--post-mobile-abbr-text-color);
   font-size: var(--post-mobile-abbr-font-size);

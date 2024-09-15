@@ -192,7 +192,7 @@ const Board = () => {
       )}
       {feed.length !== 0 ? (
         <>
-          {rules && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
+          {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
           <Virtuoso
             increaseViewportBy={{ bottom: 1200, top: 1200 }}
             totalCount={combinedFeed.length}
