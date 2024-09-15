@@ -92,7 +92,7 @@ const Board = () => {
           !feed.some((post) => post.cid === cid)
         );
       }),
-    [accountComments, subplebbitAddress, feed],
+    [accountComments, subplebbitAddress, feed, hideThreadsWithoutImages],
   );
 
   // show newest account comment at the top of the feed but after pinned posts

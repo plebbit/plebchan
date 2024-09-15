@@ -30,8 +30,6 @@ import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import { create } from 'zustand';
 import _ from 'lodash';
-import SubplebbitRules from '../subplebbit-rules';
-import subplebbitRules from '../subplebbit-rules';
 
 interface ShowOmittedRepliesState {
   showOmittedReplies: Record<string, boolean>;

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
-import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
