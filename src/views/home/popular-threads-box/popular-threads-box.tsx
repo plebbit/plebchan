@@ -10,7 +10,7 @@ import { CatalogPostMedia } from '../../../components/catalog-row';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
 import BoxModal from '../box-modal';
 import { nsfwTags } from '../home';
-import removeMarkdown from 'remove-markdown';
+import { removeMarkdown } from '../../../lib/utils/post-utils';
 
 interface PopularThreadProps {
   post: Comment;
