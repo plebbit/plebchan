@@ -96,13 +96,9 @@ const UpdateButton = () => {
     <>
       {/* TODO: Implement update button once available in API  */}
       {isMobile ? (
-        <button className={`button ${styles.disabledButton}`} onClick={() => alert('Coming soon')}>
-          {t('update')}
-        </button>
+        <button className={`button ${styles.disabledButton}`}>{t('update')}</button>
       ) : (
-        <button className={`button ${styles.disabledButton}`} onClick={() => alert('Coming soon')}>
-          {t('update')}
-        </button>
+        <button className={`button ${styles.disabledButton}`}>{t('update')}</button>
       )}
     </>
   );
