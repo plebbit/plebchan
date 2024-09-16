@@ -224,7 +224,7 @@
   "animated_gif": "Animovaný GIF",
   "hide_avatars": "Skrýt avatary",
   "anon_mode": "Anonymní režim",
-  "anon_mode_description": "Automaticky používejte jiný uživatelský ID v každém vlákně",
+  "anon_mode_description": "Použijte různé uživatelské ID v každém vlákně",
   "pending": "Čeká na schválení",
   "failed": "Nepodařilo se",
   "add": "Přidat",

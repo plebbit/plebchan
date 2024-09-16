@@ -224,7 +224,7 @@
   "animated_gif": "GIF Animata",
   "hide_avatars": "Nascondi avatar",
   "anon_mode": "Modalità anonima",
-  "anon_mode_description": "Usa automaticamente un ID utente diverso in ogni thread",
+  "anon_mode_description": "Usa un ID utente diverso per ogni thread",
   "pending": "In attesa",
   "failed": "Fallito",
   "add": "Aggiungi",

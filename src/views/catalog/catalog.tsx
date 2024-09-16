@@ -17,6 +17,7 @@ import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
 import styles from './catalog.module.css';
+import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -27,7 +28,8 @@ const Catalog = () => {
 
   const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbits = useDefaultSubplebbits();
-  const { filter, showAdultBoards, showGoreBoards } = useCatalogFiltersStore();
+  const { hideAdultBoards, hideGoreBoards } = useInterfaceSettingsStore();
+  const { filter } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -40,7 +42,7 @@ const Catalog = () => {
         const hasGoreTag = tags?.includes('gore');
         const hasAdultTag = tags?.includes('adult');
 
-        if ((hasGoreTag && !showGoreBoards) || (hasAdultTag && !showAdultBoards)) {
+        if ((hasGoreTag && hideGoreBoards) || (hasAdultTag && hideAdultBoards)) {
           return false;
         }
         return true;
@@ -54,7 +56,7 @@ const Catalog = () => {
       return subscriptions || [];
     }
     return [subplebbitAddress];
-  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbits, subscriptions, showAdultBoards, showGoreBoards]);
+  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbits, subscriptions, hideAdultBoards, hideGoreBoards]);
 
   const { imageSize } = useCatalogStyleStore();
   const columnWidth = imageSize === 'Large' ? 270 : 180;

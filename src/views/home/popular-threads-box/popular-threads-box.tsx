@@ -10,6 +10,7 @@ import { CatalogPostMedia } from '../../../components/catalog-row';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
 import BoxModal from '../box-modal';
 import { nsfwTags } from '../home';
+import { removeMarkdown } from '../../../lib/utils/post-utils';
 
 interface PopularThreadProps {
   post: Comment;
@@ -17,11 +18,16 @@ interface PopularThreadProps {
   boardShortAddress: string;
 }
 
-const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThreadProps) => {
-  const { cid, subplebbitAddress, title } = post || {};
-  const commentMediaInfo = getCommentMediaInfo(post);
+const ContentPreview = ({ content, maxLength = 99 }: { content: string; maxLength?: number }) => {
+  const plainText = removeMarkdown(content).trim().replaceAll('&nbsp;', '').replace(/\n\n/g, '\n').replaceAll('\n\n', '');
+  const truncatedText = plainText.length > maxLength ? `${plainText.substring(0, maxLength).trim()}...` : plainText;
 
-  let content = post?.content?.replace(/\n\n/g, '\n');
+  return truncatedText;
+};
+
+const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThreadProps) => {
+  const { cid, content, subplebbitAddress, title } = post || {};
+  const commentMediaInfo = getCommentMediaInfo(post);
 
   return (
     <div className={styles.popularThread} key={cid}>
@@ -38,7 +44,7 @@ const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThrea
             {content && ': '}
           </>
         )}
-        {content && (content.length > 99 ? `${content.substring(0, 99).trim()}...` : `${content}`)}
+        {content && <ContentPreview content={content} maxLength={99} />}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
-import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
@@ -96,11 +96,11 @@ const UpdateButton = () => {
     <>
       {/* TODO: Implement update button once available in API  */}
       {isMobile ? (
-        <button className={`button ${styles.disabledButton}`} disabled>
+        <button className={`button ${styles.disabledButton}`} onClick={() => alert('Coming soon')}>
           {t('update')}
         </button>
       ) : (
-        <button className={`button ${styles.disabledButton}`} disabled>
+        <button className={`button ${styles.disabledButton}`} onClick={() => alert('Coming soon')}>
           {t('update')}
         </button>
       )}
@@ -293,19 +293,18 @@ const PostPageStats = () => {
   const params = useParams();
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
-  const isInRulesView = isRulesView(location.pathname, params);
 
   const comment = useComment({ commentCid: params?.commentCid });
   const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);
 
-  const displayReplyCount = replyCount !== undefined ? replyCount.toString() : '?';
-  const replyCountTooltip = replyCount !== undefined ? _.capitalize(t('replies')) : t('loading');
+  const displayReplyCount = replyCount !== undefined ? replyCount.toString() : isInDescriptionView ? 1 : '?';
+  const replyCountTooltip = replyCount !== undefined || isInDescriptionView ? _.capitalize(t('replies')) : t('loading');
 
   return (
     <span>
-      {(pinned || isInDescriptionView || isInRulesView) && `${_.capitalize(t('sticky'))} / `}
-      {(closed || isInDescriptionView || isInRulesView) && `${_.capitalize(t('closed'))} / `}
+      {(pinned || isInDescriptionView) && `${_.capitalize(t('sticky'))} / `}
+      {(closed || isInDescriptionView) && `${_.capitalize(t('closed'))} / `}
       <Tooltip children={displayReplyCount} content={replyCountTooltip} /> / <Tooltip children={linkCount?.toString()} content={_.capitalize(t('links'))} />
     </span>
   );
@@ -379,7 +378,7 @@ export const DesktopBoardButtons = () => {
               {(isInAllView || isInSubscriptionsView) && (
                 <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
               )}
-              {(isInCatalogView || isInAllView || isInSubscriptionsView) && (
+              {isInCatalogView && (
                 <>
                   [
                   <CatalogFilters />]

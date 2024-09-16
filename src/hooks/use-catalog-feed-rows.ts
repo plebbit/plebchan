@@ -2,17 +2,17 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useLocation } from 'react-router-dom';
 import { useAccountComments, Subplebbit } from '@plebbit/plebbit-react-hooks';
+import useInterfaceSettingsStore from '../stores/use-interface-settings-store';
+import { getCommentMediaInfo, getHasThumbnail } from '../lib/utils/media-utils';
 import { isAllView } from '../lib/utils/view-utils';
 import { useMultisubMetadata } from './use-default-subplebbits';
-import useCatalogFiltersStore from '../stores/use-catalog-filters-store';
 import _ from 'lodash';
-import { getCommentMediaInfo, getHasThumbnail } from '../lib/utils/media-utils';
 
 const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit) => {
   const { t } = useTranslation();
   const { address, createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
   const { avatarUrl } = suggested || {};
-  const { showTextOnlyThreads } = useCatalogFiltersStore();
+  const { hideThreadsWithoutImages } = useInterfaceSettingsStore();
 
   const location = useLocation();
   const isInAllView = isAllView(location.pathname, useParams());
@@ -41,7 +41,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
         !deleted &&
         !removed &&
         state === 'succeeded' &&
-        (showTextOnlyThreads || (!showTextOnlyThreads && isMediaShowed)) &&
+        (!hideThreadsWithoutImages || (hideThreadsWithoutImages && isMediaShowed)) &&
         cid &&
         cid === postCid &&
         subplebbitAddress === address &&
@@ -63,7 +63,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
     }
 
     // add subplebbit description and rules as fake posts at the top of the feed
-    if ((description && description.length > 0 && (showTextOnlyThreads || (!showTextOnlyThreads && suggested?.avatarUrl))) || (isInAllView && showTextOnlyThreads)) {
+    if (description && description.length > 0) {
       _feed.unshift({
         isDescription: true,
         subplebbitAddress: address,
@@ -77,7 +77,8 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
       });
     }
 
-    if (rules && rules.length > 0 && showTextOnlyThreads) {
+    // rules are shown in description thread if both are set
+    if (rules && rules.length > 0 && !description) {
       _feed.unshift({
         isRules: true,
         subplebbitAddress: address,
@@ -91,23 +92,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
     }
 
     return _feed;
-  }, [
-    accountComments,
-    feed,
-    description,
-    rules,
-    address,
-    isFeedLoaded,
-    createdAt,
-    title,
-    shortAddress,
-    avatarUrl,
-    t,
-    isInAllView,
-    multisub,
-    showTextOnlyThreads,
-    suggested?.avatarUrl,
-  ]);
+  }, [accountComments, feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub, hideThreadsWithoutImages]);
 
   const rows = useMemo(() => {
     const rows = [];

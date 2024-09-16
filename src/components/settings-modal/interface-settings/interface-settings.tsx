@@ -5,6 +5,8 @@ import useTheme from '../../../hooks/use-theme';
 import packageJson from '../../../../package.json';
 import styles from './interface-settings.module.css';
 import _ from 'lodash';
+import useInterfaceSettingsStore from '../../../stores/use-interface-settings-store';
+import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -110,6 +112,8 @@ const InterfaceLanguage = () => {
 const InterfaceSettings = () => {
   const { t } = useTranslation();
   const { hideAvatars, setHideAvatars } = useAvatarVisibilityStore();
+  const { hideGoreBoards, setHideGoreBoards, hideAdultBoards, setHideAdultBoards, hideThreadsWithoutImages, setHideThreadsWithoutImages } = useInterfaceSettingsStore();
+  const { setShowTextOnlyThreads } = useCatalogFiltersStore();
 
   const handleHideAvatarsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHideAvatars(e.target.checked);
@@ -140,6 +144,29 @@ const InterfaceSettings = () => {
       <div className={styles.setting}>
         <label>
           <input type='checkbox' checked={hideAvatars} onChange={handleHideAvatarsChange} /> {_.capitalize(t('hide_avatars'))}
+        </label>
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' checked={hideGoreBoards} onChange={(e) => setHideGoreBoards(e.target.checked)} /> {_.capitalize(t('hide_gore_boards'))}
+        </label>
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' checked={hideAdultBoards} onChange={(e) => setHideAdultBoards(e.target.checked)} /> {_.capitalize(t('hide_adult_boards'))}
+        </label>
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input
+            type='checkbox'
+            checked={hideThreadsWithoutImages}
+            onChange={(e) => {
+              setHideThreadsWithoutImages(e.target.checked);
+              setShowTextOnlyThreads(!e.target.checked);
+            }}
+          />
+          {_.capitalize(t('hide_threads_without_images'))}
         </label>
       </div>
     </div>

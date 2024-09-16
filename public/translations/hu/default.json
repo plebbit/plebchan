@@ -224,7 +224,7 @@
   "animated_gif": "Animált GIF",
   "hide_avatars": "Avatarok elrejtése",
   "anon_mode": "Anonim mód",
-  "anon_mode_description": "Automatikusan használjon más felhasználói azonosítót minden szálban",
+  "anon_mode_description": "Használjon különböző felhasználói azonosítót minden szálban",
   "pending": "Függőben",
   "failed": "Sikertelen",
   "add": "Hozzáad",

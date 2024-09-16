@@ -9,10 +9,6 @@ interface FilterItem {
 }
 
 interface CatalogFiltersStore {
-  showAdultBoards: boolean;
-  setShowAdultBoards: (value: boolean) => void;
-  showGoreBoards: boolean;
-  setShowGoreBoards: (value: boolean) => void;
   showTextOnlyThreads: boolean;
   setShowTextOnlyThreads: (value: boolean) => void;
   filterText: string;
@@ -35,10 +31,6 @@ const useCatalogFiltersStore = create(
         set({ showTextOnlyThreads: value, filteredCount: 0 });
         get().updateFilter();
       },
-      showAdultBoards: false,
-      setShowAdultBoards: (value: boolean) => set({ showAdultBoards: value }),
-      showGoreBoards: false,
-      setShowGoreBoards: (value: boolean) => set({ showGoreBoards: value }),
       filterText: '',
       setFilterText: (value: string) => set({ filterText: value }),
       filterItems: [],
@@ -58,28 +50,28 @@ const useCatalogFiltersStore = create(
           filter: (comment: Comment) => {
             const { showTextOnlyThreads, filterItems } = state;
 
-            const shouldShow = (() => {
-              if (!showTextOnlyThreads && !getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
-                return false;
+            const hasThumbnail = getHasThumbnail(getCommentMediaInfo(comment), comment?.link);
+            const title = comment?.title?.toLowerCase() || '';
+            const content = comment?.content?.toLowerCase() || '';
+
+            const matchesFilterItems = filterItems
+              .filter((item) => item.enabled)
+              .some((item) => {
+                const text = item.text.toLowerCase();
+                return title.includes(text) || content.includes(text);
+              });
+
+            const shouldShow = showTextOnlyThreads || hasThumbnail;
+
+            if (!shouldShow || matchesFilterItems) {
+              if (matchesFilterItems && !filteredCids.has(comment.cid)) {
+                filteredCids.add(comment.cid);
+                set((state) => ({ filteredCount: state.filteredCount + 1 }));
               }
-
-              const title = comment?.title?.toLowerCase() || '';
-              const content = comment?.content?.toLowerCase() || '';
-
-              return !filterItems
-                .filter((item) => item.enabled)
-                .some((item) => {
-                  const text = item.text.toLowerCase();
-                  return title.includes(text) || content.includes(text);
-                });
-            })();
-
-            if (!shouldShow && !filteredCids.has(comment.cid)) {
-              filteredCids.add(comment.cid);
-              set((state) => ({ filteredCount: state.filteredCount + 1 }));
+              return false;
             }
 
-            return shouldShow;
+            return true;
           },
         }));
       },

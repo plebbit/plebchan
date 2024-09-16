@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
@@ -200,7 +200,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
 
 const PostMessageMobile = ({ post }: PostProps) => {
   const { t } = useTranslation();
-  const { cid, content, deleted, edit, original, parentCid, postCid, reason, removed, state } = post || {};
+  const { cid, content, deleted, edit, isRules, original, parentCid, postCid, reason, removed, state } = post || {};
   // TODO: commentAuthor is not available outside of editedComment, update when available
   // const banned = !!post?.commentAuthor?.banExpiresAt;
   const [showOriginal, setShowOriginal] = useState(false);
@@ -223,7 +223,7 @@ const PostMessageMobile = ({ post }: PostProps) => {
   );
 
   return (
-    <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines}`}>
+    <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines} ${isRules && styles.rulesMessage}`}>
       {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         reason ? (
@@ -353,6 +353,17 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
 
   const stateString = useStateString(post);
 
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const showRules = isDescription && subplebbit?.rules && subplebbit?.rules.length > 0;
+  const subplebbitRulesReply = {
+    isRules: true,
+    subplebbitAddress,
+    timestamp: subplebbit?.createdAt,
+    author: { displayName: `## ${t('board_mods')}` },
+    content: `${subplebbit?.rules?.map((rule: string, index: number) => `${index + 1}. ${rule}`).join('\n')}`,
+    replyCount: 0,
+  };
+
   return (
     <>
       {hidden && !isInPostPageView ? (
@@ -394,8 +405,6 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
             </div>
             {!(pinned && !isInPostView) &&
               !isInPendingPostView &&
-              !isDescription &&
-              !isRules &&
               replies &&
               showReplies &&
               (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
@@ -403,6 +412,11 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                   <Reply openReplyModal={openReplyModal} postReplyCount={replyCount} reply={reply} roles={roles} />
                 </div>
               ))}
+            {showRules && (
+              <div className={styles.replyContainer}>
+                <Reply reply={subplebbitRulesReply} />
+              </div>
+            )}
           </div>
           {!isInPendingPostView &&
             (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (
