@@ -167,11 +167,16 @@ const Markdown = ({ content, title }: MarkdownProps) => {
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
           p: ({ children }) => <p className={isInCatalogView ? styles.inline : ''}>{children}</p>,
+          h1: ({ children }) => <p className={styles.header}>{children}</p>,
+          h2: ({ children }) => <p className={styles.header}>{children}</p>,
+          h3: ({ children }) => <p className={styles.header}>{children}</p>,
+          h4: ({ children }) => <p className={styles.header}>{children}</p>,
+          h5: ({ children }) => <p className={styles.header}>{children}</p>,
+          h6: ({ children }) => <p className={styles.header}>{children}</p>,
           img: ({ src }) => <span>{src}</span>,
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
           source: ({ src }) => <span>{src}</span>,
-          hr: () => null,
           a: ({ href, children }) => {
             if (href && !isInCatalogView) {
               const linkMediaInfo = getLinkMediaInfo(href);
