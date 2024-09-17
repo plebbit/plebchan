@@ -45,29 +45,37 @@ const useCatalogFiltersStore = create(
       },
       filter: undefined,
       updateFilter: () => {
-        const filteredCids = new Set<string>();
+        // const filteredCids = new Set<string>();
         set((state) => ({
           filter: (comment: Comment) => {
-            const { showTextOnlyThreads, filterItems } = state;
+            const {
+              showTextOnlyThreads,
+              // filterItems
+            } = state;
 
             const hasThumbnail = getHasThumbnail(getCommentMediaInfo(comment), comment?.link);
-            const title = comment?.title?.toLowerCase() || '';
-            const content = comment?.content?.toLowerCase() || '';
+            // const title = comment?.title?.toLowerCase() || '';
+            // const content = comment?.content?.toLowerCase() || '';
 
-            const matchesFilterItems = filterItems
-              .filter((item) => item.enabled)
-              .some((item) => {
-                const text = item.text.toLowerCase();
-                return title.includes(text) || content.includes(text);
-              });
+            // const matchesFilterItems = filterItems
+            //   .filter((item) => item.enabled)
+            //   .some((item) => {
+            //     const text = item.text.toLowerCase();
+            //     return title.includes(text) || content.includes(text);
+            //   });
 
             const shouldShow = showTextOnlyThreads || hasThumbnail;
 
-            if (!shouldShow || matchesFilterItems) {
-              if (matchesFilterItems && !filteredCids.has(comment.cid)) {
-                filteredCids.add(comment.cid);
-                set((state) => ({ filteredCount: state.filteredCount + 1 }));
-              }
+            if (
+              !shouldShow
+              // || matchesFilterItems
+            ) {
+              // if (
+              //   matchesFilterItems &&
+              //   !filteredCids.has(comment.cid)) {
+              //   filteredCids.add(comment.cid);
+              //   set((state) => ({ filteredCount: state.filteredCount + 1 }));
+              // }
               return false;
             }
 
