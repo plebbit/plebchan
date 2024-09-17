@@ -78,10 +78,10 @@ const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose
 
   return (
     <div onClick={onClose}>
-      <a href={`https://seedit.eth.limo/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
+      <a href={`https://seedit.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
         <div className={styles.postMenuItem}>{t('view_on_client', { client: 'Seedit' })}</div>
       </a>
-      <a href={`https://plebones.eth.limo/#/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
+      <a href={`https://plebones.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
         <div className={styles.postMenuItem}>{t('view_on_client', { client: 'Plebones' })}</div>
       </a>
     </div>
