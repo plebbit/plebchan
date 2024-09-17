@@ -75,6 +75,10 @@ export const getLinkMediaInfo = memoize(
     let type: string = 'webpage';
     let mime: string | undefined;
 
+    if (url.pathname === '/_next/image' && url.search.startsWith('?url=')) {
+      return { url: link, type: 'image' };
+    }
+
     try {
       const fileName = url.pathname.slice(url.pathname.lastIndexOf('/') + 1).toLowerCase();
       mime = extName(fileName)[0]?.mime;
