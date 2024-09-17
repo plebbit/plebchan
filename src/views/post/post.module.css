@@ -533,12 +533,6 @@
   bottom: -5px;
 }
 
-.stateString {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 @media (max-width: 640px) {
   .replyQuotePreview {
     margin-right: 10px;
