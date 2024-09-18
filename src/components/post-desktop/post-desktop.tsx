@@ -84,131 +84,135 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const userIDBackgroundColor = hashStringToColor(userID);
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
+  const { hidden } = useHide(post);
+
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu post={post} />}
-      {title &&
-        (title.length <= 75 ? (
-          <span className={styles.subject}>{title} </span>
-        ) : (
-          <Tooltip
-            children={<span className={styles.subject}>{title.slice(0, 75) + '(...)'} </span>}
-            content={title.length < 1000 ? title : title.slice(0, 1000) + `... ${t('title_too_long')}`}
-          />
-        ))}
-      <span className={styles.nameBlock}>
-        <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
-          {deleted ? (
-            _.capitalize(t('deleted'))
-          ) : removed ? (
-            _.capitalize(t('removed'))
-          ) : displayName ? (
-            displayName.length <= 20 ? (
-              displayName
-            ) : (
-              <Tooltip
-                children={displayName.slice(0, 20) + '(...)'}
-                content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + `... ${t('display_name_too_long')}`}
-              />
-            )
+      <span className={(hidden || removed || deleted) && styles.postDesktopHidden}>
+        {title &&
+          (title.length <= 75 ? (
+            <span className={styles.subject}>{title} </span>
           ) : (
-            _.capitalize(t('anonymous'))
-          )}
-          {!(deleted || removed) && <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>}
-        </span>
-        {!(isDescription || isRules) && (
-          <>
-            {author?.avatar && !(deleted || removed) && !hideAvatars ? (
-              <span className={styles.authorAvatar}>
-                <img src={avatarImageUrl} alt='' />
-              </span>
-            ) : (
-              ' '
-            )}
-            (ID:{' '}
-            {deleted ? (
-              t('deleted')
-            ) : removed ? (
-              t('removed')
-            ) : (
-              <Tooltip
-                children={
-                  <span
-                    title={t('highlight_posts')}
-                    className={styles.userAddress}
-                    onClick={() => handleUserAddressClick(userID, postCid)}
-                    style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
-                  >
-                    {userID}
-                  </span>
-                }
-                content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
-                showTooltip={isInPostPageView || showOmittedReplies[postCid] || (postReplyCount < 6 && !pinned)}
-              />
-            )}
-            ){' '}
-          </>
-        )}
-      </span>
-      <span className={styles.dateTime}>
-        <Tooltip children={<span>{getFormattedDate(timestamp)}</span>} content={getFormattedTimeAgo(timestamp)} />
-        {isDescription || isRules ? '' : ' '}
-      </span>
-      <span className={styles.postNum}>
-        {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
-          <span className={styles.postNumLink}>
-            {' '}
-            <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>{' '}
-          </span>
-        )}
-        {!(isDescription || isRules) &&
-          (cid ? (
-            <span className={styles.postNumLink}>
-              <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
-                c/
-              </Link>
-              <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
-                {shortCid}
-              </span>
-            </span>
-          ) : (
-            <>
-              <span>c/</span>
-              <span className={styles.pendingCid}>
-                {state === 'failed' || stateString === 'Failed' ? _.capitalize(t('failed')) : state === 'pending' ? _.capitalize(t('pending')) : ''}
-              </span>
-            </>
+            <Tooltip
+              children={<span className={styles.subject}>{title.slice(0, 75) + '(...)'} </span>}
+              content={title.length < 1000 ? title : title.slice(0, 1000) + `... ${t('title_too_long')}`}
+            />
           ))}
-        {pinned && (
-          <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
-            <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+        <span className={styles.nameBlock}>
+          <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
+            {deleted ? (
+              _.capitalize(t('deleted'))
+            ) : removed ? (
+              _.capitalize(t('removed'))
+            ) : displayName ? (
+              displayName.length <= 20 ? (
+                displayName
+              ) : (
+                <Tooltip
+                  children={displayName.slice(0, 20) + '(...)'}
+                  content={displayName.length < 1000 ? displayName : displayName.slice(0, 1000) + `... ${t('display_name_too_long')}`}
+                />
+              )
+            ) : (
+              _.capitalize(t('anonymous'))
+            )}
+            {!(deleted || removed) && <span className='capitalize'>{authorRole && ` ## Board ${authorRole}`} </span>}
           </span>
-        )}
-        {locked && (
-          <span className={`${styles.closedIconWrapper} ${styles.addPaddingBeforeReply} ${pinned && styles.addPaddingInBetween}`}>
-            <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
-          </span>
-        )}
-        {!isInPostPageView && !isReply && !isHidden && (
-          <span className={styles.replyButton}>
-            [
-            <Link
-              to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}
-              onClick={(e) => !cid && !isDescription && !isRules && e.preventDefault()}
-            >
-              {_.capitalize(t('reply'))}
-            </Link>
-            ]
-          </span>
-        )}
+          {!(isDescription || isRules) && (
+            <>
+              {author?.avatar && !(deleted || removed) && !hideAvatars ? (
+                <span className={styles.authorAvatar}>
+                  <img src={avatarImageUrl} alt='' />
+                </span>
+              ) : (
+                ' '
+              )}
+              (ID:{' '}
+              {deleted ? (
+                t('deleted')
+              ) : removed ? (
+                t('removed')
+              ) : (
+                <Tooltip
+                  children={
+                    <span
+                      title={t('highlight_posts')}
+                      className={styles.userAddress}
+                      onClick={() => handleUserAddressClick(userID, postCid)}
+                      style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
+                    >
+                      {userID}
+                    </span>
+                  }
+                  content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
+                  showTooltip={isInPostPageView || showOmittedReplies[postCid] || (postReplyCount < 6 && !pinned)}
+                />
+              )}
+              ){' '}
+            </>
+          )}
+        </span>
+        <span className={styles.dateTime}>
+          <Tooltip children={<span>{getFormattedDate(timestamp)}</span>} content={getFormattedTimeAgo(timestamp)} />
+          {isDescription || isRules ? '' : ' '}
+        </span>
+        <span className={styles.postNum}>
+          {subplebbitAddress && (isInAllView || isInSubscriptionsView) && !isReply && (
+            <span className={styles.postNumLink}>
+              {' '}
+              <Link to={`/p/${subplebbitAddress}`}>p/{subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress)}</Link>{' '}
+            </span>
+          )}
+          {!(isDescription || isRules) &&
+            (cid ? (
+              <span className={styles.postNumLink}>
+                <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
+                  c/
+                </Link>
+                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
+                  {shortCid}
+                </span>
+              </span>
+            ) : (
+              <>
+                <span>c/</span>
+                <span className={styles.pendingCid}>
+                  {state === 'failed' || stateString === 'Failed' ? _.capitalize(t('failed')) : state === 'pending' ? _.capitalize(t('pending')) : ''}
+                </span>
+              </>
+            ))}
+          {pinned && (
+            <span className={`${styles.stickyIconWrapper} ${!locked && styles.addPaddingBeforeReply}`}>
+              <img src='assets/icons/sticky.gif' alt='' className={styles.stickyIcon} title={t('sticky')} />
+            </span>
+          )}
+          {locked && (
+            <span className={`${styles.closedIconWrapper} ${styles.addPaddingBeforeReply} ${pinned && styles.addPaddingInBetween}`}>
+              <img src='assets/icons/closed.gif' alt='' className={styles.closedIcon} title={t('closed')} />
+            </span>
+          )}
+          {!isInPostPageView && !isReply && !isHidden && (
+            <span className={styles.replyButton}>
+              [
+              <Link
+                to={isInAllView && isDescription ? '/p/all/description' : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${postCid}`}`}
+                onClick={(e) => !cid && !isDescription && !isRules && e.preventDefault()}
+              >
+                {_.capitalize(t('reply'))}
+              </Link>
+              ]
+            </span>
+          )}
+        </span>
+        {!(removed || deleted) && <PostMenuDesktop post={post} />}
+        {cid &&
+          parentCid &&
+          replies &&
+          replies.map(
+            (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+          )}
       </span>
-      {!(removed || deleted) && <PostMenuDesktop post={post} />}
-      {cid &&
-        parentCid &&
-        replies &&
-        replies.map(
-          (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
-        )}
     </div>
   );
 };
@@ -396,12 +400,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
-      <div
-        className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${(hidden || removed || deleted) && styles.postDesktopHidden}`}
-        data-cid={cid}
-        data-author-address={author?.shortAddress}
-        data-post-cid={postCid}
-      >
+      <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
         {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
         {!(hidden || removed || deleted) && <PostMessage post={post} />}
@@ -461,7 +460,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         )}
         <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
           {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
-          <PostInfo isHidden={isHidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
+          <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && <div className={styles.spacer} />}
           {!isHidden && content && <PostMessage post={post} />}
         </div>
