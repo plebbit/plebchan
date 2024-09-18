@@ -130,7 +130,7 @@ const BlockBoardButton = ({ address }: { address: string }) => {
 };
 
 const PostMenuMobile = ({ post }: { post: Comment }) => {
-  const { author, cid, isDescription, isRules, link, parentCid, postCid, subplebbitAddress } = post || {};
+  const { author, cid, deleted, isDescription, isRules, link, parentCid, postCid, removed, subplebbitAddress } = post || {};
   const { isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: author?.address, subplebbitAddress });
   const commentMediaInfo = getCommentMediaInfo(post);
   const { thumbnail, type, url } = commentMediaInfo || {};
@@ -160,24 +160,28 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
 
   return (
     <>
-      <span className={styles.postMenuBtn} title='Post menu' onClick={handleMenuClick} ref={refs.setReference} {...getReferenceProps()}>
-        ...
-      </span>
-      {isMenuOpen &&
-        (cid || isDescription || isRules) &&
-        createPortal(
-          <FloatingFocusManager context={context} modal={false}>
-            <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
-              {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
-              {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={postCid} onClose={handleClose} />}
-              {cid && subplebbitAddress && !isDescription && !isRules && <BlockUserButton address={author?.address} />}
-              {cid && subplebbitAddress && !isInBoardView && !isDescription && !isRules && <BlockBoardButton address={subplebbitAddress} />}
-              {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}
-              <ViewOnButtons cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
-            </div>
-          </FloatingFocusManager>,
-          document.body,
-        )}
+      {!(deleted || removed) && (
+        <>
+          <span className={styles.postMenuBtn} title='Post menu' onClick={handleMenuClick} ref={refs.setReference} {...getReferenceProps()}>
+            ...
+          </span>
+          {isMenuOpen &&
+            (cid || isDescription || isRules) &&
+            createPortal(
+              <FloatingFocusManager context={context} modal={false}>
+                <div className={styles.postMenu} ref={refs.setFloating} style={floatingStyles} aria-labelledby={headingId} {...getFloatingProps()}>
+                  {cid && subplebbitAddress && <CopyLinkButton cid={cid} subplebbitAddress={subplebbitAddress} onClose={handleClose} />}
+                  {cid && subplebbitAddress && <HidePostButton cid={cid} isReply={parentCid} postCid={postCid} onClose={handleClose} />}
+                  {cid && subplebbitAddress && !isDescription && !isRules && <BlockUserButton address={author?.address} />}
+                  {cid && subplebbitAddress && !isInBoardView && !isDescription && !isRules && <BlockBoardButton address={subplebbitAddress} />}
+                  {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}
+                  <ViewOnButtons cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
+                </div>
+              </FloatingFocusManager>,
+              document.body,
+            )}
+        </>
+      )}
       {(isAccountMod || isAccountCommentAuthor) && cid && (
         <span className={styles.checkbox}>
           <EditMenu post={post} />

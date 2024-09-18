@@ -314,7 +314,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   if (editedComment) {
     post = editedComment;
   }
-  const { author, cid, postCid, subplebbitAddress } = post || {};
+  const { author, cid, deleted, postCid, removed, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -322,13 +322,13 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     <div className={styles.replyMobile}>
       <div className={styles.reply}>
         <div
-          className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
+          className={`${styles.replyContainer} ${isRouteLinkToReply && styles.highlight} ${(hidden || deleted || removed) && styles.postDesktopHidden}`}
           data-cid={cid}
           data-author-address={author?.shortAddress}
           data-post-cid={postCid}
         >
           <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
-          {!hidden && <PostMessageMobile post={post} />}
+          {!hidden && !deleted && !removed && <PostMessageMobile post={post} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>

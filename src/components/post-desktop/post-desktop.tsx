@@ -202,7 +202,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           </span>
         )}
       </span>
-      <PostMenuDesktop post={post} />
+      {!(removed || deleted) && <PostMenuDesktop post={post} />}
       {cid &&
         parentCid &&
         replies &&
@@ -298,7 +298,7 @@ const PostMessage = ({ post }: PostProps) => {
 
   return (
     <blockquote className={`${styles.postMessage} ${isRules && styles.rulesMessage}`}>
-      {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+      {isReply && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         reason ? (
           <>
@@ -397,14 +397,14 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
       <div
-        className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${hidden && styles.postDesktopHidden}`}
+        className={`${styles.reply} ${isRouteLinkToReply && styles.highlight} ${(hidden || removed || deleted) && styles.postDesktopHidden}`}
         data-cid={cid}
         data-author-address={author?.shortAddress}
         data-post-cid={postCid}
       >
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
         {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
-        {!hidden && <PostMessage post={post} />}
+        {!(hidden || removed || deleted) && <PostMessage post={post} />}
       </div>
     </div>
   );
