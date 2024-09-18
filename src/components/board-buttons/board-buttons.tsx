@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAccountComment, useComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment, useComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
@@ -291,10 +291,12 @@ const PostPageStats = () => {
   const isInDescriptionView = isDescriptionView(location.pathname, params);
 
   const comment = useComment({ commentCid: params?.commentCid });
+  const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
+  const descriptionReplyCount = location?.pathname.startsWith('/p/all/') ? 0 : subplebbit?.rules?.length > 0 ? 1 : 0;
   const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);
 
-  const displayReplyCount = replyCount !== undefined ? replyCount.toString() : isInDescriptionView ? 1 : '?';
+  const displayReplyCount = replyCount !== undefined ? replyCount.toString() : isInDescriptionView ? descriptionReplyCount : '?';
   const replyCountTooltip = replyCount !== undefined || isInDescriptionView ? _.capitalize(t('replies')) : t('loading');
 
   return (

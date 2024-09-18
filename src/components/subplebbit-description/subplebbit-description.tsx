@@ -8,12 +8,13 @@ interface DescriptionPostProps {
   avatarUrl?: string;
   createdAt: number;
   description: string;
+  replyCount: number;
   shortAddress: string;
   subplebbitAddress: string | undefined;
   title: string;
 }
 
-const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress, subplebbitAddress, title }: DescriptionPostProps) => {
+const SubplebbitDescription = ({ avatarUrl, createdAt, description, replyCount, shortAddress, subplebbitAddress, title }: DescriptionPostProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const isInAllView = isAllView(location.pathname, useParams());
@@ -26,7 +27,7 @@ const SubplebbitDescription = ({ avatarUrl, createdAt, description, shortAddress
     author: { displayName: `## ${t('board_mods')}` },
     content: isInAllView ? multisubMetadata?.description : description,
     link: avatarUrl,
-    replyCount: 1,
+    replyCount,
     title: t('welcome_to_board', {
       board: isInAllView ? multisubMetadata?.title : title || `p/${shortAddress}`,
       interpolation: { escapeValue: false },

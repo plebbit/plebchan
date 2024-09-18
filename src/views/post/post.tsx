@@ -109,6 +109,7 @@ const PostPage = () => {
           avatarUrl={suggested?.avatarUrl}
           createdAt={createdAt}
           description={description}
+          replyCount={location.pathname.startsWith('/p/all/') ? 0 : rules?.length > 0 ? 1 : 0}
           subplebbitAddress={subplebbitAddress}
           shortAddress={shortAddress}
           title={title}
