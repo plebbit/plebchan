@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useLocation, useParams } from 'react-router-dom';
-import { isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
+import { isAllView, isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
 import useReplyModal from '../../hooks/use-reply-modal';
 import PostDesktop from '../../components/post-desktop';
@@ -55,6 +55,7 @@ const PostPage = () => {
   const params = useParams();
   const location = useLocation();
   const { commentCid, subplebbitAddress } = params;
+  const isInAllView = isAllView(location.pathname, params);
   const isInSettigsView = isSettingsView(location.pathname, params);
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
@@ -85,8 +86,9 @@ const PostPage = () => {
   useEffect(() => {
     const boardTitle = title ? title : shortAddress || subplebbitAddress;
     const postTitle = post?.title?.slice(0, 30) || post?.content?.slice(0, 30);
-    document.title = (postTitle ? postTitle.trim() + '... - ' : '') + boardTitle + ' - plebchan';
-  }, [title, shortAddress, subplebbitAddress, post?.title, post?.content]);
+    const postDucumentTitle = (postTitle ? postTitle.trim() + '... - ' : '') + boardTitle + ' - plebchan';
+    document.title = isInAllView ? `${t('all')} - plebchan` : postDucumentTitle;
+  }, [title, shortAddress, subplebbitAddress, post?.title, post?.content, isInAllView, t]);
 
   return (
     <div className={styles.content}>
@@ -109,6 +111,7 @@ const PostPage = () => {
           avatarUrl={suggested?.avatarUrl}
           createdAt={createdAt}
           description={description}
+          replyCount={location.pathname.startsWith('/p/all/') ? 0 : rules?.length > 0 ? 1 : 0}
           subplebbitAddress={subplebbitAddress}
           shortAddress={shortAddress}
           title={title}

@@ -1,1 +1,1 @@
-export { default } from './popular-threads-box';
+export { default, ContentPreview } from './popular-threads-box';

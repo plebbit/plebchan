@@ -131,7 +131,7 @@ const CatalogFilters = () => {
 
   return (
     <>
-      <span className={`${styles.filtersButton} button`} onClick={() => setShowModal(true)}>
+      <span className={`${styles.filtersButton} button`} onClick={() => setShowModal(false)} style={{ cursor: 'not-allowed' }}>
         {t('filters')}
       </span>
       {showModal && <FiltersModal closeModal={closeModal} />}

@@ -186,6 +186,7 @@ const Board = () => {
           subplebbitAddress={subplebbitAddress}
           createdAt={createdAt}
           description={description}
+          replyCount={isInAllView ? 0 : rules?.length > 0 ? 1 : 0}
           shortAddress={shortAddress}
           title={title}
         />

@@ -17,6 +17,7 @@ import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
 import Markdown from '../markdown';
 import _ from 'lodash';
+import { ContentPreview } from '../../views/home/popular-threads-box';
 
 interface CatalogPostMediaProps {
   commentMediaInfo: any;
@@ -186,7 +187,21 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   });
 
   const postContent = (
-    <div className={`${styles.teaser} ${hidden && styles.hidden}`}>{hidden ? <b>({t('hidden')})</b> : <Markdown title={title} content={content} />}</div>
+    <div className={`${styles.teaser} ${hidden && styles.hidden}`}>
+      {hidden ? (
+        <b>({t('hidden')})</b>
+      ) : (
+        <>
+          {title && (
+            <span>
+              <b>{title}</b>
+              {content ? ': ' : ''}
+            </span>
+          )}
+          {content && <ContentPreview content={content} maxLength={9999} />}
+        </>
+      )}
+    </div>
   );
 
   const { imageSize, showOPComment } = useCatalogStyleStore();

@@ -91,7 +91,6 @@ const TopBarDesktop = () => {
           to='boards/create'
           onClick={(e) => {
             e.preventDefault();
-            alert('Coming soon');
           }}
         >
           Create
@@ -102,7 +101,6 @@ const TopBarDesktop = () => {
           to='boards'
           onClick={(e) => {
             e.preventDefault();
-            alert('Coming soon');
           }}
         >
           Vote

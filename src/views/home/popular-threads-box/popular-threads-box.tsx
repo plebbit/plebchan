@@ -18,7 +18,7 @@ interface PopularThreadProps {
   boardShortAddress: string;
 }
 
-const ContentPreview = ({ content, maxLength = 99 }: { content: string; maxLength?: number }) => {
+export const ContentPreview = ({ content, maxLength = 99 }: { content: string; maxLength?: number }) => {
   const plainText = removeMarkdown(content).trim().replaceAll('&nbsp;', '').replace(/\n\n/g, '\n').replaceAll('\n\n', '');
   const truncatedText = plainText.length > maxLength ? `${plainText.substring(0, maxLength).trim()}...` : plainText;
 
