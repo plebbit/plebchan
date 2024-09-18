@@ -220,7 +220,7 @@
   --reply-backlink-mobile-border-top: 1px solid #b7c5d9;
 
   /* board banner */
-  --banner-image-border: 1px solid #000;
+  --banner-image-border: 1px solid #34345c;
   --board-title-font-size: 28px;
   --board-title-font-family: Tahoma, sans-serif;
   --board-address-font-size: x-small;
@@ -604,7 +604,7 @@
   --reply-backlink-mobile-border-top: 1px solid #b7c5d9;
 
   /* board banner */
-  --banner-image-border: 1px solid #000;
+  --banner-image-border: none;
   --board-title-font-size: 32px;
   --board-title-text-color: #af0a0f;
   --board-title-font-family: times new roman, serif;
@@ -798,7 +798,7 @@
   --body-font-size: 10pt;
 
   /* board banner */
-  --banner-image-border: none;
+  --banner-image-border: 1px solid #000;
 
   /* board title */
   --board-title-font-size: 28px;
@@ -1011,7 +1011,7 @@
   --body-font-size: 10pt;
 
   /* board banner */
-  --banner-image-border: none;
+  --banner-image-border: 1px solid #000;
 
   /* board title */
   --board-title-font-size: 28px;
