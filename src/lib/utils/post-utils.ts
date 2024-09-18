@@ -40,14 +40,14 @@ export const formatMarkdown = (content: string): string => {
 
 export function removeMarkdown(md: string): string {
   return md
-    .replace(/\[([^\]]*?)\][\[\(].*?[\]\)]/g, '$1') // Remove links
+    .replace(/\[([^\]]*?)][[(].*?[)\]]/g, '$1') // Remove links
     .replace(/[*_~`]/g, '') // Remove emphasis and code markers
     .replace(/^#+\s*(.+)$/gm, '$1') // Remove headers
     .replace(/^\s*[-*+]\s+/gm, '') // Remove list markers
     .replace(/^\s*>\s+/gm, '') // Remove blockquotes
     .replace(/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/g, '') // Remove reference-style links
     .replace(/^(\n)?\s{0,}#{1,6}\s*( (.+))? +#+$|^(\n)?\s{0,}#{1,6}\s*( (.+))?$/gm, '$1$3$4$6') // Remove atx-style headers
-    .replace(/([\*]+)(\S)(.*?\S)??\1/g, '$2$3') // Remove * emphasis
+    .replace(/([*]+)(\S)(.*?\S)?\1/g, '$2$3') // Remove * emphasis
     .replace(/(^|\W)([_]+)(\S)(.*?\S)??\2($|\W)/g, '$1$3$4$5') // Remove _ emphasis
     .replace(/(`{3,})(.*?)\1/gm, '$2') // Remove code blocks
     .replace(/`(.+?)`/g, '$1') // Remove inline code
