@@ -3,13 +3,12 @@ import useAnonModeStore from '../stores/use-anon-mode-store';
 import { useCallback, useMemo } from 'react';
 
 const useAnonMode = (postCid?: string) => {
-  const { anonMode, threadSigners, setThreadSigner, setAddressSigner, getAddressSigner, setCurrentAnonSignerAddress } = useAnonModeStore((state) => ({
+  const { anonMode, threadSigners, setThreadSigner, setAddressSigner, getAddressSigner } = useAnonModeStore((state) => ({
     anonMode: state.anonMode,
     threadSigners: state.threadSigners,
     setThreadSigner: state.setThreadSigner,
     setAddressSigner: state.setAddressSigner,
     getAddressSigner: state.getAddressSigner,
-    setCurrentAnonSignerAddress: state.setCurrentAnonSignerAddress,
   }));
 
   const threadSigner = useMemo(() => (postCid ? threadSigners[postCid] : undefined), [postCid, threadSigners]);
@@ -27,7 +26,6 @@ const useAnonMode = (postCid?: string) => {
             } else {
               setAddressSigner(signer);
             }
-            setCurrentAnonSignerAddress(signer.address);
           }
           return signer;
         } catch (error) {
@@ -36,7 +34,6 @@ const useAnonMode = (postCid?: string) => {
       } else {
         try {
           const signer = await account?.plebbit.createSigner({ type: 'ed25519', privateKey: threadSigner?.privateKey });
-          setCurrentAnonSignerAddress(signer.address);
           return signer;
         } catch (error) {
           console.error('Failed to retrieve anonymous signer:', error);
@@ -44,17 +41,14 @@ const useAnonMode = (postCid?: string) => {
       }
     }
     return null;
-  }, [anonMode, postCid, threadSigner, account, setThreadSigner, setAddressSigner, setCurrentAnonSignerAddress]);
+  }, [anonMode, postCid, threadSigner, account, setThreadSigner, setAddressSigner]);
 
   const getExistingSigner = useCallback(
     (address: string) => {
       const signer = getAddressSigner(address);
-      if (signer) {
-        setCurrentAnonSignerAddress(signer.address);
-      }
       return signer;
     },
-    [getAddressSigner, setCurrentAnonSignerAddress],
+    [getAddressSigner],
   );
 
   return { anonMode, getNewSigner, getExistingSigner };

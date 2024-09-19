@@ -15,7 +15,6 @@ import styles from './reply-modal.module.css';
 import { LinkTypePreviewer } from '../post-form';
 import _ from 'lodash';
 import useAnonMode from '../../hooks/use-anon-mode';
-import useAnonModeStore from '../../stores/use-anon-mode-store';
 
 interface ReplyModalProps {
   closeModal: () => void;
@@ -41,7 +40,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const address = comment?.author?.address;
 
   const hasCalledAnonAddressRef = useRef(false);
-  const { setCurrentAnonSignerAddress } = useAnonModeStore();
 
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
@@ -55,7 +53,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             displayName: displayName || undefined,
           },
         });
-        setCurrentAnonSignerAddress(existingSigner.address);
       } else {
         const newSigner = await getNewSigner();
         if (newSigner) {
@@ -66,11 +63,10 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
               displayName: displayName || undefined,
             },
           });
-          setCurrentAnonSignerAddress(newSigner.address);
         }
       }
     }
-  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName, setCurrentAnonSignerAddress]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value.slice(contentPrefix.length).trim() || '';

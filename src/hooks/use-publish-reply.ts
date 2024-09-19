@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { ChallengeVerification, Comment, PublishCommentOptions, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { ChallengeVerification, Comment, PublishCommentOptions, useAccount, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
 import useChallengesStore from '../stores/use-challenges-store';
@@ -50,8 +50,6 @@ const useReplyStore = create<ReplyState>((set) => ({
         content,
         link,
         spoiler,
-        ...(author && { author: updatedAuthor }),
-        ...(signer && { signer }),
         onChallenge: (...args: any) => addChallenge(args),
         onChallengeVerification: (challengeVerification: ChallengeVerification, comment: Comment) => {
           alertChallengeVerificationFailed(challengeVerification, comment);
@@ -61,6 +59,14 @@ const useReplyStore = create<ReplyState>((set) => ({
           alert(error.message);
         },
       };
+
+      if (updatedAuthor) {
+        publishCommentOptions.author = updatedAuthor;
+      }
+
+      if (signer) {
+        publishCommentOptions.signer = signer;
+      }
 
       return {
         author: { ...state.author, [parentCid]: updatedAuthor },
@@ -102,6 +108,8 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
   const setReplyStore = useReplyStore((state) => state.setReplyStore);
   const resetReplyStore = useReplyStore((state) => state.resetReplyStore);
 
+  const account = useAccount();
+
   const setPublishReplyOptions = useCallback(
     (options: Partial<SetReplyStoreData>) => {
       const newOptions: Partial<SetReplyStoreData> = {
@@ -110,7 +118,6 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
         content: options.content ?? content,
         link: options.link ?? link,
         spoiler: options.spoiler ?? spoiler,
-        signer: anonMode ? signer || options.signer : undefined,
       };
 
       if ('displayName' in options) {
@@ -118,18 +125,23 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
       }
 
       if (anonMode) {
-        const currentAuthor = signer?.author || author || {};
+        newOptions.signer = signer || options.signer;
         newOptions.author = {
-          ...currentAuthor,
+          ...(author || {}),
+          address: newOptions.signer?.address,
           ...('displayName' in options && { displayName: options.displayName }),
         };
       } else {
-        newOptions.author = undefined;
+        newOptions.signer = undefined;
+        newOptions.author = {
+          address: account?.author?.address,
+          ...('displayName' in options && { displayName: options.displayName }),
+        };
       }
 
       setReplyStore(newOptions as SetReplyStoreData);
     },
-    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode],
+    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode, account],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);

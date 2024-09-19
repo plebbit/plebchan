@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
@@ -9,14 +9,11 @@ import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/po
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useAnonModeStore from '../../stores/use-anon-mode-store';
 import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
-import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
-import usePostCidForPendingPost from '../../hooks/use-post-cid';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
@@ -68,21 +65,12 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  // comment.author.shortAddress is undefined while the comment publishing state is pending, use account instead
-  // in anon mode, use the newly generated signer.address instead, which will be comment.author.address
-  const { anonMode } = useAnonMode();
-  const { getThreadSigner, currentAnonSignerAddress } = useAnonModeStore();
-  const postCidForSigner = usePostCidForPendingPost(parentCid);
-  const anonSignerAddress = postCidForSigner ? getThreadSigner(postCidForSigner)?.address || currentAnonSignerAddress : null;
-  const account = useAccount();
-  const pendingShortAddress = anonMode ? anonSignerAddress && Plebbit.getShortAddress(anonSignerAddress) : account?.author?.shortAddress;
+  const userID = address && Plebbit.getShortAddress(address);
+  const userIDBackgroundColor = hashStringToColor(userID);
+  const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
-
-  const userID = shortAddress || pendingShortAddress;
-  const userIDBackgroundColor = hashStringToColor(userID);
-  const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   const { hidden } = useHide(post);
 

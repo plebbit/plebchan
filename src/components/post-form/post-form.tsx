@@ -55,9 +55,9 @@ const useSubmitStore = create<SubmitState>((set) => ({
   publishCommentOptions: {},
   setSubmitStore: ({ author, displayName, signer, subplebbitAddress, title, content, link, spoiler }) =>
     set((state) => {
-      const updatedAuthor = displayName ? { ...author, displayName } : author;
       const nextState = { ...state };
-      if (author !== undefined) nextState.author = updatedAuthor;
+      if (author !== undefined) nextState.author = author;
+      if (displayName !== undefined) nextState.displayName = displayName;
       if (signer !== undefined) nextState.signer = signer;
       if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
       if (title !== undefined) nextState.title = title || undefined;
@@ -83,8 +83,11 @@ const useSubmitStore = create<SubmitState>((set) => ({
         publishCommentOptions.signer = nextState.signer;
       }
 
-      if (nextState.author) {
-        publishCommentOptions.author = nextState.author;
+      if (nextState.author || nextState.displayName) {
+        publishCommentOptions.author = {
+          ...nextState.author,
+          displayName: nextState.displayName,
+        };
       }
 
       nextState.publishCommentOptions = publishCommentOptions;
