@@ -114,14 +114,14 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
       const newOptions: Partial<SetReplyStoreData> = {
         subplebbitAddress,
         parentCid,
-        content: options.content ?? content,
-        link: options.link ?? link,
+        content: options.content === '' ? undefined : options.content ?? content,
+        link: options.link === '' ? undefined : options.link ?? link,
         spoiler: options.spoiler ?? spoiler,
-        displayName: options.displayName ?? author?.displayName ?? account?.author?.displayName,
+        displayName: options.displayName === '' ? undefined : options.displayName ?? author?.displayName ?? account?.author?.displayName,
       };
 
       if ('displayName' in options) {
-        newOptions.displayName = options.displayName;
+        newOptions.displayName = options.displayName === '' ? undefined : options.displayName;
       }
 
       if (anonMode) {
