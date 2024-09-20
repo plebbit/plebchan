@@ -325,7 +325,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
                 type='text'
                 ref={subjectRef}
                 onChange={(e) => {
-                  setSubmitStore({ title: e.target.value });
+                  setSubmitStore({ title: e.target.value || undefined });
                 }}
               />
               <button onClick={onPublishPost}>{t('post')}</button>
@@ -349,7 +349,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               ref={urlRef}
               onChange={(e) => {
                 setUrl(e.target.value);
-                isInPostView ? setPublishReplyOptions({ link: e.target.value }) : setSubmitStore({ link: e.target.value });
+                isInPostView ? setPublishReplyOptions({ link: e.target.value || undefined }) : setSubmitStore({ link: e.target.value || undefined });
               }}
             />
             <span className={styles.linkType}> {url && <LinkTypePreviewer link={url} />}</span>
