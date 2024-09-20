@@ -233,5 +233,8 @@
   "order": "Kolejność",
   "text": "Tekst",
   "filtered_threads": "Filtrowane wątki",
-  "missing_link_confirm": "Twój post nie zawiera linku z obrazem, domyślnie zostanie przefiltrowany na Plebchan. Możesz wyłączyć ten filtr w ustawieniach lub zobaczyć swój post w innym kliencie Plebbit, takim jak Seedit. Chcesz opublikować mimo to?"
+  "missing_link_confirm": "Twój post nie zawiera linku z obrazem, domyślnie zostanie przefiltrowany na Plebchan. Możesz wyłączyć ten filtr w ustawieniach lub zobaczyć swój post w innym kliencie Plebbit, takim jak Seedit. Chcesz opublikować mimo to?",
+  "no_board_selected_warning": "Proszę wybrać tablicę przed opublikowaniem.",
+  "invalid_url_alert": "Podany link nie jest poprawnym adresem URL.",
+  "empty_comment_alert": "Nie można opublikować pustego komentarza."
 }

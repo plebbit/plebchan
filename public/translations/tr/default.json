@@ -233,5 +233,8 @@
   "order": "Sıra",
   "text": "Metin",
   "filtered_threads": "Filtrelenmiş başlıklar",
-  "missing_link_confirm": "Gönderinizin bir resmi içeren bağlantısı yok, varsayılan olarak Plebchan'da filtrelenecek. Bu filtreyi ayarlardan devre dışı bırakabilir veya gönderinizi Seedit gibi başka bir Plebbit istemcisinde görüntüleyebilirsiniz. Yine de gönderi paylaşmak ister misiniz?"
+  "missing_link_confirm": "Gönderinizin bir resmi içeren bağlantısı yok, varsayılan olarak Plebchan'da filtrelenecek. Bu filtreyi ayarlardan devre dışı bırakabilir veya gönderinizi Seedit gibi başka bir Plebbit istemcisinde görüntüleyebilirsiniz. Yine de gönderi paylaşmak ister misiniz?",
+  "no_board_selected_warning": "Lütfen gönderimden önce bir pano seçin.",
+  "invalid_url_alert": "Verilen bağlantı geçerli bir URL değildir.",
+  "empty_comment_alert": "Boş yorum gönderilemez."
 }

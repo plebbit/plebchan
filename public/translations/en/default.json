@@ -233,5 +233,8 @@
   "order": "Order",
   "text": "Text",
   "filtered_threads": "Filtered threads",
-  "missing_link_confirm": "Your post is missing a link with an image, it will be filtered out by default on Plebchan. You can disable this filter in the settings, or view your post on another Plebbit client, like Seedit. Post anyway?"
+  "missing_link_confirm": "Your post is missing a link with an image, it will be filtered out by default on Plebchan. You can disable this filter in the settings, or view your post on another Plebbit client, like Seedit. Post anyway?",
+  "no_board_selected_warning": "Please select a board before posting.",
+  "invalid_url_alert": "The provided link is not a valid URL.",
+  "empty_comment_alert": "Cannot post empty comment."
 }

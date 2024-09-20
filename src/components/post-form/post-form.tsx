@@ -128,7 +128,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const author = account?.author || {};
   const { displayName } = author || {};
   const [url, setUrl] = useState('');
-  const { link, publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
+  const { publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
   useEffect(() => {
@@ -195,11 +195,16 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentTitle && !currentContent && !currentUrl) {
-      alert(`Cannot post empty comment`);
+      alert(t('empty_comment_alert'));
       return;
     }
     if (currentUrl && !isValidURL(currentUrl)) {
-      alert('The provided link is not a valid URL.');
+      alert(t('invalid_url_alert'));
+      return;
+    }
+
+    if ((isInAllView || isInSubscriptionsView) && !publishCommentOptions.subplebbitAddress) {
+      alert(t('no_board_selected_warning'));
       return;
     }
 
@@ -277,12 +282,12 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentContent && !currentUrl) {
-      alert(`Cannot post empty comment`);
+      alert(t('empty_comment_alert'));
       return;
     }
 
     if (currentUrl && !isValidURL(currentUrl)) {
-      alert('The provided link is not a valid URL.');
+      alert(t('invalid_url_alert'));
       return;
     }
 

@@ -73,12 +73,12 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentContent && !currentUrl) {
-      alert(`Cannot post empty comment`);
+      alert(t('empty_comment_alert'));
       return;
     }
 
     if (currentUrl && !isValidURL(currentUrl)) {
-      alert('The provided link is not a valid URL.');
+      alert(t('invalid_url_alert'));
       return;
     }
 

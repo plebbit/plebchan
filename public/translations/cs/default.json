@@ -233,5 +233,8 @@
   "order": "Pořadí",
   "text": "Text",
   "filtered_threads": "Filtr threads",
-  "missing_link_confirm": "Váš příspěvek postrádá odkaz s obrázkem, ve výchozím nastavení bude na Plebchanu filtrován. Tento filtr můžete vypnout v nastavení nebo si můžete svůj příspěvek prohlédnout na jiném klientovi Plebbit, jako je Seedit. Přesto zveřejnit?"
+  "missing_link_confirm": "Váš příspěvek postrádá odkaz s obrázkem, ve výchozím nastavení bude na Plebchanu filtrován. Tento filtr můžete vypnout v nastavení nebo si můžete svůj příspěvek prohlédnout na jiném klientovi Plebbit, jako je Seedit. Přesto zveřejnit?",
+  "no_board_selected_warning": "Vyberte desku před odesláním.",
+  "invalid_url_alert": "Poskytnutý odkaz není platná adresa URL.",
+  "empty_comment_alert": "Nelze publikovat prázdný komentář."
 }

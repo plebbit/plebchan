@@ -233,5 +233,8 @@
   "order": "Rendit",
   "text": "Tekst",
   "filtered_threads": "Tema të filtruar",
-  "missing_link_confirm": "Postimi juaj i mungon një lidhje me një imazh, ai do të filtrohet automatikisht në Plebchan. Mund ta çaktivizoni këtë filtër në cilësimet, ose të shihni postimin tuaj në një klient tjetër Plebbit, si Seedit. A dëshironi të postoni gjithsesi?"
+  "missing_link_confirm": "Postimi juaj i mungon një lidhje me një imazh, ai do të filtrohet automatikisht në Plebchan. Mund ta çaktivizoni këtë filtër në cilësimet, ose të shihni postimin tuaj në një klient tjetër Plebbit, si Seedit. A dëshironi të postoni gjithsesi?",
+  "no_board_selected_warning": "Ju lutemi zgjidhni një bord para se të postoni.",
+  "invalid_url_alert": "Lidhja e ofruar nuk është një URL e vlefshme.",
+  "empty_comment_alert": "Nuk mund të postoni një koment bosh."
 }
