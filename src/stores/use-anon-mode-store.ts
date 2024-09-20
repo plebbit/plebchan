@@ -29,40 +29,53 @@ const useAnonModeStore = create<AnonModeState>((set, get) => ({
     set((state) => ({
       threadSigners: { ...state.threadSigners, [postCid]: signer },
     }));
-    anonModeStore.setItem(postCid, signer);
+    anonModeStore.setItem(`threadSigner_${postCid}`, signer);
   },
-  getThreadSigner: (postCid: string) => get().threadSigners[postCid],
+  getThreadSigner: (postCid: string) => {
+    const state = get();
+    if (state.threadSigners[postCid]) {
+      return state.threadSigners[postCid];
+    }
+    return null;
+  },
   setAddressSigner: (signer: any) => {
     set((state) => ({
       addressSigners: { ...state.addressSigners, [signer.address]: signer },
     }));
-    anonModeStore.setItem(signer.address, signer);
+    anonModeStore.setItem(`addressSigner_${signer.address}`, signer);
   },
-  getAddressSigner: (address: string) => get().addressSigners[address],
-  currentAnonSignerAddress: null,
+  getAddressSigner: (address: string) => {
+    const state = get();
+    if (state.addressSigners[address]) {
+      return state.addressSigners[address];
+    }
+    return null;
+  },
 }));
 
 const initializeAnonModeStore = async () => {
   const entries: [string, any][] = await anonModeStore.entries();
   const threadSigners: { [key: string]: any } = {};
   const addressSigners: { [key: string]: any } = {};
-  let anonMode = true; // Default value
+  let anonMode = true;
 
   entries.forEach(([key, value]) => {
     if (key === 'anonMode') {
       anonMode = value;
-    } else if (value.address) {
-      addressSigners[value.address] = value;
-    } else {
-      threadSigners[key] = value;
+    } else if (key.startsWith('threadSigner_')) {
+      const postCid = key.replace('threadSigner_', '');
+      threadSigners[postCid] = value;
+    } else if (key.startsWith('addressSigner_')) {
+      const address = key.replace('addressSigner_', '');
+      addressSigners[address] = value;
     }
   });
 
-  useAnonModeStore.setState((state) => ({
-    anonMode, // Set the retrieved anonMode state
-    threadSigners: { ...threadSigners, ...state.threadSigners },
-    addressSigners: { ...addressSigners, ...state.addressSigners },
-  }));
+  useAnonModeStore.setState({
+    anonMode,
+    threadSigners,
+    addressSigners,
+  });
 };
 
 initializeAnonModeStore();
