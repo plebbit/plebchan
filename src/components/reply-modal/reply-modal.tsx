@@ -44,7 +44,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
       hasCalledAnonAddressRef.current = true;
-      const existingSigner = getExistingSigner(address);
+      const existingSigner = await getExistingSigner(address);
       if (existingSigner) {
         setPublishReplyOptions({
           signer: existingSigner,

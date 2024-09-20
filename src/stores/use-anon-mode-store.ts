@@ -23,7 +23,7 @@ const useAnonModeStore = create<AnonModeState>((set, get) => ({
   addressSigners: {},
   setAnonMode: (mode: boolean) => {
     set({ anonMode: mode });
-    anonModeStore.setItem('anonMode', mode); // Persist anonMode state
+    anonModeStore.setItem('anonMode', mode);
   },
   setThreadSigner: (postCid: string, signer: any) => {
     set((state) => ({

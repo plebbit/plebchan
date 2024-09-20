@@ -233,7 +233,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
       hasCalledAnonAddressRef.current = true;
-      const existingSigner = getExistingSigner(address);
+      const existingSigner = await getExistingSigner(address);
       if (existingSigner) {
         setPublishReplyOptions({
           signer: existingSigner,
