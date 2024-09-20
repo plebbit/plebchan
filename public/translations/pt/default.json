@@ -232,5 +232,6 @@
   "enable": "Ativar",
   "order": "Ordem",
   "text": "Texto",
-  "filtered_threads": "Threads filtrados"
+  "filtered_threads": "Threads filtrados",
+  "missing_link_confirm": "Sua postagem está faltando um link com uma imagem, ela será filtrada por padrão no Plebchan. Você pode desativar esse filtro nas configurações ou visualizar sua postagem em outro cliente Plebbit, como o Seedit. Postar mesmo assim?"
 }

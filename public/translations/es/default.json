@@ -232,5 +232,6 @@
   "enable": "Habilitar",
   "order": "Orden",
   "text": "Texto",
-  "filtered_threads": "Hilos filtrados"
+  "filtered_threads": "Hilos filtrados",
+  "missing_link_confirm": "Tu publicación falta un enlace con una imagen, se filtrará de forma predeterminada en Plebchan. Puedes desactivar este filtro en la configuración, o ver tu publicación en otro cliente de Plebbit, como Seedit. ¿Publicar de todos modos?"
 }

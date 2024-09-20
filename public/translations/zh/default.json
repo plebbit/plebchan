@@ -232,5 +232,6 @@
   "enable": "启用",
   "order": "顺序",
   "text": "文本",
-  "filtered_threads": "已过滤的帖子"
+  "filtered_threads": "已过滤的帖子",
+  "missing_link_confirm": "您的帖子缺少带图像的链接，默认情况下将在 Plebchan 中被过滤。您可以在设置中禁用此过滤器，或者在另一个 Plebbit 客户端（如 Seedit）中查看您的帖子。还是发布吗？"
 }

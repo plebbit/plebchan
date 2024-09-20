@@ -232,5 +232,6 @@
   "enable": "Aktiver",
   "order": "Rækkefølge",
   "text": "Tekst",
-  "filtered_threads": "Filtrerede tråde"
+  "filtered_threads": "Filtrerede tråde",
+  "missing_link_confirm": "Dit indlæg mangler et link med et billede, det vil som standard blive filtreret på Plebchan. Du kan deaktivere dette filter i indstillingerne eller se dit indlæg på en anden Plebbit-klient, som Seedit. Vil du alligevel poste?"
 }

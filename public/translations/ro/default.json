@@ -232,5 +232,6 @@
   "enable": "Activare",
   "order": "Ordine",
   "text": "Text",
-  "filtered_threads": "Fire filtrate"
+  "filtered_threads": "Fire filtrate",
+  "missing_link_confirm": "Postarea ta nu are un link cu o imagine, va fi filtrată în mod implicit pe Plebchan. Poți dezactiva acest filtru în setări sau vizualiza postarea ta pe un alt client Plebbit, cum ar fi Seedit. Postează oricum?"
 }

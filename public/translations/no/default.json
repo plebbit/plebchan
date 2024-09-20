@@ -232,5 +232,6 @@
   "enable": "Aktiver",
   "order": "Rekkefølge",
   "text": "Tekst",
-  "filtered_threads": "Filtrerte tråder"
+  "filtered_threads": "Filtrerte tråder",
+  "missing_link_confirm": "Innlegget ditt mangler en lenke med et bilde, og vil bli filtrert som standard på Plebchan. Du kan deaktivere dette filteret i innstillingene, eller se innlegget ditt på en annen Plebbit-klient, som Seedit. Vil du legge ut uansett?"
 }

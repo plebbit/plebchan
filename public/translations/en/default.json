@@ -232,5 +232,6 @@
   "enable": "Enable",
   "order": "Order",
   "text": "Text",
-  "filtered_threads": "Filtered threads"
+  "filtered_threads": "Filtered threads",
+  "missing_link_confirm": "Your post is missing a link with an image, it will be filtered out by default on Plebchan. You can disable this filter in the settings, or view your post on another Plebbit client, like Seedit. Post anyway?"
 }

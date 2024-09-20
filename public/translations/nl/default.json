@@ -232,5 +232,6 @@
   "enable": "Inschakelen",
   "order": "Volgorde",
   "text": "Tekst",
-  "filtered_threads": "Gefilterde threads"
+  "filtered_threads": "Gefilterde threads",
+  "missing_link_confirm": "Je bericht mist een link met een afbeelding, deze zal standaard op Plebchan worden gefilterd. Je kunt deze filter in de instellingen uitschakelen of je bericht bekijken op een andere Plebbit-client, zoals Seedit. Toch posten?"
 }

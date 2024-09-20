@@ -232,5 +232,6 @@
   "enable": "Engedélyez",
   "order": "Rendelés",
   "text": "Szöveg",
-  "filtered_threads": "Szűrt szálak"
+  "filtered_threads": "Szűrt szálak",
+  "missing_link_confirm": "A bejegyzésedből hiányzik egy képet tartalmazó hivatkozás, alapértelmezés szerint kiszűrésre kerül a Plebchan-on. Ezt a szűrőt letilthatod a beállításokban, vagy megnézheted a bejegyzésedet egy másik Plebbit kliensben, például a Seedit-en. Mégis posztolj?"
 }

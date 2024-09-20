@@ -232,5 +232,6 @@
   "enable": "Activer",
   "order": "Ordre",
   "text": "Texte",
-  "filtered_threads": "Threads filtrés"
+  "filtered_threads": "Threads filtrés",
+  "missing_link_confirm": "Votre publication est manquante d'un lien avec une image, elle sera filtrée par défaut sur Plebchan. Vous pouvez désactiver ce filtre dans les paramètres, ou voir votre publication sur un autre client Plebbit, comme Seedit. Publier quand même ?"
 }

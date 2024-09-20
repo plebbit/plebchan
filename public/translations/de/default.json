@@ -232,5 +232,6 @@
   "enable": "Aktivieren",
   "order": "Reihenfolge",
   "text": "Text",
-  "filtered_threads": "Gefilterte Threads"
+  "filtered_threads": "Gefilterte Threads",
+  "missing_link_confirm": "Ihr Beitrag fehlt ein Link mit einem Bild, er wird standardmäßig auf Plebchan herausgefiltert. Sie können diesen Filter in den Einstellungen deaktivieren oder Ihren Beitrag in einem anderen Plebbit-Client wie Seedit anzeigen. Trotzdem posten?"
 }

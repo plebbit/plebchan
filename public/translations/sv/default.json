@@ -232,5 +232,6 @@
   "enable": "Aktivera",
   "order": "Ordning",
   "text": "Text",
-  "filtered_threads": "Filtrerade trådar"
+  "filtered_threads": "Filtrerade trådar",
+  "missing_link_confirm": "Ditt inlägg saknar en länk med en bild, det kommer att filtreras som standard på Plebchan. Du kan inaktivera detta filter i inställningarna, eller visa ditt inlägg på en annan Plebbit-klient, som Seedit. Vill du ändå posta?"
 }

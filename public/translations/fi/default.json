@@ -232,5 +232,6 @@
   "enable": "Ota käyttöön",
   "order": "Järjestys",
   "text": "Teksti",
-  "filtered_threads": "Suodatetut ketjut"
+  "filtered_threads": "Suodatetut ketjut",
+  "missing_link_confirm": "Viestistäsi puuttuu kuvaan liittyvä linkki, se suodatetaan oletusarvoisesti Plebchanissa. Voit poistaa tämän suodattimen käytöstä asetuksissa tai katsoa viestiäsi toisella Plebbit-asiakkaalla, kuten Seedit. Haluaako silti julkaista?"
 }

@@ -232,5 +232,6 @@
   "enable": "Aktivizo",
   "order": "Rendit",
   "text": "Tekst",
-  "filtered_threads": "Tema të filtruar"
+  "filtered_threads": "Tema të filtruar",
+  "missing_link_confirm": "Postimi juaj i mungon një lidhje me një imazh, ai do të filtrohet automatikisht në Plebchan. Mund ta çaktivizoni këtë filtër në cilësimet, ose të shihni postimin tuaj në një klient tjetër Plebbit, si Seedit. A dëshironi të postoni gjithsesi?"
 }

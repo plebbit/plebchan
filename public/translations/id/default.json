@@ -232,5 +232,6 @@
   "enable": "Aktifkan",
   "order": "Urutan",
   "text": "Teks",
-  "filtered_threads": "Thread yang difilter"
+  "filtered_threads": "Thread yang difilter",
+  "missing_link_confirm": "Postingan Anda tidak memiliki tautan dengan gambar, itu akan difilter secara default di Plebchan. Anda dapat menonaktifkan filter ini di pengaturan, atau melihat postingan Anda di klien Plebbit lain, seperti Seedit. Posting saja?"
 }

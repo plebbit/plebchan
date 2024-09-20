@@ -14,7 +14,7 @@ import {
 } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
-import { getLinkMediaInfo } from '../../lib/utils/media-utils';
+import { getHasThumbnail, getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { formatMarkdown } from '../../lib/utils/post-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -198,9 +198,21 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       alert(`Cannot post empty comment`);
       return;
     }
-    if (link && !isValidURL(link)) {
+    if (currentUrl && !isValidURL(currentUrl)) {
       alert('The provided link is not a valid URL.');
       return;
+    }
+
+    if (!isInPostView) {
+      const linkMediaInfo = getLinkMediaInfo(currentUrl);
+      const hasThumbnail = getHasThumbnail(linkMediaInfo, currentUrl);
+
+      if (!hasThumbnail) {
+        const confirmMessage = t('missing_link_confirm');
+        if (!window.confirm(confirmMessage)) {
+          return;
+        }
+      }
     }
 
     publishComment();
