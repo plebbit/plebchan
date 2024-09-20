@@ -97,7 +97,7 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
   const { anonMode } = useAnonMode();
 
   const { author, signer, content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
-    author: state.author[parentCid] || (account?.author ? { ...account.author, displayName: account.author.displayName || undefined } : undefined),
+    author: state.author[parentCid] || (account?.author ? { displayName: account.author.displayName || undefined } : undefined),
     displayName: state.displayName[parentCid] || account?.author?.displayName,
     signer: state.signer[parentCid],
     content: state.content[parentCid] || '',
