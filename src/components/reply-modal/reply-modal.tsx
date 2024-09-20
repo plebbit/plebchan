@@ -132,14 +132,14 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     : `The subplebbit might be offline and publishing might fail.`;
 
   useEffect(() => {
-    if (showReplyModal && !isMobile) {
+    if (showReplyModal) {
       setTimeout(() => {
         if (textRef.current) {
           textRef.current.focus();
         }
       }, 0);
     }
-  }, [showReplyModal, isMobile]);
+  }, [showReplyModal]);
 
   useEffect(() => {
     if (textRef.current) {
