@@ -232,5 +232,9 @@
   "enable": "I-enable",
   "order": "Kaayusan",
   "text": "Teksto",
-  "filtered_threads": "Na-filter na mga thread"
+  "filtered_threads": "Na-filter na mga thread",
+  "missing_link_confirm": "Ang iyong post ay walang link na may larawan, ito ay awtomatikong magiging filter sa Plebchan. Maaari mong huwag paganahin ang filter na ito sa mga setting, o tingnan ang iyong post sa ibang Plebbit client, tulad ng Seedit. Mag-post pa rin?",
+  "no_board_selected_warning": "Mangyaring pumili ng board bago mag-post.",
+  "invalid_url_alert": "Ang ibinigay na link ay hindi isang wastong URL.",
+  "empty_comment_alert": "Hindi makapag-post ng walang laman na komento."
 }

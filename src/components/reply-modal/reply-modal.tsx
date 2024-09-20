@@ -15,7 +15,6 @@ import styles from './reply-modal.module.css';
 import { LinkTypePreviewer } from '../post-form';
 import _ from 'lodash';
 import useAnonMode from '../../hooks/use-anon-mode';
-import useAnonModeStore from '../../stores/use-anon-mode-store';
 
 interface ReplyModalProps {
   closeModal: () => void;
@@ -41,12 +40,11 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const address = comment?.author?.address;
 
   const hasCalledAnonAddressRef = useRef(false);
-  const { setCurrentAnonSignerAddress } = useAnonModeStore();
 
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
       hasCalledAnonAddressRef.current = true;
-      const existingSigner = getExistingSigner(address);
+      const existingSigner = await getExistingSigner(address);
       if (existingSigner) {
         setPublishReplyOptions({
           signer: existingSigner,
@@ -55,7 +53,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             displayName: displayName || undefined,
           },
         });
-        setCurrentAnonSignerAddress(existingSigner.address);
       } else {
         const newSigner = await getNewSigner();
         if (newSigner) {
@@ -66,23 +63,22 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
               displayName: displayName || undefined,
             },
           });
-          setCurrentAnonSignerAddress(newSigner.address);
         }
       }
     }
-  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName, setCurrentAnonSignerAddress]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value.slice(contentPrefix.length).trim() || '';
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentContent && !currentUrl) {
-      alert(`Cannot post empty comment`);
+      alert(t('empty_comment_alert'));
       return;
     }
 
     if (currentUrl && !isValidURL(currentUrl)) {
-      alert('The provided link is not a valid URL.');
+      alert(t('invalid_url_alert'));
       return;
     }
 
@@ -136,14 +132,14 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     : `The subplebbit might be offline and publishing might fail.`;
 
   useEffect(() => {
-    if (showReplyModal && !isMobile) {
+    if (showReplyModal) {
       setTimeout(() => {
         if (textRef.current) {
           textRef.current.focus();
         }
       }, 0);
     }
-  }, [showReplyModal, isMobile]);
+  }, [showReplyModal]);
 
   useEffect(() => {
     if (textRef.current) {

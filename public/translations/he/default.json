@@ -232,5 +232,9 @@
   "enable": "הפעל",
   "order": "סדר",
   "text": "טקסט",
-  "filtered_threads": "אשכולות ממוינים"
+  "filtered_threads": "אשכולות ממוינים",
+  "missing_link_confirm": "הפוסט שלך חסר קישור עם תמונה, הוא ית过滤 ברירת מחדל ב-Plebchan. אתה יכול לבטל את הפילטר הזה בהגדרות, או לצפות בפוסט שלך בלקוח Plebbit אחר, כמו Seedit. לפרסם בכל מקרה?",
+  "no_board_selected_warning": "אנא בחר לוח לפני פרסום.",
+  "invalid_url_alert": "הלינק שסופק אינו כתובת URL חוקית.",
+  "empty_comment_alert": "לא ניתן לפרסם תגובה ריקה."
 }

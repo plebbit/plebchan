@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { ChallengeVerification, Comment, PublishCommentOptions, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { ChallengeVerification, Comment, PublishCommentOptions, useAccount, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
 import useChallengesStore from '../stores/use-challenges-store';
@@ -50,8 +50,6 @@ const useReplyStore = create<ReplyState>((set) => ({
         content,
         link,
         spoiler,
-        ...(author && { author: updatedAuthor }),
-        ...(signer && { signer }),
         onChallenge: (...args: any) => addChallenge(args),
         onChallengeVerification: (challengeVerification: ChallengeVerification, comment: Comment) => {
           alertChallengeVerificationFailed(challengeVerification, comment);
@@ -61,6 +59,14 @@ const useReplyStore = create<ReplyState>((set) => ({
           alert(error.message);
         },
       };
+
+      if (updatedAuthor) {
+        publishCommentOptions.author = updatedAuthor;
+      }
+
+      if (signer) {
+        publishCommentOptions.signer = signer;
+      }
 
       return {
         author: { ...state.author, [parentCid]: updatedAuthor },
@@ -87,17 +93,18 @@ const useReplyStore = create<ReplyState>((set) => ({
 
 const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: string }) => {
   const parentCid = cid;
+  const account = useAccount();
+  const { anonMode } = useAnonMode();
+
   const { author, signer, content, link, spoiler, publishCommentOptions } = useReplyStore((state) => ({
-    author: state.author[parentCid],
-    displayName: state.displayName[parentCid],
+    author: state.author[parentCid] || (account?.author ? { displayName: account.author.displayName || undefined } : undefined),
+    displayName: state.displayName[parentCid] || account?.author?.displayName,
     signer: state.signer[parentCid],
-    content: state.content[parentCid],
+    content: state.content[parentCid] || '',
     link: state.link[parentCid],
-    spoiler: state.spoiler[parentCid],
+    spoiler: state.spoiler[parentCid] || false,
     publishCommentOptions: state.publishCommentOptions[parentCid],
   }));
-
-  const { anonMode } = useAnonMode();
 
   const setReplyStore = useReplyStore((state) => state.setReplyStore);
   const resetReplyStore = useReplyStore((state) => state.resetReplyStore);
@@ -107,29 +114,34 @@ const useReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: 
       const newOptions: Partial<SetReplyStoreData> = {
         subplebbitAddress,
         parentCid,
-        content: options.content ?? content,
-        link: options.link ?? link,
+        content: options.content === '' ? undefined : options.content ?? content,
+        link: options.link === '' ? undefined : options.link ?? link,
         spoiler: options.spoiler ?? spoiler,
-        signer: anonMode ? signer || options.signer : undefined,
+        displayName: options.displayName === '' ? undefined : options.displayName ?? author?.displayName ?? account?.author?.displayName,
       };
 
       if ('displayName' in options) {
-        newOptions.displayName = options.displayName;
+        newOptions.displayName = options.displayName === '' ? undefined : options.displayName;
       }
 
       if (anonMode) {
-        const currentAuthor = signer?.author || author || {};
+        newOptions.signer = signer || options.signer;
         newOptions.author = {
-          ...currentAuthor,
+          ...(author || {}),
+          address: newOptions.signer?.address,
           ...('displayName' in options && { displayName: options.displayName }),
         };
       } else {
-        newOptions.author = undefined;
+        newOptions.signer = undefined;
+        newOptions.author = {
+          address: account?.author?.address,
+          ...('displayName' in options && { displayName: options.displayName }),
+        };
       }
 
       setReplyStore(newOptions as SetReplyStoreData);
     },
-    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode],
+    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode, account],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);

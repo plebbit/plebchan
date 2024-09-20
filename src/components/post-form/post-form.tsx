@@ -14,7 +14,7 @@ import {
 } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
-import { getLinkMediaInfo } from '../../lib/utils/media-utils';
+import { getHasThumbnail, getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { formatMarkdown } from '../../lib/utils/post-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -55,9 +55,9 @@ const useSubmitStore = create<SubmitState>((set) => ({
   publishCommentOptions: {},
   setSubmitStore: ({ author, displayName, signer, subplebbitAddress, title, content, link, spoiler }) =>
     set((state) => {
-      const updatedAuthor = displayName ? { ...author, displayName } : author;
       const nextState = { ...state };
-      if (author !== undefined) nextState.author = updatedAuthor;
+      if (author !== undefined) nextState.author = author;
+      if (displayName !== undefined) nextState.displayName = displayName;
       if (signer !== undefined) nextState.signer = signer;
       if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
       if (title !== undefined) nextState.title = title || undefined;
@@ -83,8 +83,11 @@ const useSubmitStore = create<SubmitState>((set) => ({
         publishCommentOptions.signer = nextState.signer;
       }
 
-      if (nextState.author) {
-        publishCommentOptions.author = nextState.author;
+      if (nextState.author || nextState.displayName) {
+        publishCommentOptions.author = {
+          ...nextState.author,
+          displayName: nextState.displayName,
+        };
       }
 
       nextState.publishCommentOptions = publishCommentOptions;
@@ -125,8 +128,14 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const author = account?.author || {};
   const { displayName } = author || {};
   const [url, setUrl] = useState('');
-  const { link, publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
+  const { publishCommentOptions, setSubmitStore, resetSubmitStore } = useSubmitStore();
   const { index, publishComment } = usePublishComment(publishCommentOptions);
+
+  useEffect(() => {
+    if (displayName) {
+      setSubmitStore({ displayName });
+    }
+  }, [displayName, setSubmitStore]);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
   const urlRef = useRef<HTMLInputElement>(null);
@@ -186,12 +195,29 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentTitle && !currentContent && !currentUrl) {
-      alert(`Cannot post empty comment`);
+      alert(t('empty_comment_alert'));
       return;
     }
-    if (link && !isValidURL(link)) {
-      alert('The provided link is not a valid URL.');
+    if (currentUrl && !isValidURL(currentUrl)) {
+      alert(t('invalid_url_alert'));
       return;
+    }
+
+    if ((isInAllView || isInSubscriptionsView) && !publishCommentOptions.subplebbitAddress) {
+      alert(t('no_board_selected_warning'));
+      return;
+    }
+
+    if (!isInPostView) {
+      const linkMediaInfo = getLinkMediaInfo(currentUrl);
+      const hasThumbnail = getHasThumbnail(linkMediaInfo, currentUrl);
+
+      if (!hasThumbnail) {
+        const confirmMessage = t('missing_link_confirm');
+        if (!window.confirm(confirmMessage)) {
+          return;
+        }
+      }
     }
 
     publishComment();
@@ -224,7 +250,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const getAnonAddressForReply = useCallback(async () => {
     if (anonMode && !hasCalledAnonAddressRef.current) {
       hasCalledAnonAddressRef.current = true;
-      const existingSigner = getExistingSigner(address);
+      const existingSigner = await getExistingSigner(address);
       if (existingSigner) {
         setPublishReplyOptions({
           signer: existingSigner,
@@ -256,12 +282,12 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentContent && !currentUrl) {
-      alert(`Cannot post empty comment`);
+      alert(t('empty_comment_alert'));
       return;
     }
 
     if (currentUrl && !isValidURL(currentUrl)) {
-      alert('The provided link is not a valid URL.');
+      alert(t('invalid_url_alert'));
       return;
     }
 
@@ -316,7 +342,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
                 type='text'
                 ref={subjectRef}
                 onChange={(e) => {
-                  setSubmitStore({ title: e.target.value });
+                  setSubmitStore({ title: e.target.value || undefined });
                 }}
               />
               <button onClick={onPublishPost}>{t('post')}</button>
@@ -340,7 +366,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               ref={urlRef}
               onChange={(e) => {
                 setUrl(e.target.value);
-                isInPostView ? setPublishReplyOptions({ link: e.target.value }) : setSubmitStore({ link: e.target.value });
+                isInPostView ? setPublishReplyOptions({ link: e.target.value || undefined }) : setSubmitStore({ link: e.target.value || undefined });
               }}
             />
             <span className={styles.linkType}> {url && <LinkTypePreviewer link={url} />}</span>

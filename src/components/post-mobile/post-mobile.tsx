@@ -1,20 +1,17 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import useAnonModeStore from '../../stores/use-anon-mode-store';
 import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
-import useAnonMode from '../../hooks/use-anon-mode';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
-import usePostCidForPendingPost from '../../hooks/use-post-cid';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
 import CommentMedia from '../comment-media';
@@ -49,21 +46,13 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
 
   const isReply = parentCid;
 
-  // comment.author.shortAddress is undefined while the comment publishing state is pending, use account instead
-  // in anon mode, use the newly generated signer.address instead, which will be comment.author.address
-  const { anonMode } = useAnonMode();
-  const { getThreadSigner, currentAnonSignerAddress } = useAnonModeStore();
-  const postCidForSigner = usePostCidForPendingPost(parentCid);
-  const anonSignerAddress = postCidForSigner ? getThreadSigner(postCidForSigner)?.address || currentAnonSignerAddress : null;
-  const account = useAccount();
-  const pendingShortAddress = anonMode ? anonSignerAddress && Plebbit.getShortAddress(anonSignerAddress) : account?.author?.shortAddress;
-
   const stateString = useStateString(post);
 
   const handleUserAddressClick = useAuthorAddressClick();
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
-  const userIDBackgroundColor = hashStringToColor(shortAddress || pendingShortAddress);
+  const userID = address && Plebbit.getShortAddress(address);
+  const userIDBackgroundColor = hashStringToColor(userID);
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   const { hidden } = useHide(post);
@@ -113,10 +102,10 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                       <span
                         title={t('highlight_posts')}
                         className={styles.userAddress}
-                        onClick={() => handleUserAddressClick(shortAddress || pendingShortAddress, postCid)}
+                        onClick={() => handleUserAddressClick(userID, postCid)}
                         style={{ backgroundColor: userIDBackgroundColor, color: userIDTextColor }}
                       >
-                        {shortAddress || pendingShortAddress}
+                        {userID}
                       </span>
                     }
                     content={`${numberOfPostsByAuthor === 1 ? t('1_post_by_this_id') : t('x_posts_by_this_id', { number: numberOfPostsByAuthor })}`}
