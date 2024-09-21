@@ -25,7 +25,7 @@ import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, deleted, link, locked, parentCid, pinned, postCid, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, deleted, link, locked, parentCid, pinned, postCid, reason, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, shortAddress } = author || {};
@@ -61,7 +61,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
     <>
       <div className={styles.postInfo}>
         <PostMenuMobile post={post} />
-        <span className={(hidden || deleted || removed) && styles.postDesktopHidden}>
+        <span className={(hidden || ((removed || deleted) && !reason)) && parentCid ? styles.postDesktopHidden : ''}>
           <span className={styles.nameBlock}>
             <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
               {removed ? (
@@ -307,7 +307,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   if (editedComment) {
     post = editedComment;
   }
-  const { author, cid, deleted, postCid, removed, subplebbitAddress } = post || {};
+  const { author, cid, deleted, postCid, reason, removed, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -321,7 +321,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
           data-post-cid={postCid}
         >
           <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
-          {!hidden && !deleted && !removed && <PostMessageMobile post={post} />}
+          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <PostMessageMobile post={post} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>
@@ -331,7 +331,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
+  const { author, cid, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -379,7 +379,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
             <div className={styles.postContainer}>
               <div className={styles.postOp} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
                 <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
-                {content && <PostMessageMobile post={post} />}
+                <PostMessageMobile post={post} />
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
                 <div className={styles.postLink}>
