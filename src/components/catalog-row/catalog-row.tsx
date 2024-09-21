@@ -15,7 +15,6 @@ import useHide from '../../hooks/use-hide';
 import useWindowWidth from '../../hooks/use-window-width';
 import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
-import Markdown from '../markdown';
 import _ from 'lodash';
 import { ContentPreview } from '../../views/home/popular-threads-box';
 
