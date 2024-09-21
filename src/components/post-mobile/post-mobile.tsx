@@ -61,7 +61,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
     <>
       <div className={styles.postInfo}>
         <PostMenuMobile post={post} />
-        <span className={(hidden || ((removed || deleted) && !reason)) && parentCid && styles.postDesktopHidden}>
+        <span className={(hidden || ((removed || deleted) && !reason)) && parentCid ? styles.postDesktopHidden : ''}>
           <span className={styles.nameBlock}>
             <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
               {removed ? (

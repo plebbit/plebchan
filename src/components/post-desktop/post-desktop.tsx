@@ -77,7 +77,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu post={post} />}
-      <span className={(hidden || ((removed || deleted) && !reason)) && parentCid && styles.postDesktopHidden}>
+      <span className={(hidden || ((removed || deleted) && !reason)) && parentCid ? styles.postDesktopHidden : ''}>
         {title &&
           (title.length <= 75 ? (
             <span className={styles.subject}>{title} </span>
