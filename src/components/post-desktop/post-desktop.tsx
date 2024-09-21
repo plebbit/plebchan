@@ -77,7 +77,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu post={post} />}
-      <span className={(hidden || removed || deleted) && styles.postDesktopHidden}>
+      <span className={(hidden || removed || deleted) && parentCid && styles.postDesktopHidden}>
         {title &&
           (title.length <= 75 ? (
             <span className={styles.subject}>{title} </span>
@@ -399,7 +399,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, deleted, link, pinned, postCid, removed, state, subplebbitAddress } = post || {};
+  const { author, cid, content, deleted, link, parentCid, pinned, postCid, removed, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -450,7 +450,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
           <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && <div className={styles.spacer} />}
-          {!isHidden && content && <PostMessage post={post} />}
+          {!(isHidden && parentCid) && <PostMessage post={post} />}
         </div>
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replyCount > 5 || (pinned && repliesCount > 0)) && !isInPostPageView && (
           <span className={styles.summary}>

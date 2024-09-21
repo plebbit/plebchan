@@ -61,7 +61,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
     <>
       <div className={styles.postInfo}>
         <PostMenuMobile post={post} />
-        <span className={(hidden || deleted || removed) && styles.postDesktopHidden}>
+        <span className={(hidden || deleted || removed) && parentCid && styles.postDesktopHidden}>
           <span className={styles.nameBlock}>
             <span className={`${styles.name} ${(isDescription || isRules || authorRole) && !(deleted || removed) && styles.capcodeMod}`}>
               {removed ? (
@@ -331,7 +331,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
+  const { author, cid, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -379,7 +379,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
             <div className={styles.postContainer}>
               <div className={styles.postOp} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
                 <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
-                {content && <PostMessageMobile post={post} />}
+                <PostMessageMobile post={post} />
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
                 <div className={styles.postLink}>
