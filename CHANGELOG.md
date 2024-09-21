@@ -1,3 +1,13 @@
+## [0.2.7](https://github.com/plebbit/plebchan/compare/v0.2.6...v0.2.7) (2024-09-21)
+
+
+### Bug Fixes
+
+* **post:** deleted or removed posts appeared collapsed like replies ([d3af6c2](https://github.com/plebbit/plebchan/commit/d3af6c2a44f0a868a07e57822369af62bf015d1e))
+* **post:** deleted or removed replies should not be collapsed if edit reason is provided ([994c667](https://github.com/plebbit/plebchan/commit/994c667819266c14c4bcdba5c3738665245e9f09))
+
+
+
 ## [0.2.6](https://github.com/plebbit/plebchan/compare/v0.2.5...v0.2.6) (2024-09-20)
 
 
