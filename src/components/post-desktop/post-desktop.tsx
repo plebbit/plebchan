@@ -46,7 +46,7 @@ const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
 
 const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, deleted, locked, pinned, parentCid, postCid, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const { author, cid, deleted, locked, pinned, parentCid, postCid, reason, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
   const replies = useReplies(post);
   const { address, shortAddress } = author || {};
@@ -77,7 +77,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   return (
     <div className={styles.postInfo}>
       {!isHidden && <EditMenu post={post} />}
-      <span className={(hidden || removed || deleted) && parentCid && styles.postDesktopHidden}>
+      <span className={(hidden || ((removed || deleted) && !reason)) && parentCid && styles.postDesktopHidden}>
         {title &&
           (title.length <= 75 ? (
             <span className={styles.subject}>{title} </span>
@@ -290,7 +290,7 @@ const PostMessage = ({ post }: PostProps) => {
 
   return (
     <blockquote className={`${styles.postMessage} ${isRules && styles.rulesMessage}`}>
-      {isReply && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+      {isReply && state !== 'failed' && isReplyingToReply && !(deleted || removed) && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         reason ? (
           <>
@@ -381,7 +381,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     post = editedComment;
   }
 
-  const { author, cid, deleted, link, postCid, removed, subplebbitAddress } = post || {};
+  const { author, cid, deleted, link, postCid, reason, removed, subplebbitAddress } = post || {};
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
@@ -391,7 +391,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
       <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
         {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
-        {!(hidden || removed || deleted) && <PostMessage post={post} />}
+        {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <PostMessage post={post} />}
       </div>
     </div>
   );
