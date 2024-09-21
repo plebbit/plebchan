@@ -1,3 +1,46 @@
+## [0.2.6](https://github.com/plebbit/plebchan/compare/v0.2.5...v0.2.6) (2024-09-20)
+
+
+### Bug Fixes
+
+* **anon mode:** refreshing page could generate a new anon address for thread ([f247f0e](https://github.com/plebbit/plebchan/commit/f247f0e995e1c3a3daadd0ba8528ee1fea209f62))
+* **anon mode:** user id could change for pending post, name field could bug out ([bb97640](https://github.com/plebbit/plebchan/commit/bb976409ff425097187db3a9679a0b80464aa0c9))
+* **banner:** border was missing in some themes ([9a4e62b](https://github.com/plebbit/plebchan/commit/9a4e62bd19d27a410f0210231572f482ae1a2ab1))
+* **board:** show description even if there are no posts ([72f0c79](https://github.com/plebbit/plebchan/commit/72f0c79922b2e1dec60de8e236d2094685561b9f))
+* **catalog filters:** clicking "save" button didn't close the modal ([ea42d5d](https://github.com/plebbit/plebchan/commit/ea42d5d46c0633168a9556a13555151a2b28ab05))
+* **catalog:** greentext and markdown styling shouldn't appear ([7742e1c](https://github.com/plebbit/plebchan/commit/7742e1c9b03f09912162a84d6caf26fb7ae4db88))
+* **edit menu:** modal could appear opaque ([b18c1bc](https://github.com/plebbit/plebchan/commit/b18c1bc4914c1371bc07ac5c48a06e6f05858b2c))
+* p/all description showed "undefined" in window title ([d5dcedf](https://github.com/plebbit/plebchan/commit/d5dcedf3bdb109547097851d4717cc1853b1fd4b))
+* **popular threads box:** don't display markdown syntax, remove white space ([2db5009](https://github.com/plebbit/plebchan/commit/2db5009911982482fadbbb2381db23192ae15452))
+* **post form:** emptying out the fields and posting could result in "empty string" error ([f80f636](https://github.com/plebbit/plebchan/commit/f80f6369a5d8a57b239dfadf91abc5da219d7abb))
+* **post menu mobile:** "view on" links were broken ([2390238](https://github.com/plebbit/plebchan/commit/2390238a10ba1d21e5bdd473627c837b13d6a31b))
+* **post:** "(You)" wasn't appearing for comments published in anon mode by user ([7d2bd38](https://github.com/plebbit/plebchan/commit/7d2bd38f58d45e615a28b2fbd5a7ba6f58247d01))
+* **post:** anon ID could be wrong while post is pending ([e068db9](https://github.com/plebbit/plebchan/commit/e068db97438a73eadee83a87c20b3552e08fb0f2))
+* **post:** incorrect spacing on enlarged images ([5bcfda6](https://github.com/plebbit/plebchan/commit/5bcfda6908301a06a1518a9d51f27648dc8f31dd))
+* **post:** special characters in content could overflow ([c1910c9](https://github.com/plebbit/plebchan/commit/c1910c97888df4616cb765f7a00497796b2e03df))
+* **theme:** changing theme wouldn't work in pending post page ([5f55ade](https://github.com/plebbit/plebchan/commit/5f55adef07895371fa63c44376061dcaa9b067d7))
+
+
+### Features
+
+* **catalog filters:** add "filtered threads" count ([b38948b](https://github.com/plebbit/plebchan/commit/b38948bbc9c1cd1cc1b4f76b93031a4b7576c954))
+* **post form:** alert user when submitting a post without media ([3c27fd6](https://github.com/plebbit/plebchan/commit/3c27fd6c3131c0a1d624bc9c9d34bc583d4345db))
+* **post:** add support for next.js image links ([5a9bf5b](https://github.com/plebbit/plebchan/commit/5a9bf5b88bd805e9b729b70d5fd4d69c39ff99fb))
+* **post:** show media dimensions if available ([4664206](https://github.com/plebbit/plebchan/commit/4664206e77c0331cd827a4cfa1e400d4e2922105))
+* **reply modal:** add autofocus on mobile ([c58a6bc](https://github.com/plebbit/plebchan/commit/c58a6bceec0285710e1348f11eadcef98f0e41b8))
+
+
+### Performance Improvements
+
+* **catalog:** optimize filtered feed ([6e472b2](https://github.com/plebbit/plebchan/commit/6e472b2b17fb7b94790388567eb061e8f164a8e7))
+
+
+### Reverts
+
+* **catalog:** disable catalog filters temporarily, they don't perform well with api ([cadf416](https://github.com/plebbit/plebchan/commit/cadf4160587712cdec5d63212c53f8dd2d698c41))
+
+
+
 ## [0.2.5](https://github.com/plebbit/plebchan/compare/v0.2.4...v0.2.5) (2024-09-06)
 
 
