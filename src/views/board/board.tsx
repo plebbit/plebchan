@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import styles from './board.module.css';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
@@ -53,7 +53,7 @@ const Board = () => {
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
 
   const { sortType } = useSortingStore();
-  const { timeFilterSeconds } = useTimeFilter();
+  const { timeFilterSeconds, timeFilterName } = useTimeFilter();
 
   const feedOptions: any = useMemo(
     () => ({
@@ -66,7 +66,7 @@ const Board = () => {
     [subplebbitAddresses, sortType, timeFilterSeconds, isInAllView, isInSubscriptionsView, hideThreadsWithoutImages],
   );
 
-  const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);
+  const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
   const { accountComments } = useAccountComments();
 
   const resetTriggeredRef = useRef(false);
@@ -142,8 +142,89 @@ const Board = () => {
     </div>
   );
 
+  const handleNewerPostsButtonClick = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      reset();
+    }, 300);
+  };
+
+  // suggest the user to change time filter if there aren't enough posts
+  const { feed: weeklyFeed } = useFeed({
+    subplebbitAddresses,
+    sortType,
+    newerThan: 60 * 60 * 24 * 7,
+    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+  });
+  const { feed: monthlyFeed } = useFeed({
+    subplebbitAddresses,
+    sortType,
+    newerThan: 60 * 60 * 24 * 30,
+    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+  });
+
+  const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowMorePostsSuggestion(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const params = useParams();
+  const currentTimeFilterName = params?.timeFilterName || timeFilterName;
+
   const Footer = () => {
-    return <div className={styles.footer}>{loadingString}</div>;
+    let footerContent;
+    if (feed.length === 0) {
+      footerContent = t('no_posts');
+    }
+    if (hasMore || (subplebbitAddresses && subplebbitAddresses.length === 0)) {
+      footerContent = (
+        <>
+          {subplebbitAddressesWithNewerPosts.length > 0 ? (
+            <div className={styles.stateString}>
+              <Trans
+                i18nKey='newer_posts_available'
+                components={{
+                  1: <span onClick={handleNewerPostsButtonClick} />,
+                }}
+              />
+            </div>
+          ) : (
+            (isInAllView || isInSubscriptionsView) &&
+            showMorePostsSuggestion &&
+            monthlyFeed.length > feed.length &&
+            (weeklyFeed.length > feed.length ? (
+              <div className={styles.stateString}>
+                <Trans
+                  i18nKey='more_posts_last_week'
+                  values={{ currentTimeFilterName }}
+                  components={{
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subs' : `/p/${subplebbitAddress}`) + '/1w'} />,
+                  }}
+                />
+              </div>
+            ) : (
+              <div className={styles.stateString}>
+                <Trans
+                  i18nKey='more_posts_last_month'
+                  values={{ currentTimeFilterName }}
+                  components={{
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subs' : `/p/${subplebbitAddress}`) + '/1m'} />,
+                  }}
+                />
+              </div>
+            ))
+          )}
+          <div className={styles.stateString}>
+            <LoadingEllipsis string={loadingStateString} />
+          </div>
+        </>
+      );
+    }
+    return <div className={styles.footer}>{footerContent}</div>;
   };
 
   // save the last Virtuoso state to restore it when navigating back

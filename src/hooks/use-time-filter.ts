@@ -14,9 +14,9 @@ const timeFilterNamesToSeconds: Record<string, number | undefined> = {
   '12h': 60 * 60 * 12,
   '24h': 60 * 60 * 24,
   '48h': 60 * 60 * 24 * 2,
-  week: 60 * 60 * 24 * 7,
-  month: 60 * 60 * 24 * 30,
-  year: 60 * 60 * 24 * 365,
+  '1w': 60 * 60 * 24 * 7,
+  '1m': 60 * 60 * 24 * 30,
+  '1y': 60 * 60 * 24 * 365,
   all: undefined,
 };
 
@@ -25,8 +25,8 @@ const secondsSinceLastVisit = lastVisitTimestamp ? (Date.now() - parseInt(lastVi
 const day = 24 * 60 * 60;
 let lastVisitTimeFilterName: string | undefined;
 if (secondsSinceLastVisit > 30 * day) {
-  lastVisitTimeFilterName = 'month';
-  timeFilterNamesToSeconds[lastVisitTimeFilterName] = timeFilterNamesToSeconds['month'];
+  lastVisitTimeFilterName = '1m';
+  timeFilterNamesToSeconds[lastVisitTimeFilterName] = timeFilterNamesToSeconds['1m'];
 } else if (secondsSinceLastVisit > 7 * day) {
   const weeks = Math.ceil(secondsSinceLastVisit / day / 7);
   lastVisitTimeFilterName = `${weeks}w`;
@@ -40,7 +40,7 @@ if (secondsSinceLastVisit > 30 * day) {
   timeFilterNamesToSeconds[lastVisitTimeFilterName] = timeFilterNamesToSeconds['24h'];
 }
 
-export const timeFilterNames = [lastVisitTimeFilterName, '1h', '12h', '24h', '48h', 'week', 'month', 'year', 'all'];
+export const timeFilterNames = [lastVisitTimeFilterName, '1h', '12h', '24h', '48h', '1w', '1m', '1y', 'all'];
 
 const useTimeFilter = () => {
   const params = useParams();
