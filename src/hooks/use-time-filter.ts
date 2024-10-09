@@ -6,10 +6,10 @@ const lastVisitTimestamp = localStorage.getItem('plebchanLastVisitTimestamp');
 
 // update the last visited timestamp every n seconds
 setInterval(() => {
-  localStorage.setItem('plebchanLastVisitTimestamp', Date.now());
+  localStorage.setItem('plebchanLastVisitTimestamp', Date.now().toString());
 }, 60 * 1000);
 
-const timeFilterNamesToSeconds = {
+const timeFilterNamesToSeconds: Record<string, number | undefined> = {
   '1h': 60 * 60,
   '12h': 60 * 60 * 12,
   '24h': 60 * 60 * 24,
@@ -21,9 +21,9 @@ const timeFilterNamesToSeconds = {
 };
 
 // calculate the last visit timeFilterNamesToSeconds
-const secondsSinceLastVisit = lastVisitTimestamp ? (Date.now() - lastVisitTimestamp) / 1000 : Infinity;
+const secondsSinceLastVisit = lastVisitTimestamp ? (Date.now() - parseInt(lastVisitTimestamp, 10)) / 1000 : Infinity;
 const day = 24 * 60 * 60;
-let lastVisitTimeFilterName;
+let lastVisitTimeFilterName: string | undefined;
 if (secondsSinceLastVisit > 30 * day) {
   lastVisitTimeFilterName = 'month';
   timeFilterNamesToSeconds[lastVisitTimeFilterName] = timeFilterNamesToSeconds['month'];
@@ -52,9 +52,9 @@ const useTimeFilter = () => {
   }
 
   assert(!timeFilterName || typeof timeFilterName === 'string', `useTimeFilter timeFilterName argument '${timeFilterName}' not a string`);
-  const timeFilterSeconds = timeFilterNamesToSeconds[timeFilterName];
+  const timeFilterSeconds = timeFilterNamesToSeconds[timeFilterName as keyof typeof timeFilterNamesToSeconds];
   assert(!timeFilterName || timeFilterName === 'all' || timeFilterSeconds !== undefined, `useTimeFilter no filter for timeFilterName '${timeFilterName}'`);
-  return { timeFilterSeconds, timeFilterNames };
+  return { timeFilterSeconds, timeFilterNames, timeFilterName };
 };
 
 export default useTimeFilter;
