@@ -236,5 +236,8 @@
   "missing_link_confirm": "Je bericht mist een link met een afbeelding, deze zal standaard op Plebchan worden gefilterd. Je kunt deze filter in de instellingen uitschakelen of je bericht bekijken op een andere Plebbit-client, zoals Seedit. Toch posten?",
   "no_board_selected_warning": "Selecteer een bord voordat je plaatst.",
   "invalid_url_alert": "De opgegeven link is geen geldige URL.",
-  "empty_comment_alert": "Kan geen lege opmerking plaatsen."
+  "empty_comment_alert": "Kan geen lege opmerking plaatsen.",
+  "more_posts_last_week": "Berichten sinds {{currentTimeFilterName}}, <1>meer berichten van afgelopen week tonen</1>",
+  "more_posts_last_month": "Berichten sinds {{currentTimeFilterName}}, <1>meer berichten van afgelopen maand tonen</1>",
+  "newer_posts_available": "Nieuwere berichten beschikbaar, <1>herlaad feed</1>"
 }

@@ -236,5 +236,8 @@
   "missing_link_confirm": "Il tuo post è privo di un link con un'immagine, verrà filtrato per impostazione predefinita su Plebchan. Puoi disabilitare questo filtro nelle impostazioni o visualizzare il tuo post su un altro client Plebbit, come Seedit. Pubblica comunque?",
   "no_board_selected_warning": "Per favore, seleziona una board prima di pubblicare.",
   "invalid_url_alert": "Il link fornito non è un URL valido.",
-  "empty_comment_alert": "Impossibile pubblicare un commento vuoto."
+  "empty_comment_alert": "Impossibile pubblicare un commento vuoto.",
+  "more_posts_last_week": "Stai visualizzando post da {{currentTimeFilterName}}, <1>visualizza più post della scorsa settimana</1>",
+  "more_posts_last_month": "Stai visualizzando post da {{currentTimeFilterName}}, <1>visualizza più post del mese scorso</1>",
+  "newer_posts_available": "Nuovi post disponibili, <1>ricarica il feed</1>"
 }
