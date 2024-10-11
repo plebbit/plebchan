@@ -105,6 +105,41 @@ export const getLinkMediaInfo = memoize(
   { max: 1000 },
 );
 
+// some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
+const fetchWebpageThumbnail = async (url: string): Promise<string | undefined> => {
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Try to find Open Graph image
+    const ogImage = doc.querySelector('meta[property="og:image"]');
+    if (ogImage && ogImage.getAttribute('content')) {
+      return ogImage.getAttribute('content')!;
+    }
+
+    // If no Open Graph image, try to find the first image
+    const firstImage = doc.querySelector('img');
+    if (firstImage && firstImage.getAttribute('src')) {
+      return new URL(firstImage.getAttribute('src')!, url).href;
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error('Error fetching webpage thumbnail:', error);
+    return undefined;
+  }
+};
+
+export const fetchWebpageThumbnailIfNeeded = async (commentMediaInfo: CommentMediaInfo): Promise<CommentMediaInfo> => {
+  if (commentMediaInfo.type === 'webpage' && !commentMediaInfo.thumbnail) {
+    const thumbnail = await fetchWebpageThumbnail(commentMediaInfo.url);
+    return { ...commentMediaInfo, thumbnail };
+  }
+  return commentMediaInfo;
+};
+
 export const getCommentMediaInfo = (comment: Comment): CommentMediaInfo | undefined => {
   if (!comment?.thumbnailUrl && !comment?.link) {
     return;
