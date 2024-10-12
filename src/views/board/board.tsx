@@ -143,7 +143,7 @@ const Board = () => {
   );
 
   const handleNewerPostsButtonClick = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0 });
     setTimeout(() => {
       reset();
     }, 300);
@@ -202,7 +202,7 @@ const Board = () => {
                   i18nKey='more_posts_last_week'
                   values={{ currentTimeFilterName }}
                   components={{
-                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subs' : `/p/${subplebbitAddress}`) + '/1w'} />,
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1w'} />,
                   }}
                 />
               </div>
@@ -212,7 +212,7 @@ const Board = () => {
                   i18nKey='more_posts_last_month'
                   values={{ currentTimeFilterName }}
                   components={{
-                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subs' : `/p/${subplebbitAddress}`) + '/1m'} />,
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1m'} />,
                   }}
                 />
               </div>

@@ -1,25 +1,32 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
+import { Comment, useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogFeedRows from '../../hooks/use-catalog-feed-rows';
 import useDefaultSubplebbits from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useWindowWidth from '../../hooks/use-window-width';
-import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
+import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SettingsModal from '../../components/settings-modal';
 import styles from './catalog.module.css';
-import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
+
+const threadsWithoutImagesFilter = (comment: Comment) => {
+  if (!getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
+    return false;
+  }
+  return true;
+};
 
 const Catalog = () => {
   const { t } = useTranslation();
@@ -29,7 +36,7 @@ const Catalog = () => {
   const isInAllView = isAllView(location.pathname, useParams());
   const defaultSubplebbits = useDefaultSubplebbits();
   const { hideAdultBoards, hideGoreBoards } = useInterfaceSettingsStore();
-  const { filter } = useCatalogFiltersStore();
+  const { hideThreadsWithoutImages } = useInterfaceSettingsStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -64,7 +71,7 @@ const Catalog = () => {
   const columnCount = Math.floor(useWindowWidth() / columnWidth);
   const postsPerPage = columnCount <= 2 ? 10 : columnCount === 3 ? 15 : columnCount === 4 ? 20 : 25;
 
-  const { timeFilterSeconds } = useTimeFilter();
+  const { timeFilterSeconds, timeFilterName } = useTimeFilter();
   const { sortType } = useSortingStore();
 
   const feedOptions = useMemo(() => {
@@ -72,7 +79,7 @@ const Catalog = () => {
       subplebbitAddresses,
       sortType,
       postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-      filter,
+      filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
     };
 
     if (isInAllView || isInSubscriptionsView) {
@@ -80,9 +87,39 @@ const Catalog = () => {
     }
 
     return options;
-  }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, filter]);
+  }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, hideThreadsWithoutImages]);
 
-  const { feed, hasMore, loadMore, reset } = useFeed(feedOptions);
+  const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
+
+  const handleNewerPostsButtonClick = () => {
+    window.scrollTo({ top: 0, left: 0 });
+    setTimeout(() => {
+      reset();
+    }, 300);
+  };
+
+  // suggest the user to change time filter if there aren't enough posts
+  const { feed: weeklyFeed } = useFeed({
+    subplebbitAddresses,
+    sortType,
+    newerThan: 60 * 60 * 24 * 7,
+    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+  });
+  const { feed: monthlyFeed } = useFeed({
+    subplebbitAddresses,
+    sortType,
+    newerThan: 60 * 60 * 24 * 30,
+    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+  });
+
+  const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowMorePostsSuggestion(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const setResetFunction = useFeedResetStore((state) => state.setResetFunction);
   useEffect(() => {
@@ -91,18 +128,24 @@ const Catalog = () => {
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { error, shortAddress, state, title } = subplebbit || {};
+  const { blocked, unblock } = useBlock({ address: subplebbitAddress });
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
+
   const loadingString = (
     <div className={styles.stateString}>
       {state === 'failed' ? (
-        state
+        <span className='red'>{state}</span>
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
         t('not_subscribed_to_any_board')
+      ) : blocked ? (
+        'you have blocked this board'
+      ) : !hasMore && feed.length === 0 ? (
+        t('no_posts')
       ) : (
-        <LoadingEllipsis string={loadingStateString} />
+        hasMore && <LoadingEllipsis string={loadingStateString} />
       )}
       {error && (
-        <div style={{ color: 'red' }}>
+        <div className='red'>
           <br />
           {error.message}
         </div>
@@ -110,7 +153,8 @@ const Catalog = () => {
     </div>
   );
 
-  const { blocked, unblock } = useBlock({ address: subplebbitAddress });
+  const params = useParams();
+  const currentTimeFilterName = params?.timeFilterName || timeFilterName;
 
   const Footer = () => {
     let footerContent;
@@ -121,29 +165,51 @@ const Catalog = () => {
         footerContent = t('no_posts');
       }
     }
-    if (hasMore || subplebbitAddresses.length === 0) {
-      footerContent = loadingString;
+    if (hasMore || (subplebbitAddresses && subplebbitAddresses.length === 0)) {
+      footerContent = (
+        <>
+          {subplebbitAddressesWithNewerPosts.length > 0 ? (
+            <div className={styles.stateString}>
+              <Trans
+                i18nKey='newer_posts_available'
+                components={{
+                  1: <span onClick={handleNewerPostsButtonClick} />,
+                }}
+              />
+            </div>
+          ) : (
+            (isInAllView || isInSubscriptionsView) &&
+            showMorePostsSuggestion &&
+            monthlyFeed.length > feed.length &&
+            (weeklyFeed.length > feed.length ? (
+              <div className={styles.stateString}>
+                <Trans
+                  i18nKey='more_posts_last_week'
+                  values={{ currentTimeFilterName }}
+                  components={{
+                    1: <Link to={(isInAllView ? '/p/all/catalog' : isInSubscriptionsView ? '/p/subscriptions/catalog' : `/p/${subplebbitAddress}/catalog`) + '/1w'} />,
+                  }}
+                />
+              </div>
+            ) : (
+              <div className={styles.stateString}>
+                <Trans
+                  i18nKey='more_posts_last_month'
+                  values={{ currentTimeFilterName }}
+                  components={{
+                    1: <Link to={(isInAllView ? '/p/all/catalog' : isInSubscriptionsView ? '/p/subscriptions/catalog' : `/p/${subplebbitAddress}/catalog`) + '/1m'} />,
+                  }}
+                />
+              </div>
+            ))
+          )}
+          <div className={styles.stateString}>
+            <LoadingEllipsis string={loadingStateString} />
+          </div>
+        </>
+      );
     }
-    return (
-      <div className={styles.footer}>
-        {footerContent}
-        {blocked && (
-          <>
-            &nbsp;&nbsp;[
-            <span
-              className={styles.button}
-              onClick={() => {
-                unblock();
-                reset();
-              }}
-            >
-              Unblock
-            </span>
-            ]
-          </>
-        )}
-      </div>
-    );
+    return <div className={styles.footer}>{footerContent}</div>;
   };
 
   const isFeedLoaded = feed.length > 0 || state === 'failed';
@@ -177,18 +243,41 @@ const Catalog = () => {
       {location.pathname.endsWith('/settings') && <SettingsModal />}
       <hr />
       <div className={styles.catalog}>
-        <Virtuoso
-          increaseViewportBy={{ bottom: 1200, top: 1200 }}
-          totalCount={rows?.length || 0}
-          data={rows}
-          itemContent={(index, row) => <CatalogRow index={index} row={row} />}
-          useWindowScroll={true}
-          components={{ Footer }}
-          endReached={loadMore}
-          ref={virtuosoRef}
-          restoreStateFrom={lastVirtuosoState}
-          initialScrollTop={lastVirtuosoState?.scrollTop}
-        />
+        {feed.length !== 0 ? (
+          <>
+            <Virtuoso
+              increaseViewportBy={{ bottom: 1200, top: 1200 }}
+              totalCount={rows?.length || 0}
+              data={rows}
+              itemContent={(index, row) => <CatalogRow index={index} row={row} />}
+              useWindowScroll={true}
+              components={{ Footer }}
+              endReached={loadMore}
+              ref={virtuosoRef}
+              restoreStateFrom={lastVirtuosoState}
+              initialScrollTop={lastVirtuosoState?.scrollTop}
+            />
+          </>
+        ) : (
+          <div className={styles.footer}>
+            {loadingString}
+            {blocked && (
+              <>
+                &nbsp;&nbsp;[
+                <span
+                  className={styles.button}
+                  onClick={() => {
+                    unblock();
+                    reset();
+                  }}
+                >
+                  Unblock
+                </span>
+                ]
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
