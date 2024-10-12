@@ -71,7 +71,7 @@ const PopularThreadsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; 
   };
 
   const filteredSubplebbits = useMemo(getFilteredSubplebbits, [subplebbits, showWorksafeContentOnly, showNsfwContentOnly, multisub]);
-  const popularPosts = usePopularPosts(filteredSubplebbits);
+  const { popularPosts } = usePopularPosts(filteredSubplebbits);
 
   return (
     <div className={styles.box}>
@@ -79,8 +79,8 @@ const PopularThreadsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; 
         <h2 className='capitalize'>{t('popular_threads')}</h2>
         <BoxModal isBoardsBoxModal={false} />
       </div>
-      <div className={`${styles.boxContent} ${popularPosts.length === 8 ? styles.popularThreads : ''}`}>
-        {popularPosts.length < 8 ? (
+      <div className={`${styles.boxContent} ${popularPosts.length !== 0 ? styles.popularThreads : ''}`}>
+        {popularPosts.length === 0 ? (
           <LoadingEllipsis string={t('loading')} />
         ) : (
           popularPosts.map((post: any) => (
