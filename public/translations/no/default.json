@@ -236,5 +236,8 @@
   "missing_link_confirm": "Innlegget ditt mangler en lenke med et bilde, og vil bli filtrert som standard på Plebchan. Du kan deaktivere dette filteret i innstillingene, eller se innlegget ditt på en annen Plebbit-klient, som Seedit. Vil du legge ut uansett?",
   "no_board_selected_warning": "Vennligst velg et brett før du poster.",
   "invalid_url_alert": "Den angitte lenken er ikke en gyldig URL.",
-  "empty_comment_alert": "Kan ikke poste tom kommentar."
+  "empty_comment_alert": "Kan ikke poste tom kommentar.",
+  "more_posts_last_week": "Viser innlegg siden {{currentTimeFilterName}}, <1>vis flere innlegg fra forrige uke</1>",
+  "more_posts_last_month": "Viser innlegg siden {{currentTimeFilterName}}, <1>vis flere innlegg fra forrige måned</1>",
+  "newer_posts_available": "Nyere innlegg tilgjengelige, <1>oppdater feed</1>"
 }

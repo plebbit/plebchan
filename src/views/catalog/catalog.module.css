@@ -1,5 +1,14 @@
 .footer {
-  padding-top: 10px;
+  padding: 15px 0 10px 5px;
+}
+
+.footer a  {
+  text-decoration: var(--button-text-decoration);
+  color: var(--button-desktop-text-color);
+}
+
+.footer a:hover {
+  color: var(--button-desktop-text-color-hover);
 }
 
 @media (max-width: 640px) {

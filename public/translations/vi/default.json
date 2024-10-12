@@ -236,5 +236,8 @@
   "missing_link_confirm": "Bài đăng của bạn thiếu một liên kết với hình ảnh, nó sẽ bị lọc theo mặc định trên Plebchan. Bạn có thể tắt bộ lọc này trong cài đặt hoặc xem bài đăng của bạn trên một khách hàng Plebbit khác, như Seedit. Vẫn muốn đăng?",
   "no_board_selected_warning": "Vui lòng chọn một bảng trước khi đăng.",
   "invalid_url_alert": "Liên kết được cung cấp không phải là một URL hợp lệ.",
-  "empty_comment_alert": "Không thể đăng bình luận trống."
+  "empty_comment_alert": "Không thể đăng bình luận trống.",
+  "more_posts_last_week": "Đang hiển thị bài viết từ {{currentTimeFilterName}}, <1>hiển thị thêm bài viết từ tuần trước</1>",
+  "more_posts_last_month": "Đang hiển thị bài viết từ {{currentTimeFilterName}}, <1>hiển thị thêm bài viết từ tháng trước</1>",
+  "newer_posts_available": "Có bài viết mới, <1>tải lại nguồn cấp dữ liệu</1>"
 }

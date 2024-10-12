@@ -135,7 +135,7 @@
   "expand_all_settings": "Expand All Settings",
   "collapse_all_settings": "Collapse All Settings",
   "refresh": "Refresh",
-  "no_board_selected": "no boards selected",
+  "no_board_selected": "no board selected",
   "none": "none",
   "not_subscribed_to_any_board": "You have not subscribed to any boards yet.",
   "board_mods": "Board Mods",
@@ -236,5 +236,8 @@
   "missing_link_confirm": "Your post is missing a link with an image, it will be filtered out by default on Plebchan. You can disable this filter in the settings, or view your post on another Plebbit client, like Seedit. Post anyway?",
   "no_board_selected_warning": "Please select a board before posting.",
   "invalid_url_alert": "The provided link is not a valid URL.",
-  "empty_comment_alert": "Cannot post empty comment."
+  "empty_comment_alert": "Cannot post empty comment.",
+  "more_posts_last_week": "Showing posts since {{currentTimeFilterName}}, <1>show more posts from last week</1>",
+  "more_posts_last_month": "Showing posts since {{currentTimeFilterName}}, <1>show more posts from last month</1>",
+  "newer_posts_available": "Newer posts available, <1>reload feed</1>"
 }

@@ -236,5 +236,8 @@
   "missing_link_confirm": "Postarea ta nu are un link cu o imagine, va fi filtrată în mod implicit pe Plebchan. Poți dezactiva acest filtru în setări sau vizualiza postarea ta pe un alt client Plebbit, cum ar fi Seedit. Postează oricum?",
   "no_board_selected_warning": "Vă rugăm să selectați un tablou înainte de a publica.",
   "invalid_url_alert": "Linkul furnizat nu este un URL valid.",
-  "empty_comment_alert": "Nu se poate publica un comentariu gol."
+  "empty_comment_alert": "Nu se poate publica un comentariu gol.",
+  "more_posts_last_week": "Afișând postări din {{currentTimeFilterName}}, <1>afișați mai multe postări din săptămâna trecută</1>",
+  "more_posts_last_month": "Afișând postări din {{currentTimeFilterName}}, <1>afișați mai multe postări din luna trecută</1>",
+  "newer_posts_available": "Postări mai recente disponibile, <1>reîncarcă fluxul</1>"
 }

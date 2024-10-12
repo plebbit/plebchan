@@ -236,5 +236,8 @@
   "missing_link_confirm": "당신의 게시물에는 이미지가 포함된 링크가 없습니다. 기본적으로 Plebchan에서 필터링됩니다. 설정에서 이 필터를 비활성화하거나 Seedit와 같은 다른 Plebbit 클라이언트에서 게시물을 볼 수 있습니다. 그래도 게시하시겠습니까?",
   "no_board_selected_warning": "게시하기 전에 보드를 선택하십시오.",
   "invalid_url_alert": "제공된 링크는 유효한 URL이 아닙니다.",
-  "empty_comment_alert": "빈 댓글을 게시할 수 없습니다."
+  "empty_comment_alert": "빈 댓글을 게시할 수 없습니다.",
+  "more_posts_last_week": "{{currentTimeFilterName}} 이후의 게시물이 표시됩니다. <1>지난 주의 게시물 더 보기</1>",
+  "more_posts_last_month": "{{currentTimeFilterName}} 이후의 게시물이 표시됩니다. <1>지난달의 게시물 더 보기</1>",
+  "newer_posts_available": "새로운 게시물이 있습니다, <1>피드를 새로 고침</1>"
 }

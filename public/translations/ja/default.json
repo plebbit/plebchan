@@ -236,5 +236,8 @@
   "missing_link_confirm": "あなたの投稿には画像付きのリンクがありません。それはPlebchanでデフォルトでフィルタリングされます。このフィルタを設定で無効にするか、Seeditのような別のPlebbitクライアントで投稿を表示できます。それでも投稿しますか？",
   "no_board_selected_warning": "投稿する前にボードを選択してください。",
   "invalid_url_alert": "提供されたリンクは有効なURLではありません。",
-  "empty_comment_alert": "空のコメントは投稿できません。"
+  "empty_comment_alert": "空のコメントは投稿できません。",
+  "more_posts_last_week": "{{currentTimeFilterName}} からの投稿を表示しています。<1>先週の投稿をさらに表示</1>",
+  "more_posts_last_month": "{{currentTimeFilterName}} からの投稿を表示しています。<1>先月の投稿をさらに表示</1>",
+  "newer_posts_available": "新しい投稿が利用可能です、<1>フィードを再読み込み</1>"
 }

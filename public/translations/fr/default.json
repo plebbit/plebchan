@@ -236,5 +236,8 @@
   "missing_link_confirm": "Votre publication est manquante d'un lien avec une image, elle sera filtrée par défaut sur Plebchan. Vous pouvez désactiver ce filtre dans les paramètres, ou voir votre publication sur un autre client Plebbit, comme Seedit. Publier quand même ?",
   "no_board_selected_warning": "Veuillez sélectionner un tableau avant de publier.",
   "invalid_url_alert": "Le lien fourni n'est pas une URL valide.",
-  "empty_comment_alert": "Impossible de publier un commentaire vide."
+  "empty_comment_alert": "Impossible de publier un commentaire vide.",
+  "more_posts_last_week": "Affichage des publications depuis {{currentTimeFilterName}}, <1>afficher plus de publications de la semaine dernière</1>",
+  "more_posts_last_month": "Affichage des publications depuis {{currentTimeFilterName}}, <1>recharger plus de publications du mois dernier</1>",
+  "newer_posts_available": "Nouveaux messages disponibles, <1>recharger le fil</1>"
 }

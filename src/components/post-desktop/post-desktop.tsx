@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import { getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
+import { fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
@@ -208,7 +208,17 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
 const PostMedia = ({ post }: PostProps) => {
   const { t } = useTranslation();
   const { link, spoiler } = post || {};
-  const commentMediaInfo = getCommentMediaInfo(post);
+
+  // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
+  const initialCommentMediaInfo = useMemo(() => getCommentMediaInfo(post), [post]);
+  const [commentMediaInfo, setCommentMediaInfo] = useState(initialCommentMediaInfo);
+  useEffect(() => {
+    if (initialCommentMediaInfo?.type === 'webpage' && !initialCommentMediaInfo.thumbnail) {
+      fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo).then(setCommentMediaInfo);
+    } else {
+      setCommentMediaInfo(initialCommentMediaInfo);
+    }
+  }, [initialCommentMediaInfo]);
 
   const { url } = commentMediaInfo || {};
   let type = commentMediaInfo?.type;
