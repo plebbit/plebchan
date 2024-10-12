@@ -80,18 +80,19 @@ export const getLinkMediaInfo = memoize(
     }
 
     try {
-      const fileName = url.pathname.split('/').pop() || '';
-      if (fileName.includes('.')) {
-        mime = extName(fileName)[0]?.mime;
-        if (mime) {
-          if (mime.startsWith('image')) {
-            type = mime === 'image/gif' ? 'gif' : 'image';
-          } else if (mime.startsWith('video')) {
-            type = 'video';
-          } else if (mime.startsWith('audio')) {
-            type = 'audio';
-          }
+      mime = extName(new URL(link).pathname.toLowerCase().replace('/', ''))[0]?.mime;
+      if (mime) {
+        if (mime.startsWith('image')) {
+          type = mime === 'image/gif' ? 'gif' : 'image';
+        } else if (mime.startsWith('video')) {
+          type = 'video';
+        } else if (mime.startsWith('audio')) {
+          type = 'audio';
         }
+      }
+
+      if (!url.pathname.includes('.')) {
+        type = 'webpage';
       }
 
       if (canEmbed(url) || url.host.startsWith('yt.')) {
