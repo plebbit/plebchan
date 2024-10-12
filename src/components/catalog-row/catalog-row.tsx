@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, size, autoUpdate, Placement } from '@floating-ui/react';
-import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView } from '../../lib/utils/view-utils';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
@@ -114,8 +114,19 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     title,
   } = post || {};
   const linkCount = useCountLinksInReplies(post);
-  const commentMediaInfo = getCommentMediaInfo(post);
+
+  // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
+  const initialCommentMediaInfo = useMemo(() => getCommentMediaInfo(post), [post]);
+  const [commentMediaInfo, setCommentMediaInfo] = useState(initialCommentMediaInfo);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+  useEffect(() => {
+    if (initialCommentMediaInfo?.type === 'webpage' && !initialCommentMediaInfo.thumbnail) {
+      fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo).then(setCommentMediaInfo);
+    } else {
+      setCommentMediaInfo(initialCommentMediaInfo);
+    }
+  }, [initialCommentMediaInfo]);
+
   const { hidden } = useHide({ cid });
 
   const location = useLocation();
