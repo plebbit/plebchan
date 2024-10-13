@@ -1,4 +1,5 @@
 .footer {
+  color: var(--post-mobile-abbr-text-color);
   padding: 15px 0 10px 5px;
 }
 

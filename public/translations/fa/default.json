@@ -240,5 +240,6 @@
   "more_posts_last_week": "نمایش پست‌ها از {{currentTimeFilterName}}، <1>نمایش پست‌های بیشتر از هفته گذشته</1>",
   "more_posts_last_month": "نمایش پست‌ها از {{currentTimeFilterName}}، <1>نمایش پست‌های بیشتر از ماه گذشته</1>",
   "newer_posts_available": "پست‌های جدیدتر در دسترس هستند، <1>بارگذاری مجدد خوراک</1>",
-  "stored_locally": "محلی ذخیره شده ({{location}})، با دستگاه‌ها همگام‌سازی نشده است"
+  "stored_locally": "محلی ذخیره شده ({{location}})، با دستگاه‌ها همگام‌سازی نشده است",
+  "choose_one": "یکی را انتخاب کنید:"
 }

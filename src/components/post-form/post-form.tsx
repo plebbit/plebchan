@@ -391,7 +391,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
             <td>{t('board')}</td>
             <td>
               <select onChange={(e) => setSubmitStore({ subplebbitAddress: e.target.value })} value={subplebbitAddress}>
-                <option value=''>--{t('no_board_selected')}--</option>
+                <option value=''>{t('choose_one')}</option>
                 {isInAllView &&
                   defaultSubplebbitAddresses.map((address: string) => (
                     <option key={address} value={address}>

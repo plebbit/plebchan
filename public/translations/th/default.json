@@ -240,5 +240,6 @@
   "more_posts_last_week": "แสดงโพสต์ตั้งแต่ {{currentTimeFilterName}} <1>แสดงโพสต์เพิ่มเติมจากสัปดาห์ที่แล้ว</1>",
   "more_posts_last_month": "โพสต์ตั้งแต่ {{currentTimeFilterName}} <1>แสดงโพสต์เพิ่มเติมจากเดือนที่แล้ว</1>",
   "newer_posts_available": "โพสต์ใหม่พร้อมใช้งาน, <1>โหลดฟีดใหม่</1>",
-  "stored_locally": "จัดเก็บในเครื่อง ({{location}}) ไม่ได้ซิงค์ข้ามอุปกรณ์"
+  "stored_locally": "จัดเก็บในเครื่อง ({{location}}) ไม่ได้ซิงค์ข้ามอุปกรณ์",
+  "choose_one": "เลือกหนึ่ง:"
 }

@@ -240,5 +240,6 @@
   "more_posts_last_week": "Afișând postări din {{currentTimeFilterName}}, <1>afișați mai multe postări din săptămâna trecută</1>",
   "more_posts_last_month": "Afișând postări din {{currentTimeFilterName}}, <1>afișați mai multe postări din luna trecută</1>",
   "newer_posts_available": "Postări mai recente disponibile, <1>reîncarcă fluxul</1>",
-  "stored_locally": "Stocat local ({{location}}), nu este sincronizat între dispozitive"
+  "stored_locally": "Stocat local ({{location}}), nu este sincronizat între dispozitive",
+  "choose_one": "Alege una:"
 }

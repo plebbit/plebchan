@@ -240,5 +240,6 @@
   "more_posts_last_week": "Pokazuje posty od {{currentTimeFilterName}}, <1>pokaż więcej postów z zeszłego tygodnia</1>",
   "more_posts_last_month": "Pokazuje posty od {{currentTimeFilterName}}, <1>pokaż więcej postów z zeszłego miesiąca</1>",
   "newer_posts_available": "Dostępne są nowsze posty, <1>przeładuj kanał</1>",
-  "stored_locally": "Przechowywane lokalnie ({{location}}), nie synchronizowane między urządzeniami"
+  "stored_locally": "Przechowywane lokalnie ({{location}}), nie synchronizowane między urządzeniami",
+  "choose_one": "Wybierz jeden:"
 }

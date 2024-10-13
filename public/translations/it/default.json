@@ -240,5 +240,6 @@
   "more_posts_last_week": "Stai visualizzando post da {{currentTimeFilterName}}, <1>visualizza più post della scorsa settimana</1>",
   "more_posts_last_month": "Stai visualizzando post da {{currentTimeFilterName}}, <1>visualizza più post del mese scorso</1>",
   "newer_posts_available": "Nuovi post disponibili, <1>ricarica il feed</1>",
-  "stored_locally": "Memorizzato localmente ({{location}}), non sincronizzato tra i dispositivi"
+  "stored_locally": "Memorizzato localmente ({{location}}), non sincronizzato tra i dispositivi",
+  "choose_one": "Scegline una:"
 }

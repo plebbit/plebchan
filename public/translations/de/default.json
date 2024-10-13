@@ -240,5 +240,6 @@
   "more_posts_last_week": "Zeigt Beiträge seit {{currentTimeFilterName}}, <1>zeige mehr Beiträge aus der letzten Woche</1>",
   "more_posts_last_month": "Zeigt Beiträge seit {{currentTimeFilterName}}, <1>zeige mehr Beiträge aus dem letzten Monat</1>",
   "newer_posts_available": "Neuere Beiträge verfügbar, <1>Feed neu laden</1>",
-  "stored_locally": "Lokal gespeichert ({{location}}), nicht geräteübergreifend synchronisiert"
+  "stored_locally": "Lokal gespeichert ({{location}}), nicht geräteübergreifend synchronisiert",
+  "choose_one": "Wählen Sie eine:"
 }
