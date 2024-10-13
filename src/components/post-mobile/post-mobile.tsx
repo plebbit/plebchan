@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
@@ -43,13 +43,17 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
   const initialCommentMediaInfo = useMemo(() => getCommentMediaInfo(post), [post]);
   const [commentMediaInfo, setCommentMediaInfo] = useState(initialCommentMediaInfo);
-  useEffect(() => {
+
+  const fetchThumbnail = useCallback(async () => {
     if (initialCommentMediaInfo?.type === 'webpage' && !initialCommentMediaInfo.thumbnail) {
-      fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo).then(setCommentMediaInfo);
-    } else {
-      setCommentMediaInfo(initialCommentMediaInfo);
+      const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo);
+      setCommentMediaInfo(newMediaInfo);
     }
   }, [initialCommentMediaInfo]);
+
+  useEffect(() => {
+    fetchThumbnail();
+  }, [fetchThumbnail]);
 
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);

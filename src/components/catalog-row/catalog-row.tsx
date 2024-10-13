@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -119,13 +119,17 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   const initialCommentMediaInfo = useMemo(() => getCommentMediaInfo(post), [post]);
   const [commentMediaInfo, setCommentMediaInfo] = useState(initialCommentMediaInfo);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  useEffect(() => {
+
+  const fetchThumbnail = useCallback(async () => {
     if (initialCommentMediaInfo?.type === 'webpage' && !initialCommentMediaInfo.thumbnail) {
-      fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo).then(setCommentMediaInfo);
-    } else {
-      setCommentMediaInfo(initialCommentMediaInfo);
+      const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo);
+      setCommentMediaInfo(newMediaInfo);
     }
   }, [initialCommentMediaInfo]);
+
+  useEffect(() => {
+    fetchThumbnail();
+  }, [fetchThumbnail]);
 
   const { hidden } = useHide({ cid });
 
