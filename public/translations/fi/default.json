@@ -239,5 +239,6 @@
   "empty_comment_alert": "Ei voi julkaista tyhjää kommenttia.",
   "more_posts_last_week": "Näytetään viestejä ajasta {{currentTimeFilterName}}, <1>näytä lisää viestejä viime viikolta</1>",
   "more_posts_last_month": "Näytetään viestejä ajasta {{currentTimeFilterName}}, <1>näytä lisää viestejä viime kuulta</1>",
-  "newer_posts_available": "Uudemmat viestit saatavilla, <1>lataa syöte uudelleen</1>"
+  "newer_posts_available": "Uudemmat viestit saatavilla, <1>lataa syöte uudelleen</1>",
+  "stored_locally": "Tallennettu paikallisesti ({{location}}), ei synkronoitu laitteiden välillä"
 }

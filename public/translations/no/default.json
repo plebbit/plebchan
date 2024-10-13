@@ -239,5 +239,6 @@
   "empty_comment_alert": "Kan ikke poste tom kommentar.",
   "more_posts_last_week": "Viser innlegg siden {{currentTimeFilterName}}, <1>vis flere innlegg fra forrige uke</1>",
   "more_posts_last_month": "Viser innlegg siden {{currentTimeFilterName}}, <1>vis flere innlegg fra forrige måned</1>",
-  "newer_posts_available": "Nyere innlegg tilgjengelige, <1>oppdater feed</1>"
+  "newer_posts_available": "Nyere innlegg tilgjengelige, <1>oppdater feed</1>",
+  "stored_locally": "Lagring lokalt ({{location}}), ikke synkronisert på tvers av enheter"
 }

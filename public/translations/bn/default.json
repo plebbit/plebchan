@@ -239,5 +239,6 @@
   "empty_comment_alert": "খালি মন্তব্য পোস্ট করা যাবে না।",
   "more_posts_last_week": "আপনি {{currentTimeFilterName}} থেকে পোস্টগুলি দেখছেন, <1>গত সপ্তাহ থেকে আরও পোস্ট দেখান</1>",
   "more_posts_last_month": "আপনি {{currentTimeFilterName}} থেকে পোস্টগুলি দেখছেন, <1>গত মাস থেকে আরও পোস্ট দেখান</1>",
-  "newer_posts_available": "নতুন পোস্ট উপলব্ধ, <1>ফিডটি রিফ্রেশ করুন</1>"
+  "newer_posts_available": "নতুন পোস্ট উপলব্ধ, <1>ফিডটি রিফ্রেশ করুন</1>",
+  "stored_locally": "স্থানীয়ভাবে সংরক্ষিত ({{location}}), ডিভাইসের মধ্যে সিঙ্ক করা হয়নি"
 }

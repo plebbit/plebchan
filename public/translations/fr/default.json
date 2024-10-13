@@ -239,5 +239,6 @@
   "empty_comment_alert": "Impossible de publier un commentaire vide.",
   "more_posts_last_week": "Affichage des publications depuis {{currentTimeFilterName}}, <1>afficher plus de publications de la semaine dernière</1>",
   "more_posts_last_month": "Affichage des publications depuis {{currentTimeFilterName}}, <1>recharger plus de publications du mois dernier</1>",
-  "newer_posts_available": "Nouveaux messages disponibles, <1>recharger le fil</1>"
+  "newer_posts_available": "Nouveaux messages disponibles, <1>recharger le fil</1>",
+  "stored_locally": "Stocké localement ({{location}}), non synchronisé entre les appareils"
 }

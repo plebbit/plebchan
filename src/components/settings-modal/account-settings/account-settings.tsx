@@ -180,7 +180,10 @@ const AccountSettings = () => {
           +
         </button>
         <div className={styles.warning}>
-          stored locally ({window.isElectron ? 'this desktop app' : isAndroid ? 'this mobile app' : window.location.hostname}), not synced across devices
+          {t('stored_locally', {
+            location: window.isElectron ? 'this desktop app' : isAndroid ? 'this mobile app' : window.location.hostname,
+            interpolation: { escapeValue: false },
+          })}
         </div>
       </div>
       <div></div>

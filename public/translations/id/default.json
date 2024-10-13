@@ -239,5 +239,6 @@
   "empty_comment_alert": "Tidak dapat memposting komentar kosong.",
   "more_posts_last_week": "Menampilkan pos sejak {{currentTimeFilterName}}, <1>tampilkan lebih banyak pos dari minggu lalu</1>",
   "more_posts_last_month": "Menampilkan pos sejak {{currentTimeFilterName}}, <1>tampilkan lebih banyak pos dari bulan lalu</1>",
-  "newer_posts_available": "Postingan terbaru tersedia, <1>muat ulang umpan</1>"
+  "newer_posts_available": "Postingan terbaru tersedia, <1>muat ulang umpan</1>",
+  "stored_locally": "Disimpan secara lokal ({{location}}), tidak disinkronkan antar perangkat"
 }

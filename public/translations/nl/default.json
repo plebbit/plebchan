@@ -239,5 +239,6 @@
   "empty_comment_alert": "Kan geen lege opmerking plaatsen.",
   "more_posts_last_week": "Berichten sinds {{currentTimeFilterName}}, <1>meer berichten van afgelopen week tonen</1>",
   "more_posts_last_month": "Berichten sinds {{currentTimeFilterName}}, <1>meer berichten van afgelopen maand tonen</1>",
-  "newer_posts_available": "Nieuwere berichten beschikbaar, <1>herlaad feed</1>"
+  "newer_posts_available": "Nieuwere berichten beschikbaar, <1>herlaad feed</1>",
+  "stored_locally": "Lokaal opgeslagen ({{location}}), niet gesynchroniseerd tussen apparaten"
 }

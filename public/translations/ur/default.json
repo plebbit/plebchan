@@ -239,5 +239,6 @@
   "empty_comment_alert": "خالی تبصرہ پوسٹ نہیں کیا جا سکتا۔",
   "more_posts_last_week": "{{currentTimeFilterName}} سے پوسٹ دکھا رہا ہے، <1>پچھلے ہفتے کے مزید پوسٹس دکھائیں</1>",
   "more_posts_last_month": "{{currentTimeFilterName}} سے پوسٹ دکھا رہا ہے، <1>پچھلے مہینے کے مزید پوسٹس دکھائیں</1>",
-  "newer_posts_available": "نئے پوسٹس دستیاب ہیں، <1>فیڈ کو دوبارہ لوڈ کریں</1>"
+  "newer_posts_available": "نئے پوسٹس دستیاب ہیں، <1>فیڈ کو دوبارہ لوڈ کریں</1>",
+  "stored_locally": "مقامی طور پر محفوظ ({{location}})، آلات کے درمیان ہم وقت سازی نہیں کی گئی"
 }
