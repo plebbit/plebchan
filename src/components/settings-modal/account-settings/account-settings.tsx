@@ -4,6 +4,7 @@ import { createAccount, deleteAccount, exportAccount, importAccount, setAccount,
 import stringify from 'json-stringify-pretty-compact';
 import styles from './account-settings.module.css';
 import useAnonModeStore from '../../../stores/use-anon-mode-store';
+import { isAndroid } from '../../../lib/utils/platform';
 
 const AnonMode = () => {
   const { t } = useTranslation();
@@ -178,6 +179,9 @@ const AccountSettings = () => {
         <button className={styles.createAccount} onClick={_createAccount}>
           +
         </button>
+        <div className={styles.warning}>
+          stored locally ({window.isElectron ? 'this desktop app' : isAndroid ? 'this mobile app' : window.location.hostname}), not synced across devices
+        </div>
       </div>
       <div></div>
       <textarea value={text} onChange={(e) => setText(e.target.value)} autoCorrect='off' autoComplete='off' spellCheck='false' />
