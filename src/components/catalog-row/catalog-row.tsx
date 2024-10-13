@@ -6,7 +6,8 @@ import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, size, autoUpdate, Placement } from '@floating-ui/react';
 import { fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
-import { isAllView } from '../../lib/utils/view-utils';
+import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
@@ -134,7 +135,9 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   const { hidden } = useHide({ cid });
 
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname, useParams());
+  const params = useParams();
+  const isInAllView = isAllView(location.pathname, params);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const postLink = isInAllView && isDescription ? `/p/all/description` : `/p/${subplebbitAddress}/${isDescription ? 'description' : isRules ? 'rules' : `c/${cid}`}`;
 
@@ -292,6 +295,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               {author?.displayName || _.capitalize(t('anonymous'))}
               {isCatalogPostAuthorMod && <span className='capitalize'>{` ## Board ${catalogPostAuthorRole}`}</span>}
             </span>
+            {(isInAllView || isInSubscriptionsView) && subplebbitAddress && ` to p/${Plebbit.getShortAddress(subplebbitAddress)}`}
             <span className={styles.postAgo}> {getFormattedTimeAgo(timestamp)}</span>
             {replyCount > 0 && (
               <div className={styles.postLast}>
