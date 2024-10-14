@@ -39,10 +39,6 @@
   display: block;
 }
 
-.deleteAccount:not(:disabled) {
-  color: red;
-}
-
 .setting .createAccount {
   margin-left: 5px;
 }
