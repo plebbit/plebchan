@@ -79,6 +79,12 @@ export const getLinkMediaInfo = memoize(
       return { url: link, type: 'image' };
     }
 
+    // non-direct imgbb links can return lower res thumbnails
+    if (url.host === 'ibb.co') {
+      const imageId = url.pathname.split('/')[1];
+      return { url: link, type: 'webpage', thumbnail: `https://i.ibb.co/${imageId}/thumbnail.jpg` };
+    }
+
     try {
       mime = extName(new URL(link).pathname.toLowerCase().replace('/', ''))[0]?.mime;
       if (mime) {
