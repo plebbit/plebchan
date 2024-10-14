@@ -46,7 +46,7 @@ interface EmbedComponentProps {
   parsedUrl: URL;
 }
 
-const youtubeHosts = new Set<string>(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be', 'm.youtube.com']);
+const youtubeHosts = new Set<string>(['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be', 'm.youtube.com', 'music.youtube.com']);
 
 const YoutubeEmbed = ({ parsedUrl }: EmbedComponentProps) => {
   let youtubeId = parsedUrl.searchParams.get('v');
