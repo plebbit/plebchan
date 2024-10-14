@@ -159,7 +159,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
 
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       prevScrollPosRef.current = currentScrollPos;
-    }, 25);
+    }, 50);
 
     window.addEventListener('scroll', debouncedHandleScroll);
 
