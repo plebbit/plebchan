@@ -239,5 +239,7 @@
   "empty_comment_alert": "لا يمكن نشر تعليق فارغ.",
   "more_posts_last_week": "تظهر المشاركات منذ {{currentTimeFilterName}} ، <1>عرض المزيد من المشاركات من الأسبوع الماضي</1>",
   "more_posts_last_month": "تظهر المشاركات منذ {{currentTimeFilterName}} ، <1>عرض المزيد من المشاركات من الشهر الماضي</1>",
-  "newer_posts_available": "مشاركات جديدة متاحة، <1>قم بتحديث الخلاصة</1>"
+  "newer_posts_available": "مشاركات جديدة متاحة، <1>قم بتحديث الخلاصة</1>",
+  "stored_locally": "مخزنة محليًا ({{location}})، ليست متزامنة عبر الأجهزة",
+  "choose_one": "اختر واحدة:"
 }

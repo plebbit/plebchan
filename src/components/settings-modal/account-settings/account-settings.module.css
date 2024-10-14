@@ -47,6 +47,12 @@
   margin-left: 5px;
 }
 
+.warning {
+  font-size: 0.8em;
+  color: red;
+  padding: 5px 0;
+}
+
 .settingTip {
   display: block;
   font-size: 0.85em;

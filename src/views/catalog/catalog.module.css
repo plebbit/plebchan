@@ -1,5 +1,6 @@
 .footer {
   padding: 15px 0 10px 5px;
+  color: var(--post-mobile-abbr-text-color);
 }
 
 .footer a  {

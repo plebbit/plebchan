@@ -239,5 +239,7 @@
   "empty_comment_alert": "לא ניתן לפרסם תגובה ריקה.",
   "more_posts_last_week": "מראה פוסטים מאז {{currentTimeFilterName}}, <1>הצג פוסטים נוספים מהשבוע שעבר</1>",
   "more_posts_last_month": "מראה פוסטים מאז {{currentTimeFilterName}}, <1>הצג פוסטים נוספים מהחודש שעבר</1>",
-  "newer_posts_available": "ישנם פוסטים חדשים זמינים, <1>טען מחדש את הפיד</1>"
+  "newer_posts_available": "ישנם פוסטים חדשים זמינים, <1>טען מחדש את הפיד</1>",
+  "stored_locally": "מאוחסן מקומית ({{location}}), לא מסונכרן בין מכשירים",
+  "choose_one": "בחר אחת:"
 }

@@ -239,5 +239,7 @@
   "empty_comment_alert": "Boş yorum gönderilemez.",
   "more_posts_last_week": "{{currentTimeFilterName}} tarihinden itibaren gönderiler gösteriliyor, <1>geçen haftadan daha fazla gönderi göster</1>",
   "more_posts_last_month": "{{currentTimeFilterName}} tarihinden itibaren gönderiler gösteriliyor, <1>geçen aydan daha fazla gönderi göster</1>",
-  "newer_posts_available": "Daha yeni gönderiler mevcut, <1>beslemeyi yenile</1>"
+  "newer_posts_available": "Daha yeni gönderiler mevcut, <1>beslemeyi yenile</1>",
+  "stored_locally": "Yerel olarak saklanıyor ({{location}}), cihazlar arasında senkronize edilmedi",
+  "choose_one": "Birini seç:"
 }

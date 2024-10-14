@@ -135,14 +135,6 @@ const fetchWebpageThumbnail = async (url: string): Promise<string | undefined> =
   }
 };
 
-export const fetchWebpageThumbnailIfNeeded = async (commentMediaInfo: CommentMediaInfo): Promise<CommentMediaInfo> => {
-  if (commentMediaInfo.type === 'webpage' && !commentMediaInfo.thumbnail) {
-    const thumbnail = await fetchWebpageThumbnail(commentMediaInfo.url);
-    return { ...commentMediaInfo, thumbnail };
-  }
-  return commentMediaInfo;
-};
-
 export const getCommentMediaInfo = (comment: Comment): CommentMediaInfo | undefined => {
   if (!comment?.thumbnailUrl && !comment?.link) {
     return;
@@ -191,4 +183,31 @@ export const getMediaDimensions = (commentMediaInfo: CommentMediaInfo | undefine
   }
 
   return '';
+};
+
+export const fetchWebpageThumbnailIfNeeded = async (commentMediaInfo: CommentMediaInfo): Promise<CommentMediaInfo> => {
+  if (commentMediaInfo.type === 'webpage' && !commentMediaInfo.thumbnail) {
+    const cachedThumbnail = getCachedThumbnail(commentMediaInfo.url);
+    if (cachedThumbnail) {
+      return { ...commentMediaInfo, thumbnail: cachedThumbnail };
+    }
+    const thumbnail = await fetchWebpageThumbnail(commentMediaInfo.url);
+    if (thumbnail) {
+      setCachedThumbnail(commentMediaInfo.url, thumbnail);
+    }
+    return { ...commentMediaInfo, thumbnail };
+  }
+  return commentMediaInfo;
+};
+const THUMBNAIL_CACHE_KEY = 'webpageThumbnailCache';
+
+export const getCachedThumbnail = (url: string): string | null => {
+  const cache = JSON.parse(localStorage.getItem(THUMBNAIL_CACHE_KEY) || '{}');
+  return cache[url] || null;
+};
+
+export const setCachedThumbnail = (url: string, thumbnail: string): void => {
+  const cache = JSON.parse(localStorage.getItem(THUMBNAIL_CACHE_KEY) || '{}');
+  cache[url] = thumbnail;
+  localStorage.setItem(THUMBNAIL_CACHE_KEY, JSON.stringify(cache));
 };
