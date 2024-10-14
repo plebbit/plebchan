@@ -39,12 +39,6 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const { publishCommentOptions, setPublishPostStore, resetPublishPostStore } = usePublishPostStore();
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
-  useEffect(() => {
-    if (displayName) {
-      setPublishPostStore({ displayName });
-    }
-  }, [displayName, setPublishPostStore]);
-
   const textRef = useRef<HTMLTextAreaElement>(null);
   const urlRef = useRef<HTMLInputElement>(null);
   const subjectRef = useRef<HTMLInputElement>(null);
