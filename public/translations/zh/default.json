@@ -224,7 +224,7 @@
   "animated_gif": "动画GIF",
   "hide_avatars": "隐藏头像",
   "anon_mode": "匿名模式",
-  "anon_mode_description": "在每个线程中使用不同的用户 ID",
+  "anon_mode_description": "为您发布的每个线程使用唯一的用户 ID。这些 ID 无法追溯到您的原始帐户。",
   "pending": "待处理",
   "failed": "失败",
   "add": "添加",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "显示自 {{currentTimeFilterName}} 以来的帖子，<1>显示上个月的更多帖子</1>",
   "newer_posts_available": "新帖子可用，<1>重新加载源</1>",
   "stored_locally": "本地存储 ({{location}})，未在设备之间同步",
-  "choose_one": "选择一个："
+  "choose_one": "选择一个：",
+  "create": "创建",
+  "plebbit_account": "Plebbit 账户",
+  "save_changes": "保存更改",
+  "reset_changes": "重置更改"
 }

@@ -62,7 +62,7 @@ const SettingsModal = () => {
         <div className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => setShowAccountSettings(!showAccountSettings)}>
             <span className={showAccountSettings ? styles.hideButton : styles.showButton} />
-            {t('account')}
+            {t('plebbit_account')}
           </label>
         </div>
         {showAccountSettings && <AccountSettings />}

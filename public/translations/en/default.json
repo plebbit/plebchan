@@ -224,7 +224,7 @@
   "animated_gif": "Animated GIF",
   "hide_avatars": "Hide avatars",
   "anon_mode": "Anon mode",
-  "anon_mode_description": "Use a different user ID in each thread",
+  "anon_mode_description": "Use a unique user ID for each thread you post in. These IDs cannot be traced back to your original account.",
   "pending": "Pending",
   "failed": "Failed",
   "add": "Add",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "Showing posts since {{currentTimeFilterName}}, <1>show more posts from last month</1>",
   "newer_posts_available": "Newer posts available, <1>reload feed</1>",
   "stored_locally": "Stored locally ({{location}}), not synced across devices",
-  "choose_one": "Choose one:"
+  "choose_one": "Choose one:",
+  "create": "Create",
+  "plebbit_account": "Plebbit Account",
+  "save_changes": "Save Changes",
+  "reset_changes": "Reset Changes"
 }

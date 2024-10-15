@@ -224,7 +224,7 @@
   "animated_gif": "Animeret GIF",
   "hide_avatars": "Skjul avatarer",
   "anon_mode": "Anonim tilstand",
-  "anon_mode_description": "Brug et forskelligt bruger-ID i hver tråd",
+  "anon_mode_description": "Brug et unikt bruger-ID til hvert indlæg, du poster i. Disse ID'er kan ikke spores tilbage til din oprindelige konto.",
   "pending": "Afventer",
   "failed": "Mislykkedes",
   "add": "Tilføj",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "Viser indlæg siden {{currentTimeFilterName}}, <1>vis flere indlæg fra sidste måned</1>",
   "newer_posts_available": "Nyere indlæg tilgængelige, <1>genindlæs feed</1>",
   "stored_locally": "Lager lokalt ({{location}}), ikke synkroniseret på tværs af enheder",
-  "choose_one": "Vælg en:"
+  "choose_one": "Vælg en:",
+  "create": "Opret",
+  "plebbit_account": "Plebbit-konto",
+  "save_changes": "Gem ændringer",
+  "reset_changes": "Nulstil ændringer"
 }

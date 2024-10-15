@@ -224,7 +224,7 @@
   "animated_gif": "GIF Animado",
   "hide_avatars": "Ocultar avatares",
   "anon_mode": "Modo anónimo",
-  "anon_mode_description": "Usa un ID de usuario diferente en cada hilo",
+  "anon_mode_description": "Utiliza un ID de usuario único para cada hilo en el que publiques. Estas ID no pueden ser rastreadas de vuelta a tu cuenta original.",
   "pending": "Pendiente",
   "failed": "Fallido",
   "add": "Añadir",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "Mostrando publicaciones desde {{currentTimeFilterName}}, <1>mostrar más publicaciones del mes pasado</1>",
   "newer_posts_available": "Nuevas publicaciones disponibles, <1>recargar el feed</1>",
   "stored_locally": "Almacenado localmente ({{location}}), no sincronizado entre dispositivos",
-  "choose_one": "Elige uno:"
+  "choose_one": "Elige uno:",
+  "create": "Crear",
+  "plebbit_account": "Cuenta Plebbit",
+  "save_changes": "Guardar cambios",
+  "reset_changes": "Restablecer cambios"
 }

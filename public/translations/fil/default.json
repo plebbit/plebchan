@@ -224,7 +224,7 @@
   "animated_gif": "Animated GIF",
   "hide_avatars": "Itago ang mga avatar",
   "anon_mode": "Anong mode",
-  "anon_mode_description": "Gumamit ng iba't ibang user ID sa bawat thread",
+  "anon_mode_description": "Gumamit ng natatanging user ID para sa bawat thread na iyong pinapansin. Ang mga ID na ito ay hindi maaring subaybayan pabalik sa iyong orihinal na account.",
   "pending": "Naghihintay",
   "failed": "Nabigo",
   "add": "Idagdag",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "Ipinapakita ang mga post mula {{currentTimeFilterName}}, <1>ipakita ang higit pang mga post mula sa nakaraang buwan</1>",
   "newer_posts_available": "May mga bagong post na magagamit, <1>i-reload ang feed</1>",
   "stored_locally": "Nakaimbak nang lokal ({{location}}), hindi naka-sync sa iba pang device",
-  "choose_one": "Pumili ng isa:"
+  "choose_one": "Pumili ng isa:",
+  "create": "Lumikha",
+  "plebbit_account": "Plebbit Account",
+  "save_changes": "I-save ang mga pagbabago",
+  "reset_changes": "I-reset ang mga pagbabago"
 }

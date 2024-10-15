@@ -224,7 +224,7 @@
   "animated_gif": "GIF متحرك",
   "hide_avatars": "إخفاء الصور الرمزية",
   "anon_mode": "وضع مجهول",
-  "anon_mode_description": "استخدم معرف مستخدم مختلف في كل موضوع",
+  "anon_mode_description": "استخدم معرف مستخدم فريد لكل موضوع تنشر فيه. لا يمكن تتبع هذه المعرفات إلى حسابك الأصلي.",
   "pending": "قيد الانتظار",
   "failed": "فشل",
   "add": "أضف",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "تظهر المشاركات منذ {{currentTimeFilterName}} ، <1>عرض المزيد من المشاركات من الشهر الماضي</1>",
   "newer_posts_available": "مشاركات جديدة متاحة، <1>قم بتحديث الخلاصة</1>",
   "stored_locally": "مخزنة محليًا ({{location}})، ليست متزامنة عبر الأجهزة",
-  "choose_one": "اختر واحدة:"
+  "choose_one": "اختر واحدة:",
+  "create": "إنشاء",
+  "plebbit_account": "حساب Plebbit",
+  "save_changes": "حفظ التغييرات",
+  "reset_changes": "إعادة تعيين التغييرات"
 }

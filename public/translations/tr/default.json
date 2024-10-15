@@ -224,7 +224,7 @@
   "animated_gif": "Animasyonlu GIF",
   "hide_avatars": "Avatarları gizle",
   "anon_mode": "Gizli mod",
-  "anon_mode_description": "Her başlıkta farklı bir kullanıcı ID'si kullanın",
+  "anon_mode_description": "Yayınladığınız her başlık için benzersiz bir kullanıcı ID'si kullanın. Bu ID'ler orijinal hesabınıza geri izlenemez.",
   "pending": "Beklemede",
   "failed": "Başarısız",
   "add": "Ekle",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "{{currentTimeFilterName}} tarihinden itibaren gönderiler gösteriliyor, <1>geçen aydan daha fazla gönderi göster</1>",
   "newer_posts_available": "Daha yeni gönderiler mevcut, <1>beslemeyi yenile</1>",
   "stored_locally": "Yerel olarak saklanıyor ({{location}}), cihazlar arasında senkronize edilmedi",
-  "choose_one": "Birini seç:"
+  "choose_one": "Birini seç:",
+  "create": "Oluştur",
+  "plebbit_account": "Plebbit Hesabı",
+  "save_changes": "Değişiklikleri Kaydet",
+  "reset_changes": "Değişiklikleri Sıfırla"
 }

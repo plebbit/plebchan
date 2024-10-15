@@ -224,7 +224,7 @@
   "animated_gif": "애니메이션 GIF",
   "hide_avatars": "아바타 숨기기",
   "anon_mode": "익명 모드",
-  "anon_mode_description": "각 스레드에서 다른 사용자 ID를 사용하세요",
+  "anon_mode_description": "게시하는 각 스레드에 대해 고유한 사용자 ID를 사용하세요. 이러한 ID는 원래 계정으로 추적할 수 없습니다.",
   "pending": "대기 중",
   "failed": "실패",
   "add": "추가",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "{{currentTimeFilterName}} 이후의 게시물이 표시됩니다. <1>지난달의 게시물 더 보기</1>",
   "newer_posts_available": "새로운 게시물이 있습니다, <1>피드를 새로 고침</1>",
   "stored_locally": "로컬에 저장됨 ({{location}}), 장치 간에 동기화되지 않음",
-  "choose_one": "하나를 선택하세요:"
+  "choose_one": "하나를 선택하세요:",
+  "create": "생성",
+  "plebbit_account": "Plebbit 계정",
+  "save_changes": "변경 사항 저장",
+  "reset_changes": "변경 사항 초기화"
 }

@@ -224,7 +224,7 @@
   "animated_gif": "GIF Animasi",
   "hide_avatars": "Sembunyikan avatar",
   "anon_mode": "Mode anonim",
-  "anon_mode_description": "Gunakan ID pengguna yang berbeda di setiap thread",
+  "anon_mode_description": "Gunakan ID pengguna unik untuk setiap utas yang Anda posting. ID ini tidak dapat dilacak kembali ke akun asli Anda.",
   "pending": "Tertunda",
   "failed": "Gagal",
   "add": "Tambahkan",
@@ -241,5 +241,9 @@
   "more_posts_last_month": "Menampilkan pos sejak {{currentTimeFilterName}}, <1>tampilkan lebih banyak pos dari bulan lalu</1>",
   "newer_posts_available": "Postingan terbaru tersedia, <1>muat ulang umpan</1>",
   "stored_locally": "Disimpan secara lokal ({{location}}), tidak disinkronkan antar perangkat",
-  "choose_one": "Pilih satu:"
+  "choose_one": "Pilih satu:",
+  "create": "Buat",
+  "plebbit_account": "Akun Plebbit",
+  "save_changes": "Simpan Perubahan",
+  "reset_changes": "Atur Ulang Perubahan"
 }
