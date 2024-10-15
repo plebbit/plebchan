@@ -119,14 +119,41 @@ export const getLinkMediaInfo = memoize(
 const fetchWebpageThumbnail = async (url: string): Promise<string | undefined> => {
   try {
     let html: string;
+    const MAX_HTML_SIZE = 1024 * 1024;
+    const TIMEOUT = 5000;
+
     if (Capacitor.isNativePlatform()) {
       // in the native app, the Capacitor HTTP plugin is used to fetch the thumbnail
-      const response = await CapacitorHttp.get({ url });
-      html = response.data;
+      const response = await CapacitorHttp.get({
+        url,
+        readTimeout: TIMEOUT,
+        connectTimeout: TIMEOUT,
+        responseType: 'text',
+        headers: { Accept: 'text/html', Range: `bytes=0-${MAX_HTML_SIZE - 1}` },
+      });
+      html = response.data.slice(0, MAX_HTML_SIZE);
     } else {
       // some sites have CORS access, from which the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-      const response = await fetch(url);
-      html = await response.text();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
+
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: { Accept: 'text/html' },
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) throw new Error('Network response was not ok');
+
+      const reader = response.body?.getReader();
+      let result = '';
+      while (true) {
+        const { done, value } = await reader!.read();
+        if (done || result.length >= MAX_HTML_SIZE) break;
+        result += new TextDecoder().decode(value);
+      }
+      html = result.slice(0, MAX_HTML_SIZE);
     }
 
     const parser = new DOMParser();
