@@ -10,8 +10,8 @@ const CryptoAddressSetting = () => {
   const [cryptoState, setCryptoState] = useState({
     cryptoAddress: '',
     checkingCryptoAddress: false,
-    showResolvingMessage: false,
-    resolveString: '',
+    showResolvingMessage: true,
+    resolveString: t('crypto_address_verification'),
     resolveClass: '',
   });
 
@@ -20,8 +20,11 @@ const CryptoAddressSetting = () => {
   const author = { ...account?.author, address: cryptoState.cryptoAddress };
   const { resolvedAddress, state, error, chainProvider } = useResolvedAuthorAddress({ author, cache: false });
 
+  const [inputValue, setInputValue] = useState(account?.author?.shortAddress.includes('.') ? account.author.shortAddress : '');
+
   const checkCryptoAddress = () => {
-    if (!cryptoState.cryptoAddress || !cryptoState.cryptoAddress.includes('.')) {
+    const addressToCheck = inputValue || cryptoState.cryptoAddress;
+    if (!addressToCheck || !addressToCheck.includes('.')) {
       alert(t('enter_crypto_address'));
       return;
     }
@@ -48,6 +51,7 @@ const CryptoAddressSetting = () => {
 
     setCryptoState((prevState) => ({
       ...prevState,
+      cryptoAddress: addressToCheck,
       showResolvingMessage: true,
       resolveString,
       resolveClass,
@@ -106,8 +110,11 @@ const CryptoAddressSetting = () => {
         <input
           type='text'
           placeholder='address.eth/.sol'
-          defaultValue={cryptoState.cryptoAddress || (account?.author?.shortAddress.includes('.') ? account.author.shortAddress : '')}
-          onChange={(e) => setCryptoState((prevState) => ({ ...prevState, cryptoAddress: e.target.value }))}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            setCryptoState((prevState) => ({ ...prevState, cryptoAddress: e.target.value }));
+          }}
         />
         <button className={styles.saveButton} onClick={saveCryptoAddress}>
           {t('save')}

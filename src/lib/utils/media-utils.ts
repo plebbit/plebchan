@@ -3,6 +3,8 @@ import extName from 'ext-name';
 import { canEmbed } from '../../components/embed';
 import memoize from 'memoizee';
 import { isValidURL } from './url-utils';
+import { Capacitor } from '@capacitor/core';
+import { CapacitorHttp } from '@capacitor/core';
 
 export interface CommentMediaInfo {
   url: string;
@@ -79,6 +81,12 @@ export const getLinkMediaInfo = memoize(
       return { url: link, type: 'image' };
     }
 
+    // Non-direct imgbb links can return lower res thumbnails on web. On native, the full image can be fetched later.
+    if (url.host === 'ibb.co' && !Capacitor.isNativePlatform()) {
+      const imageId = url.pathname.split('/')[1];
+      return { url: link, type: 'webpage', thumbnail: `https://i.ibb.co/${imageId}/thumbnail.jpg` };
+    }
+
     try {
       mime = extName(new URL(link).pathname.toLowerCase().replace('/', ''))[0]?.mime;
       if (mime) {
@@ -108,11 +116,19 @@ export const getLinkMediaInfo = memoize(
   { max: 1000 },
 );
 
-// some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
 const fetchWebpageThumbnail = async (url: string): Promise<string | undefined> => {
   try {
-    const response = await fetch(url);
-    const html = await response.text();
+    let html: string;
+    if (Capacitor.isNativePlatform()) {
+      // in the native app, the Capacitor HTTP plugin is used to fetch the thumbnail
+      const response = await CapacitorHttp.get({ url });
+      html = response.data;
+    } else {
+      // some sites have CORS access, from which the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
+      const response = await fetch(url);
+      html = await response.text();
+    }
+
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
 

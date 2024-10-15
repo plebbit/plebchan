@@ -11,9 +11,9 @@ const usePublishReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAd
   const { author, signer, content, link, spoiler, publishCommentOptions } = usePublishReplyStore((state) => ({
     author: state.author[parentCid] || (account?.author ? { displayName: account.author.displayName || undefined } : undefined),
     displayName: state.displayName[parentCid] || account?.author?.displayName,
-    signer: state.signer[parentCid],
-    content: state.content[parentCid] || '',
-    link: state.link[parentCid],
+    signer: state.signer[parentCid] || undefined,
+    content: state.content[parentCid] || undefined,
+    link: state.link[parentCid] || undefined,
     spoiler: state.spoiler[parentCid] || false,
     publishCommentOptions: state.publishCommentOptions[parentCid],
   }));

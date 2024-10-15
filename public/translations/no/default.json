@@ -224,7 +224,7 @@
   "animated_gif": "Animasjons GIF",
   "hide_avatars": "Skjul avatarer",
   "anon_mode": "Anonim modus",
-  "anon_mode_description": "Bruk et annet bruker-ID i hver tråd",
+  "anon_mode_description": "Bruk et unikt bruker-ID for hvert innlegg du legger ut. Disse ID-ene kan ikke spores tilbake til din opprinnelige konto.",
   "pending": "Venter",
   "failed": "Feilet",
   "add": "Legg til",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Viser innlegg siden {{currentTimeFilterName}}, <1>vis flere innlegg fra forrige måned</1>",
   "newer_posts_available": "Nyere innlegg tilgjengelige, <1>oppdater feed</1>",
   "stored_locally": "Lagring lokalt ({{location}}), ikke synkronisert på tvers av enheter",
-  "choose_one": "Velg en:"
+  "choose_one": "Velg en:",
+  "create": "Opprett",
+  "plebbit_account": "Plebbit-konto",
+  "save_changes": "Lagre endringer",
+  "reset_changes": "Tilbakestill endringer",
+  "crypto_address_yours": "Crypto-adressen tilhører denne kontoen.",
+  "delete_wallet": "Slett lommebok",
+  "loading_subplebbit": "Laster subplebbit",
+  "avatar_warning": "Du kan ikke poste med en avatar mens anonym modus er aktivert. Du kan slå den av i innstillingene for Plebbit-kontoen din."
 }

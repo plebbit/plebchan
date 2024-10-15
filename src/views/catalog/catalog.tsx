@@ -173,7 +173,7 @@ const Catalog = () => {
               <Trans
                 i18nKey='newer_posts_available'
                 components={{
-                  1: <span onClick={handleNewerPostsButtonClick} />,
+                  1: <span className={styles.newerPostsButton} onClick={handleNewerPostsButtonClick} />,
                 }}
               />
             </div>

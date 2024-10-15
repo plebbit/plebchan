@@ -224,7 +224,7 @@
   "animated_gif": "Animált GIF",
   "hide_avatars": "Avatarok elrejtése",
   "anon_mode": "Anonim mód",
-  "anon_mode_description": "Használjon különböző felhasználói azonosítót minden szálban",
+  "anon_mode_description": "Használjon egyedi felhasználói azonosítót minden szálhoz, amelyre hozzászól. Ezek az azonosítók nem követhetők vissza az eredeti fiókjához.",
   "pending": "Függőben",
   "failed": "Sikertelen",
   "add": "Hozzáad",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "A {{currentTimeFilterName}} óta látható bejegyzések, <1>további bejegyzések megjelenítése az előző hónapban</1>",
   "newer_posts_available": "Új bejegyzések állnak rendelkezésre, <1>frissítse az adatfolyamot</1>",
   "stored_locally": "Helyben tárolva ({{location}}), nem szinkronizálva eszközök között",
-  "choose_one": "Válasszon egyet:"
+  "choose_one": "Válasszon egyet:",
+  "create": "Létrehozás",
+  "plebbit_account": "Plebbit-fiók",
+  "save_changes": "Változások mentése",
+  "reset_changes": "Változások visszaállítása",
+  "crypto_address_yours": "A kripto-cím ehhez a fiókhoz tartozik.",
+  "delete_wallet": "Tárca törlése",
+  "loading_subplebbit": "Subplebbit betöltése",
+  "avatar_warning": "Nem posztolhatsz avatarral, míg az anon mód be van kapcsolva. Kikapcsolhatod a Plebbit-fiókod beállításaiban."
 }

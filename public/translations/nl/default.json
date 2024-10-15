@@ -224,7 +224,7 @@
   "animated_gif": "Geanimeerde GIF",
   "hide_avatars": "Avatars verbergen",
   "anon_mode": "Anoniem modus",
-  "anon_mode_description": "Gebruik een ander gebruikers-ID in elk draad",
+  "anon_mode_description": "Gebruik een unieke gebruikers-ID voor elk onderwerp waarin u plaatst. Deze ID's kunnen niet worden teruggevoerd naar uw oorspronkelijke account.",
   "pending": "In afwachting",
   "failed": "Mislukt",
   "add": "Toevoegen",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Berichten sinds {{currentTimeFilterName}}, <1>meer berichten van afgelopen maand tonen</1>",
   "newer_posts_available": "Nieuwere berichten beschikbaar, <1>herlaad feed</1>",
   "stored_locally": "Lokaal opgeslagen ({{location}}), niet gesynchroniseerd tussen apparaten",
-  "choose_one": "Kies er een:"
+  "choose_one": "Kies er een:",
+  "create": "Maak aan",
+  "plebbit_account": "Plebbit-account",
+  "save_changes": "Wijzigingen opslaan",
+  "reset_changes": "Wijzigingen resetten",
+  "crypto_address_yours": "Crypto-adres behoort tot deze account.",
+  "delete_wallet": "Verwijder portemonnee",
+  "loading_subplebbit": "Subplebbit laden",
+  "avatar_warning": "Je kunt niet met een avatar posten terwijl de anonieme modus aan staat. Je kunt het uitschakelen in de instellingen van je Plebbit-account."
 }

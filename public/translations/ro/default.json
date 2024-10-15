@@ -224,7 +224,7 @@
   "animated_gif": "GIF Animat",
   "hide_avatars": "Ascunde avatarele",
   "anon_mode": "Mod anonim",
-  "anon_mode_description": "Utilizați un ID de utilizator diferit în fiecare fir",
+  "anon_mode_description": "Utilizați un ID de utilizator unic pentru fiecare fir în care postați. Aceste ID-uri nu pot fi urmărite înapoi la contul dvs. original.",
   "pending": "În așteptare",
   "failed": "Eșuat",
   "add": "Adaugă",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Afișând postări din {{currentTimeFilterName}}, <1>afișați mai multe postări din luna trecută</1>",
   "newer_posts_available": "Postări mai recente disponibile, <1>reîncarcă fluxul</1>",
   "stored_locally": "Stocat local ({{location}}), nu este sincronizat între dispozitive",
-  "choose_one": "Alege una:"
+  "choose_one": "Alege una:",
+  "create": "Creează",
+  "plebbit_account": "Cont Plebbit",
+  "save_changes": "Salvează modificările",
+  "reset_changes": "Resetează modificările",
+  "crypto_address_yours": "Adresa crypto aparține acestui cont.",
+  "delete_wallet": "Șterge portofelul",
+  "loading_subplebbit": "Se încarcă subplebbit",
+  "avatar_warning": "Nu poți publica cu un avatar în timp ce modul anonim este activat. Poți să-l dezactivezi în setările contului tău Plebbit."
 }

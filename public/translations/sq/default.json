@@ -224,7 +224,7 @@
   "animated_gif": "GIF i Animuar",
   "hide_avatars": "Fsheh avatarët",
   "anon_mode": "Mënyra anonime",
-  "anon_mode_description": "Përdorni një ID të ndryshme përdoruesi në çdo temë",
+  "anon_mode_description": "Përdorni një ID përdoruesi unike për çdo temë në të cilën postoni. Këto ID nuk mund të gjurmohen mbrapsht në llogarinë tuaj origjinale.",
   "pending": "Në pritje",
   "failed": "Dështuar",
   "add": "Shto",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Duke treguar postimet që nga {{currentTimeFilterName}}, <1>tregoni më shumë postime nga java e kaluar</1>",
   "newer_posts_available": "Postime më të reja janë të disponueshme, <1>rifreskoje fluxin</1>",
   "stored_locally": "Ruajtur lokalmente ({{location}}), nuk është sinkronizuar ndërmjet pajisjeve",
-  "choose_one": "Zgjidhni një:"
+  "choose_one": "Zgjidhni një:",
+  "create": "Krijo",
+  "plebbit_account": "Llogaria Plebbit",
+  "save_changes": "Ruaj ndryshimet",
+  "reset_changes": "Rivendosni ndryshimet",
+  "crypto_address_yours": "Adresa e kriptovalutës i përket këtij llogarie.",
+  "delete_wallet": "Fshi portofolin",
+  "loading_subplebbit": "Po ngarkohet subplebbit",
+  "avatar_warning": "Nuk mund të postoni me një avatar ndërsa është aktivizuar moda anonime. Mund ta çaktivizoni në cilësimet e llogarisë tuaj Plebbit."
 }

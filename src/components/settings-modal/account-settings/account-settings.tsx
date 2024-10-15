@@ -4,7 +4,9 @@ import { createAccount, deleteAccount, exportAccount, importAccount, setAccount,
 import stringify from 'json-stringify-pretty-compact';
 import styles from './account-settings.module.css';
 import useAnonModeStore from '../../../stores/use-anon-mode-store';
-import { isAndroid } from '../../../lib/utils/platform';
+import { Capacitor } from '@capacitor/core';
+
+const isAndroid = Capacitor.getPlatform() === 'android';
 
 const AnonMode = () => {
   const { t } = useTranslation();
@@ -177,8 +179,9 @@ const AccountSettings = () => {
           {accountsOptions}
         </select>
         <button className={styles.createAccount} onClick={_createAccount}>
-          +
-        </button>
+          {t('create')}
+        </button>{' '}
+        <button onClick={_importAccount}>{t('import')}</button> <button onClick={_exportAccount}>{t('export')}</button>
         <div className={styles.warning}>
           {t('stored_locally', {
             location: window.isElectron ? 'this desktop app' : isAndroid ? 'this mobile app' : window.location.hostname,
@@ -189,8 +192,7 @@ const AccountSettings = () => {
       <div></div>
       <textarea value={text} onChange={(e) => setText(e.target.value)} autoCorrect='off' autoComplete='off' spellCheck='false' />
       <div>
-        <button onClick={saveAccount}>{t('save')}</button> <button onClick={() => setText(accountJson)}>{t('reset')}</button>{' '}
-        <button onClick={_importAccount}>{t('import')}</button> <button onClick={_exportAccount}>{t('export')}</button> <AnonMode />
+        <button onClick={saveAccount}>{t('save_changes')}</button> <button onClick={() => setText(accountJson)}>{t('reset_changes')}</button> <AnonMode />
         <button className={styles.deleteAccount} onClick={() => _deleteAccount(account?.name)}>
           {t('delete_account')}
         </button>

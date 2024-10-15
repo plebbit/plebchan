@@ -224,7 +224,7 @@
   "animated_gif": "アニメーションGIF",
   "hide_avatars": "アバターを隠す",
   "anon_mode": "匿名モード",
-  "anon_mode_description": "各スレッドで異なるユーザーIDを使用する",
+  "anon_mode_description": "投稿する各スレッドに一意のユーザーIDを使用してください。これらのIDは、元のアカウントに戻すことはできません。",
   "pending": "保留中",
   "failed": "失敗",
   "add": "追加",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "{{currentTimeFilterName}} からの投稿を表示しています。<1>先月の投稿をさらに表示</1>",
   "newer_posts_available": "新しい投稿が利用可能です、<1>フィードを再読み込み</1>",
   "stored_locally": "ローカルに保存されています ({{location}})、デバイス間で同期されていません",
-  "choose_one": "いずれかを選択してください:"
+  "choose_one": "いずれかを選択してください:",
+  "create": "作成",
+  "plebbit_account": "Plebbit アカウント",
+  "save_changes": "変更を保存",
+  "reset_changes": "変更をリセット",
+  "crypto_address_yours": "暗号通貨アドレスはこのアカウントに属しています。",
+  "delete_wallet": "ウォレットを削除",
+  "loading_subplebbit": "subplebbitを読み込んでいます",
+  "avatar_warning": "アバターを使用して投稿することはできません。匿名モードがオンになっている間は、Plebbitアカウントの設定でオフにできます。"
 }

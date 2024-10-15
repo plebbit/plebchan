@@ -3,12 +3,12 @@
   padding: 15px 0 10px 5px;
 }
 
-.footer a  {
+.footer a, .newerPostsButton  {
   text-decoration: var(--button-text-decoration);
   color: var(--button-desktop-text-color);
 }
 
-.footer a:hover {
+.footer a:hover, .newerPostsButton:hover {
   color: var(--button-desktop-text-color-hover);
 }
 

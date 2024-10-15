@@ -224,7 +224,7 @@
   "animated_gif": "एनिमेटेड GIF",
   "hide_avatars": "अवतार लपवा",
   "anon_mode": "अनाम मोड",
-  "anon_mode_description": "प्रत्येक थ्रेडमध्ये एक वेगवेगळा वापरकर्ता ID वापरा",
+  "anon_mode_description": "आपण पोस्ट करणार्‍या प्रत्येक ध糹रेसाठी एक अद्वितीय वापरकर्ता ID वापरा. या ID आपल्या मूळ खात्याकडे मागे ट्रेस करता येत नाही.",
   "pending": "प्रलंबित",
   "failed": "असफल",
   "add": "अॅड करा",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "{{currentTimeFilterName}} पासून पोस्ट दर्शवित आहेत, <1>गेल्या महिन्यातील अधिक पोस्ट दर्शवा</1>",
   "newer_posts_available": "नवीनतम पोस्ट उपलब्ध आहेत, <1>फीड रीलोड करा</1>",
   "stored_locally": "स्थानिकपणे संग्रहित ({{location}}), उपकरणांमध्ये समन्वयित केलेले नाही",
-  "choose_one": "एक निवडा:"
+  "choose_one": "एक निवडा:",
+  "create": "तयार करा",
+  "plebbit_account": "Plebbit खाता",
+  "save_changes": "बदलांना जतन करा",
+  "reset_changes": "बदलांना रीसेट करा",
+  "crypto_address_yours": "क्रिप्टो पत्ता हा खात्याकडे संबंधित आहे.",
+  "delete_wallet": "वॉलेट हटवा",
+  "loading_subplebbit": "subplebbit लोड करीत आहे",
+  "avatar_warning": "आपण अज्ञात मोड चालू असताना अवतारसह पोस्ट करू शकत नाही. आपण ते आपल्या Plebbit खात्याच्या सेटिंग्जमध्ये बंद करू शकता."
 }

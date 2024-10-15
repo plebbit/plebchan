@@ -224,7 +224,7 @@
   "animated_gif": "Animoitu GIF",
   "hide_avatars": "Piilota avatarit",
   "anon_mode": "Anonyymi tila",
-  "anon_mode_description": "Käytä eri käyttäjä-ID:tä jokaisessa ketjussa",
+  "anon_mode_description": "Käytä ainutlaatuista käyttäjä-ID:tä jokaisessa ketjussa, johon julkaiset. Näitä ID:itä ei voida jäljittää takaisin alkuperäiseen tiliisi.",
   "pending": "Odottaa",
   "failed": "Epäonnistui",
   "add": "Lisää",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Näytetään viestejä ajasta {{currentTimeFilterName}}, <1>näytä lisää viestejä viime kuulta</1>",
   "newer_posts_available": "Uudemmat viestit saatavilla, <1>lataa syöte uudelleen</1>",
   "stored_locally": "Tallennettu paikallisesti ({{location}}), ei synkronoitu laitteiden välillä",
-  "choose_one": "Valitse yksi:"
+  "choose_one": "Valitse yksi:",
+  "create": "Luo",
+  "plebbit_account": "Plebbit-tili",
+  "save_changes": "Tallenna muutokset",
+  "reset_changes": "Nollaa muutokset",
+  "crypto_address_yours": "Krypto-osoite kuuluu tähän tiliin.",
+  "delete_wallet": "Poista lompakko",
+  "loading_subplebbit": "Ladataan subplebbit",
+  "avatar_warning": "Et voi julkaista avatarilla, kun anonyymi tila on päällä. Voit poistaa sen käytöstä Plebbit-tilisi asetuksissa."
 }

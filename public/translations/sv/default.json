@@ -224,7 +224,7 @@
   "animated_gif": "Animerad GIF",
   "hide_avatars": "Dölj avatarer",
   "anon_mode": "Anonymt läge",
-  "anon_mode_description": "Använd ett annat användar-ID i varje tråd",
+  "anon_mode_description": "Använd ett unikt användar-ID för varje tråd du publicerar i. Dessa ID:n kan inte spåras tillbaka till ditt ursprungliga konto.",
   "pending": "Väntande",
   "failed": "Misslyckades",
   "add": "Lägg till",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Visar inlägg sedan {{currentTimeFilterName}}, <1>visa fler inlägg från förra månaden</1>",
   "newer_posts_available": "Nyare inlägg tillgängliga, <1>ladda om flödet</1>",
   "stored_locally": "Lagrad lokalt ({{location}}), inte synkroniserad mellan enheter",
-  "choose_one": "Välj en:"
+  "choose_one": "Välj en:",
+  "create": "Skapa",
+  "plebbit_account": "Plebbit-konto",
+  "save_changes": "Spara ändringar",
+  "reset_changes": "Återställ ändringar",
+  "crypto_address_yours": "Crypto-adressen tillhör denna konto.",
+  "delete_wallet": "Ta bort plånbok",
+  "loading_subplebbit": "Laddar subplebbit",
+  "avatar_warning": "Du kan inte posta med en avatar när anonym läge är aktiverat. Du kan stänga av det i inställningarna för ditt Plebbit-konto."
 }

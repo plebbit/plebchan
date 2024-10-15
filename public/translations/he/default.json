@@ -224,7 +224,7 @@
   "animated_gif": "GIF מונפש",
   "hide_avatars": "הסתר את התמונות האישיות",
   "anon_mode": "מצב אנונימי",
-  "anon_mode_description": "השתמש במזהה משתמש שונה בכל שרשור",
+  "anon_mode_description": "השתמש במזהה משתמש ייחודי לכל שרשור שאתה מפרסם בו. מזהים אלה לא יכולים להתחקות חזרה לחשבון המקורי שלך.",
   "pending": "ממתין",
   "failed": "נכשל",
   "add": "הוסף",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "מראה פוסטים מאז {{currentTimeFilterName}}, <1>הצג פוסטים נוספים מהחודש שעבר</1>",
   "newer_posts_available": "ישנם פוסטים חדשים זמינים, <1>טען מחדש את הפיד</1>",
   "stored_locally": "מאוחסן מקומית ({{location}}), לא מסונכרן בין מכשירים",
-  "choose_one": "בחר אחת:"
+  "choose_one": "בחר אחת:",
+  "create": "צור",
+  "plebbit_account": "חשבון Plebbit",
+  "save_changes": "שמור שינויים",
+  "reset_changes": "איפוס שינויים",
+  "crypto_address_yours": "כתובת המטבע הקריפטוגרפי שייכת לחשבון זה.",
+  "delete_wallet": "מחק ארנק",
+  "loading_subplebbit": "טוען subplebbit",
+  "avatar_warning": "אין באפשרותך לפרסם עם תמונת פרופיל בזמן שמצב אנונימי מופעל. תוכל לבטל זאת בהגדרות חשבון Plebbit שלך."
 }

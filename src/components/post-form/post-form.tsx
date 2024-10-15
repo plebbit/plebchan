@@ -39,12 +39,6 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const { publishCommentOptions, setPublishPostStore, resetPublishPostStore } = usePublishPostStore();
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
-  useEffect(() => {
-    if (displayName) {
-      setPublishPostStore({ displayName });
-    }
-  }, [displayName, setPublishPostStore]);
-
   const textRef = useRef<HTMLTextAreaElement>(null);
   const urlRef = useRef<HTMLInputElement>(null);
   const subjectRef = useRef<HTMLInputElement>(null);
@@ -345,12 +339,12 @@ const PostForm = () => {
   const [showForm, setShowForm] = useState(false);
 
   const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
-  const { isOffline, offlineTitle } = useIsSubplebbitOffline(subplebbit);
+  const { isOffline, isOnlineStatusLoading, offlineTitle } = useIsSubplebbitOffline(subplebbit);
 
   return (
     <>
       <div className={styles.postFormDesktop}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && (isOffline || isOffline) && <div className={styles.offlineBoard}>{offlineTitle}</div>}
+        {!(isInAllView || isInSubscriptionsView) && showForm && (isOffline || isOnlineStatusLoading) && <div className={styles.offlineBoard}>{offlineTitle}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -370,7 +364,7 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormMobile}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && (isOffline || isOffline) && <div className={styles.offlineBoard}>{offlineTitle}</div>}
+        {!(isInAllView || isInSubscriptionsView) && showForm && (isOffline || isOnlineStatusLoading) && <div className={styles.offlineBoard}>{offlineTitle}</div>}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}

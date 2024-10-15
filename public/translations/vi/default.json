@@ -224,7 +224,7 @@
   "animated_gif": "GIF Hoạt Hình",
   "hide_avatars": "Ẩn avatar",
   "anon_mode": "Chế độ ẩn danh",
-  "anon_mode_description": "Sử dụng ID người dùng khác nhau trong từng chủ đề",
+  "anon_mode_description": "Sử dụng ID người dùng duy nhất cho mỗi chủ đề bạn đăng. Những ID này không thể được theo dõi lại tài khoản gốc của bạn.",
   "pending": "Đang chờ",
   "failed": "Thất bại",
   "add": "Thêm",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Đang hiển thị bài viết từ {{currentTimeFilterName}}, <1>hiển thị thêm bài viết từ tháng trước</1>",
   "newer_posts_available": "Có bài viết mới, <1>tải lại nguồn cấp dữ liệu</1>",
   "stored_locally": "Lưu trữ cục bộ ({{location}}), không được đồng bộ qua các thiết bị",
-  "choose_one": "Chọn một:"
+  "choose_one": "Chọn một:",
+  "create": "Tạo",
+  "plebbit_account": "Tài khoản Plebbit",
+  "save_changes": "Lưu thay đổi",
+  "reset_changes": "Đặt lại thay đổi",
+  "crypto_address_yours": "Địa chỉ tiền điện tử thuộc về tài khoản này.",
+  "delete_wallet": "Xóa ví",
+  "loading_subplebbit": "Đang tải subplebbit",
+  "avatar_warning": "Bạn không thể đăng với hình đại diện khi chế độ ẩn danh đang bật. Bạn có thể tắt nó trong cài đặt Tài khoản Plebbit của mình."
 }

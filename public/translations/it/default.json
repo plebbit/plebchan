@@ -224,7 +224,7 @@
   "animated_gif": "GIF Animata",
   "hide_avatars": "Nascondi avatar",
   "anon_mode": "Modalità anonima",
-  "anon_mode_description": "Usa un ID utente diverso per ogni thread",
+  "anon_mode_description": "Usa un ID utente unico per ogni thread in cui pubblichi. Questi ID non possono essere tracciati fino al tuo account originale.",
   "pending": "In attesa",
   "failed": "Fallito",
   "add": "Aggiungi",
@@ -241,5 +241,13 @@
   "more_posts_last_month": "Stai visualizzando post da {{currentTimeFilterName}}, <1>visualizza più post del mese scorso</1>",
   "newer_posts_available": "Nuovi post disponibili, <1>ricarica il feed</1>",
   "stored_locally": "Memorizzato localmente ({{location}}), non sincronizzato tra i dispositivi",
-  "choose_one": "Scegline una:"
+  "choose_one": "Scegline una:",
+  "create": "Crea",
+  "plebbit_account": "Account Plebbit",
+  "save_changes": "Salva Modifiche",
+  "reset_changes": "Ripristina Modifiche",
+  "crypto_address_yours": "L'indirizzo cripto appartiene a questo account.",
+  "delete_wallet": "Elimina Wallet",
+  "loading_subplebbit": "Caricamento subplebbit",
+  "avatar_warning": "Non puoi postare con un avatar mentre la modalità anonima è attiva. Puoi disattivarla nelle impostazioni del tuo account Plebbit."
 }
