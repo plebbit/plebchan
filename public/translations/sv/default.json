@@ -245,5 +245,8 @@
   "create": "Skapa",
   "plebbit_account": "Plebbit-konto",
   "save_changes": "Spara ändringar",
-  "reset_changes": "Återställ ändringar"
+  "reset_changes": "Återställ ändringar",
+  "crypto_address_yours": "Crypto-adressen tillhör denna konto.",
+  "delete_wallet": "Ta bort plånbok",
+  "loading_subplebbit": "Laddar subplebbit"
 }

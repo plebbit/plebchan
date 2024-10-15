@@ -245,5 +245,8 @@
   "create": "Opret",
   "plebbit_account": "Plebbit-konto",
   "save_changes": "Gem ændringer",
-  "reset_changes": "Nulstil ændringer"
+  "reset_changes": "Nulstil ændringer",
+  "crypto_address_yours": "Crypto-adresse tilhører denne konto.",
+  "delete_wallet": "Slet tegnebog",
+  "loading_subplebbit": "Indlæser subplebbit"
 }

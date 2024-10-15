@@ -245,5 +245,8 @@
   "create": "作成",
   "plebbit_account": "Plebbit アカウント",
   "save_changes": "変更を保存",
-  "reset_changes": "変更をリセット"
+  "reset_changes": "変更をリセット",
+  "crypto_address_yours": "暗号通貨アドレスはこのアカウントに属しています。",
+  "delete_wallet": "ウォレットを削除",
+  "loading_subplebbit": "subplebbitを読み込んでいます"
 }

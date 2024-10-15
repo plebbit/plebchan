@@ -245,5 +245,8 @@
   "create": "Maak aan",
   "plebbit_account": "Plebbit-account",
   "save_changes": "Wijzigingen opslaan",
-  "reset_changes": "Wijzigingen resetten"
+  "reset_changes": "Wijzigingen resetten",
+  "crypto_address_yours": "Crypto-adres behoort tot deze account.",
+  "delete_wallet": "Verwijder portemonnee",
+  "loading_subplebbit": "Subplebbit laden"
 }

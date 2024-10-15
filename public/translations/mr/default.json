@@ -245,5 +245,8 @@
   "create": "तयार करा",
   "plebbit_account": "Plebbit खाता",
   "save_changes": "बदलांना जतन करा",
-  "reset_changes": "बदलांना रीसेट करा"
+  "reset_changes": "बदलांना रीसेट करा",
+  "crypto_address_yours": "क्रिप्टो पत्ता हा खात्याकडे संबंधित आहे.",
+  "delete_wallet": "वॉलेट हटवा",
+  "loading_subplebbit": "subplebbit लोड करीत आहे"
 }

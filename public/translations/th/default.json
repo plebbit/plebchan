@@ -245,5 +245,8 @@
   "create": "สร้าง",
   "plebbit_account": "บัญชี Plebbit",
   "save_changes": "บันทึกการเปลี่ยนแปลง",
-  "reset_changes": "รีเซ็ตการเปลี่ยนแปลง"
+  "reset_changes": "รีเซ็ตการเปลี่ยนแปลง",
+  "crypto_address_yours": "ที่อยู่คริปโตเป็นของบัญชีนี้",
+  "delete_wallet": "ลบกระเป๋าเงิน",
+  "loading_subplebbit": "กำลังโหลด subplebbit"
 }

@@ -245,5 +245,8 @@
   "create": "Creează",
   "plebbit_account": "Cont Plebbit",
   "save_changes": "Salvează modificările",
-  "reset_changes": "Resetează modificările"
+  "reset_changes": "Resetează modificările",
+  "crypto_address_yours": "Adresa crypto aparține acestui cont.",
+  "delete_wallet": "Șterge portofelul",
+  "loading_subplebbit": "Se încarcă subplebbit"
 }

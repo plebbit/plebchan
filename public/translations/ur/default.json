@@ -245,5 +245,8 @@
   "create": "تخلیق کریں",
   "plebbit_account": "Plebbit اکاؤنٹ",
   "save_changes": "تبدیلیاں محفوظ کریں",
-  "reset_changes": "تبدیلیاں ری سیٹ کریں"
+  "reset_changes": "تبدیلیاں ری سیٹ کریں",
+  "crypto_address_yours": "کرپٹو پتا اس اکاؤنٹ کا حصہ ہے۔",
+  "delete_wallet": "والٹ حذف کریں",
+  "loading_subplebbit": "سب پلبیٹ لوڈ ہو رہا ہے"
 }

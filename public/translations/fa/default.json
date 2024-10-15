@@ -245,5 +245,8 @@
   "create": "ایجاد",
   "plebbit_account": "حساب Plebbit",
   "save_changes": "ذخیره تغییرات",
-  "reset_changes": "بازنشانی تغییرات"
+  "reset_changes": "بازنشانی تغییرات",
+  "crypto_address_yours": "آدرس رمزارز به این حساب تعلق دارد.",
+  "delete_wallet": "حذف کیف پول",
+  "loading_subplebbit": "در حال بارگذاری subplebbit"
 }

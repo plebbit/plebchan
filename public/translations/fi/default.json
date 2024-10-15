@@ -245,5 +245,8 @@
   "create": "Luo",
   "plebbit_account": "Plebbit-tili",
   "save_changes": "Tallenna muutokset",
-  "reset_changes": "Nollaa muutokset"
+  "reset_changes": "Nollaa muutokset",
+  "crypto_address_yours": "Krypto-osoite kuuluu tähän tiliin.",
+  "delete_wallet": "Poista lompakko",
+  "loading_subplebbit": "Ladataan subplebbit"
 }

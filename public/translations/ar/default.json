@@ -245,5 +245,8 @@
   "create": "إنشاء",
   "plebbit_account": "حساب Plebbit",
   "save_changes": "حفظ التغييرات",
-  "reset_changes": "إعادة تعيين التغييرات"
+  "reset_changes": "إعادة تعيين التغييرات",
+  "crypto_address_yours": "عنوان العملة الرقمية ينتمي إلى هذا الحساب.",
+  "delete_wallet": "حذف المحفظة",
+  "loading_subplebbit": "جارٍ تحميل subplebbit"
 }

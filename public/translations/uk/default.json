@@ -245,5 +245,8 @@
   "create": "Створити",
   "plebbit_account": "Обліковий запис Plebbit",
   "save_changes": "Зберегти зміни",
-  "reset_changes": "Скинути зміни"
+  "reset_changes": "Скинути зміни",
+  "crypto_address_yours": "Адреса криптовалюти належить цьому обліковому запису.",
+  "delete_wallet": "Видалити гаманець",
+  "loading_subplebbit": "Завантаження subplebbit"
 }

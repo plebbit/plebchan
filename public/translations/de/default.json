@@ -245,5 +245,8 @@
   "create": "Erstellen",
   "plebbit_account": "Plebbit-Konto",
   "save_changes": "Änderungen speichern",
-  "reset_changes": "Änderungen zurücksetzen"
+  "reset_changes": "Änderungen zurücksetzen",
+  "crypto_address_yours": "Krypto-Adresse gehört zu diesem Konto.",
+  "delete_wallet": "Wallet löschen",
+  "loading_subplebbit": "Lade subplebbit"
 }

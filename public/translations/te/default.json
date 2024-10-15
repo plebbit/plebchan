@@ -245,5 +245,8 @@
   "create": "సృష్టించండి",
   "plebbit_account": "Plebbit ఖాతా",
   "save_changes": "మార్పులను సేవ్ చేయండి",
-  "reset_changes": "మార్పులను రీసెట్ చేయండి"
+  "reset_changes": "మార్పులను రీసెట్ చేయండి",
+  "crypto_address_yours": "క్రిప్టో చిరునామా ఈ ఖాతాకు చేరుకుంది.",
+  "delete_wallet": "వాలెట్ తొలగించండి",
+  "loading_subplebbit": "సబ్‌ప్లెబిట్‌లో లోడింగ్"
 }

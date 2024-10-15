@@ -245,5 +245,8 @@
   "create": "생성",
   "plebbit_account": "Plebbit 계정",
   "save_changes": "변경 사항 저장",
-  "reset_changes": "변경 사항 초기화"
+  "reset_changes": "변경 사항 초기화",
+  "crypto_address_yours": "암호 주소는이 계정에 속합니다.",
+  "delete_wallet": "지갑 삭제",
+  "loading_subplebbit": "subplebbit 로딩 중"
 }

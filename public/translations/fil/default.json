@@ -245,5 +245,8 @@
   "create": "Lumikha",
   "plebbit_account": "Plebbit Account",
   "save_changes": "I-save ang mga pagbabago",
-  "reset_changes": "I-reset ang mga pagbabago"
+  "reset_changes": "I-reset ang mga pagbabago",
+  "crypto_address_yours": "Ang crypto address ay nauugnay sa account na ito.",
+  "delete_wallet": "Tanggalin ang Wallet",
+  "loading_subplebbit": "Naglo-load ng subplebbit"
 }

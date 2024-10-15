@@ -245,5 +245,8 @@
   "create": "Opprett",
   "plebbit_account": "Plebbit-konto",
   "save_changes": "Lagre endringer",
-  "reset_changes": "Tilbakestill endringer"
+  "reset_changes": "Tilbakestill endringer",
+  "crypto_address_yours": "Crypto-adressen tilhører denne kontoen.",
+  "delete_wallet": "Slett lommebok",
+  "loading_subplebbit": "Laster subplebbit"
 }

@@ -245,5 +245,8 @@
   "create": "Buat",
   "plebbit_account": "Akun Plebbit",
   "save_changes": "Simpan Perubahan",
-  "reset_changes": "Atur Ulang Perubahan"
+  "reset_changes": "Atur Ulang Perubahan",
+  "crypto_address_yours": "Alamat kripto milik akun ini.",
+  "delete_wallet": "Hapus Dompet",
+  "loading_subplebbit": "Memuat subplebbit"
 }

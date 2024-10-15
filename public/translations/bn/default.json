@@ -245,5 +245,8 @@
   "create": "তৈরি করুন",
   "plebbit_account": "Plebbit অ্যাকাউন্ট",
   "save_changes": "পরিবর্তনগুলি সংরক্ষণ করুন",
-  "reset_changes": "পরিবর্তনগুলি রিসেট করুন"
+  "reset_changes": "পরিবর্তনগুলি রিসেট করুন",
+  "crypto_address_yours": "ক্রিপ্টো ঠিকানা এই অ্যাকাউন্টের অংশ।",
+  "delete_wallet": "ওয়ালেট মুছুন",
+  "loading_subplebbit": "সাবপ্লেবিট লোড হচ্ছে"
 }

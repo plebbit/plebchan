@@ -245,5 +245,8 @@
   "create": "צור",
   "plebbit_account": "חשבון Plebbit",
   "save_changes": "שמור שינויים",
-  "reset_changes": "איפוס שינויים"
+  "reset_changes": "איפוס שינויים",
+  "crypto_address_yours": "כתובת המטבע הקריפטוגרפי שייכת לחשבון זה.",
+  "delete_wallet": "מחק ארנק",
+  "loading_subplebbit": "טוען subplebbit"
 }

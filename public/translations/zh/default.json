@@ -245,5 +245,8 @@
   "create": "创建",
   "plebbit_account": "Plebbit 账户",
   "save_changes": "保存更改",
-  "reset_changes": "重置更改"
+  "reset_changes": "重置更改",
+  "crypto_address_yours": "加密地址属于此帐户。",
+  "delete_wallet": "删除钱包",
+  "loading_subplebbit": "加载 subplebbit"
 }

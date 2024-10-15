@@ -245,5 +245,8 @@
   "create": "Crear",
   "plebbit_account": "Cuenta Plebbit",
   "save_changes": "Guardar cambios",
-  "reset_changes": "Restablecer cambios"
+  "reset_changes": "Restablecer cambios",
+  "crypto_address_yours": "La dirección de criptomoneda pertenece a esta cuenta.",
+  "delete_wallet": "Eliminar billetera",
+  "loading_subplebbit": "Cargando subplebbit"
 }

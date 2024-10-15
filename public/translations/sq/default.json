@@ -245,5 +245,8 @@
   "create": "Krijo",
   "plebbit_account": "Llogaria Plebbit",
   "save_changes": "Ruaj ndryshimet",
-  "reset_changes": "Rivendosni ndryshimet"
+  "reset_changes": "Rivendosni ndryshimet",
+  "crypto_address_yours": "Adresa e kriptovalutës i përket këtij llogarie.",
+  "delete_wallet": "Fshi portofolin",
+  "loading_subplebbit": "Po ngarkohet subplebbit"
 }

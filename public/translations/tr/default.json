@@ -245,5 +245,8 @@
   "create": "Oluştur",
   "plebbit_account": "Plebbit Hesabı",
   "save_changes": "Değişiklikleri Kaydet",
-  "reset_changes": "Değişiklikleri Sıfırla"
+  "reset_changes": "Değişiklikleri Sıfırla",
+  "crypto_address_yours": "Kripto adres bu hesaba aittir.",
+  "delete_wallet": "Cüzdanı Sil",
+  "loading_subplebbit": "Subplebbit Yükleniyor"
 }

@@ -245,5 +245,8 @@
   "create": "Δημιουργία",
   "plebbit_account": "Λογαριασμός Plebbit",
   "save_changes": "Αποθήκευση αλλαγών",
-  "reset_changes": "Επαναφορά αλλαγών"
+  "reset_changes": "Επαναφορά αλλαγών",
+  "crypto_address_yours": "Η διεύθυνση κρυπτονομίσματος ανήκει σε αυτόν τον λογαριασμό.",
+  "delete_wallet": "Διαγραφή πορτοφολιού",
+  "loading_subplebbit": "Φόρτωση subplebbit"
 }

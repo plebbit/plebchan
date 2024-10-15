@@ -245,5 +245,8 @@
   "create": "Vytvořit",
   "plebbit_account": "Účet Plebbit",
   "save_changes": "Uložit změny",
-  "reset_changes": "Obnovit změny"
+  "reset_changes": "Obnovit změny",
+  "crypto_address_yours": "Adresa kryptoměny patří k tomuto účtu.",
+  "delete_wallet": "Smazat peněženku",
+  "loading_subplebbit": "Načítání subplebbit"
 }

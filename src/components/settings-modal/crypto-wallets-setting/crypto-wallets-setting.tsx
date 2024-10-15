@@ -89,7 +89,7 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
 
   const _removeWallet = (index: number) => {
     const wallet = walletsArray[index];
-    if (window.confirm(t('delete_confirm', { value: wallet.chainTicker, interpolation: { escapeValue: false } }))) {
+    if (window.confirm(t('delete_confirm', { value: wallet.address, interpolation: { escapeValue: false } }))) {
       const newArray = [...walletsArray.slice(0, index), ...walletsArray.slice(index + 1)];
       setWalletsArray(newArray);
       setSelectedWallet(0);
@@ -142,10 +142,10 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
           />
           <div className={styles.buttons}>
             <button className={styles.save} onClick={save}>
-              {t('save')}
+              {t('save_changes')}
             </button>
             <button className={styles.removeWallet} onClick={() => _removeWallet(selectedWallet)}>
-              {t('remove')}
+              {t('delete_wallet')}
             </button>
           </div>
         </div>
@@ -170,7 +170,7 @@ const CryptoWalletsForm = ({ account }: { account: Account | undefined }) => {
             setSelectedWallet(newIndex);
           }}
         >
-          +
+          {t('create')}
         </button>
       </div>
       {walletsInputs}

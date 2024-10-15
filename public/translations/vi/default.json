@@ -245,5 +245,8 @@
   "create": "Tạo",
   "plebbit_account": "Tài khoản Plebbit",
   "save_changes": "Lưu thay đổi",
-  "reset_changes": "Đặt lại thay đổi"
+  "reset_changes": "Đặt lại thay đổi",
+  "crypto_address_yours": "Địa chỉ tiền điện tử thuộc về tài khoản này.",
+  "delete_wallet": "Xóa ví",
+  "loading_subplebbit": "Đang tải subplebbit"
 }

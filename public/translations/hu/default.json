@@ -245,5 +245,8 @@
   "create": "Létrehozás",
   "plebbit_account": "Plebbit-fiók",
   "save_changes": "Változások mentése",
-  "reset_changes": "Változások visszaállítása"
+  "reset_changes": "Változások visszaállítása",
+  "crypto_address_yours": "A kripto-cím ehhez a fiókhoz tartozik.",
+  "delete_wallet": "Tárca törlése",
+  "loading_subplebbit": "Subplebbit betöltése"
 }
