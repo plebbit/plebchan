@@ -81,6 +81,12 @@ export const getLinkMediaInfo = memoize(
       return { url: link, type: 'image' };
     }
 
+    // Non-direct imgbb links can return lower res thumbnails on web. On native, the full image can be fetched later.
+    if (url.host === 'ibb.co' && !Capacitor.isNativePlatform()) {
+      const imageId = url.pathname.split('/')[1];
+      return { url: link, type: 'webpage', thumbnail: `https://i.ibb.co/${imageId}/thumbnail.jpg` };
+    }
+
     try {
       mime = extName(new URL(link).pathname.toLowerCase().replace('/', ''))[0]?.mime;
       if (mime) {
