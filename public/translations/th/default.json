@@ -248,5 +248,6 @@
   "reset_changes": "รีเซ็ตการเปลี่ยนแปลง",
   "crypto_address_yours": "ที่อยู่คริปโตเป็นของบัญชีนี้",
   "delete_wallet": "ลบกระเป๋าเงิน",
-  "loading_subplebbit": "กำลังโหลด subplebbit"
+  "loading_subplebbit": "กำลังโหลด subplebbit",
+  "avatar_warning": "คุณไม่สามารถโพสต์ด้วยอวาตาร์ในขณะที่โหมดอนาโนเป็นเปิดอยู่ คุณสามารถปิดได้ในการตั้งค่าบัญชี Plebbit ของคุณ"
 }

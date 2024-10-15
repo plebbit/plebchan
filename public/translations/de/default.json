@@ -248,5 +248,6 @@
   "reset_changes": "Änderungen zurücksetzen",
   "crypto_address_yours": "Krypto-Adresse gehört zu diesem Konto.",
   "delete_wallet": "Wallet löschen",
-  "loading_subplebbit": "Lade subplebbit"
+  "loading_subplebbit": "Lade subplebbit",
+  "avatar_warning": "Sie können nicht mit einem Avatar posten, während der Anonymmodus aktiviert ist. Sie können ihn in den Einstellungen Ihres Plebbit-Kontos deaktivieren."
 }

@@ -248,5 +248,6 @@
   "reset_changes": "Ripristina Modifiche",
   "crypto_address_yours": "L'indirizzo cripto appartiene a questo account.",
   "delete_wallet": "Elimina Wallet",
-  "loading_subplebbit": "Caricamento subplebbit"
+  "loading_subplebbit": "Caricamento subplebbit",
+  "avatar_warning": "Non puoi postare con un avatar mentre la modalità anonima è attiva. Puoi disattivarla nelle impostazioni del tuo account Plebbit."
 }

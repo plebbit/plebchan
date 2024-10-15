@@ -248,5 +248,6 @@
   "reset_changes": "Nollaa muutokset",
   "crypto_address_yours": "Krypto-osoite kuuluu tähän tiliin.",
   "delete_wallet": "Poista lompakko",
-  "loading_subplebbit": "Ladataan subplebbit"
+  "loading_subplebbit": "Ladataan subplebbit",
+  "avatar_warning": "Et voi julkaista avatarilla, kun anonyymi tila on päällä. Voit poistaa sen käytöstä Plebbit-tilisi asetuksissa."
 }

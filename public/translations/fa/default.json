@@ -248,5 +248,6 @@
   "reset_changes": "بازنشانی تغییرات",
   "crypto_address_yours": "آدرس رمزارز به این حساب تعلق دارد.",
   "delete_wallet": "حذف کیف پول",
-  "loading_subplebbit": "در حال بارگذاری subplebbit"
+  "loading_subplebbit": "در حال بارگذاری subplebbit",
+  "avatar_warning": "شما نمی‌توانید با آواتار پست بگذارید در حالی که حالت ناشناس فعال است. می‌توانید آن را در تنظیمات حساب Plebbit خود خاموش کنید."
 }

@@ -248,5 +248,6 @@
   "reset_changes": "I-reset ang mga pagbabago",
   "crypto_address_yours": "Ang crypto address ay nauugnay sa account na ito.",
   "delete_wallet": "Tanggalin ang Wallet",
-  "loading_subplebbit": "Naglo-load ng subplebbit"
+  "loading_subplebbit": "Naglo-load ng subplebbit",
+  "avatar_warning": "Hindi ka makakapag-post gamit ang avatar habang naka-on ang anon mode. Maaari mo itong i-off sa iyong mga setting ng Plebbit Account."
 }

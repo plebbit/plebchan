@@ -248,5 +248,6 @@
   "reset_changes": "Đặt lại thay đổi",
   "crypto_address_yours": "Địa chỉ tiền điện tử thuộc về tài khoản này.",
   "delete_wallet": "Xóa ví",
-  "loading_subplebbit": "Đang tải subplebbit"
+  "loading_subplebbit": "Đang tải subplebbit",
+  "avatar_warning": "Bạn không thể đăng với hình đại diện khi chế độ ẩn danh đang bật. Bạn có thể tắt nó trong cài đặt Tài khoản Plebbit của mình."
 }

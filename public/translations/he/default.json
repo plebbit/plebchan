@@ -248,5 +248,6 @@
   "reset_changes": "איפוס שינויים",
   "crypto_address_yours": "כתובת המטבע הקריפטוגרפי שייכת לחשבון זה.",
   "delete_wallet": "מחק ארנק",
-  "loading_subplebbit": "טוען subplebbit"
+  "loading_subplebbit": "טוען subplebbit",
+  "avatar_warning": "אין באפשרותך לפרסם עם תמונת פרופיל בזמן שמצב אנונימי מופעל. תוכל לבטל זאת בהגדרות חשבון Plebbit שלך."
 }

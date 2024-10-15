@@ -248,5 +248,6 @@
   "reset_changes": "Obnovit změny",
   "crypto_address_yours": "Adresa kryptoměny patří k tomuto účtu.",
   "delete_wallet": "Smazat peněženku",
-  "loading_subplebbit": "Načítání subplebbit"
+  "loading_subplebbit": "Načítání subplebbit",
+  "avatar_warning": "Nemůžete zveřejňovat s avatarem, když je zapnutý anonymní režim. Můžete ho vypnout v nastavení svého účtu Plebbit."
 }

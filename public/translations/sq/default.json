@@ -248,5 +248,6 @@
   "reset_changes": "Rivendosni ndryshimet",
   "crypto_address_yours": "Adresa e kriptovalutës i përket këtij llogarie.",
   "delete_wallet": "Fshi portofolin",
-  "loading_subplebbit": "Po ngarkohet subplebbit"
+  "loading_subplebbit": "Po ngarkohet subplebbit",
+  "avatar_warning": "Nuk mund të postoni me një avatar ndërsa është aktivizuar moda anonime. Mund ta çaktivizoni në cilësimet e llogarisë tuaj Plebbit."
 }

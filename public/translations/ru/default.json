@@ -248,5 +248,6 @@
   "reset_changes": "Сбросить изменения",
   "crypto_address_yours": "Адрес криптовалюты принадлежит этому аккаунту.",
   "delete_wallet": "Удалить кошелек",
-  "loading_subplebbit": "Загрузка subplebbit"
+  "loading_subplebbit": "Загрузка subplebbit",
+  "avatar_warning": "Вы не можете публиковать с аватаром, когда режим анонимности включен. Вы можете отключить его в настройках своей учетной записи Plebbit."
 }

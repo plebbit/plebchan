@@ -248,5 +248,6 @@
   "reset_changes": "Wijzigingen resetten",
   "crypto_address_yours": "Crypto-adres behoort tot deze account.",
   "delete_wallet": "Verwijder portemonnee",
-  "loading_subplebbit": "Subplebbit laden"
+  "loading_subplebbit": "Subplebbit laden",
+  "avatar_warning": "Je kunt niet met een avatar posten terwijl de anonieme modus aan staat. Je kunt het uitschakelen in de instellingen van je Plebbit-account."
 }

@@ -248,5 +248,6 @@
   "reset_changes": "Nulstil ændringer",
   "crypto_address_yours": "Crypto-adresse tilhører denne konto.",
   "delete_wallet": "Slet tegnebog",
-  "loading_subplebbit": "Indlæser subplebbit"
+  "loading_subplebbit": "Indlæser subplebbit",
+  "avatar_warning": "Du kan ikke poste med et avatar, mens anonym tilstand er tændt. Du kan slukke det i dine Plebbit-kontoindstillinger."
 }

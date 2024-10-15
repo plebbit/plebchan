@@ -248,5 +248,6 @@
   "reset_changes": "Atur Ulang Perubahan",
   "crypto_address_yours": "Alamat kripto milik akun ini.",
   "delete_wallet": "Hapus Dompet",
-  "loading_subplebbit": "Memuat subplebbit"
+  "loading_subplebbit": "Memuat subplebbit",
+  "avatar_warning": "Anda tidak bisa memposting dengan avatar saat mode anonim diaktifkan. Anda bisa mematikan ini di pengaturan Akun Plebbit Anda."
 }

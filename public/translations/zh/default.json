@@ -248,5 +248,6 @@
   "reset_changes": "重置更改",
   "crypto_address_yours": "加密地址属于此帐户。",
   "delete_wallet": "删除钱包",
-  "loading_subplebbit": "加载 subplebbit"
+  "loading_subplebbit": "加载 subplebbit",
+  "avatar_warning": "在匿名模式开启时，您无法使用头像进行发布。您可以在 Plebbit 账户设置中将其关闭。"
 }

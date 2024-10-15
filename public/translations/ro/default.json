@@ -248,5 +248,6 @@
   "reset_changes": "Resetează modificările",
   "crypto_address_yours": "Adresa crypto aparține acestui cont.",
   "delete_wallet": "Șterge portofelul",
-  "loading_subplebbit": "Se încarcă subplebbit"
+  "loading_subplebbit": "Se încarcă subplebbit",
+  "avatar_warning": "Nu poți publica cu un avatar în timp ce modul anonim este activat. Poți să-l dezactivezi în setările contului tău Plebbit."
 }

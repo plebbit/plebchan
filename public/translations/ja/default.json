@@ -248,5 +248,6 @@
   "reset_changes": "変更をリセット",
   "crypto_address_yours": "暗号通貨アドレスはこのアカウントに属しています。",
   "delete_wallet": "ウォレットを削除",
-  "loading_subplebbit": "subplebbitを読み込んでいます"
+  "loading_subplebbit": "subplebbitを読み込んでいます",
+  "avatar_warning": "アバターを使用して投稿することはできません。匿名モードがオンになっている間は、Plebbitアカウントの設定でオフにできます。"
 }
