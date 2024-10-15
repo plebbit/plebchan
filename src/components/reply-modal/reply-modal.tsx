@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Draggable from 'react-draggable';
 import { setAccount, useAccount, useComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
@@ -127,9 +127,11 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
   const offlineAlert = updatedAt
     ? isBoardOffline && (
-        <div className={styles.offlineBoard}>{`Posts last synced ${getFormattedTimeAgo(updatedAt)}, the subplebbit might be offline and publishing might fail.`}</div>
+        <div className={styles.offlineBoard}>
+          <Trans i18nKey='posts_last_synced_info' values={{ time: getFormattedTimeAgo(updatedAt) }} />
+        </div>
       )
-    : `The subplebbit might be offline and publishing might fail.`;
+    : t('subplebbit_offline_info');
 
   useEffect(() => {
     if (showReplyModal) {
