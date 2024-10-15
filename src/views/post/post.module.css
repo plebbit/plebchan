@@ -161,6 +161,7 @@
 .postDesktop .postMessage, .replyDesktop .postMessage {
   padding: 1em 40px;
   overflow: hidden;
+  word-break: break-word;
 }
 
 .rulesMessage {
