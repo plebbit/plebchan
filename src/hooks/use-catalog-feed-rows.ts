@@ -33,13 +33,14 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
 
     // show account comments instantly in the feed once published (cid defined), instead of waiting for the feed to update
     const filteredComments = accountComments.filter((comment) => {
-      const { cid, deleted, link, postCid, removed, state, subplebbitAddress } = comment || {};
+      const { cid, deleted, link, postCid, removed, state, subplebbitAddress, timestamp } = comment || {};
       const commentMediaInfo = getCommentMediaInfo(comment);
       const isMediaShowed = getHasThumbnail(commentMediaInfo, link);
 
       return (
         !deleted &&
         !removed &&
+        timestamp > Date.now() - 60 * 60 * 1000 &&
         state === 'succeeded' &&
         (!hideThreadsWithoutImages || (hideThreadsWithoutImages && isMediaShowed)) &&
         cid &&

@@ -80,10 +80,11 @@ const Board = () => {
   const filteredComments = useMemo(
     () =>
       accountComments.filter((comment) => {
-        const { cid, deleted, postCid, removed, state } = comment || {};
+        const { cid, deleted, postCid, removed, state, timestamp } = comment || {};
         return (
           !deleted &&
           !removed &&
+          timestamp > Date.now() - 60 * 60 * 1000 &&
           state === 'succeeded' &&
           cid &&
           (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(comment), comment?.link) : true) &&
