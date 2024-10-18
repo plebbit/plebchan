@@ -1,3 +1,4 @@
+import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru/index.js';
 import { Comment } from '@plebbit/plebbit-react-hooks';
 import extName from 'ext-name';
 import { canEmbed } from '../../components/embed';
@@ -228,29 +229,27 @@ export const getMediaDimensions = (commentMediaInfo: CommentMediaInfo | undefine
   return '';
 };
 
+const thumbnailUrlsDb = localForageLru.createInstance({ name: 'plebchanThumbnailUrls', size: 500 });
+
+export const getCachedThumbnail = async (url: string): Promise<string | null> => {
+  return await thumbnailUrlsDb.getItem(url);
+};
+
+export const setCachedThumbnail = async (url: string, thumbnail: string): Promise<void> => {
+  await thumbnailUrlsDb.setItem(url, thumbnail);
+};
+
 export const fetchWebpageThumbnailIfNeeded = async (commentMediaInfo: CommentMediaInfo): Promise<CommentMediaInfo> => {
   if (commentMediaInfo.type === 'webpage' && !commentMediaInfo.thumbnail) {
-    const cachedThumbnail = getCachedThumbnail(commentMediaInfo.url);
+    const cachedThumbnail = await getCachedThumbnail(commentMediaInfo.url);
     if (cachedThumbnail) {
       return { ...commentMediaInfo, thumbnail: cachedThumbnail };
     }
     const thumbnail = await fetchWebpageThumbnail(commentMediaInfo.url);
     if (thumbnail) {
-      setCachedThumbnail(commentMediaInfo.url, thumbnail);
+      await setCachedThumbnail(commentMediaInfo.url, thumbnail);
     }
     return { ...commentMediaInfo, thumbnail };
   }
   return commentMediaInfo;
-};
-const THUMBNAIL_CACHE_KEY = 'webpageThumbnailCache';
-
-export const getCachedThumbnail = (url: string): string | null => {
-  const cache = JSON.parse(localStorage.getItem(THUMBNAIL_CACHE_KEY) || '{}');
-  return cache[url] || null;
-};
-
-export const setCachedThumbnail = (url: string, thumbnail: string): void => {
-  const cache = JSON.parse(localStorage.getItem(THUMBNAIL_CACHE_KEY) || '{}');
-  cache[url] = thumbnail;
-  localStorage.setItem(THUMBNAIL_CACHE_KEY, JSON.stringify(cache));
 };
