@@ -1,3 +1,39 @@
+## [0.2.8](https://github.com/plebbit/plebchan/compare/v0.2.7...v0.2.8) (2024-10-19)
+
+
+### Bug Fixes
+
+* **android:** update app logo ([4ef3f9d](https://github.com/plebbit/plebchan/commit/4ef3f9de7d19c2a86dd8d0e50c349472f1da19aa))
+* color missing, translation missing ([0705bd9](https://github.com/plebbit/plebchan/commit/0705bd9dbd7784ea3d57d2f5903225985e9a210a))
+* **crypto address setting:** default description didn't appear, clicking 'check' with address already set would result in error ([ff3f5f6](https://github.com/plebbit/plebchan/commit/ff3f5f618d67845373b7cc1337ea0a796c331265))
+* **electron:** empty error message would appear after closing app ([83fdd8e](https://github.com/plebbit/plebchan/commit/83fdd8eb09be8acf7e422abd4b7aa0d1c4452fc2))
+* **electron:** missing isElectron flag ([3720ed2](https://github.com/plebbit/plebchan/commit/3720ed2d2ee03742926a21521add06e38e271d1a))
+* **feed:** old account comments could appear at the top of the feed ([c2aa9ca](https://github.com/plebbit/plebchan/commit/c2aa9cad49f5c78da535c7cd3e7e5cc135737377))
+* **post:** a non-direct link could be marked as media instead of webpage ([e9280ac](https://github.com/plebbit/plebchan/commit/e9280ac84c5151fcb8d76b04b746d80e6850e0a8))
+* **post:** some links to images could be embedded as videos ([46e1189](https://github.com/plebbit/plebchan/commit/46e1189711c1e345afd7f85b8026017fd2550c2b))
+* **publish reply:** error "content is an empty string" could appear ([af7505c](https://github.com/plebbit/plebchan/commit/af7505c45f3196ee21b3fdd5d70411538a05bcea))
+* **topbar:** mobile animation on scroll was too slow ([8e245a4](https://github.com/plebbit/plebchan/commit/8e245a47598913ad816b84af71572236688d9497))
+
+
+### Features
+
+* **account settings:** alert user account is stored locally and specify location ([89d37dc](https://github.com/plebbit/plebchan/commit/89d37dc029120cdacf2b68eeddf247049e379164))
+* **android:** fetch thumbnail image from any webpage link ([6f8a6e3](https://github.com/plebbit/plebchan/commit/6f8a6e38d49adff7252287268db512d792e448be))
+* **board:** suggest user to switch time filter on p/all and p/subscription if there aren't enough posts ([eac0a01](https://github.com/plebbit/plebchan/commit/eac0a0150ca45412990660498cfc08ac961631f5))
+* **catalog post:** add thumbnail fetching for sites with cors access ([3556a04](https://github.com/plebbit/plebchan/commit/3556a042803ecf9a580ea16bf9e69dd03be526b6))
+* **catalog:** add warning to switch filter if there aren't enough posts in p/all and p/subscriptions ([ba9496c](https://github.com/plebbit/plebchan/commit/ba9496ca4210d5e86277ea4dbf801a1614371294))
+* **embed:** add support to music.youtube.com ([03dbf95](https://github.com/plebbit/plebchan/commit/03dbf958f61df005b0556a680551ed359f467e34))
+* **embed:** add support to youtube playlists ([492d979](https://github.com/plebbit/plebchan/commit/492d979cf9746ab032230c832756516170693744))
+* **post:** add client-side thumbnail fetching for websites with CORS access ([561e395](https://github.com/plebbit/plebchan/commit/561e395256fa178af1ac28011132f7dc8b39f189))
+* **post:** support thumbnails from non-direct imgbb links ([9e24ae0](https://github.com/plebbit/plebchan/commit/9e24ae0aed435d1aeec8d9f7ba6e4b5c268e77b4))
+
+
+### Performance Improvements
+
+* **gifs:** cache first frame so gifs don't reload all the time when navigating ([73e12cc](https://github.com/plebbit/plebchan/commit/73e12ccbae85595ea81d06a73db0055319e841bf))
+
+
+
 ## [0.2.7](https://github.com/plebbit/plebchan/compare/v0.2.6...v0.2.7) (2024-09-21)
 
 
