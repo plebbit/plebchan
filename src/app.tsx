@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
@@ -90,6 +90,17 @@ const GlobalLayout = () => {
 };
 
 const App = () => {
+  // react router doesn't handle the %23 hash correctly, so we need to replace it with #
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    const currentPath = location.pathname + location.hash;
+    if (currentPath.includes('%23')) {
+      const correctedPath = currentPath.replace('%23', '#');
+      navigate(correctedPath, { replace: true });
+    }
+  }, [location, navigate]);
+
   return (
     <div className={styles.app}>
       <Routes>
