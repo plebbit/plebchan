@@ -249,5 +249,6 @@
   "crypto_address_yours": "Crypto-adressen tilhører denne kontoen.",
   "delete_wallet": "Slett lommebok",
   "loading_subplebbit": "Laster subplebbit",
-  "avatar_warning": "Du kan ikke poste med en avatar mens anonym modus er aktivert. Du kan slå den av i innstillingene for Plebbit-kontoen din."
+  "avatar_warning": "Du kan ikke poste med en avatar mens anonym modus er aktivert. Du kan slå den av i innstillingene for Plebbit-kontoen din.",
+  "last_bumped": "Siste bumpet"
 }

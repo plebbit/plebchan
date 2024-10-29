@@ -249,5 +249,6 @@
   "crypto_address_yours": "A kripto-cím ehhez a fiókhoz tartozik.",
   "delete_wallet": "Tárca törlése",
   "loading_subplebbit": "Subplebbit betöltése",
-  "avatar_warning": "Nem posztolhatsz avatarral, míg az anon mód be van kapcsolva. Kikapcsolhatod a Plebbit-fiókod beállításaiban."
+  "avatar_warning": "Nem posztolhatsz avatarral, míg az anon mód be van kapcsolva. Kikapcsolhatod a Plebbit-fiókod beállításaiban.",
+  "last_bumped": "Utolsó bump"
 }

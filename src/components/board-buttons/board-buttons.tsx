@@ -197,11 +197,13 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
     link && navigate(link);
   };
 
+  const { sortType } = useSortingStore();
+
   return (
     <>
       {!isTopbar ? (
         <>
-          <span>{t('newer_than')}</span>:&nbsp;
+          <span>{isInCatalogView ? (sortType === 'active' ? t('last_bumped') : t('newer_than')) : t('last_bumped')}</span>:&nbsp;
         </>
       ) : (
         <> </>

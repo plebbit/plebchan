@@ -249,5 +249,6 @@
   "crypto_address_yours": "Crypto-adressen tillhör denna konto.",
   "delete_wallet": "Ta bort plånbok",
   "loading_subplebbit": "Laddar subplebbit",
-  "avatar_warning": "Du kan inte posta med en avatar när anonym läge är aktiverat. Du kan stänga av det i inställningarna för ditt Plebbit-konto."
+  "avatar_warning": "Du kan inte posta med en avatar när anonym läge är aktiverat. Du kan stänga av det i inställningarna för ditt Plebbit-konto.",
+  "last_bumped": "Senaste bump"
 }

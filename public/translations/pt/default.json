@@ -249,5 +249,6 @@
   "crypto_address_yours": "O endereço de criptomoeda pertence a esta conta.",
   "delete_wallet": "Excluir carteira",
   "loading_subplebbit": "Carregando subplebbit",
-  "avatar_warning": "Você não pode postar com um avatar enquanto o modo anônimo estiver ativado. Você pode desativá-lo nas configurações da sua Conta Plebbit."
+  "avatar_warning": "Você não pode postar com um avatar enquanto o modo anônimo estiver ativado. Você pode desativá-lo nas configurações da sua Conta Plebbit.",
+  "last_bumped": "Último bump"
 }
