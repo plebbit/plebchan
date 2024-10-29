@@ -22,7 +22,7 @@ const Board = ({ subplebbit, subplebbits, useCatalog }: { subplebbit: Subplebbit
   return (
     <div className={styles.subplebbit} key={address}>
       {(isOffline || isOnlineStatusLoading) && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
-      <Link to={boardLink}>{title || address}</Link>
+      <Link to={boardLink}>{title || (address.endsWith('.eth') || address.endsWith('.sol') ? address.slice(0, -4) : address && Plebbit.getShortAddress(address))}</Link>
       {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
     </div>
   );

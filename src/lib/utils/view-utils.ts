@@ -1,5 +1,3 @@
-import { timeFilterNames } from '../../hooks/use-time-filter';
-
 export type ParamsType = {
   accountCommentIndex?: string;
   commentCid?: string;
@@ -7,25 +5,8 @@ export type ParamsType = {
   timeFilterName?: string;
 };
 
-export const isAllView = (pathname: string, params: ParamsType): boolean => {
-  const { timeFilterName } = params;
-
-  if (timeFilterName && !timeFilterNames.includes(timeFilterName)) {
-    return false;
-  }
-
-  return (
-    pathname === '/p/all' ||
-    pathname === '/p/all/settings' ||
-    pathname === `/p/all/${timeFilterName}` ||
-    pathname === `/p/all/${timeFilterName}/settings` ||
-    pathname === '/p/all/catalog' ||
-    pathname === '/p/all/catalog/settings' ||
-    pathname === `/p/all/catalog/${timeFilterName}` ||
-    pathname === `/p/all/catalog/${timeFilterName}/settings` ||
-    pathname === '/p/all/description' ||
-    pathname === '/p/all/description/settings'
-  );
+export const isAllView = (pathname: string): boolean => {
+  return pathname.startsWith('/p/all');
 };
 
 export const isBoardView = (pathname: string, params: ParamsType): boolean => {
@@ -105,7 +86,7 @@ export const isSubscriptionsView = (pathname: string, params: ParamsType): boole
 
 export const isNotFoundView = (pathname: string, params: ParamsType): boolean => {
   return (
-    !isAllView(pathname, params) &&
+    !isAllView(pathname) &&
     !isBoardView(pathname, params) &&
     !isCatalogView(pathname, params) &&
     !isDescriptionView(pathname, params) &&

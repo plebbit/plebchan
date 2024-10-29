@@ -17,7 +17,7 @@ const useInitialTheme = (pendingPostSubplebbitAddress?: string) => {
   const params = useParams();
   const isInHomeView = isHomeView(location.pathname);
   const isInNotFoundView = isNotFoundView(location.pathname, params);
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
 

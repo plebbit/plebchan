@@ -249,5 +249,6 @@
   "crypto_address_yours": "암호 주소는이 계정에 속합니다.",
   "delete_wallet": "지갑 삭제",
   "loading_subplebbit": "subplebbit 로딩 중",
-  "avatar_warning": "익명 모드가 켜져 있는 동안 아바타로 게시할 수 없습니다. Plebbit 계정 설정에서 끌 수 있습니다."
+  "avatar_warning": "익명 모드가 켜져 있는 동안 아바타로 게시할 수 없습니다. Plebbit 계정 설정에서 끌 수 있습니다.",
+  "last_bumped": "마지막 bump"
 }

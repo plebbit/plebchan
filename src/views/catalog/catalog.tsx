@@ -33,7 +33,7 @@ const Catalog = () => {
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
 
-  const isInAllView = isAllView(location.pathname, useParams());
+  const isInAllView = isAllView(location.pathname);
   const defaultSubplebbits = useDefaultSubplebbits();
   const { hideAdultBoards, hideGoreBoards } = useInterfaceSettingsStore();
   const { hideThreadsWithoutImages } = useInterfaceSettingsStore();
@@ -153,7 +153,7 @@ const Catalog = () => {
     </div>
   );
 
-  const params = useParams();
+  const params = useParams<{ sortType?: string; timeFilterName?: string }>();
   const currentTimeFilterName = params?.timeFilterName || timeFilterName;
 
   const Footer = () => {

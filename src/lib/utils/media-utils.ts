@@ -4,8 +4,7 @@ import extName from 'ext-name';
 import { canEmbed } from '../../components/embed';
 import memoize from 'memoizee';
 import { isValidURL } from './url-utils';
-import { Capacitor } from '@capacitor/core';
-import { CapacitorHttp } from '@capacitor/core';
+import { Capacitor, CapacitorHttp } from '@capacitor/core';
 
 export interface CommentMediaInfo {
   url: string;

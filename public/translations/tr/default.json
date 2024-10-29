@@ -249,5 +249,6 @@
   "crypto_address_yours": "Kripto adres bu hesaba aittir.",
   "delete_wallet": "Cüzdanı Sil",
   "loading_subplebbit": "Subplebbit Yükleniyor",
-  "avatar_warning": "Anonim mod açıken avatar ile paylaşım yapamazsınız. Bunu Plebbit Hesap ayarlarınızdan kapatabilirsiniz."
+  "avatar_warning": "Anonim mod açıken avatar ile paylaşım yapamazsınız. Bunu Plebbit Hesap ayarlarınızdan kapatabilirsiniz.",
+  "last_bumped": "Son bump"
 }

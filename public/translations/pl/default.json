@@ -249,5 +249,6 @@
   "crypto_address_yours": "Adres kryptowaluty należy do tego konta.",
   "delete_wallet": "Usuń portfel",
   "loading_subplebbit": "Ładowanie subplebbit",
-  "avatar_warning": "Nie możesz publikować z awatarem, gdy tryb anonimowy jest włączony. Możesz go wyłączyć w ustawieniach swojego konta Plebbit."
+  "avatar_warning": "Nie możesz publikować z awatarem, gdy tryb anonimowy jest włączony. Możesz go wyłączyć w ustawieniach swojego konta Plebbit.",
+  "last_bumped": "Ostatni bump"
 }

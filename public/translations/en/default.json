@@ -249,5 +249,6 @@
   "crypto_address_yours": "Crypto address belongs to this account.",
   "delete_wallet": "Delete Wallet",
   "loading_subplebbit": "Loading subplebbit",
-  "avatar_warning": "You can't post with an avatar while anon mode is turned on. You can turn it off in your Plebbit Account settings."
+  "avatar_warning": "You can't post with an avatar while anon mode is turned on. You can turn it off in your Plebbit Account settings.",
+  "last_bumped": "Last Bumped"
 }

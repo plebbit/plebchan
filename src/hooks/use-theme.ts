@@ -34,7 +34,7 @@ const useTheme = (): [string, (theme: string) => void] => {
 
   const getCurrentTheme = useCallback(() => {
     const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
-    const isInAllView = isAllView(location.pathname, params);
+    const isInAllView = isAllView(location.pathname);
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
     let storedTheme = null;
@@ -67,7 +67,7 @@ const useTheme = (): [string, (theme: string) => void] => {
   const setSubplebbitTheme = useCallback(
     async (newTheme: string) => {
       const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
-      const isInAllView = isAllView(location.pathname, params);
+      const isInAllView = isAllView(location.pathname);
       const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
       if (isInAllView || isInSubscriptionsView) {

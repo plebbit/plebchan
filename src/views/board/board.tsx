@@ -35,7 +35,7 @@ const Board = () => {
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
   const { hideThreadsWithoutImages } = useInterfaceSettingsStore();
 
-  const isInAllView = isAllView(location.pathname, useParams());
+  const isInAllView = isAllView(location.pathname);
   const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
 
   const account = useAccount();

@@ -21,7 +21,7 @@ const ImageBanner = () => {
 const BoardHeader = () => {
   const location = useLocation();
   const params = useParams();
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });

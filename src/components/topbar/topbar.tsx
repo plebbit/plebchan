@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -70,7 +71,9 @@ const TopBarDesktop = () => {
         {subplebbits.map((sub: any, index: any) => (
           <span key={index}>
             {index === 0 ? null : ' '}
-            <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>{sub.address.includes('.') ? sub.address : sub.address.slice(0, 10).concat('...')}</Link>
+            <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>
+              {sub.address.endsWith('.eth') || sub.address.endsWith('.sol') ? sub.address.slice(0, -4) : sub.address.slice(0, 10).concat('...')}
+            </Link>
             {index !== subplebbits.length - 1 ? ' /' : null}
           </span>
         ))}
@@ -127,7 +130,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
 
   const location = useLocation();
   const params = useParams();
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInCatalogView = isCatalogView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const selectValue = isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress;
@@ -138,10 +141,10 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
       <option value='all'>all</option>
       <option value='subscriptions'>subscriptions</option>
       {subplebbitAddresses.map((address: any, index: number) => {
-        const subplebbitAddress = address?.includes('.') ? address : address?.slice(0, 10).concat('...');
+        const subplebbitAddress = address?.includes('.') ? address : Plebbit.getShortAddress(address);
         return (
           <option key={index} value={address}>
-            {subplebbitAddress}
+            {subplebbitAddress.endsWith('.eth') || subplebbitAddress.endsWith('.sol') ? subplebbitAddress.slice(0, -4) : subplebbitAddress}
           </option>
         );
       })}

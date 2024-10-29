@@ -61,7 +61,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
 
   const params = useParams();
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
