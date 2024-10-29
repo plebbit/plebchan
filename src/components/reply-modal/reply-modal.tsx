@@ -120,7 +120,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   }, [parentCid]);
 
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname, useParams());
+  const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { updatedAt } = subplebbit || {};

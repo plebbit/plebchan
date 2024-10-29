@@ -59,7 +59,7 @@ const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose
   const { t } = useTranslation();
   const location = useLocation();
   const params = useParams();
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const getViewOnOtherClientLink = () => {

@@ -44,7 +44,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const subjectRef = useRef<HTMLInputElement>(null);
 
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname, useParams());
+  const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const subscriptions = account?.subscriptions || [];
   const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
@@ -322,7 +322,7 @@ const PostForm = () => {
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
   const post = useComment({ commentCid: useParams().commentCid });

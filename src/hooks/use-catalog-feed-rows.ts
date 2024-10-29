@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAccountComments, Subplebbit } from '@plebbit/plebbit-react-hooks';
 import useInterfaceSettingsStore from '../stores/use-interface-settings-store';
 import { getCommentMediaInfo, getHasThumbnail } from '../lib/utils/media-utils';
@@ -15,7 +15,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
   const { hideThreadsWithoutImages } = useInterfaceSettingsStore();
 
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname, useParams());
+  const isInAllView = isAllView(location.pathname);
   const multisub = useMultisubMetadata();
 
   const { accountComments } = useAccountComments();

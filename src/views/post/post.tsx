@@ -55,7 +55,7 @@ const PostPage = () => {
   const params = useParams();
   const location = useLocation();
   const { commentCid, subplebbitAddress } = params;
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInSettigsView = isSettingsView(location.pathname, params);
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);

@@ -178,10 +178,8 @@ const ShowOPCommentOption = () => {
 
 export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView, isTopbar = false }: BoardButtonsProps) => {
   const { t } = useTranslation();
-  const params = useParams();
   const navigate = useNavigate();
-  const { timeFilterNames } = useTimeFilter();
-  const selectedTimeFilterName = params.timeFilterName;
+  const { timeFilterName, timeFilterNames } = useTimeFilter();
 
   const changeTimeFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const timeFilterName = event.target.value;
@@ -199,6 +197,8 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
 
   const { sortType } = useSortingStore();
 
+  const allTimeFilterNames = timeFilterName && !timeFilterNames.includes(timeFilterName) ? [timeFilterName, ...timeFilterNames.slice(1)] : timeFilterNames.slice(1);
+
   return (
     <>
       {!isTopbar ? (
@@ -208,10 +208,10 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
       ) : (
         <> </>
       )}
-      <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem, 'capitalize'].join(' ')} value={selectedTimeFilterName}>
-        {timeFilterNames.map((timeFilterName, i) => (
-          <option key={timeFilterName + i} value={timeFilterName}>
-            {timeFilterName}
+      <select onChange={changeTimeFilter} className={[styles.feedName, styles.menuItem, 'capitalize'].join(' ')} value={timeFilterName}>
+        {allTimeFilterNames.map((name, i) => (
+          <option key={name + i} value={name}>
+            {name}
           </option>
         ))}
       </select>
@@ -223,7 +223,7 @@ export const MobileBoardButtons = () => {
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInCatalogView = isCatalogView(location.pathname, params);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
@@ -317,7 +317,7 @@ export const DesktopBoardButtons = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
   const isInCatalogView = isCatalogView(location.pathname, params);
-  const isInAllView = isAllView(location.pathname, params);
+  const isInAllView = isAllView(location.pathname);
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
