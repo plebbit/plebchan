@@ -1,3 +1,16 @@
+## [0.2.9](https://github.com/plebbit/plebchan/compare/v0.2.8...v0.2.9) (2024-10-29)
+
+
+### Bug Fixes
+
+* **catalog:** if time filter is 'bump order', it should say 'last bumped' instead of 'newer than' ([71ba306](https://github.com/plebbit/plebchan/commit/71ba306ec12cc9a31f1a52b26348f52c620fae2f))
+* **embed:** reddit links have to include '/comments/' to be embeddable ([5e6c9fb](https://github.com/plebbit/plebchan/commit/5e6c9fba7e4ee14d80d041327dff12def20d4b87))
+* **p/all:** auto time filter didn't show posts from last visit ([0b5aa7d](https://github.com/plebbit/plebchan/commit/0b5aa7dc31afdd49ff8a5470e2d1312d9f2f3d8b))
+* **release.yml:** wrong java version prevented apk build ([f280f33](https://github.com/plebbit/plebchan/commit/f280f33556c1fccfddb018c6ded53df492c67488))
+* **router:** a link could include '%23' instead of '#' ([360dfb4](https://github.com/plebbit/plebchan/commit/360dfb4604bde8c4dc5459f849a40a063c1c58ec))
+
+
+
 ## [0.2.8](https://github.com/plebbit/plebchan/compare/v0.2.7...v0.2.8) (2024-10-19)
 
 
