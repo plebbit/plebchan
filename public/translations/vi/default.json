@@ -250,5 +250,11 @@
   "delete_wallet": "Xóa ví",
   "loading_subplebbit": "Đang tải subplebbit",
   "avatar_warning": "Bạn không thể đăng với hình đại diện khi chế độ ẩn danh đang bật. Bạn có thể tắt nó trong cài đặt Tài khoản Plebbit của mình.",
-  "last_bumped": "Bump gần đây nhất"
+  "last_bumped": "Bump gần đây nhất",
+  "threads_without_images_tip": "Không hiển thị bài viết không có hình ảnh",
+  "hide_gore_boards_tip": "Không hiển thị bài viết từ các bảng có thẻ \"gore\"",
+  "hide_adult_boards_tip": "Không hiển thị bài viết từ các bảng có thẻ \"adult\"",
+  "fit_expanded_images_to_screen": "Phù hợp hình ảnh mở rộng với màn hình",
+  "fit_expanded_images_to_screen_tip": "Hạn chế hình ảnh mở rộng cả chiều rộng và chiều cao của trình duyệt",
+  "hide_avatars_tip": "Không hiển thị hình đại diện bên cạnh tên hiển thị của người dùng"
 }

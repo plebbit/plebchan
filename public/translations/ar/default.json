@@ -250,5 +250,11 @@
   "delete_wallet": "حذف المحفظة",
   "loading_subplebbit": "جارٍ تحميل subplebbit",
   "avatar_warning": "لا يمكنك النشر بصورة رمزية أثناء تفعيل وضع المجهول. يمكنك إيقافه في إعدادات حساب Plebbit الخاص بك.",
-  "last_bumped": "آخر رفع"
+  "last_bumped": "آخر رفع",
+  "threads_without_images_tip": "لا تعرض المشاركات بدون صور",
+  "hide_gore_boards_tip": "لا تعرض المشاركات من اللوحات ذات علامة \"دموية\"",
+  "hide_adult_boards_tip": "لا تعرض المشاركات من اللوحات ذات علامة \"بالغ\"",
+  "fit_expanded_images_to_screen": "تغيير حجم الصور الموسعة لتناسب الشاشة",
+  "fit_expanded_images_to_screen_tip": "حدد الصور الموسعة لكل من عرض وارتفاع المتصفح",
+  "hide_avatars_tip": "لا تعرض الصور الرمزية بجانب أسماء المستخدمين"
 }

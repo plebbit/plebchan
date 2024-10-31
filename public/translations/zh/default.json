@@ -250,5 +250,11 @@
   "delete_wallet": "删除钱包",
   "loading_subplebbit": "加载 subplebbit",
   "avatar_warning": "在匿名模式开启时，您无法使用头像进行发布。您可以在 Plebbit 账户设置中将其关闭。",
-  "last_bumped": "最后提升"
+  "last_bumped": "最后提升",
+  "threads_without_images_tip": "不显示没有图片的帖子",
+  "hide_gore_boards_tip": "不显示来自带有“gore”标签的板块的帖子",
+  "hide_adult_boards_tip": "不显示来自带有“adult”标签的板块的帖子",
+  "fit_expanded_images_to_screen": "适应扩展图像到屏幕",
+  "fit_expanded_images_to_screen_tip": "将扩展图像限制为浏览器的宽度和高度",
+  "hide_avatars_tip": "不显示用户显示名称旁边的头像"
 }

@@ -250,5 +250,11 @@
   "delete_wallet": "Hapus Dompet",
   "loading_subplebbit": "Memuat subplebbit",
   "avatar_warning": "Anda tidak bisa memposting dengan avatar saat mode anonim diaktifkan. Anda bisa mematikan ini di pengaturan Akun Plebbit Anda.",
-  "last_bumped": "Terakhir bump"
+  "last_bumped": "Terakhir bump",
+  "threads_without_images_tip": "Jangan tampilkan pos tanpa gambar",
+  "hide_gore_boards_tip": "Jangan tampilkan pos dari papan dengan tag \"gore\"",
+  "hide_adult_boards_tip": "Jangan tampilkan pos dari papan dengan tag \"adult\"",
+  "fit_expanded_images_to_screen": "Sesuaikan gambar yang diperluas ke layar",
+  "fit_expanded_images_to_screen_tip": "Batasi gambar yang diperluas baik pada lebar maupun tinggi browser",
+  "hide_avatars_tip": "Jangan tampilkan avatar di sebelah nama pengguna"
 }

@@ -250,5 +250,11 @@
   "delete_wallet": "ลบกระเป๋าเงิน",
   "loading_subplebbit": "กำลังโหลด subplebbit",
   "avatar_warning": "คุณไม่สามารถโพสต์ด้วยอวาตาร์ในขณะที่โหมดอนาโนเป็นเปิดอยู่ คุณสามารถปิดได้ในการตั้งค่าบัญชี Plebbit ของคุณ",
-  "last_bumped": "เพิ่มล่าสุด"
+  "last_bumped": "เพิ่มล่าสุด",
+  "threads_without_images_tip": "ไม่แสดงโพสต์ที่ไม่มีรูปภาพ",
+  "hide_gore_boards_tip": "ไม่แสดงโพสต์จากกระดานที่มีแท็ก \"gore\"",
+  "hide_adult_boards_tip": "ไม่แสดงโพสต์จากกระดานที่มีแท็ก \"adult\"",
+  "fit_expanded_images_to_screen": "ปรับขนาดภาพที่ขยายให้พอดีกับหน้าจอ",
+  "fit_expanded_images_to_screen_tip": "จำกัดภาพที่ขยายให้พอดีกับทั้งความกว้างและความสูงของเบราว์เซอร์",
+  "hide_avatars_tip": "ไม่แสดงอวาตาร์ข้างชื่อผู้ใช้"
 }

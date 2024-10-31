@@ -250,5 +250,11 @@
   "delete_wallet": "Elimina Wallet",
   "loading_subplebbit": "Caricamento subplebbit",
   "avatar_warning": "Non puoi postare con un avatar mentre la modalità anonima è attiva. Puoi disattivarla nelle impostazioni del tuo account Plebbit.",
-  "last_bumped": "Ultimo Bump"
+  "last_bumped": "Ultimo Bump",
+  "threads_without_images_tip": "Non mostrare i post senza immagini",
+  "hide_gore_boards_tip": "Non mostrare i post provenienti da bacheche con l'etichetta \"gore\"",
+  "hide_adult_boards_tip": "Non mostrare i post provenienti da bacheche con l'etichetta \"adult\"",
+  "fit_expanded_images_to_screen": "Adatta le immagini espanse allo schermo",
+  "fit_expanded_images_to_screen_tip": "Limita le immagini espanse sia alla larghezza che all'altezza del browser",
+  "hide_avatars_tip": "Non mostrare gli avatar accanto ai nomi visualizzati degli utenti"
 }

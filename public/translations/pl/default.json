@@ -250,5 +250,11 @@
   "delete_wallet": "Usuń portfel",
   "loading_subplebbit": "Ładowanie subplebbit",
   "avatar_warning": "Nie możesz publikować z awatarem, gdy tryb anonimowy jest włączony. Możesz go wyłączyć w ustawieniach swojego konta Plebbit.",
-  "last_bumped": "Ostatni bump"
+  "last_bumped": "Ostatni bump",
+  "threads_without_images_tip": "Nie wyświetlaj postów bez obrazów",
+  "hide_gore_boards_tip": "Nie wyświetlaj postów z tablic z tagiem \"gore\"",
+  "hide_adult_boards_tip": "Nie wyświetlaj postów z tablic z tagiem \"adult\"",
+  "fit_expanded_images_to_screen": "Dopasuj rozszerzone obrazy do ekranu",
+  "fit_expanded_images_to_screen_tip": "Ogranicz rozszerzone obrazy do szerokości i wysokości przeglądarki",
+  "hide_avatars_tip": "Nie wyświetlaj avatarów obok nazw wyświetlających użytkowników"
 }

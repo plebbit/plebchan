@@ -143,21 +143,6 @@ const InterfaceSettings = () => {
       </div>
       <div className={styles.setting}>
         <label>
-          <input type='checkbox' checked={hideAvatars} onChange={handleHideAvatarsChange} /> {_.capitalize(t('hide_avatars'))}
-        </label>
-      </div>
-      <div className={styles.setting}>
-        <label>
-          <input type='checkbox' checked={hideGoreBoards} onChange={(e) => setHideGoreBoards(e.target.checked)} /> {_.capitalize(t('hide_gore_boards'))}
-        </label>
-      </div>
-      <div className={styles.setting}>
-        <label>
-          <input type='checkbox' checked={hideAdultBoards} onChange={(e) => setHideAdultBoards(e.target.checked)} /> {_.capitalize(t('hide_adult_boards'))}
-        </label>
-      </div>
-      <div className={styles.setting}>
-        <label>
           <input
             type='checkbox'
             checked={hideThreadsWithoutImages}
@@ -168,6 +153,35 @@ const InterfaceSettings = () => {
           />
           {_.capitalize(t('hide_threads_without_images'))}
         </label>
+        <div className={styles.settingTip}>{_.capitalize(t('threads_without_images_tip'))}</div>
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' checked={hideGoreBoards} onChange={(e) => setHideGoreBoards(e.target.checked)} /> {_.capitalize(t('hide_gore_boards'))}
+        </label>
+        <div className={styles.settingTip}>{_.capitalize(t('hide_gore_boards_tip'))}</div>
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' checked={hideAdultBoards} onChange={(e) => setHideAdultBoards(e.target.checked)} /> {_.capitalize(t('hide_adult_boards'))}
+        </label>
+        <div className={styles.settingTip}>{_.capitalize(t('hide_adult_boards_tip'))}</div>
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input
+            type='checkbox'
+            // checked={fitExpandedImagesToScreen} onChange={(e) => setFitExpandedImagesToScreen(e.target.checked)}
+          />
+          {_.capitalize(t('fit_expanded_images_to_screen'))}
+        </label>
+        <div className={styles.settingTip}>{_.capitalize(t('fit_expanded_images_to_screen_tip'))}</div>
+      </div>
+      <div className={styles.setting}>
+        <label>
+          <input type='checkbox' checked={hideAvatars} onChange={handleHideAvatarsChange} /> {_.capitalize(t('hide_avatars'))}
+        </label>
+        <div className={styles.settingTip}>{_.capitalize(t('hide_avatars_tip'))}</div>
       </div>
     </div>
   );

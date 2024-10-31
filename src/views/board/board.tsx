@@ -249,6 +249,8 @@ const Board = () => {
     document.title = boardTitle + ' - plebchan';
   }, [title, shortAddress, subplebbitAddress]);
 
+  console.log('feed', feed);
+
   return (
     <div className={styles.content}>
       {location.pathname.endsWith('/settings') && <SettingsModal />}

@@ -250,5 +250,11 @@
   "delete_wallet": "Smazat peněženku",
   "loading_subplebbit": "Načítání subplebbit",
   "avatar_warning": "Nemůžete zveřejňovat s avatarem, když je zapnutý anonymní režim. Můžete ho vypnout v nastavení svého účtu Plebbit.",
-  "last_bumped": "Poslední bump"
+  "last_bumped": "Poslední bump",
+  "threads_without_images_tip": "Nezobrazovat příspěvky bez obrázků",
+  "hide_gore_boards_tip": "Nezobrazovat příspěvky z desek s tagem \"gore\"",
+  "hide_adult_boards_tip": "Nezobrazovat příspěvky z desek s tagem \"adult\"",
+  "fit_expanded_images_to_screen": "Přizpůsobit rozšířené obrázky obrazovce",
+  "fit_expanded_images_to_screen_tip": "Omezení rozšířených obrázků na šířku a výšku prohlížeče",
+  "hide_avatars_tip": "Nezobrazovat avatary vedle jmen uživatelů"
 }

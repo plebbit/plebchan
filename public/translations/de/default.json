@@ -250,5 +250,11 @@
   "delete_wallet": "Wallet löschen",
   "loading_subplebbit": "Lade subplebbit",
   "avatar_warning": "Sie können nicht mit einem Avatar posten, während der Anonymmodus aktiviert ist. Sie können ihn in den Einstellungen Ihres Plebbit-Kontos deaktivieren.",
-  "last_bumped": "Zuletzt hochgeladen"
+  "last_bumped": "Zuletzt hochgeladen",
+  "threads_without_images_tip": "Keine Beiträge ohne Bilder anzeigen",
+  "hide_gore_boards_tip": "Keine Beiträge von Boards mit dem Tag \"Gore\" anzeigen",
+  "hide_adult_boards_tip": "Keine Beiträge von Boards mit dem Tag \"adult\" anzeigen",
+  "fit_expanded_images_to_screen": "Erweiterte Bilder an den Bildschirm anpassen",
+  "fit_expanded_images_to_screen_tip": "Erweiterte Bilder auf die Breite und Höhe des Browsers beschränken",
+  "hide_avatars_tip": "Keine Avatare neben den Benutzernamen anzeigen"
 }

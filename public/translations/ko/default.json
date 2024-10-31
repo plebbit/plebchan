@@ -250,5 +250,11 @@
   "delete_wallet": "지갑 삭제",
   "loading_subplebbit": "subplebbit 로딩 중",
   "avatar_warning": "익명 모드가 켜져 있는 동안 아바타로 게시할 수 없습니다. Plebbit 계정 설정에서 끌 수 있습니다.",
-  "last_bumped": "마지막 bump"
+  "last_bumped": "마지막 bump",
+  "threads_without_images_tip": "이미지 없는 게시물을 표시하지 않음",
+  "hide_gore_boards_tip": "\"gore\" 태그가 있는 게시판의 게시물을 표시하지 않음",
+  "hide_adult_boards_tip": "\"adult\" 태그가 있는 게시판의 게시물을 표시하지 않음",
+  "fit_expanded_images_to_screen": "확장된 이미지를 화면에 맞추기",
+  "fit_expanded_images_to_screen_tip": "확장된 이미지를 브라우저의 너비와 높이로 제한합니다",
+  "hide_avatars_tip": "사용자 표시 이름 옆에 아바타를 표시하지 않음"
 }

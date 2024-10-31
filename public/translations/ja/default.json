@@ -250,5 +250,11 @@
   "delete_wallet": "ウォレットを削除",
   "loading_subplebbit": "subplebbitを読み込んでいます",
   "avatar_warning": "アバターを使用して投稿することはできません。匿名モードがオンになっている間は、Plebbitアカウントの設定でオフにできます。",
-  "last_bumped": "最後のバンプ"
+  "last_bumped": "最後のバンプ",
+  "threads_without_images_tip": "画像のない投稿を表示しない",
+  "hide_gore_boards_tip": "\"gore\" タグのあるボードからの投稿を表示しない",
+  "hide_adult_boards_tip": "\"adult\" タグのあるボードからの投稿を表示しない",
+  "fit_expanded_images_to_screen": "拡張された画像を画面に合わせる",
+  "fit_expanded_images_to_screen_tip": "拡張された画像をブラウザの幅と高さの両方に制限します",
+  "hide_avatars_tip": "ユーザーの表示名の横にアバターを表示しない"
 }

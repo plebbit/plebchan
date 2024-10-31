@@ -250,5 +250,11 @@
   "delete_wallet": "Cüzdanı Sil",
   "loading_subplebbit": "Subplebbit Yükleniyor",
   "avatar_warning": "Anonim mod açıken avatar ile paylaşım yapamazsınız. Bunu Plebbit Hesap ayarlarınızdan kapatabilirsiniz.",
-  "last_bumped": "Son bump"
+  "last_bumped": "Son bump",
+  "threads_without_images_tip": "Görüntü olmayan gönderileri gösterme",
+  "hide_gore_boards_tip": "\"gore\" etiketi olan panolardan gelen gönderileri gösterme",
+  "hide_adult_boards_tip": "\"adult\" etiketi olan panolardan gelen gönderileri gösterme",
+  "fit_expanded_images_to_screen": "Genişletilmiş resimleri ekrana sığdır",
+  "fit_expanded_images_to_screen_tip": "Genişletilmiş resimleri hem tarayıcı genişliğine hem de yüksekliğine sınırlayın",
+  "hide_avatars_tip": "Kullanıcı görünüm adlarının yanında avatarları gösterme"
 }
