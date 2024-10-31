@@ -7,6 +7,7 @@ import styles from './interface-settings.module.css';
 import _ from 'lodash';
 import useInterfaceSettingsStore from '../../../stores/use-interface-settings-store';
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
+import useExpandedMediaStore from '../../../stores/use-expanded-media-store';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -114,6 +115,7 @@ const InterfaceSettings = () => {
   const { hideAvatars, setHideAvatars } = useAvatarVisibilityStore();
   const { hideGoreBoards, setHideGoreBoards, hideAdultBoards, setHideAdultBoards, hideThreadsWithoutImages, setHideThreadsWithoutImages } = useInterfaceSettingsStore();
   const { setShowTextOnlyThreads } = useCatalogFiltersStore();
+  const { fitExpandedImagesToScreen, setFitExpandedImagesToScreen } = useExpandedMediaStore();
 
   const handleHideAvatarsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHideAvatars(e.target.checked);
@@ -169,10 +171,7 @@ const InterfaceSettings = () => {
       </div>
       <div className={styles.setting}>
         <label>
-          <input
-            type='checkbox'
-            // checked={fitExpandedImagesToScreen} onChange={(e) => setFitExpandedImagesToScreen(e.target.checked)}
-          />
+          <input type='checkbox' checked={fitExpandedImagesToScreen} onChange={(e) => setFitExpandedImagesToScreen(e.target.checked)} />
           {_.capitalize(t('fit_expanded_images_to_screen'))}
         </label>
         <div className={styles.settingTip}>{_.capitalize(t('fit_expanded_images_to_screen_tip'))}</div>
