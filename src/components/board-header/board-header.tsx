@@ -44,7 +44,7 @@ const BoardHeader = () => {
         </div>
       )}
       <div className={styles.boardTitle}>
-        {title || shortAddress ? (shortAddress.endsWith('.eth') || shortAddress.endsWith('.sol') ? shortAddress.slice(0, -4) : shortAddress) : subplebbitAddress}
+        {title || (shortAddress ? (shortAddress.endsWith('.eth') || shortAddress.endsWith('.sol') ? shortAddress.slice(0, -4) : shortAddress) : subplebbitAddress)}
         {(isOffline || isOnlineStatusLoading) && !isInAllView && !isInSubscriptionsView && (
           <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />
         )}
