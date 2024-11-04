@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Ne pas afficher les publications des forums avec le tag \"adult\"",
   "fit_expanded_images_to_screen": "Ajuster les images agrandies à l'écran",
   "fit_expanded_images_to_screen_tip": "Limiter les images agrandies à la fois à la largeur et à la hauteur du navigateur",
-  "hide_avatars_tip": "Ne pas afficher les avatars à côté des noms d'affichage des utilisateurs"
+  "hide_avatars_tip": "Ne pas afficher les avatars à côté des noms d'affichage des utilisateurs",
+  "choose_file": "Choisissez un fichier",
+  "uploading": "téléchargement...",
+  "no_file_chosen": "Aucun fichier choisi"
 }

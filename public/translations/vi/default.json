@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Không hiển thị bài viết từ các bảng có thẻ \"adult\"",
   "fit_expanded_images_to_screen": "Phù hợp hình ảnh mở rộng với màn hình",
   "fit_expanded_images_to_screen_tip": "Hạn chế hình ảnh mở rộng cả chiều rộng và chiều cao của trình duyệt",
-  "hide_avatars_tip": "Không hiển thị hình đại diện bên cạnh tên hiển thị của người dùng"
+  "hide_avatars_tip": "Không hiển thị hình đại diện bên cạnh tên hiển thị của người dùng",
+  "choose_file": "Chọn tệp",
+  "uploading": "đang tải lên...",
+  "no_file_chosen": "Không có tệp nào được chọn"
 }

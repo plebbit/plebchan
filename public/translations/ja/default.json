@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "\"adult\" タグのあるボードからの投稿を表示しない",
   "fit_expanded_images_to_screen": "拡張された画像を画面に合わせる",
   "fit_expanded_images_to_screen_tip": "拡張された画像をブラウザの幅と高さの両方に制限します",
-  "hide_avatars_tip": "ユーザーの表示名の横にアバターを表示しない"
+  "hide_avatars_tip": "ユーザーの表示名の横にアバターを表示しない",
+  "choose_file": "ファイルを選択",
+  "uploading": "アップロード中...",
+  "no_file_chosen": "ファイルが選択されていません"
 }

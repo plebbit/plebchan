@@ -261,10 +261,10 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             <span className={styles.uploadContainer}>
               <span className={styles.uploadButton}>
                 <button onClick={handleUpload} disabled={isUploading}>
-                  {isUploading ? 'uploading...' : 'choose file'}
+                  {isUploading ? t('uploading') : t('choose_file')}
                 </button>
               </span>
-              <span className={styles.uploadFileName}>{uploadedFileName ? uploadedFileName : 'No file chosen'}</span>
+              <span className={styles.uploadFileName}>{uploadedFileName ? uploadedFileName : t('no_file_chosen')}</span>
             </span>
           )}
           <span className={styles.spoilerButton}>

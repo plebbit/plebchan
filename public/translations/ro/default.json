@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Nu afișa postări de la panouri cu eticheta \"adult\"",
   "fit_expanded_images_to_screen": "Se potrivesc imaginile extinse pe ecran",
   "fit_expanded_images_to_screen_tip": "Limitați imaginile extinse atât la lățimea cât și la înălțimea browserului",
-  "hide_avatars_tip": "Nu afișa avatare lângă numele de afișare ale utilizatorilor"
+  "hide_avatars_tip": "Nu afișa avatare lângă numele de afișare ale utilizatorilor",
+  "choose_file": "Alegeți fișierul",
+  "uploading": "încărcare...",
+  "no_file_chosen": "Niciun fișier ales"
 }

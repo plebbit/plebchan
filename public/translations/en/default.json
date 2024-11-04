@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Don't display posts from boards with the \"adult\" tag",
   "fit_expanded_images_to_screen": "Fit expanded images to screen",
   "fit_expanded_images_to_screen_tip": "Limit expanded images to both browser width and height",
-  "hide_avatars_tip": "Don't display avatars next to user display names"
+  "hide_avatars_tip": "Don't display avatars next to user display names",
+  "choose_file": "Choose File",
+  "uploading": "uploading...",
+  "no_file_chosen": "No file chosen"
 }

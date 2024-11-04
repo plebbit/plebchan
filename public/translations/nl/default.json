@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Toon geen berichten van borden met de tag \"adult\"",
   "fit_expanded_images_to_screen": "Pas uitgebreide afbeeldingen aan het scherm aan",
   "fit_expanded_images_to_screen_tip": "Beperk uitgebreide afbeeldingen tot zowel de breedte als de hoogte van de browser",
-  "hide_avatars_tip": "Toon geen avatar naast de weergavenamen van gebruikers"
+  "hide_avatars_tip": "Toon geen avatar naast de weergavenamen van gebruikers",
+  "choose_file": "Kies een bestand",
+  "uploading": "uploaden...",
+  "no_file_chosen": "Geen bestand gekozen"
 }

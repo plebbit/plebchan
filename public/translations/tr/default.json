@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "\"adult\" etiketi olan panolardan gelen gönderileri gösterme",
   "fit_expanded_images_to_screen": "Genişletilmiş resimleri ekrana sığdır",
   "fit_expanded_images_to_screen_tip": "Genişletilmiş resimleri hem tarayıcı genişliğine hem de yüksekliğine sınırlayın",
-  "hide_avatars_tip": "Kullanıcı görünüm adlarının yanında avatarları gösterme"
+  "hide_avatars_tip": "Kullanıcı görünüm adlarının yanında avatarları gösterme",
+  "choose_file": "Dosya Seç",
+  "uploading": "yükleniyor...",
+  "no_file_chosen": "Hiçbir dosya seçilmedi"
 }

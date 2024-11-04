@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "不显示来自带有“adult”标签的板块的帖子",
   "fit_expanded_images_to_screen": "适应扩展图像到屏幕",
   "fit_expanded_images_to_screen_tip": "将扩展图像限制为浏览器的宽度和高度",
-  "hide_avatars_tip": "不显示用户显示名称旁边的头像"
+  "hide_avatars_tip": "不显示用户显示名称旁边的头像",
+  "choose_file": "选择文件",
+  "uploading": "正在上传...",
+  "no_file_chosen": "未选择任何文件"
 }

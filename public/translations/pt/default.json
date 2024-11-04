@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Não exiba postagens de quadros com a tag \"adult\"",
   "fit_expanded_images_to_screen": "Ajustar imagens expandidas à tela",
   "fit_expanded_images_to_screen_tip": "Limite imagens expandidas tanto à largura quanto à altura do navegador",
-  "hide_avatars_tip": "Não exiba avatares ao lado dos nomes de exibição dos usuários"
+  "hide_avatars_tip": "Não exiba avatares ao lado dos nomes de exibição dos usuários",
+  "choose_file": "Escolher arquivo",
+  "uploading": "carregando...",
+  "no_file_chosen": "Nenhum arquivo escolhido"
 }

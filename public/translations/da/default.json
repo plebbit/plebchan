@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Vis ikke indlæg fra boards med tagget \"adult\"",
   "fit_expanded_images_to_screen": "Tilpas udvidede billeder til skærmen",
   "fit_expanded_images_to_screen_tip": "Begræns udvidede billeder til både browserens bredde og højde",
-  "hide_avatars_tip": "Vis ikke avatarer ved siden af brugernes visningsnavne"
+  "hide_avatars_tip": "Vis ikke avatarer ved siden af brugernes visningsnavne",
+  "choose_file": "Vælg fil",
+  "uploading": "uploading...",
+  "no_file_chosen": "Ingen fil valgt"
 }

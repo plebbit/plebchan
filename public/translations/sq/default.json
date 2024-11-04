@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Mos e tregoni postimet nga bordet me etiketën \"adult\"",
   "fit_expanded_images_to_screen": "Përshtatni imazhet e zgjeruara në ekran",
   "fit_expanded_images_to_screen_tip": "Kufizoni imazhet e zgjeruara si në gjerësi ashtu edhe në lartësi të shfletuesit",
-  "hide_avatars_tip": "Mos e tregoni avatarët pranë emrave të shfaqjes së përdoruesve"
+  "hide_avatars_tip": "Mos e tregoni avatarët pranë emrave të shfaqjes së përdoruesve",
+  "choose_file": "Zgjidhni skedarin",
+  "uploading": "duke ngarkuar...",
+  "no_file_chosen": "Nuk është zgjedhur asnjë skedar"
 }

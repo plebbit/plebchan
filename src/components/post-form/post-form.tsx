@@ -318,9 +318,9 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
             <td>{t('file')}</td>
             <td>
               <button onClick={handleUpload} disabled={isUploading}>
-                {isUploading ? 'uploading...' : 'choose file'}
+                {isUploading ? t('uploading') : t('choose_file')}
               </button>
-              <span>{uploadedFileName ? uploadedFileName : 'No file chosen'}</span>
+              <span>{uploadedFileName ? uploadedFileName : t('no_file_chosen')}</span>
             </td>
           </tr>
         )}

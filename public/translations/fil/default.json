@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Huwag ipakita ang mga post mula sa mga board na may \"adult\" tag",
   "fit_expanded_images_to_screen": "I-adjust ang mga pinalawak na larawan sa screen",
   "fit_expanded_images_to_screen_tip": "Limitahan ang mga pinalawak na larawan sa parehong lapad at taas ng browser",
-  "hide_avatars_tip": "Huwag ipakita ang mga avatar sa tabi ng mga display name ng gumagamit"
+  "hide_avatars_tip": "Huwag ipakita ang mga avatar sa tabi ng mga display name ng gumagamit",
+  "choose_file": "Pumili ng File",
+  "uploading": "ina-upload...",
+  "no_file_chosen": "Walang napiling file"
 }

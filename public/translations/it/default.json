@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Non mostrare i post provenienti da bacheche con l'etichetta \"adult\"",
   "fit_expanded_images_to_screen": "Adatta le immagini espanse allo schermo",
   "fit_expanded_images_to_screen_tip": "Limita le immagini espanse sia alla larghezza che all'altezza del browser",
-  "hide_avatars_tip": "Non mostrare gli avatar accanto ai nomi visualizzati degli utenti"
+  "hide_avatars_tip": "Non mostrare gli avatar accanto ai nomi visualizzati degli utenti",
+  "choose_file": "Scegli File",
+  "uploading": "caricamento...",
+  "no_file_chosen": "Nessun file scelto"
 }

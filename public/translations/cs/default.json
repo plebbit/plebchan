@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Nezobrazovat příspěvky z desek s tagem \"adult\"",
   "fit_expanded_images_to_screen": "Přizpůsobit rozšířené obrázky obrazovce",
   "fit_expanded_images_to_screen_tip": "Omezení rozšířených obrázků na šířku a výšku prohlížeče",
-  "hide_avatars_tip": "Nezobrazovat avatary vedle jmen uživatelů"
+  "hide_avatars_tip": "Nezobrazovat avatary vedle jmen uživatelů",
+  "choose_file": "Vyberte soubor",
+  "uploading": "nahrávání...",
+  "no_file_chosen": "Žádný soubor není vybrán"
 }

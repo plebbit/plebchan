@@ -256,5 +256,8 @@
   "hide_adult_boards_tip": "Ne jelenjen meg a \"felnőtt\" címkével rendelkező táblák bejegyzéseit",
   "fit_expanded_images_to_screen": "Illeszkedjen a kibővített képekhez a képernyőhöz",
   "fit_expanded_images_to_screen_tip": "A kibővített képeket korlátozza a böngésző szélességére és magasságára",
-  "hide_avatars_tip": "Ne jelenjen meg az avatárok a felhasználói megjelenítési nevek mellett"
+  "hide_avatars_tip": "Ne jelenjen meg az avatárok a felhasználói megjelenítési nevek mellett",
+  "choose_file": "Válassza ki a fájlt",
+  "uploading": "feltöltés...",
+  "no_file_chosen": "Nincs fájl kiválasztva"
 }
