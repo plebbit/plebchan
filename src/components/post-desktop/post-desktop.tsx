@@ -464,7 +464,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
           <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && !(deleted || removed) && <div className={styles.spacer} />}
-          {!(isHidden && parentCid) && <PostMessage post={post} />}
+          {!isHidden && <PostMessage post={post} />}
         </div>
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replyCount > 5 || (pinned && repliesCount > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
