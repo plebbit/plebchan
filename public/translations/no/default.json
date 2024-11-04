@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Vis ikke avatarer ved siden av brukernes visningsnavn",
   "choose_file": "Velg fil",
   "uploading": "laster opp...",
-  "no_file_chosen": "Ingen fil valgt"
+  "no_file_chosen": "Ingen fil valgt",
+  "error": "Feil"
 }

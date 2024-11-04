@@ -259,5 +259,6 @@
   "hide_avatars_tip": "ユーザーの表示名の横にアバターを表示しない",
   "choose_file": "ファイルを選択",
   "uploading": "アップロード中...",
-  "no_file_chosen": "ファイルが選択されていません"
+  "no_file_chosen": "ファイルが選択されていません",
+  "error": "エラー"
 }

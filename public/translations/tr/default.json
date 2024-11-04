@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Kullanıcı görünüm adlarının yanında avatarları gösterme",
   "choose_file": "Dosya Seç",
   "uploading": "yükleniyor...",
-  "no_file_chosen": "Hiçbir dosya seçilmedi"
+  "no_file_chosen": "Hiçbir dosya seçilmedi",
+  "error": "Hata"
 }

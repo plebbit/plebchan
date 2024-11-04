@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Nezobrazovat avatary vedle jmen uživatelů",
   "choose_file": "Vyberte soubor",
   "uploading": "nahrávání...",
-  "no_file_chosen": "Žádný soubor není vybrán"
+  "no_file_chosen": "Žádný soubor není vybrán",
+  "error": "Chyba"
 }

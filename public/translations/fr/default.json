@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Ne pas afficher les avatars à côté des noms d'affichage des utilisateurs",
   "choose_file": "Choisissez un fichier",
   "uploading": "téléchargement...",
-  "no_file_chosen": "Aucun fichier choisi"
+  "no_file_chosen": "Aucun fichier choisi",
+  "error": "Erreur"
 }

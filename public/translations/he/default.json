@@ -259,5 +259,6 @@
   "hide_avatars_tip": "אל תציג תמונות פרופיל לצד שמות המשתמשים",
   "choose_file": "בחר קובץ",
   "uploading": "מעלה...",
-  "no_file_chosen": "לא נבחר קובץ"
+  "no_file_chosen": "לא נבחר קובץ",
+  "error": "שגיאה"
 }

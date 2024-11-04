@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Ne jelenjen meg az avatárok a felhasználói megjelenítési nevek mellett",
   "choose_file": "Válassza ki a fájlt",
   "uploading": "feltöltés...",
-  "no_file_chosen": "Nincs fájl kiválasztva"
+  "no_file_chosen": "Nincs fájl kiválasztva",
+  "error": "Hiba"
 }

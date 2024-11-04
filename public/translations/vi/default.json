@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Không hiển thị hình đại diện bên cạnh tên hiển thị của người dùng",
   "choose_file": "Chọn tệp",
   "uploading": "đang tải lên...",
-  "no_file_chosen": "Không có tệp nào được chọn"
+  "no_file_chosen": "Không có tệp nào được chọn",
+  "error": "Lỗi"
 }

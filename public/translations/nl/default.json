@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Toon geen avatar naast de weergavenamen van gebruikers",
   "choose_file": "Kies een bestand",
   "uploading": "uploaden...",
-  "no_file_chosen": "Geen bestand gekozen"
+  "no_file_chosen": "Geen bestand gekozen",
+  "error": "Fout"
 }

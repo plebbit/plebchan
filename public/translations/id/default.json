@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Jangan tampilkan avatar di sebelah nama pengguna",
   "choose_file": "Pilih Berkas",
   "uploading": "mengupload...",
-  "no_file_chosen": "Tidak ada file yang dipilih"
+  "no_file_chosen": "Tidak ada file yang dipilih",
+  "error": "Kesalahan"
 }

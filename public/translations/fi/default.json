@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Älä näytä avatareita käyttäjänäyttönimien vieressä",
   "choose_file": "Valitse tiedosto",
   "uploading": "lataaminen...",
-  "no_file_chosen": "Ei tiedostoa valittu"
+  "no_file_chosen": "Ei tiedostoa valittu",
+  "error": "Virhe"
 }

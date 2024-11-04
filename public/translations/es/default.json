@@ -259,5 +259,6 @@
   "hide_avatars_tip": "No mostrar avatares junto a los nombres de usuario",
   "choose_file": "Elige archivo",
   "uploading": "subiendo...",
-  "no_file_chosen": "Ningún archivo elegido"
+  "no_file_chosen": "Ningún archivo elegido",
+  "error": "Error"
 }

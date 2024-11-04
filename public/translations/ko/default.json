@@ -259,5 +259,6 @@
   "hide_avatars_tip": "사용자 표시 이름 옆에 아바타를 표시하지 않음",
   "choose_file": "파일 선택",
   "uploading": "업로드 중...",
-  "no_file_chosen": "선택된 파일이 없습니다"
+  "no_file_chosen": "선택된 파일이 없습니다",
+  "error": "오류"
 }

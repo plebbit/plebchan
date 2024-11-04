@@ -139,3 +139,14 @@
     cursor: default;
   }
 }
+
+.error {
+  width: 294px;
+  font-family: monospace;
+  background-color: #E62020;
+  font-size: 12px;
+  color: white;
+  padding: 3px 5px;
+  margin-top: 1px;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.20);
+}

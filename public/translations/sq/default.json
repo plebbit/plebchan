@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Mos e tregoni avatarët pranë emrave të shfaqjes së përdoruesve",
   "choose_file": "Zgjidhni skedarin",
   "uploading": "duke ngarkuar...",
-  "no_file_chosen": "Nuk është zgjedhur asnjë skedar"
+  "no_file_chosen": "Nuk është zgjedhur asnjë skedar",
+  "error": "Gabim"
 }

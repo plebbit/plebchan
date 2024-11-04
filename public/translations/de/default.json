@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Keine Avatare neben den Benutzernamen anzeigen",
   "choose_file": "Datei auswählen",
   "uploading": "Hochladen...",
-  "no_file_chosen": "Keine Datei ausgewählt"
+  "no_file_chosen": "Keine Datei ausgewählt",
+  "error": "Fehler"
 }

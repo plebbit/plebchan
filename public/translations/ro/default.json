@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Nu afișa avatare lângă numele de afișare ale utilizatorilor",
   "choose_file": "Alegeți fișierul",
   "uploading": "încărcare...",
-  "no_file_chosen": "Niciun fișier ales"
+  "no_file_chosen": "Niciun fișier ales",
+  "error": "Eroare"
 }

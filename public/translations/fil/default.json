@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Huwag ipakita ang mga avatar sa tabi ng mga display name ng gumagamit",
   "choose_file": "Pumili ng File",
   "uploading": "ina-upload...",
-  "no_file_chosen": "Walang napiling file"
+  "no_file_chosen": "Walang napiling file",
+  "error": "Error"
 }

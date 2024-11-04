@@ -72,20 +72,23 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     }
   }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
 
+  const [error, setError] = useState<string | null>(null);
+
   const onPublishReply = () => {
     const currentContent = textRef.current?.value.slice(contentPrefix.length).trim() || '';
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentContent && !currentUrl) {
-      alert(t('empty_comment_alert'));
+      setError(t('empty_comment_alert'));
       return;
     }
 
     if (currentUrl && !isValidURL(currentUrl)) {
-      alert(t('invalid_url_alert'));
+      setError(t('invalid_url_alert'));
       return;
     }
 
+    setError(null);
     publishReply();
   };
 
@@ -190,11 +193,11 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
         }
       }
     } catch (error) {
-      console.error('Upload failed:', error);
+      console.error('Upload failed, ', error);
       if (error instanceof Error && error.message !== 'File selection cancelled') {
-        alert(`${t('upload_failed')}: ${error.message}`);
+        setError(`${t('upload_failed')}, ${error.message}`);
       } else if (typeof error === 'string' && error !== 'File selection cancelled') {
-        alert(`${t('upload_failed')}: ${error}`);
+        setError(`${t('upload_failed')}, ${error}`);
       }
     } finally {
       setIsUploading(false);
@@ -279,6 +282,11 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             {t('post')}
           </button>
         </div>
+        {error && (
+          <div className={styles.error}>
+            {t('error')}: {error}
+          </div>
+        )}
       </div>
     </div>
   );

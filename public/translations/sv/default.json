@@ -259,5 +259,6 @@
   "hide_avatars_tip": "Visa inte avatarer bredvid användarnas visningsnamn",
   "choose_file": "Välj fil",
   "uploading": "laddar upp...",
-  "no_file_chosen": "Ingen fil vald"
+  "no_file_chosen": "Ingen fil vald",
+  "error": "Fel"
 }
