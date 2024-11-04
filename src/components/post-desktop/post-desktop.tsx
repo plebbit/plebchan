@@ -76,7 +76,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
 
   return (
     <div className={styles.postInfo}>
-      {!isHidden && <EditMenu post={post} />}
+      {isHidden ? parentCid && <span className={styles.hiddenReplyEditMenuSpacer} /> : <EditMenu post={post} />}
       <span className={(hidden || ((removed || deleted) && !reason)) && parentCid ? styles.postDesktopHidden : ''}>
         {title &&
           (title.length <= 75 ? (
@@ -403,7 +403,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
       <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
-        <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
+        <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} />
         {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
         {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <PostMessage post={post} />}
       </div>
@@ -413,7 +413,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, deleted, link, parentCid, pinned, postCid, removed, state, subplebbitAddress } = post || {};
+  const { author, cid, content, deleted, link, pinned, postCid, removed, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
