@@ -15,6 +15,10 @@ import styles from './reply-modal.module.css';
 import { LinkTypePreviewer } from '../post-form';
 import _ from 'lodash';
 import useAnonMode from '../../hooks/use-anon-mode';
+import FileUploader from '../../plugins/file-uploader';
+import { Capacitor } from '@capacitor/core';
+
+const isAndroid = Capacitor.getPlatform() === 'android';
 
 interface ReplyModalProps {
   closeModal: () => void;
@@ -167,6 +171,36 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     }
   };
 
+  // on android, auto upload file to image hosting sites with open api
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const handleUpload = async () => {
+    try {
+      setIsUploading(true);
+      const result = await FileUploader.pickAndUploadMedia();
+      console.log('Upload result:', result);
+      if (result.url) {
+        setUrl(result.url);
+        if (urlRef.current) {
+          urlRef.current.value = result.url;
+        }
+        setPublishReplyOptions({ link: result.url || undefined });
+        if (result.fileName) {
+          setUploadedFileName(result.fileName);
+        }
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+      if (error instanceof Error && error.message !== 'File selection cancelled') {
+        alert(`${t('upload_failed')}: ${error.message}`);
+      } else if (typeof error === 'string' && error !== 'File selection cancelled') {
+        alert(`${t('upload_failed')}: ${error}`);
+      }
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>
@@ -218,10 +252,20 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
         {!(isInAllView || isInSubscriptionsView) && offlineAlert}
         <div className={styles.offlineAlert}></div>
         <div className={styles.footer}>
-          {url && (
+          {url && !isAndroid && (
             <>
               {t('link_type')}: <LinkTypePreviewer link={url} />{' '}
             </>
+          )}
+          {isAndroid && (
+            <span className={styles.uploadContainer}>
+              <span className={styles.uploadButton}>
+                <button onClick={handleUpload} disabled={isUploading}>
+                  {isUploading ? 'uploading...' : 'choose file'}
+                </button>
+              </span>
+              <span className={styles.uploadFileName}>{uploadedFileName ? uploadedFileName : 'No file chosen'}</span>
+            </span>
           )}
           <span className={styles.spoilerButton}>
             [
