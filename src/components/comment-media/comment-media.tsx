@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
-import styles from './comment-media.module.css';
 import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { getHostname } from '../../lib/utils/url-utils';
+import useExpandedMediaStore from '../../stores/use-expanded-media-store';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useIsMobile from '../../hooks/use-is-mobile';
+import styles from './comment-media.module.css';
 import Embed, { canEmbed } from '../embed';
 
 interface MediaProps {
@@ -108,7 +109,10 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   const { t } = useTranslation();
   const { thumbnail, type, url } = commentMediaInfo || {};
   const isMobile = useIsMobile();
-  const mediaClass = isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp;
+  const { fitExpandedImagesToScreen } = useExpandedMediaStore();
+  const mediaClass = `${isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp} ${
+    fitExpandedImagesToScreen ? styles.fitToScreen : ''
+  }`;
   const mediaDimensions = getMediaDimensions(commentMediaInfo);
 
   return (

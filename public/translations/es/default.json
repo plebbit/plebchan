@@ -250,5 +250,16 @@
   "delete_wallet": "Eliminar billetera",
   "loading_subplebbit": "Cargando subplebbit",
   "avatar_warning": "No puedes publicar con un avatar mientras el modo anónimo esté activado. Puedes desactivarlo en la configuración de tu cuenta Plebbit.",
-  "last_bumped": "Último bump"
+  "last_bumped": "Último bump",
+  "threads_without_images_tip": "No mostrar publicaciones sin imágenes",
+  "hide_gore_boards_tip": "No mostrar publicaciones de los tableros con la etiqueta \"gore\"",
+  "hide_adult_boards_tip": "No mostrar publicaciones de los tableros con la etiqueta \"adult\"",
+  "fit_expanded_images_to_screen": "Ajustar imágenes ampliadas a la pantalla",
+  "fit_expanded_images_to_screen_tip": "Limitar imágenes ampliadas tanto al ancho como a la altura del navegador",
+  "hide_avatars_tip": "No mostrar avatares junto a los nombres de usuario",
+  "choose_file": "Elige archivo",
+  "uploading": "subiendo...",
+  "no_file_chosen": "Ningún archivo elegido",
+  "error": "Error",
+  "vote": "voto"
 }

@@ -20,7 +20,7 @@ import PostForm from './components/post-form';
 import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
 
-const CheckRouteParams = () => {
+const ValidateRouteParams = () => {
   const { accountCommentIndex, timeFilterName } = useParams();
   const { timeFilterNames, lastVisitTimeFilterName } = useTimeFilter();
   const { accountComments } = useAccountComments();
@@ -125,7 +125,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/faq' element={<FAQ />} />
           <Route path='*' element={<NotFound />} />
-          <Route element={<CheckRouteParams />}>
+          <Route element={<ValidateRouteParams />}>
             <Route element={<BoardLayout />}>
               <Route path='/p/:subplebbitAddress' element={<Board />} />
               <Route path='/p/:subplebbitAddress/settings' element={<Board />} />

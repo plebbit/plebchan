@@ -250,5 +250,16 @@
   "delete_wallet": "Tanggalin ang Wallet",
   "loading_subplebbit": "Naglo-load ng subplebbit",
   "avatar_warning": "Hindi ka makakapag-post gamit ang avatar habang naka-on ang anon mode. Maaari mo itong i-off sa iyong mga setting ng Plebbit Account.",
-  "last_bumped": "Huling bump"
+  "last_bumped": "Huling bump",
+  "threads_without_images_tip": "Huwag ipakita ang mga post na walang mga imahe",
+  "hide_gore_boards_tip": "Huwag ipakita ang mga post mula sa mga board na may \"gore\" tag",
+  "hide_adult_boards_tip": "Huwag ipakita ang mga post mula sa mga board na may \"adult\" tag",
+  "fit_expanded_images_to_screen": "I-adjust ang mga pinalawak na larawan sa screen",
+  "fit_expanded_images_to_screen_tip": "Limitahan ang mga pinalawak na larawan sa parehong lapad at taas ng browser",
+  "hide_avatars_tip": "Huwag ipakita ang mga avatar sa tabi ng mga display name ng gumagamit",
+  "choose_file": "Pumili ng File",
+  "uploading": "ina-upload...",
+  "no_file_chosen": "Walang napiling file",
+  "error": "Error",
+  "vote": "bumoto"
 }

@@ -250,5 +250,16 @@
   "delete_wallet": "Slett lommebok",
   "loading_subplebbit": "Laster subplebbit",
   "avatar_warning": "Du kan ikke poste med en avatar mens anonym modus er aktivert. Du kan slå den av i innstillingene for Plebbit-kontoen din.",
-  "last_bumped": "Siste bumpet"
+  "last_bumped": "Siste bumpet",
+  "threads_without_images_tip": "Vis ikke innlegg uten bilder",
+  "hide_gore_boards_tip": "Vis ikke innlegg fra tavler med \"gore\"-taggen",
+  "hide_adult_boards_tip": "Vis ikke innlegg fra tavler med \"adult\"-taggen",
+  "fit_expanded_images_to_screen": "Tilpass utvidede bilder til skjermen",
+  "fit_expanded_images_to_screen_tip": "Begrens utvidede bilder til både nettleserens bredde og høyde",
+  "hide_avatars_tip": "Vis ikke avatarer ved siden av brukernes visningsnavn",
+  "choose_file": "Velg fil",
+  "uploading": "laster opp...",
+  "no_file_chosen": "Ingen fil valgt",
+  "error": "Feil",
+  "vote": "stemme"
 }

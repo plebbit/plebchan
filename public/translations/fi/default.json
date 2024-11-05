@@ -250,5 +250,16 @@
   "delete_wallet": "Poista lompakko",
   "loading_subplebbit": "Ladataan subplebbit",
   "avatar_warning": "Et voi julkaista avatarilla, kun anonyymi tila on päällä. Voit poistaa sen käytöstä Plebbit-tilisi asetuksissa.",
-  "last_bumped": "Viimeisin bump"
+  "last_bumped": "Viimeisin bump",
+  "threads_without_images_tip": "Älä näytä viestejä ilman kuvia",
+  "hide_gore_boards_tip": "Älä näytä viestejä tauluista, joissa on \"gore\" -tagi",
+  "hide_adult_boards_tip": "Älä näytä viestejä tauluista, joissa on \"adult\" -tagi",
+  "fit_expanded_images_to_screen": "Sovita laajennettuja kuvia näyttöön",
+  "fit_expanded_images_to_screen_tip": "Rajoita laajennettuja kuvia sekä selaimen leveyteen että korkeuteen",
+  "hide_avatars_tip": "Älä näytä avatareita käyttäjänäyttönimien vieressä",
+  "choose_file": "Valitse tiedosto",
+  "uploading": "lataaminen...",
+  "no_file_chosen": "Ei tiedostoa valittu",
+  "error": "Virhe",
+  "vote": "äänestä"
 }

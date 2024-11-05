@@ -250,5 +250,16 @@
   "delete_wallet": "Fshi portofolin",
   "loading_subplebbit": "Po ngarkohet subplebbit",
   "avatar_warning": "Nuk mund të postoni me një avatar ndërsa është aktivizuar moda anonime. Mund ta çaktivizoni në cilësimet e llogarisë tuaj Plebbit.",
-  "last_bumped": "Bumping i fundit"
+  "last_bumped": "Bumping i fundit",
+  "threads_without_images_tip": "Mos e tregoni postimet pa imazhe",
+  "hide_gore_boards_tip": "Mos e tregoni postimet nga bordet me etiketën \"gore\"",
+  "hide_adult_boards_tip": "Mos e tregoni postimet nga bordet me etiketën \"adult\"",
+  "fit_expanded_images_to_screen": "Përshtatni imazhet e zgjeruara në ekran",
+  "fit_expanded_images_to_screen_tip": "Kufizoni imazhet e zgjeruara si në gjerësi ashtu edhe në lartësi të shfletuesit",
+  "hide_avatars_tip": "Mos e tregoni avatarët pranë emrave të shfaqjes së përdoruesve",
+  "choose_file": "Zgjidhni skedarin",
+  "uploading": "duke ngarkuar...",
+  "no_file_chosen": "Nuk është zgjedhur asnjë skedar",
+  "error": "Gabim",
+  "vote": "votim"
 }

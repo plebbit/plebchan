@@ -121,27 +121,6 @@ const Board = () => {
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
-  const loadingString = (
-    <div className={styles.stateString}>
-      {state === 'failed' ? (
-        <span className='red'>{state}</span>
-      ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-        t('not_subscribed_to_any_board')
-      ) : blocked ? (
-        'you have blocked this board'
-      ) : !hasMore && feed.length === 0 ? (
-        t('no_posts')
-      ) : (
-        hasMore && <LoadingEllipsis string={loadingStateString} />
-      )}
-      {error && (
-        <div className='red'>
-          <br />
-          {error.message}
-        </div>
-      )}
-    </div>
-  );
 
   const handleNewerPostsButtonClick = () => {
     window.scrollTo({ top: 0, left: 0 });
@@ -219,13 +198,46 @@ const Board = () => {
               </div>
             ))
           )}
-          <div className={styles.stateString}>
-            <LoadingEllipsis string={loadingStateString} />
-          </div>
         </>
       );
     }
-    return <div className={styles.footer}>{footerContent}</div>;
+    return (
+      <div className={styles.footer}>
+        {footerContent}
+        <div>
+          {state === 'failed' ? (
+            <span className='red'>{state}</span>
+          ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
+            t('not_subscribed_to_any_board')
+          ) : blocked ? (
+            'you have blocked this board'
+          ) : (
+            hasMore && <LoadingEllipsis string={loadingStateString} />
+          )}
+          {error && (
+            <div className='red'>
+              <br />
+              {error.message}
+            </div>
+          )}
+          {blocked && (
+            <>
+              &nbsp;&nbsp;[
+              <span
+                className={styles.button}
+                onClick={() => {
+                  unblock();
+                  reset();
+                }}
+              >
+                Unblock
+              </span>
+              ]
+            </>
+          )}
+        </div>
+      </div>
+    );
   };
 
   // save the last Virtuoso state to restore it when navigating back
@@ -273,47 +285,24 @@ const Board = () => {
           title={title}
         />
       )}
-      {feed.length !== 0 ? (
-        <>
-          {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-          <Virtuoso
-            increaseViewportBy={{ bottom: 1200, top: 1200 }}
-            totalCount={combinedFeed.length}
-            data={combinedFeed}
-            itemContent={(index, post) => {
-              const { deleted, locked, removed } = post || {};
-              const isThreadClosed = deleted || locked || removed;
+      {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
+      <Virtuoso
+        increaseViewportBy={{ bottom: 1200, top: 1200 }}
+        totalCount={combinedFeed.length}
+        data={combinedFeed}
+        itemContent={(index, post) => {
+          const { deleted, locked, removed } = post || {};
+          const isThreadClosed = deleted || locked || removed;
 
-              return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
-            }}
-            useWindowScroll={true}
-            components={{ Footer }}
-            endReached={loadMore}
-            ref={virtuosoRef}
-            restoreStateFrom={lastVirtuosoState}
-            initialScrollTop={lastVirtuosoState?.scrollTop}
-          />
-        </>
-      ) : (
-        <div className={styles.footer}>
-          {loadingString}
-          {blocked && (
-            <>
-              &nbsp;&nbsp;[
-              <span
-                className={styles.button}
-                onClick={() => {
-                  unblock();
-                  reset();
-                }}
-              >
-                Unblock
-              </span>
-              ]
-            </>
-          )}
-        </div>
-      )}
+          return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
+        }}
+        useWindowScroll={true}
+        components={{ Footer }}
+        endReached={loadMore}
+        ref={virtuosoRef}
+        restoreStateFrom={lastVirtuosoState}
+        initialScrollTop={lastVirtuosoState?.scrollTop}
+      />
     </div>
   );
 };

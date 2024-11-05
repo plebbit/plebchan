@@ -250,5 +250,16 @@
   "delete_wallet": "Șterge portofelul",
   "loading_subplebbit": "Se încarcă subplebbit",
   "avatar_warning": "Nu poți publica cu un avatar în timp ce modul anonim este activat. Poți să-l dezactivezi în setările contului tău Plebbit.",
-  "last_bumped": "Ultima creștere"
+  "last_bumped": "Ultima creștere",
+  "threads_without_images_tip": "Nu afișa postările fără imagini",
+  "hide_gore_boards_tip": "Nu afișa postări de la panouri cu eticheta \"gore\"",
+  "hide_adult_boards_tip": "Nu afișa postări de la panouri cu eticheta \"adult\"",
+  "fit_expanded_images_to_screen": "Se potrivesc imaginile extinse pe ecran",
+  "fit_expanded_images_to_screen_tip": "Limitați imaginile extinse atât la lățimea cât și la înălțimea browserului",
+  "hide_avatars_tip": "Nu afișa avatare lângă numele de afișare ale utilizatorilor",
+  "choose_file": "Alegeți fișierul",
+  "uploading": "încărcare...",
+  "no_file_chosen": "Niciun fișier ales",
+  "error": "Eroare",
+  "vote": "vot"
 }

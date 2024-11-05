@@ -28,3 +28,9 @@
 .setting input[type="checkbox"] {
   margin-right: 2px;
 }
+
+.settingTip {
+  font-size: 0.85em;
+  margin: 2px 0 5px 0;
+  padding-left: 19px;
+}

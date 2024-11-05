@@ -582,3 +582,8 @@
     display: none;
   }
 }
+
+.hiddenReplyEditMenuSpacer {
+  width: 6px;
+  display: inline-block;
+}

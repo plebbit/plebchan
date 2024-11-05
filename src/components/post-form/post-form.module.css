@@ -101,6 +101,7 @@
   margin: 0 3px;
   vertical-align: middle;
   transform: translateY(-2px);
+  cursor: pointer;
 }
 
 .spoilerButton td {
@@ -111,6 +112,10 @@
 
 .spoilerButton {
   font-weight: normal;
+}
+
+.spoilerButton label {
+  cursor: pointer;
 }
 
 @media (max-width: 640px) {
@@ -125,13 +130,13 @@
   .postFormTable td input {
     height: 20px;
   }
-
+  
   .postFormTable td textarea {
     height: 80px;
   }
 
   .postFormTable button {
-    padding: 4px 8px;
+    padding: 3px 6px;
   }
 }
 
@@ -139,4 +144,14 @@
   .postFormMobile {
     display: none;
   }
+}
+
+.uploadButton button {
+  position: relative;
+  margin: 0;
+  margin-right: 5px;
+}
+
+.uploadButton span {
+  font-weight: normal;
 }

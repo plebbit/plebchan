@@ -250,5 +250,16 @@
   "delete_wallet": "Supprimer le portefeuille",
   "loading_subplebbit": "Chargement de subplebbit",
   "avatar_warning": "Vous ne pouvez pas publier avec un avatar pendant que le mode anonyme est activé. Vous pouvez le désactiver dans les paramètres de votre compte Plebbit.",
-  "last_bumped": "Dernière élévation"
+  "last_bumped": "Dernière élévation",
+  "threads_without_images_tip": "Ne pas afficher les publications sans images",
+  "hide_gore_boards_tip": "Ne pas afficher les publications des forums avec le tag \"gore\"",
+  "hide_adult_boards_tip": "Ne pas afficher les publications des forums avec le tag \"adult\"",
+  "fit_expanded_images_to_screen": "Ajuster les images agrandies à l'écran",
+  "fit_expanded_images_to_screen_tip": "Limiter les images agrandies à la fois à la largeur et à la hauteur du navigateur",
+  "hide_avatars_tip": "Ne pas afficher les avatars à côté des noms d'affichage des utilisateurs",
+  "choose_file": "Choisissez un fichier",
+  "uploading": "téléchargement...",
+  "no_file_chosen": "Aucun fichier choisi",
+  "error": "Erreur",
+  "vote": "vote"
 }

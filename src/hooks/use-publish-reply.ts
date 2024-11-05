@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useAccount, usePublishComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, usePublishComment } from '@plebbit/plebbit-react-hooks';
 import useAnonMode from './use-anon-mode';
-import usePublishReplyStore, { SetReplyStoreData } from '../stores/use-publish-reply-store';
+import usePublishReplyStore from '../stores/use-publish-reply-store';
 
 const usePublishReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: string }) => {
   const parentCid = cid;
@@ -22,8 +22,8 @@ const usePublishReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAd
   const resetReplyStore = usePublishReplyStore((state) => state.resetReplyStore);
 
   const setPublishReplyOptions = useCallback(
-    (options: Partial<SetReplyStoreData>) => {
-      const newOptions: Partial<SetReplyStoreData> = {
+    (options: Comment) => {
+      const newOptions: Comment = {
         subplebbitAddress,
         parentCid,
         content: options.content === '' ? undefined : options.content ?? content,
@@ -51,7 +51,7 @@ const usePublishReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAd
         };
       }
 
-      setReplyStore(newOptions as SetReplyStoreData);
+      setReplyStore(newOptions);
     },
     [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode, account],
   );

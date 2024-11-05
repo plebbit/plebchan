@@ -250,5 +250,16 @@
   "delete_wallet": "Slet tegnebog",
   "loading_subplebbit": "Indlæser subplebbit",
   "avatar_warning": "Du kan ikke poste med et avatar, mens anonym tilstand er tændt. Du kan slukke det i dine Plebbit-kontoindstillinger.",
-  "last_bumped": "Sidste bumpet"
+  "last_bumped": "Sidste bumpet",
+  "threads_without_images_tip": "Vis ikke indlæg uden billeder",
+  "hide_gore_boards_tip": "Vis ikke indlæg fra boards med tagget \"gore\"",
+  "hide_adult_boards_tip": "Vis ikke indlæg fra boards med tagget \"adult\"",
+  "fit_expanded_images_to_screen": "Tilpas udvidede billeder til skærmen",
+  "fit_expanded_images_to_screen_tip": "Begræns udvidede billeder til både browserens bredde og højde",
+  "hide_avatars_tip": "Vis ikke avatarer ved siden af brugernes visningsnavne",
+  "choose_file": "Vælg fil",
+  "uploading": "uploading...",
+  "no_file_chosen": "Ingen fil valgt",
+  "error": "Fejl",
+  "vote": "stem"
 }

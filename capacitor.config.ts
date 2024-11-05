@@ -9,7 +9,13 @@ const config: CapacitorConfig = {
     CapacitorHttp: {
       enabled: true,
     },
+    FileUploader: {
+      enabled: true
+    }
   },
+  server: {
+    androidScheme: 'https'
+  }
 };
 
 export default config;

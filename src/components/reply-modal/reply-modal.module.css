@@ -64,6 +64,12 @@
   vertical-align: top;
 }
 
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .footer button {
   text-transform: capitalize;
   float: right;
@@ -80,9 +86,37 @@
   padding-top: 2px;
 }
 
+.spoilerButton label, .spoilerButton input[type="checkbox"] {
+  cursor: pointer;
+}
+
 .publishButton {
   width: 75px;
-  filter: var(--filter80)
+  filter: var(--filter80);
+}
+
+.uploadButton {
+  float: left;
+  margin-right: 5px;
+  white-space: nowrap;
+}
+
+.uploadButton button {
+  white-space: nowrap;
+}
+
+.uploadFileName {
+  display: inline-block;
+  width: calc(100% - 75px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.uploadContainer {
+  display: inline-flex;
+  align-items: center;
+  width: 130px;
 }
 
 .offlineBoard {
@@ -103,4 +137,15 @@
   .title {
     cursor: default;
   }
+}
+
+.error {
+  width: 294px;
+  font-family: monospace;
+  background-color: #E62020;
+  font-size: 12px;
+  color: white;
+  padding: 3px 5px;
+  margin-top: 1px;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.20);
 }

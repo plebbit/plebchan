@@ -14,6 +14,10 @@ import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useAnonMode from '../../hooks/use-anon-mode';
 import usePublishPostStore from '../../stores/use-publish-post-store';
+import FileUploader from '../../plugins/file-uploader';
+import { Capacitor } from '@capacitor/core';
+
+const isAndroid = Capacitor.getPlatform() === 'android';
 
 export const LinkTypePreviewer = ({ link }: { link: string }) => {
   const { t } = useTranslation();
@@ -214,6 +218,36 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   }, [anonMode, getAnonAddressForPost, getAnonAddressForReply, isInPostView]);
 
+  // on android, auto upload file to image hosting sites with open api
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const handleUpload = async () => {
+    try {
+      setIsUploading(true);
+      const result = await FileUploader.pickAndUploadMedia();
+      console.log('Upload result:', result);
+      if (result.url) {
+        setUrl(result.url);
+        if (urlRef.current) {
+          urlRef.current.value = result.url;
+        }
+        isInPostView ? setPublishReplyOptions({ link: result.url || undefined }) : setPublishPostStore({ link: result.url || undefined });
+        if (result.fileName) {
+          setUploadedFileName(result.fileName);
+        }
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+      if (error instanceof Error && error.message !== 'File selection cancelled') {
+        alert(`${t('upload_failed')}: ${error.message}`);
+      } else if (typeof error === 'string' && error !== 'File selection cancelled') {
+        alert(`${t('upload_failed')}: ${error}`);
+      }
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
     <table className={styles.postFormTable}>
       <tbody>
@@ -233,7 +267,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
                 }
               }}
             />
-            {isInPostView && <button onClick={onPublishReply}>{t('post')}</button>}
+            {isInPostView && (
+              <button onClick={onPublishReply} disabled={isUploading}>
+                {t('post')}
+              </button>
+            )}
           </td>
         </tr>
         {!isInPostView && (
@@ -266,6 +304,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               autoComplete='off'
               spellCheck='false'
               ref={urlRef}
+              disabled={isUploading}
               onChange={(e) => {
                 setUrl(e.target.value);
                 isInPostView ? setPublishReplyOptions({ link: e.target.value || undefined }) : setPublishPostStore({ link: e.target.value || undefined });
@@ -274,6 +313,17 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
             <span className={styles.linkType}> {url && <LinkTypePreviewer link={url} />}</span>
           </td>
         </tr>
+        {isAndroid && (
+          <tr className={styles.uploadButton}>
+            <td>{t('file')}</td>
+            <td>
+              <button onClick={handleUpload} disabled={isUploading}>
+                {isUploading ? t('uploading') : t('choose_file')}
+              </button>
+              <span>{uploadedFileName ? uploadedFileName : t('no_file_chosen')}</span>
+            </td>
+          </tr>
+        )}
         <tr className={styles.spoilerButton}>
           <td>{t('options')}</td>
           <td>

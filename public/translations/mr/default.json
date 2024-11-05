@@ -250,5 +250,16 @@
   "delete_wallet": "वॉलेट हटवा",
   "loading_subplebbit": "subplebbit लोड करीत आहे",
   "avatar_warning": "आपण अज्ञात मोड चालू असताना अवतारसह पोस्ट करू शकत नाही. आपण ते आपल्या Plebbit खात्याच्या सेटिंग्जमध्ये बंद करू शकता.",
-  "last_bumped": "अंतिम बंप"
+  "last_bumped": "अंतिम बंप",
+  "threads_without_images_tip": "चित्रांश न दर्शविणारे पोस्ट दर्शवू नका",
+  "hide_gore_boards_tip": "“गोर” टॅग असलेल्या बोर्डवरील पोस्ट दर्शवू नका",
+  "hide_adult_boards_tip": "“एडल्ट” टॅग असलेल्या बोर्डवरील पोस्ट दर्शवू नका",
+  "fit_expanded_images_to_screen": "विस्तृत प्रतिमा स्क्रीनवर फिट करा",
+  "fit_expanded_images_to_screen_tip": "विस्तृत प्रतिमांना ब्राउझरच्या रुंदी आणि उंचीवर मर्यादित करा",
+  "hide_avatars_tip": "युजर डिस्प्ले नावेच्या बरोबर अवतार दर्शवू नका",
+  "choose_file": "फाइल निवडा",
+  "uploading": "अपलोड करत आहे...",
+  "no_file_chosen": "कोणताही फाइल निवडलेली नाही",
+  "error": "त्रुटी",
+  "vote": "मत"
 }
