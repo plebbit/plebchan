@@ -260,5 +260,6 @@
   "choose_file": "파일 선택",
   "uploading": "업로드 중...",
   "no_file_chosen": "선택된 파일이 없습니다",
-  "error": "오류"
+  "error": "오류",
+  "vote": "투표"
 }

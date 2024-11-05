@@ -260,5 +260,6 @@
   "choose_file": "Válassza ki a fájlt",
   "uploading": "feltöltés...",
   "no_file_chosen": "Nincs fájl kiválasztva",
-  "error": "Hiba"
+  "error": "Hiba",
+  "vote": "szavazás"
 }

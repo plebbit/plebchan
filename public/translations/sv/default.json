@@ -260,5 +260,6 @@
   "choose_file": "Välj fil",
   "uploading": "laddar upp...",
   "no_file_chosen": "Ingen fil vald",
-  "error": "Fel"
+  "error": "Fel",
+  "vote": "rösta"
 }

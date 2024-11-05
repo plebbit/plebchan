@@ -260,5 +260,6 @@
   "choose_file": "Alegeți fișierul",
   "uploading": "încărcare...",
   "no_file_chosen": "Niciun fișier ales",
-  "error": "Eroare"
+  "error": "Eroare",
+  "vote": "vot"
 }

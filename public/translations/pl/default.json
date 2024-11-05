@@ -260,5 +260,6 @@
   "choose_file": "Wybierz plik",
   "uploading": "ładowanie...",
   "no_file_chosen": "Nie wybrano żadnego pliku",
-  "error": "Błąd"
+  "error": "Błąd",
+  "vote": "głos"
 }

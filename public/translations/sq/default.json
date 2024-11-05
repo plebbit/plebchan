@@ -260,5 +260,6 @@
   "choose_file": "Zgjidhni skedarin",
   "uploading": "duke ngarkuar...",
   "no_file_chosen": "Nuk është zgjedhur asnjë skedar",
-  "error": "Gabim"
+  "error": "Gabim",
+  "vote": "votim"
 }

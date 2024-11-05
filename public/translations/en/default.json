@@ -260,5 +260,6 @@
   "choose_file": "Choose File",
   "uploading": "uploading...",
   "no_file_chosen": "No file chosen",
-  "error": "Error"
+  "error": "Error",
+  "vote": "vote"
 }

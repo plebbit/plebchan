@@ -260,5 +260,6 @@
   "choose_file": "Vælg fil",
   "uploading": "uploading...",
   "no_file_chosen": "Ingen fil valgt",
-  "error": "Fejl"
+  "error": "Fejl",
+  "vote": "stem"
 }

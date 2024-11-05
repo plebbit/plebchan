@@ -260,5 +260,6 @@
   "choose_file": "Chọn tệp",
   "uploading": "đang tải lên...",
   "no_file_chosen": "Không có tệp nào được chọn",
-  "error": "Lỗi"
+  "error": "Lỗi",
+  "vote": "bỏ phiếu"
 }

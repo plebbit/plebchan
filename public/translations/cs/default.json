@@ -260,5 +260,6 @@
   "choose_file": "Vyberte soubor",
   "uploading": "nahrávání...",
   "no_file_chosen": "Žádný soubor není vybrán",
-  "error": "Chyba"
+  "error": "Chyba",
+  "vote": "hlasování"
 }

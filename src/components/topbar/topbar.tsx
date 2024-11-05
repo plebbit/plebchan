@@ -96,7 +96,7 @@ const TopBarDesktop = () => {
             e.preventDefault();
           }}
         >
-          Create
+          {t('create')}
         </Link>
         ] [
         <Link
@@ -106,7 +106,7 @@ const TopBarDesktop = () => {
             e.preventDefault();
           }}
         >
-          Vote
+          {t('vote')}
         </Link>
         ]
       </span>

@@ -260,5 +260,6 @@
   "choose_file": "Pumili ng File",
   "uploading": "ina-upload...",
   "no_file_chosen": "Walang napiling file",
-  "error": "Error"
+  "error": "Error",
+  "vote": "bumoto"
 }

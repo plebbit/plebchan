@@ -260,5 +260,6 @@
   "choose_file": "Kies een bestand",
   "uploading": "uploaden...",
   "no_file_chosen": "Geen bestand gekozen",
-  "error": "Fout"
+  "error": "Fout",
+  "vote": "stem"
 }

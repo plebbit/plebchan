@@ -260,5 +260,6 @@
   "choose_file": "Pilih Berkas",
   "uploading": "mengupload...",
   "no_file_chosen": "Tidak ada file yang dipilih",
-  "error": "Kesalahan"
+  "error": "Kesalahan",
+  "vote": "suara"
 }

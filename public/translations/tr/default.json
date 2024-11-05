@@ -260,5 +260,6 @@
   "choose_file": "Dosya Seç",
   "uploading": "yükleniyor...",
   "no_file_chosen": "Hiçbir dosya seçilmedi",
-  "error": "Hata"
+  "error": "Hata",
+  "vote": "oy"
 }
