@@ -84,7 +84,7 @@ const Board = () => {
         return (
           !deleted &&
           !removed &&
-          timestamp > Date.now() - 60 * 60 * 1000 &&
+          timestamp > Date.now() / 1000 - 60 * 60 &&
           state === 'succeeded' &&
           cid &&
           (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(comment), comment?.link) : true) &&
