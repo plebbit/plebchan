@@ -9,7 +9,7 @@ import { copyShareLinkToClipboard, isValidURL } from '../../../lib/utils/url-uti
 import useEditCommentPrivileges from '../../../hooks/use-author-privileges';
 import useHide from '../../../hooks/use-hide';
 import EditMenu from '../../edit-menu/edit-menu';
-import { isAllView, isBoardView, isPostPageView, isSubscriptionsView } from '../../../lib/utils/view-utils';
+import { isBoardView, isPostPageView } from '../../../lib/utils/view-utils';
 import { useLocation, useParams } from 'react-router-dom';
 
 interface PostMenuMobileProps {
@@ -57,18 +57,10 @@ const ImageSearchButtons = ({ url, onClose }: { url: string; onClose: () => void
 
 const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuMobileProps) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const params = useParams();
-  const isInAllView = isAllView(location.pathname);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const getViewOnOtherClientLink = () => {
     if (isDescription || isRules) {
-      if (isInAllView || isInSubscriptionsView) {
-        return `${isInAllView ? 'all' : isInSubscriptionsView && 'subscriptions'}`;
-      } else {
-        return `${subplebbitAddress}/${isDescription ? 'description' : isRules && 'rules'}`;
-      }
+      return `${subplebbitAddress}`;
     } else {
       return `${subplebbitAddress}/c/${cid}`;
     }
