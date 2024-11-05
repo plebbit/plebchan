@@ -257,7 +257,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
         <div className={styles.footer}>
           {url && !isAndroid && (
             <>
-              {t('link_type')}: <LinkTypePreviewer link={url} />{' '}
+              {t('link_type')}: <LinkTypePreviewer link={url} />
             </>
           )}
           {isAndroid && (
@@ -267,7 +267,9 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
                   {isUploading ? t('uploading') : t('choose_file')}
                 </button>
               </span>
-              <span className={styles.uploadFileName}>{uploadedFileName ? uploadedFileName : t('no_file_chosen')}</span>
+              <span className={styles.uploadFileName} title={uploadedFileName ? uploadedFileName : t('no_file_chosen')}>
+                {uploadedFileName ? uploadedFileName : t('no_file_chosen')}
+              </span>
             </span>
           )}
           <span className={styles.spoilerButton}>

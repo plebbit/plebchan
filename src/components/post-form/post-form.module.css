@@ -101,6 +101,7 @@
   margin: 0 3px;
   vertical-align: middle;
   transform: translateY(-2px);
+  cursor: pointer;
 }
 
 .spoilerButton td {
@@ -111,6 +112,10 @@
 
 .spoilerButton {
   font-weight: normal;
+}
+
+.spoilerButton label {
+  cursor: pointer;
 }
 
 @media (max-width: 640px) {

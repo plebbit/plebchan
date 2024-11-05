@@ -84,10 +84,9 @@
 .spoilerButton {
   display: inline-block;
   padding-top: 2px;
-  margin-left: 5px;
 }
 
-.spoilerButton label {
+.spoilerButton label, .spoilerButton input[type="checkbox"] {
   cursor: pointer;
 }
 

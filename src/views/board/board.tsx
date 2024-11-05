@@ -121,7 +121,6 @@ const Board = () => {
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
   const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
-  const loadingString = <div className={styles.stateString}></div>;
 
   const handleNewerPostsButtonClick = () => {
     window.scrollTo({ top: 0, left: 0 });
