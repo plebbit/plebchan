@@ -3,17 +3,6 @@ import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
 import useChallengesStore from './use-challenges-store';
 
-export type SetReplyStoreData = {
-  subplebbitAddress: string;
-  parentCid: string;
-  author?: any;
-  displayName?: string;
-  content: string;
-  link?: string;
-  signer?: any;
-  spoiler: boolean;
-};
-
 type ReplyState = {
   author: { [parentCid: string]: any | undefined };
   displayName: { [parentCid: string]: string | undefined };
@@ -22,7 +11,7 @@ type ReplyState = {
   signer: { [parentCid: string]: any | undefined };
   spoiler: { [parentCid: string]: boolean | undefined };
   publishCommentOptions: { [parentCid: string]: PublishCommentOptions | undefined };
-  setReplyStore: (data: SetReplyStoreData) => void;
+  setReplyStore: (comment: Comment) => void;
   resetReplyStore: (parentCid: string) => void;
 };
 
@@ -37,9 +26,9 @@ const usePublishReplyStore = create<ReplyState>((set) => ({
   spoiler: {},
   publishCommentOptions: {},
 
-  setReplyStore: (data: SetReplyStoreData) =>
+  setReplyStore: (comment: Comment) =>
     set((state) => {
-      const { subplebbitAddress, parentCid, author, displayName, content, link, signer, spoiler } = data;
+      const { subplebbitAddress, parentCid, author, displayName, content, link, signer, spoiler } = comment;
       const updatedAuthor = displayName ? { ...author, displayName } : author;
 
       const publishCommentOptions: PublishCommentOptions = {
