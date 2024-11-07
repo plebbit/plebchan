@@ -14,8 +14,6 @@ import _ from 'lodash';
 interface PostMenuDesktopProps {
   cid: string;
   isDescription?: boolean;
-  isInAllView?: boolean;
-  isInSubscriptionsView?: boolean;
   isRules?: boolean;
   subplebbitAddress: string;
   onClose: () => void;
@@ -70,17 +68,13 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
   );
 };
 
-const ViewOnButton = ({ cid, isDescription, isInAllView, isInSubscriptionsView, isRules, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
+const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
   const { t } = useTranslation();
   const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
 
   const getViewOnOtherClientLink = () => {
     if (isDescription || isRules) {
-      if (isInAllView || isInSubscriptionsView) {
-        return `${isInAllView ? 'all' : isInSubscriptionsView && 'subscriptions'}`;
-      } else {
-        return `${subplebbitAddress}/${isDescription ? 'description' : isRules && 'rules'}`;
-      }
+      return `${subplebbitAddress}`;
     } else {
       return `${subplebbitAddress}/c/${cid}`;
     }
@@ -203,15 +197,7 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
                 </div>
               )}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButton url={url} onClose={handleClose} />}
-              <ViewOnButton
-                cid={cid}
-                isDescription={isDescription}
-                isInAllView={isInAllView}
-                isInSubscriptionsView={isInSubscriptionsView}
-                isRules={isRules}
-                subplebbitAddress={subplebbitAddress}
-                onClose={handleClose}
-              />
+              <ViewOnButton cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
               {!isDescription && !isRules && <BlockUserButton address={author?.address} />}
               {(isInAllView || isInSubscriptionsView) && <BlockBoardButton address={subplebbitAddress} />}
             </div>
