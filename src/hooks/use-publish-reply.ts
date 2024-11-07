@@ -3,7 +3,7 @@ import { Comment, useAccount, usePublishComment } from '@plebbit/plebbit-react-h
 import useAnonMode from './use-anon-mode';
 import usePublishReplyStore from '../stores/use-publish-reply-store';
 
-const usePublishReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAddress: string }) => {
+const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; subplebbitAddress: string; postCid?: string }) => {
   const parentCid = cid;
   const account = useAccount();
   const { anonMode } = useAnonMode();
@@ -26,6 +26,7 @@ const usePublishReply = ({ cid, subplebbitAddress }: { cid: string; subplebbitAd
       const newOptions: Comment = {
         subplebbitAddress,
         parentCid,
+        postCid: postCid ?? parentCid,
         content: options.content === '' ? undefined : options.content ?? content,
         link: options.link === '' ? undefined : options.link ?? link,
         spoiler: options.spoiler ?? spoiler,

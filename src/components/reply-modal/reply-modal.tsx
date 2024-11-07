@@ -31,7 +31,11 @@ interface ReplyModalProps {
 
 const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, subplebbitAddress }: ReplyModalProps) => {
   const { t } = useTranslation();
-  const { setPublishReplyOptions, publishReply, resetPublishReplyOptions, replyIndex } = usePublishReply({ cid: parentCid, subplebbitAddress });
+  const { setPublishReplyOptions, publishReply, resetPublishReplyOptions, replyIndex } = usePublishReply({
+    cid: parentCid,
+    subplebbitAddress,
+    postCid,
+  });
   const account = useAccount();
   const { displayName } = account?.author || {};
   const [url, setUrl] = useState('');
