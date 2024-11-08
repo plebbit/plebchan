@@ -1,3 +1,25 @@
+# [0.3.0](https://github.com/plebbit/plebchan/compare/v0.2.9...v0.3.0) (2024-11-08)
+
+
+### Bug Fixes
+
+* **board:** account comments couldn't appear instantly in feed ([0b92c60](https://github.com/plebbit/plebchan/commit/0b92c60f3453f1b2541f352aad2378dd4afdc9b4))
+* **board:** virtuoso footer would overflow ([8d35e09](https://github.com/plebbit/plebchan/commit/8d35e0942f65553052c421c79f37d26b4da2a0ca))
+* **p/all:** empty 24h feed would not show 'show more posts since last week' ([82217a7](https://github.com/plebbit/plebchan/commit/82217a726c787323a42ac04978624a3f72251d67))
+* **post menu:** link to other clients was broken on description post ([c2363fe](https://github.com/plebbit/plebchan/commit/c2363fe03b86fafe2d5cfc6da14fecaa458cce80))
+* **post:** hidden post showed its content ([a2dd3ef](https://github.com/plebbit/plebchan/commit/a2dd3efe087637e8dfd5b3fda3cba11605add1c2))
+* **reply:** hidden reply was too big and showed edit menu checkbox ([a927f3a](https://github.com/plebbit/plebchan/commit/a927f3aa0070afd63f8540c231ed79252692c16b))
+
+
+### Features
+
+* **android app:** add 'choose file' button to auto upload media to catbox in the background ([f40c2c2](https://github.com/plebbit/plebchan/commit/f40c2c2f8816f6d12c320da36ad71ac5f76fcbef))
+* **interface settings:** add 'Fit expanded images to screen' setting ([ba54d70](https://github.com/plebbit/plebchan/commit/ba54d70421ad257f0ba31cbc2d5d5a5a72030d02))
+* **reply modal:** add 'choose file' button on android ([5c09b66](https://github.com/plebbit/plebchan/commit/5c09b66338417db0ad448fc3a164951bc7cb29d3))
+* **reply modal:** display errors in modal ([5768443](https://github.com/plebbit/plebchan/commit/57684438a5fd7941c6974711c627e372aa564c5e))
+
+
+
 ## [0.2.9](https://github.com/plebbit/plebchan/compare/v0.2.8...v0.2.9) (2024-10-29)
 
 
