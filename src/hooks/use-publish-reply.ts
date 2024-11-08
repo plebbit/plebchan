@@ -54,7 +54,7 @@ const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; sub
 
       setReplyStore(newOptions);
     },
-    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode, account],
+    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode, account, postCid],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
