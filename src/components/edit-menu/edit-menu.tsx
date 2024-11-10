@@ -1,7 +1,14 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { autoUpdate, FloatingFocusManager, offset, shift, useClick, useDismiss, useFloating, useId, useInteractions, useRole } from '@floating-ui/react';
-import { Comment, PublishCommentEditOptions, useAccount, usePublishCommentEdit } from '@plebbit/plebbit-react-hooks';
+import {
+  Comment,
+  PublishCommentEditOptions,
+  useAccount,
+  usePublishCommentEdit,
+  usePublishCommentModeration,
+  PublishCommentModerationOptions,
+} from '@plebbit/plebbit-react-hooks';
 import styles from './edit-menu.module.css';
 import { alertChallengeVerificationFailed } from '../../lib/utils/challenge-utils';
 import useChallengesStore from '../../stores/use-challenges-store';
@@ -27,7 +34,7 @@ const timestampToDays = (timestamp: number) => {
 const EditMenu = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { author, cid, commentAuthor, content, deleted, locked, parentCid, pinned, postCid, reason, removed, spoiler, subplebbitAddress } = post || {};
+  const { author, cid, content, deleted, locked, parentCid, pinned, postCid, reason, removed, spoiler, subplebbitAddress } = post || {};
   const isReply = parentCid;
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const [isContentEditorOpen, setIsContentEditorOpen] = useState(false);
@@ -49,7 +56,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
       if (author?.address !== account?.author?.address) {
         // Check for existing thread signer first
         const threadSigner = getThreadSigner(postCid);
-        if (threadSigner && threadSigner.address === author?.address) {
+        if (threadSigner && threadSigner?.address === author?.address) {
           setSigner(threadSigner);
           return;
         }
@@ -80,16 +87,23 @@ const EditMenu = ({ post }: { post: Comment }) => {
 
   const defaultPublishEditOptions = useMemo(() => {
     return {
-      commentAuthor: !isCommentAuthorMod && isAccountMod && !isAccountCommentAuthor ? commentAuthor : undefined,
       commentCid: cid,
+      subplebbitAddress,
+      // Author edit properties
       content: isAccountCommentAuthor ? content : undefined,
       deleted: isAccountCommentAuthor ? deleted ?? false : undefined,
-      locked: isAccountMod ? locked ?? false : undefined,
-      pinned: isAccountMod ? pinned ?? false : undefined,
-      reason,
-      removed: isAccountMod ? removed ?? false : undefined,
-      spoiler: spoiler ?? false,
-      subplebbitAddress,
+      spoiler: isAccountCommentAuthor ? spoiler ?? false : undefined,
+      // Mod edit properties
+      commentModeration: isAccountMod
+        ? {
+            locked: locked ?? false,
+            pinned: pinned ?? false,
+            removed: removed ?? false,
+            spoiler: spoiler ?? false,
+            reason,
+            banExpiresAt: post?.commentModeration?.banExpiresAt,
+          }
+        : undefined,
       onChallenge: (...args: any) => addChallenge([...args, post]),
       onChallengeVerification: alertChallengeVerificationFailed,
       onError: (error: Error) => {
@@ -97,7 +111,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
         alert('Comment edit failed. ' + error.message);
       },
     };
-  }, [isAccountMod, isAccountCommentAuthor, commentAuthor, cid, content, deleted, locked, pinned, reason, removed, spoiler, subplebbitAddress, post, isCommentAuthorMod]);
+  }, [isAccountMod, isAccountCommentAuthor, cid, content, deleted, locked, pinned, reason, removed, spoiler, subplebbitAddress, post]);
 
   const [publishCommentEditOptions, setPublishCommentEditOptions] = useState<PublishCommentEditOptions>(defaultPublishEditOptions);
 
@@ -106,13 +120,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
       commentCid: cid,
       subplebbitAddress,
       signer,
-      author:
-        signer && signer.address === author?.address
-          ? {
-              address: signer.address,
-              displayName: post?.author?.displayName,
-            }
-          : account?.author,
+      author: signer?.address === author?.address ? { address: signer?.address, displayName: post?.author?.displayName } : account?.author,
       content: publishCommentEditOptions.content,
       deleted: publishCommentEditOptions.deleted,
       reason: publishCommentEditOptions.reason,
@@ -127,47 +135,59 @@ const EditMenu = ({ post }: { post: Comment }) => {
     [publishCommentEditOptions, cid, subplebbitAddress, signer, post, account?.author, author?.address],
   );
 
-  const modEditOptions = useMemo<PublishCommentEditOptions>(
+  const modEditOptions = useMemo<PublishCommentModerationOptions>(
     () => ({
       commentCid: cid,
       subplebbitAddress,
-      locked: parentCid === undefined ? publishCommentEditOptions.locked : undefined,
-      pinned: publishCommentEditOptions.pinned,
-      removed: publishCommentEditOptions.removed,
-      reason: publishCommentEditOptions.reason,
-      commentAuthor: !isCommentAuthorMod ? publishCommentEditOptions.commentAuthor : undefined,
+      commentModeration: {
+        locked: parentCid === undefined ? publishCommentEditOptions.commentModeration?.locked : undefined,
+        pinned: publishCommentEditOptions.commentModeration?.pinned,
+        removed: publishCommentEditOptions.commentModeration?.removed,
+        spoiler: publishCommentEditOptions.commentModeration?.spoiler,
+        reason: publishCommentEditOptions.reason,
+        banExpiresAt: publishCommentEditOptions.commentModeration?.banExpiresAt,
+      },
       author: account?.author,
       onChallenge: (...args: any) => addChallenge([...args, post]),
       onChallengeVerification: alertChallengeVerificationFailed,
       onError: (error: Error) => {
         console.warn(error);
-        alert('Comment edit failed. ' + error.message);
+        alert('Comment moderation failed. ' + error.message);
       },
     }),
-    [publishCommentEditOptions, cid, subplebbitAddress, isCommentAuthorMod, post, account?.author, parentCid],
+    [publishCommentEditOptions, cid, subplebbitAddress, post, account?.author, parentCid],
   );
 
   const { publishCommentEdit: publishAuthorEdit } = usePublishCommentEdit(authorEditOptions);
-  const { publishCommentEdit: publishModEdit } = usePublishCommentEdit(modEditOptions);
+  const { publishCommentModeration } = usePublishCommentModeration(modEditOptions);
 
   useEffect(() => {
     setPublishCommentEditOptions(defaultPublishEditOptions);
   }, [defaultPublishEditOptions]);
 
   const [banDuration, setBanDuration] = useState(() =>
-    publishCommentEditOptions.commentAuthor?.banExpiresAt ? timestampToDays(publishCommentEditOptions.commentAuthor.banExpiresAt) : 1,
+    publishCommentEditOptions.commentModeration?.banExpiresAt ? timestampToDays(publishCommentEditOptions.commentModeration.banExpiresAt) : 1,
   );
 
   const onCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, checked } = e.target;
-    if (id === 'banUser') {
-      setPublishCommentEditOptions((state) => ({
-        ...state,
-        commentAuthor: { ...state.commentAuthor, banExpiresAt: checked ? daysToTimestampInSeconds(banDuration) : undefined },
-      }));
-    } else {
-      setPublishCommentEditOptions((state) => ({ ...state, [id]: checked }));
-    }
+
+    setPublishCommentEditOptions((state) => {
+      const newState = { ...state };
+
+      if (isAccountMod) {
+        newState.commentModeration = {
+          ...newState.commentModeration,
+          [id === 'banUser' ? 'banExpiresAt' : id]: id === 'banUser' ? (checked ? daysToTimestampInSeconds(banDuration) : undefined) : checked,
+        };
+      }
+
+      if (isAccountCommentAuthor) {
+        newState[id] = checked;
+      }
+
+      return newState;
+    });
   };
 
   const onBanDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,11 +219,11 @@ const EditMenu = ({ post }: { post: Comment }) => {
     try {
       if (isAccountCommentAuthor && isAccountMod) {
         await publishAuthorEdit();
-        await publishModEdit();
+        await publishCommentModeration();
       } else if (isAccountCommentAuthor) {
         await publishAuthorEdit();
       } else if (isAccountMod) {
-        await publishModEdit();
+        await publishCommentModeration();
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -258,7 +278,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
                   <div className={styles.menuItem}>
                     <label>
                       [
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.removed ?? false} type='checkbox' id='removed' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.commentModeration?.removed ?? false} type='checkbox' id='removed' />
                       {_.capitalize(t('remove'))}?]
                     </label>
                   </div>
@@ -266,7 +286,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
                     <div className={styles.menuItem}>
                       [
                       <label>
-                        <input onChange={onCheckbox} checked={publishCommentEditOptions.locked ?? false} type='checkbox' id='locked' />
+                        <input onChange={onCheckbox} checked={publishCommentEditOptions.commentModeration?.locked ?? false} type='checkbox' id='locked' />
                         {_.capitalize(t('close_thread'))}?
                       </label>
                       ]
@@ -275,7 +295,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.spoiler ?? false} type='checkbox' id='spoiler' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.commentModeration?.spoiler ?? false} type='checkbox' id='spoiler' />
                       {_.capitalize(t('spoiler'))}?
                     </label>
                     ]
@@ -283,7 +303,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
                   <div className={styles.menuItem}>
                     [
                     <label>
-                      <input onChange={onCheckbox} checked={publishCommentEditOptions.pinned ?? false} type='checkbox' id='pinned' />
+                      <input onChange={onCheckbox} checked={publishCommentEditOptions.commentModeration?.pinned ?? false} type='checkbox' id='pinned' />
                       {_.capitalize(t('sticky'))}?
                     </label>
                     ]
@@ -292,7 +312,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
                     <div className={styles.menuItem}>
                       [
                       <label>
-                        <input onChange={onCheckbox} checked={publishCommentEditOptions.commentAuthor?.banExpiresAt !== undefined} type='checkbox' id='banUser' />
+                        <input onChange={onCheckbox} checked={publishCommentEditOptions.commentModeration?.banExpiresAt !== undefined} type='checkbox' id='banUser' />
                         <Trans
                           i18nKey='ban_user_for'
                           shouldUnescape={true}

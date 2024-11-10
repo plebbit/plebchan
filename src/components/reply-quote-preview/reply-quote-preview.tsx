@@ -18,8 +18,6 @@ interface ReplyQuotePreviewProps {
 const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
   const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
 
-  if (targetElements.length === 0) return;
-
   const isInViewport = (element: HTMLElement) => {
     const bounding = element.getBoundingClientRect();
     return (
