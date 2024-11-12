@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import { capitalize } from 'lodash';
 import { Comment, useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { Trans, useTranslation } from 'react-i18next';
@@ -164,7 +165,7 @@ const Board = () => {
       footerContent = (
         <>
           {subplebbitAddressesWithNewerPosts.length > 0 ? (
-            <div className={styles.stateString}>
+            <div className={styles.morePostsSuggestion}>
               <Trans
                 i18nKey='newer_posts_available'
                 components={{
@@ -177,7 +178,7 @@ const Board = () => {
             showMorePostsSuggestion &&
             monthlyFeed.length > feed.length &&
             (weeklyFeed.length > feed.length ? (
-              <div className={styles.stateString}>
+              <div className={styles.morePostsSuggestion}>
                 <Trans
                   i18nKey='more_posts_last_week'
                   values={{ currentTimeFilterName }}
@@ -187,7 +188,7 @@ const Board = () => {
                 />
               </div>
             ) : (
-              <div className={styles.stateString}>
+              <div className={styles.morePostsSuggestion}>
                 <Trans
                   i18nKey='more_posts_last_month'
                   values={{ currentTimeFilterName }}
