@@ -197,7 +197,7 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
 
   const { sortType } = useSortingStore();
 
-  const allTimeFilterNames = timeFilterName && !timeFilterNames.includes(timeFilterName) ? [timeFilterName, ...timeFilterNames.slice(1)] : timeFilterNames.slice(1);
+  const allTimeFilterNames = timeFilterName ? Array.from(new Set([timeFilterName, ...timeFilterNames])) : timeFilterNames;
 
   return (
     <>
