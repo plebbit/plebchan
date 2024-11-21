@@ -1,10 +1,17 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import { fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
+import {
+  CommentMediaInfo,
+  fetchWebpageThumbnailIfNeeded,
+  getCommentMediaInfo,
+  getDisplayMediaInfoType,
+  getHasThumbnail,
+  getMediaDimensions,
+} from '../../lib/utils/media-utils';
 import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
@@ -210,19 +217,22 @@ const PostMedia = ({ post }: PostProps) => {
   const { link, spoiler } = post || {};
 
   // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-  const initialCommentMediaInfo = useMemo(() => getCommentMediaInfo(post), [post]);
-  const [commentMediaInfo, setCommentMediaInfo] = useState(initialCommentMediaInfo);
-
-  const fetchThumbnail = useCallback(async () => {
-    if (initialCommentMediaInfo?.type === 'webpage' && !initialCommentMediaInfo.thumbnail) {
-      const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo);
-      setCommentMediaInfo(newMediaInfo);
-    }
-  }, [initialCommentMediaInfo]);
-
+  const [commentMediaInfo, setCommentMediaInfo] = useState<CommentMediaInfo | undefined>();
   useEffect(() => {
-    fetchThumbnail();
-  }, [fetchThumbnail]);
+    const loadThumbnail = async () => {
+      const initialInfo = getCommentMediaInfo(post);
+      if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
+        const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
+        setCommentMediaInfo(newMediaInfo);
+      } else {
+        setCommentMediaInfo(initialInfo);
+      }
+    };
+    loadThumbnail();
+    return () => {
+      setCommentMediaInfo(undefined);
+    };
+  }, [post]);
 
   const { url } = commentMediaInfo || {};
   let type = commentMediaInfo?.type;
