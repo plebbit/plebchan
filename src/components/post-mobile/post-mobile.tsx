@@ -40,26 +40,24 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-  const [commentMediaInfo, setCommentMediaInfo] = useState<CommentMediaInfo | undefined>();
+  const initialInfo = getCommentMediaInfo(post);
+  const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
   useEffect(() => {
+    // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
     const loadThumbnail = async () => {
-      const initialInfo = getCommentMediaInfo(post);
       if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
         const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
-        setCommentMediaInfo(newMediaInfo);
-      } else {
-        setCommentMediaInfo(initialInfo);
+        setWebpageThumbnail(newMediaInfo);
       }
     };
     loadThumbnail();
     return () => {
-      setCommentMediaInfo(undefined);
+      setWebpageThumbnail(undefined);
     };
-  }, [post]);
+  }, [initialInfo]);
+  const commentMediaInfo = webpageThumbnail || initialInfo;
 
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  const [showThumbnail, setShowThumbnail] = useState(true);
 
   const isReply = parentCid;
 
@@ -184,11 +182,31 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
         </span>
       </div>
-      {(hasThumbnail || link) && !(deleted || removed) && (
-        <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
-      )}
+      {(hasThumbnail || link) && !(deleted || removed) && <PostMediaContent key={cid} post={post} link={link} t={t} />}
     </>
   );
+};
+
+const PostMediaContent = ({ post, link, t }: { post: any; link: string; t: any }) => {
+  const initialInfo = getCommentMediaInfo(post);
+  const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
+  const [showThumbnail, setShowThumbnail] = useState(true);
+
+  useEffect(() => {
+    // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
+    const loadThumbnail = async () => {
+      if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
+        const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
+        setWebpageThumbnail(newMediaInfo);
+      }
+    };
+    loadThumbnail();
+  }, [initialInfo]);
+
+  const commentMediaInfo = webpageThumbnail || initialInfo;
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+
+  return hasThumbnail && <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />;
 };
 
 const ReplyBacklinks = ({ post }: PostProps) => {
