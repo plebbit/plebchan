@@ -179,17 +179,21 @@ const Markdown = ({ content, title }: MarkdownProps) => {
           source: ({ src }) => <span>{src}</span>,
           a: ({ href, children }) => {
             if (href && !isInCatalogView) {
-              const linkMediaInfo = getLinkMediaInfo(href);
-              const embedUrl = new URL(href);
-              if (canEmbed(embedUrl) || getHasThumbnail(linkMediaInfo, href)) {
-                return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
-              } else {
-                return (
-                  <a href={href} target='_blank' rel='noopener noreferrer'>
-                    {children}
-                  </a>
-                );
+              try {
+                const linkMediaInfo = getLinkMediaInfo(href);
+                const embedUrl = href.startsWith('http') ? new URL(href) : null;
+                if ((embedUrl && canEmbed(embedUrl)) || getHasThumbnail(linkMediaInfo, href)) {
+                  return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
+                }
+              } catch (e) {
+                console.debug('Invalid URL:', href);
               }
+
+              return (
+                <a href={href} target='_blank' rel='noopener noreferrer'>
+                  {children}
+                </a>
+              );
             }
           },
         }}

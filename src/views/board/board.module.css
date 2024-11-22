@@ -4,7 +4,12 @@
 
 .footer {
   color: var(--post-mobile-abbr-text-color);
-  padding: 15px 0 10px 5px;
+  padding: 15px 0 20px 5px;
+}
+
+.morePostsSuggestion {
+  color: var(--body-font-color);
+  padding-bottom: 5px;
 }
 
 .footer a, .newerPostsButton  {

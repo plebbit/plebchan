@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import { fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { CommentMediaInfo, fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -40,23 +40,24 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-  const initialCommentMediaInfo = useMemo(() => getCommentMediaInfo(post), [post]);
-  const [commentMediaInfo, setCommentMediaInfo] = useState(initialCommentMediaInfo);
-
-  const fetchThumbnail = useCallback(async () => {
-    if (initialCommentMediaInfo?.type === 'webpage' && !initialCommentMediaInfo.thumbnail) {
-      const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo);
-      setCommentMediaInfo(newMediaInfo);
-    }
-  }, [initialCommentMediaInfo]);
-
+  const initialInfo = getCommentMediaInfo(post);
+  const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
   useEffect(() => {
-    fetchThumbnail();
-  }, [fetchThumbnail]);
+    // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
+    const loadThumbnail = async () => {
+      if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
+        const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
+        setWebpageThumbnail(newMediaInfo);
+      }
+    };
+    loadThumbnail();
+    return () => {
+      setWebpageThumbnail(undefined);
+    };
+  }, [initialInfo]);
+  const commentMediaInfo = webpageThumbnail || initialInfo;
 
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-  const [showThumbnail, setShowThumbnail] = useState(true);
 
   const isReply = parentCid;
 
@@ -181,11 +182,31 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
         </span>
       </div>
-      {(hasThumbnail || link) && !(deleted || removed) && (
-        <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
-      )}
+      {(hasThumbnail || link) && !(deleted || removed) && <PostMediaContent key={cid} post={post} link={link} t={t} />}
     </>
   );
+};
+
+const PostMediaContent = ({ post, link, t }: { post: any; link: string; t: any }) => {
+  const initialInfo = getCommentMediaInfo(post);
+  const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
+  const [showThumbnail, setShowThumbnail] = useState(true);
+
+  useEffect(() => {
+    // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
+    const loadThumbnail = async () => {
+      if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
+        const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
+        setWebpageThumbnail(newMediaInfo);
+      }
+    };
+    loadThumbnail();
+  }, [initialInfo]);
+
+  const commentMediaInfo = webpageThumbnail || initialInfo;
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+
+  return hasThumbnail && <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />;
 };
 
 const ReplyBacklinks = ({ post }: PostProps) => {
