@@ -179,7 +179,10 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
       {commentMediaInfo?.type === 'image' ? (
         isMobile ? (
           <span className={styles.thumbnail}>
-            <span className={isImageExpanded ? mediaClass : `${styles.thumbnailSmall} ${thumbnailSmallPadding}`} style={isImageExpanded ? {} : thumbnailDimensions}>
+            <span
+              className={isImageExpanded ? mediaClass : `${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailSmall} ${thumbnailSmallPadding}`}
+              style={isImageExpanded ? {} : thumbnailDimensions}
+            >
               <img src={url} alt='' onClick={() => setIsImageExpanded(!isImageExpanded)} />
             </span>
             {isImageExpanded && type && (
@@ -194,7 +197,10 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
             {type && !isImageExpanded && <div className={styles.fileInfo}>{`${post?.spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
           </span>
         ) : (
-          <span className={isImageExpanded ? mediaClass : `${styles.thumbnailBig}  ${styles.thumbnail}`} style={isImageExpanded ? {} : thumbnailDimensions}>
+          <span
+            className={isImageExpanded ? mediaClass : `${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailBig} ${styles.thumbnail}`}
+            style={isImageExpanded ? {} : thumbnailDimensions}
+          >
             <img src={url} alt='' onClick={() => setIsImageExpanded(!isImageExpanded)} />
           </span>
         )

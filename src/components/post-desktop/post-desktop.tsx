@@ -227,6 +227,7 @@ const PostMedia = ({ post }: PostProps) => {
 const PostMediaContent = ({ post, link, spoiler, t }: { post: any; link: string; spoiler: boolean; t: any }) => {
   const initialInfo = getCommentMediaInfo(post);
   const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   useEffect(() => {
     // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
@@ -289,7 +290,13 @@ const PostMediaContent = ({ post, link, spoiler, t }: { post: any; link: string;
       </div>
       {(hasThumbnail || (!hasThumbnail && !showThumbnail) || spoiler) && (
         <div className={styles.fileThumbnail}>
-          <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
+          <CommentMedia
+            commentMediaInfo={commentMediaInfo}
+            post={post}
+            showThumbnail={showThumbnail}
+            setShowThumbnail={setShowThumbnail}
+            isOutOfFeed={isDescription || isRules}
+          />
         </div>
       )}
     </div>
