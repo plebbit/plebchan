@@ -233,7 +233,10 @@ const ReplyBacklinks = ({ post }: PostProps) => {
     replies.length > 0 && (
       <div className={styles.mobileReplyBacklinks}>
         {replies.map(
-          (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+          (reply: Comment, index: number) =>
+            reply?.parentCid === cid &&
+            reply?.cid &&
+            !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
         )}
       </div>
     )

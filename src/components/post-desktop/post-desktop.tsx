@@ -209,7 +209,10 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           parentCid &&
           replies &&
           replies.map(
-            (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+            (reply: Comment, index: number) =>
+              reply?.parentCid === cid &&
+              reply?.cid &&
+              !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
           )}
       </span>
     </div>
