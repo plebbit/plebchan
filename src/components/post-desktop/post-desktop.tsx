@@ -165,7 +165,11 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
                 <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                   c/
                 </Link>
-                <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={() => openReplyModal && openReplyModal(cid, postCid, subplebbitAddress)}>
+                <span
+                  className={styles.replyToPost}
+                  title={t('reply_to_post')}
+                  onMouseDown={() => openReplyModal && !(deleted || removed) && openReplyModal(cid, postCid, subplebbitAddress)}
+                >
                   {shortCid}
                 </span>
               </span>
@@ -205,7 +209,10 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
           parentCid &&
           replies &&
           replies.map(
-            (reply: Comment, index: number) => reply?.parentCid === cid && reply?.cid && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+            (reply: Comment, index: number) =>
+              reply?.parentCid === cid &&
+              reply?.cid &&
+              !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
           )}
       </span>
     </div>
@@ -223,6 +230,7 @@ const PostMedia = ({ post }: PostProps) => {
 const PostMediaContent = ({ post, link, spoiler, t }: { post: any; link: string; spoiler: boolean; t: any }) => {
   const initialInfo = getCommentMediaInfo(post);
   const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
 
   useEffect(() => {
     // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
@@ -285,7 +293,13 @@ const PostMediaContent = ({ post, link, spoiler, t }: { post: any; link: string;
       </div>
       {(hasThumbnail || (!hasThumbnail && !showThumbnail) || spoiler) && (
         <div className={styles.fileThumbnail}>
-          <CommentMedia commentMediaInfo={commentMediaInfo} post={post} showThumbnail={showThumbnail} setShowThumbnail={setShowThumbnail} />
+          <CommentMedia
+            commentMediaInfo={commentMediaInfo}
+            post={post}
+            showThumbnail={showThumbnail}
+            setShowThumbnail={setShowThumbnail}
+            isOutOfFeed={isDescription || isRules}
+          />
         </div>
       )}
     </div>

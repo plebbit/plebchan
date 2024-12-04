@@ -6,7 +6,6 @@ import styles from './home.module.css';
 import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
-import LoadingEllipsis from '../../components/loading-ellipsis';
 import PopularThreadsBox from './popular-threads-box';
 import BoardsBox from './boards-box';
 
@@ -61,7 +60,7 @@ const InfoBox = () => {
   );
 };
 
-const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAddresses: string[] }) => {
+const Stats = ({ subplebbitAddresses }: { subplebbitAddresses: string[] }) => {
   const { t } = useTranslation();
   const stats = useSubplebbitsStats({ subplebbitAddresses });
 
@@ -84,29 +83,22 @@ const Stats = ({ multisub, subplebbitAddresses }: { multisub: any; subplebbitAdd
   }, [stats, allStatsLoaded]);
 
   const boardsTracked = Object.values(stats).filter((stat: any) => stat && !stat.loading).length;
-  const enoughStats = boardsTracked >= multisub.length / 2;
 
   return (
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className='capitalize'>{t('stats')}</h2>
       </div>
-      <div className={`${styles.boxContent} ${enoughStats ? styles.stats : ''}`}>
-        {enoughStats ? (
-          <>
-            <div className={styles.stat}>
-              <b>{t('total_posts')}</b> {totalPosts}
-            </div>
-            <div className={styles.stat}>
-              <b>{t('current_users')}</b> {currentUsers}
-            </div>
-            <div className={styles.stat}>
-              <b>{t('boards_tracked')}</b> {boardsTracked}
-            </div>
-          </>
-        ) : (
-          <LoadingEllipsis string={t('loading')} />
-        )}
+      <div className={`${styles.boxContent} ${styles.stats}`}>
+        <div className={styles.stat}>
+          <b>{t('total_posts')}</b> {totalPosts}
+        </div>
+        <div className={styles.stat}>
+          <b>{t('current_users')}</b> {currentUsers}
+        </div>
+        <div className={styles.stat}>
+          <b>{t('boards_tracked')}</b> {boardsTracked}
+        </div>
       </div>
     </div>
   );
@@ -224,7 +216,7 @@ const Home = () => {
       <InfoBox />
       <BoardsBox multisub={defaultSubplebbits} subplebbits={subplebbits} />
       <PopularThreadsBox multisub={defaultSubplebbits} subplebbits={subplebbits} />
-      <Stats multisub={defaultSubplebbits} subplebbitAddresses={subplebbitAddresses} />
+      <Stats subplebbitAddresses={subplebbitAddresses} />
       <Footer />
     </div>
   );
