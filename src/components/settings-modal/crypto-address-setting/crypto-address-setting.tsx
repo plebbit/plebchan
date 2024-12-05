@@ -8,7 +8,7 @@ const CryptoAddressSetting = () => {
   const account = useAccount();
 
   const [cryptoState, setCryptoState] = useState({
-    cryptoAddress: '',
+    cryptoAddress: account?.author?.shortAddress.includes('.') ? account.author.shortAddress : '',
     checkingCryptoAddress: false,
     showResolvingMessage: true,
     resolveString: t('crypto_address_verification'),
@@ -62,6 +62,12 @@ const CryptoAddressSetting = () => {
     if (!cryptoState.cryptoAddress || !cryptoState.cryptoAddress.includes('.')) {
       alert(t('enter_crypto_address'));
       return;
+    } else if (cryptoState.cryptoAddress === account?.author?.address) {
+      setSavedCryptoAddress(true);
+      setTimeout(() => {
+        setSavedCryptoAddress(false);
+      }, 2000);
+      return;
     } else if (resolvedAddress && resolvedAddress !== account?.signer?.address) {
       alert(t('crypto_address_not_yours'));
       return;
@@ -110,7 +116,7 @@ const CryptoAddressSetting = () => {
         <input
           type='text'
           placeholder='address.eth/.sol'
-          value={inputValue}
+          value={cryptoState.cryptoAddress}
           onChange={(e) => {
             setInputValue(e.target.value);
             setCryptoState((prevState) => ({ ...prevState, cryptoAddress: e.target.value }));
