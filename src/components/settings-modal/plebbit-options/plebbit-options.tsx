@@ -148,19 +148,50 @@ const PlebbitOptions = () => {
   const solRpcRef = useRef<HTMLTextAreaElement>(null);
   const maticRpcRef = useRef<HTMLTextAreaElement>(null);
   const avaxRpcRef = useRef<HTMLTextAreaElement>(null);
+  const httpRoutersRef = useRef<HTMLTextAreaElement>(null);
   const plebbitRpcRef = useRef<HTMLInputElement>(null);
   const plebbitDataPathRef = useRef<HTMLInputElement>(null);
 
   const handleSave = async () => {
-    const ipfsGatewayUrls = ipfsGatewayUrlsRef.current?.value.split('\n').map((url) => url.trim());
+    const ipfsGatewayUrls = ipfsGatewayUrlsRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
     const mediaIpfsGatewayUrl = mediaIpfsGatewayUrlRef.current?.value.trim();
-    const pubsubHttpClientsOptions = pubsubProvidersRef.current?.value.split('\n').map((url) => url.trim());
-    const ethRpcUrls = ethRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const solRpcUrls = solRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const maticRpcUrls = maticRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const avaxRpcUrls = avaxRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const plebbitRpcClientsOptions = plebbitRpcRef.current?.value.trim();
-    const plebbitDataPath = plebbitDataPathRef.current?.value.trim();
+
+    const pubsubHttpClientsOptions = pubsubProvidersRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const ethRpcUrls = ethRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const solRpcUrls = solRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const maticRpcUrls = maticRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const avaxRpcUrls = avaxRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const httpRoutersOptions = httpRoutersRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const plebbitRpcClientsOptions = plebbitRpcRef.current?.value.trim() ? [plebbitRpcRef.current.value.trim()] : undefined;
+    const dataPath = plebbitDataPathRef.current?.value.trim() || undefined;
 
     const chainProviders = {
       eth: {
@@ -190,11 +221,12 @@ const PlebbitOptions = () => {
           ipfsGatewayUrls,
           pubsubHttpClientsOptions,
           chainProviders,
+          httpRoutersOptions,
           plebbitRpcClientsOptions,
-          plebbitDataPath,
+          dataPath,
         },
       });
-      alert('Options saved.');
+      alert('Options saved, reloading...');
       window.location.reload();
     } catch (e) {
       if (e instanceof Error) {
