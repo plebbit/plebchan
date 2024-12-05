@@ -136,7 +136,7 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
   const isReply = parentCid;
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { url } = commentMediaInfo || {};
+  const { url, thumbnailWidth, thumbnailHeight } = commentMediaInfo || {};
   let type = commentMediaInfo?.type;
   const gifFrameUrl = useFetchGifFirstFrame(url);
 
@@ -150,10 +150,17 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
   const maxThumbnailSize = isMobile || isReply ? 125 : 250;
 
   if (linkWidth && linkHeight) {
+    // use the dimensions from the plebbit-js api
     let scale = Math.min(1, maxThumbnailSize / Math.max(linkWidth, linkHeight));
     displayWidth = `${linkWidth * scale}px`;
     displayHeight = `${linkHeight * scale}px`;
+  } else if (thumbnailHeight && thumbnailWidth) {
+    // use the dimensions from the thumbnail fetched by useCommentMediaInfo
+    let scale = Math.min(1, maxThumbnailSize / Math.max(thumbnailWidth, thumbnailHeight));
+    displayWidth = `${thumbnailWidth * scale}px`;
+    displayHeight = `${thumbnailHeight * scale}px`;
   } else {
+    // use the default size
     displayWidth = `${maxThumbnailSize}px`;
     displayHeight = `${maxThumbnailSize}px`;
   }

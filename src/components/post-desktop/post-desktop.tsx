@@ -1,23 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import {
-  CommentMediaInfo,
-  fetchWebpageThumbnailIfNeeded,
-  getCommentMediaInfo,
-  getDisplayMediaInfoType,
-  getHasThumbnail,
-  getMediaDimensions,
-} from '../../lib/utils/media-utils';
+import { getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
+import { useCommentMediaInfo } from '../../hooks/use-comment-media-info';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
@@ -228,23 +222,8 @@ const PostMedia = ({ post }: PostProps) => {
 };
 
 const PostMediaContent = ({ post, link, spoiler, t }: { post: any; link: string; spoiler: boolean; t: any }) => {
-  const initialInfo = getCommentMediaInfo(post);
-  const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-
-  useEffect(() => {
-    // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-    const loadThumbnail = async () => {
-      if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
-        const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
-        setWebpageThumbnail(newMediaInfo);
-      }
-    };
-    loadThumbnail();
-  }, [initialInfo]);
-
-  const commentMediaInfo = webpageThumbnail || initialInfo;
-
+  const commentMediaInfo = useCommentMediaInfo(post);
   const { url } = commentMediaInfo || {};
   let type = commentMediaInfo?.type;
   const gifFrameUrl = useFetchGifFirstFrame(url);

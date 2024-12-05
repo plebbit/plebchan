@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, size, autoUpdate, Placement } from '@floating-ui/react';
-import { fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
@@ -18,6 +18,7 @@ import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
 import _ from 'lodash';
 import { ContentPreview } from '../../views/home/popular-threads-box';
+import { useCommentMediaInfo } from '../../hooks/use-comment-media-info';
 
 interface CatalogPostMediaProps {
   commentMediaInfo: any;
@@ -116,21 +117,8 @@ const CatalogPost = ({ post }: { post: Comment }) => {
   } = post || {};
   const linkCount = useCountLinksInReplies(post);
 
-  // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-  const initialCommentMediaInfo = useMemo(() => getCommentMediaInfo(post), [post]);
-  const [commentMediaInfo, setCommentMediaInfo] = useState(initialCommentMediaInfo);
+  const commentMediaInfo = useCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-
-  const fetchThumbnail = useCallback(async () => {
-    if (initialCommentMediaInfo?.type === 'webpage' && !initialCommentMediaInfo.thumbnail) {
-      const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialCommentMediaInfo);
-      setCommentMediaInfo(newMediaInfo);
-    }
-  }, [initialCommentMediaInfo]);
-
-  useEffect(() => {
-    fetchThumbnail();
-  }, [fetchThumbnail]);
 
   const { hidden } = useHide({ cid });
 

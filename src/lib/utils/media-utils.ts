@@ -10,6 +10,8 @@ export interface CommentMediaInfo {
   url: string;
   type: string;
   thumbnail?: string;
+  thumbnailWidth?: number;
+  thumbnailHeight?: number;
   patternThumbnailUrl?: string;
   post?: Comment;
 }
