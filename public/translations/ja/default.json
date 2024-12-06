@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "暗号通貨アドレスは別のアカウントに属しています。",
   "enter_crypto_address": "有効な暗号通貨アドレスを入力してください。",
   "crypto_address_not_resolved": "暗号通貨アドレスはまだ解決されていません。",
-  "copy_message_etherscan": "<1>etherscan</1>で署名するメッセージをコピー",
+  "copy_message_etherscan": "<1>{{copy}}</1> メッセージを<2>etherscan</2>でサイン",
   "account": "アカウント",
   "crypto_address": "暗号通貨アドレス",
   "crypto_wallets": "暗号通貨ウォレット",

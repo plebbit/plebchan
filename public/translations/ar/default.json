@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "عنوان العملة الرقمية ينتمي إلى حساب آخر.",
   "enter_crypto_address": "الرجاء إدخال عنوان كريبتو صالح.",
   "crypto_address_not_resolved": "لم يتم حل عنوان العملة الرقمية بعد.",
-  "copy_message_etherscan": "انسخ الرسالة للتوقيع على <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> رسالة للتوقيع على <2>etherscan</2>",
   "account": "حساب",
   "crypto_address": "عنوان العملة الرقمية",
   "crypto_wallets": "محافظ العملات الرقمية",

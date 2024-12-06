@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Adresa kryptoměny patří k jinému účtu.",
   "enter_crypto_address": "Zadejte prosím platnou kryptoadresu.",
   "crypto_address_not_resolved": "Adresa kryptoměny ještě není vyřešena.",
-  "copy_message_etherscan": "Zkopírujte zprávu k podpisu na <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> zpráva k podpisu na <2>etherscan</2>",
   "account": "účet",
   "crypto_address": "adresa kryptoměny",
   "crypto_wallets": "Kryptoměny",

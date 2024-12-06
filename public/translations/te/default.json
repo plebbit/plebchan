@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "క్రిప్టో చిరునామా మరొక ఖాతాకు చేరుకుంది.",
   "enter_crypto_address": "దయచేసి చేసిన క్రిప్టో చిరునామాను నమోదు చేయండి.",
   "crypto_address_not_resolved": "క్రిప్టో చిరునామా ఇంకా పరిష్కరించబడలేదు.",
-  "copy_message_etherscan": "<1>etherscan</1> లో సైన్ చేయడానికి సందేశాన్ని కాపీ చేయండి",
+  "copy_message_etherscan": "<1>{{copy}}</1> సందేశం సాఇన్ చేయడానికి <2>etherscan</2> మీద",
   "account": "ఖాతా",
   "crypto_address": "క్రిప్టో చిరునామా",
   "crypto_wallets": "క్రిప్టో వాలెట్‌లు",

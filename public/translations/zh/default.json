@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "加密地址属于另一个帐户。",
   "enter_crypto_address": "请输入有效的加密货币地址。",
   "crypto_address_not_resolved": "加密地址尚未解析。",
-  "copy_message_etherscan": "复制消息以在<1>etherscan</1>上签名",
+  "copy_message_etherscan": "<1>{{copy}}</1> 在<2>etherscan</2>上签名的消息",
   "account": "帐户",
   "crypto_address": "加密地址",
   "crypto_wallets": "加密货币钱包",
