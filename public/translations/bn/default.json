@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "ক্রিপ্টো ঠিকানা অন্য একটি অ্যাকাউন্টের অংশ।",
   "enter_crypto_address": "দয়া করে একটি বৈধ ক্রিপ্টো ঠিকানা দিন।",
   "crypto_address_not_resolved": "ক্রিপ্টো ঠিকানা এখনো সমাধান করা হয়নি।",
-  "copy_message_etherscan": "<1>etherscan</1> এ সাইন করার জন্য বার্তা অনুলিপি করুন",
+  "copy_message_etherscan": "<1>{{copy}}</1> বার্তা সাইন করতে <2>etherscan</2> এ",
   "account": "অ্যাকাউন্ট",
   "crypto_address": "ক্রিপ্টো ঠিকানা",
   "crypto_wallets": "ক্রিপ্টো ওয়ালেট",

@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import { CommentMediaInfo, fetchWebpageThumbnailIfNeeded, getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { getHasThumbnail } from '../../lib/utils/media-utils';
 import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useAvatarVisibilityStore from '../../stores/use-avatar-visibility-store';
 import useAuthorAddressClick from '../../hooks/use-author-address-click';
+import { useCommentMediaInfo } from '../../hooks/use-comment-media-info';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
@@ -26,6 +27,7 @@ import _ from 'lodash';
 const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, deleted, link, locked, parentCid, pinned, postCid, reason, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const isReply = parentCid;
   const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const { address, shortAddress } = author || {};
@@ -40,26 +42,8 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  const initialInfo = getCommentMediaInfo(post);
-  const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
-  useEffect(() => {
-    // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-    const loadThumbnail = async () => {
-      if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
-        const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
-        setWebpageThumbnail(newMediaInfo);
-      }
-    };
-    loadThumbnail();
-    return () => {
-      setWebpageThumbnail(undefined);
-    };
-  }, [initialInfo]);
-  const commentMediaInfo = webpageThumbnail || initialInfo;
-
+  const commentMediaInfo = useCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
-
-  const isReply = parentCid;
 
   const stateString = useStateString(post);
 
@@ -192,22 +176,9 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
 };
 
 const PostMediaContent = ({ post, link, t }: { post: any; link: string; t: any }) => {
-  const initialInfo = getCommentMediaInfo(post);
-  const [webpageThumbnail, setWebpageThumbnail] = useState<CommentMediaInfo | undefined>();
   const [showThumbnail, setShowThumbnail] = useState(true);
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-  useEffect(() => {
-    // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
-    const loadThumbnail = async () => {
-      if (initialInfo?.type === 'webpage' && !initialInfo.thumbnail) {
-        const newMediaInfo = await fetchWebpageThumbnailIfNeeded(initialInfo);
-        setWebpageThumbnail(newMediaInfo);
-      }
-    };
-    loadThumbnail();
-  }, [initialInfo]);
-
-  const commentMediaInfo = webpageThumbnail || initialInfo;
+  const commentMediaInfo = useCommentMediaInfo(post);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   return (

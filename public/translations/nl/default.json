@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Crypto-adres behoort tot een andere account.",
   "enter_crypto_address": "Voer alstublieft een geldig crypto-adres in.",
   "crypto_address_not_resolved": "Crypto-adres is nog niet opgelost.",
-  "copy_message_etherscan": "Kopieer bericht om te ondertekenen op <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> bericht om te ondertekenen op <2>etherscan</2>",
   "account": "account",
   "crypto_address": "crypto adres",
   "crypto_wallets": "Crypto-portefeuilles",

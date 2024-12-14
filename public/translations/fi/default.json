@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Krypto-osoite kuuluu toiseen tiliin.",
   "enter_crypto_address": "Syötä voimassa oleva krypto-osoite.",
   "crypto_address_not_resolved": "Krypto-osoitetta ei ole vielä ratkaistu.",
-  "copy_message_etherscan": "Kopioi viesti allekirjoitettavaksi <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> viesti allekirjoitettavaksi <2>etherscan</2>:ssa",
   "account": "tili",
   "crypto_address": "krypto-osoite",
   "crypto_wallets": "Krypto-lompakot",

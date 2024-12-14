@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Crypto-adressen tilhører en annen konto.",
   "enter_crypto_address": "Vennligst skriv inn en gyldig kryptoadresse.",
   "crypto_address_not_resolved": "Crypto-adresse er ikke løst ennå.",
-  "copy_message_etherscan": "Kopier melding for å signere på <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> melding å signere på <2>etherscan</2>",
   "account": "konto",
   "crypto_address": "kryptoadresse",
   "crypto_wallets": "Crypto-lommebøker",

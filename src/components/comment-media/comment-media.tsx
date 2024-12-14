@@ -29,18 +29,14 @@ interface MediaProps {
 const Thumbnail = ({ commentMediaInfo, deleted, displayHeight, displayWidth, isFloatingEmbed, isOutOfFeed, isReply, removed, spoiler, setShowThumbnail }: MediaProps) => {
   const isMobile = useIsMobile();
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
-  const [hasError, setHasError] = useState(false);
-  const handleError = () => setHasError(true);
 
   let thumbnailComponent: React.ReactNode = null;
   const iframeThumbnail = patternThumbnailUrl || thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, url);
 
-  if (type === 'gif' && gifFrameUrl) {
-    thumbnailComponent = <img src={gifFrameUrl} alt='' onClick={() => setShowThumbnail(false)} />;
-  } else if (type === 'image') {
-    thumbnailComponent = <img src={url} alt='' onError={handleError} onClick={() => setShowThumbnail(false)} />;
+  if (type === 'gif') {
+    thumbnailComponent = <img src={gifFrameUrl || url} alt='' onClick={() => setShowThumbnail(false)} />;
   } else if (type === 'video') {
     thumbnailComponent = thumbnail ? (
       <img src={thumbnail} alt='' />
@@ -61,7 +57,7 @@ const Thumbnail = ({ commentMediaInfo, deleted, displayHeight, displayWidth, isF
 
   const linkWithoutThumbnail = url && new URL(url);
 
-  return hasError || deleted || removed ? (
+  return deleted || removed ? (
     <img className={styles.fileDeleted} src='assets/filedeleted-res.gif' alt='File deleted' />
   ) : spoiler ? (
     <img className={styles.spoiler} src='assets/spoiler.png' alt='' onClick={() => setShowThumbnail(false)} />
@@ -106,8 +102,6 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
         <img src={url} alt='' onClick={() => setShowThumbnail(true)} />
       ) : type === 'video' ? (
         <video src={url} controls autoPlay loop muted />
-      ) : type === 'image' ? (
-        <img src={url} alt='' onClick={() => setShowThumbnail(true)} />
       ) : type === 'webpage' ? (
         <img src={thumbnail} alt='' onClick={() => setShowThumbnail(true)} />
       ) : null}
@@ -131,12 +125,75 @@ const Media = ({ commentMediaInfo, isReply, setShowThumbnail }: MediaProps) => {
   );
 };
 
+interface ImageProps {
+  commentMediaInfo: CommentMediaInfo;
+  displayHeight: string;
+  displayWidth: string;
+  isOutOfFeed: boolean;
+  post: Comment | undefined;
+}
+
+const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, post }: ImageProps) => {
+  const { t } = useTranslation();
+  const { parentCid } = post || {};
+  const { type, url } = commentMediaInfo || {};
+  const isReply = parentCid;
+  const isMobile = useIsMobile();
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
+  const { fitExpandedImagesToScreen } = useExpandedMediaStore();
+  const mediaDimensions = getMediaDimensions(commentMediaInfo);
+  const mediaClass = `${isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp} ${
+    fitExpandedImagesToScreen ? styles.fitToScreen : ''
+  }`;
+  const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
+  const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
+
+  const [hasError, setHasError] = useState(false);
+  const handleError = () => setHasError(true);
+
+  return isMobile ? (
+    <span className={styles.thumbnail}>
+      <span
+        className={isImageExpanded ? mediaClass : `${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailSmall} ${thumbnailSmallPadding}`}
+        style={isImageExpanded ? {} : thumbnailDimensions}
+      >
+        {hasError ? (
+          <img src='assets/filedeleted-res.gif' alt='File deleted' />
+        ) : (
+          <img src={url} onError={handleError} alt='' onClick={() => setIsImageExpanded(!isImageExpanded)} />
+        )}
+      </span>
+      {isImageExpanded && type && (
+        <div className={styles.fileInfo}>
+          <a href={url} target='_blank' rel='noopener noreferrer'>
+            {url && url.length > 30 ? url.slice(0, 30) + '...' : url}
+          </a>{' '}
+          ({getDisplayMediaInfoType(type, t)}
+          {mediaDimensions && `, ${mediaDimensions}`})
+        </div>
+      )}
+      {type && !isImageExpanded && <div className={styles.fileInfo}>{`${post?.spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
+    </span>
+  ) : (
+    <span
+      className={isImageExpanded ? mediaClass : `${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailBig} ${styles.thumbnail}`}
+      style={isImageExpanded ? {} : thumbnailDimensions}
+    >
+      {hasError ? (
+        <img src='assets/filedeleted-res.gif' alt='File deleted' />
+      ) : (
+        <img src={url} onError={handleError} alt='' onClick={() => setIsImageExpanded(!isImageExpanded)} />
+      )}
+    </span>
+  );
+};
+
 const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, setShowThumbnail }: MediaProps) => {
   const { deleted, linkHeight, linkWidth, parentCid, removed, spoiler } = post || {};
   const isReply = parentCid;
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { url } = commentMediaInfo || {};
+  const { thumbnailHeight, thumbnailWidth, url } = commentMediaInfo || {};
   let type = commentMediaInfo?.type;
   const gifFrameUrl = useFetchGifFirstFrame(url);
 
@@ -150,10 +207,17 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
   const maxThumbnailSize = isMobile || isReply ? 125 : 250;
 
   if (linkWidth && linkHeight) {
+    // use the dimensions from the plebbit-js api
     let scale = Math.min(1, maxThumbnailSize / Math.max(linkWidth, linkHeight));
     displayWidth = `${linkWidth * scale}px`;
     displayHeight = `${linkHeight * scale}px`;
+  } else if (thumbnailHeight && thumbnailWidth) {
+    // use the dimensions from the thumbnail fetched by useCommentMediaInfo
+    let scale = Math.min(1, maxThumbnailSize / Math.max(thumbnailWidth, thumbnailHeight));
+    displayWidth = `${thumbnailWidth * scale}px`;
+    displayHeight = `${thumbnailHeight * scale}px`;
   } else {
+    // use the default size
     displayWidth = `${maxThumbnailSize}px`;
     displayHeight = `${maxThumbnailSize}px`;
   }
@@ -165,45 +229,11 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const isOutOfFeed = isDescription || isRules || isFloatingEmbed; // virtuoso wrapper unneeded
 
-  const [isImageExpanded, setIsImageExpanded] = useState(false);
-  const { fitExpandedImagesToScreen } = useExpandedMediaStore();
-  const mediaDimensions = getMediaDimensions(commentMediaInfo);
-  const mediaClass = `${isMobile ? styles.mediaMobile : isReply ? styles.mediaDesktopReply : styles.mediaDesktopOp} ${
-    fitExpandedImagesToScreen ? styles.fitToScreen : ''
-  }`;
-  const thumbnailSmallPadding = isMobile ? styles.thumbnailMobile : styles.thumbnailReplyDesktop;
-  const thumbnailDimensions = { '--width': displayWidth, '--height': displayHeight } as React.CSSProperties;
-
   return (
     <span className={styles.content}>
       {commentMediaInfo?.type === 'image' ? (
-        isMobile ? (
-          <span className={styles.thumbnail}>
-            <span
-              className={isImageExpanded ? mediaClass : `${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailSmall} ${thumbnailSmallPadding}`}
-              style={isImageExpanded ? {} : thumbnailDimensions}
-            >
-              <img src={url} alt='' onClick={() => setIsImageExpanded(!isImageExpanded)} />
-            </span>
-            {isImageExpanded && type && (
-              <div className={styles.fileInfo}>
-                <a href={url} target='_blank' rel='noopener noreferrer'>
-                  {url && url.length > 30 ? url.slice(0, 30) + '...' : url}
-                </a>{' '}
-                ({getDisplayMediaInfoType(type, t)}
-                {mediaDimensions && `, ${mediaDimensions}`})
-              </div>
-            )}
-            {type && !isImageExpanded && <div className={styles.fileInfo}>{`${post?.spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
-          </span>
-        ) : (
-          <span
-            className={isImageExpanded ? mediaClass : `${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailBig} ${styles.thumbnail}`}
-            style={isImageExpanded ? {} : thumbnailDimensions}
-          >
-            <img src={url} alt='' onClick={() => setIsImageExpanded(!isImageExpanded)} />
-          </span>
-        )
+        // images just enlarge when clicked, so they don't need two separate components
+        <Image commentMediaInfo={commentMediaInfo} displayHeight={displayHeight} displayWidth={displayWidth} isOutOfFeed={isOutOfFeed} post={post} />
       ) : (
         <>
           <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>

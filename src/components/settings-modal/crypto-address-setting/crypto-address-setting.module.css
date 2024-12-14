@@ -41,6 +41,10 @@
   margin: 0 5px;
 }
 
+.saved {
+  padding-left: 5px;
+}
+
 .red {
   color: red;
 }

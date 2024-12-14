@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Адреса криптовалюти належить до іншого облікового запису.",
   "enter_crypto_address": "Будь ласка, введіть дійсну криптовалютну адресу.",
   "crypto_address_not_resolved": "Адреса криптовалюти ще не вирішена.",
-  "copy_message_etherscan": "Скопіюйте повідомлення для підпису на <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> повідомлення для підпису на <2>etherscan</2>",
   "account": "рахунок",
   "crypto_address": "адреса криптовалюти",
   "crypto_wallets": "Криптокошельки",

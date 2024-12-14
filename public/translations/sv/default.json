@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Crypto-adress tillhör ett annat konto.",
   "enter_crypto_address": "Ange en giltig kryptoadress.",
   "crypto_address_not_resolved": "Crypto-adressen är ännu inte löst.",
-  "copy_message_etherscan": "Kopiera meddelande för att signera på <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> meddelande att signera på <2>etherscan</2>",
   "account": "konto",
   "crypto_address": "kryptoadress",
   "crypto_wallets": "Crypto-plånböcker",

@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "L'indirizzo cripto appartiene a un altro account.",
   "enter_crypto_address": "Inserisci un indirizzo cripto valido.",
   "crypto_address_not_resolved": "L'indirizzo cripto non è ancora risolto.",
-  "copy_message_etherscan": "Copia messaggio da firmare su <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> messaggio da firmare su <2>etherscan</2>",
   "account": "account",
   "crypto_address": "indirizzo crypto",
   "crypto_wallets": "Wallet crypto",

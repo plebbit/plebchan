@@ -12,7 +12,7 @@ interface SettingsProps {
   maticRpcRef?: RefObject<HTMLTextAreaElement>;
   avaxRpcRef?: RefObject<HTMLTextAreaElement>;
   plebbitRpcRef?: RefObject<HTMLInputElement>;
-  nodeDataPathRef?: RefObject<HTMLInputElement>;
+  plebbitDataPathRef?: RefObject<HTMLInputElement>;
 }
 
 const IPFSGatewaysSettings = ({ ipfsGatewayUrlsRef, mediaIpfsGatewayUrlRef }: SettingsProps) => {
@@ -119,20 +119,22 @@ const PlebbitRPCSettings = ({ plebbitRpcRef }: SettingsProps) => {
   );
 };
 
-const NodeDataPathSettings = ({ nodeDataPathRef }: SettingsProps) => {
+const PlebbitDataPathSettings = ({ plebbitDataPathRef }: SettingsProps) => {
   const plebbitRpc = usePlebbitRpcSettings();
   const { plebbitRpcSettings } = plebbitRpc || {};
   const isConnectedToRpc = plebbitRpc?.state === 'succeeded';
-  const path = plebbitRpcSettings?.plebbitOptions?.dataPath || '';
+  const path = plebbitRpcSettings?.plebbitOptions?.plebbitDataPath || '';
 
   return (
-    <div className={styles.nodeDataPathSettings}>
+    <div className={styles.plebbitDataPathSettings}>
       <div>
-        <input type='text' defaultValue={path} disabled={!isConnectedToRpc} ref={nodeDataPathRef} />
+        <input type='text' defaultValue={path} disabled={!isConnectedToRpc} ref={plebbitDataPathRef} />
       </div>
     </div>
   );
 };
+
+const isElectron = window.isElectron === true;
 
 const PlebbitOptions = () => {
   const { t } = useTranslation();
@@ -146,19 +148,50 @@ const PlebbitOptions = () => {
   const solRpcRef = useRef<HTMLTextAreaElement>(null);
   const maticRpcRef = useRef<HTMLTextAreaElement>(null);
   const avaxRpcRef = useRef<HTMLTextAreaElement>(null);
+  const httpRoutersRef = useRef<HTMLTextAreaElement>(null);
   const plebbitRpcRef = useRef<HTMLInputElement>(null);
-  const nodeDataPathRef = useRef<HTMLInputElement>(null);
+  const plebbitDataPathRef = useRef<HTMLInputElement>(null);
 
   const handleSave = async () => {
-    const ipfsGatewayUrls = ipfsGatewayUrlsRef.current?.value.split('\n').map((url) => url.trim());
+    const ipfsGatewayUrls = ipfsGatewayUrlsRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
     const mediaIpfsGatewayUrl = mediaIpfsGatewayUrlRef.current?.value.trim();
-    const pubsubHttpClientsOptions = pubsubProvidersRef.current?.value.split('\n').map((url) => url.trim());
-    const ethRpcUrls = ethRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const solRpcUrls = solRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const maticRpcUrls = maticRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const avaxRpcUrls = avaxRpcRef.current?.value.split('\n').map((url) => url.trim());
-    const plebbitRpcClientsOptions = plebbitRpcRef.current?.value.trim();
-    const dataPath = nodeDataPathRef.current?.value.trim();
+
+    const pubsubHttpClientsOptions = pubsubProvidersRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const ethRpcUrls = ethRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const solRpcUrls = solRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const maticRpcUrls = maticRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const avaxRpcUrls = avaxRpcRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const httpRoutersOptions = httpRoutersRef.current?.value
+      .split('\n')
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
+
+    const plebbitRpcClientsOptions = plebbitRpcRef.current?.value.trim() ? [plebbitRpcRef.current.value.trim()] : undefined;
+    const dataPath = plebbitDataPathRef.current?.value.trim() || undefined;
 
     const chainProviders = {
       eth: {
@@ -188,11 +221,12 @@ const PlebbitOptions = () => {
           ipfsGatewayUrls,
           pubsubHttpClientsOptions,
           chainProviders,
+          httpRoutersOptions,
           plebbitRpcClientsOptions,
           dataPath,
         },
       });
-      alert('Options saved.');
+      alert('Options saved, reloading...');
       window.location.reload();
     } catch (e) {
       if (e instanceof Error) {
@@ -230,17 +264,19 @@ const PlebbitOptions = () => {
         </span>
       </div>
       <div className={styles.category}>
-        <span className={styles.categoryTitle}>node RPC:</span>
+        <span className={styles.categoryTitle}>plebbit RPC:</span>
         <span className={styles.categorySettings}>
           <PlebbitRPCSettings plebbitRpcRef={plebbitRpcRef} />
         </span>
       </div>
-      <div className={styles.category}>
-        <span className={styles.categoryTitle}>node data path:</span>
-        <span className={styles.categorySettings}>
-          <NodeDataPathSettings nodeDataPathRef={nodeDataPathRef} />
-        </span>
-      </div>
+      {isElectron && (
+        <div className={styles.category}>
+          <span className={styles.categoryTitle}>plebbit data path:</span>
+          <span className={styles.categorySettings}>
+            <PlebbitDataPathSettings plebbitDataPathRef={plebbitDataPathRef} />
+          </span>
+        </div>
+      )}
     </div>
   );
 };

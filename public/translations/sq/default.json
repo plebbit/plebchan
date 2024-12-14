@@ -103,7 +103,7 @@
   "crypto_address_not_yours": "Adresa e kriptovalutës i përket një llogarie tjetër.",
   "enter_crypto_address": "Ju lutemi vendosni një adresë kripto të vlefshme.",
   "crypto_address_not_resolved": "Adresa e kriptovalutës nuk është ende e zgjidhur.",
-  "copy_message_etherscan": "Kopjoni mesazhin për të nënshkruar në <1>etherscan</1>",
+  "copy_message_etherscan": "<1>{{copy}}</1> mesazh për nënshkrim në <2>etherscan</2>",
   "account": "llogari",
   "crypto_address": "adresa e kripto",
   "crypto_wallets": "Portofolitë e cryptos",
