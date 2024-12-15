@@ -7,7 +7,7 @@ import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useIsMobile from '../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 
-const totalBanners = 60;
+const totalBanners = 61;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
