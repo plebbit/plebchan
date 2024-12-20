@@ -505,6 +505,7 @@
 
 .editedInfo {
   color: var(--post-mobile-abbr-text-color);
+  font-size: var(--post-mobile-abbr-font-size);
 }
 
 .showOriginal {
