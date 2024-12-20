@@ -140,7 +140,7 @@ const Catalog = () => {
       ) : blocked ? (
         'you have blocked this board'
       ) : !hasMore && feed.length === 0 ? (
-        t('no_posts')
+        t('no_threads')
       ) : (
         hasMore && <LoadingEllipsis string={loadingStateString} />
       )}
@@ -162,7 +162,7 @@ const Catalog = () => {
       if (blocked) {
         footerContent = 'you have blocked this board';
       } else {
-        footerContent = t('no_posts');
+        footerContent = t('no_threads');
       }
     }
     if (hasMore || (subplebbitAddresses && subplebbitAddresses.length === 0)) {
@@ -171,7 +171,7 @@ const Catalog = () => {
           {subplebbitAddressesWithNewerPosts.length > 0 ? (
             <div className={styles.stateString}>
               <Trans
-                i18nKey='newer_posts_available'
+                i18nKey='newer_threads_available'
                 components={{
                   1: <span className={styles.newerPostsButton} onClick={handleNewerPostsButtonClick} />,
                 }}
@@ -184,7 +184,7 @@ const Catalog = () => {
             (weeklyFeed.length > feed.length ? (
               <div className={styles.stateString}>
                 <Trans
-                  i18nKey='more_posts_last_week'
+                  i18nKey='more_threads_last_week'
                   values={{ currentTimeFilterName }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all/catalog' : isInSubscriptionsView ? '/p/subscriptions/catalog' : `/p/${subplebbitAddress}/catalog`) + '/1w'} />,
@@ -194,7 +194,7 @@ const Catalog = () => {
             ) : (
               <div className={styles.stateString}>
                 <Trans
-                  i18nKey='more_posts_last_month'
+                  i18nKey='more_threads_last_month'
                   values={{ currentTimeFilterName }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all/catalog' : isInSubscriptionsView ? '/p/subscriptions/catalog' : `/p/${subplebbitAddress}/catalog`) + '/1m'} />,

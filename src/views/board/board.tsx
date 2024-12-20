@@ -158,7 +158,7 @@ const Board = () => {
   const Footer = () => {
     let footerContent;
     if (feed.length === 0) {
-      footerContent = t('no_posts');
+      footerContent = t('no_threads');
     }
     if (hasMore || (subplebbitAddresses && subplebbitAddresses.length === 0)) {
       footerContent = (
@@ -166,7 +166,7 @@ const Board = () => {
           {subplebbitAddressesWithNewerPosts.length > 0 ? (
             <div className={styles.morePostsSuggestion}>
               <Trans
-                i18nKey='newer_posts_available'
+                i18nKey='newer_threads_available'
                 components={{
                   1: <span className={styles.newerPostsButton} onClick={handleNewerPostsButtonClick} />,
                 }}
@@ -179,7 +179,7 @@ const Board = () => {
             (weeklyFeed.length > feed.length ? (
               <div className={styles.morePostsSuggestion}>
                 <Trans
-                  i18nKey='more_posts_last_week'
+                  i18nKey='more_threads_last_week'
                   values={{ currentTimeFilterName }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1w'} />,
@@ -189,7 +189,7 @@ const Board = () => {
             ) : (
               <div className={styles.morePostsSuggestion}>
                 <Trans
-                  i18nKey='more_posts_last_month'
+                  i18nKey='more_threads_last_month'
                   values={{ currentTimeFilterName }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1m'} />,
