@@ -163,6 +163,20 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
 
   const contentPrefix = `c/${parentCid && Plebbit.getShortCid(parentCid)}\n`;
 
+  // enable spellcheck after the prefix is set
+  useEffect(() => {
+    if (showReplyModal && textRef.current) {
+      textRef.current.spellcheck = false;
+      textRef.current.value = contentPrefix + (selectedText || '');
+
+      setTimeout(() => {
+        if (textRef.current) {
+          textRef.current.spellcheck = true;
+        }
+      }, 100);
+    }
+  }, [showReplyModal, contentPrefix, selectedText]);
+
   const handleContentInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     if (!value.startsWith(contentPrefix)) {
@@ -245,16 +259,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
           />
         </div>
         <div className={styles.content}>
-          <textarea
-            cols={48}
-            rows={4}
-            wrap='soft'
-            ref={textRef}
-            spellCheck={false}
-            defaultValue={contentPrefix + selectedText}
-            onInput={handleContentInput}
-            onChange={handleContentChange}
-          />
+          <textarea cols={48} rows={4} wrap='soft' ref={textRef} spellCheck={true} onInput={handleContentInput} onChange={handleContentChange} />
         </div>
         {!(isInAllView || isInSubscriptionsView) && offlineAlert}
         <div className={styles.offlineAlert}></div>
