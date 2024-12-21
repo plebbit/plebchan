@@ -490,6 +490,9 @@
 
 .highlight {
   background: var(--reply-highlight-background-color) !important;
+  border: var(--reply-highlight-border) !important;
+  border-left: var(--reply-highlight-border-left, revert) !important;
+  border-top: var(--reply-highlight-border-top, revert) !important;
 }
 
 .replyQuotePreview {
