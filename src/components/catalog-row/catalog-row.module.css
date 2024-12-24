@@ -13,7 +13,11 @@
   padding: 10px 0 3px 0;
   vertical-align: top;
   display: inline-block;
+}
+
+.postContent {
   overflow: hidden;
+  max-height: 155px;
 }
 
 .large {
@@ -145,4 +149,15 @@
 
 .postPreview .capcode {
   color: var(--catalog-post-preview-author-capcode-color);
+}
+
+.xmasHat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  left: -10px;
+  margin-top: -55px;
+  z-index: 999;
+  box-shadow: none !important;
 }
