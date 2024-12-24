@@ -43,6 +43,30 @@
   opacity: 0.5;
 }
 
+.xmasHatWrapper {
+  position: relative;
+}
+
+.xmasHat {
+  position: absolute;
+  pointer-events: none;
+  top: -80px;
+  left: 0;
+  z-index: 9999;
+}
+
+@media (max-width: 640px) {
+  .xmasHat {
+    width: 100px;
+    top: -20px;
+    left: -15px;
+  }
+}
+
+.xmasHat img {
+  border: none;
+}
+
 /* clearfix to contain float elements */
 .postDesktop::after {
   content: "";

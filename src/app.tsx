@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useAccountComments } from '@plebbit/plebbit-react-hooks';
+import { initSnow, removeSnow, shouldShowSnow } from './lib/snow';
 import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
 import useTheme from './hooks/use-theme';
@@ -19,6 +20,7 @@ import ChallengeModal from './components/challenge-modal';
 import PostForm from './components/post-form';
 import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
+import useSpecialThemeStore from './stores/use-special-theme-store';
 
 const ValidateRouteParams = () => {
   const { accountCommentIndex, timeFilterName } = useParams();
@@ -50,6 +52,17 @@ const BoardLayout = () => {
   const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const pendingPost = useAccountComment({ commentIndex: accountCommentIndex ? parseInt(accountCommentIndex) : undefined });
+
+  // Christmas theme
+  const { isEnabled: isSpecialEnabled } = useSpecialThemeStore();
+  useEffect(() => {
+    if (isSpecialEnabled) {
+      initSnow({ flakeCount: 150 });
+    }
+    return () => {
+      removeSnow();
+    };
+  }, [isSpecialEnabled]);
 
   // force rerender of post form when navigating between pages, except when opening settings modal in current view
   const key = location.pathname.endsWith('/settings')

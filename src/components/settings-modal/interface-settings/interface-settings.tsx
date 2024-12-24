@@ -8,6 +8,7 @@ import _ from 'lodash';
 import useInterfaceSettingsStore from '../../../stores/use-interface-settings-store';
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import useExpandedMediaStore from '../../../stores/use-expanded-media-store';
+import useSpecialThemeStore from '../../../stores/use-special-theme-store';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -69,19 +70,33 @@ const CheckForUpdates = () => {
 
 const Style = () => {
   const [theme, setTheme] = useTheme();
+  const { isEnabled, setIsEnabled } = useSpecialThemeStore();
+  const today = new Date();
+  const month = today.getMonth();
+  const day = today.getDate();
+  const isChristmas = month === 11 && (day === 24 || day === 25);
 
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTheme(e.target.value);
+    const newTheme = e.target.value;
+
+    if (newTheme === 'special') {
+      setIsEnabled(true);
+      setTheme('tomorrow');
+    } else {
+      setIsEnabled(false);
+      setTheme(newTheme);
+    }
   };
 
   return (
-    <select className={styles.themeSettings} value={theme} onChange={handleThemeChange}>
+    <select className={styles.themeSettings} value={isEnabled ? 'special' : theme} onChange={handleThemeChange}>
       <option value='yotsuba'>Yotsuba</option>
       <option value='yotsuba-b'>Yotsuba B</option>
       <option value='futaba'>Futaba</option>
       <option value='burichan'>Burichan</option>
       <option value='tomorrow'>Tomorrow</option>
       <option value='photon'>Photon</option>
+      {isChristmas && <option value='special'>Special</option>}
     </select>
   );
 };

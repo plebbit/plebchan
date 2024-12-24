@@ -19,6 +19,7 @@ import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { shouldShowSnow } from '../../lib/snow';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -262,48 +263,51 @@ const Board = () => {
   }, [title, shortAddress, subplebbitAddress]);
 
   return (
-    <div className={styles.content}>
-      {location.pathname.endsWith('/settings') && <SettingsModal />}
-      {activeCid && threadCid && postSubplebbitAddress && (
-        <ReplyModal
-          closeModal={closeModal}
-          parentCid={activeCid}
-          postCid={threadCid}
-          scrollY={scrollY}
-          showReplyModal={showReplyModal}
-          subplebbitAddress={postSubplebbitAddress}
-        />
-      )}
-      {((description && description.length > 0) || isInAllView) && (
-        <SubplebbitDescription
-          avatarUrl={suggested?.avatarUrl}
-          subplebbitAddress={subplebbitAddress}
-          createdAt={createdAt}
-          description={description}
-          replyCount={isInAllView ? 0 : rules?.length > 0 ? 1 : 0}
-          shortAddress={shortAddress}
-          title={title}
-        />
-      )}
-      {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-      <Virtuoso
-        increaseViewportBy={{ bottom: 1200, top: 1200 }}
-        totalCount={combinedFeed.length}
-        data={combinedFeed}
-        itemContent={(index, post) => {
-          const { deleted, locked, removed } = post || {};
-          const isThreadClosed = deleted || locked || removed;
+    <>
+      {shouldShowSnow() && <hr />}
+      <div className={`${styles.content} ${shouldShowSnow() ? styles.garland : ''}`}>
+        {location.pathname.endsWith('/settings') && <SettingsModal />}
+        {activeCid && threadCid && postSubplebbitAddress && (
+          <ReplyModal
+            closeModal={closeModal}
+            parentCid={activeCid}
+            postCid={threadCid}
+            scrollY={scrollY}
+            showReplyModal={showReplyModal}
+            subplebbitAddress={postSubplebbitAddress}
+          />
+        )}
+        {((description && description.length > 0) || isInAllView) && (
+          <SubplebbitDescription
+            avatarUrl={suggested?.avatarUrl}
+            subplebbitAddress={subplebbitAddress}
+            createdAt={createdAt}
+            description={description}
+            replyCount={isInAllView ? 0 : rules?.length > 0 ? 1 : 0}
+            shortAddress={shortAddress}
+            title={title}
+          />
+        )}
+        {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
+        <Virtuoso
+          increaseViewportBy={{ bottom: 1200, top: 1200 }}
+          totalCount={combinedFeed.length}
+          data={combinedFeed}
+          itemContent={(index, post) => {
+            const { deleted, locked, removed } = post || {};
+            const isThreadClosed = deleted || locked || removed;
 
-          return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
-        }}
-        useWindowScroll={true}
-        components={{ Footer }}
-        endReached={loadMore}
-        ref={virtuosoRef}
-        restoreStateFrom={lastVirtuosoState}
-        initialScrollTop={lastVirtuosoState?.scrollTop}
-      />
-    </div>
+            return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
+          }}
+          useWindowScroll={true}
+          components={{ Footer }}
+          endReached={loadMore}
+          ref={virtuosoRef}
+          restoreStateFrom={lastVirtuosoState}
+          initialScrollTop={lastVirtuosoState?.scrollTop}
+        />
+      </div>
+    </>
   );
 };
 

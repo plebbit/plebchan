@@ -23,6 +23,7 @@ import ReplyQuotePreview from '../reply-quote-preview';
 import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import _ from 'lodash';
+import { shouldShowSnow } from '../../lib/snow';
 
 const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
@@ -400,7 +401,13 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
           )}
           <div className={showReplies ? styles.thread : styles.quotePreview}>
             <div className={styles.postContainer}>
-              <div className={styles.postOp} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
+              <div
+                className={`${styles.postOp} ${shouldShowSnow() ? styles.xmasHatWrapper : ''}`}
+                data-cid={cid}
+                data-author-address={author?.shortAddress}
+                data-post-cid={postCid}
+              >
+                {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} />}
                 <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
                 <PostMessageMobile post={post} />
               </div>

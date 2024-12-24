@@ -6,6 +6,7 @@ import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useIsMobile from '../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
+import { shouldShowSnow } from '../../lib/snow';
 
 const totalBanners = 61;
 
@@ -37,7 +38,7 @@ const BoardHeader = () => {
   const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbit);
 
   return (
-    <div className={styles.content}>
+    <div className={`${styles.content} ${shouldShowSnow() ? styles.garland : ''}`}>
       {!useIsMobile() && (
         <div className={styles.bannerCnt}>
           <ImageBanner key={isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : address} />
