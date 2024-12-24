@@ -15,7 +15,7 @@ const SubplebbitStats = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { address, createdAt } = subplebbit || {};
 
-  const stats = useSubplebbitStats({ subplebbitAddress: address });
+  let stats = useSubplebbitStats({ subplebbitAddress: address });
   const { hiddenStats, toggleVisibility } = useSubplebbitStatsVisibilityStore();
   const isHidden = hiddenStats[address];
 
@@ -25,7 +25,7 @@ const SubplebbitStats = () => {
 
   const comment = useComment({ commentCid: params?.commentCid });
   const { deleted, locked, removed } = comment || {};
-  const hideStats = !stats.allPostCount || deleted || locked || removed || isInDescriptionView || isInRulesView;
+  const hideStats = deleted || locked || removed || isInDescriptionView || isInRulesView;
 
   const unixToMMDDYYYY = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
@@ -51,13 +51,13 @@ const SubplebbitStats = () => {
               <td>
                 <Trans
                   i18nKey='board_stats_hour'
-                  values={{ userCount: stats.hourActiveUserCount, postCount: stats.hourPostCount }}
+                  values={{ userCount: stats.hourActiveUserCount ?? '?', postCount: stats.hourPostCount ?? '?' }}
                   components={{ 1: <span className={styles.statValue} /> }}
                 />
                 {' / '}
                 <Trans
                   i18nKey='board_stats_day'
-                  values={{ userCount: stats.dayActiveUserCount, postCount: stats.dayPostCount }}
+                  values={{ userCount: stats.dayActiveUserCount ?? '?', postCount: stats.dayPostCount ?? '?' }}
                   components={{ 1: <span className={styles.statValue} /> }}
                 />
               </td>
@@ -66,13 +66,13 @@ const SubplebbitStats = () => {
               <td>
                 <Trans
                   i18nKey='board_stats_week'
-                  values={{ userCount: stats.weekActiveUserCount, postCount: stats.weekPostCount }}
+                  values={{ userCount: stats.weekActiveUserCount ?? '?', postCount: stats.weekPostCount ?? '?' }}
                   components={{ 1: <span className={styles.statValue} /> }}
                 />
                 {' / '}
                 <Trans
                   i18nKey='board_stats_month'
-                  values={{ userCount: stats.monthActiveUserCount, postCount: stats.monthPostCount }}
+                  values={{ userCount: stats.monthActiveUserCount ?? '?', postCount: stats.monthPostCount ?? '?' }}
                   components={{ 1: <span className={styles.statValue} /> }}
                 />
               </td>
@@ -83,7 +83,7 @@ const SubplebbitStats = () => {
                 {' / '}
                 <Trans
                   i18nKey='board_stats_all'
-                  values={{ userCount: stats.allActiveUserCount, postCount: stats.allPostCount }}
+                  values={{ userCount: stats.allActiveUserCount ?? '?', postCount: stats.allPostCount ?? '?' }}
                   components={{ 1: <span className={styles.statValue} /> }}
                 />
               </td>

@@ -19,6 +19,7 @@ import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
+import { shouldShowSnow } from '../../lib/snow';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -158,7 +159,7 @@ const Board = () => {
   const Footer = () => {
     let footerContent;
     if (feed.length === 0) {
-      footerContent = t('no_posts');
+      footerContent = t('no_threads');
     }
     if (hasMore || (subplebbitAddresses && subplebbitAddresses.length === 0)) {
       footerContent = (
@@ -166,7 +167,7 @@ const Board = () => {
           {subplebbitAddressesWithNewerPosts.length > 0 ? (
             <div className={styles.morePostsSuggestion}>
               <Trans
-                i18nKey='newer_posts_available'
+                i18nKey='newer_threads_available'
                 components={{
                   1: <span className={styles.newerPostsButton} onClick={handleNewerPostsButtonClick} />,
                 }}
@@ -179,7 +180,7 @@ const Board = () => {
             (weeklyFeed.length > feed.length ? (
               <div className={styles.morePostsSuggestion}>
                 <Trans
-                  i18nKey='more_posts_last_week'
+                  i18nKey='more_threads_last_week'
                   values={{ currentTimeFilterName }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1w'} />,
@@ -189,7 +190,7 @@ const Board = () => {
             ) : (
               <div className={styles.morePostsSuggestion}>
                 <Trans
-                  i18nKey='more_posts_last_month'
+                  i18nKey='more_threads_last_month'
                   values={{ currentTimeFilterName }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1m'} />,
@@ -262,48 +263,51 @@ const Board = () => {
   }, [title, shortAddress, subplebbitAddress]);
 
   return (
-    <div className={styles.content}>
-      {location.pathname.endsWith('/settings') && <SettingsModal />}
-      {activeCid && threadCid && postSubplebbitAddress && (
-        <ReplyModal
-          closeModal={closeModal}
-          parentCid={activeCid}
-          postCid={threadCid}
-          scrollY={scrollY}
-          showReplyModal={showReplyModal}
-          subplebbitAddress={postSubplebbitAddress}
-        />
-      )}
-      {((description && description.length > 0) || isInAllView) && (
-        <SubplebbitDescription
-          avatarUrl={suggested?.avatarUrl}
-          subplebbitAddress={subplebbitAddress}
-          createdAt={createdAt}
-          description={description}
-          replyCount={isInAllView ? 0 : rules?.length > 0 ? 1 : 0}
-          shortAddress={shortAddress}
-          title={title}
-        />
-      )}
-      {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-      <Virtuoso
-        increaseViewportBy={{ bottom: 1200, top: 1200 }}
-        totalCount={combinedFeed.length}
-        data={combinedFeed}
-        itemContent={(index, post) => {
-          const { deleted, locked, removed } = post || {};
-          const isThreadClosed = deleted || locked || removed;
+    <>
+      {shouldShowSnow() && <hr />}
+      <div className={`${styles.content} ${shouldShowSnow() ? styles.garland : ''}`}>
+        {location.pathname.endsWith('/settings') && <SettingsModal />}
+        {activeCid && threadCid && postSubplebbitAddress && (
+          <ReplyModal
+            closeModal={closeModal}
+            parentCid={activeCid}
+            postCid={threadCid}
+            scrollY={scrollY}
+            showReplyModal={showReplyModal}
+            subplebbitAddress={postSubplebbitAddress}
+          />
+        )}
+        {((description && description.length > 0) || isInAllView) && (
+          <SubplebbitDescription
+            avatarUrl={suggested?.avatarUrl}
+            subplebbitAddress={subplebbitAddress}
+            createdAt={createdAt}
+            description={description}
+            replyCount={isInAllView ? 0 : rules?.length > 0 ? 1 : 0}
+            shortAddress={shortAddress}
+            title={title}
+          />
+        )}
+        {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
+        <Virtuoso
+          increaseViewportBy={{ bottom: 1200, top: 1200 }}
+          totalCount={combinedFeed.length}
+          data={combinedFeed}
+          itemContent={(index, post) => {
+            const { deleted, locked, removed } = post || {};
+            const isThreadClosed = deleted || locked || removed;
 
-          return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
-        }}
-        useWindowScroll={true}
-        components={{ Footer }}
-        endReached={loadMore}
-        ref={virtuosoRef}
-        restoreStateFrom={lastVirtuosoState}
-        initialScrollTop={lastVirtuosoState?.scrollTop}
-      />
-    </div>
+            return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
+          }}
+          useWindowScroll={true}
+          components={{ Footer }}
+          endReached={loadMore}
+          ref={virtuosoRef}
+          restoreStateFrom={lastVirtuosoState}
+          initialScrollTop={lastVirtuosoState?.scrollTop}
+        />
+      </div>
+    </>
   );
 };
 

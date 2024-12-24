@@ -175,6 +175,8 @@
   /* reply highlight */
   --reply-highlight-background-color: #f0c0b0;
   --reply-highlight-border: 1px solid #d99f91;
+  --reply-double-highlight-background-color: #e8a690;
+  --reply-double-highlight-border: 1px solid #d99f91;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;
@@ -382,6 +384,8 @@
   /* reply highlight */
   --reply-highlight-background-color: #d6bad0;
   --reply-highlight-border: 1px solid #ba9dbf;
+  --reply-double-highlight-background-color: #bfa6ba;
+  --reply-double-highlight-border: 1px solid #ba9dbf;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;
@@ -564,6 +568,7 @@
 
   /* reply highlight */
   --reply-highlight-background-color: #f0c0b0;
+  --reply-double-highlight-background-color: #e8a690;
 
   /* settings modal */
   --settings-modal-background-color: #f0e0d6;
@@ -748,6 +753,7 @@
 
   /* reply highlight */
   --reply-highlight-background-color: #d6bad0;
+  --reply-double-highlight-background-color: #bfa6ba;
 
   /* settings modal */
   --settings-modal-background-color: #d6daf0;
@@ -962,6 +968,10 @@
   --reply-highlight-border: 1px solid #111;
   --reply-highlight-border-left: 1px solid #111;
   --reply-highlight-border-top: 1px solid #111;
+  --reply-double-highlight-background-color: #111;
+  --reply-double-highlight-border: 1px solid #111;
+  --reply-double-highlight-border-left: 1px solid #111;
+  --reply-double-highlight-border-top: 1px solid #111;
 
   /* settings modal */
   --settings-modal-font-size: 14px;
@@ -1154,6 +1164,10 @@
   --reply-highlight-border: 1px solid #ccc;
   --reply-highlight-border-left: 1px solid #ccc;
   --reply-highlight-border-top: 1px solid #ccc;
+  --reply-double-highlight-background-color: #bbb;
+  --reply-double-highlight-border: 1px solid #ccc;
+  --reply-double-highlight-border-left: 1px solid #ccc;
+  --reply-double-highlight-border-top: 1px solid #ccc;
 
   /* reply modal */
   --reply-modal-field-input-border: 1px solid #aaa;

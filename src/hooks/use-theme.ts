@@ -6,6 +6,7 @@ import useDefaultSubplebbits from './use-default-subplebbits';
 import useInitialTheme from './use-initial-theme';
 import { nsfwTags } from '../views/home/home';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import useSpecialThemeStore from '../stores/use-special-theme-store';
 
 const themeClasses = ['yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon'];
 
@@ -23,6 +24,7 @@ const useTheme = (): [string, (theme: string) => void] => {
   const pendingPostCommentIndex = pendingPostParams?.accountCommentIndex ? parseInt(pendingPostParams.accountCommentIndex) : undefined;
   const pendingPost = useAccountComment({ commentIndex: pendingPostCommentIndex });
   const pendingPostSubplebbitAddress = pendingPost?.subplebbitAddress;
+  const { isEnabled, setIsEnabled } = useSpecialThemeStore();
 
   const setThemeStore = useThemeStore((state) => state.setTheme);
   const getTheme = useThemeStore((state) => state.getTheme);
@@ -32,10 +34,39 @@ const useTheme = (): [string, (theme: string) => void] => {
   const initialTheme = useInitialTheme(pendingPostSubplebbitAddress);
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
 
+  const isInAllView = isAllView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+
+  // Check for Christmas and initialize special theme if needed
+  useEffect(() => {
+    const today = new Date();
+    const month = today.getMonth();
+    const day = today.getDate();
+    const isChristmas = month === 11 && (day === 24 || day === 25);
+    const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
+
+    if (isChristmas && isEnabled === null && subplebbitAddress && !isInAllView && !isInSubscriptionsView) {
+      setIsEnabled(true);
+      setCurrentTheme('tomorrow');
+      updateThemeClass('tomorrow');
+    }
+  }, [isEnabled, setIsEnabled, params, pendingPostSubplebbitAddress, location.pathname, isInAllView, isInSubscriptionsView]);
+
   const getCurrentTheme = useCallback(() => {
+    const { isEnabled } = useSpecialThemeStore.getState();
     const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
     const isInAllView = isAllView(location.pathname);
     const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+
+    // Always use yotsuba for home page
+    if (location.pathname === '/') {
+      return 'yotsuba';
+    }
+
+    // If special theme is enabled, use tomorrow
+    if (isEnabled) {
+      return 'tomorrow';
+    }
 
     let storedTheme = null;
     if (isInAllView || isInSubscriptionsView) {

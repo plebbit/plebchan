@@ -16,6 +16,7 @@ import styles from './post.module.css';
 export interface PostProps {
   index?: number;
   isHidden?: boolean;
+  hasThumbnail?: boolean;
   post?: any;
   postReplyCount?: number;
   reply?: any;

@@ -33,10 +33,20 @@ const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
   targetElements.forEach((element) => {
     const htmlElement = element as HTMLElement;
     if (isInViewport(htmlElement)) {
-      htmlElement.classList.add('highlight');
+      const hasHighlight = Array.from(htmlElement.classList).some((className) => className.includes('highlight') && !className.includes('double-highlight'));
+      if (hasHighlight) {
+        console.log('contains highlight');
+        htmlElement.classList.remove('highlight');
+        htmlElement.classList.add('double-highlight');
+      } else {
+        console.log("doesn't contain highlight", htmlElement.classList);
+        htmlElement.classList.remove('double-highlight');
+        htmlElement.classList.add('highlight');
+      }
       anyInView = true;
     } else {
-      htmlElement.classList.remove('highlight');
+      // If not in view, remove both classes
+      htmlElement.classList.remove('highlight', 'double-highlight');
     }
   });
 
@@ -112,6 +122,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
       const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
       targetElements.forEach((element) => {
         element.classList.remove('highlight');
+        element.classList.remove('double-highlight');
       });
     }
     setHoveredCid(null);
@@ -215,6 +226,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
       const targetElements = document.querySelectorAll(`[data-cid="${cid}"]`);
       targetElements.forEach((element) => {
         element.classList.remove('highlight');
+        element.classList.remove('double-highlight');
       });
     }
     setHoveredCid(null);

@@ -43,6 +43,30 @@
   opacity: 0.5;
 }
 
+.xmasHatWrapper {
+  position: relative;
+}
+
+.xmasHat {
+  position: absolute;
+  pointer-events: none;
+  top: -80px;
+  left: 0;
+  z-index: 9999;
+}
+
+@media (max-width: 640px) {
+  .xmasHat {
+    width: 100px;
+    top: -20px;
+    left: -15px;
+  }
+}
+
+.xmasHat img {
+  border: none;
+}
+
 /* clearfix to contain float elements */
 .postDesktop::after {
   content: "";
@@ -160,7 +184,6 @@
 
 .postDesktop .postMessage, .replyDesktop .postMessage {
   padding: 1em 40px;
-  overflow: hidden;
   word-break: break-word;
 }
 
@@ -334,7 +357,6 @@
 .postMobile .postMessage {
   padding: 10px;
   font-size: var(--post-mobile-content-font-size);
-  overflow: hidden;
   word-break: break-word;
 }
 
@@ -492,6 +514,9 @@
 
 .highlight {
   background: var(--reply-highlight-background-color) !important;
+  border: var(--reply-highlight-border) !important;
+  border-left: var(--reply-highlight-border-left, revert) !important;
+  border-top: var(--reply-highlight-border-top, revert) !important;
 }
 
 .replyQuotePreview {
@@ -507,6 +532,7 @@
 
 .editedInfo {
   color: var(--post-mobile-abbr-text-color);
+  font-size: var(--post-mobile-abbr-font-size);
 }
 
 .showOriginal {
