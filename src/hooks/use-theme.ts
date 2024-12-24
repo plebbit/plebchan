@@ -42,7 +42,7 @@ const useTheme = (): [string, (theme: string) => void] => {
     const today = new Date();
     const month = today.getMonth();
     const day = today.getDate();
-    const isChristmas = month === 11 && (day === 24 || day === 25);
+    const isChristmas = (month === 11 && day >= 24) || (month === 0 && day <= 5);
     const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
 
     if (isChristmas && isEnabled === null && subplebbitAddress && !isInAllView && !isInSubscriptionsView) {
