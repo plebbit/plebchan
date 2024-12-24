@@ -1,6 +1,6 @@
 .content {
   margin-bottom: 15px;
-  overflow-x: hidden;
+  overflow: visible;
 }
 
 .error {

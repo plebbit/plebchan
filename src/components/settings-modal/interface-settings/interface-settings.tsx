@@ -74,7 +74,7 @@ const Style = () => {
   const today = new Date();
   const month = today.getMonth();
   const day = today.getDate();
-  const isChristmas = month === 11 && (day === 24 || day === 25);
+  const isChristmas = (month === 11 && day >= 24) || (month === 0 && day <= 5);
 
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newTheme = e.target.value;

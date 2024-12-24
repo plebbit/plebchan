@@ -1,7 +1,3 @@
-.content {
-  overflow: hidden;
-}
-
 .footer {
   color: var(--post-mobile-abbr-text-color);
   padding: 15px 0 20px 5px;

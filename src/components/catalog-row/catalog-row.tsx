@@ -19,6 +19,7 @@ import styles from './catalog-row.module.css';
 import _ from 'lodash';
 import { ContentPreview } from '../../views/home/popular-threads-box';
 import { useCommentMediaInfo } from '../../hooks/use-comment-media-info';
+import { shouldShowSnow } from '../../lib/snow';
 
 interface CatalogPostMediaProps {
   commentMediaInfo: any;
@@ -228,27 +229,30 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               <span className={styles.hiddenThumbnail} />
             </Link>
           ) : hasThumbnail ? (
-            <Link to={postLink}>
-              <div
-                className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
-                ref={refs.setReference}
-                onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
-                onMouseLeave={() => {
-                  setShowPortal(false);
-                  if (timeoutRef.current) {
-                    clearTimeout(timeoutRef.current);
-                    timeoutRef.current = null;
-                  }
-                }}
-              >
-                {threadIcons}
-                {spoiler ? (
-                  <img src='assets/spoiler.png' alt='' />
-                ) : (
-                  <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
-                )}
-              </div>
-            </Link>
+            <>
+              {shouldShowSnow() && hasThumbnail && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
+              <Link to={postLink}>
+                <div
+                  className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}
+                  ref={refs.setReference}
+                  onMouseOver={() => (timeoutRef.current = setTimeout(() => setShowPortal(true), 250))}
+                  onMouseLeave={() => {
+                    setShowPortal(false);
+                    if (timeoutRef.current) {
+                      clearTimeout(timeoutRef.current);
+                      timeoutRef.current = null;
+                    }
+                  }}
+                >
+                  {threadIcons}
+                  {spoiler ? (
+                    <img src='assets/spoiler.png' alt='' />
+                  ) : (
+                    <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
+                  )}
+                </div>
+              </Link>
+            </>
           ) : (
             threadIcons
           )}
@@ -264,7 +268,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
               <PostMenuDesktop post={post} />
             </span>
           </div>
-          {(showOPComment || isTextOnlyThread) && (hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>)}
+          <div className={styles.postContent}>{(showOPComment || isTextOnlyThread) && (hasThumbnail ? postContent : <Link to={postLink}>{postContent}</Link>)}</div>
         </div>
       </div>
       {(hoveredCid === cid || isDescription) &&
