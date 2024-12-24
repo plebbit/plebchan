@@ -71,6 +71,10 @@ hr {
   .highlight {
     background: var(--reply-highlight-background-color) !important;
   }
+
+  .double-highlight {
+    background: var(--reply-double-highlight-background-color) !important;
+  }
 }
 
 @media (min-width: 640px) {
@@ -91,5 +95,12 @@ hr {
     border: var(--reply-highlight-border) !important;
     border-left: var(--reply-highlight-border-left, revert) !important;
     border-top: var(--reply-highlight-border-top, revert) !important;
+  }
+
+  .double-highlight {
+    background: var(--reply-double-highlight-background-color) !important;
+    border: var(--reply-double-highlight-border) !important;
+    border-left: var(--reply-double-highlight-border-left, revert) !important;
+    border-top: var(--reply-double-highlight-border-top, revert) !important;
   }
 }

@@ -28,6 +28,7 @@ import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import { create } from 'zustand';
 import _ from 'lodash';
+import { shouldShowSnow } from '../../lib/snow';
 
 interface ShowOmittedRepliesState {
   showOmittedReplies: Record<string, boolean>;
@@ -213,15 +214,15 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   );
 };
 
-const PostMedia = ({ post }: PostProps) => {
+const PostMedia = ({ post, hasThumbnail }: PostProps) => {
   const { t } = useTranslation();
-  const { link, spoiler, cid } = post || {};
+  const { spoiler, cid } = post || {};
 
   // Reset state by remounting component when post changes
-  return <PostMediaContent key={cid} post={post} link={link} spoiler={spoiler} t={t} />;
+  return <PostMediaContent key={cid} post={post} hasThumbnail={hasThumbnail} spoiler={spoiler} t={t} />;
 };
 
-const PostMediaContent = ({ post, link, spoiler, t }: { post: any; link: string; spoiler: boolean; t: any }) => {
+const PostMediaContent = ({ post, hasThumbnail, spoiler, t }: { post: any; hasThumbnail: boolean | undefined; spoiler: boolean; t: any }) => {
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const commentMediaInfo = useCommentMediaInfo(post);
   const { url } = commentMediaInfo || {};
@@ -235,7 +236,6 @@ const PostMediaContent = ({ post, link, spoiler, t }: { post: any; link: string;
   }
 
   const embedUrl = url && new URL(url);
-  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const mediaDimensions = getMediaDimensions(commentMediaInfo);
@@ -451,6 +451,9 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
     replyCount: 0,
   };
 
+  const commentMediaInfo = useCommentMediaInfo(post);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+
   return (
     <div className={styles.postDesktop}>
       {showReplies ? (
@@ -466,8 +469,9 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
             <span className={`${styles.hideButton} ${hidden ? styles.unhideThread : styles.hideThread}`} onClick={hidden ? unhide : hide} />
           </span>
         )}
-        <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
-          {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
+        <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid} className={shouldShowSnow() && hasThumbnail ? styles.xmasHatWrapper : ''}>
+          {shouldShowSnow() && hasThumbnail && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
+          {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} hasThumbnail={hasThumbnail} />}
           <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && !(deleted || removed) && <div className={styles.spacer} />}
           {!isHidden && <PostMessage post={post} />}
