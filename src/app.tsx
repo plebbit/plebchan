@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useAccountComments } from '@plebbit/plebbit-react-hooks';
-import { initSnow, removeSnow, shouldShowSnow } from './lib/snow';
+import { initSnow, removeSnow } from './lib/snow';
 import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
 import useTheme from './hooks/use-theme';

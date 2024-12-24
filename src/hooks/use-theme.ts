@@ -50,7 +50,7 @@ const useTheme = (): [string, (theme: string) => void] => {
       setCurrentTheme('tomorrow');
       updateThemeClass('tomorrow');
     }
-  }, [isEnabled, setIsEnabled, params, pendingPostSubplebbitAddress, location.pathname]);
+  }, [isEnabled, setIsEnabled, params, pendingPostSubplebbitAddress, location.pathname, isInAllView, isInSubscriptionsView]);
 
   const getCurrentTheme = useCallback(() => {
     const { isEnabled } = useSpecialThemeStore.getState();

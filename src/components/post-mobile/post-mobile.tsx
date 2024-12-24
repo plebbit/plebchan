@@ -407,7 +407,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 data-author-address={author?.shortAddress}
                 data-post-cid={postCid}
               >
-                {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} />}
+                {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
                 <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
                 <PostMessageMobile post={post} />
               </div>

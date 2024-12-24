@@ -216,7 +216,7 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
 
 const PostMedia = ({ post, hasThumbnail }: PostProps) => {
   const { t } = useTranslation();
-  const { link, spoiler, cid } = post || {};
+  const { spoiler, cid } = post || {};
 
   // Reset state by remounting component when post changes
   return <PostMediaContent key={cid} post={post} hasThumbnail={hasThumbnail} spoiler={spoiler} t={t} />;
@@ -470,7 +470,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           </span>
         )}
         <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid} className={shouldShowSnow() && hasThumbnail ? styles.xmasHatWrapper : ''}>
-          {shouldShowSnow() && hasThumbnail && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} />}
+          {shouldShowSnow() && hasThumbnail && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
           {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} hasThumbnail={hasThumbnail} />}
           <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && !(deleted || removed) && <div className={styles.spacer} />}
