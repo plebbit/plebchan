@@ -56,7 +56,7 @@ const BoardLayout = () => {
   // Christmas theme
   const { isEnabled: isSpecialEnabled } = useSpecialThemeStore();
   useEffect(() => {
-    if (isSpecialEnabled) {
+    if (isSpecialEnabled && !isMobile) {
       initSnow({ flakeCount: 150 });
     }
     return () => {
