@@ -1,9 +1,19 @@
+## [0.3.3](https://github.com/plebbit/plebchan/compare/v0.3.2...v0.3.3) (2024-12-25)
+
+
+### Bug Fixes
+
+* snow effect shouldn't show on mobile ([5284b3d](https://github.com/plebbit/plebchan/commit/5284b3da1be0807ef86ab0d97627e58c8e4784ae))
+
+
+
 ## [0.3.2](https://github.com/plebbit/plebchan/compare/v0.3.1...v0.3.2) (2024-12-24)
 
 
 ### Bug Fixes
 
 * **avatar settings:** add timestamp field to let users add existing signature ([16c8f39](https://github.com/plebbit/plebchan/commit/16c8f39add8231df00c261891ee80ca312fc66a2))
+* **board stats:** while stats load, show ? as values instead of showing nothing (causing displacement) ([c40c9e4](https://github.com/plebbit/plebchan/commit/c40c9e4df559bda5528e415e066940388e798005))
 * **electron:** auto restart script more reliable ([b05c6ed](https://github.com/plebbit/plebchan/commit/b05c6ed94f61fa94fd233033c4be056a55bc1e23))
 * **electron:** ipfs proxy should have error status code ([d608a46](https://github.com/plebbit/plebchan/commit/d608a46b00303dc2a5f0b7c9a4e40f62f6beaf1d))
 * **ellipsis animation:** dots could appear cut off and cause displacement changing width of string ([09505a6](https://github.com/plebbit/plebchan/commit/09505a62313fcf26de4a1e84d7f705eee714bd33))
@@ -15,6 +25,7 @@
 * **post:** deleted or removed post could show reply form ([0043e2b](https://github.com/plebbit/plebchan/commit/0043e2bdb6f86ac82278889ee18a290abd5f24fa))
 * **post:** error was displayed incorrectly ([fd8b3ea](https://github.com/plebbit/plebchan/commit/fd8b3ea2e9d16aeb81d08e73a2d7d6394568c555))
 * **post:** image could flicker when clicking it to expand it ([077b3bc](https://github.com/plebbit/plebchan/commit/077b3bc9efe25938bb3798424fe7156ba840b9b0))
+* **post:** long text content wouldn't wrap around images ([0944094](https://github.com/plebbit/plebchan/commit/094409439215f7b42ab7b9eef704e96375149cb0))
 * **reply:** don't show backlink for deleted or removed reply ([d6d2831](https://github.com/plebbit/plebchan/commit/d6d2831b465ffbedb08294f4d894feb69ac0391a))
 * **settings:** crypto address setting would show error for an already set address ([cc660e9](https://github.com/plebbit/plebchan/commit/cc660e9527468de04c1b826c9d97b863ebd2f2eb))
 * **time filter:** last visit time filter could be a duplicate in dropdown ([9ee6966](https://github.com/plebbit/plebchan/commit/9ee6966c26c848ad8c6bab4117f6316b90e29e9c))
@@ -22,8 +33,16 @@
 
 ### Features
 
+* add christmas theme ([eb3a630](https://github.com/plebbit/plebchan/commit/eb3a630cc360a650e178eee6e8d5aad85ee93197))
 * **electron:** add http routers to electron ([521d26b](https://github.com/plebbit/plebchan/commit/521d26bbe387794008a5309b9e30eadb418c9299))
 * **p/all:** improve design of "show more posts" button in feed footer ([1cc8d9a](https://github.com/plebbit/plebchan/commit/1cc8d9acbe86d059564622a8908f61bbc1abdb53))
+* **post:** enable highlighting an already highlighted post by using a different color ([5a498cb](https://github.com/plebbit/plebchan/commit/5a498cbcb656704c2147c08ab942b45636498165))
+* **reply modal:** add spellcheck for the content, excluding the c/cid at the top ([9ec308b](https://github.com/plebbit/plebchan/commit/9ec308bcc28215ce8346dee55892337da79e16db))
+
+
+### Performance Improvements
+
+* **index.html:** preload UI assets ([73f9d9e](https://github.com/plebbit/plebchan/commit/73f9d9eb53221183f1d058b0f4a4b748322e37c9))
 
 
 
