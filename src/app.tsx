@@ -62,7 +62,7 @@ const BoardLayout = () => {
     return () => {
       removeSnow();
     };
-  }, [isSpecialEnabled]);
+  }, [isSpecialEnabled, isMobile]);
 
   // force rerender of post form when navigating between pages, except when opening settings modal in current view
   const key = location.pathname.endsWith('/settings')
