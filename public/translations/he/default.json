@@ -251,7 +251,7 @@
   "loading_subplebbit": "טוען subplebbit",
   "avatar_warning": "אין באפשרותך לפרסם עם תמונת פרופיל בזמן שמצב אנונימי מופעל. תוכל לבטל זאת בהגדרות חשבון Plebbit שלך.",
   "last_bumped": "הבום האחרון",
-  "threads_without_images_tip": "אל תציג נושאים ללא תמונות",
+  "threads_without_images_tip": "הצג רק נושאים שמקשרים למדיה שניתן להטמיע",
   "hide_gore_boards_tip": "אל תציג נושאים מלוחות עם תג \"גורה\"",
   "hide_adult_boards_tip": "אל תציג נושאים מלוחות עם תג \"מבוגר\"",
   "fit_expanded_images_to_screen": "התאם את התמונות המורחבות למסך",

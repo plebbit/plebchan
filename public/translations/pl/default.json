@@ -251,7 +251,7 @@
   "loading_subplebbit": "Ładowanie subplebbit",
   "avatar_warning": "Nie możesz publikować z awatarem, gdy tryb anonimowy jest włączony. Możesz go wyłączyć w ustawieniach swojego konta Plebbit.",
   "last_bumped": "Ostatni bump",
-  "threads_without_images_tip": "Nie wyświetlaj wątków bez obrazów",
+  "threads_without_images_tip": "Wyświetlaj tylko wątki, które linkują do mediów, które można osadzić",
   "hide_gore_boards_tip": "Nie wyświetlaj wątków z forów z tagiem \"gore\"",
   "hide_adult_boards_tip": "Nie wyświetlaj wątków z forów z tagiem \"adult\"",
   "fit_expanded_images_to_screen": "Dopasuj rozszerzone obrazy do ekranu",

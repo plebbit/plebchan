@@ -251,7 +251,7 @@
   "loading_subplebbit": "Naglo-load ng subplebbit",
   "avatar_warning": "Hindi ka makakapag-post gamit ang avatar habang naka-on ang anon mode. Maaari mo itong i-off sa iyong mga setting ng Plebbit Account.",
   "last_bumped": "Huling bump",
-  "threads_without_images_tip": "Huwag magpakita ng mga thread na walang mga larawan",
+  "threads_without_images_tip": "Ipakita lamang ang mga thread na nagli-link sa mga embeddable na media",
   "hide_gore_boards_tip": "Huwag magpakita ng mga thread mula sa mga board na may \"gore\" na tag",
   "hide_adult_boards_tip": "Huwag magpakita ng mga thread mula sa mga board na may \"adult\" na tag",
   "fit_expanded_images_to_screen": "I-adjust ang mga pinalawak na larawan sa screen",

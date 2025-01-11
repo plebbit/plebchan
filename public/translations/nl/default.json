@@ -251,7 +251,7 @@
   "loading_subplebbit": "Subplebbit laden",
   "avatar_warning": "Je kunt niet met een avatar posten terwijl de anonieme modus aan staat. Je kunt het uitschakelen in de instellingen van je Plebbit-account.",
   "last_bumped": "Laatste bump",
-  "threads_without_images_tip": "Toon geen threads zonder afbeeldingen",
+  "threads_without_images_tip": "Toon alleen threads die naar inbedbare media linken",
   "hide_gore_boards_tip": "Toon geen threads van boards met de \"gore\" tag",
   "hide_adult_boards_tip": "Toon geen threads van boards met de \"adult\" tag",
   "fit_expanded_images_to_screen": "Pas uitgebreide afbeeldingen aan het scherm aan",

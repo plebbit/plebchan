@@ -251,7 +251,7 @@
   "loading_subplebbit": "Laddar subplebbit",
   "avatar_warning": "Du kan inte posta med en avatar när anonym läge är aktiverat. Du kan stänga av det i inställningarna för ditt Plebbit-konto.",
   "last_bumped": "Senaste bump",
-  "threads_without_images_tip": "Visa inte trådar utan bilder",
+  "threads_without_images_tip": "Visa endast trådar som länkar till inbäddbara medier",
   "hide_gore_boards_tip": "Visa inte trådar från forum med taggen \"gore\"",
   "hide_adult_boards_tip": "Visa inte trådar från forum med taggen \"adult\"",
   "fit_expanded_images_to_screen": "Anpassa utvidgade bilder till skärmen",

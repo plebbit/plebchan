@@ -251,7 +251,7 @@
   "loading_subplebbit": "Indlæser subplebbit",
   "avatar_warning": "Du kan ikke poste med et avatar, mens anonym tilstand er tændt. Du kan slukke det i dine Plebbit-kontoindstillinger.",
   "last_bumped": "Sidste bumpet",
-  "threads_without_images_tip": "Vis ikke tråde uden billeder",
+  "threads_without_images_tip": "Vis kun tråde, der linker til indlejrbare medier",
   "hide_gore_boards_tip": "Vis ikke tråde fra boards med \"gore\" tagget",
   "hide_adult_boards_tip": "Vis ikke tråde fra boards med \"adult\" tagget",
   "fit_expanded_images_to_screen": "Tilpas udvidede billeder til skærmen",

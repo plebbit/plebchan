@@ -251,7 +251,7 @@
   "loading_subplebbit": "Subplebbit betöltése",
   "avatar_warning": "Nem posztolhatsz avatarral, míg az anon mód be van kapcsolva. Kikapcsolhatod a Plebbit-fiókod beállításaiban.",
   "last_bumped": "Utolsó bump",
-  "threads_without_images_tip": "Ne jelenítsd meg a képek nélküli szálakat",
+  "threads_without_images_tip": "Csak azokat a szálakat jelenítse meg, amelyek beágyazható médiára mutatnak",
   "hide_gore_boards_tip": "Ne jelenítsd meg a \"gore\" címkével rendelkező fórumok szálait",
   "hide_adult_boards_tip": "Ne jelenítsd meg a \"adult\" címkével rendelkező fórumok szálait",
   "fit_expanded_images_to_screen": "Illeszkedjen a kibővített képekhez a képernyőhöz",

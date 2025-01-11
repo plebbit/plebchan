@@ -251,7 +251,7 @@
   "loading_subplebbit": "Načítání subplebbit",
   "avatar_warning": "Nemůžete zveřejňovat s avatarem, když je zapnutý anonymní režim. Můžete ho vypnout v nastavení svého účtu Plebbit.",
   "last_bumped": "Poslední bump",
-  "threads_without_images_tip": "Nezobrazovat vlákna bez obrázků",
+  "threads_without_images_tip": "Zobrazit pouze vlákna, která odkazují na vložitelné médium",
   "hide_gore_boards_tip": "Nezobrazovat vlákna z fór se značkou \"gore\"",
   "hide_adult_boards_tip": "Nezobrazovat vlákna z fór se značkou \"adult\"",
   "fit_expanded_images_to_screen": "Přizpůsobit rozšířené obrázky obrazovce",

@@ -251,7 +251,7 @@
   "loading_subplebbit": "Đang tải subplebbit",
   "avatar_warning": "Bạn không thể đăng với hình đại diện khi chế độ ẩn danh đang bật. Bạn có thể tắt nó trong cài đặt Tài khoản Plebbit của mình.",
   "last_bumped": "Bump gần đây nhất",
-  "threads_without_images_tip": "Không hiển thị chủ đề không có hình ảnh",
+  "threads_without_images_tip": "Chỉ hiển thị các chủ đề liên kết đến phương tiện có thể nhúng",
   "hide_gore_boards_tip": "Không hiển thị chủ đề từ các diễn đàn có thẻ \"gore\"",
   "hide_adult_boards_tip": "Không hiển thị chủ đề từ các diễn đàn có thẻ \"adult\"",
   "fit_expanded_images_to_screen": "Phù hợp hình ảnh mở rộng với màn hình",

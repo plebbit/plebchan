@@ -251,7 +251,7 @@
   "loading_subplebbit": "Lade subplebbit",
   "avatar_warning": "Sie können nicht mit einem Avatar posten, während der Anonymmodus aktiviert ist. Sie können ihn in den Einstellungen Ihres Plebbit-Kontos deaktivieren.",
   "last_bumped": "Zuletzt hochgeladen",
-  "threads_without_images_tip": "Keine Threads ohne Bilder anzeigen",
+  "threads_without_images_tip": "Nur Threads anzeigen, die auf einbettbare Medien verlinken",
   "hide_gore_boards_tip": "Zeige keine Threads von Boards mit dem \"gore\"-Tag",
   "hide_adult_boards_tip": "Zeige keine Threads von Boards mit dem \"adult\"-Tag",
   "fit_expanded_images_to_screen": "Erweiterte Bilder an den Bildschirm anpassen",

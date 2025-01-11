@@ -251,7 +251,7 @@
   "loading_subplebbit": "Chargement de subplebbit",
   "avatar_warning": "Vous ne pouvez pas publier avec un avatar pendant que le mode anonyme est activé. Vous pouvez le désactiver dans les paramètres de votre compte Plebbit.",
   "last_bumped": "Dernière élévation",
-  "threads_without_images_tip": "Ne pas afficher les sujets sans images",
+  "threads_without_images_tip": "Afficher uniquement les fils qui lient à des médias intégrables",
   "hide_gore_boards_tip": "Ne pas afficher les fils des forums avec le tag \"gore\"",
   "hide_adult_boards_tip": "Ne pas afficher les fils des forums avec le tag \"adult\"",
   "fit_expanded_images_to_screen": "Ajuster les images agrandies à l'écran",

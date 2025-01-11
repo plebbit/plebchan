@@ -251,7 +251,7 @@
   "loading_subplebbit": "กำลังโหลด subplebbit",
   "avatar_warning": "คุณไม่สามารถโพสต์ด้วยอวาตาร์ในขณะที่โหมดอนาโนเป็นเปิดอยู่ คุณสามารถปิดได้ในการตั้งค่าบัญชี Plebbit ของคุณ",
   "last_bumped": "เพิ่มล่าสุด",
-  "threads_without_images_tip": "ไม่แสดงกระทู้ที่ไม่มีรูปภาพ",
+  "threads_without_images_tip": "แสดงเฉพาะกระทู้ที่เชื่อมโยงไปยังสื่อที่สามารถฝังได้",
   "hide_gore_boards_tip": "ไม่แสดงกระทู้จากบอร์ดที่มีแท็ก \"gore\"",
   "hide_adult_boards_tip": "ไม่แสดงกระทู้จากบอร์ดที่มีแท็ก \"adult\"",
   "fit_expanded_images_to_screen": "ปรับขนาดภาพที่ขยายให้พอดีกับหน้าจอ",

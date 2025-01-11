@@ -251,7 +251,7 @@
   "loading_subplebbit": "Caricamento subplebbit",
   "avatar_warning": "Non puoi postare con un avatar mentre la modalità anonima è attiva. Puoi disattivarla nelle impostazioni del tuo account Plebbit.",
   "last_bumped": "Ultimo Bump",
-  "threads_without_images_tip": "Non mostrare thread senza immagini",
+  "threads_without_images_tip": "Mostra solo i thread che linkano a media incorporabili",
   "hide_gore_boards_tip": "Non mostrare i thread dei board con il tag \"gore\"",
   "hide_adult_boards_tip": "Non mostrare i thread dei board con il tag \"adult\"",
   "fit_expanded_images_to_screen": "Adatta le immagini espanse allo schermo",
