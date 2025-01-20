@@ -6,11 +6,10 @@ import usePublishReplyStore from '../stores/use-publish-reply-store';
 const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; subplebbitAddress: string; postCid?: string }) => {
   const parentCid = cid;
   const account = useAccount();
-  const { anonMode } = useAnonMode();
+  const { anonMode } = useAnonMode(postCid);
 
   const { author, signer, content, link, spoiler, publishCommentOptions } = usePublishReplyStore((state) => ({
-    author: state.author[parentCid] || (account?.author ? { displayName: account.author.displayName || undefined } : undefined),
-    displayName: state.displayName[parentCid] || account?.author?.displayName,
+    author: state.author[parentCid],
     signer: state.signer[parentCid] || undefined,
     content: state.content[parentCid] || undefined,
     link: state.link[parentCid] || undefined,
@@ -21,47 +20,54 @@ const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; sub
   const setReplyStore = usePublishReplyStore((state) => state.setReplyStore);
   const resetReplyStore = usePublishReplyStore((state) => state.resetReplyStore);
 
+  const createBaseOptions = useCallback(() => {
+    const baseOptions: Comment = {
+      subplebbitAddress,
+      parentCid,
+      postCid: postCid ?? parentCid,
+      content,
+      link,
+      spoiler,
+    };
+
+    const authorOptions = {
+      displayName: author?.displayName,
+      address: anonMode ? signer?.address : account?.author?.address,
+    };
+
+    baseOptions.author = authorOptions;
+
+    if (anonMode) {
+      baseOptions.signer = signer;
+    }
+
+    return baseOptions;
+  }, [anonMode, author, content, link, parentCid, postCid, signer, spoiler, subplebbitAddress, account]);
+
   const setPublishReplyOptions = useCallback(
-    (options: Comment) => {
-      const newOptions: Comment = {
-        subplebbitAddress,
-        parentCid,
-        postCid: postCid ?? parentCid,
-        content: options.content === '' ? undefined : options.content ?? content,
-        link: options.link === '' ? undefined : options.link ?? link,
-        spoiler: options.spoiler ?? spoiler,
-        displayName: options.displayName === '' ? undefined : options.displayName ?? author?.displayName ?? account?.author?.displayName,
-      };
+    (options: Partial<Comment>) => {
+      const baseOptions = createBaseOptions();
+      const sanitizedOptions = Object.entries(options).reduce((acc, [key, value]) => {
+        acc[key] = value === '' ? undefined : value;
+        return acc;
+      }, {} as Partial<Comment>);
 
-      if ('displayName' in options) {
-        newOptions.displayName = options.displayName === '' ? undefined : options.displayName;
-      }
-
-      if (anonMode) {
-        newOptions.signer = signer || options.signer;
-        newOptions.author = {
-          ...(author || {}),
-          address: newOptions.signer?.address,
-          ...('displayName' in options && { displayName: options.displayName }),
-        };
-      } else {
-        newOptions.signer = undefined;
-        newOptions.author = {
-          address: account?.author?.address,
-          ...('displayName' in options && { displayName: options.displayName }),
-        };
-      }
-
+      const newOptions = { ...baseOptions, ...sanitizedOptions };
       setReplyStore(newOptions);
     },
-    [subplebbitAddress, parentCid, author, signer, content, link, spoiler, setReplyStore, anonMode, account, postCid],
+    [createBaseOptions, setReplyStore],
   );
 
   const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
 
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 
-  return { setPublishReplyOptions, resetPublishReplyOptions, replyIndex: index, publishReply: publishComment, setReplyStore };
+  return {
+    setPublishReplyOptions,
+    resetPublishReplyOptions,
+    replyIndex: index,
+    publishReply: publishComment,
+  };
 };
 
 export default usePublishReply;
