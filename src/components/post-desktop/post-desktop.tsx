@@ -405,12 +405,15 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
+  const commentMediaInfo = useCommentMediaInfo(post);
+  const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
+
   return (
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
       <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} />
-        {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} />}
+        {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} hasThumbnail={hasThumbnail} />}
         {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <PostMessage post={post} />}
       </div>
     </div>
