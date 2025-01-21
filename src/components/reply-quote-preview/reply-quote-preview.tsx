@@ -35,11 +35,9 @@ const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
     if (isInViewport(htmlElement)) {
       const hasHighlight = Array.from(htmlElement.classList).some((className) => className.includes('highlight') && !className.includes('double-highlight'));
       if (hasHighlight) {
-        console.log('contains highlight');
         htmlElement.classList.remove('highlight');
         htmlElement.classList.add('double-highlight');
       } else {
-        console.log("doesn't contain highlight", htmlElement.classList);
         htmlElement.classList.remove('double-highlight');
         htmlElement.classList.add('highlight');
       }
