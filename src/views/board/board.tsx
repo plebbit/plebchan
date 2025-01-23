@@ -293,12 +293,7 @@ const Board = () => {
           increaseViewportBy={{ bottom: 1200, top: 1200 }}
           totalCount={combinedFeed.length}
           data={combinedFeed}
-          itemContent={(index, post) => {
-            const { deleted, locked, removed } = post || {};
-            const isThreadClosed = deleted || locked || removed;
-
-            return <Post index={index} post={post} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />;
-          }}
+          itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
           useWindowScroll={true}
           components={{ Footer }}
           endReached={loadMore}
