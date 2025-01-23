@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createAccount, deleteAccount, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from '@plebbit/plebbit-react-hooks';
 import stringify from 'json-stringify-pretty-compact';
@@ -26,9 +26,7 @@ const AnonMode = () => {
 const AccountSettings = () => {
   const { t } = useTranslation();
   const account = useAccount();
-  const { accounts } = useAccounts();
   const [text, setText] = useState('');
-  const [switchToLastAccount, setSwitchToLastAccount] = useState(false);
 
   const accountJson = useMemo(
     () => stringify({ account: { ...account, plebbit: undefined, karma: undefined, plebbitReactOptions: undefined, unreadNotificationCount: undefined } }),
@@ -39,16 +37,20 @@ const AccountSettings = () => {
     setText(accountJson);
   }, [accountJson]);
 
+  const { accounts } = useAccounts();
+  const switchToNewAccountRef = useRef(false);
+
   useEffect(() => {
-    if (switchToLastAccount && accounts.length > 0) {
+    if (switchToNewAccountRef.current && accounts.length > 0) {
       const lastAccount = accounts[accounts.length - 1];
       setActiveAccount(lastAccount.name);
-      setSwitchToLastAccount(false);
+      switchToNewAccountRef.current = false;
     }
-  }, [accounts, switchToLastAccount]);
+  }, [accounts, setActiveAccount]);
 
-  const _createAccount = async () => {
+  const handleCreateAccount = async () => {
     try {
+      switchToNewAccountRef.current = true;
       await createAccount();
     } catch (error) {
       if (error instanceof Error) {
@@ -58,7 +60,6 @@ const AccountSettings = () => {
         console.error('An unknown error occurred:', error);
       }
     }
-    setSwitchToLastAccount(true);
   };
 
   const _deleteAccount = (accountName: string) => {
@@ -89,7 +90,7 @@ const AccountSettings = () => {
     }
   };
 
-  const _exportAccount = async () => {
+  const handleExportAccount = async () => {
     try {
       const accountString = await exportAccount();
       const accountObject = JSON.parse(accountString);
@@ -123,8 +124,7 @@ const AccountSettings = () => {
     }
   };
 
-  const _importAccount = async () => {
-    // Create a file input element
+  const handleImportAccount = async () => {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = '.json';
@@ -141,15 +141,34 @@ const AccountSettings = () => {
         // Read the file content
         const reader = new FileReader();
         reader.onload = async (e) => {
-          const fileContent = e.target!.result; // Non-null assertion
-          if (typeof fileContent !== 'string') {
-            throw new Error('File content is not a string.');
+          try {
+            const fileContent = e.target!.result;
+            if (typeof fileContent !== 'string') {
+              throw new Error('File content is not a string.');
+            }
+            const newAccount = JSON.parse(fileContent);
+            await importAccount(fileContent);
+
+            // Store the imported account's address
+            if (newAccount.account?.author?.address) {
+              localStorage.setItem('importedAccountAddress', newAccount.account.author.address);
+            }
+
+            // Set the new account as active before reloading
+            if (newAccount.account?.name) {
+              await setActiveAccount(newAccount.account.name);
+            }
+
+            alert(`Imported ${newAccount.account?.name}`);
+            window.location.reload();
+          } catch (error) {
+            if (error instanceof Error) {
+              alert(error.message);
+              console.log(error);
+            } else {
+              console.error('An unknown error occurred:', error);
+            }
           }
-          const newAccount = JSON.parse(fileContent);
-          await importAccount(fileContent);
-          setSwitchToLastAccount(true);
-          alert(`Imported ${newAccount.account?.name}`);
-          window.location.reload();
         };
         reader.readAsText(file);
       } catch (error) {
@@ -178,10 +197,10 @@ const AccountSettings = () => {
         <select value={account?.name} onChange={(e) => setActiveAccount(e.target.value)}>
           {accountsOptions}
         </select>
-        <button className={styles.createAccount} onClick={_createAccount}>
+        <button className={styles.createAccount} onClick={handleCreateAccount}>
           {t('create')}
         </button>{' '}
-        <button onClick={_importAccount}>{t('import')}</button> <button onClick={_exportAccount}>{t('export')}</button>
+        <button onClick={handleImportAccount}>{t('import')}</button> <button onClick={handleExportAccount}>{t('export')}</button>
         <div className={styles.warning}>
           {t('stored_locally', {
             location: window.isElectron ? 'this desktop app' : isAndroid ? 'this mobile app' : window.location.hostname,
