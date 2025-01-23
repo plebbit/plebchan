@@ -5,6 +5,7 @@ import stringify from 'json-stringify-pretty-compact';
 import styles from './account-settings.module.css';
 import useAnonModeStore from '../../../stores/use-anon-mode-store';
 import { Capacitor } from '@capacitor/core';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const isAndroid = Capacitor.getPlatform() === 'android';
 
@@ -25,6 +26,7 @@ const AnonMode = () => {
 
 const AccountSettings = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const account = useAccount();
   const [text, setText] = useState('');
 
@@ -39,6 +41,7 @@ const AccountSettings = () => {
 
   const { accounts } = useAccounts();
   const switchToNewAccountRef = useRef(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (switchToNewAccountRef.current && accounts.length > 0) {
@@ -160,6 +163,11 @@ const AccountSettings = () => {
             }
 
             alert(`Imported ${newAccount.account?.name}`);
+
+            const currentPath = location.pathname;
+            if (!currentPath.includes('/settings#account-settings')) {
+              navigate(`${currentPath}#account-settings`, { replace: true });
+            }
             window.location.reload();
           } catch (error) {
             if (error instanceof Error) {
