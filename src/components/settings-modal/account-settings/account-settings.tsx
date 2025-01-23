@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createAccount, deleteAccount, exportAccount, importAccount, setAccount, setActiveAccount, useAccount, useAccounts } from '@plebbit/plebbit-react-hooks';
 import stringify from 'json-stringify-pretty-compact';
@@ -49,7 +49,7 @@ const AccountSettings = () => {
       setActiveAccount(lastAccount.name);
       switchToNewAccountRef.current = false;
     }
-  }, [accounts, setActiveAccount]);
+  }, [accounts]);
 
   const handleCreateAccount = async () => {
     try {
