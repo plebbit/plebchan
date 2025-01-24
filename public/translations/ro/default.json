@@ -251,7 +251,7 @@
   "loading_subplebbit": "Se încarcă subplebbit",
   "avatar_warning": "Nu poți publica cu un avatar în timp ce modul anonim este activat. Poți să-l dezactivezi în setările contului tău Plebbit.",
   "last_bumped": "Ultima creștere",
-  "threads_without_images_tip": "Nu afișați subiecte fără imagini",
+  "threads_without_images_tip": "Afișați doar discuțiile care sunt legătura către media încorporabilă",
   "hide_gore_boards_tip": "Nu afișați discuțiile de pe forumuri cu eticheta \"gore\"",
   "hide_adult_boards_tip": "Nu afișați discuțiile de pe forumuri cu eticheta \"adult\"",
   "fit_expanded_images_to_screen": "Se potrivesc imaginile extinse pe ecran",

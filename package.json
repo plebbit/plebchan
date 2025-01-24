@@ -8,7 +8,7 @@
   "dependencies": {
     "@capacitor/app": "6.0.1",
     "@floating-ui/react": "0.26.1",
-    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#be1a1f317db7c4096f0d1c79452e13452bf9df78",
+    "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#6d35eb3b4dc84f8fdcbb46d95e3b1d78f1750b5f",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "13.0.0",
     "@testing-library/user-event": "13.2.1",
@@ -35,7 +35,7 @@
     "react-router-dom": "6.16.0",
     "react-router-hash-link": "2.4.3",
     "react-scripts": "5.0.1",
-    "react-virtuoso": "4.7.8",
+    "react-virtuoso": "4.12.3",
     "rehype-sanitize": "5.0.1",
     "remark-gfm": "3.0.1",
     "remark-supersub": "1.0.0",

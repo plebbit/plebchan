@@ -251,7 +251,7 @@
   "loading_subplebbit": "Subplebbit Yükleniyor",
   "avatar_warning": "Anonim mod açıken avatar ile paylaşım yapamazsınız. Bunu Plebbit Hesap ayarlarınızdan kapatabilirsiniz.",
   "last_bumped": "Son bump",
-  "threads_without_images_tip": "Resimsiz gönderileri görüntüleme",
+  "threads_without_images_tip": "Sadece gömme medya bağlantısı olan gönderileri görüntüle",
   "hide_gore_boards_tip": "\"gore\" etiketi olan boardlardan gönderileri göstermeyin",
   "hide_adult_boards_tip": "\"adult\" etiketi olan boardlardan gönderileri göstermeyin",
   "fit_expanded_images_to_screen": "Genişletilmiş resimleri ekrana sığdır",

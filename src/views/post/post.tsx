@@ -30,6 +30,14 @@ export const Post = ({ post, showAllReplies = false, showReplies = true, openRep
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   const isMobile = useIsMobile();
 
+  const { deleted, locked, removed } = post || {};
+  const isThreadClosed = deleted || locked || removed;
+
+  const { t } = useTranslation();
+  if (isThreadClosed) {
+    openReplyModal = () => alert(t('thread_closed_alert'));
+  }
+
   let comment = post;
 
   // handle pending mod or author edit

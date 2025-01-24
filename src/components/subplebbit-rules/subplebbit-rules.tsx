@@ -10,7 +10,7 @@ interface RulesPostProps {
 
 const SubplebbitRules = ({ subplebbitAddress, createdAt, rules }: RulesPostProps) => {
   const { t } = useTranslation();
-  const content = rules.map((rule, index) => `${index + 1}. ${rule}`).join('\n');
+  const content = rules?.map((rule, index) => `${index + 1}. ${rule}`).join('\n');
   const post = {
     isRules: true,
     subplebbitAddress,

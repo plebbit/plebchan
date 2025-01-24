@@ -251,7 +251,7 @@
   "loading_subplebbit": "subplebbitを読み込んでいます",
   "avatar_warning": "アバターを使用して投稿することはできません。匿名モードがオンになっている間は、Plebbitアカウントの設定でオフにできます。",
   "last_bumped": "最後のバンプ",
-  "threads_without_images_tip": "画像のないスレッドを表示しない",
+  "threads_without_images_tip": "埋め込むことができるメディアへのリンクを持つスレッドのみを表示",
   "hide_gore_boards_tip": "\"gore\"タグのあるボードからスレッドを表示しない",
   "hide_adult_boards_tip": "\"adult\"タグのあるボードからスレッドを表示しない",
   "fit_expanded_images_to_screen": "拡張された画像を画面に合わせる",

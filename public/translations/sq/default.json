@@ -251,7 +251,7 @@
   "loading_subplebbit": "Po ngarkohet subplebbit",
   "avatar_warning": "Nuk mund të postoni me një avatar ndërsa është aktivizuar moda anonime. Mund ta çaktivizoni në cilësimet e llogarisë tuaj Plebbit.",
   "last_bumped": "Bumping i fundit",
-  "threads_without_images_tip": "Mos shfaqni temat pa imazhe",
+  "threads_without_images_tip": "Shfaqni vetëm temat që lidhin me media të integrueshme",
   "hide_gore_boards_tip": "Mos shfaqni temat nga forumet me etiketën \"gore\"",
   "hide_adult_boards_tip": "Mos shfaqni temat nga forumet me etiketën \"adult\"",
   "fit_expanded_images_to_screen": "Përshtatni imazhet e zgjeruara në ekran",

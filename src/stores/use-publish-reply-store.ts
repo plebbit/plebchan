@@ -28,8 +28,14 @@ const usePublishReplyStore = create<ReplyState>((set) => ({
 
   setReplyStore: (comment: Comment) =>
     set((state) => {
-      const { subplebbitAddress, parentCid, author, displayName, content, link, signer, spoiler } = comment;
-      const updatedAuthor = displayName ? { ...author, displayName } : author;
+      const { subplebbitAddress, parentCid, author, content, link, signer, spoiler } = comment;
+
+      const displayName = 'displayName' in comment ? comment.displayName || undefined : author?.displayName;
+
+      const baseAuthor = author ? { ...author } : {};
+      delete baseAuthor.displayName;
+
+      const updatedAuthor = displayName ? { ...baseAuthor, displayName } : baseAuthor;
 
       const publishCommentOptions: PublishCommentOptions = {
         subplebbitAddress,
@@ -48,7 +54,7 @@ const usePublishReplyStore = create<ReplyState>((set) => ({
         },
       };
 
-      if (updatedAuthor) {
+      if (Object.keys(updatedAuthor).length > 0) {
         publishCommentOptions.author = updatedAuthor;
       }
 

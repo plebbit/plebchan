@@ -251,7 +251,7 @@
   "loading_subplebbit": "جارٍ تحميل subplebbit",
   "avatar_warning": "لا يمكنك النشر بصورة رمزية أثناء تفعيل وضع المجهول. يمكنك إيقافه في إعدادات حساب Plebbit الخاص بك.",
   "last_bumped": "آخر رفع",
-  "threads_without_images_tip": "لا تعرض المواضيع بدون صور",
+  "threads_without_images_tip": "عرض فقط المواضيع التي ترتبط بالوسائط القابلة للتضمين",
   "hide_gore_boards_tip": "لا تعرض المواضيع من المجالس التي تحتوي على وسم \"جور\"",
   "hide_adult_boards_tip": "لا تعرض المواضيع من المجالس التي تحتوي على وسم \"بالغ\"",
   "fit_expanded_images_to_screen": "تغيير حجم الصور الموسعة لتناسب الشاشة",

@@ -251,7 +251,7 @@
   "loading_subplebbit": "Ladataan subplebbit",
   "avatar_warning": "Et voi julkaista avatarilla, kun anonyymi tila on päällä. Voit poistaa sen käytöstä Plebbit-tilisi asetuksissa.",
   "last_bumped": "Viimeisin bump",
-  "threads_without_images_tip": "Älä näytä ketjuja ilman kuvia",
+  "threads_without_images_tip": "Näytä vain ketjut, jotka linkittävät upotettaviin medioihin",
   "hide_gore_boards_tip": "Älä näytä ketjuja taulukoista, joissa on \"gore\"-tunniste",
   "hide_adult_boards_tip": "Älä näytä ketjuja taulukoista, joissa on \"adult\"-tunniste",
   "fit_expanded_images_to_screen": "Sovita laajennettuja kuvia näyttöön",
