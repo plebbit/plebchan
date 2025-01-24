@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { Challenge as ChallengeType } from '@plebbit/plebbit-react-hooks';
@@ -51,6 +51,16 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
       onSubmit();
     }
   };
+
+  useEffect(() => {
+    const onEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', onEscapeKey);
+    return () => document.removeEventListener('keydown', onEscapeKey);
+  }, [closeModal]);
 
   // react-draggable requires a ref to the modal node
   const nodeRef = useRef(null);
