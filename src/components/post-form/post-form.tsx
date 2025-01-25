@@ -259,11 +259,12 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               placeholder={!displayName ? _.capitalize(t('anonymous')) : undefined}
               defaultValue={displayName || undefined}
               onChange={(e) => {
-                setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } });
+                const newDisplayName = e.target.value.trim() || undefined;
+                setAccount({ ...account, author: { ...account?.author, displayName: newDisplayName } });
                 if (isInPostView) {
-                  setPublishReplyOptions({ displayName: e.target.value || undefined });
+                  setPublishReplyOptions({ displayName: newDisplayName });
                 } else {
-                  setPublishPostStore({ displayName: e.target.value || undefined });
+                  setPublishPostStore({ displayName: newDisplayName });
                 }
               }}
             />
