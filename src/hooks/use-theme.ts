@@ -49,6 +49,8 @@ const useTheme = (): [string, (theme: string) => void] => {
       setIsEnabled(true);
       setCurrentTheme('tomorrow');
       updateThemeClass('tomorrow');
+    } else if (!isChristmas && isEnabled) {
+      setIsEnabled(false);
     }
   }, [isEnabled, setIsEnabled, params, pendingPostSubplebbitAddress, location.pathname, isInAllView, isInSubscriptionsView]);
 
