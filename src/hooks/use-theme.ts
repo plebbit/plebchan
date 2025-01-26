@@ -7,6 +7,7 @@ import useInitialTheme from './use-initial-theme';
 import { nsfwTags } from '../views/home/home';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import useSpecialThemeStore from '../stores/use-special-theme-store';
+import { isChristmas } from '../lib/utils/time-utils';
 
 const themeClasses = ['yotsuba', 'yotsuba-b', 'futaba', 'burichan', 'tomorrow', 'photon'];
 
@@ -39,17 +40,14 @@ const useTheme = (): [string, (theme: string) => void] => {
 
   // Check for Christmas and initialize special theme if needed
   useEffect(() => {
-    const today = new Date();
-    const month = today.getMonth();
-    const day = today.getDate();
-    const isChristmas = (month === 11 && day >= 24) || (month === 0 && day <= 5);
+    const isChristmasTime = isChristmas();
     const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
 
-    if (isChristmas && isEnabled === null && subplebbitAddress && !isInAllView && !isInSubscriptionsView) {
+    if (isChristmasTime && isEnabled === null && subplebbitAddress && !isInAllView && !isInSubscriptionsView) {
       setIsEnabled(true);
       setCurrentTheme('tomorrow');
       updateThemeClass('tomorrow');
-    } else if (!isChristmas && isEnabled) {
+    } else if (!isChristmasTime && isEnabled) {
       setIsEnabled(false);
     }
   }, [isEnabled, setIsEnabled, params, pendingPostSubplebbitAddress, location.pathname, isInAllView, isInSubscriptionsView]);
