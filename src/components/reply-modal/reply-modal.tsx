@@ -228,7 +228,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
       hasInitializedDisplayName.current = true;
       setPublishReplyOptions({ displayName });
     }
-  }, [displayName]);
+  }, [displayName, setPublishReplyOptions]);
 
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>

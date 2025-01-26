@@ -258,7 +258,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         setPublishPostStore({ displayName });
       }
     }
-  }, [displayName, isInPostView]);
+  }, [displayName, isInPostView, setPublishReplyOptions, setPublishPostStore]);
 
   return (
     <table className={styles.postFormTable}>
