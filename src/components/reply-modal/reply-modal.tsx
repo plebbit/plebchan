@@ -222,6 +222,14 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     }
   };
 
+  const hasInitializedDisplayName = useRef(false);
+  useEffect(() => {
+    if (displayName && !hasInitializedDisplayName.current) {
+      hasInitializedDisplayName.current = true;
+      setPublishReplyOptions({ displayName });
+    }
+  }, [displayName]);
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>

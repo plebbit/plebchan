@@ -248,6 +248,18 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   };
 
+  const hasInitializedDisplayName = useRef(false);
+  useEffect(() => {
+    if (displayName && !hasInitializedDisplayName.current) {
+      hasInitializedDisplayName.current = true;
+      if (isInPostView) {
+        setPublishReplyOptions({ displayName });
+      } else {
+        setPublishPostStore({ displayName });
+      }
+    }
+  }, [displayName, isInPostView]);
+
   return (
     <table className={styles.postFormTable}>
       <tbody>
