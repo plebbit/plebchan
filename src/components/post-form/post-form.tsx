@@ -401,7 +401,9 @@ const PostForm = () => {
 
   const [showForm, setShowForm] = useState(false);
 
-  const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
+  const subplebbit = useSubplebbit({ subplebbitAddress });
   const { isOffline, isOnlineStatusLoading, offlineTitle } = useIsSubplebbitOffline(subplebbit);
 
   return (
