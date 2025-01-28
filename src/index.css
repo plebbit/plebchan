@@ -26,6 +26,16 @@ hr {
   color: var(--post-greentext-color);
 }
 
+.spoilertext {
+  color: #000 !important;
+  background: #000 !important;
+  text-decoration: none;
+}
+
+.spoilertext:hover {
+  color: #fff !important;
+}
+
 .capitalize {
   text-transform: capitalize;
 }
