@@ -30,15 +30,17 @@ const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; sub
       spoiler,
     };
 
-    const authorOptions = {
-      displayName: author?.displayName,
-      address: anonMode ? signer?.address : account?.author?.address,
-    };
-
-    baseOptions.author = authorOptions;
-
     if (anonMode) {
+      baseOptions.author = {
+        address: signer?.address,
+        displayName: author?.displayName,
+      };
       baseOptions.signer = signer;
+    } else {
+      baseOptions.author = {
+        ...account?.author,
+        displayName: author?.displayName || account?.author?.displayName,
+      };
     }
 
     return baseOptions;
