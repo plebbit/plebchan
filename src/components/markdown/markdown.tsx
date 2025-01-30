@@ -125,31 +125,84 @@ const blockquoteToGreentext = () => (tree: any) => {
   });
 };
 
+const spoilerToDiv = () => (tree: any) => {
+  tree.children.forEach((node: any) => {
+    if (node.type === 'paragraph') {
+      const text = node.children.map((child: any) => child.value).join('');
+      if (text.includes('§§SPOILER_START§§')) {
+        node.type = 'span';
+        node.data = {
+          hName: 'span',
+        };
+        node.children.forEach((child: any) => {
+          if (child.type === 'text') {
+            const parts = child.value.split(/(§§SPOILER_START§§.*?§§SPOILER_END§§)/);
+            if (parts.length > 1) {
+              const newChildren = parts.map((part: string) => {
+                const spoilerMatch = part.match(/§§SPOILER_START§§(.*?)§§SPOILER_END§§/);
+                if (spoilerMatch) {
+                  return {
+                    type: 'span',
+                    data: {
+                      hName: 'span',
+                      hProperties: {
+                        className: 'spoilertext',
+                      },
+                    },
+                    children: [
+                      {
+                        type: 'text',
+                        value: spoilerMatch[1],
+                      },
+                    ],
+                  };
+                }
+                return {
+                  type: 'text',
+                  value: part,
+                };
+              });
+              node.children = newChildren;
+            }
+          }
+        });
+      }
+    }
+  });
+};
+
 interface MarkdownProps {
   content: string;
   title?: string;
 }
 
 const Markdown = ({ content, title }: MarkdownProps) => {
+  const preprocessedContent = useMemo(() => {
+    if (!content) return '';
+    return content.replace(/<spoiler>([^<]*)<\/spoiler>/g, '§§SPOILER_START§§$1§§SPOILER_END§§').replace(/<img[^>]*src=['"]([^'"]+)['"][^>]*>/gi, '$1');
+  }, [content]);
+
   const remarkPlugins: any[] = [[supersub]];
 
-  if (content && content.length <= MAX_LENGTH_FOR_GFM) {
+  if (preprocessedContent && preprocessedContent.length <= MAX_LENGTH_FOR_GFM) {
     remarkPlugins.push([remarkGfm, { singleTilde: false }]);
   }
 
   const customSchema = useMemo(
     () => ({
       ...defaultSchema,
-      tagNames: [...(defaultSchema.tagNames || []), 'div'],
+      tagNames: [...(defaultSchema.tagNames || []), 'div', 'span'],
       attributes: {
         ...defaultSchema.attributes,
         div: ['className'],
+        span: ['className'],
       },
     }),
     [],
   );
 
   remarkPlugins.push([blockquoteToGreentext]);
+  remarkPlugins.push([spoilerToDiv]);
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
@@ -162,7 +215,7 @@ const Markdown = ({ content, title }: MarkdownProps) => {
         </span>
       )}
       <ReactMarkdown
-        children={content}
+        children={preprocessedContent}
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeSanitize, customSchema]]}
         components={{
@@ -173,7 +226,10 @@ const Markdown = ({ content, title }: MarkdownProps) => {
           h4: ({ children }) => <p className={styles.header}>{children}</p>,
           h5: ({ children }) => <p className={styles.header}>{children}</p>,
           h6: ({ children }) => <p className={styles.header}>{children}</p>,
-          img: ({ src }) => <span>{src}</span>,
+          img: ({ src, alt }) => {
+            const displayText = src || alt || 'image';
+            return <span>{displayText}</span>;
+          },
           video: ({ src }) => <span>{src}</span>,
           iframe: ({ src }) => <span>{src}</span>,
           source: ({ src }) => <span>{src}</span>,

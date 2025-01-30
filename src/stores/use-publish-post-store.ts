@@ -1,4 +1,4 @@
-import { PublishCommentOptions } from '@plebbit/plebbit-react-hooks';
+import { ChallengeVerification, Comment, PublishCommentOptions } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
 import useChallengesStore from './use-challenges-store';
@@ -29,45 +29,52 @@ const usePublishPostStore = create<SubmitState>((set) => ({
   link: undefined,
   spoiler: undefined,
   publishCommentOptions: {},
-  setPublishPostStore: ({ author, displayName, signer, subplebbitAddress, title, content, link, spoiler }) =>
-    set((state) => {
-      const nextState = { ...state };
-      if (author !== undefined) nextState.author = author;
-      if (displayName !== undefined) nextState.displayName = displayName;
-      if (signer !== undefined) nextState.signer = signer;
-      if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
-      if (title !== undefined) nextState.title = title || undefined;
-      if (content !== undefined) nextState.content = content || undefined;
-      if (link !== undefined) nextState.link = link || undefined;
-      if (spoiler !== undefined) nextState.spoiler = spoiler || undefined;
+  setPublishPostStore: (comment: Comment) =>
+    set(() => {
+      const { subplebbitAddress, author, content, link, signer, spoiler, title } = comment;
+
+      const displayName = 'displayName' in comment ? comment.displayName || undefined : author?.displayName;
+
+      const baseAuthor = author ? { ...author } : {};
+      delete baseAuthor.displayName;
+
+      const updatedAuthor = displayName ? { ...baseAuthor, displayName } : baseAuthor;
 
       const publishCommentOptions: PublishCommentOptions = {
-        subplebbitAddress: nextState.subplebbitAddress,
-        title: nextState.title,
-        content: nextState.content,
-        link: nextState.link,
-        spoiler: nextState.spoiler,
+        subplebbitAddress,
+        title,
+        content,
+        link,
+        spoiler,
         onChallenge: (...args: any) => addChallenge(args),
-        onChallengeVerification: alertChallengeVerificationFailed,
+        onChallengeVerification: (challengeVerification: ChallengeVerification, comment: Comment) => {
+          alertChallengeVerificationFailed(challengeVerification, comment);
+        },
         onError: (error: Error) => {
           console.error(error);
           alert(error.message);
         },
       };
 
-      if (nextState.signer) {
-        publishCommentOptions.signer = nextState.signer;
+      if (Object.keys(updatedAuthor).length > 0) {
+        publishCommentOptions.author = updatedAuthor;
       }
 
-      if (nextState.author || nextState.displayName) {
-        publishCommentOptions.author = {
-          ...nextState.author,
-          displayName: nextState.displayName,
-        };
+      if (signer) {
+        publishCommentOptions.signer = signer;
       }
 
-      nextState.publishCommentOptions = publishCommentOptions;
-      return nextState;
+      return {
+        author: updatedAuthor,
+        displayName,
+        signer,
+        subplebbitAddress,
+        title,
+        content,
+        link,
+        spoiler,
+        publishCommentOptions,
+      };
     }),
   resetPublishPostStore: () =>
     set({

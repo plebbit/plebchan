@@ -17,8 +17,8 @@ const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; sub
     publishCommentOptions: state.publishCommentOptions[parentCid],
   }));
 
-  const setReplyStore = usePublishReplyStore((state) => state.setReplyStore);
-  const resetReplyStore = usePublishReplyStore((state) => state.resetReplyStore);
+  const setPublishReplyStore = usePublishReplyStore((state) => state.setPublishReplyStore);
+  const resetPublishReplyStore = usePublishReplyStore((state) => state.resetPublishReplyStore);
 
   const createBaseOptions = useCallback(() => {
     const baseOptions: Comment = {
@@ -30,15 +30,17 @@ const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; sub
       spoiler,
     };
 
-    const authorOptions = {
-      displayName: author?.displayName,
-      address: anonMode ? signer?.address : account?.author?.address,
-    };
-
-    baseOptions.author = authorOptions;
-
     if (anonMode) {
+      baseOptions.author = {
+        address: signer?.address,
+        displayName: author?.displayName,
+      };
       baseOptions.signer = signer;
+    } else {
+      baseOptions.author = {
+        ...account?.author,
+        displayName: author?.displayName || account?.author?.displayName,
+      };
     }
 
     return baseOptions;
@@ -53,12 +55,12 @@ const usePublishReply = ({ cid, subplebbitAddress, postCid }: { cid: string; sub
       }, {} as Partial<Comment>);
 
       const newOptions = { ...baseOptions, ...sanitizedOptions };
-      setReplyStore(newOptions);
+      setPublishReplyStore(newOptions);
     },
-    [createBaseOptions, setReplyStore],
+    [createBaseOptions, setPublishReplyStore],
   );
 
-  const resetPublishReplyOptions = useCallback(() => resetReplyStore(parentCid), [parentCid, resetReplyStore]);
+  const resetPublishReplyOptions = useCallback(() => resetPublishReplyStore(parentCid), [parentCid, resetPublishReplyStore]);
 
   const { index, publishComment } = usePublishComment(publishCommentOptions);
 

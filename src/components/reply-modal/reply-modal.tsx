@@ -47,34 +47,29 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const comment = useComment({ commentCid: postCid });
   const address = comment?.author?.address;
 
-  const hasCalledAnonAddressRef = useRef(false);
-
   const getAnonAddressForReply = useCallback(async () => {
-    if (anonMode && !hasCalledAnonAddressRef.current) {
-      hasCalledAnonAddressRef.current = true;
-      const existingSigner = await getExistingSigner(address);
-      if (existingSigner) {
+    const existingSigner = await getExistingSigner(address);
+    if (existingSigner) {
+      setPublishReplyOptions({
+        signer: existingSigner,
+        author: {
+          address: existingSigner.address,
+          displayName: displayName || undefined,
+        },
+      });
+    } else {
+      const newSigner = await getNewSigner();
+      if (newSigner) {
         setPublishReplyOptions({
-          signer: existingSigner,
+          signer: newSigner,
           author: {
-            address: existingSigner.address,
+            address: newSigner.address,
             displayName: displayName || undefined,
           },
         });
-      } else {
-        const newSigner = await getNewSigner();
-        if (newSigner) {
-          setPublishReplyOptions({
-            signer: newSigner,
-            author: {
-              address: newSigner.address,
-              displayName: displayName || undefined,
-            },
-          });
-        }
       }
     }
-  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, displayName]);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -98,9 +93,25 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
 
   useEffect(() => {
     if (anonMode) {
+      setPublishReplyOptions({
+        signer: undefined,
+        author: {
+          address: undefined,
+          displayName: displayName || undefined,
+        },
+      });
       getAnonAddressForReply();
+    } else {
+      setPublishReplyOptions({
+        signer: undefined,
+        author: {
+          ...account?.author,
+          displayName: displayName || account?.author?.displayName,
+        },
+      });
     }
-  }, [anonMode, getAnonAddressForReply]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anonMode]);
 
   useEffect(() => {
     if (typeof replyIndex === 'number') {
@@ -151,8 +162,19 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
           textRef.current.focus();
         }
       }, 0);
+
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+      };
     }
-  }, [showReplyModal]);
+  }, [showReplyModal, closeModal]);
 
   useEffect(() => {
     if (textRef.current) {
@@ -222,6 +244,14 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     }
   };
 
+  const hasInitializedDisplayName = useRef(false);
+  useEffect(() => {
+    if (displayName && !hasInitializedDisplayName.current) {
+      hasInitializedDisplayName.current = true;
+      setPublishReplyOptions({ displayName });
+    }
+  }, [displayName, setPublishReplyOptions]);
+
   const modalContent = (
     <div className={styles.container} ref={nodeRef}>
       <div className={`replyModalHandle ${styles.title}`}>
@@ -243,7 +273,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             placeholder={displayName ? undefined : _.capitalize(t('name'))}
             onChange={(e) => {
               setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } });
-              setPublishReplyOptions({ displayName: e.target.value || undefined });
+              setPublishReplyOptions({ displayName: e.target.value });
             }}
           />
         </div>
@@ -254,7 +284,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             placeholder={_.capitalize(t('link'))}
             onChange={(e) => {
               setUrl(e.target.value);
-              setPublishReplyOptions({ link: e.target.value || undefined });
+              setPublishReplyOptions({ link: e.target.value });
             }}
           />
         </div>

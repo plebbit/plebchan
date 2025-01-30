@@ -21,6 +21,19 @@ const SettingsModal = () => {
     navigate(newPath);
   };
 
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [closeModal]);
+
   const [showInterfaceSettings, setShowInterfaceSettings] = useState(false);
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [showAvatarSettings, setShowAvatarSettings] = useState(false);

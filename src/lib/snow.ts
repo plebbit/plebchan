@@ -102,5 +102,5 @@ export const shouldShowSnow = (): boolean => {
   const today = new Date();
   const month = today.getMonth();
   const day = today.getDate();
-  return (month === 11 && day >= 24) || (month === 0 && day <= 5);
+  return month === 11 && (day === 24 || day === 25);
 };

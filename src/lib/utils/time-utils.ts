@@ -68,3 +68,10 @@ export const getFormattedTimeAgo = (unixTimestamp: number): string => {
   }
   return t('time_x_years_ago', { count: Math.floor(timeDifference / 31104000) });
 };
+
+export const isChristmas = (): boolean => {
+  const today = new Date();
+  const month = today.getMonth();
+  const day = today.getDate();
+  return month === 11 && (day === 24 || day === 25);
+};

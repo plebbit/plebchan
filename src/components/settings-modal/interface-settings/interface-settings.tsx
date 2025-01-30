@@ -9,6 +9,7 @@ import useInterfaceSettingsStore from '../../../stores/use-interface-settings-st
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import useExpandedMediaStore from '../../../stores/use-expanded-media-store';
 import useSpecialThemeStore from '../../../stores/use-special-theme-store';
+import { isChristmas } from '../../../lib/utils/time-utils';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -71,10 +72,7 @@ const CheckForUpdates = () => {
 const Style = () => {
   const [theme, setTheme] = useTheme();
   const { isEnabled, setIsEnabled } = useSpecialThemeStore();
-  const today = new Date();
-  const month = today.getMonth();
-  const day = today.getDate();
-  const isChristmas = (month === 11 && day >= 24) || (month === 0 && day <= 5);
+  const isChristmasTime = isChristmas();
 
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newTheme = e.target.value;
@@ -96,7 +94,7 @@ const Style = () => {
       <option value='burichan'>Burichan</option>
       <option value='tomorrow'>Tomorrow</option>
       <option value='photon'>Photon</option>
-      {isChristmas && <option value='special'>Special</option>}
+      {isChristmasTime && <option value='special'>Special</option>}
     </select>
   );
 };
