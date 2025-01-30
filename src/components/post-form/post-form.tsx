@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Comment, setAccount, useAccount, useAccountComment, useComment, useEditedComment, usePublishComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, setAccount, useAccount, useAccountComment, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { getHasThumbnail, getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { formatMarkdown } from '../../lib/utils/post-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
 import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import usePublishReply from '../../hooks/use-publish-reply';
-import styles from './post-form.module.css';
-import _ from 'lodash';
-import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
-import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useAnonMode from '../../hooks/use-anon-mode';
-import usePublishPostStore from '../../stores/use-publish-post-store';
+import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
+import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
+import usePublishPost from '../../hooks/use-publish-post';
+import usePublishReply from '../../hooks/use-publish-reply';
 import FileUploader from '../../plugins/file-uploader';
+import styles from './post-form.module.css';
 import { Capacitor } from '@capacitor/core';
+import _ from 'lodash';
 
 const isAndroid = Capacitor.getPlatform() === 'android';
 
@@ -36,12 +36,14 @@ export const LinkTypePreviewer = ({ link }: { link: string }) => {
 
 const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid: string }) => {
   const { t } = useTranslation();
+  const params = useParams();
   const account = useAccount();
+  const [url, setUrl] = useState('');
   const author = account?.author || {};
   const { displayName } = author || {};
-  const [url, setUrl] = useState('');
-  const { publishCommentOptions, setPublishPostStore, resetPublishPostStore } = usePublishPostStore();
-  const { index, publishComment } = usePublishComment(publishCommentOptions);
+  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
+  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
+  const { setPublishPostOptions, postIndex, publishPost, publishPostOptions, resetPublishPostOptions } = usePublishPost({ subplebbitAddress });
 
   const textRef = useRef<HTMLTextAreaElement>(null);
   const urlRef = useRef<HTMLInputElement>(null);
@@ -69,23 +71,18 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   };
 
-  const hasCalledAnonAddressRef = useRef(false);
-
   const getAnonAddressForPost = useCallback(async () => {
     if (anonMode) {
-      if (!hasCalledAnonAddressRef.current) {
-        hasCalledAnonAddressRef.current = true;
-        const newSigner = (await getNewSigner()) || {};
-        setPublishPostStore({
-          signer: newSigner,
-          author: {
-            address: newSigner.address,
-            displayName: displayName || undefined,
-          },
-        });
-      }
+      const newSigner = (await getNewSigner()) || {};
+      setPublishPostOptions({
+        signer: newSigner,
+        author: {
+          address: newSigner.address,
+          displayName: displayName || undefined,
+        },
+      });
     } else {
-      setPublishPostStore({
+      setPublishPostOptions({
         signer: undefined,
         author: {
           address: account?.author?.address,
@@ -93,7 +90,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         },
       });
     }
-  }, [anonMode, getNewSigner, account, setPublishPostStore, displayName]);
+  }, [anonMode, getNewSigner, account, setPublishPostOptions, displayName]);
 
   const onPublishPost = () => {
     const currentTitle = subjectRef.current?.value.trim() || '';
@@ -109,7 +106,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       return;
     }
 
-    if ((isInAllView || isInSubscriptionsView) && !publishCommentOptions.subplebbitAddress) {
+    if ((isInAllView || isInSubscriptionsView) && !publishPostOptions.subplebbitAddress) {
       alert(t('no_board_selected_warning'));
       return;
     }
@@ -126,31 +123,22 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       }
     }
 
-    publishComment();
+    publishPost();
   };
-
-  const params = useParams();
-  const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
-  const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
-  useEffect(() => {
-    if (subplebbitAddress) {
-      setPublishPostStore({ subplebbitAddress });
-    }
-  }, [subplebbitAddress, setPublishPostStore]);
 
   // redirect to pending page when pending comment is created
   const navigate = useNavigate();
   useEffect(() => {
-    if (typeof index === 'number') {
-      resetPublishPostStore();
+    if (typeof postIndex === 'number') {
+      resetPublishPostOptions();
       resetFields();
-      navigate(`/profile/${index}`);
+      navigate(`/profile/${postIndex}`);
     }
-  }, [index, resetPublishPostStore, navigate]);
+  }, [postIndex, resetPublishPostOptions, navigate]);
 
   useEffect(() => {
     if (anonMode) {
-      setPublishPostStore({
+      setPublishPostOptions({
         signer: undefined,
         author: {
           address: undefined,
@@ -159,7 +147,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       });
       getAnonAddressForPost();
     } else {
-      setPublishPostStore({
+      setPublishPostOptions({
         signer: undefined,
         author: {
           ...account?.author,
@@ -176,19 +164,18 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const { setPublishReplyOptions, resetPublishReplyOptions, replyIndex, publishReply } = usePublishReply({ cid, subplebbitAddress });
 
   const getAnonAddressForReply = useCallback(async () => {
-    if (anonMode && !hasCalledAnonAddressRef.current) {
-      hasCalledAnonAddressRef.current = true;
-      const existingSigner = await getExistingSigner(address);
-      if (existingSigner) {
-        setPublishReplyOptions({
-          signer: existingSigner,
-          author: {
-            address: existingSigner.address,
-            displayName: displayName || undefined,
-          },
-        });
-      } else {
-        const newSigner = await getNewSigner();
+    const existingSigner = await getExistingSigner(address);
+    if (existingSigner) {
+      setPublishReplyOptions({
+        signer: existingSigner,
+        author: {
+          address: existingSigner.address,
+          displayName: displayName || undefined,
+        },
+      });
+    } else {
+      const newSigner = await getNewSigner();
+      if (newSigner) {
         setPublishReplyOptions({
           signer: newSigner,
           author: {
@@ -198,11 +185,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         });
       }
     }
-  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, anonMode, displayName]);
+  }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, displayName]);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const formattedContent = formatMarkdown(e.target.value);
-    isInPostView ? setPublishReplyOptions({ content: formattedContent }) : setPublishPostStore({ content: formattedContent });
+    isInPostView ? setPublishReplyOptions({ content: formattedContent }) : setPublishPostOptions({ content: formattedContent });
   };
 
   const onPublishReply = () => {
@@ -238,7 +225,8 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         getAnonAddressForPost();
       }
     }
-  }, [anonMode, getAnonAddressForPost, getAnonAddressForReply, isInPostView]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anonMode, isInPostView]);
 
   // on android, auto upload file to image hosting sites with open api
   const [isUploading, setIsUploading] = useState(false);
@@ -253,7 +241,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
         if (urlRef.current) {
           urlRef.current.value = result.url;
         }
-        isInPostView ? setPublishReplyOptions({ link: result.url || undefined }) : setPublishPostStore({ link: result.url || undefined });
+        isInPostView ? setPublishReplyOptions({ link: result.url || undefined }) : setPublishPostOptions({ link: result.url || undefined });
         if (result.fileName) {
           setUploadedFileName(result.fileName);
         }
@@ -277,10 +265,10 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       if (isInPostView) {
         setPublishReplyOptions({ displayName });
       } else {
-        setPublishPostStore({ displayName });
+        setPublishPostOptions({ displayName });
       }
     }
-  }, [displayName, isInPostView, setPublishReplyOptions, setPublishPostStore]);
+  }, [displayName, isInPostView, setPublishReplyOptions, setPublishPostOptions]);
 
   return (
     <table className={styles.postFormTable}>
@@ -298,7 +286,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
                 if (isInPostView) {
                   setPublishReplyOptions({ displayName: newDisplayName });
                 } else {
-                  setPublishPostStore({ displayName: newDisplayName });
+                  setPublishPostOptions({ displayName: newDisplayName });
                 }
               }}
             />
@@ -317,7 +305,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
                 type='text'
                 ref={subjectRef}
                 onChange={(e) => {
-                  setPublishPostStore({ title: e.target.value || undefined });
+                  setPublishPostOptions({ title: e.target.value });
                 }}
               />
               <button onClick={onPublishPost}>{t('post')}</button>
@@ -342,7 +330,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
               disabled={isUploading}
               onChange={(e) => {
                 setUrl(e.target.value);
-                isInPostView ? setPublishReplyOptions({ link: e.target.value || undefined }) : setPublishPostStore({ link: e.target.value || undefined });
+                isInPostView ? setPublishReplyOptions({ link: e.target.value }) : setPublishPostOptions({ link: e.target.value });
               }}
             />
             <span className={styles.linkType}> {url && <LinkTypePreviewer link={url} />}</span>
@@ -366,7 +354,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
             <label>
               <input
                 type='checkbox'
-                onChange={(e) => (isInPostView ? setPublishReplyOptions({ spoiler: e.target.checked }) : setPublishPostStore({ spoiler: e.target.checked }))}
+                onChange={(e) => (isInPostView ? setPublishReplyOptions({ spoiler: e.target.checked }) : setPublishPostOptions({ spoiler: e.target.checked }))}
               />
               {_.capitalize(t('spoiler'))}?
             </label>
@@ -377,7 +365,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
           <tr>
             <td>{t('board')}</td>
             <td>
-              <select onChange={(e) => setPublishPostStore({ subplebbitAddress: e.target.value })} value={subplebbitAddress}>
+              <select onChange={(e) => setPublishPostOptions({ subplebbitAddress: e.target.value })} value={subplebbitAddress}>
                 <option value=''>{t('choose_one')}</option>
                 {isInAllView &&
                   defaultSubplebbitAddresses.map((address: string) => (

@@ -262,7 +262,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             placeholder={displayName ? undefined : _.capitalize(t('name'))}
             onChange={(e) => {
               setAccount({ ...account, author: { ...account?.author, displayName: e.target.value } });
-              setPublishReplyOptions({ displayName: e.target.value || undefined });
+              setPublishReplyOptions({ displayName: e.target.value });
             }}
           />
         </div>
@@ -273,7 +273,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             placeholder={_.capitalize(t('link'))}
             onChange={(e) => {
               setUrl(e.target.value);
-              setPublishReplyOptions({ link: e.target.value || undefined });
+              setPublishReplyOptions({ link: e.target.value });
             }}
           />
         </div>

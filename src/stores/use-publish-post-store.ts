@@ -1,4 +1,4 @@
-import { PublishCommentOptions } from '@plebbit/plebbit-react-hooks';
+import { Comment, PublishCommentOptions } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
 import useChallengesStore from './use-challenges-store';
@@ -29,8 +29,17 @@ const usePublishPostStore = create<SubmitState>((set) => ({
   link: undefined,
   spoiler: undefined,
   publishCommentOptions: {},
-  setPublishPostStore: ({ author, displayName, signer, subplebbitAddress, title, content, link, spoiler }) =>
+  setPublishPostStore: (comment: Comment) =>
     set((state) => {
+      const { subplebbitAddress, author, content, link, signer, spoiler, title } = comment;
+
+      const displayName = 'displayName' in comment ? comment.displayName || undefined : author?.displayName;
+
+      const baseAuthor = author ? { ...author } : {};
+      delete baseAuthor.displayName;
+
+      const updatedAuthor = displayName ? { ...baseAuthor, displayName } : baseAuthor;
+
       const nextState = { ...state };
       if (author !== undefined) nextState.author = author;
       if (displayName !== undefined) nextState.displayName = displayName;
@@ -55,15 +64,12 @@ const usePublishPostStore = create<SubmitState>((set) => ({
         },
       };
 
-      if (nextState.signer) {
-        publishCommentOptions.signer = nextState.signer;
+      if (Object.keys(updatedAuthor).length > 0) {
+        publishCommentOptions.author = updatedAuthor;
       }
 
-      if (nextState.author || nextState.displayName) {
-        publishCommentOptions.author = {
-          ...nextState.author,
-          displayName: nextState.displayName,
-        };
+      if (nextState.signer) {
+        publishCommentOptions.signer = nextState.signer;
       }
 
       nextState.publishCommentOptions = publishCommentOptions;
