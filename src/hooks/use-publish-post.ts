@@ -10,9 +10,9 @@ const usePublishPost = ({ subplebbitAddress }: { subplebbitAddress?: string }) =
   const { author, signer, title, content, link, spoiler, publishCommentOptions } = usePublishPostStore((state) => ({
     author: state.author,
     signer: state.signer,
-    title: state.title === '' ? undefined : state.title,
-    content: state.content === '' ? undefined : state.content,
-    link: state.link === '' ? undefined : state.link,
+    title: state.title || undefined,
+    content: state.content || undefined,
+    link: state.link || undefined,
     spoiler: state.spoiler || false,
     publishCommentOptions: state.publishCommentOptions,
   }));

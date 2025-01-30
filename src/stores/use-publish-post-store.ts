@@ -1,4 +1,4 @@
-import { Comment, PublishCommentOptions } from '@plebbit/plebbit-react-hooks';
+import { ChallengeVerification, Comment, PublishCommentOptions } from '@plebbit/plebbit-react-hooks';
 import { create } from 'zustand';
 import { alertChallengeVerificationFailed } from '../lib/utils/challenge-utils';
 import useChallengesStore from './use-challenges-store';
@@ -30,7 +30,7 @@ const usePublishPostStore = create<SubmitState>((set) => ({
   spoiler: undefined,
   publishCommentOptions: {},
   setPublishPostStore: (comment: Comment) =>
-    set((state) => {
+    set(() => {
       const { subplebbitAddress, author, content, link, signer, spoiler, title } = comment;
 
       const displayName = 'displayName' in comment ? comment.displayName || undefined : author?.displayName;
@@ -40,24 +40,16 @@ const usePublishPostStore = create<SubmitState>((set) => ({
 
       const updatedAuthor = displayName ? { ...baseAuthor, displayName } : baseAuthor;
 
-      const nextState = { ...state };
-      if (author !== undefined) nextState.author = author;
-      if (displayName !== undefined) nextState.displayName = displayName;
-      if (signer !== undefined) nextState.signer = signer;
-      if (subplebbitAddress !== undefined) nextState.subplebbitAddress = subplebbitAddress;
-      if (title !== undefined) nextState.title = title || undefined;
-      if (content !== undefined) nextState.content = content || undefined;
-      if (link !== undefined) nextState.link = link || undefined;
-      if (spoiler !== undefined) nextState.spoiler = spoiler || undefined;
-
       const publishCommentOptions: PublishCommentOptions = {
-        subplebbitAddress: nextState.subplebbitAddress,
-        title: nextState.title,
-        content: nextState.content,
-        link: nextState.link,
-        spoiler: nextState.spoiler,
+        subplebbitAddress,
+        title,
+        content,
+        link,
+        spoiler,
         onChallenge: (...args: any) => addChallenge(args),
-        onChallengeVerification: alertChallengeVerificationFailed,
+        onChallengeVerification: (challengeVerification: ChallengeVerification, comment: Comment) => {
+          alertChallengeVerificationFailed(challengeVerification, comment);
+        },
         onError: (error: Error) => {
           console.error(error);
           alert(error.message);
@@ -68,12 +60,21 @@ const usePublishPostStore = create<SubmitState>((set) => ({
         publishCommentOptions.author = updatedAuthor;
       }
 
-      if (nextState.signer) {
-        publishCommentOptions.signer = nextState.signer;
+      if (signer) {
+        publishCommentOptions.signer = signer;
       }
 
-      nextState.publishCommentOptions = publishCommentOptions;
-      return nextState;
+      return {
+        author: updatedAuthor,
+        displayName,
+        signer,
+        subplebbitAddress,
+        title,
+        content,
+        link,
+        spoiler,
+        publishCommentOptions,
+      };
     }),
   resetPublishPostStore: () =>
     set({

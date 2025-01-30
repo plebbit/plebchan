@@ -11,8 +11,8 @@ type ReplyState = {
   signer: { [parentCid: string]: any | undefined };
   spoiler: { [parentCid: string]: boolean | undefined };
   publishCommentOptions: { [parentCid: string]: PublishCommentOptions | undefined };
-  setReplyStore: (comment: Comment) => void;
-  resetReplyStore: (parentCid: string) => void;
+  setPublishReplyStore: (comment: Comment) => void;
+  resetPublishReplyStore: (parentCid: string) => void;
 };
 
 const { addChallenge } = useChallengesStore.getState();
@@ -26,7 +26,7 @@ const usePublishReplyStore = create<ReplyState>((set) => ({
   spoiler: {},
   publishCommentOptions: {},
 
-  setReplyStore: (comment: Comment) =>
+  setPublishReplyStore: (comment: Comment) =>
     set((state) => {
       const { subplebbitAddress, parentCid, author, content, link, signer, spoiler } = comment;
 
@@ -73,7 +73,7 @@ const usePublishReplyStore = create<ReplyState>((set) => ({
       };
     }),
 
-  resetReplyStore: (parentCid) =>
+  resetPublishReplyStore: (parentCid) =>
     set((state) => ({
       author: { ...state.author, [parentCid]: undefined },
       displayName: { ...state.displayName, [parentCid]: undefined },
