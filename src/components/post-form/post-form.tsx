@@ -148,6 +148,28 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     }
   }, [index, resetPublishPostStore, navigate]);
 
+  useEffect(() => {
+    if (anonMode) {
+      setPublishPostStore({
+        signer: undefined,
+        author: {
+          address: undefined,
+          displayName: displayName || undefined,
+        },
+      });
+      getAnonAddressForPost();
+    } else {
+      setPublishPostStore({
+        signer: undefined,
+        author: {
+          ...account?.author,
+          displayName: displayName || account?.author?.displayName,
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anonMode]);
+
   // in post page, publish a reply to the post
   const isInPostView = isPostPageView(location.pathname, params);
   const cid = params?.commentCid as string;
