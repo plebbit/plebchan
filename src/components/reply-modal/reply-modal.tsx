@@ -162,8 +162,19 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
           textRef.current.focus();
         }
       }, 0);
+
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+      };
     }
-  }, [showReplyModal]);
+  }, [showReplyModal, closeModal]);
 
   useEffect(() => {
     if (textRef.current) {
