@@ -262,5 +262,7 @@
   "no_file_chosen": "कोणताही फाइल निवडलेली नाही",
   "error": "त्रुटी",
   "vote": "मत",
-  "warning": "चेतावणी"
+  "warning": "चेतावणी",
+  "comment_field_too_long": "टिप्पणी खूप लांब आहे ({{length}}/2000).",
+  "field_too_long": "फील्ड खूप लांब आहे."
 }

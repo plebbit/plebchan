@@ -262,5 +262,7 @@
   "no_file_chosen": "ファイルが選択されていません",
   "error": "エラー",
   "vote": "投票",
-  "warning": "警告"
+  "warning": "警告",
+  "comment_field_too_long": "コメントが長すぎます ({{length}}/2000)。",
+  "field_too_long": "フィールドが長すぎます。"
 }

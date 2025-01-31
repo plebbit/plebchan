@@ -262,5 +262,7 @@
   "no_file_chosen": "Không có tệp nào được chọn",
   "error": "Lỗi",
   "vote": "bỏ phiếu",
-  "warning": "Cảnh báo"
+  "warning": "Cảnh báo",
+  "comment_field_too_long": "Bình luận quá dài ({{length}}/2000).",
+  "field_too_long": "Trường quá dài."
 }

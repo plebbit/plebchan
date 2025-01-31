@@ -262,5 +262,7 @@
   "no_file_chosen": "Tidak ada file yang dipilih",
   "error": "Kesalahan",
   "vote": "suara",
-  "warning": "Peringatan"
+  "warning": "Peringatan",
+  "comment_field_too_long": "Komentar terlalu panjang ({{length}}/2000).",
+  "field_too_long": "Kolom terlalu panjang."
 }

@@ -262,5 +262,7 @@
   "no_file_chosen": "לא נבחר קובץ",
   "error": "שגיאה",
   "vote": "הצבעה",
-  "warning": "אזהרה"
+  "warning": "אזהרה",
+  "comment_field_too_long": "התגובה ארוכה מדי ({{length}}/2000).",
+  "field_too_long": "המשדה ארוך מדי."
 }

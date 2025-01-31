@@ -262,5 +262,7 @@
   "no_file_chosen": "Hiçbir dosya seçilmedi",
   "error": "Hata",
   "vote": "oy",
-  "warning": "Uyarı"
+  "warning": "Uyarı",
+  "comment_field_too_long": "Yorum çok uzun ({{length}}/2000).",
+  "field_too_long": "Alan çok uzun."
 }

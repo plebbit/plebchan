@@ -262,5 +262,7 @@
   "no_file_chosen": "Ingen fil valgt",
   "error": "Feil",
   "vote": "stemme",
-  "warning": "Advarsel"
+  "warning": "Advarsel",
+  "comment_field_too_long": "Kommentar for lang ({{length}}/2000).",
+  "field_too_long": "Feltet er for langt."
 }

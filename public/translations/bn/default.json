@@ -262,5 +262,7 @@
   "no_file_chosen": "কোন ফাইল নির্বাচিত নয়",
   "error": "ত্রুটি",
   "vote": "ভোট",
-  "warning": "সতর্কতা"
+  "warning": "সতর্কতা",
+  "comment_field_too_long": "মন্তব্য খুব লম্বা ({{length}}/2000)।",
+  "field_too_long": "ফিল্ডটি খুব লম্বা।"
 }

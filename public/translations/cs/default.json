@@ -262,5 +262,7 @@
   "no_file_chosen": "Žádný soubor není vybrán",
   "error": "Chyba",
   "vote": "hlasování",
-  "warning": "Upozornění"
+  "warning": "Upozornění",
+  "comment_field_too_long": "Komentář je příliš dlouhý ({{length}}/2000).",
+  "field_too_long": "Pole je příliš dlouhé."
 }

@@ -262,5 +262,7 @@
   "no_file_chosen": "선택된 파일이 없습니다",
   "error": "오류",
   "vote": "투표",
-  "warning": "경고"
+  "warning": "경고",
+  "comment_field_too_long": "댓글이 너무 깁니다 ({{length}}/2000).",
+  "field_too_long": "필드가 너무 깁니다."
 }

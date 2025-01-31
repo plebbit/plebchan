@@ -262,5 +262,7 @@
   "no_file_chosen": "کوئی فائل منتخب نہیں کی گئی",
   "error": "غلطی",
   "vote": "ووٹ",
-  "warning": "چیتاونی"
+  "warning": "چیتاونی",
+  "comment_field_too_long": "تبصرہ بہت طویل ہے ({{length}}/2000).",
+  "field_too_long": "فیلڈ بہت طویل ہے۔"
 }

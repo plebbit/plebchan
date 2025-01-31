@@ -262,5 +262,7 @@
   "no_file_chosen": "Niciun fișier ales",
   "error": "Eroare",
   "vote": "vot",
-  "warning": "Avertisment"
+  "warning": "Avertisment",
+  "comment_field_too_long": "Comentariu prea lung ({{length}}/2000).",
+  "field_too_long": "Câmp prea lung."
 }

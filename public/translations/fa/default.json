@@ -262,5 +262,7 @@
   "no_file_chosen": "فایلی انتخاب نشده است",
   "error": "خطا",
   "vote": "رای",
-  "warning": "هشدار"
+  "warning": "هشدار",
+  "comment_field_too_long": "کامنت خیلی طولانی است ({{length}}/2000).",
+  "field_too_long": "فیلد خیلی طولانی است."
 }

@@ -262,5 +262,7 @@
   "no_file_chosen": "Walang napiling file",
   "error": "Error",
   "vote": "bumoto",
-  "warning": "Babala"
+  "warning": "Babala",
+  "comment_field_too_long": "Napakahabang komento ({{length}}/2000).",
+  "field_too_long": "Ang field ay masyadong mahaba."
 }

@@ -262,5 +262,7 @@
   "no_file_chosen": "Ei tiedostoa valittu",
   "error": "Virhe",
   "vote": "äänestä",
-  "warning": "Varoitus"
+  "warning": "Varoitus",
+  "comment_field_too_long": "Kommentti liian pitkä ({{length}}/2000).",
+  "field_too_long": "Kenttä liian pitkä."
 }

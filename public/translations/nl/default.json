@@ -262,5 +262,7 @@
   "no_file_chosen": "Geen bestand gekozen",
   "error": "Fout",
   "vote": "stem",
-  "warning": "Waarschuwing"
+  "warning": "Waarschuwing",
+  "comment_field_too_long": "Commentaar te lang ({{length}}/2000).",
+  "field_too_long": "Veld te lang."
 }

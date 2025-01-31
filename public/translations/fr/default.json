@@ -262,5 +262,7 @@
   "no_file_chosen": "Aucun fichier choisi",
   "error": "Erreur",
   "vote": "vote",
-  "warning": "Avertissement"
+  "warning": "Avertissement",
+  "comment_field_too_long": "Commentaire trop long ({{length}}/2000).",
+  "field_too_long": "Champ trop long."
 }

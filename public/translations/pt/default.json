@@ -262,5 +262,7 @@
   "no_file_chosen": "Nenhum arquivo escolhido",
   "error": "Erro",
   "vote": "voto",
-  "warning": "Aviso"
+  "warning": "Aviso",
+  "comment_field_too_long": "Comentário muito longo ({{length}}/2000).",
+  "field_too_long": "Campo muito longo."
 }
