@@ -155,3 +155,9 @@
 .uploadButton span {
   font-weight: normal;
 }
+
+.error {
+  font-weight: bold;
+  padding: 5px;
+  color: red;
+}

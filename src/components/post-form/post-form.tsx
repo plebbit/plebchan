@@ -59,6 +59,19 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const comment = useComment({ commentCid: postCid });
   const address = comment?.author?.address;
 
+  const [lengthError, setLengthError] = useState<string | null>(null);
+
+  const checkContentLength = useRef(
+    _.debounce((content: string, t: Function) => {
+      const length = content.trim().length;
+      if (length > 2000) {
+        setLengthError(`${t('error')}: ${t('comment_field_too_long', { length })}`);
+      } else {
+        setLengthError(null);
+      }
+    }, 1000),
+  ).current;
+
   const resetFields = () => {
     if (textRef.current) {
       textRef.current.value = '';
@@ -97,12 +110,20 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
     const currentContent = textRef.current?.value.trim() || '';
     const currentUrl = urlRef.current?.value.trim() || '';
 
+    checkContentLength.cancel();
+    setLengthError(null);
+
     if (!currentTitle && !currentContent && !currentUrl) {
       alert(t('empty_comment_alert'));
       return;
     }
     if (currentUrl && !isValidURL(currentUrl)) {
       alert(t('invalid_url_alert'));
+      return;
+    }
+
+    if (currentContent.length > 2000) {
+      alert(t('error') + ': ' + t('field_too_long'));
       return;
     }
 
@@ -190,11 +211,15 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const formattedContent = formatMarkdown(e.target.value);
     isInPostView ? setPublishReplyOptions({ content: formattedContent }) : setPublishPostOptions({ content: formattedContent });
+    checkContentLength(formattedContent, t);
   };
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value.trim() || '';
     const currentUrl = urlRef.current?.value.trim() || '';
+
+    checkContentLength.cancel();
+    setLengthError(null);
 
     if (!currentContent && !currentUrl) {
       alert(t('empty_comment_alert'));
@@ -203,6 +228,11 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
 
     if (currentUrl && !isValidURL(currentUrl)) {
       alert(t('invalid_url_alert'));
+      return;
+    }
+
+    if (currentContent.length > 2000) {
+      alert(t('error') + ': ' + t('field_too_long'));
       return;
     }
 
@@ -316,6 +346,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
           <td>{t('comment')}</td>
           <td>
             <textarea cols={48} rows={4} wrap='soft' ref={textRef} onChange={handleContentChange} />
+            {lengthError && <div className={styles.error}>{lengthError}</div>}
           </td>
         </tr>
         <tr>
