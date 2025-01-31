@@ -35,6 +35,19 @@ const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => 
     };
   }, [handleClickOutside]);
 
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowSearchBar(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [setShowSearchBar]);
+
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const searchInput = searchInputRef.current?.value;
