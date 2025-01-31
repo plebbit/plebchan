@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './settings-modal.module.css';
@@ -16,10 +16,10 @@ const SettingsModal = () => {
   const navigate = useNavigate();
   const hash = location.hash.slice(1);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     const newPath = location.pathname.replace(/\/settings$/, '');
     navigate(newPath);
-  };
+  }, [location.pathname, navigate]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
