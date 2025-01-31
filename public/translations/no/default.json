@@ -261,5 +261,6 @@
   "uploading": "laster opp...",
   "no_file_chosen": "Ingen fil valgt",
   "error": "Feil",
-  "vote": "stemme"
+  "vote": "stemme",
+  "warning": "Advarsel"
 }

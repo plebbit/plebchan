@@ -261,5 +261,6 @@
   "uploading": "uploading...",
   "no_file_chosen": "Ingen fil valgt",
   "error": "Fejl",
-  "vote": "stem"
+  "vote": "stem",
+  "warning": "Advarsel"
 }

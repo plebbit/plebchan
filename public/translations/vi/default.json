@@ -261,5 +261,6 @@
   "uploading": "đang tải lên...",
   "no_file_chosen": "Không có tệp nào được chọn",
   "error": "Lỗi",
-  "vote": "bỏ phiếu"
+  "vote": "bỏ phiếu",
+  "warning": "Cảnh báo"
 }

@@ -150,7 +150,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const offlineAlert = updatedAt
     ? isBoardOffline && (
         <div className={styles.offlineBoard}>
-          <Trans i18nKey='posts_last_synced_info' values={{ time: getFormattedTimeAgo(updatedAt) }} />
+          {t('warning')}: <Trans i18nKey='posts_last_synced_info' values={{ time: getFormattedTimeAgo(updatedAt) }} />
         </div>
       )
     : t('subplebbit_offline_info');
@@ -291,8 +291,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
         <div className={styles.content}>
           <textarea cols={48} rows={4} wrap='soft' ref={textRef} spellCheck={true} onInput={handleContentInput} onChange={handleContentChange} />
         </div>
-        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
-        <div className={styles.offlineAlert}></div>
         <div className={styles.footer}>
           {url && !isAndroid && (
             <>
@@ -328,6 +326,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             {t('error')}: {error}
           </div>
         )}
+        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
       </div>
     </div>
   );

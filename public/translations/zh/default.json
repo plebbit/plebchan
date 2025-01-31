@@ -261,5 +261,6 @@
   "uploading": "正在上传...",
   "no_file_chosen": "未选择任何文件",
   "error": "错误",
-  "vote": "投票"
+  "vote": "投票",
+  "warning": "警告"
 }

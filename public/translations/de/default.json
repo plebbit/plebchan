@@ -261,5 +261,6 @@
   "uploading": "Hochladen...",
   "no_file_chosen": "Keine Datei ausgewählt",
   "error": "Fehler",
-  "vote": "Abstimmung"
+  "vote": "Abstimmung",
+  "warning": "Warnung"
 }

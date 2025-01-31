@@ -261,5 +261,6 @@
   "uploading": "yükleniyor...",
   "no_file_chosen": "Hiçbir dosya seçilmedi",
   "error": "Hata",
-  "vote": "oy"
+  "vote": "oy",
+  "warning": "Uyarı"
 }

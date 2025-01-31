@@ -261,5 +261,6 @@
   "uploading": "laddar upp...",
   "no_file_chosen": "Ingen fil vald",
   "error": "Fel",
-  "vote": "rösta"
+  "vote": "rösta",
+  "warning": "Varning"
 }

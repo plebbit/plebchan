@@ -261,5 +261,6 @@
   "uploading": "ina-upload...",
   "no_file_chosen": "Walang napiling file",
   "error": "Error",
-  "vote": "bumoto"
+  "vote": "bumoto",
+  "warning": "Babala"
 }

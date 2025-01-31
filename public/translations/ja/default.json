@@ -261,5 +261,6 @@
   "uploading": "アップロード中...",
   "no_file_chosen": "ファイルが選択されていません",
   "error": "エラー",
-  "vote": "投票"
+  "vote": "投票",
+  "warning": "警告"
 }

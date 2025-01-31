@@ -261,5 +261,6 @@
   "uploading": "feltöltés...",
   "no_file_chosen": "Nincs fájl kiválasztva",
   "error": "Hiba",
-  "vote": "szavazás"
+  "vote": "szavazás",
+  "warning": "Figyelmeztetés"
 }

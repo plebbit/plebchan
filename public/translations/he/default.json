@@ -261,5 +261,6 @@
   "uploading": "מעלה...",
   "no_file_chosen": "לא נבחר קובץ",
   "error": "שגיאה",
-  "vote": "הצבעה"
+  "vote": "הצבעה",
+  "warning": "אזהרה"
 }

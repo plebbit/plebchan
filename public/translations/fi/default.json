@@ -261,5 +261,6 @@
   "uploading": "lataaminen...",
   "no_file_chosen": "Ei tiedostoa valittu",
   "error": "Virhe",
-  "vote": "äänestä"
+  "vote": "äänestä",
+  "warning": "Varoitus"
 }

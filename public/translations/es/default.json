@@ -261,5 +261,6 @@
   "uploading": "subiendo...",
   "no_file_chosen": "Ningún archivo elegido",
   "error": "Error",
-  "vote": "voto"
+  "vote": "voto",
+  "warning": "Advertencia"
 }
