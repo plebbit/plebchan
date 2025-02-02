@@ -296,7 +296,13 @@ const PostMessage = ({ post }: PostProps) => {
   const [showOriginal, setShowOriginal] = useState(false);
 
   const [showFullComment, setShowFullComment] = useState(false);
-  const displayContent = content && !isInPostView && content.length > 1000 && !showFullComment ? content.slice(0, 1000) : content;
+  const displayContent =
+    content &&
+    (!isInPostView && content.length > 1000 && !showFullComment
+      ? content.slice(0, 1000)
+      : isInPostView && content.length > 2000 && !showFullComment
+      ? content.slice(0, 2000)
+      : content);
 
   const quotelinkReply = useComment({ commentCid: parentCid });
   const isReply = parentCid;
@@ -377,7 +383,7 @@ const PostMessage = ({ post }: PostProps) => {
           />
         </span>
       )} */}
-      {content?.length > 1000 && !isInPostView && !showFullComment && (
+      {((!isInPostView && content?.length > 1000 && !showFullComment) || (isInPostView && content?.length > 2000 && !showFullComment)) && (
         <span className={styles.abbr}>
           <br />
           <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <span onClick={() => setShowFullComment(true)} /> }} />
