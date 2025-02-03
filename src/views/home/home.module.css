@@ -89,6 +89,23 @@
   color: inherit;
 }
 
+.loadMoreButton {
+  text-align: center;
+  margin-bottom: 14px;
+  color: var(--topbar-separator-color);
+}
+
+.loadMoreButton span {
+  color: var(--topbar-desktop-link-text-color);
+  text-transform: capitalize;
+}
+
+.loadMoreButton span:hover {
+  cursor: pointer;
+  color: var(--button-desktop-text-color-hover);
+  text-decoration: underline;
+}
+
 .boxBar, .infoboxBar {
   padding-left: 0.5em;
   line-height: 2em;

@@ -266,5 +266,6 @@
   "comment_field_too_long": "टिप्पणी खूप लांब आहे ({{length}}/2000).",
   "field_too_long": "फील्ड खूप लांब आहे.",
   "title": "सिरसक",
-  "tags": "टॅग"
+  "tags": "टॅग",
+  "load_more": "अधिक लोड करा"
 }

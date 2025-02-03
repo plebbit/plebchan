@@ -77,7 +77,7 @@ const renderBoardsList = (subplebbits: any, isInCatalogView: boolean, subscripti
           <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>
             {sub.address.endsWith('.eth') || sub.address.endsWith('.sol') ? sub.address : sub.address.slice(0, 10).concat('...')}
           </Link>
-          {index !== subplebbits.length - 1 ? ' /' : null}
+          {index !== subplebbits?.length - 1 ? ' /' : null}
         </span>
       ))}
       ]{' '}
@@ -90,7 +90,7 @@ const renderBoardsList = (subplebbits: any, isInCatalogView: boolean, subscripti
               <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>
                 {address.endsWith('.eth') || address.endsWith('.sol') ? address : address.slice(0, 10).concat('...')}
               </Link>
-              {index !== subscriptions.length - 1 ? ' /' : null}
+              {index !== subscriptions?.length - 1 ? ' /' : null}
             </span>
           ))}
           ]{' '}

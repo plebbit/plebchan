@@ -266,5 +266,6 @@
   "comment_field_too_long": "Comment too long ({{length}}/2000).",
   "field_too_long": "Field too long.",
   "title": "Title",
-  "tags": "Tags"
+  "tags": "Tags",
+  "load_more": "Load More"
 }

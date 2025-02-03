@@ -266,5 +266,6 @@
   "comment_field_too_long": "Yorum çok uzun ({{length}}/2000).",
   "field_too_long": "Alan çok uzun.",
   "title": "Başlık",
-  "tags": "Etiketler"
+  "tags": "Etiketler",
+  "load_more": "Daha fazla yükle"
 }

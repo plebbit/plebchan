@@ -266,5 +266,6 @@
   "comment_field_too_long": "Comentario demasiado largo ({{length}}/2000).",
   "field_too_long": "Campo demasiado largo.",
   "title": "Título",
-  "tags": "Etiquetas"
+  "tags": "Etiquetas",
+  "load_more": "Cargar más"
 }

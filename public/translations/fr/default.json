@@ -266,5 +266,6 @@
   "comment_field_too_long": "Commentaire trop long ({{length}}/2000).",
   "field_too_long": "Champ trop long.",
   "title": "Titre",
-  "tags": "Tags"
+  "tags": "Tags",
+  "load_more": "Charger plus"
 }

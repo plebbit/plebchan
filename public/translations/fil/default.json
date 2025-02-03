@@ -266,5 +266,6 @@
   "comment_field_too_long": "Napakahabang komento ({{length}}/2000).",
   "field_too_long": "Ang field ay masyadong mahaba.",
   "title": "Pamagat",
-  "tags": "Mga tag"
+  "tags": "Mga tag",
+  "load_more": "Mag-load ng higit pa"
 }

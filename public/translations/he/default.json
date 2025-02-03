@@ -266,5 +266,6 @@
   "comment_field_too_long": "התגובה ארוכה מדי ({{length}}/2000).",
   "field_too_long": "המשדה ארוך מדי.",
   "title": "כותרת",
-  "tags": "תגיות"
+  "tags": "תגיות",
+  "load_more": "טען עוד"
 }

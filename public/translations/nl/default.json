@@ -266,5 +266,6 @@
   "comment_field_too_long": "Commentaar te lang ({{length}}/2000).",
   "field_too_long": "Veld te lang.",
   "title": "Titel",
-  "tags": "Tags"
+  "tags": "Tags",
+  "load_more": "Laad meer"
 }
