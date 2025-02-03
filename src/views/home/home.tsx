@@ -214,7 +214,7 @@ const Home = () => {
       <HomeLogo />
       <SearchBar />
       <InfoBox />
-      <BoardsList multisub={defaultSubplebbits} subplebbits={subplebbits} />
+      <BoardsList multisub={defaultSubplebbits} />
       <PopularThreadsBox multisub={defaultSubplebbits} subplebbits={subplebbits} />
       <Stats subplebbitAddresses={subplebbitAddresses} />
       <Footer />

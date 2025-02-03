@@ -136,6 +136,7 @@ const App = () => {
       <Routes>
         <Route element={<GlobalLayout />}>
           <Route path='/' element={<Home />} />
+          <Route path='/:tag' element={<Home />} />
           <Route path='/faq' element={<FAQ />} />
           <Route path='*' element={<NotFound />} />
           <Route element={<ValidateRouteParams />}>

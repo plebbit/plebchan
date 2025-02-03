@@ -68,7 +68,7 @@ const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => 
 };
 
 const renderBoardsList = (subplebbits: any, isInCatalogView: boolean, subscriptions: string[]) =>
-  subplebbits.length > 0 && (
+  subplebbits?.length > 0 && (
     <>
       [
       {subplebbits.map((sub: any, index: any) => (
@@ -77,11 +77,11 @@ const renderBoardsList = (subplebbits: any, isInCatalogView: boolean, subscripti
           <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>
             {sub.address.endsWith('.eth') || sub.address.endsWith('.sol') ? sub.address : sub.address.slice(0, 10).concat('...')}
           </Link>
-          {index !== subplebbits?.length - 1 ? ' /' : null}
+          {index !== subplebbits.length - 1 ? ' /' : null}
         </span>
       ))}
       ]{' '}
-      {subscriptions.length > 0 && (
+      {subscriptions?.length > 0 && (
         <>
           [
           {subscriptions.map((address: any, index: any) => (
