@@ -264,5 +264,7 @@
   "vote": "โหวต",
   "warning": "คำเตือน",
   "comment_field_too_long": "คอมเมนต์ยาวเกินไป ({{length}}/2000)",
-  "field_too_long": "ฟิลด์ยาวเกินไป"
+  "field_too_long": "ฟิลด์ยาวเกินไป",
+  "title": "ชื่อเรื่อง",
+  "tags": "แท็ก"
 }

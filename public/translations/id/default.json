@@ -264,5 +264,7 @@
   "vote": "suara",
   "warning": "Peringatan",
   "comment_field_too_long": "Komentar terlalu panjang ({{length}}/2000).",
-  "field_too_long": "Kolom terlalu panjang."
+  "field_too_long": "Kolom terlalu panjang.",
+  "title": "Judul",
+  "tags": "Tag"
 }

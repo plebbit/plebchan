@@ -264,5 +264,7 @@
   "vote": "stemme",
   "warning": "Advarsel",
   "comment_field_too_long": "Kommentar for lang ({{length}}/2000).",
-  "field_too_long": "Feltet er for langt."
+  "field_too_long": "Feltet er for langt.",
+  "title": "Tittel",
+  "tags": "Tags"
 }

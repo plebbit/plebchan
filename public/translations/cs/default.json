@@ -264,5 +264,7 @@
   "vote": "hlasování",
   "warning": "Upozornění",
   "comment_field_too_long": "Komentář je příliš dlouhý ({{length}}/2000).",
-  "field_too_long": "Pole je příliš dlouhé."
+  "field_too_long": "Pole je příliš dlouhé.",
+  "title": "Název",
+  "tags": "Štítky"
 }

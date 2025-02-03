@@ -264,5 +264,7 @@
   "vote": "投票",
   "warning": "警告",
   "comment_field_too_long": "评论太长 ({{length}}/2000)。",
-  "field_too_long": "字段太长。"
+  "field_too_long": "字段太长。",
+  "title": "标题",
+  "tags": "标签"
 }

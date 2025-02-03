@@ -264,5 +264,7 @@
   "vote": "szavazás",
   "warning": "Figyelmeztetés",
   "comment_field_too_long": "Túl hosszú hozzászólás ({{length}}/2000).",
-  "field_too_long": "A mező túl hosszú."
+  "field_too_long": "A mező túl hosszú.",
+  "title": "Cím",
+  "tags": "Címkék"
 }

@@ -264,5 +264,7 @@
   "vote": "Abstimmung",
   "warning": "Warnung",
   "comment_field_too_long": "Kommentar zu lang ({{length}}/2000).",
-  "field_too_long": "Das Feld ist zu lang."
+  "field_too_long": "Das Feld ist zu lang.",
+  "title": "Titel",
+  "tags": "Tags"
 }

@@ -264,5 +264,7 @@
   "vote": "äänestä",
   "warning": "Varoitus",
   "comment_field_too_long": "Kommentti liian pitkä ({{length}}/2000).",
-  "field_too_long": "Kenttä liian pitkä."
+  "field_too_long": "Kenttä liian pitkä.",
+  "title": "Otsikko",
+  "tags": "Tunnisteet"
 }

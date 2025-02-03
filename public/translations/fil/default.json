@@ -264,5 +264,7 @@
   "vote": "bumoto",
   "warning": "Babala",
   "comment_field_too_long": "Napakahabang komento ({{length}}/2000).",
-  "field_too_long": "Ang field ay masyadong mahaba."
+  "field_too_long": "Ang field ay masyadong mahaba.",
+  "title": "Pamagat",
+  "tags": "Mga tag"
 }

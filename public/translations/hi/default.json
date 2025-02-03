@@ -264,5 +264,7 @@
   "vote": "मत डालें",
   "warning": "चेतावनी",
   "comment_field_too_long": "टिप्पणी बहुत लंबी है ({{length}}/2000)।",
-  "field_too_long": "क्षेत्र बहुत लंबा है।"
+  "field_too_long": "क्षेत्र बहुत लंबा है।",
+  "title": "शीर्षक",
+  "tags": "टैग"
 }

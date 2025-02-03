@@ -264,5 +264,7 @@
   "vote": "ووٹ",
   "warning": "چیتاونی",
   "comment_field_too_long": "تبصرہ بہت طویل ہے ({{length}}/2000).",
-  "field_too_long": "فیلڈ بہت طویل ہے۔"
+  "field_too_long": "فیلڈ بہت طویل ہے۔",
+  "title": "عنوان",
+  "tags": "ٹٰیگ"
 }

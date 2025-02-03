@@ -264,5 +264,7 @@
   "vote": "vot",
   "warning": "Avertisment",
   "comment_field_too_long": "Comentariu prea lung ({{length}}/2000).",
-  "field_too_long": "Câmp prea lung."
+  "field_too_long": "Câmp prea lung.",
+  "title": "Titlu",
+  "tags": "Etichete"
 }

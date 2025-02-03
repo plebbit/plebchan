@@ -264,5 +264,7 @@
   "vote": "rösta",
   "warning": "Varning",
   "comment_field_too_long": "Kommentar för lång ({{length}}/2000).",
-  "field_too_long": "Fältet är för långt."
+  "field_too_long": "Fältet är för långt.",
+  "title": "Titel",
+  "tags": "Taggar"
 }

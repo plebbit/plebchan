@@ -264,5 +264,7 @@
   "vote": "تصويت",
   "warning": "تحذير",
   "comment_field_too_long": "التعليق طويل جدًا ({{length}}/2000).",
-  "field_too_long": "الحقل طويل جدًا."
+  "field_too_long": "الحقل طويل جدًا.",
+  "title": "عنوان",
+  "tags": "علامات"
 }

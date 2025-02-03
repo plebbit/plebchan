@@ -264,5 +264,7 @@
   "vote": "رای",
   "warning": "هشدار",
   "comment_field_too_long": "کامنت خیلی طولانی است ({{length}}/2000).",
-  "field_too_long": "فیلد خیلی طولانی است."
+  "field_too_long": "فیلد خیلی طولانی است.",
+  "title": "عنوان",
+  "tags": "برچسب‌ها"
 }

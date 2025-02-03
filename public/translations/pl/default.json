@@ -264,5 +264,7 @@
   "vote": "głos",
   "warning": "Ostrzeżenie",
   "comment_field_too_long": "Komentarz za długi ({{length}}/2000).",
-  "field_too_long": "Pole jest za długie."
+  "field_too_long": "Pole jest za długie.",
+  "title": "Tytuł",
+  "tags": "Tagi"
 }

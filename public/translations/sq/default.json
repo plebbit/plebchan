@@ -264,5 +264,7 @@
   "vote": "votim",
   "warning": "Kujdes",
   "comment_field_too_long": "Komentar shumë i gjatë ({{length}}/2000).",
-  "field_too_long": "Fusha është shumë e gjatë."
+  "field_too_long": "Fusha është shumë e gjatë.",
+  "title": "Titulli",
+  "tags": "Etiketa"
 }
