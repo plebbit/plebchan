@@ -7,7 +7,7 @@ import packageJson from '../../../package.json';
 import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
 import PopularThreadsBox from './popular-threads-box';
-import BoardsBox from './boards-box';
+import BoardsList from './boards-list';
 
 // https://github.com/plebbit/temporary-default-subplebbits/blob/master/README.md
 // plebchan shouldn't consider 'vulgar' or 'anti' as nsfw tags, unlike more sfw-oriented clients
@@ -214,7 +214,7 @@ const Home = () => {
       <HomeLogo />
       <SearchBar />
       <InfoBox />
-      <BoardsBox multisub={defaultSubplebbits} subplebbits={subplebbits} />
+      <BoardsList multisub={defaultSubplebbits} subplebbits={subplebbits} />
       <PopularThreadsBox multisub={defaultSubplebbits} subplebbits={subplebbits} />
       <Stats subplebbitAddresses={subplebbitAddresses} />
       <Footer />
