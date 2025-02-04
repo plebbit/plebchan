@@ -17,8 +17,8 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
   const subplebbitData = useSubplebbit({ subplebbitAddress: address });
   const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbitData);
 
-  const displayAddress = address === 'all' ? 'all' : Plebbit.getShortAddress(address);
-  const showOfflineIcon = address !== 'all' && (isOffline || isOnlineStatusLoading);
+  const displayAddress = address && Plebbit.getShortAddress(address);
+  const showOfflineIcon = address && (isOffline || isOnlineStatusLoading);
 
   return (
     <tr className={styles.subplebbit} key={address}>
@@ -37,7 +37,7 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
           <p className={styles.boardCell}>
             {tags.map((tag: string, index: number) => (
               <span key={tag}>
-                {tag === 'multiboard' ? <span>{tag}</span> : <Link to={`/${tag}`}>{tag}</Link>}
+                <Link to={`/${tag}`}>{tag}</Link>
                 {index < tags.length - 1 && ', '}
               </span>
             ))}
@@ -68,12 +68,6 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
   const hasMoreBoards =
     currentTag && tags.includes(currentTag) ? displayCount < multisub.filter((sub) => sub?.tags?.includes(currentTag)).length : displayCount < multisub.length;
 
-  const defaultBoard = {
-    address: 'all',
-    title: 'Temporary Default Subplebbits',
-    tags: ['multiboard'],
-  } as Subplebbit;
-
   return (
     <div className={styles.boardsBox}>
       <table className={styles.boardsList}>
@@ -89,7 +83,6 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
           </tr>
         </thead>
         <tbody>
-          {!currentTag && <Board key='all' subplebbit={defaultBoard} isMobile={isMobile} />}
           {filteredBoards.map((sub) => (
             <Board key={sub.address} subplebbit={sub} isMobile={isMobile} />
           ))}
