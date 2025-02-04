@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { Subplebbit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
+import useIsMobile from '../../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 import styles from '../home.module.css';
 import { nsfwTags } from '../home';
 
-const Board = ({ subplebbit }: { subplebbit: Subplebbit; useCatalog?: boolean }) => {
+const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit || {};
   const nsfwTag = tags?.find((tag: string) => nsfwTags.includes(tag));
@@ -31,16 +32,18 @@ const Board = ({ subplebbit }: { subplebbit: Subplebbit; useCatalog?: boolean })
       <td className={styles.boardTitle}>
         <p className={styles.boardCell}>{title || displayAddress}</p>
       </td>
-      <td className={styles.boardTags}>
-        <p className={styles.boardCell}>
-          {tags.map((tag: string, index: number) => (
-            <span key={tag}>
-              {tag === 'multiboard' ? <span>{tag}</span> : <Link to={`/${tag}`}>{tag}</Link>}
-              {index < tags.length - 1 && ', '}
-            </span>
-          ))}
-        </p>
-      </td>
+      {!isMobile && (
+        <td className={styles.boardTags}>
+          <p className={styles.boardCell}>
+            {tags.map((tag: string, index: number) => (
+              <span key={tag}>
+                {tag === 'multiboard' ? <span>{tag}</span> : <Link to={`/${tag}`}>{tag}</Link>}
+                {index < tags.length - 1 && ', '}
+              </span>
+            ))}
+          </p>
+        </td>
+      )}
     </tr>
   );
 };
@@ -49,6 +52,7 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
   const { t } = useTranslation();
   const location = useLocation();
   const [displayCount, setDisplayCount] = useState(15);
+  const isMobile = useIsMobile();
 
   const currentTag = location.pathname.split('/').filter(Boolean)[0];
   const tags = useDefaultSubplebbitTags(multisub);
@@ -81,13 +85,13 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
           <tr>
             <th>{t('board')}</th>
             <th>{t('title')}</th>
-            <th>{t('tags')}</th>
+            {!isMobile && <th>{t('tags')}</th>}
           </tr>
         </thead>
         <tbody>
-          {!currentTag && <Board key='all' subplebbit={defaultBoard} />}
+          {!currentTag && <Board key='all' subplebbit={defaultBoard} isMobile={isMobile} />}
           {filteredBoards.map((sub) => (
-            <Board key={sub.address} subplebbit={sub} />
+            <Board key={sub.address} subplebbit={sub} isMobile={isMobile} />
           ))}
         </tbody>
       </table>
