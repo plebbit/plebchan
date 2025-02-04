@@ -1,19 +1,20 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { Subplebbit } from '@plebbit/plebbit-react-hooks';
+import { Subplebbit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 import styles from '../home.module.css';
 import { nsfwTags } from '../home';
-import { useState, useEffect } from 'react';
 
 const Board = ({ subplebbit }: { subplebbit: Subplebbit; useCatalog?: boolean }) => {
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit || {};
   const nsfwTag = tags?.find((tag: string) => nsfwTags.includes(tag));
 
-  const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbit);
+  const subplebbitData = useSubplebbit({ subplebbitAddress: address });
+  const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbitData);
 
   const displayAddress = address === 'all' ? 'all' : Plebbit.getShortAddress(address);
   const showOfflineIcon = address !== 'all' && (isOffline || isOnlineStatusLoading);
@@ -22,8 +23,8 @@ const Board = ({ subplebbit }: { subplebbit: Subplebbit; useCatalog?: boolean })
     <tr className={styles.subplebbit} key={address}>
       <td className={styles.boardAddress}>
         <p className={styles.boardCell}>
-          <Link to={`/p/${address}`}>{displayAddress}</Link>
           {showOfflineIcon && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
+          <Link to={`/p/${address}`}>{displayAddress}</Link>
           {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
         </p>
       </td>
@@ -33,10 +34,10 @@ const Board = ({ subplebbit }: { subplebbit: Subplebbit; useCatalog?: boolean })
       <td className={styles.boardTags}>
         <p className={styles.boardCell}>
           {tags.map((tag: string, index: number) => (
-            <>
+            <span key={tag}>
               {tag === 'multiboard' ? <span>{tag}</span> : <Link to={`/${tag}`}>{tag}</Link>}
               {index < tags.length - 1 && ', '}
-            </>
+            </span>
           ))}
         </p>
       </td>
