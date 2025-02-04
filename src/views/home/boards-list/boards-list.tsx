@@ -56,10 +56,12 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
     setDisplayCount(15);
   }, [currentTag]);
 
-  // First filter by tag, then limit by displayCount
   const filteredBoards = (currentTag && tags.includes(currentTag) ? multisub.filter((sub) => sub?.tags?.includes(currentTag)) : multisub).slice(0, displayCount);
 
-  const hasMoreBoards = displayCount < multisub.length;
+  const totalBoardCount = currentTag && tags.includes(currentTag) ? multisub.filter((sub) => sub?.tags?.includes(currentTag)).length : multisub.length;
+
+  const hasMoreBoards =
+    currentTag && tags.includes(currentTag) ? displayCount < multisub.filter((sub) => sub?.tags?.includes(currentTag)).length : displayCount < multisub.length;
 
   const defaultBoard = {
     address: 'all',
@@ -89,7 +91,7 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
         </tbody>
       </table>
       <div className={styles.displayCount}>
-        displaying {filteredBoards.length} of {multisub.length} boards
+        displaying {filteredBoards.length} of {totalBoardCount} boards
         {currentTag && tags.includes(currentTag) && ` tagged "${currentTag}"`}
       </div>
       {hasMoreBoards && (
