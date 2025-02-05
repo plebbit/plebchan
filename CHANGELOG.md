@@ -1,3 +1,43 @@
+## [0.3.4](https://github.com/plebbit/plebchan/compare/v0.3.3...v0.3.4) (2025-02-05)
+
+
+### Bug Fixes
+
+* **account settings:** creating new account didn't automatically switch to it ([382e069](https://github.com/plebbit/plebchan/commit/382e0692c16b65eb4f3758a095d0a83fbc60b1e1))
+* **board:** some subplebbit avatars could overflow ([4f2308f](https://github.com/plebbit/plebchan/commit/4f2308fa94fb113b33f39e435e1d324b5adb8f54))
+* **challenge modal:** user could submit empty answer ([a7beb3a](https://github.com/plebbit/plebchan/commit/a7beb3aebb3997ec5d0ce1d6b6270d560cd93927))
+* emptying fields could fail when publishing reply ([7ffb3ce](https://github.com/plebbit/plebchan/commit/7ffb3ce8c5ef5f898c615292a74e50bfb97989e0))
+* **interface setting:** improve wording ([88a5782](https://github.com/plebbit/plebchan/commit/88a5782118759039577cb647b0a880c7787f3b8f))
+* **post:** an hr element written in markdown could get rendered as a UI hr ([165b950](https://github.com/plebbit/plebchan/commit/165b9504225b252d7de0d1a8608be471bdd2f12a))
+* **post:** content could bypass max character count if posted from other plebbit client ([b9210dc](https://github.com/plebbit/plebchan/commit/b9210dc835fa7dcbdf0d31b7173bf7c675b25655))
+* **post:** prevent edit menu checkbox from being interactable while post is loading ([96794a0](https://github.com/plebbit/plebchan/commit/96794a0c1e1d5bd8278b6c321a9ae24a5761210b))
+* **post:** title would wrap incorrectly in posts with no image/thumbnail ([0e67960](https://github.com/plebbit/plebchan/commit/0e6796002c27af53fd3b8d9bfe4a9e94a62801da))
+* **reply modal:** changing anon mode before publishing reply didn't work ([2a20716](https://github.com/plebbit/plebchan/commit/2a20716212708e0ddd7cb3a036a34f223c2c9159))
+* **reply:** media thumbnail wasn't showing ([be2b65b](https://github.com/plebbit/plebchan/commit/be2b65b5856e463dc9e770125118472b960a3a93))
+* **subplebbit:** subplebbit could erroneously appear offline while publishing a post ([48a8046](https://github.com/plebbit/plebchan/commit/48a80464862f618d86d57bd3e8859077499b994a))
+* **theme:** christmas theme should only run on dec 24 and 25 ([cbed83c](https://github.com/plebbit/plebchan/commit/cbed83cd1098031113009db4fa41f522f0536584))
+* **theme:** prevent special theme from persisting outside holiday period ([65ed3df](https://github.com/plebbit/plebchan/commit/65ed3dffd5ac3af227d736d686f410692ce31e53))
+* **topbar:** only display the top 15 subs in the default list ([0488a6c](https://github.com/plebbit/plebchan/commit/0488a6c629402f0c6acff09f2a9090abe07b2c4d))
+
+
+### Features
+
+* **account settings:** add hash-based routing for settings categories ([c21d512](https://github.com/plebbit/plebchan/commit/c21d512958fbda8bac95c9ed3f6f2850bcbd3f7b))
+* **boards list:** add filter by tag ([0716aac](https://github.com/plebbit/plebchan/commit/0716aac9e2ecdfb1de709c411b1f952012ae1f37))
+* **boards list:** add PPH column ([d858b53](https://github.com/plebbit/plebchan/commit/d858b5398d7c4bd4810662bf42d4fc4d87c433b1))
+* **boards list:** show 15 boards at a time + p/all, add load more button ([cf849ba](https://github.com/plebbit/plebchan/commit/cf849bab7047cb224b928dcce2217833312c5363))
+* **challenge modal:** close with escape key ([515007c](https://github.com/plebbit/plebchan/commit/515007cbf61feb33b7c7720a972c9c08a6fc9835))
+* **home:** add boards list more similar to vichan, which is better than 4chan's boards box for a potentially infinite number of boards ([cadfc69](https://github.com/plebbit/plebchan/commit/cadfc699fcf5b9370bdddd04f6e7261703923cca))
+* **markdown:** add spoiler text ([9a08b95](https://github.com/plebbit/plebchan/commit/9a08b9572b80dd16998422fbf3246b61c86b8d4b))
+* **post form:** add content length check ([1b359f9](https://github.com/plebbit/plebchan/commit/1b359f9d7b1c095c73690aec736cd6928c251e53))
+* **post:** support youtube links from Invidious instances ([9d9ba61](https://github.com/plebbit/plebchan/commit/9d9ba61a919ab9ecc2186a144dd4a4e411939bcb))
+* **reply modal:** add content length check, better error display ([d861f89](https://github.com/plebbit/plebchan/commit/d861f894f1dea9d2b532985e74370617b03a56ac))
+* **reply modal:** close with escape key ([63cb5b6](https://github.com/plebbit/plebchan/commit/63cb5b6591ed846ec0c87ea312109a5b325c3e52))
+* **settings modal:** close with escape key ([01e467d](https://github.com/plebbit/plebchan/commit/01e467d0699dfc14f68dacf0f843f5c71755220e))
+* **settings:** add subscriptions setting ([85d2cb6](https://github.com/plebbit/plebchan/commit/85d2cb67a97efd3d32ab9bcfd5ad7a052e0d14ba))
+
+
+
 ## [0.3.3](https://github.com/plebbit/plebchan/compare/v0.3.2...v0.3.3) (2024-12-25)
 
 
