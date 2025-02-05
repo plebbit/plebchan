@@ -474,7 +474,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
       )}
       <div className={isHidden ? styles.postDesktopHidden : ''}>
         {!isInPostPageView && !isDescription && !isRules && showReplies && (
-          <span className={styles.hideButtonWrapper}>
+          <span className={`${styles.hideButtonWrapper} ${!hasThumbnail ? styles.hideButtonWrapperNoImage : ''}`}>
             <span className={`${styles.hideButton} ${hidden ? styles.unhideThread : styles.hideThread}`} onClick={hidden ? unhide : hide} />
           </span>
         )}

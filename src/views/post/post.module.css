@@ -29,6 +29,10 @@
   float: left;
 }
 
+.hideButtonWrapperNoImage {
+  height: 25px !important;
+}
+
 .postDesktop .hideButton {
   background-repeat: no-repeat;
   background-position: center;
