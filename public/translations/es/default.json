@@ -261,5 +261,16 @@
   "uploading": "subiendo...",
   "no_file_chosen": "Ningún archivo elegido",
   "error": "Error",
-  "vote": "voto"
+  "vote": "voto",
+  "warning": "Advertencia",
+  "comment_field_too_long": "Comentario demasiado largo ({{length}}/2000).",
+  "field_too_long": "Campo demasiado largo.",
+  "title": "Título",
+  "tags": "Etiquetas",
+  "load_more": "Cargar más",
+  "displaying_boards": "Mostrando {{filteredBoardsCount}} de {{totalBoardCount}} foros",
+  "displaying_boards_with_tag": "Mostrando {{filteredBoardsCount}} de {{totalBoardCount}} foros etiquetados con {{currentTag}}",
+  "pph": "Posts Per Hour (Publicaciones Por Hora)",
+  "unsubscribe_all": "Cancelar suscripción a todo",
+  "unsubscribe_all_confirm": "¿Está seguro de que desea cancelar la suscripción a todos los foros?"
 }

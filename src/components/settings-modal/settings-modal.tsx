@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './settings-modal.module.css';
@@ -9,6 +9,7 @@ import CryptoAddressSetting from './crypto-address-setting';
 import CryptoWalletsSetting from './crypto-wallets-setting';
 import InterfaceSettings from './interface-settings';
 import PlebbitOptions from './plebbit-options';
+import SubscriptionsSetting from './subscriptions-setting';
 
 const SettingsModal = () => {
   const { t } = useTranslation();
@@ -16,10 +17,10 @@ const SettingsModal = () => {
   const navigate = useNavigate();
   const hash = location.hash.slice(1);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     const newPath = location.pathname.replace(/\/settings$/, '');
     navigate(newPath);
-  };
+  }, [location.pathname, navigate]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -39,6 +40,7 @@ const SettingsModal = () => {
   const [showAvatarSettings, setShowAvatarSettings] = useState(false);
   const [showCryptoAddressSetting, setShowCryptoAddressSetting] = useState(false);
   const [showCryptoWalletSettings, setShowCryptoWalletSettings] = useState(false);
+  const [showSubscriptionsSettings, setShowSubscriptionsSettings] = useState(false);
   const [showBlockedAddressesSetting, setShowBlockedAddressesSetting] = useState(false);
   const [showPlebbitOptionsSettings, setShowPlebbitOptionsSettings] = useState(false);
   const [expandAll, setExpandAll] = useState(false);
@@ -50,6 +52,7 @@ const SettingsModal = () => {
       Number(showAvatarSettings) +
       Number(showCryptoAddressSetting) +
       Number(showCryptoWalletSettings) +
+      Number(showSubscriptionsSettings) +
       Number(showBlockedAddressesSetting) +
       Number(showPlebbitOptionsSettings)
     );
@@ -61,6 +64,7 @@ const SettingsModal = () => {
     if (showAvatarSettings && 'avatar-settings' !== excludeCategoryId) return 'avatar-settings';
     if (showCryptoAddressSetting && 'crypto-address-settings' !== excludeCategoryId) return 'crypto-address-settings';
     if (showCryptoWalletSettings && 'crypto-wallet-settings' !== excludeCategoryId) return 'crypto-wallet-settings';
+    if (showSubscriptionsSettings && 'subscriptions-settings' !== excludeCategoryId) return 'subscriptions-settings';
     if (showBlockedAddressesSetting && 'blocked-addresses-settings' !== excludeCategoryId) return 'blocked-addresses-settings';
     if (showPlebbitOptionsSettings && 'plebbit-options-settings' !== excludeCategoryId) return 'plebbit-options-settings';
     return null;
@@ -100,6 +104,7 @@ const SettingsModal = () => {
       setShowAvatarSettings(hash === 'avatar-settings');
       setShowCryptoAddressSetting(hash === 'crypto-address-settings');
       setShowCryptoWalletSettings(hash === 'crypto-wallet-settings');
+      setShowSubscriptionsSettings(hash === 'subscriptions-settings');
       setShowBlockedAddressesSetting(hash === 'blocked-addresses-settings');
       setShowPlebbitOptionsSettings(hash === 'plebbit-options-settings');
     }
@@ -113,6 +118,7 @@ const SettingsModal = () => {
     setShowAvatarSettings(newExpandState);
     setShowCryptoAddressSetting(newExpandState);
     setShowCryptoWalletSettings(newExpandState);
+    setShowSubscriptionsSettings(newExpandState);
     setShowBlockedAddressesSetting(newExpandState);
     setShowPlebbitOptionsSettings(newExpandState);
 
@@ -166,6 +172,13 @@ const SettingsModal = () => {
           </label>
         </div>
         {showCryptoWalletSettings && <CryptoWalletsSetting />}
+        <div id='subscriptions-settings' className={`${styles.setting} ${styles.category}`}>
+          <label onClick={() => handleCategoryClick('subscriptions-settings', showSubscriptionsSettings, setShowSubscriptionsSettings)}>
+            <span className={showSubscriptionsSettings ? styles.hideButton : styles.showButton} />
+            {t('subscriptions')}
+          </label>
+        </div>
+        {showSubscriptionsSettings && <SubscriptionsSetting />}
         <div id='blocked-addresses-settings' className={`${styles.setting} ${styles.category}`}>
           <label onClick={() => handleCategoryClick('blocked-addresses-settings', showBlockedAddressesSetting, setShowBlockedAddressesSetting)}>
             <span className={showBlockedAddressesSetting ? styles.hideButton : styles.showButton} />

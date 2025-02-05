@@ -22,7 +22,7 @@ const useAuthorPrivileges = ({ commentAuthorAddress, subplebbitAddress, postCid 
     const accountAuthorRole = roles?.[accountAuthorAddress]?.role;
     const isAccountMod = accountAuthorRole === 'admin' || accountAuthorRole === 'owner' || accountAuthorRole === 'moderator';
 
-    let isAccountCommentAuthor = accountAuthorAddress === commentAuthorAddress;
+    let isAccountCommentAuthor = postCid && accountAuthorAddress === commentAuthorAddress;
 
     if (!isAccountCommentAuthor && anonMode) {
       const addressSigner = getAddressSigner(commentAuthorAddress);

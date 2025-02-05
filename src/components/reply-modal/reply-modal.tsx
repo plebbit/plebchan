@@ -72,18 +72,39 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   }, [address, getExistingSigner, getNewSigner, setPublishReplyOptions, displayName]);
 
   const [error, setError] = useState<string | null>(null);
+  const [lengthError, setLengthError] = useState<string | null>(null);
+
+  const checkContentLength = useRef(
+    _.debounce((content: string, t: Function) => {
+      const length = content.trim().length;
+      if (length > 2000) {
+        setError(null);
+        setLengthError(`${t('error')}: ${t('comment_field_too_long', { length })}`);
+      } else {
+        setLengthError(null);
+      }
+    }, 1000),
+  ).current;
 
   const onPublishReply = () => {
     const currentContent = textRef.current?.value.slice(contentPrefix.length).trim() || '';
     const currentUrl = urlRef.current?.value.trim() || '';
 
     if (!currentContent && !currentUrl) {
-      setError(t('empty_comment_alert'));
+      setError(t('error') + ': ' + t('empty_comment_alert'));
       return;
     }
 
     if (currentUrl && !isValidURL(currentUrl)) {
-      setError(t('invalid_url_alert'));
+      setError(t('error') + ': ' + t('invalid_url_alert'));
+      return;
+    }
+
+    checkContentLength.cancel();
+    setLengthError(null);
+
+    if (currentContent.length > 2000) {
+      setError(t('error') + ': ' + t('field_too_long'));
       return;
     }
 
@@ -150,7 +171,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const offlineAlert = updatedAt
     ? isBoardOffline && (
         <div className={styles.offlineBoard}>
-          <Trans i18nKey='posts_last_synced_info' values={{ time: getFormattedTimeAgo(updatedAt) }} />
+          {t('warning')}: <Trans i18nKey='posts_last_synced_info' values={{ time: getFormattedTimeAgo(updatedAt) }} />
         </div>
       )
     : t('subplebbit_offline_info');
@@ -211,6 +232,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     const formattedContent = formatMarkdown(contentWithoutPrefix);
     if (textRef.current && textRef.current.value !== formattedContent) {
       setPublishReplyOptions({ content: formattedContent });
+      checkContentLength(formattedContent, t);
     }
   };
 
@@ -291,8 +313,6 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
         <div className={styles.content}>
           <textarea cols={48} rows={4} wrap='soft' ref={textRef} spellCheck={true} onInput={handleContentInput} onChange={handleContentChange} />
         </div>
-        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
-        <div className={styles.offlineAlert}></div>
         <div className={styles.footer}>
           {url && !isAndroid && (
             <>
@@ -323,11 +343,8 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
             {t('post')}
           </button>
         </div>
-        {error && (
-          <div className={styles.error}>
-            {t('error')}: {error}
-          </div>
-        )}
+        {lengthError ? <div className={styles.error}>{lengthError}</div> : error && <div className={styles.error}>{error}</div>}
+        {!(isInAllView || isInSubscriptionsView) && offlineAlert}
       </div>
     </div>
   );

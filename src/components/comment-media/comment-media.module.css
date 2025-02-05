@@ -14,7 +14,7 @@
 .floatingEmbed, .subplebbitAvatar {
   max-width: 250px;
   max-height: 250px;
-  display: inline-block;
+  display: inline-flex;
 }
 
 .subplebbitAvatar {

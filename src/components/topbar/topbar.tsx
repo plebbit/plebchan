@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './topbar.module.css';
-import useDefaultSubplebbits, { categorizeSubplebbits, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import _, { debounce } from 'lodash';
 import { TimeFilter } from '../board-buttons';
 
@@ -35,6 +35,19 @@ const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => 
     };
   }, [handleClickOutside]);
 
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowSearchBar(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [setShowSearchBar]);
+
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const searchInput = searchInputRef.current?.value;
@@ -54,41 +67,52 @@ const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => 
   );
 };
 
+const renderBoardsList = (subplebbits: any, isInCatalogView: boolean, subscriptions: string[]) =>
+  subplebbits?.length > 0 && (
+    <>
+      [
+      {subplebbits.map((sub: any, index: any) => (
+        <span key={index}>
+          {index === 0 ? null : ' '}
+          <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>
+            {sub.address.endsWith('.eth') || sub.address.endsWith('.sol') ? sub.address : sub.address.slice(0, 10).concat('...')}
+          </Link>
+          {index !== subplebbits.length - 1 ? ' /' : null}
+        </span>
+      ))}
+      ]{' '}
+      {subscriptions?.length > 0 && (
+        <>
+          [
+          {subscriptions.map((address: any, index: any) => (
+            <span key={index}>
+              {index === 0 ? null : ' '}
+              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>
+                {address.endsWith('.eth') || address.endsWith('.sol') ? address : address.slice(0, 10).concat('...')}
+              </Link>
+              {index !== subscriptions?.length - 1 ? ' /' : null}
+            </span>
+          ))}
+          ]{' '}
+        </>
+      )}
+    </>
+  );
+
 const TopBarDesktop = () => {
   const { t } = useTranslation();
+  const account = useAccount();
   const location = useLocation();
   const params = useParams();
   const isInCatalogView = isCatalogView(location.pathname, params);
   const subplebbits = useDefaultSubplebbits();
   const [showSearchBar, setShowSearchBar] = useState(false);
 
-  const { plebbitSubs, interestsSubs, randomSubs, internationalSubs, projectsSubs } = categorizeSubplebbits(subplebbits);
-
-  const renderSubplebbits = (subplebbits: any) =>
-    subplebbits.length > 0 && (
-      <>
-        [
-        {subplebbits.map((sub: any, index: any) => (
-          <span key={index}>
-            {index === 0 ? null : ' '}
-            <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>
-              {sub.address.endsWith('.eth') || sub.address.endsWith('.sol') ? sub.address.slice(0, -4) : sub.address.slice(0, 10).concat('...')}
-            </Link>
-            {index !== subplebbits.length - 1 ? ' /' : null}
-          </span>
-        ))}
-        ]{' '}
-      </>
-    );
-
   return (
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
-        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>] {renderSubplebbits(plebbitSubs)}
-        {renderSubplebbits(projectsSubs)}
-        {renderSubplebbits(interestsSubs)}
-        {renderSubplebbits(randomSubs)}
-        {renderSubplebbits(internationalSubs)}[
+        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>]{' '}
+        {renderBoardsList(subplebbits.slice(0, 15), isInCatalogView, account?.subscriptions)}[
         <Link
           className={styles.disabledButton}
           to='boards/create'

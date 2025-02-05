@@ -41,32 +41,9 @@ const useDefaultSubplebbits = () => {
   return cacheSubplebbits || subplebbits;
 };
 
-export const categorizeSubplebbits = (subplebbits: MultisubSubplebbit[]) => {
-  const plebbitSubs = subplebbits.filter((sub) => sub.tags?.includes('plebbit'));
-  const interestsSubs = subplebbits.filter(
-    (sub) => sub.tags?.includes('topic') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('country') && !sub.tags?.includes('international'),
-  );
-  const randomSubs = subplebbits.filter((sub) => sub.tags?.includes('random') && !sub.tags?.includes('plebbit'));
-  const internationalSubs = subplebbits.filter((sub) => sub.tags?.includes('international') || sub.tags?.includes('country'));
-  const projectsSubs = subplebbits.filter((sub) => sub.tags?.includes('project') && !sub.tags?.includes('plebbit') && !sub.tags?.includes('topic'));
-
-  return { plebbitSubs, interestsSubs, randomSubs, internationalSubs, projectsSubs };
-};
-
 export const useDefaultSubplebbitAddresses = () => {
   const defaultSubplebbits = useDefaultSubplebbits();
-  const categorizedSubplebbits = useMemo(() => categorizeSubplebbits(defaultSubplebbits), [defaultSubplebbits]);
-  return useMemo(
-    () =>
-      [
-        ...categorizedSubplebbits.plebbitSubs,
-        ...categorizedSubplebbits.projectsSubs,
-        ...categorizedSubplebbits.interestsSubs,
-        ...categorizedSubplebbits.randomSubs,
-        ...categorizedSubplebbits.internationalSubs,
-      ].map((subplebbit) => subplebbit.address),
-    [categorizedSubplebbits],
-  );
+  return useMemo(() => defaultSubplebbits.map((subplebbit) => subplebbit.address), [defaultSubplebbits]);
 };
 
 export const useMultisubMetadata = () => {

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Comment, Subplebbit } from '@plebbit/plebbit-react-hooks';
 import styles from '../home.module.css';
 import usePopularPosts from '../../../hooks/use-popular-posts';
-import useHomeFiltersStore from '../../../stores/use-home-filters-store';
+import usePopularThreadsOptionsStore from '../../../stores/use-popular-threads-options-store';
 import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../../components/catalog-row';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
@@ -52,7 +52,7 @@ const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThrea
 
 const PopularThreadsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; subplebbits: any }) => {
   const { t } = useTranslation();
-  const { showWorksafeContentOnly, showNsfwContentOnly } = useHomeFiltersStore();
+  const { showWorksafeContentOnly, showNsfwContentOnly } = usePopularThreadsOptionsStore();
 
   const getFilteredSubplebbits = () => {
     if (showWorksafeContentOnly) {
@@ -77,7 +77,7 @@ const PopularThreadsBox = ({ multisub, subplebbits }: { multisub: Subplebbit[]; 
     <div className={styles.box}>
       <div className={`${styles.boxBar} ${styles.color2ColorBar}`}>
         <h2 className='capitalize'>{t('popular_threads')}</h2>
-        <BoxModal isBoardsBoxModal={false} />
+        <BoxModal />
       </div>
       <div className={`${styles.boxContent} ${popularPosts.length !== 0 ? styles.popularThreads : ''}`}>
         {popularPosts.length === 0 ? (
