@@ -270,5 +270,7 @@
   "load_more": "Cargar más",
   "displaying_boards": "Mostrando {{filteredBoardsCount}} de {{totalBoardCount}} foros",
   "displaying_boards_with_tag": "Mostrando {{filteredBoardsCount}} de {{totalBoardCount}} foros etiquetados con {{currentTag}}",
-  "pph": "Posts Per Hour (Publicaciones Por Hora)"
+  "pph": "Posts Per Hour (Publicaciones Por Hora)",
+  "unsubscribe_all": "Cancelar suscripción a todo",
+  "unsubscribe_all_confirm": "¿Está seguro de que desea cancelar la suscripción a todos los foros?"
 }

@@ -270,5 +270,7 @@
   "load_more": "Загрузить больше",
   "displaying_boards": "Отображение {{filteredBoardsCount}} из {{totalBoardCount}} форумов",
   "displaying_boards_with_tag": "Отображение {{filteredBoardsCount}} из {{totalBoardCount}} форумов с тегом {{currentTag}}",
-  "pph": "Posts Per Hour (Посты в Час)"
+  "pph": "Posts Per Hour (Посты в Час)",
+  "unsubscribe_all": "Отписаться от всего",
+  "unsubscribe_all_confirm": "Вы уверены, что хотите отписаться от всех форумов?"
 }

@@ -137,7 +137,7 @@
   "refresh": "Refresh",
   "no_board_selected": "no board selected",
   "none": "none",
-  "not_subscribed_to_any_board": "You have not subscribed to any boards yet.",
+  "not_subscribed_to_any_board": "You have not subscribed to any board yet.",
   "board_mods": "Board Mods",
   "this_post_was_removed": "this post was removed",
   "user_deleted_this_post": "User deleted this post.",
@@ -270,5 +270,7 @@
   "load_more": "Load More",
   "displaying_boards": "Displaying {{filteredBoardsCount}} of {{totalBoardCount}} boards",
   "displaying_boards_with_tag": "Displaying {{filteredBoardsCount}} of {{totalBoardCount}} boards tagged {{currentTag}}",
-  "pph": "Posts Per Hour"
+  "pph": "Posts Per Hour",
+  "unsubscribe_all": "Unsubscribe From All",
+  "unsubscribe_all_confirm": "Are you sure you want to unsubscribe from all boards?"
 }

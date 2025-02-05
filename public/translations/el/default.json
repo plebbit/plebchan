@@ -270,5 +270,7 @@
   "load_more": "Φορτώστε περισσότερα",
   "displaying_boards": "Εμφάνιση {{filteredBoardsCount}} από τα {{totalBoardCount}} boards",
   "displaying_boards_with_tag": "Εμφάνιση {{filteredBoardsCount}} από τα {{totalBoardCount}} boards με την ετικέτα {{currentTag}}",
-  "pph": "Posts Per Hour (Αναρτήσεις ανά ώρα)"
+  "pph": "Posts Per Hour (Αναρτήσεις ανά ώρα)",
+  "unsubscribe_all": "Ακύρωση εγγραφής από όλα",
+  "unsubscribe_all_confirm": "Είστε σίγουροι ότι θέλετε να ακυρώσετε την εγγραφή από όλα τα boards;"
 }

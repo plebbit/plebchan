@@ -270,5 +270,7 @@
   "load_more": "Tải thêm",
   "displaying_boards": "Hiển thị {{filteredBoardsCount}} trong {{totalBoardCount}} diễn đàn",
   "displaying_boards_with_tag": "Hiển thị {{filteredBoardsCount}} trong {{totalBoardCount}} diễn đàn có thẻ {{currentTag}}",
-  "pph": "Posts Per Hour (Bài Viết Mỗi Giờ)"
+  "pph": "Posts Per Hour (Bài Viết Mỗi Giờ)",
+  "unsubscribe_all": "Hủy đăng ký tất cả",
+  "unsubscribe_all_confirm": "Bạn có chắc chắn muốn hủy đăng ký tất cả các diễn đàn không?"
 }

@@ -270,5 +270,7 @@
   "load_more": "טען עוד",
   "displaying_boards": "מציג {{filteredBoardsCount}} מתוך {{totalBoardCount}} פורומים",
   "displaying_boards_with_tag": "מציג {{filteredBoardsCount}} מתוך {{totalBoardCount}} פורומים עם התג {{currentTag}}",
-  "pph": "Posts Per Hour (פוסטים לשעה)"
+  "pph": "Posts Per Hour (פוסטים לשעה)",
+  "unsubscribe_all": "הסרה מכולם",
+  "unsubscribe_all_confirm": "האם אתה בטוח שברצונך לבטל את ההרשמה מכל הפורומים?"
 }

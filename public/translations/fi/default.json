@@ -270,5 +270,7 @@
   "load_more": "Lataa lisää",
   "displaying_boards": "Näytetään {{filteredBoardsCount}} {{totalBoardCount}} foorumista",
   "displaying_boards_with_tag": "Näytetään {{filteredBoardsCount}} {{totalBoardCount}} foorumista, joissa on tagi {{currentTag}}",
-  "pph": "Posts Per Hour (Viestit tunnissa)"
+  "pph": "Posts Per Hour (Viestit tunnissa)",
+  "unsubscribe_all": "Peruuta tilaus kaikilta",
+  "unsubscribe_all_confirm": "Oletko varma, että haluat peruuttaa tilauksen kaikilta foorumeilta?"
 }

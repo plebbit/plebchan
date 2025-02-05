@@ -270,5 +270,7 @@
   "load_more": "もっと読み込む",
   "displaying_boards": "表示中 {{filteredBoardsCount}} 件のうち {{totalBoardCount}} 件の掲示板",
   "displaying_boards_with_tag": "表示中 {{filteredBoardsCount}} 件のうち {{totalBoardCount}} 件の掲示板、タグ {{currentTag}}",
-  "pph": "Posts Per Hour (時間あたりの投稿)"
+  "pph": "Posts Per Hour (時間あたりの投稿)",
+  "unsubscribe_all": "すべての登録を解除する",
+  "unsubscribe_all_confirm": "すべての掲示板から解除してもよろしいですか？"
 }

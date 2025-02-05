@@ -270,5 +270,7 @@
   "load_more": "加载更多",
   "displaying_boards": "显示 {{filteredBoardsCount}} 个板块，共 {{totalBoardCount}} 个板块",
   "displaying_boards_with_tag": "显示 {{filteredBoardsCount}} 个板块，共 {{totalBoardCount}} 个板块，标签为 {{currentTag}}",
-  "pph": "Posts Per Hour (每小时帖子)"
+  "pph": "Posts Per Hour (每小时帖子)",
+  "unsubscribe_all": "取消所有订阅",
+  "unsubscribe_all_confirm": "您确定要取消对所有板块的订阅吗？"
 }

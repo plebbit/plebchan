@@ -270,5 +270,7 @@
   "load_more": "Töltsön be többet",
   "displaying_boards": "Képernyőn {{filteredBoardsCount}} a(z) {{totalBoardCount}} fórumokból",
   "displaying_boards_with_tag": "Képernyőn {{filteredBoardsCount}} a(z) {{totalBoardCount}} fórumok közül, amelyek tartalmazzák a(z) {{currentTag}} címkét",
-  "pph": "Posts Per Hour (Bejegyzések óránként)"
+  "pph": "Posts Per Hour (Bejegyzések óránként)",
+  "unsubscribe_all": "Leiratkozás mindentől",
+  "unsubscribe_all_confirm": "Biztos, hogy le szeretnél iratkozni az összes fórumból?"
 }

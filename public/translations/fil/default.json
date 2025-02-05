@@ -270,5 +270,7 @@
   "load_more": "Mag-load ng higit pa",
   "displaying_boards": "Ipinapakita {{filteredBoardsCount}} mula sa {{totalBoardCount}} na mga board",
   "displaying_boards_with_tag": "Ipinapakita {{filteredBoardsCount}} mula sa {{totalBoardCount}} na mga board na may tag na {{currentTag}}",
-  "pph": "Posts Per Hour (Mga Post Bawat Oras)"
+  "pph": "Posts Per Hour (Mga Post Bawat Oras)",
+  "unsubscribe_all": "I-unsubscribe mula sa Lahat",
+  "unsubscribe_all_confirm": "Sigurado ka bang gusto mong mag-unsubscribe mula sa lahat ng boards?"
 }

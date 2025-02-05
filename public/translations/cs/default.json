@@ -270,5 +270,7 @@
   "load_more": "Načíst více",
   "displaying_boards": "Zobrazuji {{filteredBoardsCount}} z {{totalBoardCount}} fór",
   "displaying_boards_with_tag": "Zobrazuji {{filteredBoardsCount}} z {{totalBoardCount}} fór označených {{currentTag}}",
-  "pph": "Posts Per Hour (Příspěvky za hodinu)"
+  "pph": "Posts Per Hour (Příspěvky za hodinu)",
+  "unsubscribe_all": "Odhlásit se ze všeho",
+  "unsubscribe_all_confirm": "Jste si jisti, že chcete zrušit odběr ze všech fór?"
 }

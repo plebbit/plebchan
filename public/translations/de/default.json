@@ -270,5 +270,7 @@
   "load_more": "Mehr laden",
   "displaying_boards": "Zeige {{filteredBoardsCount}} von {{totalBoardCount}} Boards",
   "displaying_boards_with_tag": "Zeige {{filteredBoardsCount}} von {{totalBoardCount}} Boards mit dem Tag {{currentTag}}",
-  "pph": "Posts Per Hour (Beiträge pro Stunde)"
+  "pph": "Posts Per Hour (Beiträge pro Stunde)",
+  "unsubscribe_all": "Von allem abmelden",
+  "unsubscribe_all_confirm": "Sind Sie sicher, dass Sie sich von allen Boards abmelden möchten?"
 }

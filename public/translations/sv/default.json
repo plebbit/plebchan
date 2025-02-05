@@ -270,5 +270,7 @@
   "load_more": "Läs mer",
   "displaying_boards": "Visar {{filteredBoardsCount}} av {{totalBoardCount}} boards",
   "displaying_boards_with_tag": "Visar {{filteredBoardsCount}} av {{totalBoardCount}} boards taggade med {{currentTag}}",
-  "pph": "Posts Per Hour (Inlägg Per Timme)"
+  "pph": "Posts Per Hour (Inlägg Per Timme)",
+  "unsubscribe_all": "Avsluta prenumeration från allt",
+  "unsubscribe_all_confirm": "Är du säker på att du vill avsluta prenumerationen från alla boards?"
 }

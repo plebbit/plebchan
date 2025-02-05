@@ -270,5 +270,7 @@
   "load_more": "โหลดเพิ่มเติม",
   "displaying_boards": "แสดง {{filteredBoardsCount}} จาก {{totalBoardCount}} บอร์ด",
   "displaying_boards_with_tag": "แสดง {{filteredBoardsCount}} จาก {{totalBoardCount}} บอร์ดที่มีแท็ก {{currentTag}}",
-  "pph": "Posts Per Hour (โพสต์ต่อชั่วโมง)"
+  "pph": "Posts Per Hour (โพสต์ต่อชั่วโมง)",
+  "unsubscribe_all": "ยกเลิกการสมัครทั้งหมด",
+  "unsubscribe_all_confirm": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการสมัครสมาชิกจากทุกบอร์ด?"
 }

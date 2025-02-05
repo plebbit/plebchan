@@ -270,5 +270,7 @@
   "load_more": "Ngarko më shumë",
   "displaying_boards": "Po shfaq {{filteredBoardsCount}} nga {{totalBoardCount}} forume",
   "displaying_boards_with_tag": "Po shfaq {{filteredBoardsCount}} nga {{totalBoardCount}} forume me etiketën {{currentTag}}",
-  "pph": "Posts Per Hour (Postime Në Orë)"
+  "pph": "Posts Per Hour (Postime Në Orë)",
+  "unsubscribe_all": "Çunsubscribe nga të gjitha",
+  "unsubscribe_all_confirm": "A jeni të sigurt se doni të hiqni bllokimin nga të gjitha forume?"
 }
