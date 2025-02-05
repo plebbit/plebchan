@@ -267,5 +267,8 @@
   "field_too_long": "الحقل طويل جدًا.",
   "title": "عنوان",
   "tags": "علامات",
-  "load_more": "تحميل المزيد"
+  "load_more": "تحميل المزيد",
+  "displaying_boards": "عرض {{filteredBoardsCount}} من {{totalBoardCount}} المجالس",
+  "displaying_boards_with_tag": "عرض {{filteredBoardsCount}} من {{totalBoardCount}} المجالس الموسومة بـ {{currentTag}}",
+  "pph": "Posts Per Hour (منشورات في الساعة)"
 }

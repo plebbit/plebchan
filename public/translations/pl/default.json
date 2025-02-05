@@ -267,5 +267,8 @@
   "field_too_long": "Pole jest za długie.",
   "title": "Tytuł",
   "tags": "Tagi",
-  "load_more": "Załaduj więcej"
+  "load_more": "Załaduj więcej",
+  "displaying_boards": "Wyświetlanie {{filteredBoardsCount}} z {{totalBoardCount}} forów",
+  "displaying_boards_with_tag": "Wyświetlanie {{filteredBoardsCount}} z {{totalBoardCount}} forów oznaczonych tagiem {{currentTag}}",
+  "pph": "Posts Per Hour (Posty na Godzinę)"
 }

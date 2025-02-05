@@ -267,5 +267,8 @@
   "field_too_long": "Pole je příliš dlouhé.",
   "title": "Název",
   "tags": "Štítky",
-  "load_more": "Načíst více"
+  "load_more": "Načíst více",
+  "displaying_boards": "Zobrazuji {{filteredBoardsCount}} z {{totalBoardCount}} fór",
+  "displaying_boards_with_tag": "Zobrazuji {{filteredBoardsCount}} z {{totalBoardCount}} fór označených {{currentTag}}",
+  "pph": "Posts Per Hour (Příspěvky za hodinu)"
 }

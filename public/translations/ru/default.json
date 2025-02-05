@@ -267,5 +267,8 @@
   "field_too_long": "Поле слишком длинное.",
   "title": "Заголовок",
   "tags": "Теги",
-  "load_more": "Загрузить больше"
+  "load_more": "Загрузить больше",
+  "displaying_boards": "Отображение {{filteredBoardsCount}} из {{totalBoardCount}} форумов",
+  "displaying_boards_with_tag": "Отображение {{filteredBoardsCount}} из {{totalBoardCount}} форумов с тегом {{currentTag}}",
+  "pph": "Posts Per Hour (Посты в Час)"
 }

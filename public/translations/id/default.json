@@ -267,5 +267,8 @@
   "field_too_long": "Kolom terlalu panjang.",
   "title": "Judul",
   "tags": "Tag",
-  "load_more": "Muat lebih banyak"
+  "load_more": "Muat lebih banyak",
+  "displaying_boards": "Menampilkan {{filteredBoardsCount}} dari {{totalBoardCount}} boards",
+  "displaying_boards_with_tag": "Menampilkan {{filteredBoardsCount}} dari {{totalBoardCount}} boards dengan tag {{currentTag}}",
+  "pph": "Posts Per Hour (Posting Per Jam)"
 }

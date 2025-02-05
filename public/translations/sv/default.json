@@ -267,5 +267,8 @@
   "field_too_long": "Fältet är för långt.",
   "title": "Titel",
   "tags": "Taggar",
-  "load_more": "Läs mer"
+  "load_more": "Läs mer",
+  "displaying_boards": "Visar {{filteredBoardsCount}} av {{totalBoardCount}} boards",
+  "displaying_boards_with_tag": "Visar {{filteredBoardsCount}} av {{totalBoardCount}} boards taggade med {{currentTag}}",
+  "pph": "Posts Per Hour (Inlägg Per Timme)"
 }

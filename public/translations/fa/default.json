@@ -267,5 +267,8 @@
   "field_too_long": "فیلد خیلی طولانی است.",
   "title": "عنوان",
   "tags": "برچسب‌ها",
-  "load_more": "بارگذاری بیشتر"
+  "load_more": "بارگذاری بیشتر",
+  "displaying_boards": "نمایش {{filteredBoardsCount}} از {{totalBoardCount}} انجمن",
+  "displaying_boards_with_tag": "نمایش {{filteredBoardsCount}} از {{totalBoardCount}} انجمن با برچسب {{currentTag}}",
+  "pph": "Posts Per Hour (پست در ساعت)"
 }

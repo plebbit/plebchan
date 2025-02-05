@@ -267,5 +267,8 @@
   "field_too_long": "Veld te lang.",
   "title": "Titel",
   "tags": "Tags",
-  "load_more": "Laad meer"
+  "load_more": "Laad meer",
+  "displaying_boards": "Weergave {{filteredBoardsCount}} van {{totalBoardCount}} boards",
+  "displaying_boards_with_tag": "Weergave {{filteredBoardsCount}} van {{totalBoardCount}} boards met de tag {{currentTag}}",
+  "pph": "Posts Per Hour (Berichten Per Uur)"
 }

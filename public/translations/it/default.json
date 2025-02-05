@@ -267,5 +267,8 @@
   "field_too_long": "Campo troppo lungo.",
   "title": "Titolo",
   "tags": "Tag",
-  "load_more": "Carica altro"
+  "load_more": "Carica altro",
+  "displaying_boards": "Visualizzazione di {{filteredBoardsCount}} su {{totalBoardCount}} board",
+  "displaying_boards_with_tag": "Visualizzazione di {{filteredBoardsCount}} su {{totalBoardCount}} board con tag {{currentTag}}",
+  "pph": "Posts Per Hour (Post Per Ora)"
 }

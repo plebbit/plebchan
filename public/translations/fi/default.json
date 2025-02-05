@@ -267,5 +267,8 @@
   "field_too_long": "Kenttä liian pitkä.",
   "title": "Otsikko",
   "tags": "Tunnisteet",
-  "load_more": "Lataa lisää"
+  "load_more": "Lataa lisää",
+  "displaying_boards": "Näytetään {{filteredBoardsCount}} {{totalBoardCount}} foorumista",
+  "displaying_boards_with_tag": "Näytetään {{filteredBoardsCount}} {{totalBoardCount}} foorumista, joissa on tagi {{currentTag}}",
+  "pph": "Posts Per Hour (Viestit tunnissa)"
 }

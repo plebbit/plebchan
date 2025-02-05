@@ -267,5 +267,8 @@
   "field_too_long": "ఫీల్డ్ చాలా పొడుగ్గా ఉంది.",
   "title": "శీర్షిక",
   "tags": "ట్యాగ్స్",
-  "load_more": "మరింత లోడ్ చేయండి"
+  "load_more": "మరింత లోడ్ చేయండి",
+  "displaying_boards": "ప్రదర్శన {{filteredBoardsCount}} నుండి {{totalBoardCount}} బోర్డ్స్",
+  "displaying_boards_with_tag": "ప్రదర్శన {{filteredBoardsCount}} నుండి {{totalBoardCount}} బోర్డ్స్ ట్యాగ్ {{currentTag}}",
+  "pph": "Posts Per Hour (ప్రతి గంటలో పోస్ట్‌లు)"
 }

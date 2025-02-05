@@ -267,5 +267,8 @@
   "field_too_long": "Champ trop long.",
   "title": "Titre",
   "tags": "Tags",
-  "load_more": "Charger plus"
+  "load_more": "Charger plus",
+  "displaying_boards": "Affichage de {{filteredBoardsCount}} sur {{totalBoardCount}} forums",
+  "displaying_boards_with_tag": "Affichage de {{filteredBoardsCount}} sur {{totalBoardCount}} forums étiquetés {{currentTag}}",
+  "pph": "Posts Per Hour (Publications Par Heure)"
 }

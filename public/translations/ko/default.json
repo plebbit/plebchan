@@ -267,5 +267,8 @@
   "field_too_long": "필드가 너무 깁니다.",
   "title": "제목",
   "tags": "태그",
-  "load_more": "더 보기"
+  "load_more": "더 보기",
+  "displaying_boards": "총 {{totalBoardCount}}개의 게시판 중 {{filteredBoardsCount}}개 게시판 표시",
+  "displaying_boards_with_tag": "총 {{totalBoardCount}}개의 게시판 중 {{filteredBoardsCount}}개 게시판, 태그 {{currentTag}}",
+  "pph": "Posts Per Hour (시간당 게시물)"
 }

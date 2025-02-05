@@ -267,5 +267,8 @@
   "field_too_long": "Alan çok uzun.",
   "title": "Başlık",
   "tags": "Etiketler",
-  "load_more": "Daha fazla yükle"
+  "load_more": "Daha fazla yükle",
+  "displaying_boards": "{{filteredBoardsCount}}/{{totalBoardCount}} boardları görüntüleme",
+  "displaying_boards_with_tag": "{{currentTag}} etiketiyle işaretlenen {{totalBoardCount}} boardtan {{filteredBoardsCount}} görüntüleniyor",
+  "pph": "Posts Per Hour (Saat Başına Paylaşımlar)"
 }

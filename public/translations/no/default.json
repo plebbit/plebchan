@@ -267,5 +267,8 @@
   "field_too_long": "Feltet er for langt.",
   "title": "Tittel",
   "tags": "Tags",
-  "load_more": "Last inn mer"
+  "load_more": "Last inn mer",
+  "displaying_boards": "Viser {{filteredBoardsCount}} av {{totalBoardCount}} boards",
+  "displaying_boards_with_tag": "Viser {{filteredBoardsCount}} av {{totalBoardCount}} boards merket med {{currentTag}}",
+  "pph": "Posts Per Hour (Innhold Per Time)"
 }

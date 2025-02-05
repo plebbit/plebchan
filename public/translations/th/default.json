@@ -267,5 +267,8 @@
   "field_too_long": "ฟิลด์ยาวเกินไป",
   "title": "ชื่อเรื่อง",
   "tags": "แท็ก",
-  "load_more": "โหลดเพิ่มเติม"
+  "load_more": "โหลดเพิ่มเติม",
+  "displaying_boards": "แสดง {{filteredBoardsCount}} จาก {{totalBoardCount}} บอร์ด",
+  "displaying_boards_with_tag": "แสดง {{filteredBoardsCount}} จาก {{totalBoardCount}} บอร์ดที่มีแท็ก {{currentTag}}",
+  "pph": "Posts Per Hour (โพสต์ต่อชั่วโมง)"
 }

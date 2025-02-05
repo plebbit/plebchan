@@ -267,5 +267,8 @@
   "field_too_long": "Feltene er for lange.",
   "title": "Titel",
   "tags": "Tags",
-  "load_more": "Indlæs mere"
+  "load_more": "Indlæs mere",
+  "displaying_boards": "Viser {{filteredBoardsCount}} af {{totalBoardCount}} boards",
+  "displaying_boards_with_tag": "Viser {{filteredBoardsCount}} af {{totalBoardCount}} boards mærket {{currentTag}}",
+  "pph": "Posts Per Hour (Indlæg Per Time)"
 }

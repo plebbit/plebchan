@@ -267,5 +267,8 @@
   "field_too_long": "Поле занадто довге.",
   "title": "Заголовок",
   "tags": "Теги",
-  "load_more": "Завантажити більше"
+  "load_more": "Завантажити більше",
+  "displaying_boards": "Відображення {{filteredBoardsCount}} з {{totalBoardCount}} форумів",
+  "displaying_boards_with_tag": "Відображення {{filteredBoardsCount}} з {{totalBoardCount}} форумів, помічених тегом {{currentTag}}",
+  "pph": "Posts Per Hour (Пости за Годину)"
 }

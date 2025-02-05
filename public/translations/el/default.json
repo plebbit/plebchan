@@ -267,5 +267,8 @@
   "field_too_long": "Το πεδίο είναι πολύ μεγάλο.",
   "title": "Τίτλος",
   "tags": "Ετικέτες",
-  "load_more": "Φορτώστε περισσότερα"
+  "load_more": "Φορτώστε περισσότερα",
+  "displaying_boards": "Εμφάνιση {{filteredBoardsCount}} από τα {{totalBoardCount}} boards",
+  "displaying_boards_with_tag": "Εμφάνιση {{filteredBoardsCount}} από τα {{totalBoardCount}} boards με την ετικέτα {{currentTag}}",
+  "pph": "Posts Per Hour (Αναρτήσεις ανά ώρα)"
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { Subplebbit, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Subplebbit, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
 import useIsMobile from '../../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
@@ -13,6 +13,8 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
   const { t } = useTranslation();
   const { address, title, tags } = subplebbit || {};
   const nsfwTag = tags?.find((tag: string) => nsfwTags.includes(tag));
+
+  let stats = useSubplebbitStats({ subplebbitAddress: address });
 
   const subplebbitData = useSubplebbit({ subplebbitAddress: address });
   const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbitData);
@@ -33,16 +35,21 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
         <p className={styles.boardCell}>{title || displayAddress}</p>
       </td>
       {!isMobile && (
-        <td className={styles.boardTags}>
-          <p className={styles.boardCell}>
-            {tags.map((tag: string, index: number) => (
-              <span key={tag}>
-                <Link to={`/${tag}`}>{tag}</Link>
-                {index < tags.length - 1 && ', '}
-              </span>
-            ))}
-          </p>
-        </td>
+        <>
+          <td className={styles.boardPPH}>
+            <p className={styles.boardCell}>{stats.hourPostCount ?? '?'}</p>
+          </td>
+          <td className={styles.boardTags}>
+            <p className={styles.boardCell}>
+              {tags.map((tag: string, index: number) => (
+                <span key={tag}>
+                  <Link to={`/${tag}`}>{tag}</Link>
+                  {index < tags.length - 1 && ', '}
+                </span>
+              ))}
+            </p>
+          </td>
+        </>
       )}
     </tr>
   );
@@ -79,6 +86,11 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
           <tr>
             <th>{t('board')}</th>
             <th>{t('title')}</th>
+            {!isMobile && (
+              <th className={styles.boardPPH} title={t('pph')}>
+                PPH
+              </th>
+            )}
             {!isMobile && <th>{t('tags')}</th>}
           </tr>
         </thead>
@@ -89,8 +101,14 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
         </tbody>
       </table>
       <div className={styles.displayCount}>
-        displaying {filteredBoards.length} of {totalBoardCount} boards
-        {currentTag && tags.includes(currentTag) && ` tagged "${currentTag}"`}
+        {currentTag && tags.includes(currentTag)
+          ? t('displaying_boards_with_tag', {
+              filteredBoardsCount: filteredBoards.length,
+              totalBoardCount: totalBoardCount,
+              currentTag: `"${currentTag}"`,
+              interpolation: { escapeValue: false },
+            })
+          : t('displaying_boards', { filteredBoardsCount: filteredBoards.length, totalBoardCount: totalBoardCount, interpolation: { escapeValue: false } })}
       </div>
       {hasMoreBoards && (
         <div className={styles.loadMoreButton}>

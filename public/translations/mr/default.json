@@ -267,5 +267,8 @@
   "field_too_long": "फील्ड खूप लांब आहे.",
   "title": "सिरसक",
   "tags": "टॅग",
-  "load_more": "अधिक लोड करा"
+  "load_more": "अधिक लोड करा",
+  "displaying_boards": "प्रदर्शित करणे {{filteredBoardsCount}} मध्ये {{totalBoardCount}} बोर्ड",
+  "displaying_boards_with_tag": "प्रदर्शित करणे {{filteredBoardsCount}} मध्ये {{totalBoardCount}} बोर्ड्स ज्यात {{currentTag}} टॅग आहे",
+  "pph": "Posts Per Hour (पोस्ट प्रति तास)"
 }

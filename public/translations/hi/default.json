@@ -267,5 +267,8 @@
   "field_too_long": "क्षेत्र बहुत लंबा है।",
   "title": "शीर्षक",
   "tags": "टैग",
-  "load_more": "अधिक लोड करें"
+  "load_more": "अधिक लोड करें",
+  "displaying_boards": "प्रदर्शित {{filteredBoardsCount}} में से {{totalBoardCount}} बोर्ड",
+  "displaying_boards_with_tag": "प्रदर्शित {{filteredBoardsCount}} में से {{totalBoardCount}} बोर्ड जो {{currentTag}} टैग से जुड़े हैं",
+  "pph": "Posts Per Hour (पोस्ट प्रति घंटे)"
 }

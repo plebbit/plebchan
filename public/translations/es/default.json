@@ -267,5 +267,8 @@
   "field_too_long": "Campo demasiado largo.",
   "title": "Título",
   "tags": "Etiquetas",
-  "load_more": "Cargar más"
+  "load_more": "Cargar más",
+  "displaying_boards": "Mostrando {{filteredBoardsCount}} de {{totalBoardCount}} foros",
+  "displaying_boards_with_tag": "Mostrando {{filteredBoardsCount}} de {{totalBoardCount}} foros etiquetados con {{currentTag}}",
+  "pph": "Posts Per Hour (Publicaciones Por Hora)"
 }

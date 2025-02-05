@@ -267,5 +267,8 @@
   "field_too_long": "Ang field ay masyadong mahaba.",
   "title": "Pamagat",
   "tags": "Mga tag",
-  "load_more": "Mag-load ng higit pa"
+  "load_more": "Mag-load ng higit pa",
+  "displaying_boards": "Ipinapakita {{filteredBoardsCount}} mula sa {{totalBoardCount}} na mga board",
+  "displaying_boards_with_tag": "Ipinapakita {{filteredBoardsCount}} mula sa {{totalBoardCount}} na mga board na may tag na {{currentTag}}",
+  "pph": "Posts Per Hour (Mga Post Bawat Oras)"
 }

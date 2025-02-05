@@ -267,5 +267,8 @@
   "field_too_long": "A mező túl hosszú.",
   "title": "Cím",
   "tags": "Címkék",
-  "load_more": "Töltsön be többet"
+  "load_more": "Töltsön be többet",
+  "displaying_boards": "Képernyőn {{filteredBoardsCount}} a(z) {{totalBoardCount}} fórumokból",
+  "displaying_boards_with_tag": "Képernyőn {{filteredBoardsCount}} a(z) {{totalBoardCount}} fórumok közül, amelyek tartalmazzák a(z) {{currentTag}} címkét",
+  "pph": "Posts Per Hour (Bejegyzések óránként)"
 }

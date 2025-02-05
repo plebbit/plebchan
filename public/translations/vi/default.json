@@ -267,5 +267,8 @@
   "field_too_long": "Trường quá dài.",
   "title": "Tiêu đề",
   "tags": "Thẻ",
-  "load_more": "Tải thêm"
+  "load_more": "Tải thêm",
+  "displaying_boards": "Hiển thị {{filteredBoardsCount}} trong {{totalBoardCount}} diễn đàn",
+  "displaying_boards_with_tag": "Hiển thị {{filteredBoardsCount}} trong {{totalBoardCount}} diễn đàn có thẻ {{currentTag}}",
+  "pph": "Posts Per Hour (Bài Viết Mỗi Giờ)"
 }

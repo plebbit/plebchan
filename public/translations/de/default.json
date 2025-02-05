@@ -267,5 +267,8 @@
   "field_too_long": "Das Feld ist zu lang.",
   "title": "Titel",
   "tags": "Tags",
-  "load_more": "Mehr laden"
+  "load_more": "Mehr laden",
+  "displaying_boards": "Zeige {{filteredBoardsCount}} von {{totalBoardCount}} Boards",
+  "displaying_boards_with_tag": "Zeige {{filteredBoardsCount}} von {{totalBoardCount}} Boards mit dem Tag {{currentTag}}",
+  "pph": "Posts Per Hour (Beiträge pro Stunde)"
 }

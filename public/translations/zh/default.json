@@ -267,5 +267,8 @@
   "field_too_long": "字段太长。",
   "title": "标题",
   "tags": "标签",
-  "load_more": "加载更多"
+  "load_more": "加载更多",
+  "displaying_boards": "显示 {{filteredBoardsCount}} 个板块，共 {{totalBoardCount}} 个板块",
+  "displaying_boards_with_tag": "显示 {{filteredBoardsCount}} 个板块，共 {{totalBoardCount}} 个板块，标签为 {{currentTag}}",
+  "pph": "Posts Per Hour (每小时帖子)"
 }

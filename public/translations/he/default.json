@@ -267,5 +267,8 @@
   "field_too_long": "המשדה ארוך מדי.",
   "title": "כותרת",
   "tags": "תגיות",
-  "load_more": "טען עוד"
+  "load_more": "טען עוד",
+  "displaying_boards": "מציג {{filteredBoardsCount}} מתוך {{totalBoardCount}} פורומים",
+  "displaying_boards_with_tag": "מציג {{filteredBoardsCount}} מתוך {{totalBoardCount}} פורומים עם התג {{currentTag}}",
+  "pph": "Posts Per Hour (פוסטים לשעה)"
 }

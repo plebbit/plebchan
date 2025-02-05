@@ -267,5 +267,8 @@
   "field_too_long": "فیلڈ بہت طویل ہے۔",
   "title": "عنوان",
   "tags": "ٹٰیگ",
-  "load_more": "مزید لوڈ کریں"
+  "load_more": "مزید لوڈ کریں",
+  "displaying_boards": "ظاہر ہو رہے ہیں {{filteredBoardsCount}} میں سے {{totalBoardCount}} بورڈز",
+  "displaying_boards_with_tag": "ظاہر ہو رہے ہیں {{filteredBoardsCount}} میں سے {{totalBoardCount}} بورڈز جو {{currentTag}} ٹیگ کے ساتھ ہیں",
+  "pph": "Posts Per Hour (ہر گھنٹے میں پوسٹس)"
 }

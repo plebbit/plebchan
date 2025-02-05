@@ -267,5 +267,8 @@
   "field_too_long": "Câmp prea lung.",
   "title": "Titlu",
   "tags": "Etichete",
-  "load_more": "Încarcă mai mult"
+  "load_more": "Încarcă mai mult",
+  "displaying_boards": "Afișare {{filteredBoardsCount}} din {{totalBoardCount}} forumuri",
+  "displaying_boards_with_tag": "Afișare {{filteredBoardsCount}} din {{totalBoardCount}} forumuri etichetate cu {{currentTag}}",
+  "pph": "Posts Per Hour (Postări Pe Oră)"
 }

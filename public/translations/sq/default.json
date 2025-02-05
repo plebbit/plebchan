@@ -267,5 +267,8 @@
   "field_too_long": "Fusha është shumë e gjatë.",
   "title": "Titulli",
   "tags": "Etiketa",
-  "load_more": "Ngarko më shumë"
+  "load_more": "Ngarko më shumë",
+  "displaying_boards": "Po shfaq {{filteredBoardsCount}} nga {{totalBoardCount}} forume",
+  "displaying_boards_with_tag": "Po shfaq {{filteredBoardsCount}} nga {{totalBoardCount}} forume me etiketën {{currentTag}}",
+  "pph": "Posts Per Hour (Postime Në Orë)"
 }

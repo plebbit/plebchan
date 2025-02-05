@@ -267,5 +267,8 @@
   "field_too_long": "ফিল্ডটি খুব লম্বা।",
   "title": "শিরোনাম",
   "tags": "ট্যাগ",
-  "load_more": "আরো লোড করুন"
+  "load_more": "আরো লোড করুন",
+  "displaying_boards": "প্রদর্শন করা হচ্ছে {{filteredBoardsCount}} এর মধ্যে {{totalBoardCount}} বোর্ড",
+  "displaying_boards_with_tag": "প্রদর্শন করা হচ্ছে {{filteredBoardsCount}} এর মধ্যে {{totalBoardCount}} বোর্ড যা {{currentTag}} ট্যাগযুক্ত",
+  "pph": "Posts Per Hour (পোস্ট প্রতি ঘণ্টা)"
 }

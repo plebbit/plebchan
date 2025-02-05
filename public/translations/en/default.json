@@ -267,5 +267,8 @@
   "field_too_long": "Field too long.",
   "title": "Title",
   "tags": "Tags",
-  "load_more": "Load More"
+  "load_more": "Load More",
+  "displaying_boards": "Displaying {{filteredBoardsCount}} of {{totalBoardCount}} boards",
+  "displaying_boards_with_tag": "Displaying {{filteredBoardsCount}} of {{totalBoardCount}} boards tagged {{currentTag}}",
+  "pph": "Posts Per Hour"
 }
