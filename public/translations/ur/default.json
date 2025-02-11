@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "ظاہر ہو رہے ہیں {{filteredBoardsCount}} میں سے {{totalBoardCount}} بورڈز جو {{currentTag}} ٹیگ کے ساتھ ہیں",
   "pph": "Posts Per Hour (ہر گھنٹے میں پوسٹس)",
   "unsubscribe_all": "سب سے ان سبسکرائب کریں",
-  "unsubscribe_all_confirm": "کیا آپ کو یقین ہے کہ آپ تمام بورڈز سے ان سبسکرائب کرنا چاہتے ہیں؟"
+  "unsubscribe_all_confirm": "کیا آپ کو یقین ہے کہ آپ تمام بورڈز سے ان سبسکرائب کرنا چاہتے ہیں؟",
+  "you_have_blocked_this_board": "آپ نے اس بورڈ کو بلاک کر دیا ہے"
 }

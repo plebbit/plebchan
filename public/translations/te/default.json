@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "ప్రదర్శన {{filteredBoardsCount}} నుండి {{totalBoardCount}} బోర్డ్స్ ట్యాగ్ {{currentTag}}",
   "pph": "Posts Per Hour (ప్రతి గంటలో పోస్ట్‌లు)",
   "unsubscribe_all": "అన్ని నుండి అన్‌సబ్స్క్రైబ్ చేయండి",
-  "unsubscribe_all_confirm": "మీరు అన్ని బోర్డ్స్ నుండి అన్‌సబ్స్క్రైబ్ చేయాలని ఖచ్చితంగా భావిస్తున్నారా?"
+  "unsubscribe_all_confirm": "మీరు అన్ని బోర్డ్స్ నుండి అన్‌సబ్స్క్రైబ్ చేయాలని ఖచ్చితంగా భావిస్తున్నారా?",
+  "you_have_blocked_this_board": "మీరు ఈ బోర్డును బ్లాక్ చేసారు"
 }

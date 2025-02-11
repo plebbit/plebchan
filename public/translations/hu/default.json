@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Képernyőn {{filteredBoardsCount}} a(z) {{totalBoardCount}} fórumok közül, amelyek tartalmazzák a(z) {{currentTag}} címkét",
   "pph": "Posts Per Hour (Bejegyzések óránként)",
   "unsubscribe_all": "Leiratkozás mindentől",
-  "unsubscribe_all_confirm": "Biztos, hogy le szeretnél iratkozni az összes fórumból?"
+  "unsubscribe_all_confirm": "Biztos, hogy le szeretnél iratkozni az összes fórumból?",
+  "you_have_blocked_this_board": "Blokkoltad ezt a táblát"
 }

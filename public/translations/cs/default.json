@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Zobrazuji {{filteredBoardsCount}} z {{totalBoardCount}} fór označených {{currentTag}}",
   "pph": "Posts Per Hour (Příspěvky za hodinu)",
   "unsubscribe_all": "Odhlásit se ze všeho",
-  "unsubscribe_all_confirm": "Jste si jisti, že chcete zrušit odběr ze všech fór?"
+  "unsubscribe_all_confirm": "Jste si jisti, že chcete zrušit odběr ze všech fór?",
+  "you_have_blocked_this_board": "Zablokovali jste tuto desku"
 }

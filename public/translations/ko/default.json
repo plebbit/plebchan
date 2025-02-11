@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "총 {{totalBoardCount}}개의 게시판 중 {{filteredBoardsCount}}개 게시판, 태그 {{currentTag}}",
   "pph": "Posts Per Hour (시간당 게시물)",
   "unsubscribe_all": "모두 구독 취소",
-  "unsubscribe_all_confirm": "모든 게시판에서 구독을 취소하시겠습니까?"
+  "unsubscribe_all_confirm": "모든 게시판에서 구독을 취소하시겠습니까?",
+  "you_have_blocked_this_board": "이 게시판을 차단했습니다"
 }

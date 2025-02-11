@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Affichage de {{filteredBoardsCount}} sur {{totalBoardCount}} forums étiquetés {{currentTag}}",
   "pph": "Posts Per Hour (Publications Par Heure)",
   "unsubscribe_all": "Se désabonner de tout",
-  "unsubscribe_all_confirm": "Êtes-vous sûr de vouloir vous désabonner de tous les forums?"
+  "unsubscribe_all_confirm": "Êtes-vous sûr de vouloir vous désabonner de tous les forums?",
+  "you_have_blocked_this_board": "Vous avez bloqué ce forum"
 }

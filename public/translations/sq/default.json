@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Po shfaq {{filteredBoardsCount}} nga {{totalBoardCount}} forume me etiketën {{currentTag}}",
   "pph": "Posts Per Hour (Postime Në Orë)",
   "unsubscribe_all": "Çunsubscribe nga të gjitha",
-  "unsubscribe_all_confirm": "A jeni të sigurt se doni të hiqni bllokimin nga të gjitha forume?"
+  "unsubscribe_all_confirm": "A jeni të sigurt se doni të hiqni bllokimin nga të gjitha forume?",
+  "you_have_blocked_this_board": "Keni bllokuar këtë bord"
 }

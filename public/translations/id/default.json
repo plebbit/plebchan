@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Menampilkan {{filteredBoardsCount}} dari {{totalBoardCount}} boards dengan tag {{currentTag}}",
   "pph": "Posts Per Hour (Posting Per Jam)",
   "unsubscribe_all": "Berhenti berlangganan dari semua",
-  "unsubscribe_all_confirm": "Apakah Anda yakin ingin berhenti berlangganan dari semua board?"
+  "unsubscribe_all_confirm": "Apakah Anda yakin ingin berhenti berlangganan dari semua board?",
+  "you_have_blocked_this_board": "Anda telah memblokir papan ini"
 }

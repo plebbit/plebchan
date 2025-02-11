@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Ipinapakita {{filteredBoardsCount}} mula sa {{totalBoardCount}} na mga board na may tag na {{currentTag}}",
   "pph": "Posts Per Hour (Mga Post Bawat Oras)",
   "unsubscribe_all": "I-unsubscribe mula sa Lahat",
-  "unsubscribe_all_confirm": "Sigurado ka bang gusto mong mag-unsubscribe mula sa lahat ng boards?"
+  "unsubscribe_all_confirm": "Sigurado ka bang gusto mong mag-unsubscribe mula sa lahat ng boards?",
+  "you_have_blocked_this_board": "Ibinlock mo ang board na ito"
 }

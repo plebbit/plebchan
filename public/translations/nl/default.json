@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Weergave {{filteredBoardsCount}} van {{totalBoardCount}} boards met de tag {{currentTag}}",
   "pph": "Posts Per Hour (Berichten Per Uur)",
   "unsubscribe_all": "Afmelden voor alles",
-  "unsubscribe_all_confirm": "Weet je zeker dat je je wilt afmelden voor alle boards?"
+  "unsubscribe_all_confirm": "Weet je zeker dat je je wilt afmelden voor alle boards?",
+  "you_have_blocked_this_board": "Je hebt dit bord geblokkeerd"
 }

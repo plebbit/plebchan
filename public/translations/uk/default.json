@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Відображення {{filteredBoardsCount}} з {{totalBoardCount}} форумів, помічених тегом {{currentTag}}",
   "pph": "Posts Per Hour (Пости за Годину)",
   "unsubscribe_all": "Відписатися від всього",
-  "unsubscribe_all_confirm": "Ви впевнені, що хочете скасувати підписку з усіх форумів?"
+  "unsubscribe_all_confirm": "Ви впевнені, що хочете скасувати підписку з усіх форумів?",
+  "you_have_blocked_this_board": "Ви заблокували цю дошку"
 }

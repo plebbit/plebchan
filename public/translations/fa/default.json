@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "نمایش {{filteredBoardsCount}} از {{totalBoardCount}} انجمن با برچسب {{currentTag}}",
   "pph": "Posts Per Hour (پست در ساعت)",
   "unsubscribe_all": "لغو اشتراک از همه",
-  "unsubscribe_all_confirm": "آیا مطمئن هستید که می‌خواهید از همه انجمن‌ها لغو اشتراک کنید؟"
+  "unsubscribe_all_confirm": "آیا مطمئن هستید که می‌خواهید از همه انجمن‌ها لغو اشتراک کنید؟",
+  "you_have_blocked_this_board": "شما این تابلو را مسدود کرده‌اید"
 }

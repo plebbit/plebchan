@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "表示中 {{filteredBoardsCount}} 件のうち {{totalBoardCount}} 件の掲示板、タグ {{currentTag}}",
   "pph": "Posts Per Hour (時間あたりの投稿)",
   "unsubscribe_all": "すべての登録を解除する",
-  "unsubscribe_all_confirm": "すべての掲示板から解除してもよろしいですか？"
+  "unsubscribe_all_confirm": "すべての掲示板から解除してもよろしいですか？",
+  "you_have_blocked_this_board": "このボードをブロックしました"
 }

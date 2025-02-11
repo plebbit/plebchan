@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "प्रदर्शित करणे {{filteredBoardsCount}} मध्ये {{totalBoardCount}} बोर्ड्स ज्यात {{currentTag}} टॅग आहे",
   "pph": "Posts Per Hour (पोस्ट प्रति तास)",
   "unsubscribe_all": "सर्वांकडून अनसब्सक्राइब करा",
-  "unsubscribe_all_confirm": "तुम्हाला सर्व बोर्डमधून अनसब्सक्राइब करायचं आहे का?"
+  "unsubscribe_all_confirm": "तुम्हाला सर्व बोर्डमधून अनसब्सक्राइब करायचं आहे का?",
+  "you_have_blocked_this_board": "तुम्ही हा बोर्ड ब्लॉक केला आहेस"
 }

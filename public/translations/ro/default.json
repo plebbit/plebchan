@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Afișare {{filteredBoardsCount}} din {{totalBoardCount}} forumuri etichetate cu {{currentTag}}",
   "pph": "Posts Per Hour (Postări Pe Oră)",
   "unsubscribe_all": "Dezabonare de la toate",
-  "unsubscribe_all_confirm": "Ești sigur că vrei să te dezabonezi de la toate forumurile?"
+  "unsubscribe_all_confirm": "Ești sigur că vrei să te dezabonezi de la toate forumurile?",
+  "you_have_blocked_this_board": "Ai blocat acest tablou"
 }

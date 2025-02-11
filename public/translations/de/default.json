@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Zeige {{filteredBoardsCount}} von {{totalBoardCount}} Boards mit dem Tag {{currentTag}}",
   "pph": "Posts Per Hour (Beiträge pro Stunde)",
   "unsubscribe_all": "Von allem abmelden",
-  "unsubscribe_all_confirm": "Sind Sie sicher, dass Sie sich von allen Boards abmelden möchten?"
+  "unsubscribe_all_confirm": "Sind Sie sicher, dass Sie sich von allen Boards abmelden möchten?",
+  "you_have_blocked_this_board": "Sie haben dieses Board blockiert"
 }

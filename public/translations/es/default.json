@@ -272,5 +272,6 @@
   "displaying_boards_with_tag": "Mostrando {{filteredBoardsCount}} de {{totalBoardCount}} foros etiquetados con {{currentTag}}",
   "pph": "Posts Per Hour (Publicaciones Por Hora)",
   "unsubscribe_all": "Cancelar suscripción a todo",
-  "unsubscribe_all_confirm": "¿Está seguro de que desea cancelar la suscripción a todos los foros?"
+  "unsubscribe_all_confirm": "¿Está seguro de que desea cancelar la suscripción a todos los foros?",
+  "you_have_blocked_this_board": "Has bloqueado este tablero"
 }
