@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (ప్రతి గంటలో పోస్ట్‌లు)",
   "unsubscribe_all": "అన్ని నుండి అన్‌సబ్స్క్రైబ్ చేయండి",
   "unsubscribe_all_confirm": "మీరు అన్ని బోర్డ్స్ నుండి అన్‌సబ్స్క్రైబ్ చేయాలని ఖచ్చితంగా భావిస్తున్నారా?",
-  "you_have_blocked_this_board": "మీరు ఈ బోర్డును బ్లాక్ చేసారు"
+  "you_have_blocked_this_board": "మీరు ఈ బోర్డును బ్లాక్ చేసారు",
+  "looking_for_more_posts": "మరింత పోస్ట్‌ల కోసం చూస్తున్నాను",
+  "more_posts_last_week": "{{count}} పోస్ట్‌లు {{currentTimeFilterName}} నుండి: <1>గత వారం నుండి మరిన్ని పోస్ట్‌లు చూపించు</1>",
+  "more_posts_last_month": "{{count}} పోస్టులు {{currentTimeFilterName}} నుండి: <1>గత నెల నుండి {{moreCount}} మరిన్ని పోస్టులను చూపించు</1>",
+  "loading_feed": "లోడింగ్ ఫీడ్"
 }

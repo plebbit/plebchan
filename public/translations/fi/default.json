@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (Viestit tunnissa)",
   "unsubscribe_all": "Peruuta tilaus kaikilta",
   "unsubscribe_all_confirm": "Oletko varma, että haluat peruuttaa tilauksen kaikilta foorumeilta?",
-  "you_have_blocked_this_board": "Olet estänyt tämän taulun"
+  "you_have_blocked_this_board": "Olet estänyt tämän taulun",
+  "looking_for_more_posts": "Etsii lisää viestejä",
+  "more_posts_last_week": "{{count}} viestiä {{currentTimeFilterName}} jälkeen: <1>näytä lisää viestejä viime viikolta</1>",
+  "more_posts_last_month": "{{count}} julkaisua {{currentTimeFilterName}} jälkeen: <1>näytä {{moreCount}} lisää julkaisuja viime kuukaudesta</1>",
+  "loading_feed": "Ladataan syöte"
 }

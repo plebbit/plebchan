@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (시간당 게시물)",
   "unsubscribe_all": "모두 구독 취소",
   "unsubscribe_all_confirm": "모든 게시판에서 구독을 취소하시겠습니까?",
-  "you_have_blocked_this_board": "이 게시판을 차단했습니다"
+  "you_have_blocked_this_board": "이 게시판을 차단했습니다",
+  "looking_for_more_posts": "더 많은 게시물을 찾고 있습니다",
+  "more_posts_last_week": "{{count}} 개의 게시물 {{currentTimeFilterName}} 이후: <1>지난주 게시물 더 보기</1>",
+  "more_posts_last_month": "{{count}} 게시물 {{currentTimeFilterName}} 이후: <1>지난 달 게시물 {{moreCount}}개 더 보기</1>",
+  "loading_feed": "피드를 로딩 중"
 }

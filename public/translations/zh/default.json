@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (每小时帖子)",
   "unsubscribe_all": "取消所有订阅",
   "unsubscribe_all_confirm": "您确定要取消对所有板块的订阅吗？",
-  "you_have_blocked_this_board": "您已屏蔽此板块"
+  "you_have_blocked_this_board": "您已屏蔽此板块",
+  "looking_for_more_posts": "寻找更多帖子",
+  "more_posts_last_week": "{{count}} 帖子来自 {{currentTimeFilterName}}: <1>显示更多来自上周的帖子</1>",
+  "more_posts_last_month": "{{count}} 帖子自 {{currentTimeFilterName}} 起: <1>显示更多{{moreCount}}来自上个月的帖子</1>",
+  "loading_feed": "加载中..."
 }

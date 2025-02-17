@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (Bejegyzések óránként)",
   "unsubscribe_all": "Leiratkozás mindentől",
   "unsubscribe_all_confirm": "Biztos, hogy le szeretnél iratkozni az összes fórumból?",
-  "you_have_blocked_this_board": "Blokkoltad ezt a táblát"
+  "you_have_blocked_this_board": "Blokkoltad ezt a táblát",
+  "looking_for_more_posts": "Több bejegyzés keresése",
+  "more_posts_last_week": "{{count}} bejegyzés {{currentTimeFilterName}} óta: <1>további bejegyzések megjelenítése a múlt héten</1>",
+  "more_posts_last_month": "{{count}} bejegyzés {{currentTimeFilterName}} óta: <1>több {{moreCount}} bejegyzés megjelenítése a múlt hónapból</1>",
+  "loading_feed": "Betöltés a hírcsatornára"
 }

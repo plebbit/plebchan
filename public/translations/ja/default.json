@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (時間あたりの投稿)",
   "unsubscribe_all": "すべての登録を解除する",
   "unsubscribe_all_confirm": "すべての掲示板から解除してもよろしいですか？",
-  "you_have_blocked_this_board": "このボードをブロックしました"
+  "you_have_blocked_this_board": "このボードをブロックしました",
+  "looking_for_more_posts": "さらに投稿を探しています",
+  "more_posts_last_week": "{{count}} 件の投稿 {{currentTimeFilterName}} から: <1>先週の投稿をもっと表示する</1>",
+  "more_posts_last_month": "{{count}} 件の投稿 {{currentTimeFilterName}} 以降: <1>先月の投稿を{{moreCount}}件もっと見る</1>",
+  "loading_feed": "フィードを読み込んでいます"
 }

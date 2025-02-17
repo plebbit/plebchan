@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour",
   "unsubscribe_all": "Unsubscribe From All",
   "unsubscribe_all_confirm": "Are you sure you want to unsubscribe from all boards?",
-  "you_have_blocked_this_board": "You have blocked this board"
+  "you_have_blocked_this_board": "You have blocked this board",
+  "looking_for_more_posts": "Looking for more posts",
+  "more_posts_last_week": "{{count}} posts since {{currentTimeFilterName}}: <1>show more posts from last week</1>",
+  "more_posts_last_month": "{{count}} posts since {{currentTimeFilterName}}: <1>show {{moreCount}} more posts from last month</1>",
+  "loading_feed": "Loading feed"
 }

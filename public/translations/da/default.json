@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (Indlæg Per Time)",
   "unsubscribe_all": "Afmeld fra alt",
   "unsubscribe_all_confirm": "Er du sikker på, at du vil afmelde dig fra alle boards?",
-  "you_have_blocked_this_board": "Du har blokeret denne tavle"
+  "you_have_blocked_this_board": "Du har blokeret denne tavle",
+  "looking_for_more_posts": "Leder efter flere indlæg",
+  "more_posts_last_week": "{{count}} indlæg siden {{currentTimeFilterName}}: <1>vis flere indlæg fra sidste uge</1>",
+  "more_posts_last_month": "{{count}} indlæg siden {{currentTimeFilterName}}: <1>vis {{moreCount}} flere indlæg fra sidste måned</1>",
+  "loading_feed": "Indlæser feed"
 }

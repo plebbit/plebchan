@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (Mga Post Bawat Oras)",
   "unsubscribe_all": "I-unsubscribe mula sa Lahat",
   "unsubscribe_all_confirm": "Sigurado ka bang gusto mong mag-unsubscribe mula sa lahat ng boards?",
-  "you_have_blocked_this_board": "Ibinlock mo ang board na ito"
+  "you_have_blocked_this_board": "Ibinlock mo ang board na ito",
+  "looking_for_more_posts": "Naghahanap ng higit pang mga post",
+  "more_posts_last_week": "{{count}} mga post mula {{currentTimeFilterName}}: <1>magpakita ng higit pang mga post mula sa nakaraang linggo</1>",
+  "more_posts_last_month": "{{count}} mga post mula {{currentTimeFilterName}}: <1>ipakita ang {{moreCount}} higit pang mga post mula noong nakaraang buwan</1>",
+  "loading_feed": "Naglo-load ng feed"
 }

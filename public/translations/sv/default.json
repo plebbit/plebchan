@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (Inlägg Per Timme)",
   "unsubscribe_all": "Avsluta prenumeration från allt",
   "unsubscribe_all_confirm": "Är du säker på att du vill avsluta prenumerationen från alla boards?",
-  "you_have_blocked_this_board": "Du har blockerat denna tavla"
+  "you_have_blocked_this_board": "Du har blockerat denna tavla",
+  "looking_for_more_posts": "Letar efter fler inlägg",
+  "more_posts_last_week": "{{count}} inlägg sedan {{currentTimeFilterName}}: <1>visa fler inlägg från förra veckan</1>",
+  "more_posts_last_month": "{{count}} inlägg sedan {{currentTimeFilterName}}: <1>visa {{moreCount}} fler inlägg från förra månaden</1>",
+  "loading_feed": "Laddar flöde"
 }

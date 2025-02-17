@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (Postări Pe Oră)",
   "unsubscribe_all": "Dezabonare de la toate",
   "unsubscribe_all_confirm": "Ești sigur că vrei să te dezabonezi de la toate forumurile?",
-  "you_have_blocked_this_board": "Ai blocat acest tablou"
+  "you_have_blocked_this_board": "Ai blocat acest tablou",
+  "looking_for_more_posts": "Căutând mai multe postări",
+  "more_posts_last_week": "{{count}} postări din {{currentTimeFilterName}}: <1>arată mai multe postări de săptămâna trecută</1>",
+  "more_posts_last_month": "{{count}} postări din {{currentTimeFilterName}}: <1>afișați {{moreCount}} mai multe postări din luna trecută</1>",
+  "loading_feed": "Încărcare feed"
 }

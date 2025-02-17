@@ -273,5 +273,9 @@
   "pph": "Posts Per Hour (Beiträge pro Stunde)",
   "unsubscribe_all": "Von allem abmelden",
   "unsubscribe_all_confirm": "Sind Sie sicher, dass Sie sich von allen Boards abmelden möchten?",
-  "you_have_blocked_this_board": "Sie haben dieses Board blockiert"
+  "you_have_blocked_this_board": "Sie haben dieses Board blockiert",
+  "looking_for_more_posts": "Suche nach weiteren Beiträgen",
+  "more_posts_last_week": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>weitere Beiträge aus der letzten Woche anzeigen</1>",
+  "more_posts_last_month": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>mehr {{moreCount}} Beiträge aus dem letzten Monat anzeigen</1>",
+  "loading_feed": "Lädt Feed"
 }
