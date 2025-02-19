@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "Exibindo {{filteredBoardsCount}} de {{totalBoardCount}} boards com a tag {{currentTag}}",
   "pph": "Posts Per Hour (Postagens Por Hora)",
   "unsubscribe_all": "Cancelar inscrição em tudo",
-  "unsubscribe_all_confirm": "Tem certeza de que deseja cancelar a inscrição em todos os boards?"
+  "unsubscribe_all_confirm": "Tem certeza de que deseja cancelar a inscrição em todos os boards?",
+  "you_have_blocked_this_board": "Você bloqueou este quadro",
+  "looking_for_more_posts": "Procurando mais postagens",
+  "more_posts_last_week": "{{count}} postagens desde {{currentTimeFilterName}}: <1>mostrar mais postagens da semana passada</1>",
+  "more_posts_last_month": "{{count}} postagens desde {{currentTimeFilterName}}: <1>mostrar {{moreCount}} mais postagens do mês passado</1>",
+  "loading_feed": "Carregando feed"
 }

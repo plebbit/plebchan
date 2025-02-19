@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "প্রদর্শন করা হচ্ছে {{filteredBoardsCount}} এর মধ্যে {{totalBoardCount}} বোর্ড যা {{currentTag}} ট্যাগযুক্ত",
   "pph": "Posts Per Hour (পোস্ট প্রতি ঘণ্টা)",
   "unsubscribe_all": "সব থেকে আনসাবস্ক্রাইব করুন",
-  "unsubscribe_all_confirm": "আপনি কি নিশ্চিত যে আপনি সমস্ত বোর্ড থেকে আনসাবস্ক্রাইব করতে চান?"
+  "unsubscribe_all_confirm": "আপনি কি নিশ্চিত যে আপনি সমস্ত বোর্ড থেকে আনসাবস্ক্রাইব করতে চান?",
+  "you_have_blocked_this_board": "আপনি এই বোর্ডটি ব্লক করেছেন",
+  "looking_for_more_posts": "আরও পোস্ট খুঁজছি",
+  "more_posts_last_week": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>গত সপ্তাহ থেকে আরও পোস্ট দেখান</1>",
+  "more_posts_last_month": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>আরও {{moreCount}} পোস্ট দেখুন গত মাস থেকে</1>",
+  "loading_feed": "লোডিং ফিড"
 }

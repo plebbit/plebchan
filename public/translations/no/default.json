@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "Viser {{filteredBoardsCount}} av {{totalBoardCount}} boards merket med {{currentTag}}",
   "pph": "Posts Per Hour (Innhold Per Time)",
   "unsubscribe_all": "Avslutt abonnement fra alt",
-  "unsubscribe_all_confirm": "Er du sikker på at du vil melde deg av alle boards?"
+  "unsubscribe_all_confirm": "Er du sikker på at du vil melde deg av alle boards?",
+  "you_have_blocked_this_board": "Du har blokkert dette brettet",
+  "looking_for_more_posts": "Leter etter flere innlegg",
+  "more_posts_last_week": "{{count}} innlegg siden {{currentTimeFilterName}}: <1>vis flere innlegg fra forrige uke</1>",
+  "more_posts_last_month": "{{count}} innlegg siden {{currentTimeFilterName}}: <1>vis {{moreCount}} flere innlegg fra forrige måned</1>",
+  "loading_feed": "Laster feed"
 }

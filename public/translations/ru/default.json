@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "Отображение {{filteredBoardsCount}} из {{totalBoardCount}} форумов с тегом {{currentTag}}",
   "pph": "Posts Per Hour (Посты в Час)",
   "unsubscribe_all": "Отписаться от всего",
-  "unsubscribe_all_confirm": "Вы уверены, что хотите отписаться от всех форумов?"
+  "unsubscribe_all_confirm": "Вы уверены, что хотите отписаться от всех форумов?",
+  "you_have_blocked_this_board": "Вы заблокировали эту доску",
+  "looking_for_more_posts": "Ищу больше постов",
+  "more_posts_last_week": "{{count}} постов с {{currentTimeFilterName}}: <1>показать больше постов с прошлой недели</1>",
+  "more_posts_last_month": "{{count}} постов с {{currentTimeFilterName}}: <1>показать {{moreCount}} больше постов с прошлого месяца</1>",
+  "loading_feed": "Загрузка ленты"
 }
