@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "Po shfaq {{filteredBoardsCount}} nga {{totalBoardCount}} forume me etiketën {{currentTag}}",
   "pph": "Posts Per Hour (Postime Në Orë)",
   "unsubscribe_all": "Çunsubscribe nga të gjitha",
-  "unsubscribe_all_confirm": "A jeni të sigurt se doni të hiqni bllokimin nga të gjitha forume?"
+  "unsubscribe_all_confirm": "A jeni të sigurt se doni të hiqni bllokimin nga të gjitha forume?",
+  "you_have_blocked_this_board": "Keni bllokuar këtë bord",
+  "looking_for_more_posts": "Po kërkoni më shumë postime",
+  "more_posts_last_week": "{{count}} postime që nga {{currentTimeFilterName}}: <1>shfaq më shumë postime nga java e kaluar</1>",
+  "more_posts_last_month": "{{count}} postime nga {{currentTimeFilterName}}: <1>shfaq {{moreCount}} më shumë postime nga muaji i kaluar</1>",
+  "loading_feed": "Po ngarkoni feed-in"
 }

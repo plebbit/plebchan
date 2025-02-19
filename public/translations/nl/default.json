@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "Weergave {{filteredBoardsCount}} van {{totalBoardCount}} boards met de tag {{currentTag}}",
   "pph": "Posts Per Hour (Berichten Per Uur)",
   "unsubscribe_all": "Afmelden voor alles",
-  "unsubscribe_all_confirm": "Weet je zeker dat je je wilt afmelden voor alle boards?"
+  "unsubscribe_all_confirm": "Weet je zeker dat je je wilt afmelden voor alle boards?",
+  "you_have_blocked_this_board": "Je hebt dit bord geblokkeerd",
+  "looking_for_more_posts": "Op zoek naar meer berichten",
+  "more_posts_last_week": "{{count}} berichten sinds {{currentTimeFilterName}}: <1>meer berichten van vorige week weergeven</1>",
+  "more_posts_last_month": "{{count}} berichten sinds {{currentTimeFilterName}}: <1>meer {{moreCount}} berichten van vorige maand tonen</1>",
+  "loading_feed": "Laad feed"
 }

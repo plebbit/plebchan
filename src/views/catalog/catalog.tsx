@@ -138,7 +138,7 @@ const Catalog = () => {
       ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
         t('not_subscribed_to_any_board')
       ) : blocked ? (
-        'you have blocked this board'
+        t('you_have_blocked_this_board')
       ) : !hasMore && feed.length === 0 ? (
         t('no_threads')
       ) : (
@@ -160,7 +160,7 @@ const Catalog = () => {
     let footerContent;
     if (feed.length === 0) {
       if (blocked) {
-        footerContent = 'you have blocked this board';
+        footerContent = t('you_have_blocked_this_board');
       } else {
         footerContent = t('no_threads');
       }
@@ -271,7 +271,7 @@ const Catalog = () => {
                     reset();
                   }}
                 >
-                  Unblock
+                  {t('unblock')}
                 </span>
                 ]
               </>

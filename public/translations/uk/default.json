@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "Відображення {{filteredBoardsCount}} з {{totalBoardCount}} форумів, помічених тегом {{currentTag}}",
   "pph": "Posts Per Hour (Пости за Годину)",
   "unsubscribe_all": "Відписатися від всього",
-  "unsubscribe_all_confirm": "Ви впевнені, що хочете скасувати підписку з усіх форумів?"
+  "unsubscribe_all_confirm": "Ви впевнені, що хочете скасувати підписку з усіх форумів?",
+  "you_have_blocked_this_board": "Ви заблокували цю дошку",
+  "looking_for_more_posts": "Шукаю більше дописів",
+  "more_posts_last_week": "{{count}} дописів з {{currentTimeFilterName}}: <1>показати більше дописів з минулого тижня</1>",
+  "more_posts_last_month": "{{count}} дописів з {{currentTimeFilterName}}: <1>показати {{moreCount}} більше дописів з минулого місяця</1>",
+  "loading_feed": "Завантаження потоку"
 }

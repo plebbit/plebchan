@@ -211,7 +211,7 @@ const Board = () => {
           ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
             t('not_subscribed_to_any_board')
           ) : blocked ? (
-            'you have blocked this board'
+            t('you_have_blocked_this_board')
           ) : (
             hasMore && <LoadingEllipsis string={loadingStateString} />
           )}
@@ -231,7 +231,7 @@ const Board = () => {
                   reset();
                 }}
               >
-                Unblock
+                {t('unblock')}
               </span>
               ]
             </>

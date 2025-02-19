@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "प्रदर्शित {{filteredBoardsCount}} में से {{totalBoardCount}} बोर्ड जो {{currentTag}} टैग से जुड़े हैं",
   "pph": "Posts Per Hour (पोस्ट प्रति घंटे)",
   "unsubscribe_all": "सभी से अनसब्सक्राइब करें",
-  "unsubscribe_all_confirm": "क्या आप सभी बोर्डों से अनसब्सक्राइब करना चाहते हैं, क्या आप सुनिश्चित हैं?"
+  "unsubscribe_all_confirm": "क्या आप सभी बोर्डों से अनसब्सक्राइब करना चाहते हैं, क्या आप सुनिश्चित हैं?",
+  "you_have_blocked_this_board": "आपने इस बोर्ड को ब्लॉक कर दिया है",
+  "looking_for_more_posts": "अधिक पोस्ट ढूंढ रहे हैं",
+  "more_posts_last_week": "{{count}} पोस्ट {{currentTimeFilterName}} से: <1>पिछले सप्ताह से और पोस्ट दिखाएं</1>",
+  "more_posts_last_month": "{{count}} पोस्ट {{currentTimeFilterName}} से: <1>अधिक {{moreCount}} पोस्ट दिखाएं पिछले महीने से</1>",
+  "loading_feed": "लोडिंग फीड"
 }

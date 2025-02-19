@@ -272,5 +272,10 @@
   "displaying_boards_with_tag": "מציג {{filteredBoardsCount}} מתוך {{totalBoardCount}} פורומים עם התג {{currentTag}}",
   "pph": "Posts Per Hour (פוסטים לשעה)",
   "unsubscribe_all": "הסרה מכולם",
-  "unsubscribe_all_confirm": "האם אתה בטוח שברצונך לבטל את ההרשמה מכל הפורומים?"
+  "unsubscribe_all_confirm": "האם אתה בטוח שברצונך לבטל את ההרשמה מכל הפורומים?",
+  "you_have_blocked_this_board": "חסמת את הלוח הזה",
+  "looking_for_more_posts": "מחפש פוסטים נוספים",
+  "more_posts_last_week": "{{count}} פוסטים מ{{currentTimeFilterName}}: <1>הצג פוסטים נוספים מהשבוע שעבר</1>",
+  "more_posts_last_month": "{{count}} פוסטים מאז {{currentTimeFilterName}}: <1>הצג {{moreCount}} פוסטים נוספים מהחודש שעבר</1>",
+  "loading_feed": "טוען פיד"
 }
