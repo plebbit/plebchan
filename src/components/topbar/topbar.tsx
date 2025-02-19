@@ -194,7 +194,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
   }, []);
 
   return (
-    <div className={styles.boardNavMobile} id='sticky-menu' style={{ top: visible ? 0 : '-23px' }}>
+    <div className={styles.boardNavMobile} style={{ transform: visible ? 'translateY(0)' : 'translateY(-23px)' }}>
       <div className={styles.boardSelect}>
         <strong>{t('board')}</strong>
         {boardSelect}
