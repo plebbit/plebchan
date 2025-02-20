@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} पोस्ट {{currentTimeFilterName}} से: <1>अधिक {{moreCount}} पोस्ट दिखाएं पिछले महीने से</1>",
   "loading_feed": "लोडिंग फीड",
   "loading_post": "पोस्ट लोड हो रहा है",
-  "node_stats": "नोड आँकड़े"
+  "node_stats": "नोड आँकड़े",
+  "loading_default_boards": "डिफ़ॉल्ट बोर्ड सूची लोड हो रही है",
+  "loading_subscriptions": "सब्सक्रिप्शन लोड हो रहे हैं"
 }

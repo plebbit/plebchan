@@ -7,7 +7,6 @@ import styles from './board.module.css';
 import { shouldShowSnow } from '../../lib/snow';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
@@ -32,7 +31,6 @@ const threadsWithoutImagesFilter = (comment: Comment) => {
 };
 
 const Board = () => {
-  const { isCheckingSubscriptions } = useAutoSubscribe();
   const { t } = useTranslation();
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
@@ -298,26 +296,18 @@ const Board = () => {
           />
         )}
         {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-        {isCheckingSubscriptions ? (
-          <div className={styles.feed}>
-            <div className={styles.footer}>
-              <LoadingEllipsis string={t('loading_feed')} />
-            </div>
-          </div>
-        ) : (
-          <Virtuoso
-            increaseViewportBy={{ bottom: 1200, top: 1200 }}
-            totalCount={combinedFeed.length}
-            data={combinedFeed}
-            itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
-            useWindowScroll={true}
-            components={{ Footer }}
-            endReached={loadMore}
-            ref={virtuosoRef}
-            restoreStateFrom={lastVirtuosoState}
-            initialScrollTop={lastVirtuosoState?.scrollTop}
-          />
-        )}
+        <Virtuoso
+          increaseViewportBy={{ bottom: 1200, top: 1200 }}
+          totalCount={combinedFeed.length}
+          data={combinedFeed}
+          itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
+          useWindowScroll={true}
+          components={{ Footer }}
+          endReached={loadMore}
+          ref={virtuosoRef}
+          restoreStateFrom={lastVirtuosoState}
+          initialScrollTop={lastVirtuosoState?.scrollTop}
+        />
       </div>
     </>
   );

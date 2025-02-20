@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} پوسٹس {{currentTimeFilterName}} سے: <1>پچھلے مہینے کی مزید {{moreCount}} پوسٹس دکھائیں</1>",
   "loading_feed": "لوڈ ہو رہا ہے فیڈ",
   "loading_post": "پوسٹ لوڈ ہو رہی ہے",
-  "node_stats": "نوڈ کے اعدادوشمار"
+  "node_stats": "نوڈ کے اعدادوشمار",
+  "loading_default_boards": "ڈिफالٹ بورڈ کی فہرست لوڈ ہو رہی ہے",
+  "loading_subscriptions": "سبسکرپشن لوڈ ہو رہی ہے"
 }

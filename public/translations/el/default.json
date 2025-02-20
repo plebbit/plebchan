@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} δημοσιεύσεις από {{currentTimeFilterName}}: <1>δειξτε {{moreCount}} περισσότερες δημοσιεύσεις από τον προηγούμενο μήνα</1>",
   "loading_feed": "Φόρτωση ροής",
   "loading_post": "Φόρτωση ανάρτησης",
-  "node_stats": "Στατιστικά κόμβου"
+  "node_stats": "Στατιστικά κόμβου",
+  "loading_default_boards": "Φόρτωση της λίστας προεπιλεγμένων πάνελ",
+  "loading_subscriptions": "Φορτώνει συνδρομές"
 }

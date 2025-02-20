@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} منشورات منذ {{currentTimeFilterName}}: <1>عرض {{moreCount}} منشورات إضافية من الشهر الماضي</1>",
   "loading_feed": "تحميل الخلاصة",
   "loading_post": "جاري تحميل المنشور",
-  "node_stats": "إحصائيات العقدة"
+  "node_stats": "إحصائيات العقدة",
+  "loading_default_boards": "جار تحميل قائمة اللوحات الافتراضية",
+  "loading_subscriptions": "جارٍ تحميل الاشتراكات"
 }

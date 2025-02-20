@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} berichten sinds {{currentTimeFilterName}}: <1>meer {{moreCount}} berichten van vorige maand tonen</1>",
   "loading_feed": "Laad feed",
   "loading_post": "Bericht wordt geladen",
-  "node_stats": "Node-statistieken"
+  "node_stats": "Node-statistieken",
+  "loading_default_boards": "Laden van de standaard boardlijst",
+  "loading_subscriptions": "Abonnementen laden"
 }

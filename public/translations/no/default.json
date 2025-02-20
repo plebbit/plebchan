@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} innlegg siden {{currentTimeFilterName}}: <1>vis {{moreCount}} flere innlegg fra forrige måned</1>",
   "loading_feed": "Laster feed",
   "loading_post": "Laster innlegg",
-  "node_stats": "Node-statistikk"
+  "node_stats": "Node-statistikk",
+  "loading_default_boards": "Laster standard tavleliste",
+  "loading_subscriptions": "Laster abonnementer"
 }

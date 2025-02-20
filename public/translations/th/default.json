@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} โพสต์ตั้งแต่ {{currentTimeFilterName}}: <1>แสดง {{moreCount}} โพสต์เพิ่มเติมจากเดือนที่แล้ว</1>",
   "loading_feed": "กำลังโหลดฟีด",
   "loading_post": "กำลังโหลดโพสต์",
-  "node_stats": "สถิติโหนด"
+  "node_stats": "สถิติโหนด",
+  "loading_default_boards": "กำลังโหลดรายการกระดานเริ่มต้น",
+  "loading_subscriptions": "กำลังโหลดการสมัครสมาชิก"
 }

@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} 帖子自 {{currentTimeFilterName}} 起: <1>显示更多{{moreCount}}来自上个月的帖子</1>",
   "loading_feed": "加载中...",
   "loading_post": "正在加载帖子",
-  "node_stats": "节点统计"
+  "node_stats": "节点统计",
+  "loading_default_boards": "正在加载默认板块列表",
+  "loading_subscriptions": "加载订阅"
 }

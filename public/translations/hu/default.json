@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} bejegyzés {{currentTimeFilterName}} óta: <1>több {{moreCount}} bejegyzés megjelenítése a múlt hónapból</1>",
   "loading_feed": "Betöltés a hírcsatornára",
   "loading_post": "Bejegyzés betöltése",
-  "node_stats": "Csomópont statisztikák"
+  "node_stats": "Csomópont statisztikák",
+  "loading_default_boards": "Alapértelmezett táblák listájának betöltése",
+  "loading_subscriptions": "Előfizetések betöltése"
 }

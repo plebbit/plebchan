@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} pos dari {{currentTimeFilterName}}: <1>tampilkan {{moreCount}} lebih banyak pos dari bulan lalu</1>",
   "loading_feed": "Memuat feed",
   "loading_post": "Memuat pos",
-  "node_stats": "Statistik node"
+  "node_stats": "Statistik node",
+  "loading_default_boards": "Memuat daftar papan default",
+  "loading_subscriptions": "Memuat langganan"
 }

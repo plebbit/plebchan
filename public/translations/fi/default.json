@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} julkaisua {{currentTimeFilterName}} jälkeen: <1>näytä {{moreCount}} lisää julkaisuja viime kuukaudesta</1>",
   "loading_feed": "Ladataan syöte",
   "loading_post": "Ladataan viestiä",
-  "node_stats": "Solmun tilastot"
+  "node_stats": "Solmun tilastot",
+  "loading_default_boards": "Ladataan oletuslautalistaa",
+  "loading_subscriptions": "Ladataan tilauksia"
 }

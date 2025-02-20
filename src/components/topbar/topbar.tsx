@@ -8,6 +8,7 @@ import styles from './topbar.module.css';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import _, { debounce } from 'lodash';
 import { TimeFilter } from '../board-buttons';
+import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
 
 const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => void }) => {
   const navigate = useNavigate();
@@ -197,12 +198,15 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
 };
 
 const TopBar = () => {
+  const { t } = useTranslation();
   const params = useParams();
+  const { isCheckingSubscriptions } = useAutoSubscribe();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
     <>
+      {isCheckingSubscriptions && <div className={styles.checkingSubscriptions}>{t('loading_subscriptions')}</div>}
       <TopBarDesktop />
       <TopBarMobile subplebbitAddress={subplebbitAddress} />
     </>

@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} posts since {{currentTimeFilterName}}: <1>show {{moreCount}} more posts from last month</1>",
   "loading_feed": "Loading feed",
   "loading_post": "Loading post",
-  "node_stats": "Node stats"
+  "node_stats": "Node stats",
+  "loading_default_boards": "Loading default boards list",
+  "loading_subscriptions": "Loading subscriptions"
 }

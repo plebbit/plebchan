@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} 게시물 {{currentTimeFilterName}} 이후: <1>지난 달 게시물 {{moreCount}}개 더 보기</1>",
   "loading_feed": "피드를 로딩 중",
   "loading_post": "게시물 로딩 중",
-  "node_stats": "노드 통계"
+  "node_stats": "노드 통계",
+  "loading_default_boards": "기본 보드 목록을 로드 중",
+  "loading_subscriptions": "구독 로딩 중"
 }

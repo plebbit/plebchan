@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} postime nga {{currentTimeFilterName}}: <1>shfaq {{moreCount}} më shumë postime nga muaji i kaluar</1>",
   "loading_feed": "Po ngarkoni feed-in",
   "loading_post": "Po ngarkohet postimi",
-  "node_stats": "Statistikat e nyjës"
+  "node_stats": "Statistikat e nyjës",
+  "loading_default_boards": "Po ngarkohen listat e bordit të parazgjedhur",
+  "loading_subscriptions": "Po ngarkohen abonimet"
 }

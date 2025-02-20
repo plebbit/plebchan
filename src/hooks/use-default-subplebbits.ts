@@ -15,23 +15,42 @@ export interface MultisubSubplebbit {
   plebchanAutoSubscribe?: boolean;
 }
 
+export interface DefaultSubplebbitsState {
+  subplebbits: MultisubSubplebbit[];
+  loading: boolean;
+  error: Error | null;
+}
+
 let cacheSubplebbits: MultisubSubplebbit[] | null = null;
 let cacheMetadata: MultisubMetadata | null = null;
 let cacheAutoSubscribeAddresses: string[] | null = null;
 
 export const useDefaultSubplebbits = () => {
-  const [subplebbits, setSubplebbits] = useState<MultisubSubplebbit[]>([]);
+  const [state, setState] = useState<DefaultSubplebbitsState>({
+    subplebbits: [],
+    loading: true,
+    error: null,
+  });
 
   useEffect(() => {
     if (cacheSubplebbits) {
+      setState({
+        subplebbits: cacheSubplebbits,
+        loading: false,
+        error: null,
+      });
       return;
     }
+
     (async () => {
       try {
-        const multisub = await fetch(
-          'https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/multisub.json',
-          // { cache: 'no-cache' }
-        ).then((res) => res.json());
+        const multisub = await fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/multisub.json').then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        });
+
         cacheSubplebbits = multisub.subplebbits;
 
         // Cache auto-subscribe addresses when we fetch subplebbits
@@ -39,14 +58,69 @@ export const useDefaultSubplebbits = () => {
           .filter((sub: MultisubSubplebbit) => sub.plebchanAutoSubscribe && sub.address)
           .map((sub: MultisubSubplebbit) => sub.address);
 
-        setSubplebbits(multisub.subplebbits);
+        setState({
+          subplebbits: multisub.subplebbits,
+          loading: false,
+          error: null,
+        });
       } catch (e) {
         console.warn(e);
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+          error: e instanceof Error ? e : new Error('Failed to fetch subplebbits'),
+        }));
       }
     })();
   }, []);
 
-  return cacheSubplebbits || subplebbits;
+  // To maintain backward compatibility, return the subplebbits array directly
+  return cacheSubplebbits || state.subplebbits;
+};
+
+export const useDefaultSubplebbitsState = () => {
+  const [state, setState] = useState<DefaultSubplebbitsState>({
+    subplebbits: cacheSubplebbits || [],
+    loading: !cacheSubplebbits,
+    error: null,
+  });
+
+  useEffect(() => {
+    if (cacheSubplebbits) {
+      setState({
+        subplebbits: cacheSubplebbits,
+        loading: false,
+        error: null,
+      });
+      return;
+    }
+
+    (async () => {
+      try {
+        const multisub = await fetch('https://raw.githubusercontent.com/plebbit/temporary-default-subplebbits/master/multisub.json').then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        });
+
+        setState({
+          subplebbits: multisub.subplebbits,
+          loading: false,
+          error: null,
+        });
+      } catch (e) {
+        console.warn(e);
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+          error: e instanceof Error ? e : new Error('Failed to fetch subplebbits'),
+        }));
+      }
+    })();
+  }, []);
+
+  return state;
 };
 
 export const useDefaultSubplebbitAddresses = () => {

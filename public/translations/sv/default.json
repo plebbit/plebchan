@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} inlägg sedan {{currentTimeFilterName}}: <1>visa {{moreCount}} fler inlägg från förra månaden</1>",
   "loading_feed": "Laddar flöde",
   "loading_post": "Laddar inlägg",
-  "node_stats": "Node-statistik"
+  "node_stats": "Node-statistik",
+  "loading_default_boards": "Laddar standardlistan för tavlor",
+  "loading_subscriptions": "Laddar prenumerationer"
 }

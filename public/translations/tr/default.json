@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} gönderi {{currentTimeFilterName}}'dan itibaren: <1>geçen aydan {{moreCount}} daha fazla gönderi göster</1>",
   "loading_feed": "Yükleniyor besleme",
   "loading_post": "Gönderi yükleniyor",
-  "node_stats": "Düğüm istatistikleri"
+  "node_stats": "Düğüm istatistikleri",
+  "loading_default_boards": "Varsayılan panolar listesi yükleniyor",
+  "loading_subscriptions": "Abonelikler yükleniyor"
 }

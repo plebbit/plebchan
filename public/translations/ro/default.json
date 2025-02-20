@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} postări din {{currentTimeFilterName}}: <1>afișați {{moreCount}} mai multe postări din luna trecută</1>",
   "loading_feed": "Încărcare feed",
   "loading_post": "Se încarcă postarea",
-  "node_stats": "Statistici nod"
+  "node_stats": "Statistici nod",
+  "loading_default_boards": "Se încarcă lista de panouri implicite",
+  "loading_subscriptions": "Încărcarea abonamentelor"
 }

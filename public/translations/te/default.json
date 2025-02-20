@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} పోస్టులు {{currentTimeFilterName}} నుండి: <1>గత నెల నుండి {{moreCount}} మరిన్ని పోస్టులను చూపించు</1>",
   "loading_feed": "లోడింగ్ ఫీడ్",
   "loading_post": "పోస్ట్ లోడవుతోంది",
-  "node_stats": "నోడ్ గణాంకాలు"
+  "node_stats": "నోడ్ గణాంకాలు",
+  "loading_default_boards": "డిఫాల్ట్ బోర్డుల జాబితా లోడవుతోంది",
+  "loading_subscriptions": "సబ్‌స్క్రిప్షన్‌లు లోడ్ అవుతున్నాయి"
 }

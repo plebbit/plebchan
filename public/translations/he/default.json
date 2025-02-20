@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} פוסטים מאז {{currentTimeFilterName}}: <1>הצג {{moreCount}} פוסטים נוספים מהחודש שעבר</1>",
   "loading_feed": "טוען פיד",
   "loading_post": "טוען פוסט",
-  "node_stats": "סטטיסטיקות צומת"
+  "node_stats": "סטטיסטיקות צומת",
+  "loading_default_boards": "טוען את רשימת הלוחות ברירת המחדל",
+  "loading_subscriptions": "טוען מנויים"
 }

@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>mehr {{moreCount}} Beiträge aus dem letzten Monat anzeigen</1>",
   "loading_feed": "Lädt Feed",
   "loading_post": "Beitrag wird geladen",
-  "node_stats": "Knotenstatistiken"
+  "node_stats": "Knotenstatistiken",
+  "loading_default_boards": "Laden der Standard-Boards-Liste",
+  "loading_subscriptions": "Lade Abonnements"
 }

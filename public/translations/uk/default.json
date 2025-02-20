@@ -279,5 +279,7 @@
   "more_posts_last_month": "{{count}} дописів з {{currentTimeFilterName}}: <1>показати {{moreCount}} більше дописів з минулого місяця</1>",
   "loading_feed": "Завантаження потоку",
   "loading_post": "Завантаження поста",
-  "node_stats": "Статистика вузла"
+  "node_stats": "Статистика вузла",
+  "loading_default_boards": "Завантаження списку стандартних дошок",
+  "loading_subscriptions": "Завантаження підписок"
 }
