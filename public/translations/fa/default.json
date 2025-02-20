@@ -248,7 +248,7 @@
   "reset_changes": "بازنشانی تغییرات",
   "crypto_address_yours": "آدرس رمزارز به این حساب تعلق دارد.",
   "delete_wallet": "حذف کیف پول",
-  "loading_subplebbit": "در حال بارگذاری subplebbit",
+  "loading_board": "در حال بارگذاری تابلو",
   "avatar_warning": "شما نمی‌توانید با آواتار پست بگذارید در حالی که حالت ناشناس فعال است. می‌توانید آن را در تنظیمات حساب Plebbit خود خاموش کنید.",
   "last_bumped": "آخرین افزایش",
   "threads_without_images_tip": "فقط موضوعاتی که به رسانه‌های قابل گنجاندن لینک می‌دهند را نمایش دهید",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "در جستجوی پست‌های بیشتر",
   "more_posts_last_week": "{{count}} پست از {{currentTimeFilterName}}: <1>نمایش پست‌های بیشتر از هفته گذشته</1>",
   "more_posts_last_month": "{{count}} پست از {{currentTimeFilterName}}: <1>نمایش {{moreCount}} پست‌های بیشتر از ماه گذشته</1>",
-  "loading_feed": "در حال بارگذاری فید"
+  "loading_feed": "در حال بارگذاری فید",
+  "loading_post": "در حال بارگذاری پست"
 }

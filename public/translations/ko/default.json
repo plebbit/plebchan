@@ -248,7 +248,7 @@
   "reset_changes": "변경 사항 초기화",
   "crypto_address_yours": "암호 주소는이 계정에 속합니다.",
   "delete_wallet": "지갑 삭제",
-  "loading_subplebbit": "subplebbit 로딩 중",
+  "loading_board": "보드 로딩 중",
   "avatar_warning": "익명 모드가 켜져 있는 동안 아바타로 게시할 수 없습니다. Plebbit 계정 설정에서 끌 수 있습니다.",
   "last_bumped": "마지막 bump",
   "threads_without_images_tip": "임베드 가능한 미디어로 링크된 스레드만 표시",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "더 많은 게시물을 찾고 있습니다",
   "more_posts_last_week": "{{count}} 개의 게시물 {{currentTimeFilterName}} 이후: <1>지난주 게시물 더 보기</1>",
   "more_posts_last_month": "{{count}} 게시물 {{currentTimeFilterName}} 이후: <1>지난 달 게시물 {{moreCount}}개 더 보기</1>",
-  "loading_feed": "피드를 로딩 중"
+  "loading_feed": "피드를 로딩 중",
+  "loading_post": "게시물 로딩 중"
 }

@@ -248,7 +248,7 @@
   "reset_changes": "Nollaa muutokset",
   "crypto_address_yours": "Krypto-osoite kuuluu tähän tiliin.",
   "delete_wallet": "Poista lompakko",
-  "loading_subplebbit": "Ladataan subplebbit",
+  "loading_board": "Ladataan taulua",
   "avatar_warning": "Et voi julkaista avatarilla, kun anonyymi tila on päällä. Voit poistaa sen käytöstä Plebbit-tilisi asetuksissa.",
   "last_bumped": "Viimeisin bump",
   "threads_without_images_tip": "Näytä vain ketjut, jotka linkittävät upotettaviin medioihin",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Etsii lisää viestejä",
   "more_posts_last_week": "{{count}} viestiä {{currentTimeFilterName}} jälkeen: <1>näytä lisää viestejä viime viikolta</1>",
   "more_posts_last_month": "{{count}} julkaisua {{currentTimeFilterName}} jälkeen: <1>näytä {{moreCount}} lisää julkaisuja viime kuukaudesta</1>",
-  "loading_feed": "Ladataan syöte"
+  "loading_feed": "Ladataan syöte",
+  "loading_post": "Ladataan viestiä"
 }

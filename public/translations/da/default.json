@@ -248,7 +248,7 @@
   "reset_changes": "Nulstil ændringer",
   "crypto_address_yours": "Crypto-adresse tilhører denne konto.",
   "delete_wallet": "Slet tegnebog",
-  "loading_subplebbit": "Indlæser subplebbit",
+  "loading_board": "Indlæser tavlen",
   "avatar_warning": "Du kan ikke poste med et avatar, mens anonym tilstand er tændt. Du kan slukke det i dine Plebbit-kontoindstillinger.",
   "last_bumped": "Sidste bumpet",
   "threads_without_images_tip": "Vis kun tråde, der linker til indlejrbare medier",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Leder efter flere indlæg",
   "more_posts_last_week": "{{count}} indlæg siden {{currentTimeFilterName}}: <1>vis flere indlæg fra sidste uge</1>",
   "more_posts_last_month": "{{count}} indlæg siden {{currentTimeFilterName}}: <1>vis {{moreCount}} flere indlæg fra sidste måned</1>",
-  "loading_feed": "Indlæser feed"
+  "loading_feed": "Indlæser feed",
+  "loading_post": "Indlæser indlæg"
 }

@@ -248,7 +248,7 @@
   "reset_changes": "Đặt lại thay đổi",
   "crypto_address_yours": "Địa chỉ tiền điện tử thuộc về tài khoản này.",
   "delete_wallet": "Xóa ví",
-  "loading_subplebbit": "Đang tải subplebbit",
+  "loading_board": "Đang tải bảng",
   "avatar_warning": "Bạn không thể đăng với hình đại diện khi chế độ ẩn danh đang bật. Bạn có thể tắt nó trong cài đặt Tài khoản Plebbit của mình.",
   "last_bumped": "Bump gần đây nhất",
   "threads_without_images_tip": "Chỉ hiển thị các chủ đề liên kết đến phương tiện có thể nhúng",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Tìm kiếm thêm bài viết",
   "more_posts_last_week": "{{count}} bài viết từ {{currentTimeFilterName}}: <1>hiển thị thêm bài viết từ tuần trước</1>",
   "more_posts_last_month": "{{count}} bài đăng kể từ {{currentTimeFilterName}}: <1>hiển thị thêm {{moreCount}} bài đăng từ tháng trước</1>",
-  "loading_feed": "Đang tải feed"
+  "loading_feed": "Đang tải feed",
+  "loading_post": "Đang tải bài viết"
 }

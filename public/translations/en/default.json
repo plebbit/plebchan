@@ -248,7 +248,7 @@
   "reset_changes": "Reset Changes",
   "crypto_address_yours": "Crypto address belongs to this account.",
   "delete_wallet": "Delete Wallet",
-  "loading_subplebbit": "Loading subplebbit",
+  "loading_board": "Loading board",
   "avatar_warning": "You can't post with an avatar while anon mode is turned on. You can turn it off in your Plebbit Account settings.",
   "last_bumped": "Last Bumped",
   "threads_without_images_tip": "Only display threads that link to embeddable media",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Looking for more posts",
   "more_posts_last_week": "{{count}} posts since {{currentTimeFilterName}}: <1>show more posts from last week</1>",
   "more_posts_last_month": "{{count}} posts since {{currentTimeFilterName}}: <1>show {{moreCount}} more posts from last month</1>",
-  "loading_feed": "Loading feed"
+  "loading_feed": "Loading feed",
+  "loading_post": "Loading post"
 }

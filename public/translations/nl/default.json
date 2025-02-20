@@ -248,7 +248,7 @@
   "reset_changes": "Wijzigingen resetten",
   "crypto_address_yours": "Crypto-adres behoort tot deze account.",
   "delete_wallet": "Verwijder portemonnee",
-  "loading_subplebbit": "Subplebbit laden",
+  "loading_board": "Bord laden",
   "avatar_warning": "Je kunt niet met een avatar posten terwijl de anonieme modus aan staat. Je kunt het uitschakelen in de instellingen van je Plebbit-account.",
   "last_bumped": "Laatste bump",
   "threads_without_images_tip": "Toon alleen threads die naar inbedbare media linken",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Op zoek naar meer berichten",
   "more_posts_last_week": "{{count}} berichten sinds {{currentTimeFilterName}}: <1>meer berichten van vorige week weergeven</1>",
   "more_posts_last_month": "{{count}} berichten sinds {{currentTimeFilterName}}: <1>meer {{moreCount}} berichten van vorige maand tonen</1>",
-  "loading_feed": "Laad feed"
+  "loading_feed": "Laad feed",
+  "loading_post": "Bericht wordt geladen"
 }

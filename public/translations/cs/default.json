@@ -248,7 +248,7 @@
   "reset_changes": "Obnovit změny",
   "crypto_address_yours": "Adresa kryptoměny patří k tomuto účtu.",
   "delete_wallet": "Smazat peněženku",
-  "loading_subplebbit": "Načítání subplebbit",
+  "loading_board": "Načítání desky",
   "avatar_warning": "Nemůžete zveřejňovat s avatarem, když je zapnutý anonymní režim. Můžete ho vypnout v nastavení svého účtu Plebbit.",
   "last_bumped": "Poslední bump",
   "threads_without_images_tip": "Zobrazit pouze vlákna, která odkazují na vložitelné médium",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Hledání dalších příspěvků",
   "more_posts_last_week": "{{count}} příspěvků od {{currentTimeFilterName}}: <1>zobrazit více příspěvků z minulého týdne</1>",
   "more_posts_last_month": "{{count}} příspěvků od {{currentTimeFilterName}}: <1>zobrazit {{moreCount}} více příspěvků z minulého měsíce</1>",
-  "loading_feed": "Načítání kanálu"
+  "loading_feed": "Načítání kanálu",
+  "loading_post": "Načítání příspěvku"
 }

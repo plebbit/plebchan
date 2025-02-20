@@ -248,7 +248,7 @@
   "reset_changes": "Tilbakestill endringer",
   "crypto_address_yours": "Crypto-adressen tilhører denne kontoen.",
   "delete_wallet": "Slett lommebok",
-  "loading_subplebbit": "Laster subplebbit",
+  "loading_board": "Laster tavle",
   "avatar_warning": "Du kan ikke poste med en avatar mens anonym modus er aktivert. Du kan slå den av i innstillingene for Plebbit-kontoen din.",
   "last_bumped": "Siste bumpet",
   "threads_without_images_tip": "Vis kun tråder som lenker til innebyggbare medier",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Leter etter flere innlegg",
   "more_posts_last_week": "{{count}} innlegg siden {{currentTimeFilterName}}: <1>vis flere innlegg fra forrige uke</1>",
   "more_posts_last_month": "{{count}} innlegg siden {{currentTimeFilterName}}: <1>vis {{moreCount}} flere innlegg fra forrige måned</1>",
-  "loading_feed": "Laster feed"
+  "loading_feed": "Laster feed",
+  "loading_post": "Laster innlegg"
 }

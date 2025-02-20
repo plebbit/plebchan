@@ -248,7 +248,7 @@
   "reset_changes": "Változások visszaállítása",
   "crypto_address_yours": "A kripto-cím ehhez a fiókhoz tartozik.",
   "delete_wallet": "Tárca törlése",
-  "loading_subplebbit": "Subplebbit betöltése",
+  "loading_board": "Tábla betöltése",
   "avatar_warning": "Nem posztolhatsz avatarral, míg az anon mód be van kapcsolva. Kikapcsolhatod a Plebbit-fiókod beállításaiban.",
   "last_bumped": "Utolsó bump",
   "threads_without_images_tip": "Csak azokat a szálakat jelenítse meg, amelyek beágyazható médiára mutatnak",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Több bejegyzés keresése",
   "more_posts_last_week": "{{count}} bejegyzés {{currentTimeFilterName}} óta: <1>további bejegyzések megjelenítése a múlt héten</1>",
   "more_posts_last_month": "{{count}} bejegyzés {{currentTimeFilterName}} óta: <1>több {{moreCount}} bejegyzés megjelenítése a múlt hónapból</1>",
-  "loading_feed": "Betöltés a hírcsatornára"
+  "loading_feed": "Betöltés a hírcsatornára",
+  "loading_post": "Bejegyzés betöltése"
 }

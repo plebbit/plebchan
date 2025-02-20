@@ -248,7 +248,7 @@
   "reset_changes": "Скинути зміни",
   "crypto_address_yours": "Адреса криптовалюти належить цьому обліковому запису.",
   "delete_wallet": "Видалити гаманець",
-  "loading_subplebbit": "Завантаження subplebbit",
+  "loading_board": "Завантаження дошки",
   "avatar_warning": "Ви не можете публікувати з аватаром, коли увімкнено анонімний режим. Ви можете вимкнути його в налаштуваннях свого облікового запису Plebbit.",
   "last_bumped": "Останній бамп",
   "threads_without_images_tip": "Показувати тільки ті теми, які містять посилання на медіа, що можна вбудувати",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Шукаю більше дописів",
   "more_posts_last_week": "{{count}} дописів з {{currentTimeFilterName}}: <1>показати більше дописів з минулого тижня</1>",
   "more_posts_last_month": "{{count}} дописів з {{currentTimeFilterName}}: <1>показати {{moreCount}} більше дописів з минулого місяця</1>",
-  "loading_feed": "Завантаження потоку"
+  "loading_feed": "Завантаження потоку",
+  "loading_post": "Завантаження поста"
 }

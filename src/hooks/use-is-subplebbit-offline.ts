@@ -34,7 +34,7 @@ const useIsSubplebbitOffline = (subplebbit: Subplebbit) => {
   const offlineIconClass = isLoading ? 'yellowOfflineIcon' : isOffline ? 'redOfflineIcon' : '';
 
   const offlineTitle = isLoading
-    ? t('loading_subplebbit')
+    ? t('loading_board')
     : updatedAt
     ? isOffline && t('posts_last_synced_info', { time: getFormattedTimeAgo(updatedAt), interpolation: { escapeValue: false } })
     : t('subplebbit_offline_info');

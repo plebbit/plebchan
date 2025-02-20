@@ -248,7 +248,7 @@
   "reset_changes": "I-reset ang mga pagbabago",
   "crypto_address_yours": "Ang crypto address ay nauugnay sa account na ito.",
   "delete_wallet": "Tanggalin ang Wallet",
-  "loading_subplebbit": "Naglo-load ng subplebbit",
+  "loading_board": "Naglo-load ang board",
   "avatar_warning": "Hindi ka makakapag-post gamit ang avatar habang naka-on ang anon mode. Maaari mo itong i-off sa iyong mga setting ng Plebbit Account.",
   "last_bumped": "Huling bump",
   "threads_without_images_tip": "Ipakita lamang ang mga thread na nagli-link sa mga embeddable na media",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Naghahanap ng higit pang mga post",
   "more_posts_last_week": "{{count}} mga post mula {{currentTimeFilterName}}: <1>magpakita ng higit pang mga post mula sa nakaraang linggo</1>",
   "more_posts_last_month": "{{count}} mga post mula {{currentTimeFilterName}}: <1>ipakita ang {{moreCount}} higit pang mga post mula noong nakaraang buwan</1>",
-  "loading_feed": "Naglo-load ng feed"
+  "loading_feed": "Naglo-load ng feed",
+  "loading_post": "Naglo-load na post"
 }

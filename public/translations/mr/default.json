@@ -248,7 +248,7 @@
   "reset_changes": "बदलांना रीसेट करा",
   "crypto_address_yours": "क्रिप्टो पत्ता हा खात्याकडे संबंधित आहे.",
   "delete_wallet": "वॉलेट हटवा",
-  "loading_subplebbit": "subplebbit लोड करीत आहे",
+  "loading_board": "बोर्ड लोड हो रहा आहे",
   "avatar_warning": "आपण अज्ञात मोड चालू असताना अवतारसह पोस्ट करू शकत नाही. आपण ते आपल्या Plebbit खात्याच्या सेटिंग्जमध्ये बंद करू शकता.",
   "last_bumped": "अंतिम बंप",
   "threads_without_images_tip": "फक्त ते थ्रेड्स दाखवा जे एम्बेडेबल मीडियाशी लिंक करतात",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "अधिक पोस्ट शोधत आहे",
   "more_posts_last_week": "{{count}} पोस्ट {{currentTimeFilterName}} पासून: <1>मागील आठवड्यातील अधिक पोस्ट पहा</1>",
   "more_posts_last_month": "{{count}} पोस्ट {{currentTimeFilterName}} पासून: <1>पार्श्ववर्ती पोस्ट आणखी {{moreCount}} पहा गेल्या महिन्यातून</1>",
-  "loading_feed": "फीड लोड करत आहे"
+  "loading_feed": "फीड लोड करत आहे",
+  "loading_post": "पोस्ट लोड होत आहे"
 }

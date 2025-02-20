@@ -248,7 +248,7 @@
   "reset_changes": "重置更改",
   "crypto_address_yours": "加密地址属于此帐户。",
   "delete_wallet": "删除钱包",
-  "loading_subplebbit": "加载 subplebbit",
+  "loading_board": "正在加载板块",
   "avatar_warning": "在匿名模式开启时，您无法使用头像进行发布。您可以在 Plebbit 账户设置中将其关闭。",
   "last_bumped": "最后提升",
   "threads_without_images_tip": "仅显示链接到可嵌入媒体的帖子",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "寻找更多帖子",
   "more_posts_last_week": "{{count}} 帖子来自 {{currentTimeFilterName}}: <1>显示更多来自上周的帖子</1>",
   "more_posts_last_month": "{{count}} 帖子自 {{currentTimeFilterName}} 起: <1>显示更多{{moreCount}}来自上个月的帖子</1>",
-  "loading_feed": "加载中..."
+  "loading_feed": "加载中...",
+  "loading_post": "正在加载帖子"
 }

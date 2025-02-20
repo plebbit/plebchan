@@ -248,7 +248,7 @@
   "reset_changes": "পরিবর্তনগুলি রিসেট করুন",
   "crypto_address_yours": "ক্রিপ্টো ঠিকানা এই অ্যাকাউন্টের অংশ।",
   "delete_wallet": "ওয়ালেট মুছুন",
-  "loading_subplebbit": "সাবপ্লেবিট লোড হচ্ছে",
+  "loading_board": "বোর্ড লোড হচ্ছে",
   "avatar_warning": "অ্যানন মোড চালু থাকা অবস্থায় আপনি অ্যানিমেশন সহ পোস্ট করতে পারেন না। আপনি এটি আপনার Plebbit অ্যাকাউন্টের সেটিংসে বন্ধ করতে পারেন।",
   "last_bumped": "শেষ.bump",
   "threads_without_images_tip": "শুধুমাত্র এমন থ্রেডগুলি প্রদর্শন করুন যেগুলি এমবেডযোগ্য মিডিয়াতে লিঙ্ক করে",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "আরও পোস্ট খুঁজছি",
   "more_posts_last_week": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>গত সপ্তাহ থেকে আরও পোস্ট দেখান</1>",
   "more_posts_last_month": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>আরও {{moreCount}} পোস্ট দেখুন গত মাস থেকে</1>",
-  "loading_feed": "লোডিং ফিড"
+  "loading_feed": "লোডিং ফিড",
+  "loading_post": "পোস্ট লোড হচ্ছে"
 }

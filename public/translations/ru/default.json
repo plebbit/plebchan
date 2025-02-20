@@ -248,7 +248,7 @@
   "reset_changes": "Сбросить изменения",
   "crypto_address_yours": "Адрес криптовалюты принадлежит этому аккаунту.",
   "delete_wallet": "Удалить кошелек",
-  "loading_subplebbit": "Загрузка subplebbit",
+  "loading_board": "Загрузка доски",
   "avatar_warning": "Вы не можете публиковать с аватаром, когда режим анонимности включен. Вы можете отключить его в настройках своей учетной записи Plebbit.",
   "last_bumped": "Последний бамп",
   "threads_without_images_tip": "Отображать только темы, которые ссылаются на встраиваемые медиа",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Ищу больше постов",
   "more_posts_last_week": "{{count}} постов с {{currentTimeFilterName}}: <1>показать больше постов с прошлой недели</1>",
   "more_posts_last_month": "{{count}} постов с {{currentTimeFilterName}}: <1>показать {{moreCount}} больше постов с прошлого месяца</1>",
-  "loading_feed": "Загрузка ленты"
+  "loading_feed": "Загрузка ленты",
+  "loading_post": "Загрузка сообщения"
 }

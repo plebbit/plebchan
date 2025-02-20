@@ -248,7 +248,7 @@
   "reset_changes": "మార్పులను రీసెట్ చేయండి",
   "crypto_address_yours": "క్రిప్టో చిరునామా ఈ ఖాతాకు చేరుకుంది.",
   "delete_wallet": "వాలెట్ తొలగించండి",
-  "loading_subplebbit": "సబ్‌ప్లెబిట్‌లో లోడింగ్",
+  "loading_board": "బోర్డు లోడవుతోంది",
   "avatar_warning": "మీరు అను మోడ్ ఆన్ ఉండగా అవతార్‌తో పోస్ట్ చేయలేరు. మీరు మీ Plebbit ఖాతా సెట్టింగ్స్‌లో దీన్ని ఆఫ్ చేయవచ్చు.",
   "last_bumped": "చివరి బంప్",
   "threads_without_images_tip": "ఏంబెడబుల్ మీడియాకు లింక్ చేసే థ్రెడ్‌లను మాత్రమే చూపించండి",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "మరింత పోస్ట్‌ల కోసం చూస్తున్నాను",
   "more_posts_last_week": "{{count}} పోస్ట్‌లు {{currentTimeFilterName}} నుండి: <1>గత వారం నుండి మరిన్ని పోస్ట్‌లు చూపించు</1>",
   "more_posts_last_month": "{{count}} పోస్టులు {{currentTimeFilterName}} నుండి: <1>గత నెల నుండి {{moreCount}} మరిన్ని పోస్టులను చూపించు</1>",
-  "loading_feed": "లోడింగ్ ఫీడ్"
+  "loading_feed": "లోడింగ్ ఫీడ్",
+  "loading_post": "పోస్ట్ లోడవుతోంది"
 }

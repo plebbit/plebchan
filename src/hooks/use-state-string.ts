@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useClientsStates } from '@plebbit/plebbit-react-hooks';
+import { debounce } from 'lodash';
 
 interface CommentOrSubplebbit {
   state?: string;
@@ -25,13 +26,19 @@ const getClientHost = (clientUrl: string): string => {
 };
 
 const useStateString = (commentOrSubplebbit: CommentOrSubplebbit): string | undefined => {
-  const { states } = useClientsStates({ comment: commentOrSubplebbit }) as { states: States };
+  const { states: rawStates } = useClientsStates({ comment: commentOrSubplebbit }) as { states: States };
+
+  const debouncedStates = useMemo(() => {
+    const debouncedValue = debounce((value: States) => value, 300);
+    return debouncedValue(rawStates);
+  }, [rawStates]);
+
   return useMemo(() => {
     let stateString: string | undefined = '';
 
-    for (const state in states) {
-      const clientUrls = states[state];
-      const clientHosts = clientUrls.map((clientUrl) => getClientHost(clientUrl));
+    for (const state in debouncedStates) {
+      const clientUrls = debouncedStates[state];
+      const clientHosts = clientUrls.map((clientUrl: string) => getClientHost(clientUrl));
 
       if (clientHosts.length === 0) {
         continue;
@@ -49,10 +56,17 @@ const useStateString = (commentOrSubplebbit: CommentOrSubplebbit): string | unde
       if (commentOrSubplebbit?.publishingState && commentOrSubplebbit?.publishingState !== 'stopped' && commentOrSubplebbit?.publishingState !== 'succeeded') {
         stateString = commentOrSubplebbit.publishingState;
       } else if (commentOrSubplebbit?.updatingState !== 'stopped' && commentOrSubplebbit?.updatingState !== 'succeeded') {
-        stateString = commentOrSubplebbit?.updatingState;
+        stateString = commentOrSubplebbit.updatingState;
       }
       if (stateString) {
-        stateString = stateString.replaceAll('-', ' ').replace('ipfs', 'IPFS').replace('ipns', 'IPNS');
+        stateString = stateString
+          .replaceAll('-', ' ')
+          .replace('ipfs', 'post')
+          .replace('ipns', 'subplebbit')
+          .replace('fetching', 'loading')
+          .replace('resolving', 'loading')
+          .replace('subplebbit subplebbit', 'board')
+          .replace('loading subplebbit', 'loading board');
       }
     }
 
@@ -61,7 +75,7 @@ const useStateString = (commentOrSubplebbit: CommentOrSubplebbit): string | unde
     }
 
     return stateString === '' ? undefined : stateString;
-  }, [states, commentOrSubplebbit]);
+  }, [debouncedStates, commentOrSubplebbit]);
 };
 
 export default useStateString;

@@ -121,7 +121,7 @@ const Board = () => {
   const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
-  const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
+  const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading_board');
 
   const handleNewerPostsButtonClick = () => {
     window.scrollTo({ top: 0, left: 0 });

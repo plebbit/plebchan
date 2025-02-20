@@ -248,7 +248,7 @@
   "reset_changes": "Änderungen zurücksetzen",
   "crypto_address_yours": "Krypto-Adresse gehört zu diesem Konto.",
   "delete_wallet": "Wallet löschen",
-  "loading_subplebbit": "Lade subplebbit",
+  "loading_board": "Lädt Board",
   "avatar_warning": "Sie können nicht mit einem Avatar posten, während der Anonymmodus aktiviert ist. Sie können ihn in den Einstellungen Ihres Plebbit-Kontos deaktivieren.",
   "last_bumped": "Zuletzt hochgeladen",
   "threads_without_images_tip": "Nur Threads anzeigen, die auf einbettbare Medien verlinken",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Suche nach weiteren Beiträgen",
   "more_posts_last_week": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>weitere Beiträge aus der letzten Woche anzeigen</1>",
   "more_posts_last_month": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>mehr {{moreCount}} Beiträge aus dem letzten Monat anzeigen</1>",
-  "loading_feed": "Lädt Feed"
+  "loading_feed": "Lädt Feed",
+  "loading_post": "Beitrag wird geladen"
 }

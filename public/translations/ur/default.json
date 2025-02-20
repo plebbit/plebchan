@@ -248,7 +248,7 @@
   "reset_changes": "تبدیلیاں ری سیٹ کریں",
   "crypto_address_yours": "کرپٹو پتا اس اکاؤنٹ کا حصہ ہے۔",
   "delete_wallet": "والٹ حذف کریں",
-  "loading_subplebbit": "سب پلبیٹ لوڈ ہو رہا ہے",
+  "loading_board": "بورڈ لوڈ ہو رہا ہے",
   "avatar_warning": "آپ اَنون موڈ آن ہونے پر اوتار کے ساتھ پوسٹ نہیں کر سکتے۔ آپ اسے اپنے Plebbit اکاؤنٹ کی ترتیبات میں بند کر سکتے ہیں۔",
   "last_bumped": "آخری بمپر",
   "threads_without_images_tip": "صرف وہ تھریڈز دکھائیں جو ایمبیڈ ایبل میڈیا کے ساتھ لنک کرتے ہیں",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "مزید پوسٹس تلاش کر رہے ہیں",
   "more_posts_last_week": "{{count}} پوسٹس {{currentTimeFilterName}} سے: <1>پچھلے ہفتے سے مزید پوسٹس دکھائیں</1>",
   "more_posts_last_month": "{{count}} پوسٹس {{currentTimeFilterName}} سے: <1>پچھلے مہینے کی مزید {{moreCount}} پوسٹس دکھائیں</1>",
-  "loading_feed": "لوڈ ہو رہا ہے فیڈ"
+  "loading_feed": "لوڈ ہو رہا ہے فیڈ",
+  "loading_post": "پوسٹ لوڈ ہو رہی ہے"
 }

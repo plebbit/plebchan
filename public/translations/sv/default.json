@@ -248,7 +248,7 @@
   "reset_changes": "Återställ ändringar",
   "crypto_address_yours": "Crypto-adressen tillhör denna konto.",
   "delete_wallet": "Ta bort plånbok",
-  "loading_subplebbit": "Laddar subplebbit",
+  "loading_board": "Laddar tavla",
   "avatar_warning": "Du kan inte posta med en avatar när anonym läge är aktiverat. Du kan stänga av det i inställningarna för ditt Plebbit-konto.",
   "last_bumped": "Senaste bump",
   "threads_without_images_tip": "Visa endast trådar som länkar till inbäddbara medier",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Letar efter fler inlägg",
   "more_posts_last_week": "{{count}} inlägg sedan {{currentTimeFilterName}}: <1>visa fler inlägg från förra veckan</1>",
   "more_posts_last_month": "{{count}} inlägg sedan {{currentTimeFilterName}}: <1>visa {{moreCount}} fler inlägg från förra månaden</1>",
-  "loading_feed": "Laddar flöde"
+  "loading_feed": "Laddar flöde",
+  "loading_post": "Laddar inlägg"
 }

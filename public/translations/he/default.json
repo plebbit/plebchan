@@ -248,7 +248,7 @@
   "reset_changes": "איפוס שינויים",
   "crypto_address_yours": "כתובת המטבע הקריפטוגרפי שייכת לחשבון זה.",
   "delete_wallet": "מחק ארנק",
-  "loading_subplebbit": "טוען subplebbit",
+  "loading_board": "טוען את הלוח",
   "avatar_warning": "אין באפשרותך לפרסם עם תמונת פרופיל בזמן שמצב אנונימי מופעל. תוכל לבטל זאת בהגדרות חשבון Plebbit שלך.",
   "last_bumped": "הבום האחרון",
   "threads_without_images_tip": "הצג רק נושאים שמקשרים למדיה שניתן להטמיע",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "מחפש פוסטים נוספים",
   "more_posts_last_week": "{{count}} פוסטים מ{{currentTimeFilterName}}: <1>הצג פוסטים נוספים מהשבוע שעבר</1>",
   "more_posts_last_month": "{{count}} פוסטים מאז {{currentTimeFilterName}}: <1>הצג {{moreCount}} פוסטים נוספים מהחודש שעבר</1>",
-  "loading_feed": "טוען פיד"
+  "loading_feed": "טוען פיד",
+  "loading_post": "טוען פוסט"
 }

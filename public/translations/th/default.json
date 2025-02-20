@@ -248,7 +248,7 @@
   "reset_changes": "รีเซ็ตการเปลี่ยนแปลง",
   "crypto_address_yours": "ที่อยู่คริปโตเป็นของบัญชีนี้",
   "delete_wallet": "ลบกระเป๋าเงิน",
-  "loading_subplebbit": "กำลังโหลด subplebbit",
+  "loading_board": "กำลังโหลดบอร์ด",
   "avatar_warning": "คุณไม่สามารถโพสต์ด้วยอวาตาร์ในขณะที่โหมดอนาโนเป็นเปิดอยู่ คุณสามารถปิดได้ในการตั้งค่าบัญชี Plebbit ของคุณ",
   "last_bumped": "เพิ่มล่าสุด",
   "threads_without_images_tip": "แสดงเฉพาะกระทู้ที่เชื่อมโยงไปยังสื่อที่สามารถฝังได้",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "กำลังมองหาบทความเพิ่มเติม",
   "more_posts_last_week": "{{count}} โพสต์จาก {{currentTimeFilterName}}: <1>แสดงโพสต์เพิ่มเติมจากสัปดาห์ที่แล้ว</1>",
   "more_posts_last_month": "{{count}} โพสต์ตั้งแต่ {{currentTimeFilterName}}: <1>แสดง {{moreCount}} โพสต์เพิ่มเติมจากเดือนที่แล้ว</1>",
-  "loading_feed": "กำลังโหลดฟีด"
+  "loading_feed": "กำลังโหลดฟีด",
+  "loading_post": "กำลังโหลดโพสต์"
 }

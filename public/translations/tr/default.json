@@ -248,7 +248,7 @@
   "reset_changes": "Değişiklikleri Sıfırla",
   "crypto_address_yours": "Kripto adres bu hesaba aittir.",
   "delete_wallet": "Cüzdanı Sil",
-  "loading_subplebbit": "Subplebbit Yükleniyor",
+  "loading_board": "Tahta yükleniyor",
   "avatar_warning": "Anonim mod açıken avatar ile paylaşım yapamazsınız. Bunu Plebbit Hesap ayarlarınızdan kapatabilirsiniz.",
   "last_bumped": "Son bump",
   "threads_without_images_tip": "Sadece gömme medya bağlantısı olan gönderileri görüntüle",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Daha fazla gönderi arıyorum",
   "more_posts_last_week": "{{count}} gönderi {{currentTimeFilterName}} tarihinden itibaren: <1>geçen haftadan daha fazla gönderi göster</1>",
   "more_posts_last_month": "{{count}} gönderi {{currentTimeFilterName}}'dan itibaren: <1>geçen aydan {{moreCount}} daha fazla gönderi göster</1>",
-  "loading_feed": "Yükleniyor besleme"
+  "loading_feed": "Yükleniyor besleme",
+  "loading_post": "Gönderi yükleniyor"
 }

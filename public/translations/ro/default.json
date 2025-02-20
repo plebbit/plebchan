@@ -248,7 +248,7 @@
   "reset_changes": "Resetează modificările",
   "crypto_address_yours": "Adresa crypto aparține acestui cont.",
   "delete_wallet": "Șterge portofelul",
-  "loading_subplebbit": "Se încarcă subplebbit",
+  "loading_board": "Se încarcă tabla",
   "avatar_warning": "Nu poți publica cu un avatar în timp ce modul anonim este activat. Poți să-l dezactivezi în setările contului tău Plebbit.",
   "last_bumped": "Ultima creștere",
   "threads_without_images_tip": "Afișați doar discuțiile care sunt legătura către media încorporabilă",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "Căutând mai multe postări",
   "more_posts_last_week": "{{count}} postări din {{currentTimeFilterName}}: <1>arată mai multe postări de săptămâna trecută</1>",
   "more_posts_last_month": "{{count}} postări din {{currentTimeFilterName}}: <1>afișați {{moreCount}} mai multe postări din luna trecută</1>",
-  "loading_feed": "Încărcare feed"
+  "loading_feed": "Încărcare feed",
+  "loading_post": "Se încarcă postarea"
 }

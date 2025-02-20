@@ -248,7 +248,7 @@
   "reset_changes": "変更をリセット",
   "crypto_address_yours": "暗号通貨アドレスはこのアカウントに属しています。",
   "delete_wallet": "ウォレットを削除",
-  "loading_subplebbit": "subplebbitを読み込んでいます",
+  "loading_board": "ボードを読み込んでいます",
   "avatar_warning": "アバターを使用して投稿することはできません。匿名モードがオンになっている間は、Plebbitアカウントの設定でオフにできます。",
   "last_bumped": "最後のバンプ",
   "threads_without_images_tip": "埋め込むことができるメディアへのリンクを持つスレッドのみを表示",
@@ -277,5 +277,6 @@
   "looking_for_more_posts": "さらに投稿を探しています",
   "more_posts_last_week": "{{count}} 件の投稿 {{currentTimeFilterName}} から: <1>先週の投稿をもっと表示する</1>",
   "more_posts_last_month": "{{count}} 件の投稿 {{currentTimeFilterName}} 以降: <1>先月の投稿を{{moreCount}}件もっと見る</1>",
-  "loading_feed": "フィードを読み込んでいます"
+  "loading_feed": "フィードを読み込んでいます",
+  "loading_post": "投稿を読み込み中"
 }
