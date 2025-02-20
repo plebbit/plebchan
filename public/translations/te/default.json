@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} పోస్ట్‌లు {{currentTimeFilterName}} నుండి: <1>గత వారం నుండి మరిన్ని పోస్ట్‌లు చూపించు</1>",
   "more_posts_last_month": "{{count}} పోస్టులు {{currentTimeFilterName}} నుండి: <1>గత నెల నుండి {{moreCount}} మరిన్ని పోస్టులను చూపించు</1>",
   "loading_feed": "లోడింగ్ ఫీడ్",
-  "loading_post": "పోస్ట్ లోడవుతోంది"
+  "loading_post": "పోస్ట్ లోడవుతోంది",
+  "node_stats": "నోడ్ గణాంకాలు"
 }

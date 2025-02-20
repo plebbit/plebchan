@@ -8,6 +8,7 @@ import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hook
 import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
 import PopularThreadsBox from './popular-threads-box';
 import BoardsList from './boards-list';
+import Version from '../../components/version';
 
 // https://github.com/plebbit/temporary-default-subplebbits/blob/master/README.md
 // plebchan shouldn't consider 'vulgar' or 'anti' as nsfw tags, unlike more sfw-oriented clients
@@ -122,9 +123,6 @@ const downloadAppLink = (() => {
   }
 })();
 
-const isElectron = window.isElectron === true;
-const commitRef = process.env.REACT_APP_COMMIT_REF;
-
 export const Footer = () => {
   const { t } = useTranslation();
   return (
@@ -172,19 +170,7 @@ export const Footer = () => {
         </li>
       </ul>
       <div className={styles.version}>
-        <a href={`https://github.com/plebbit/plebchan/releases/tag/v${packageJson.version}`} target='_blank' rel='noopener noreferrer'>
-          v{packageJson.version}
-        </a>
-        {isElectron && (
-          <a className={styles.fullNodeStats} href='http://localhost:50019/webui/' target='_blank' rel='noreferrer'>
-            node stats
-          </a>
-        )}
-        {commitRef && (
-          <a href={`https://github.com/plebbit/plebchan/commit/${commitRef}`} target='_blank' rel='noopener noreferrer'>
-            #{commitRef.slice(0, 7)}
-          </a>
-        )}
+        <Version />
       </div>
     </>
   );

@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} příspěvků od {{currentTimeFilterName}}: <1>zobrazit více příspěvků z minulého týdne</1>",
   "more_posts_last_month": "{{count}} příspěvků od {{currentTimeFilterName}}: <1>zobrazit {{moreCount}} více příspěvků z minulého měsíce</1>",
   "loading_feed": "Načítání kanálu",
-  "loading_post": "Načítání příspěvku"
+  "loading_post": "Načítání příspěvku",
+  "node_stats": "Statistiky uzlu"
 }

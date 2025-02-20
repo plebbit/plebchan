@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>weitere Beiträge aus der letzten Woche anzeigen</1>",
   "more_posts_last_month": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>mehr {{moreCount}} Beiträge aus dem letzten Monat anzeigen</1>",
   "loading_feed": "Lädt Feed",
-  "loading_post": "Beitrag wird geladen"
+  "loading_post": "Beitrag wird geladen",
+  "node_stats": "Knotenstatistiken"
 }

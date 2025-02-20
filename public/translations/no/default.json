@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} innlegg siden {{currentTimeFilterName}}: <1>vis flere innlegg fra forrige uke</1>",
   "more_posts_last_month": "{{count}} innlegg siden {{currentTimeFilterName}}: <1>vis {{moreCount}} flere innlegg fra forrige måned</1>",
   "loading_feed": "Laster feed",
-  "loading_post": "Laster innlegg"
+  "loading_post": "Laster innlegg",
+  "node_stats": "Node-statistikk"
 }

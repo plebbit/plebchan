@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} پست از {{currentTimeFilterName}}: <1>نمایش پست‌های بیشتر از هفته گذشته</1>",
   "more_posts_last_month": "{{count}} پست از {{currentTimeFilterName}}: <1>نمایش {{moreCount}} پست‌های بیشتر از ماه گذشته</1>",
   "loading_feed": "در حال بارگذاری فید",
-  "loading_post": "در حال بارگذاری پست"
+  "loading_post": "در حال بارگذاری پست",
+  "node_stats": "آمار گره"
 }

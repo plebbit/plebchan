@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} gönderi {{currentTimeFilterName}} tarihinden itibaren: <1>geçen haftadan daha fazla gönderi göster</1>",
   "more_posts_last_month": "{{count}} gönderi {{currentTimeFilterName}}'dan itibaren: <1>geçen aydan {{moreCount}} daha fazla gönderi göster</1>",
   "loading_feed": "Yükleniyor besleme",
-  "loading_post": "Gönderi yükleniyor"
+  "loading_post": "Gönderi yükleniyor",
+  "node_stats": "Düğüm istatistikleri"
 }

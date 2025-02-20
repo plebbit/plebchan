@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} bài viết từ {{currentTimeFilterName}}: <1>hiển thị thêm bài viết từ tuần trước</1>",
   "more_posts_last_month": "{{count}} bài đăng kể từ {{currentTimeFilterName}}: <1>hiển thị thêm {{moreCount}} bài đăng từ tháng trước</1>",
   "loading_feed": "Đang tải feed",
-  "loading_post": "Đang tải bài viết"
+  "loading_post": "Đang tải bài viết",
+  "node_stats": "Thống kê nút"
 }

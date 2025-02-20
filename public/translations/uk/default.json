@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} дописів з {{currentTimeFilterName}}: <1>показати більше дописів з минулого тижня</1>",
   "more_posts_last_month": "{{count}} дописів з {{currentTimeFilterName}}: <1>показати {{moreCount}} більше дописів з минулого місяця</1>",
   "loading_feed": "Завантаження потоку",
-  "loading_post": "Завантаження поста"
+  "loading_post": "Завантаження поста",
+  "node_stats": "Статистика вузла"
 }

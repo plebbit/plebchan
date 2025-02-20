@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} publications depuis {{currentTimeFilterName}}: <1>afficher plus de publications de la semaine dernière</1>",
   "more_posts_last_month": "{{count}} publications depuis {{currentTimeFilterName}}: <1>afficher {{moreCount}} publications de plus du mois dernier</1>",
   "loading_feed": "Chargement du flux",
-  "loading_post": "Chargement du message"
+  "loading_post": "Chargement du message",
+  "node_stats": "Statistiques du nœud"
 }

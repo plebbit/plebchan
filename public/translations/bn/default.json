@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>গত সপ্তাহ থেকে আরও পোস্ট দেখান</1>",
   "more_posts_last_month": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>আরও {{moreCount}} পোস্ট দেখুন গত মাস থেকে</1>",
   "loading_feed": "লোডিং ফিড",
-  "loading_post": "পোস্ট লোড হচ্ছে"
+  "loading_post": "পোস্ট লোড হচ্ছে",
+  "node_stats": "নোড পরিসংখ্যান"
 }

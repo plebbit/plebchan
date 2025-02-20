@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} posty od {{currentTimeFilterName}}: <1>pokaż więcej postów z zeszłego tygodnia</1>",
   "more_posts_last_month": "{{count}} postów od {{currentTimeFilterName}}: <1>pokaż {{moreCount}} więcej postów z ubiegłego miesiąca</1>",
   "loading_feed": "Ładowanie kanału",
-  "loading_post": "Ładowanie posta"
+  "loading_post": "Ładowanie posta",
+  "node_stats": "Statystyki węzła"
 }

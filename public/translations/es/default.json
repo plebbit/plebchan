@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} publicaciones desde {{currentTimeFilterName}}: <1>mostrar más publicaciones de la semana pasada</1>",
   "more_posts_last_month": "{{count}} publicaciones desde {{currentTimeFilterName}}: <1>ver {{moreCount}} más publicaciones del mes pasado</1>",
   "loading_feed": "Cargando feed",
-  "loading_post": "Cargando publicación"
+  "loading_post": "Cargando publicación",
+  "node_stats": "Estadísticas del nodo"
 }

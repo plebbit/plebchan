@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} โพสต์จาก {{currentTimeFilterName}}: <1>แสดงโพสต์เพิ่มเติมจากสัปดาห์ที่แล้ว</1>",
   "more_posts_last_month": "{{count}} โพสต์ตั้งแต่ {{currentTimeFilterName}}: <1>แสดง {{moreCount}} โพสต์เพิ่มเติมจากเดือนที่แล้ว</1>",
   "loading_feed": "กำลังโหลดฟีด",
-  "loading_post": "กำลังโหลดโพสต์"
+  "loading_post": "กำลังโหลดโพสต์",
+  "node_stats": "สถิติโหนด"
 }

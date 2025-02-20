@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} postări din {{currentTimeFilterName}}: <1>arată mai multe postări de săptămâna trecută</1>",
   "more_posts_last_month": "{{count}} postări din {{currentTimeFilterName}}: <1>afișați {{moreCount}} mai multe postări din luna trecută</1>",
   "loading_feed": "Încărcare feed",
-  "loading_post": "Se încarcă postarea"
+  "loading_post": "Se încarcă postarea",
+  "node_stats": "Statistici nod"
 }

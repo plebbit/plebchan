@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} 帖子来自 {{currentTimeFilterName}}: <1>显示更多来自上周的帖子</1>",
   "more_posts_last_month": "{{count}} 帖子自 {{currentTimeFilterName}} 起: <1>显示更多{{moreCount}}来自上个月的帖子</1>",
   "loading_feed": "加载中...",
-  "loading_post": "正在加载帖子"
+  "loading_post": "正在加载帖子",
+  "node_stats": "节点统计"
 }

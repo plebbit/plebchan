@@ -14,6 +14,7 @@
 .version a {
   color: var(--post-link-text-color);
   text-decoration: var(--post-content-link-text-decoration);
+  text-transform: lowercase;
 }
 
 .version a:hover {

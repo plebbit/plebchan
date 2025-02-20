@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} berichten sinds {{currentTimeFilterName}}: <1>meer berichten van vorige week weergeven</1>",
   "more_posts_last_month": "{{count}} berichten sinds {{currentTimeFilterName}}: <1>meer {{moreCount}} berichten van vorige maand tonen</1>",
   "loading_feed": "Laad feed",
-  "loading_post": "Bericht wordt geladen"
+  "loading_post": "Bericht wordt geladen",
+  "node_stats": "Node-statistieken"
 }

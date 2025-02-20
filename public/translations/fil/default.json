@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} mga post mula {{currentTimeFilterName}}: <1>magpakita ng higit pang mga post mula sa nakaraang linggo</1>",
   "more_posts_last_month": "{{count}} mga post mula {{currentTimeFilterName}}: <1>ipakita ang {{moreCount}} higit pang mga post mula noong nakaraang buwan</1>",
   "loading_feed": "Naglo-load ng feed",
-  "loading_post": "Naglo-load na post"
+  "loading_post": "Naglo-load na post",
+  "node_stats": "Istatistika ng node"
 }

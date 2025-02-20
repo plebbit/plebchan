@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} постов с {{currentTimeFilterName}}: <1>показать больше постов с прошлой недели</1>",
   "more_posts_last_month": "{{count}} постов с {{currentTimeFilterName}}: <1>показать {{moreCount}} больше постов с прошлого месяца</1>",
   "loading_feed": "Загрузка ленты",
-  "loading_post": "Загрузка сообщения"
+  "loading_post": "Загрузка сообщения",
+  "node_stats": "Статистика узла"
 }

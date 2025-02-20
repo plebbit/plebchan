@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} pos dari {{currentTimeFilterName}}: <1>tampilkan lebih banyak pos dari minggu lalu</1>",
   "more_posts_last_month": "{{count}} pos dari {{currentTimeFilterName}}: <1>tampilkan {{moreCount}} lebih banyak pos dari bulan lalu</1>",
   "loading_feed": "Memuat feed",
-  "loading_post": "Memuat pos"
+  "loading_post": "Memuat pos",
+  "node_stats": "Statistik node"
 }

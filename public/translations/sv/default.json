@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} inlägg sedan {{currentTimeFilterName}}: <1>visa fler inlägg från förra veckan</1>",
   "more_posts_last_month": "{{count}} inlägg sedan {{currentTimeFilterName}}: <1>visa {{moreCount}} fler inlägg från förra månaden</1>",
   "loading_feed": "Laddar flöde",
-  "loading_post": "Laddar inlägg"
+  "loading_post": "Laddar inlägg",
+  "node_stats": "Node-statistik"
 }

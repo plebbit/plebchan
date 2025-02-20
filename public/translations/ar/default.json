@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} منشورات منذ {{currentTimeFilterName}}: <1>عرض المزيد من المنشورات من الأسبوع الماضي</1>",
   "more_posts_last_month": "{{count}} منشورات منذ {{currentTimeFilterName}}: <1>عرض {{moreCount}} منشورات إضافية من الشهر الماضي</1>",
   "loading_feed": "تحميل الخلاصة",
-  "loading_post": "جاري تحميل المنشور"
+  "loading_post": "جاري تحميل المنشور",
+  "node_stats": "إحصائيات العقدة"
 }

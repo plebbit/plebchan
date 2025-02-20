@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} پوسٹس {{currentTimeFilterName}} سے: <1>پچھلے ہفتے سے مزید پوسٹس دکھائیں</1>",
   "more_posts_last_month": "{{count}} پوسٹس {{currentTimeFilterName}} سے: <1>پچھلے مہینے کی مزید {{moreCount}} پوسٹس دکھائیں</1>",
   "loading_feed": "لوڈ ہو رہا ہے فیڈ",
-  "loading_post": "پوسٹ لوڈ ہو رہی ہے"
+  "loading_post": "پوسٹ لوڈ ہو رہی ہے",
+  "node_stats": "نوڈ کے اعدادوشمار"
 }

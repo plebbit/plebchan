@@ -278,5 +278,6 @@
   "more_posts_last_week": "{{count}} postime që nga {{currentTimeFilterName}}: <1>shfaq më shumë postime nga java e kaluar</1>",
   "more_posts_last_month": "{{count}} postime nga {{currentTimeFilterName}}: <1>shfaq {{moreCount}} më shumë postime nga muaji i kaluar</1>",
   "loading_feed": "Po ngarkoni feed-in",
-  "loading_post": "Po ngarkohet postimi"
+  "loading_post": "Po ngarkohet postimi",
+  "node_stats": "Statistikat e nyjës"
 }
