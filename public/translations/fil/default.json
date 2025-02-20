@@ -281,5 +281,6 @@
   "loading_post": "Naglo-load na post",
   "node_stats": "Istatistika ng node",
   "loading_default_boards": "Naglo-load ng default na listahan ng mga board",
-  "loading_subscriptions": "Naglo-load ng mga subscription"
+  "loading_subscriptions": "Naglo-load ng mga subscription",
+  "create_board": "Gumawa ng board"
 }

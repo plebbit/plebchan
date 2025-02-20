@@ -281,5 +281,6 @@
   "loading_post": "Ładowanie posta",
   "node_stats": "Statystyki węzła",
   "loading_default_boards": "Ładowanie domyślnej listy tablic",
-  "loading_subscriptions": "Ładowanie subskrypcji"
+  "loading_subscriptions": "Ładowanie subskrypcji",
+  "create_board": "Utwórz tablicę"
 }

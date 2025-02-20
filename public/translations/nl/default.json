@@ -281,5 +281,6 @@
   "loading_post": "Bericht wordt geladen",
   "node_stats": "Node-statistieken",
   "loading_default_boards": "Laden van de standaard boardlijst",
-  "loading_subscriptions": "Abonnementen laden"
+  "loading_subscriptions": "Abonnementen laden",
+  "create_board": "Maak bord"
 }

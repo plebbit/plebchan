@@ -281,5 +281,6 @@
   "loading_post": "পোস্ট লোড হচ্ছে",
   "node_stats": "নোড পরিসংখ্যান",
   "loading_default_boards": "ডিফল্ট বোর্ড তালিকা লোড হচ্ছে",
-  "loading_subscriptions": "সাবস্ক্রিপশন লোড হচ্ছে"
+  "loading_subscriptions": "সাবস্ক্রিপশন লোড হচ্ছে",
+  "create_board": "বোর্ড তৈরি করুন"
 }

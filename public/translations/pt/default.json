@@ -281,5 +281,6 @@
   "loading_post": "Carregando post",
   "node_stats": "Estatísticas do nó",
   "loading_default_boards": "Carregando lista de quadros padrão",
-  "loading_subscriptions": "Carregando assinaturas"
+  "loading_subscriptions": "Carregando assinaturas",
+  "create_board": "Criar quadro"
 }

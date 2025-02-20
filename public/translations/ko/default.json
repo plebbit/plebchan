@@ -281,5 +281,6 @@
   "loading_post": "게시물 로딩 중",
   "node_stats": "노드 통계",
   "loading_default_boards": "기본 보드 목록을 로드 중",
-  "loading_subscriptions": "구독 로딩 중"
+  "loading_subscriptions": "구독 로딩 중",
+  "create_board": "보드 만들기"
 }

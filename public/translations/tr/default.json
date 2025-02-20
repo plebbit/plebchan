@@ -281,5 +281,6 @@
   "loading_post": "Gönderi yükleniyor",
   "node_stats": "Düğüm istatistikleri",
   "loading_default_boards": "Varsayılan panolar listesi yükleniyor",
-  "loading_subscriptions": "Abonelikler yükleniyor"
+  "loading_subscriptions": "Abonelikler yükleniyor",
+  "create_board": "Tahta oluştur"
 }

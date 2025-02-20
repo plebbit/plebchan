@@ -281,5 +281,6 @@
   "loading_post": "Laddar inlägg",
   "node_stats": "Node-statistik",
   "loading_default_boards": "Laddar standardlistan för tavlor",
-  "loading_subscriptions": "Laddar prenumerationer"
+  "loading_subscriptions": "Laddar prenumerationer",
+  "create_board": "Skapa tavla"
 }

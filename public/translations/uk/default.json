@@ -281,5 +281,6 @@
   "loading_post": "Завантаження поста",
   "node_stats": "Статистика вузла",
   "loading_default_boards": "Завантаження списку стандартних дошок",
-  "loading_subscriptions": "Завантаження підписок"
+  "loading_subscriptions": "Завантаження підписок",
+  "create_board": "Створити дошку"
 }

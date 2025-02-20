@@ -281,5 +281,6 @@
   "loading_post": "טוען פוסט",
   "node_stats": "סטטיסטיקות צומת",
   "loading_default_boards": "טוען את רשימת הלוחות ברירת המחדל",
-  "loading_subscriptions": "טוען מנויים"
+  "loading_subscriptions": "טוען מנויים",
+  "create_board": "צור לוח"
 }

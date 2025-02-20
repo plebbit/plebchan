@@ -281,5 +281,6 @@
   "loading_post": "Se încarcă postarea",
   "node_stats": "Statistici nod",
   "loading_default_boards": "Se încarcă lista de panouri implicite",
-  "loading_subscriptions": "Încărcarea abonamentelor"
+  "loading_subscriptions": "Încărcarea abonamentelor",
+  "create_board": "Creați tablou"
 }

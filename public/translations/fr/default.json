@@ -281,5 +281,6 @@
   "loading_post": "Chargement du message",
   "node_stats": "Statistiques du nœud",
   "loading_default_boards": "Chargement de la liste des panneaux par défaut",
-  "loading_subscriptions": "Chargement des abonnements"
+  "loading_subscriptions": "Chargement des abonnements",
+  "create_board": "Créer un tableau"
 }

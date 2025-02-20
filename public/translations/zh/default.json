@@ -281,5 +281,6 @@
   "loading_post": "正在加载帖子",
   "node_stats": "节点统计",
   "loading_default_boards": "正在加载默认板块列表",
-  "loading_subscriptions": "加载订阅"
+  "loading_subscriptions": "加载订阅",
+  "create_board": "创建板块"
 }

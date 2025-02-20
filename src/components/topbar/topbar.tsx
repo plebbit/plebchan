@@ -98,25 +98,17 @@ const TopBarDesktop = () => {
           </>
         )}
         [
-        <Link
-          className={styles.disabledButton}
-          to='boards/create'
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          {t('create')}
-        </Link>
+        <span className={styles.temporaryButton}>
+          <a href='https://plebbit.github.io/docs/learn/clients/plebchan/create-a-board' target='_blank' rel='noopener noreferrer'>
+            {t('create_board')}
+          </a>
+        </span>
         ] [
-        <Link
-          className={styles.disabledButton}
-          to='boards'
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          {t('vote')}
-        </Link>
+        <span className={styles.temporaryButton}>
+          <a href='https://seedit.eth.limo/#/communities/vote' target='_blank' rel='noopener noreferrer'>
+            {t('vote')}
+          </a>
+        </span>
         ]
       </span>
       <span className={styles.navTopRight}>

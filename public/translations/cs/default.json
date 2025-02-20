@@ -281,5 +281,6 @@
   "loading_post": "Načítání příspěvku",
   "node_stats": "Statistiky uzlu",
   "loading_default_boards": "Načítání seznamu výchozích tabulí",
-  "loading_subscriptions": "Načítání odběrů"
+  "loading_subscriptions": "Načítání odběrů",
+  "create_board": "Vytvořit desku"
 }

@@ -281,5 +281,6 @@
   "loading_post": "Loading post",
   "node_stats": "Node stats",
   "loading_default_boards": "Loading default boards list",
-  "loading_subscriptions": "Loading subscriptions"
+  "loading_subscriptions": "Loading subscriptions",
+  "create_board": "Create Board"
 }

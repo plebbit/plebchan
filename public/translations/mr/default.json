@@ -281,5 +281,6 @@
   "loading_post": "पोस्ट लोड होत आहे",
   "node_stats": "नोड आकडेवारी",
   "loading_default_boards": "डीफॉल्ट बोर्ड यादी लोड करत आहे",
-  "loading_subscriptions": "सदस्यता लोड होत आहे"
+  "loading_subscriptions": "सदस्यता लोड होत आहे",
+  "create_board": "बोर्ड तयार करा"
 }

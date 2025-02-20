@@ -281,5 +281,6 @@
   "loading_post": "Caricamento del post",
   "node_stats": "Statistiche del nodo",
   "loading_default_boards": "Caricamento della lista delle board predefinite",
-  "loading_subscriptions": "Caricamento abbonamenti"
+  "loading_subscriptions": "Caricamento abbonamenti",
+  "create_board": "Crea Board"
 }
