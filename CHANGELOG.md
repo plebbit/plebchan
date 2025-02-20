@@ -1,3 +1,25 @@
+## [0.3.5](https://github.com/plebbit/plebchan/compare/v0.3.4...v0.3.5) (2025-02-20)
+
+
+### Bug Fixes
+
+* **markdown:** lists could overflow next to thumbnail ([7172be4](https://github.com/plebbit/plebchan/commit/7172be4960553307350d2a5d41d6b7d54f814010))
+* **offline indicator:** increase offline check by 1 hour ([23ce86c](https://github.com/plebbit/plebchan/commit/23ce86c08f5146d3d00ac07ded5201ea3565aacb))
+* **pending post:** invalid pending post index would break the view, redirect to not found instead ([92e742a](https://github.com/plebbit/plebchan/commit/92e742a7570ba6db47b34550270538c69c2548a2))
+
+
+### Features
+
+* auto subscribe new accounts to specific default subplebbits ([882703b](https://github.com/plebbit/plebchan/commit/882703b00d67b782d1329ee1135dda27113e9aae))
+* **topbar:** add temporary links to "create board" and "vote" buttons ([57fc2bb](https://github.com/plebbit/plebchan/commit/57fc2bbfc282bf754e16f5caba2679279e00296b))
+
+
+### Performance Improvements
+
+* **topbar:** optimize scroll up/down animation with GPU acceleration ([31c3482](https://github.com/plebbit/plebchan/commit/31c3482831751da49bcbea1f0bbb0d2cac48fa8d))
+
+
+
 ## [0.3.4](https://github.com/plebbit/plebchan/compare/v0.3.3...v0.3.4) (2025-02-05)
 
 
