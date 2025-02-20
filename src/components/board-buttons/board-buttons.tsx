@@ -92,13 +92,21 @@ const UpdateButton = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
 
+  const handleUpdate = () => {
+    window.alert('Manual updates are not available yet. Posts update automatically every ~2 minutes.');
+  };
+
   return (
     <>
       {/* TODO: Implement update button once available in API  */}
       {isMobile ? (
-        <button className={`button ${styles.disabledButton}`}>{t('update')}</button>
+        <button className={`button ${styles.disabledButton}`} onClick={handleUpdate}>
+          {t('update')}
+        </button>
       ) : (
-        <button className={`button ${styles.disabledButton}`}>{t('update')}</button>
+        <button className={`button ${styles.disabledButton}`} onClick={handleUpdate}>
+          {t('update')}
+        </button>
       )}
     </>
   );
