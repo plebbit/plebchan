@@ -5,9 +5,10 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './topbar.module.css';
-import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import _, { debounce } from 'lodash';
 import { TimeFilter } from '../board-buttons';
+import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
 
 const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => void }) => {
   const navigate = useNavigate();
@@ -67,71 +68,47 @@ const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => 
   );
 };
 
-const renderBoardsList = (subplebbits: any, isInCatalogView: boolean, subscriptions: string[]) =>
-  subplebbits?.length > 0 && (
-    <>
-      [
-      {subplebbits.map((sub: any, index: any) => (
-        <span key={index}>
-          {index === 0 ? null : ' '}
-          <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>
-            {sub.address.endsWith('.eth') || sub.address.endsWith('.sol') ? sub.address : sub.address.slice(0, 10).concat('...')}
-          </Link>
-          {index !== subplebbits.length - 1 ? ' /' : null}
-        </span>
-      ))}
-      ]{' '}
-      {subscriptions?.length > 0 && (
-        <>
-          [
-          {subscriptions.map((address: any, index: any) => (
-            <span key={index}>
-              {index === 0 ? null : ' '}
-              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>
-                {address.endsWith('.eth') || address.endsWith('.sol') ? address : address.slice(0, 10).concat('...')}
-              </Link>
-              {index !== subscriptions?.length - 1 ? ' /' : null}
-            </span>
-          ))}
-          ]{' '}
-        </>
-      )}
-    </>
-  );
-
 const TopBarDesktop = () => {
   const { t } = useTranslation();
   const account = useAccount();
   const location = useLocation();
   const params = useParams();
   const isInCatalogView = isCatalogView(location.pathname, params);
-  const subplebbits = useDefaultSubplebbits();
   const [showSearchBar, setShowSearchBar] = useState(false);
+
+  const subscriptions = account?.subscriptions;
 
   return (
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
         [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>]{' '}
-        {renderBoardsList(subplebbits.slice(0, 15), isInCatalogView, account?.subscriptions)}[
-        <Link
-          className={styles.disabledButton}
-          to='boards/create'
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          {t('create')}
-        </Link>
+        {subscriptions?.length > 0 && (
+          <>
+            [
+            {subscriptions.map((address: any, index: any) => (
+              <span key={index}>
+                {index === 0 ? null : ' '}
+                <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>
+                  {address.endsWith('.eth') || address.endsWith('.sol') ? address : address.slice(0, 10).concat('...')}
+                </Link>
+                {index !== subscriptions?.length - 1 ? ' /' : null}
+              </span>
+            ))}
+            ]{' '}
+          </>
+        )}
+        [
+        <span className={styles.temporaryButton}>
+          <a href='https://plebbit.github.io/docs/learn/clients/plebchan/create-a-board' target='_blank' rel='noopener noreferrer'>
+            {t('create_board')}
+          </a>
+        </span>
         ] [
-        <Link
-          className={styles.disabledButton}
-          to='boards'
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          {t('vote')}
-        </Link>
+        <span className={styles.temporaryButton}>
+          <a href='https://seedit.eth.limo/#/communities/vote' target='_blank' rel='noopener noreferrer'>
+            {t('vote')}
+          </a>
+        </span>
         ]
       </span>
       <span className={styles.navTopRight}>
@@ -194,7 +171,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
   }, []);
 
   return (
-    <div className={styles.boardNavMobile} style={{ top: visible ? 0 : '-23px' }}>
+    <div className={styles.boardNavMobile} style={{ transform: visible ? 'translateY(0)' : 'translateY(-23px)' }}>
       <div className={styles.boardSelect}>
         <strong>{t('board')}</strong>
         {boardSelect}
@@ -213,12 +190,15 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
 };
 
 const TopBar = () => {
+  const { t } = useTranslation();
   const params = useParams();
+  const { isCheckingSubscriptions } = useAutoSubscribe();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
     <>
+      {isCheckingSubscriptions && <div className={styles.checkingSubscriptions}>{t('loading_subscriptions')}</div>}
       <TopBarDesktop />
       <TopBarMobile subplebbitAddress={subplebbitAddress} />
     </>

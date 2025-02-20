@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Παρακαλώ επιλέξτε μια κατηγορία πριν δημοσιεύσετε.",
   "invalid_url_alert": "Ο παρεχόμενος σύνδεσμος δεν είναι έγκυρη διεύθυνση URL.",
   "empty_comment_alert": "Δεν μπορεί να δημοσιευτεί κενό σχόλιο.",
-  "more_threads_last_week": "Εμφάνιση θεμάτων από {{currentTimeFilterName}} — [<1>Δείτε περισσότερα θέματα από την περασμένη εβδομάδα</1>]",
-  "more_threads_last_month": "Εμφάνιση θεμάτων από {{currentTimeFilterName}} — [<1>Δείτε περισσότερα θέματα από τον προηγούμενο μήνα</1>]",
+  "more_threads_last_week": "{{count}} θέματα από {{currentTimeFilterName}} — [<1>Εμφάνιση περισσότερων θεμάτων από την περασμένη εβδομάδα</1>]",
+  "more_threads_last_month": "{{count}} νήματα από {{currentTimeFilterName}} — [<1>Προβολή περισσότερων νημάτων από τον τελευταίο μήνα</1>]",
   "newer_threads_available": "Διαθέσιμα νεότερα θέματα — [<1>Ανανέωση</1>]",
   "stored_locally": "Αποθηκευμένο τοπικά ({{location}}), δεν συγχρονίζεται σε όλες τις συσκευές",
   "choose_one": "Επιλέξτε μία:",
@@ -248,7 +248,7 @@
   "reset_changes": "Επαναφορά αλλαγών",
   "crypto_address_yours": "Η διεύθυνση κρυπτονομίσματος ανήκει σε αυτόν τον λογαριασμό.",
   "delete_wallet": "Διαγραφή πορτοφολιού",
-  "loading_subplebbit": "Φόρτωση subplebbit",
+  "loading_board": "Φόρτωση πίνακα",
   "avatar_warning": "Δεν μπορείτε να δημοσιεύσετε με avatar ενώ είναι ενεργοποιημένη η ανώνυμη λειτουργία. Μπορείτε να το απενεργοποιήσετε στις ρυθμίσεις του λογαριασμού σας Plebbit.",
   "last_bumped": "Τελευταία ανύψωση",
   "threads_without_images_tip": "Εμφάνιση μόνο θεμάτων που συνδέονται με ενσωματώσιμα μέσα",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "Ψάχνει για περισσότερες αναρτήσεις",
   "more_posts_last_week": "{{count}} αναρτήσεις από {{currentTimeFilterName}}: <1>εμφάνιση περισσότερων αναρτήσεων από την περασμένη εβδομάδα</1>",
   "more_posts_last_month": "{{count}} δημοσιεύσεις από {{currentTimeFilterName}}: <1>δειξτε {{moreCount}} περισσότερες δημοσιεύσεις από τον προηγούμενο μήνα</1>",
-  "loading_feed": "Φόρτωση ροής"
+  "loading_feed": "Φόρτωση ροής",
+  "loading_post": "Φόρτωση ανάρτησης",
+  "node_stats": "Στατιστικά κόμβου",
+  "loading_default_boards": "Φόρτωση της λίστας προεπιλεγμένων πάνελ",
+  "loading_subscriptions": "Φορτώνει συνδρομές",
+  "create_board": "Δημιουργία πίνακα"
 }

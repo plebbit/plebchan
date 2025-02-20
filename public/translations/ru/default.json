@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Пожалуйста, выберите доску перед публикацией.",
   "invalid_url_alert": "Предоставленная ссылка не является действительным URL.",
   "empty_comment_alert": "Невозможно опубликовать пустой комментарий.",
-  "more_threads_last_week": "Показано обсуждения с {{currentTimeFilterName}} — [<1>Показать больше обсуждений за прошлую неделю</1>]",
-  "more_threads_last_month": "Показано обсуждения с {{currentTimeFilterName}} — [<1>Показать больше обсуждений за прошлый месяц</1>]",
+  "more_threads_last_week": "{{count}} тредов с {{currentTimeFilterName}} — [<1>Показать больше тредов за прошлую неделю</1>]",
+  "more_threads_last_month": "{{count}} темы с {{currentTimeFilterName}} — [<1>Показать больше тем с прошлого месяца</1>]",
   "newer_threads_available": "Доступны новые темы — [<1>Обновить</1>]",
   "stored_locally": "Сохранено локально ({{location}}), не синхронизировано между устройствами",
   "choose_one": "Выберите один:",
@@ -248,7 +248,7 @@
   "reset_changes": "Сбросить изменения",
   "crypto_address_yours": "Адрес криптовалюты принадлежит этому аккаунту.",
   "delete_wallet": "Удалить кошелек",
-  "loading_subplebbit": "Загрузка subplebbit",
+  "loading_board": "Загрузка доски",
   "avatar_warning": "Вы не можете публиковать с аватаром, когда режим анонимности включен. Вы можете отключить его в настройках своей учетной записи Plebbit.",
   "last_bumped": "Последний бамп",
   "threads_without_images_tip": "Отображать только темы, которые ссылаются на встраиваемые медиа",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "Ищу больше постов",
   "more_posts_last_week": "{{count}} постов с {{currentTimeFilterName}}: <1>показать больше постов с прошлой недели</1>",
   "more_posts_last_month": "{{count}} постов с {{currentTimeFilterName}}: <1>показать {{moreCount}} больше постов с прошлого месяца</1>",
-  "loading_feed": "Загрузка ленты"
+  "loading_feed": "Загрузка ленты",
+  "loading_post": "Загрузка сообщения",
+  "node_stats": "Статистика узла",
+  "loading_default_boards": "Загрузка списка стандартных досок",
+  "loading_subscriptions": "Загрузка подписок",
+  "create_board": "Создать доску"
 }

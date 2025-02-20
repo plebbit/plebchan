@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Vui lòng chọn một bảng trước khi đăng.",
   "invalid_url_alert": "Liên kết được cung cấp không phải là một URL hợp lệ.",
   "empty_comment_alert": "Không thể đăng bình luận trống.",
-  "more_threads_last_week": "Đang hiển thị các chủ đề từ {{currentTimeFilterName}} — [<1>Hiển thị thêm chủ đề từ tuần trước</1>]",
-  "more_threads_last_month": "Đang hiển thị các chủ đề từ {{currentTimeFilterName}} — [<1>Hiển thị thêm chủ đề từ tháng trước</1>]",
+  "more_threads_last_week": "{{count}} chủ đề từ {{currentTimeFilterName}} — [<1>Xem thêm chủ đề từ tuần trước</1>]",
+  "more_threads_last_month": "{{count}} chủ đề từ {{currentTimeFilterName}} — [<1>Hiển thị thêm các chủ đề từ tháng trước</1>]",
   "newer_threads_available": "Có các chủ đề mới — [<1>Làm mới</1>]",
   "stored_locally": "Lưu trữ cục bộ ({{location}}), không được đồng bộ qua các thiết bị",
   "choose_one": "Chọn một:",
@@ -248,7 +248,7 @@
   "reset_changes": "Đặt lại thay đổi",
   "crypto_address_yours": "Địa chỉ tiền điện tử thuộc về tài khoản này.",
   "delete_wallet": "Xóa ví",
-  "loading_subplebbit": "Đang tải subplebbit",
+  "loading_board": "Đang tải bảng",
   "avatar_warning": "Bạn không thể đăng với hình đại diện khi chế độ ẩn danh đang bật. Bạn có thể tắt nó trong cài đặt Tài khoản Plebbit của mình.",
   "last_bumped": "Bump gần đây nhất",
   "threads_without_images_tip": "Chỉ hiển thị các chủ đề liên kết đến phương tiện có thể nhúng",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "Tìm kiếm thêm bài viết",
   "more_posts_last_week": "{{count}} bài viết từ {{currentTimeFilterName}}: <1>hiển thị thêm bài viết từ tuần trước</1>",
   "more_posts_last_month": "{{count}} bài đăng kể từ {{currentTimeFilterName}}: <1>hiển thị thêm {{moreCount}} bài đăng từ tháng trước</1>",
-  "loading_feed": "Đang tải feed"
+  "loading_feed": "Đang tải feed",
+  "loading_post": "Đang tải bài viết",
+  "node_stats": "Thống kê nút",
+  "loading_default_boards": "Đang tải danh sách bảng mặc định",
+  "loading_subscriptions": "Đang tải đăng ký",
+  "create_board": "Tạo bảng"
 }

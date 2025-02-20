@@ -237,8 +237,8 @@
   "no_board_selected_warning": "يرجى تحديد لوحة قبل النشر.",
   "invalid_url_alert": "الرابط المقدم ليس عنوان URL صالحًا.",
   "empty_comment_alert": "لا يمكن نشر تعليق فارغ.",
-  "more_threads_last_week": "عرض المواضيع منذ {{currentTimeFilterName}} — [<1>عرض المزيد من المواضيع من الأسبوع الماضي</1>]",
-  "more_threads_last_month": "عرض المواضيع منذ {{currentTimeFilterName}} — [<1>عرض المزيد من المواضيع من الشهر الماضي</1>]",
+  "more_threads_last_week": "{{count}} مواضيع منذ {{currentTimeFilterName}} — [<1>عرض المزيد من المواضيع من الأسبوع الماضي</1>]",
+  "more_threads_last_month": "{{count}} مواضيع منذ {{currentTimeFilterName}} — [<1>عرض المزيد من المواضيع من الشهر الماضي</1>]",
   "newer_threads_available": "مواضيع أحدث متاحة — [<1>تحديث</1>]",
   "stored_locally": "مخزنة محليًا ({{location}})، ليست متزامنة عبر الأجهزة",
   "choose_one": "اختر واحدة:",
@@ -248,7 +248,7 @@
   "reset_changes": "إعادة تعيين التغييرات",
   "crypto_address_yours": "عنوان العملة الرقمية ينتمي إلى هذا الحساب.",
   "delete_wallet": "حذف المحفظة",
-  "loading_subplebbit": "جارٍ تحميل subplebbit",
+  "loading_board": "تحميل اللوحة",
   "avatar_warning": "لا يمكنك النشر بصورة رمزية أثناء تفعيل وضع المجهول. يمكنك إيقافه في إعدادات حساب Plebbit الخاص بك.",
   "last_bumped": "آخر رفع",
   "threads_without_images_tip": "عرض فقط المواضيع التي ترتبط بالوسائط القابلة للتضمين",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "البحث عن المزيد من المشاركات",
   "more_posts_last_week": "{{count}} منشورات منذ {{currentTimeFilterName}}: <1>عرض المزيد من المنشورات من الأسبوع الماضي</1>",
   "more_posts_last_month": "{{count}} منشورات منذ {{currentTimeFilterName}}: <1>عرض {{moreCount}} منشورات إضافية من الشهر الماضي</1>",
-  "loading_feed": "تحميل الخلاصة"
+  "loading_feed": "تحميل الخلاصة",
+  "loading_post": "جاري تحميل المنشور",
+  "node_stats": "إحصائيات العقدة",
+  "loading_default_boards": "جار تحميل قائمة اللوحات الافتراضية",
+  "loading_subscriptions": "جارٍ تحميل الاشتراكات",
+  "create_board": "إنشاء لوحة"
 }

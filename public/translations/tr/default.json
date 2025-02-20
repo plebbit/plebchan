@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Lütfen gönderimden önce bir pano seçin.",
   "invalid_url_alert": "Verilen bağlantı geçerli bir URL değildir.",
   "empty_comment_alert": "Boş yorum gönderilemez.",
-  "more_threads_last_week": "{{currentTimeFilterName}} tarihinden itibaren gönderiler gösteriliyor — [<1>Geçen haftadan daha fazla gönderi göster</1>]",
-  "more_threads_last_month": "{{currentTimeFilterName}} tarihinden itibaren gönderiler gösteriliyor — [<1>Geçen aydan daha fazla gönderi göster</1>]",
+  "more_threads_last_week": "{{count}} başlık {{currentTimeFilterName}}’den itibaren — [<1>Geçen haftadan daha fazla başlık göster</1>]",
+  "more_threads_last_month": "{{count}} konu {{currentTimeFilterName}} itibariyle — [<1>Geçen aydan daha fazla konu göster</1>]",
   "newer_threads_available": "Yeni gönderiler mevcut — [<1>Yenile</1>]",
   "stored_locally": "Yerel olarak saklanıyor ({{location}}), cihazlar arasında senkronize edilmedi",
   "choose_one": "Birini seç:",
@@ -248,7 +248,7 @@
   "reset_changes": "Değişiklikleri Sıfırla",
   "crypto_address_yours": "Kripto adres bu hesaba aittir.",
   "delete_wallet": "Cüzdanı Sil",
-  "loading_subplebbit": "Subplebbit Yükleniyor",
+  "loading_board": "Tahta yükleniyor",
   "avatar_warning": "Anonim mod açıken avatar ile paylaşım yapamazsınız. Bunu Plebbit Hesap ayarlarınızdan kapatabilirsiniz.",
   "last_bumped": "Son bump",
   "threads_without_images_tip": "Sadece gömme medya bağlantısı olan gönderileri görüntüle",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "Daha fazla gönderi arıyorum",
   "more_posts_last_week": "{{count}} gönderi {{currentTimeFilterName}} tarihinden itibaren: <1>geçen haftadan daha fazla gönderi göster</1>",
   "more_posts_last_month": "{{count}} gönderi {{currentTimeFilterName}}'dan itibaren: <1>geçen aydan {{moreCount}} daha fazla gönderi göster</1>",
-  "loading_feed": "Yükleniyor besleme"
+  "loading_feed": "Yükleniyor besleme",
+  "loading_post": "Gönderi yükleniyor",
+  "node_stats": "Düğüm istatistikleri",
+  "loading_default_boards": "Varsayılan panolar listesi yükleniyor",
+  "loading_subscriptions": "Abonelikler yükleniyor",
+  "create_board": "Tahta oluştur"
 }

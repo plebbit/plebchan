@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Por favor, selecione um quadro antes de postar.",
   "invalid_url_alert": "O link fornecido não é uma URL válida.",
   "empty_comment_alert": "Não é possível postar um comentário vazio.",
-  "more_threads_last_week": "Mostrando tópicos desde {{currentTimeFilterName}} — [<1>Mostrar mais tópicos da semana passada</1>]",
-  "more_threads_last_month": "Mostrando tópicos desde {{currentTimeFilterName}} — [<1>Mostrar mais tópicos do mês passado</1>]",
+  "more_threads_last_week": "{{count}} tópicos desde {{currentTimeFilterName}} — [<1>Mostrar mais tópicos da semana passada</1>]",
+  "more_threads_last_month": "{{count}} tópicos desde {{currentTimeFilterName}} — [<1>Mostrar mais tópicos do mês passado</1>]",
   "newer_threads_available": "Novos tópicos disponíveis — [<1>Atualizar</1>]",
   "stored_locally": "Armazenado localmente ({{location}}), não sincronizado entre dispositivos",
   "choose_one": "Escolha um:",
@@ -248,7 +248,7 @@
   "reset_changes": "Redefinir Alterações",
   "crypto_address_yours": "O endereço de criptomoeda pertence a esta conta.",
   "delete_wallet": "Excluir carteira",
-  "loading_subplebbit": "Carregando subplebbit",
+  "loading_board": "Carregando quadro",
   "avatar_warning": "Você não pode postar com um avatar enquanto o modo anônimo estiver ativado. Você pode desativá-lo nas configurações da sua Conta Plebbit.",
   "last_bumped": "Último bump",
   "threads_without_images_tip": "Exibir apenas threads que linkam para mídias embutíveis",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "Procurando mais postagens",
   "more_posts_last_week": "{{count}} postagens desde {{currentTimeFilterName}}: <1>mostrar mais postagens da semana passada</1>",
   "more_posts_last_month": "{{count}} postagens desde {{currentTimeFilterName}}: <1>mostrar {{moreCount}} mais postagens do mês passado</1>",
-  "loading_feed": "Carregando feed"
+  "loading_feed": "Carregando feed",
+  "loading_post": "Carregando post",
+  "node_stats": "Estatísticas do nó",
+  "loading_default_boards": "Carregando lista de quadros padrão",
+  "loading_subscriptions": "Carregando assinaturas",
+  "create_board": "Criar quadro"
 }

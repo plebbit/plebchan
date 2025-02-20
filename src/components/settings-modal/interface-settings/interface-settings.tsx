@@ -10,6 +10,7 @@ import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import useExpandedMediaStore from '../../../stores/use-expanded-media-store';
 import useSpecialThemeStore from '../../../stores/use-special-theme-store';
 import { isChristmas } from '../../../lib/utils/time-utils';
+import Version from '../../version';
 
 const commitRef = process.env.REACT_APP_COMMIT_REF;
 const isElectron = window.isElectron === true;
@@ -137,15 +138,7 @@ const InterfaceSettings = () => {
   return (
     <div className={styles.interfaceSettings}>
       <div className={styles.version}>
-        {_.capitalize(t('version'))}:{' '}
-        <a href={`https://github.com/plebbit/plebchan/releases/tag/v${packageJson.version}`} target='_blank' rel='noopener noreferrer'>
-          {packageJson.version}
-        </a>
-        {commitRef && (
-          <a href={`https://github.com/plebbit/plebchan/commit/${commitRef}`} target='_blank' rel='noopener noreferrer'>
-            #{commitRef.slice(0, 7)}
-          </a>
-        )}
+        {_.capitalize(t('version'))}: <Version />
       </div>
       <div className={styles.setting}>
         {_.capitalize(t('update'))}: <CheckForUpdates />

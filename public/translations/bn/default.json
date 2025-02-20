@@ -237,8 +237,8 @@
   "no_board_selected_warning": "পোস্ট করার আগে একটি বোর্ড নির্বাচন করুন।",
   "invalid_url_alert": "দেওয়া লিঙ্কটি একটি বৈধ URL নয়।",
   "empty_comment_alert": "খালি মন্তব্য পোস্ট করা যাবে না।",
-  "more_threads_last_week": "{{currentTimeFilterName}} থেকে থ্রেডগুলি দেখাচ্ছে — [<1>গত সপ্তাহের আরও থ্রেড দেখান</1>]",
-  "more_threads_last_month": "{{currentTimeFilterName}} থেকে থ্রেডগুলি দেখাচ্ছে — [<1>গত মাসের আরও থ্রেড দেখান</1>]",
+  "more_threads_last_week": "{{count}} থ্রেড {{currentTimeFilterName}} থেকে — [<1>গত সপ্তাহের আরও থ্রেড দেখান</1>]",
+  "more_threads_last_month": "{{count}} থ্রেড {{currentTimeFilterName}} থেকে — [<1>গত মাসের আরও থ্রেড দেখান</1>]",
   "newer_threads_available": "নতুন থ্রেড উপলব্ধ — [<1>রিফ্রেশ করুন</1>]",
   "stored_locally": "স্থানীয়ভাবে সংরক্ষিত ({{location}}), ডিভাইসের মধ্যে সিঙ্ক করা হয়নি",
   "choose_one": "একটি নির্বাচন করুন:",
@@ -248,7 +248,7 @@
   "reset_changes": "পরিবর্তনগুলি রিসেট করুন",
   "crypto_address_yours": "ক্রিপ্টো ঠিকানা এই অ্যাকাউন্টের অংশ।",
   "delete_wallet": "ওয়ালেট মুছুন",
-  "loading_subplebbit": "সাবপ্লেবিট লোড হচ্ছে",
+  "loading_board": "বোর্ড লোড হচ্ছে",
   "avatar_warning": "অ্যানন মোড চালু থাকা অবস্থায় আপনি অ্যানিমেশন সহ পোস্ট করতে পারেন না। আপনি এটি আপনার Plebbit অ্যাকাউন্টের সেটিংসে বন্ধ করতে পারেন।",
   "last_bumped": "শেষ.bump",
   "threads_without_images_tip": "শুধুমাত্র এমন থ্রেডগুলি প্রদর্শন করুন যেগুলি এমবেডযোগ্য মিডিয়াতে লিঙ্ক করে",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "আরও পোস্ট খুঁজছি",
   "more_posts_last_week": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>গত সপ্তাহ থেকে আরও পোস্ট দেখান</1>",
   "more_posts_last_month": "{{count}} পোস্ট {{currentTimeFilterName}} থেকে: <1>আরও {{moreCount}} পোস্ট দেখুন গত মাস থেকে</1>",
-  "loading_feed": "লোডিং ফিড"
+  "loading_feed": "লোডিং ফিড",
+  "loading_post": "পোস্ট লোড হচ্ছে",
+  "node_stats": "নোড পরিসংখ্যান",
+  "loading_default_boards": "ডিফল্ট বোর্ড তালিকা লোড হচ্ছে",
+  "loading_subscriptions": "সাবস্ক্রিপশন লোড হচ্ছে",
+  "create_board": "বোর্ড তৈরি করুন"
 }

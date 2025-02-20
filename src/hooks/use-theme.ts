@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
-import useDefaultSubplebbits from './use-default-subplebbits';
+import { useDefaultSubplebbits } from './use-default-subplebbits';
 import useInitialTheme from './use-initial-theme';
 import { nsfwTags } from '../views/home/home';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';

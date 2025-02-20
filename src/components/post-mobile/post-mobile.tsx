@@ -374,7 +374,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
   const isInPostPageView = isPostPageView(location.pathname, params);
   const { hidden, unhide } = useHide({ cid });
 
-  const stateString = useStateString(post);
+  const stateString = useStateString(post) || t('loading_post');
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const showRules = isDescription && subplebbit?.rules && subplebbit?.rules.length > 0;
@@ -448,7 +448,9 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
             )}
           </div>
           {!isInPendingPostView &&
-            (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (
+            !isDescription &&
+            !isRules &&
+            (stateString && stateString !== 'Failed' && state !== 'succeeded' && isInPostPageView ? (
               <div className={styles.stateString}>
                 <LoadingEllipsis string={stateString} />
               </div>

@@ -447,7 +447,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
   const linksCount = pinned ? totalLinksCount : totalLinksCount - visiblelinksCount;
   const { showOmittedReplies, setShowOmittedReplies } = useShowOmittedReplies();
 
-  const stateString = useStateString(post);
+  const stateString = useStateString(post) || t('loading_board');
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
 
@@ -522,7 +522,9 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         )}
       </div>
       {!isInPendingPostView &&
-        (stateString && stateString !== 'Failed' && state !== 'succeeded' ? (
+        !isDescription &&
+        !isRules &&
+        (stateString && stateString !== 'Failed' && state !== 'succeeded' && isInPostPageView ? (
           <div className={styles.stateString}>
             <br />
             <LoadingEllipsis string={stateString} />

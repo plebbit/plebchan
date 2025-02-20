@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Silakan pilih papan sebelum memposting.",
   "invalid_url_alert": "Tautan yang diberikan bukan URL yang valid.",
   "empty_comment_alert": "Tidak dapat memposting komentar kosong.",
-  "more_threads_last_week": "Menampilkan thread sejak {{currentTimeFilterName}} — [<1>Tampilkan lebih banyak thread dari minggu lalu</1>]",
-  "more_threads_last_month": "Menampilkan thread sejak {{currentTimeFilterName}} — [<1>Tampilkan lebih banyak thread dari bulan lalu</1>]",
+  "more_threads_last_week": "{{count}} thread sejak {{currentTimeFilterName}} — [<1>Show lebih banyak thread dari minggu lalu</1>]",
+  "more_threads_last_month": "{{count}} thread sejak {{currentTimeFilterName}} — [<1>Tampilkan lebih banyak thread dari bulan lalu</1>]",
   "newer_threads_available": "Thread terbaru tersedia — [<1>Segarkan</1>]",
   "stored_locally": "Disimpan secara lokal ({{location}}), tidak disinkronkan antar perangkat",
   "choose_one": "Pilih satu:",
@@ -248,7 +248,7 @@
   "reset_changes": "Atur Ulang Perubahan",
   "crypto_address_yours": "Alamat kripto milik akun ini.",
   "delete_wallet": "Hapus Dompet",
-  "loading_subplebbit": "Memuat subplebbit",
+  "loading_board": "Memuat papan",
   "avatar_warning": "Anda tidak bisa memposting dengan avatar saat mode anonim diaktifkan. Anda bisa mematikan ini di pengaturan Akun Plebbit Anda.",
   "last_bumped": "Terakhir bump",
   "threads_without_images_tip": "Hanya tampilkan thread yang menautkan ke media yang dapat disematkan",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "Mencari lebih banyak pos",
   "more_posts_last_week": "{{count}} pos dari {{currentTimeFilterName}}: <1>tampilkan lebih banyak pos dari minggu lalu</1>",
   "more_posts_last_month": "{{count}} pos dari {{currentTimeFilterName}}: <1>tampilkan {{moreCount}} lebih banyak pos dari bulan lalu</1>",
-  "loading_feed": "Memuat feed"
+  "loading_feed": "Memuat feed",
+  "loading_post": "Memuat pos",
+  "node_stats": "Statistik node",
+  "loading_default_boards": "Memuat daftar papan default",
+  "loading_subscriptions": "Memuat langganan",
+  "create_board": "Buat papan"
 }

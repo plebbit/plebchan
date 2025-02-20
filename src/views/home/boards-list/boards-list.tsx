@@ -4,10 +4,12 @@ import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { Subplebbit, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
+import { useDefaultSubplebbitsState } from '../../../hooks/use-default-subplebbits';
 import useIsMobile from '../../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 import styles from '../home.module.css';
 import { nsfwTags } from '../home';
+import LoadingEllipsis from '../../../components/loading-ellipsis';
 
 const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
   const { t } = useTranslation();
@@ -60,6 +62,7 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
   const location = useLocation();
   const [displayCount, setDisplayCount] = useState(15);
   const isMobile = useIsMobile();
+  const { loading, error } = useDefaultSubplebbitsState();
 
   const currentTag = location.pathname.split('/').filter(Boolean)[0];
   const tags = useDefaultSubplebbitTags(multisub);
@@ -67,6 +70,24 @@ const BoardsList = ({ multisub }: { multisub: Subplebbit[] }) => {
   useEffect(() => {
     setDisplayCount(15);
   }, [currentTag]);
+
+  if (loading) {
+    return (
+      <div className={styles.boardsBox}>
+        <span className={styles.loading}>
+          <LoadingEllipsis string={t('loading_default_boards')} />
+        </span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.boardsBox}>
+        <div className='red'>{error.message}</div>
+      </div>
+    );
+  }
 
   const filteredBoards = (currentTag && tags.includes(currentTag) ? multisub.filter((sub) => sub?.tags?.includes(currentTag)) : multisub).slice(0, displayCount);
 

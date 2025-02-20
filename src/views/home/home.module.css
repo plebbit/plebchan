@@ -34,6 +34,13 @@
   min-height: 150px;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
 .offlineIcon {
   display: inline-block;
   vertical-align: text-top;
@@ -254,6 +261,7 @@
   padding-top: 2em;
   padding-bottom: 1em;
   font-size: 11px;
+  text-transform: lowercase;
 }
 
 .version a {

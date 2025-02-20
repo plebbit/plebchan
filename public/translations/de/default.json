@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Bitte wählen Sie ein Board, bevor Sie posten.",
   "invalid_url_alert": "Der bereitgestellte Link ist keine gültige URL.",
   "empty_comment_alert": "Kann keinen leeren Kommentar posten.",
-  "more_threads_last_week": "Zeige Threads seit {{currentTimeFilterName}} — [<1>Zeige mehr Threads aus der letzten Woche</1>]",
-  "more_threads_last_month": "Zeige Threads seit {{currentTimeFilterName}} — [<1>Zeige mehr Threads aus dem letzten Monat</1>]",
+  "more_threads_last_week": "{{count}} Threads seit {{currentTimeFilterName}} — [<1>Mehr Threads aus der letzten Woche anzeigen</1>]",
+  "more_threads_last_month": "{{count}} Threads seit {{currentTimeFilterName}} — [<1>Mehr Threads vom letzten Monat anzeigen</1>]",
   "newer_threads_available": "Neuere Threads verfügbar — [<1>Aktualisieren</1>]",
   "stored_locally": "Lokal gespeichert ({{location}}), nicht geräteübergreifend synchronisiert",
   "choose_one": "Wählen Sie eine:",
@@ -248,7 +248,7 @@
   "reset_changes": "Änderungen zurücksetzen",
   "crypto_address_yours": "Krypto-Adresse gehört zu diesem Konto.",
   "delete_wallet": "Wallet löschen",
-  "loading_subplebbit": "Lade subplebbit",
+  "loading_board": "Lädt Board",
   "avatar_warning": "Sie können nicht mit einem Avatar posten, während der Anonymmodus aktiviert ist. Sie können ihn in den Einstellungen Ihres Plebbit-Kontos deaktivieren.",
   "last_bumped": "Zuletzt hochgeladen",
   "threads_without_images_tip": "Nur Threads anzeigen, die auf einbettbare Medien verlinken",
@@ -277,5 +277,10 @@
   "looking_for_more_posts": "Suche nach weiteren Beiträgen",
   "more_posts_last_week": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>weitere Beiträge aus der letzten Woche anzeigen</1>",
   "more_posts_last_month": "{{count}} Beiträge seit {{currentTimeFilterName}}: <1>mehr {{moreCount}} Beiträge aus dem letzten Monat anzeigen</1>",
-  "loading_feed": "Lädt Feed"
+  "loading_feed": "Lädt Feed",
+  "loading_post": "Beitrag wird geladen",
+  "node_stats": "Knotenstatistiken",
+  "loading_default_boards": "Laden der Standard-Boards-Liste",
+  "loading_subscriptions": "Lade Abonnements",
+  "create_board": "Board erstellen"
 }

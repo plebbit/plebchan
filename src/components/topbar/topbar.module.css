@@ -5,6 +5,12 @@
   position: relative;
 }
 
+.checkingSubscriptions {
+  font-size: var(--topbar-font-size);
+  color: var(--topbar-desktop-link-text-color);
+  text-transform: lowercase;
+}
+
 .boardNavDesktop a, .navTopRight span {
   color: var(--topbar-desktop-link-text-color);
   text-decoration: var(--topbar-desktop-link-text-decoration);
@@ -31,9 +37,16 @@
   margin-right: -7px;
 }
 
-.disabledButton {
+.temporaryButton {
+  color: var(--topbar-desktop-link-text-color);
+  text-decoration: var(--topbar-desktop-link-text-decoration);
   text-transform: capitalize;
-  cursor: not-allowed !important;
+}
+
+.temporaryButton:hover {
+  color: var(--topbar-desktop-link-text-color-hover);
+  text-decoration: var(--topbar-desktop-link-text-decoration-hover);
+  cursor: pointer;
 }
 
 .searchBar input[type="text"] {
@@ -52,7 +65,9 @@
   position: fixed;
   width: 100%;
   z-index: 3;
-  transition: top 0.2s ease-in-out;
+  will-change: transform;
+  transform: translateY(0);
+  transition: transform 0.2s ease-in-out;
   align-items: center;
   justify-content: space-around;
 }
