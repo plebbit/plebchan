@@ -129,7 +129,13 @@ const Catalog = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { error, shortAddress, state, title } = subplebbit || {};
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
-  const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading');
+
+  const feedLength = feed.length;
+  const weeklyFeedLength = weeklyFeed.length;
+  const monthlyFeedLength = monthlyFeed.length;
+  const hasFeedLoaded = !!feed;
+  const loadingStateString =
+    !hasFeedLoaded || (feedLength === 0 && !(weeklyFeedLength > feedLength || monthlyFeedLength > feedLength)) ? t('loading_feed') : t('looking_for_more_posts');
 
   const loadingString = (
     <div className={styles.stateString}>
@@ -185,7 +191,7 @@ const Catalog = () => {
               <div className={styles.stateString}>
                 <Trans
                   i18nKey='more_threads_last_week'
-                  values={{ currentTimeFilterName }}
+                  values={{ currentTimeFilterName, count: feed.length }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all/catalog' : isInSubscriptionsView ? '/p/subscriptions/catalog' : `/p/${subplebbitAddress}/catalog`) + '/1w'} />,
                   }}
@@ -195,7 +201,7 @@ const Catalog = () => {
               <div className={styles.stateString}>
                 <Trans
                   i18nKey='more_threads_last_month'
-                  values={{ currentTimeFilterName }}
+                  values={{ currentTimeFilterName, count: feed.length }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all/catalog' : isInSubscriptionsView ? '/p/subscriptions/catalog' : `/p/${subplebbitAddress}/catalog`) + '/1m'} />,
                   }}

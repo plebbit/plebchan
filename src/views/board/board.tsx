@@ -121,7 +121,6 @@ const Board = () => {
   const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
-  const loadingStateString = useFeedStateString(subplebbitAddresses) || t('loading_board');
 
   const handleNewerPostsButtonClick = () => {
     window.scrollTo({ top: 0, left: 0 });
@@ -143,6 +142,13 @@ const Board = () => {
     newerThan: 60 * 60 * 24 * 30,
     filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
   });
+
+  const feedLength = feed.length;
+  const weeklyFeedLength = weeklyFeed.length;
+  const monthlyFeedLength = monthlyFeed.length;
+  const hasFeedLoaded = !!feed;
+  const loadingStateString =
+    !hasFeedLoaded || (feedLength === 0 && !(weeklyFeedLength > feedLength || monthlyFeedLength > feedLength)) ? t('loading_feed') : t('looking_for_more_posts');
 
   const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);
   useEffect(() => {
@@ -181,7 +187,7 @@ const Board = () => {
               <div className={styles.morePostsSuggestion}>
                 <Trans
                   i18nKey='more_threads_last_week'
-                  values={{ currentTimeFilterName }}
+                  values={{ currentTimeFilterName, count: feed.length }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1w'} />,
                   }}
@@ -191,7 +197,7 @@ const Board = () => {
               <div className={styles.morePostsSuggestion}>
                 <Trans
                   i18nKey='more_threads_last_month'
-                  values={{ currentTimeFilterName }}
+                  values={{ currentTimeFilterName, count: feed.length }}
                   components={{
                     1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1m'} />,
                   }}
