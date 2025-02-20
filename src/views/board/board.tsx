@@ -4,10 +4,15 @@ import { Comment, useAccount, useAccountComments, useBlock, useFeed, useSubplebb
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { Trans, useTranslation } from 'react-i18next';
 import styles from './board.module.css';
+import { shouldShowSnow } from '../../lib/snow';
+import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
 import useTimeFilter from '../../hooks/use-time-filter';
+import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
@@ -16,10 +21,6 @@ import ReplyModal from '../../components/reply-modal';
 import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
-import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
-import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
-import { shouldShowSnow } from '../../lib/snow';
-import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -149,7 +150,8 @@ const Board = () => {
   const monthlyFeedLength = monthlyFeed.length;
   const hasFeedLoaded = !!feed;
   const loadingStateString =
-    !hasFeedLoaded || (feedLength === 0 && !(weeklyFeedLength > feedLength || monthlyFeedLength > feedLength)) ? t('loading_feed') : t('looking_for_more_posts');
+    useFeedStateString(subplebbitAddresses) ||
+    (!hasFeedLoaded || (feedLength === 0 && !(weeklyFeedLength > feedLength || monthlyFeedLength > feedLength)) ? t('loading_feed') : t('looking_for_more_posts'));
 
   const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);
   useEffect(() => {
