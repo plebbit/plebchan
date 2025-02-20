@@ -24,6 +24,7 @@
 
 .markdown ol, .markdown ul {
   padding-left: 1em;
+  display: inline-block;
 }
 
 .embedButton {
