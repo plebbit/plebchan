@@ -8,8 +8,12 @@ const UnblockButton = ({ address }: { address: string }) => {
   const { unblock } = useBlock({ address });
 
   return (
-    <span className={styles.button} onClick={unblock}>
-      {t('unblock')}
+    <span className={styles.unblockButton}>
+      [
+      <span className={styles.button} onClick={unblock}>
+        {t('unblock')}
+      </span>
+      ]
     </span>
   );
 };
@@ -40,7 +44,7 @@ const BlockedAddressesSetting = () => {
           <ul className={styles.blockedAddresses}>
             {addressList.map((address: string) => (
               <li key={address} className={styles.blockedAddress}>
-                {address && Plebbit.getShortAddress(address)} [<UnblockButton address={address} />]
+                {address && Plebbit.getShortAddress(address)} <UnblockButton address={address} />
               </li>
             ))}
           </ul>

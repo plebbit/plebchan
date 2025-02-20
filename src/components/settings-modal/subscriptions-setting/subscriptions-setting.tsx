@@ -20,8 +20,12 @@ const SubscriptionButton = ({ address }: { address: string }) => {
   };
 
   return (
-    <span className={styles.button} onClick={handleClick}>
-      {recentlyUnsubscribed || !subscribed ? t('subscribe') : t('unsubscribe')}
+    <span className={styles.subscriptionButton}>
+      [
+      <span className={styles.button} onClick={handleClick}>
+        {recentlyUnsubscribed || !subscribed ? t('subscribe') : t('unsubscribe')}
+      </span>
+      ]
     </span>
   );
 };
@@ -53,7 +57,7 @@ const SubscriptionsSetting = () => {
           <ul className={styles.subscriptions}>
             {subscriptions?.map((address: string) => (
               <li key={address} className={styles.subscription}>
-                {address && Plebbit.getShortAddress(address)} [<SubscriptionButton address={address} />]
+                {address && Plebbit.getShortAddress(address)} <SubscriptionButton address={address} />
               </li>
             ))}
           </ul>
