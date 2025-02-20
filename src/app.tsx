@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { useAccountComment, useAccountComments } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { initSnow, removeSnow } from './lib/snow';
 import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
 import useIsMobile from './hooks/use-is-mobile';
 import useTheme from './hooks/use-theme';
-import useTimeFilter from './hooks/use-time-filter';
 import styles from './app.module.css';
 import Board from './views/board';
 import Catalog from './views/catalog';
@@ -21,29 +20,6 @@ import PostForm from './components/post-form';
 import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
 import useSpecialThemeStore from './stores/use-special-theme-store';
-
-const ValidateRouteParams = () => {
-  const { accountCommentIndex, timeFilterName } = useParams();
-  const { timeFilterNames, lastVisitTimeFilterName } = useTimeFilter();
-  const { accountComments } = useAccountComments();
-
-  const isValidAccountCommentIndex =
-    !accountCommentIndex ||
-    (!isNaN(parseInt(accountCommentIndex)) &&
-      parseInt(accountCommentIndex) >= 0 &&
-      accountComments?.length > 0 &&
-      parseInt(accountCommentIndex) < accountComments.length);
-
-  const isDynamicTimeFilter = (filter: string) => /^\d+[hdwmy]$/.test(filter);
-  const isTimeFilterNameValid =
-    !timeFilterName || timeFilterNames.includes(timeFilterName as any) || timeFilterName === lastVisitTimeFilterName || isDynamicTimeFilter(timeFilterName);
-
-  if (!isValidAccountCommentIndex || !isTimeFilterNameValid) {
-    return <NotFound />;
-  }
-
-  return <Outlet />;
-};
 
 const BoardLayout = () => {
   const { accountCommentIndex, subplebbitAddress } = useParams();
@@ -128,35 +104,34 @@ const App = () => {
           <Route path='/:tag' element={<Home />} />
           <Route path='/faq' element={<FAQ />} />
           <Route path='*' element={<NotFound />} />
-          <Route element={<ValidateRouteParams />}>
-            <Route element={<BoardLayout />}>
-              <Route path='/p/:subplebbitAddress' element={<Board />} />
-              <Route path='/p/:subplebbitAddress/settings' element={<Board />} />
-              <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
-              <Route path='/p/:subplebbitAddress/catalog/settings' element={<Catalog />} />
+          <Route element={<BoardLayout />}>
+            <Route path='/p/:subplebbitAddress' element={<Board />} />
+            <Route path='/p/:subplebbitAddress/settings' element={<Board />} />
+            <Route path='/p/:subplebbitAddress/catalog' element={<Catalog />} />
+            <Route path='/p/:subplebbitAddress/catalog/settings' element={<Catalog />} />
 
-              <Route path='/p/:subplebbitAddress/c/:commentCid' element={<Post />} />
-              <Route path='/p/:subplebbitAddress/c/:commentCid/settings' element={<Post />} />
-              <Route path='/p/:subplebbitAddress/description' element={<Post />} />
-              <Route path='/p/:subplebbitAddress/description/settings' element={<Post />} />
-              <Route path='/p/:subplebbitAddress/rules' element={<Post />} />
-              <Route path='/p/:subplebbitAddress/rules/settings' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/c/:commentCid' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/c/:commentCid/settings' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/description' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/description/settings' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/rules' element={<Post />} />
+            <Route path='/p/:subplebbitAddress/rules/settings' element={<Post />} />
 
-              <Route path='/p/all/:timeFilterName?' element={<Board />} />
-              <Route path='/p/all/:timeFilterName?/settings' element={<Board />} />
-              <Route path='/p/all/description' element={<Post />} />
-              <Route path='/p/all/catalog/:timeFilterName?' element={<Catalog />} />
-              <Route path='/p/all/catalog/:timeFilterName?/settings' element={<Catalog />} />
+            <Route path='/p/all/:timeFilterName?' element={<Board />} />
+            <Route path='/p/all/:timeFilterName?/settings' element={<Board />} />
+            <Route path='/p/all/description' element={<Post />} />
+            <Route path='/p/all/catalog/:timeFilterName?' element={<Catalog />} />
+            <Route path='/p/all/catalog/:timeFilterName?/settings' element={<Catalog />} />
 
-              <Route path='/p/subscriptions/:timeFilterName?' element={<Board />} />
-              <Route path='/p/subscriptions/:timeFilterName?/settings' element={<Board />} />
-              <Route path='/p/subscriptions/catalog/:timeFilterName?' element={<Catalog />} />
-              <Route path='/p/subscriptions/catalog/:timeFilterName?/settings' element={<Catalog />} />
+            <Route path='/p/subscriptions/:timeFilterName?' element={<Board />} />
+            <Route path='/p/subscriptions/:timeFilterName?/settings' element={<Board />} />
+            <Route path='/p/subscriptions/catalog/:timeFilterName?' element={<Catalog />} />
+            <Route path='/p/subscriptions/catalog/:timeFilterName?/settings' element={<Catalog />} />
 
-              <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
-              <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />
-            </Route>
+            <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
+            <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />
           </Route>
+          <Route path='/not-found' element={<NotFound />} />
         </Route>
       </Routes>
     </div>
