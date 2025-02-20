@@ -6,7 +6,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import styles from './board.module.css';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import useFeedStateString from '../../hooks/use-feed-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
@@ -20,6 +19,7 @@ import SubplebbitRules from '../../components/subplebbit-rules';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { shouldShowSnow } from '../../lib/snow';
+import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -31,6 +31,7 @@ const threadsWithoutImagesFilter = (comment: Comment) => {
 };
 
 const Board = () => {
+  const { isCheckingSubscriptions } = useAutoSubscribe();
   const { t } = useTranslation();
   const location = useLocation();
   const { subplebbitAddress } = useParams<{ subplebbitAddress: string }>();
@@ -295,18 +296,26 @@ const Board = () => {
           />
         )}
         {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
-        <Virtuoso
-          increaseViewportBy={{ bottom: 1200, top: 1200 }}
-          totalCount={combinedFeed.length}
-          data={combinedFeed}
-          itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
-          useWindowScroll={true}
-          components={{ Footer }}
-          endReached={loadMore}
-          ref={virtuosoRef}
-          restoreStateFrom={lastVirtuosoState}
-          initialScrollTop={lastVirtuosoState?.scrollTop}
-        />
+        {isCheckingSubscriptions ? (
+          <div className={styles.feed}>
+            <div className={styles.footer}>
+              <LoadingEllipsis string={t('loading_feed')} />
+            </div>
+          </div>
+        ) : (
+          <Virtuoso
+            increaseViewportBy={{ bottom: 1200, top: 1200 }}
+            totalCount={combinedFeed.length}
+            data={combinedFeed}
+            itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
+            useWindowScroll={true}
+            components={{ Footer }}
+            endReached={loadMore}
+            ref={virtuosoRef}
+            restoreStateFrom={lastVirtuosoState}
+            initialScrollTop={lastVirtuosoState?.scrollTop}
+          />
+        )}
       </div>
     </>
   );

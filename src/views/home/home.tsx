@@ -4,7 +4,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import styles from './home.module.css';
 import packageJson from '../../../package.json';
-import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import { useDefaultSubplebbits, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
 import PopularThreadsBox from './popular-threads-box';
 import BoardsList from './boards-list';

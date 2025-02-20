@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import styles from './topbar.module.css';
-import useDefaultSubplebbits, { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
+import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import _, { debounce } from 'lodash';
 import { TimeFilter } from '../board-buttons';
 
@@ -67,52 +67,36 @@ const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => 
   );
 };
 
-const renderBoardsList = (subplebbits: any, isInCatalogView: boolean, subscriptions: string[]) =>
-  subplebbits?.length > 0 && (
-    <>
-      [
-      {subplebbits.map((sub: any, index: any) => (
-        <span key={index}>
-          {index === 0 ? null : ' '}
-          <Link to={`/p/${sub.address}${isInCatalogView ? '/catalog' : ''}`}>
-            {sub.address.endsWith('.eth') || sub.address.endsWith('.sol') ? sub.address : sub.address.slice(0, 10).concat('...')}
-          </Link>
-          {index !== subplebbits.length - 1 ? ' /' : null}
-        </span>
-      ))}
-      ]{' '}
-      {subscriptions?.length > 0 && (
-        <>
-          [
-          {subscriptions.map((address: any, index: any) => (
-            <span key={index}>
-              {index === 0 ? null : ' '}
-              <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>
-                {address.endsWith('.eth') || address.endsWith('.sol') ? address : address.slice(0, 10).concat('...')}
-              </Link>
-              {index !== subscriptions?.length - 1 ? ' /' : null}
-            </span>
-          ))}
-          ]{' '}
-        </>
-      )}
-    </>
-  );
-
 const TopBarDesktop = () => {
   const { t } = useTranslation();
   const account = useAccount();
   const location = useLocation();
   const params = useParams();
   const isInCatalogView = isCatalogView(location.pathname, params);
-  const subplebbits = useDefaultSubplebbits();
   const [showSearchBar, setShowSearchBar] = useState(false);
+
+  const subscriptions = account?.subscriptions;
 
   return (
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
         [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>]{' '}
-        {renderBoardsList(subplebbits.slice(0, 15), isInCatalogView, account?.subscriptions)}[
+        {subscriptions?.length > 0 && (
+          <>
+            [
+            {subscriptions.map((address: any, index: any) => (
+              <span key={index}>
+                {index === 0 ? null : ' '}
+                <Link to={`/p/${address}${isInCatalogView ? '/catalog' : ''}`}>
+                  {address.endsWith('.eth') || address.endsWith('.sol') ? address : address.slice(0, 10).concat('...')}
+                </Link>
+                {index !== subscriptions?.length - 1 ? ' /' : null}
+              </span>
+            ))}
+            ]{' '}
+          </>
+        )}
+        [
         <Link
           className={styles.disabledButton}
           to='boards/create'

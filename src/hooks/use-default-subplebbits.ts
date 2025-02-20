@@ -12,12 +12,14 @@ export interface MultisubSubplebbit {
   address: string;
   tags?: string[];
   features?: string[];
+  plebchanAutoSubscribe?: boolean;
 }
 
 let cacheSubplebbits: MultisubSubplebbit[] | null = null;
 let cacheMetadata: MultisubMetadata | null = null;
+let cacheAutoSubscribeAddresses: string[] | null = null;
 
-const useDefaultSubplebbits = () => {
+export const useDefaultSubplebbits = () => {
   const [subplebbits, setSubplebbits] = useState<MultisubSubplebbit[]>([]);
 
   useEffect(() => {
@@ -31,6 +33,12 @@ const useDefaultSubplebbits = () => {
           // { cache: 'no-cache' }
         ).then((res) => res.json());
         cacheSubplebbits = multisub.subplebbits;
+
+        // Cache auto-subscribe addresses when we fetch subplebbits
+        cacheAutoSubscribeAddresses = multisub.subplebbits
+          .filter((sub: MultisubSubplebbit) => sub.plebchanAutoSubscribe && sub.address)
+          .map((sub: MultisubSubplebbit) => sub.address);
+
         setSubplebbits(multisub.subplebbits);
       } catch (e) {
         console.warn(e);
@@ -72,4 +80,4 @@ export const useMultisubMetadata = () => {
   return cacheMetadata || metadata;
 };
 
-export default useDefaultSubplebbits;
+export const getAutoSubscribeAddresses = () => cacheAutoSubscribeAddresses || [];
