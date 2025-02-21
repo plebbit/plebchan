@@ -25,3 +25,10 @@
   bottom: -4px;
   left: 50%;
 }
+
+
+@media (max-width: 640px) {
+  .tooltip {
+    max-width: 80vw;
+  }
+}
