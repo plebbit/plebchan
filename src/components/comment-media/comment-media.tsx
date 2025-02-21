@@ -135,7 +135,7 @@ interface ImageProps {
 
 const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, post }: ImageProps) => {
   const { t } = useTranslation();
-  const { parentCid } = post || {};
+  const { parentCid, spoiler } = post || {};
   const { type, url } = commentMediaInfo || {};
   const isReply = parentCid;
   const isMobile = useIsMobile();
@@ -150,6 +150,15 @@ const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, pos
 
   const [hasError, setHasError] = useState(false);
   const handleError = () => setHasError(true);
+
+  if (spoiler && !isImageExpanded) {
+    const spoilerDimensions = { '--width': '150px', '--height': '150px' } as React.CSSProperties;
+    return (
+      <span className={`${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailBig} ${styles.thumbnail}`} style={spoilerDimensions}>
+        <img className={styles.spoiler} src='assets/spoiler.png' alt='' onClick={() => setIsImageExpanded(true)} />
+      </span>
+    );
+  }
 
   return isMobile ? (
     <span className={styles.thumbnail}>
@@ -227,7 +236,7 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
     displayHeight = '100%';
   }
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-  const isOutOfFeed = isDescription || isRules || isFloatingEmbed; // virtuoso wrapper unneeded
+  const isOutOfFeed = isDescription || isRules || isFloatingEmbed || spoiler; // virtuoso wrapper unneeded
 
   return (
     <span className={styles.content}>
