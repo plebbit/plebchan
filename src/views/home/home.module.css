@@ -42,14 +42,14 @@
 }
 
 .offlineIcon {
-  display: inline-block;
   vertical-align: text-top;
-  margin-right: 2px;
   width: 13px;
   height: 13px;
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
+  display: inline-block;
+  position: relative;
 }
 
 .boardsBox table {
@@ -91,6 +91,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.offlineIconContainer {
+  float: right;
 }
 
 .boardCell a {

@@ -1,6 +1,6 @@
 .tooltip {
   position: absolute;
-  background-color: #181f24;
+  background-color: var(--tooltip-background-color);
   font-size: 11px;
   line-height: 13px;
   padding: 3px 6px;
@@ -9,7 +9,6 @@
   white-space: pre-line;
   max-width: 400px;
   color: #fff;
-  overflow: hidden;
   text-align: center;
 }
 
@@ -21,7 +20,7 @@
   position: absolute;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-top: 4px solid #181f24;
+  border-top: 4px solid var(--tooltip-background-color);
   margin-left: -4px;
   bottom: -4px;
   left: 50%;

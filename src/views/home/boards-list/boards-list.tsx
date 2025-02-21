@@ -3,13 +3,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { Subplebbit, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
-import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
 import { useDefaultSubplebbitsState } from '../../../hooks/use-default-subplebbits';
+import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
 import useIsMobile from '../../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
+import LoadingEllipsis from '../../../components/loading-ellipsis';
+import Tooltip from '../../../components/tooltip';
 import styles from '../home.module.css';
 import { nsfwTags } from '../home';
-import LoadingEllipsis from '../../../components/loading-ellipsis';
 
 const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
   const { t } = useTranslation();
@@ -30,7 +31,13 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
         <p className={styles.boardCell}>
           <Link to={`/p/${address}`}>{displayAddress}</Link>
           {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
-          {showOfflineIcon && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
+          {showOfflineIcon && (
+            <span className={styles.offlineIconContainer}>
+              <Tooltip content={offlineTitle}>
+                <span className={`${styles.offlineIcon} ${offlineIconClass}`} />
+              </Tooltip>
+            </span>
+          )}
         </p>
       </td>
       <td className={styles.boardTitle}>

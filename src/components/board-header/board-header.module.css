@@ -28,14 +28,28 @@
   width: 90%;
 }
 
+.offlineIconWrapper {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  line-height: 1;
+}
+
 .offlineIcon {
- display: inline-block;
- margin-left: 10px;
- width: 16px;
- height: 16px;
- background-repeat: no-repeat;
- background-size: contain;
- image-rendering: pixelated;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  display: inline-block;
+}
+
+.redOfflineIcon {
+  background-image: var(--offline-icon);
+}
+
+.yellowOfflineIcon {
+  background-image: var(--offline-loading-icon);
 }
 
 @media (max-width: 640px) {
