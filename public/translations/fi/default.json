@@ -282,5 +282,6 @@
   "node_stats": "Solmun tilastot",
   "loading_default_boards": "Ladataan oletuslautalistaa",
   "loading_subscriptions": "Ladataan tilauksia",
-  "create_board": "Luo taulu"
+  "create_board": "Luo taulu",
+  "enter_board_address": "Syötä mikä tahansa taulun osoite"
 }

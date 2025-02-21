@@ -9,6 +9,7 @@ import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
 import PopularThreadsBox from './popular-threads-box';
 import BoardsList from './boards-list';
 import Version from '../../components/version';
+import _ from 'lodash';
 
 // https://github.com/plebbit/temporary-default-subplebbits/blob/master/README.md
 // plebchan shouldn't consider 'vulgar' or 'anti' as nsfw tags, unlike more sfw-oriented clients
@@ -35,7 +36,7 @@ const SearchBar = () => {
           spellCheck='false'
           autoCapitalize='off'
           type='text'
-          placeholder={`"board.eth/.sol" ${t('or')} "12D3KooW..."`}
+          placeholder={_.lowerCase(t('enter_board_address'))}
           ref={searchInputRef}
         />
         <button className={styles.searchButton}>{t('go')}</button>

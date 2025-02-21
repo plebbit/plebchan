@@ -282,5 +282,6 @@
   "node_stats": "סטטיסטיקות צומת",
   "loading_default_boards": "טוען את רשימת הלוחות ברירת המחדל",
   "loading_subscriptions": "טוען מנויים",
-  "create_board": "צור לוח"
+  "create_board": "צור לוח",
+  "enter_board_address": "הזן כתובת לוח כלשהי"
 }

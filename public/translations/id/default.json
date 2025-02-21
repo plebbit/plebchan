@@ -282,5 +282,6 @@
   "node_stats": "Statistik node",
   "loading_default_boards": "Memuat daftar papan default",
   "loading_subscriptions": "Memuat langganan",
-  "create_board": "Buat papan"
+  "create_board": "Buat papan",
+  "enter_board_address": "Masukkan alamat papan apa saja"
 }

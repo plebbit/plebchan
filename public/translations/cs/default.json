@@ -282,5 +282,6 @@
   "node_stats": "Statistiky uzlu",
   "loading_default_boards": "Načítání seznamu výchozích tabulí",
   "loading_subscriptions": "Načítání odběrů",
-  "create_board": "Vytvořit desku"
+  "create_board": "Vytvořit desku",
+  "enter_board_address": "Zadejte adresu libovolné desky"
 }

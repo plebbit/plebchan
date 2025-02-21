@@ -282,5 +282,6 @@
   "node_stats": "Csomópont statisztikák",
   "loading_default_boards": "Alapértelmezett táblák listájának betöltése",
   "loading_subscriptions": "Előfizetések betöltése",
-  "create_board": "Hozzon létre táblát"
+  "create_board": "Hozzon létre táblát",
+  "enter_board_address": "Adjon meg bármilyen táblázat címet"
 }

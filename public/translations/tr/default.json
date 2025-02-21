@@ -282,5 +282,6 @@
   "node_stats": "Düğüm istatistikleri",
   "loading_default_boards": "Varsayılan panolar listesi yükleniyor",
   "loading_subscriptions": "Abonelikler yükleniyor",
-  "create_board": "Tahta oluştur"
+  "create_board": "Tahta oluştur",
+  "enter_board_address": "Herhangi bir tahta adresini girin"
 }

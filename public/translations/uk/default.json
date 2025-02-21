@@ -282,5 +282,6 @@
   "node_stats": "Статистика вузла",
   "loading_default_boards": "Завантаження списку стандартних дошок",
   "loading_subscriptions": "Завантаження підписок",
-  "create_board": "Створити дошку"
+  "create_board": "Створити дошку",
+  "enter_board_address": "Введіть будь-яку адресу дошки"
 }

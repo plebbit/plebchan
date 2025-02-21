@@ -282,5 +282,6 @@
   "node_stats": "Statistikat e nyjës",
   "loading_default_boards": "Po ngarkohen listat e bordit të parazgjedhur",
   "loading_subscriptions": "Po ngarkohen abonimet",
-  "create_board": "Krijo bord"
+  "create_board": "Krijo bord",
+  "enter_board_address": "Shkruani çdo adresë bordi"
 }

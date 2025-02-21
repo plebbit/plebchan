@@ -282,5 +282,6 @@
   "node_stats": "Node-statistik",
   "loading_default_boards": "Laddar standardlistan för tavlor",
   "loading_subscriptions": "Laddar prenumerationer",
-  "create_board": "Skapa tavla"
+  "create_board": "Skapa tavla",
+  "enter_board_address": "Ange vilken som helst brädets adress"
 }

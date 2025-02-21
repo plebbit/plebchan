@@ -282,5 +282,6 @@
   "node_stats": "Estadísticas del nodo",
   "loading_default_boards": "Cargando lista de tableros predeterminados",
   "loading_subscriptions": "Cargando suscripciones",
-  "create_board": "Crear tablero"
+  "create_board": "Crear tablero",
+  "enter_board_address": "Ingrese cualquier dirección de tablero"
 }

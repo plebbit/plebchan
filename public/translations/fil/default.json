@@ -282,5 +282,6 @@
   "node_stats": "Istatistika ng node",
   "loading_default_boards": "Naglo-load ng default na listahan ng mga board",
   "loading_subscriptions": "Naglo-load ng mga subscription",
-  "create_board": "Gumawa ng board"
+  "create_board": "Gumawa ng board",
+  "enter_board_address": "Ipasok ang anumang address ng board"
 }

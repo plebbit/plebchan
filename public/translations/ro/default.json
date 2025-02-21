@@ -282,5 +282,6 @@
   "node_stats": "Statistici nod",
   "loading_default_boards": "Se încarcă lista de panouri implicite",
   "loading_subscriptions": "Încărcarea abonamentelor",
-  "create_board": "Creați tablou"
+  "create_board": "Creați tablou",
+  "enter_board_address": "Introduceți orice adresă de tablă"
 }

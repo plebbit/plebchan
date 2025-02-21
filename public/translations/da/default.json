@@ -282,5 +282,6 @@
   "node_stats": "Node-statistik",
   "loading_default_boards": "Indlæser standard tavleliste",
   "loading_subscriptions": "Indlæser abonnementer",
-  "create_board": "Opret tavle"
+  "create_board": "Opret tavle",
+  "enter_board_address": "Indtast enhver tavleadresse"
 }

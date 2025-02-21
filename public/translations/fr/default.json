@@ -282,5 +282,6 @@
   "node_stats": "Statistiques du nœud",
   "loading_default_boards": "Chargement de la liste des panneaux par défaut",
   "loading_subscriptions": "Chargement des abonnements",
-  "create_board": "Créer un tableau"
+  "create_board": "Créer un tableau",
+  "enter_board_address": "Entrez n'importe quelle adresse du forum"
 }

@@ -282,5 +282,6 @@
   "node_stats": "Статистика узла",
   "loading_default_boards": "Загрузка списка стандартных досок",
   "loading_subscriptions": "Загрузка подписок",
-  "create_board": "Создать доску"
+  "create_board": "Создать доску",
+  "enter_board_address": "Введите любой адрес доски"
 }

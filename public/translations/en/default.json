@@ -282,5 +282,6 @@
   "node_stats": "Node stats",
   "loading_default_boards": "Loading default boards list",
   "loading_subscriptions": "Loading subscriptions",
-  "create_board": "Create Board"
+  "create_board": "Create Board",
+  "enter_board_address": "Enter any board address"
 }

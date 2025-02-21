@@ -282,5 +282,6 @@
   "node_stats": "آمار گره",
   "loading_default_boards": "در حال بارگذاری فهرست تخته‌های پیش‌فرض",
   "loading_subscriptions": "در حال بارگذاری اشترا‌ک‌ها",
-  "create_board": "ایجاد تابلو"
+  "create_board": "ایجاد تابلو",
+  "enter_board_address": "آدرس هر تابلو را وارد کنید"
 }

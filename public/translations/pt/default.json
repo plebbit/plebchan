@@ -282,5 +282,6 @@
   "node_stats": "Estatísticas do nó",
   "loading_default_boards": "Carregando lista de quadros padrão",
   "loading_subscriptions": "Carregando assinaturas",
-  "create_board": "Criar quadro"
+  "create_board": "Criar quadro",
+  "enter_board_address": "Digite qualquer endereço de quadro"
 }

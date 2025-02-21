@@ -28,9 +28,9 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
     <tr className={styles.subplebbit} key={address}>
       <td className={styles.boardAddress}>
         <p className={styles.boardCell}>
-          {showOfflineIcon && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
           <Link to={`/p/${address}`}>{displayAddress}</Link>
           {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
+          {showOfflineIcon && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
         </p>
       </td>
       <td className={styles.boardTitle}>
