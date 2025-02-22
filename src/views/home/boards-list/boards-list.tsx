@@ -14,7 +14,7 @@ import { nsfwTags } from '../home';
 
 const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
   const { t } = useTranslation();
-  const { address, title, tags } = subplebbit || {};
+  const { address, tags } = subplebbit || {};
   const nsfwTag = tags?.find((tag: string) => nsfwTags.includes(tag));
 
   let stats = useSubplebbitStats({ subplebbitAddress: address });
@@ -24,6 +24,10 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
 
   const displayAddress = address && Plebbit.getShortAddress(address);
   const showOfflineIcon = address && (isOffline || isOnlineStatusLoading);
+
+  const title =
+    subplebbitData?.title ||
+    (subplebbitData?.updatedAt ? (displayAddress.endsWith('.eth') || displayAddress.endsWith('.sol') ? displayAddress.slice(0, -4) : displayAddress) : '?');
 
   return (
     <tr className={styles.subplebbit} key={address}>
@@ -41,7 +45,7 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
         </p>
       </td>
       <td className={styles.boardTitle}>
-        <p className={styles.boardCell}>{title || displayAddress}</p>
+        <p className={styles.boardCell}>{title}</p>
       </td>
       {!isMobile && (
         <>
