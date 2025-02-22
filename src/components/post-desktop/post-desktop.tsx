@@ -251,8 +251,7 @@ const PostMediaContent = ({ post, hasThumbnail, spoiler, t }: { post: any; hasTh
         {mediaDimensions && `, ${mediaDimensions}`})
         {!showThumbnail && (type === 'iframe' || type === 'video' || type === 'audio') && (
           <span>
-            {' '}
-            [
+            -[
             <span className={styles.closeMedia} onClick={() => setShowThumbnail(true)}>
               {t('close')}
             </span>
