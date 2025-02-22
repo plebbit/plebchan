@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAuthorAvatar, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
@@ -17,11 +17,11 @@ import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
+import CommentContent from '../comment-content';
 import CommentMedia from '../comment-media';
 import EditMenu from '../edit-menu/edit-menu';
 import { canEmbed } from '../embed';
 import LoadingEllipsis from '../loading-ellipsis';
-import Markdown from '../markdown';
 import PostMenuDesktop from './post-menu-desktop';
 import ReplyQuotePreview from '../reply-quote-preview';
 import Tooltip from '../tooltip';
@@ -285,120 +285,6 @@ const PostMediaContent = ({ post, hasThumbnail, spoiler, t }: { post: any; hasTh
   );
 };
 
-const PostMessage = ({ post }: PostProps) => {
-  const { cid, content, deleted, edit, isRules, original, parentCid, postCid, reason, removed, state } = post || {};
-  // TODO: commentAuthor is not yet available outside of editedComment, wait for API to be updated
-  // const banned = !!post?.commentAuthor?.banExpiresAt;
-  const { t } = useTranslation();
-  const params = useParams();
-  const location = useLocation();
-  const isInPostView = isPostPageView(location.pathname, params);
-  const [showOriginal, setShowOriginal] = useState(false);
-
-  const [showFullComment, setShowFullComment] = useState(false);
-  const displayContent =
-    content &&
-    (!isInPostView && content.length > 1000 && !showFullComment
-      ? content.slice(0, 1000)
-      : isInPostView && content.length > 2000 && !showFullComment
-      ? content.slice(0, 2000)
-      : content);
-
-  const quotelinkReply = useComment({ commentCid: parentCid });
-  const isReply = parentCid;
-  const isReplyingToReply = (postCid && postCid !== parentCid) || quotelinkReply?.postCid !== parentCid;
-
-  const stateString = useStateString(post);
-
-  const loadingString = (
-    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString || t('loading')} /> : stateString}</div>
-  );
-
-  return (
-    <blockquote className={`${styles.postMessage} ${isRules && styles.rulesMessage}`}>
-      {isReply && state !== 'failed' && isReplyingToReply && !(deleted || removed) && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
-      {removed ? (
-        reason ? (
-          <>
-            <span className={styles.redEditMessage}>({t('this_post_was_removed')})</span>
-            <br />
-            <br />
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
-          </>
-        ) : (
-          <span className={styles.grayEditMessage}>{_.capitalize(t('this_post_was_removed'))}.</span>
-        )
-      ) : deleted ? (
-        reason ? (
-          <>
-            <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>{' '}
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
-          </>
-        ) : (
-          <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>
-        )
-      ) : (
-        <>
-          {!showOriginal && <Markdown content={displayContent} />}
-          {edit && original?.content !== post?.content && (
-            <span className={styles.editedInfo}>
-              {showOriginal && <Markdown content={original?.content} />}
-              <br />
-              <Trans
-                i18nKey={'comment_edited_at_timestamp'}
-                values={{ timestamp: getFormattedDate(edit?.timestamp) }}
-                shouldUnescape={true}
-                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<></>} /> }}
-              />{' '}
-              {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
-              {showOriginal ? (
-                <Trans
-                  i18nKey={'click_here_to_hide_original'}
-                  shouldUnescape={true}
-                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
-                />
-              ) : (
-                <Trans
-                  i18nKey={'click_here_to_show_original'}
-                  shouldUnescape={true}
-                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
-                />
-              )}
-            </span>
-          )}
-        </>
-      )}
-      {/* TODO: commentAuthor is not yet available outside of editedComment, wait for API to be updated */}
-      {/* {banned && (
-        <span className={styles.removedContent}>
-          <br />
-          <br />
-          <Tooltip
-            children={`(${t('user_banned')})`}
-            content={`${t('ban_expires_at', {
-              address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
-              timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
-              interpolation: { escapeValue: false },
-            })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
-          />
-        </span>
-      )} */}
-      {((!isInPostView && content?.length > 1000 && !showFullComment) || (isInPostView && content?.length > 2000 && !showFullComment)) && (
-        <span className={styles.abbr}>
-          <br />
-          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <span onClick={() => setShowFullComment(true)} /> }} />
-        </span>
-      )}
-      {!cid && state === 'pending' && stateString !== 'Failed' && (
-        <>
-          <br />
-          {loadingString}
-        </>
-      )}
-    </blockquote>
-  );
-};
-
 const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
@@ -420,7 +306,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
       <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} />
         {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} hasThumbnail={hasThumbnail} />}
-        {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <PostMessage post={post} />}
+        {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
       </div>
     </div>
   );
@@ -483,7 +369,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} hasThumbnail={hasThumbnail} />}
           <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && !(deleted || removed) && <div className={styles.spacer} />}
-          {!isHidden && <PostMessage post={post} />}
+          {!isHidden && <CommentContent comment={post} />}
         </div>
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replyCount > 5 || (pinned && repliesCount > 0)) && !isInPostPageView && (
           <span className={styles.summary}>

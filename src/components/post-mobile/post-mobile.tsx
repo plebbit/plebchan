@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAuthorAvatar, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAuthorAvatar, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
+import { shouldShowSnow } from '../../lib/snow';
 import { getHasThumbnail } from '../../lib/utils/media-utils';
 import { getTextColorForBackground, hashStringToColor } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
@@ -15,15 +16,14 @@ import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useHide from '../../hooks/use-hide';
 import useReplies from '../../hooks/use-replies';
 import useStateString from '../../hooks/use-state-string';
+import CommentContent from '../comment-content';
 import CommentMedia from '../comment-media';
 import LoadingEllipsis from '../loading-ellipsis';
-import Markdown from '../markdown';
 import PostMenuMobile from './post-menu-mobile';
 import ReplyQuotePreview from '../reply-quote-preview';
 import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import _ from 'lodash';
-import { shouldShowSnow } from '../../lib/snow';
 
 const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
@@ -215,121 +215,6 @@ const ReplyBacklinks = ({ post }: PostProps) => {
   );
 };
 
-const PostMessageMobile = ({ post }: PostProps) => {
-  const { t } = useTranslation();
-  const { cid, content, deleted, edit, isRules, original, parentCid, postCid, reason, removed, state } = post || {};
-  // TODO: commentAuthor is not available outside of editedComment, update when available
-  // const banned = !!post?.commentAuthor?.banExpiresAt;
-  const [showOriginal, setShowOriginal] = useState(false);
-
-  const params = useParams();
-  const location = useLocation();
-  const isInPostView = isPostPageView(location.pathname, params);
-
-  const [showFullComment, setShowFullComment] = useState(false);
-  const displayContent =
-    content &&
-    (!isInPostView && content.length > 1000 && !showFullComment
-      ? content.slice(0, 1000)
-      : isInPostView && content.length > 2000 && !showFullComment
-      ? content.slice(0, 2000)
-      : content);
-
-  const quotelinkReply = useComment({ commentCid: parentCid });
-  const isReply = parentCid;
-  const isReplyingToReply = (postCid && postCid !== parentCid) || quotelinkReply?.postCid !== parentCid;
-
-  const stateString = useStateString(post);
-
-  const loadingString = (
-    <div className={`${styles.stateString} ${styles.ellipsis}`}>{stateString !== 'Failed' ? <LoadingEllipsis string={stateString || t('loading')} /> : stateString}</div>
-  );
-
-  return (
-    <blockquote className={`${styles.postMessage} ${!isReply && styles.clampLines} ${isRules && styles.rulesMessage}`}>
-      {isReply && !(removed || deleted) && state !== 'failed' && isReplyingToReply && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
-      {removed ? (
-        reason ? (
-          <>
-            <span className={styles.redEditMessage}>({t('this_post_was_removed')})</span>
-            <br />
-            <br />
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
-          </>
-        ) : (
-          <span className={styles.grayEditMessage}>{_.capitalize(t('this_post_was_removed'))}.</span>
-        )
-      ) : deleted ? (
-        reason ? (
-          <>
-            <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>{' '}
-            <span className={styles.grayEditMessage}>{`${_.capitalize(t('reason'))}: "${reason}"`}</span>
-          </>
-        ) : (
-          <span className={styles.grayEditMessage}>{t('user_deleted_this_post')}</span>
-        )
-      ) : (
-        <>
-          {!showOriginal && <Markdown content={displayContent} />}
-          {edit && original?.content !== post?.content && (
-            <span className={styles.editedInfo}>
-              {showOriginal && <Markdown content={original?.content} />}
-              <br />
-              <Trans
-                i18nKey={'comment_edited_at_timestamp'}
-                values={{ timestamp: getFormattedDate(edit?.timestamp) }}
-                shouldUnescape={true}
-                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<></>} /> }}
-              />{' '}
-              {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
-              {showOriginal ? (
-                <Trans
-                  i18nKey={'click_here_to_hide_original'}
-                  shouldUnescape={true}
-                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
-                />
-              ) : (
-                <Trans
-                  i18nKey={'click_here_to_show_original'}
-                  shouldUnescape={true}
-                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
-                />
-              )}
-            </span>
-          )}
-        </>
-      )}
-      {/* TODO: commentAuthor is not available outside of editedComment, update when available */}
-      {/* {banned && (
-        <span className={styles.removedContent}>
-          <br />
-          <br />
-          <Tooltip
-            children={`(${t('user_banned')})`}
-            content={`${t('ban_expires_at', {
-              address: subplebbitAddress && Plebbit.getShortAddress(subplebbitAddress),
-              timestamp: getFormattedDate(commentAuthor?.banExpiresAt),
-              interpolation: { escapeValue: false },
-            })}${reason ? `. ${_.capitalize(t('reason'))}: "${reason}"` : ''}`}
-          />
-        </span>
-      )} */}
-      {((!isInPostView && content?.length > 1000 && !showFullComment) || (isInPostView && content?.length > 2000 && !showFullComment)) && (
-        <span className={styles.abbr}>
-          <br />
-          <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <span onClick={() => setShowFullComment(true)} /> }} />
-        </span>
-      )}
-      {!cid && state === 'pending' && stateString !== 'Failed' && (
-        <>
-          <br />
-          {loadingString}
-        </>
-      )}
-    </blockquote>
-  );
-};
-
 const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
@@ -351,7 +236,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
           data-post-cid={postCid}
         >
           <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
-          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <PostMessageMobile post={post} />}
+          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>
@@ -415,7 +300,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               >
                 {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
                 <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
-                <PostMessageMobile post={post} />
+                <CommentContent comment={post} />
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
                 <div className={styles.postLink}>
