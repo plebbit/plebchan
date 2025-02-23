@@ -333,15 +333,19 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
             )}
           </div>
           {!isInPendingPostView &&
-            !isDescription &&
-            !isRules &&
-            (stateString && stateString !== 'Failed' && state !== 'succeeded' && isInPostPageView ? (
-              <div className={styles.stateString}>
-                <LoadingEllipsis string={stateString} />
-              </div>
-            ) : (
-              state === 'failed' && <span className={styles.error}>{t('failed')}</span>
-            ))}
+          !isDescription &&
+          !isRules &&
+          stateString &&
+          stateString !== 'Failed' &&
+          state !== 'succeeded' &&
+          isInPostPageView &&
+          !(!showReplies && !showAllReplies) ? (
+            <div className={styles.stateString}>
+              <LoadingEllipsis string={stateString} />
+            </div>
+          ) : (
+            state === 'failed' && <span className={styles.error}>{t('failed')}</span>
+          )}
         </div>
       )}
     </>
