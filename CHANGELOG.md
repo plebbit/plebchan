@@ -1,3 +1,19 @@
+## [0.3.6](https://github.com/plebbit/plebchan/compare/v0.3.5...v0.3.6) (2025-02-23)
+
+
+### Bug Fixes
+
+* **feed:** "no posts" could appear in an empty board after the user published to it ([588d9fb](https://github.com/plebbit/plebchan/commit/588d9fbdb09966730b9999c2556a792156b8d976))
+* **post:** image marked as spoiler was visible ([6e60360](https://github.com/plebbit/plebchan/commit/6e60360033355877b02a61e691d1f4f89f1de0f1))
+* **post:** loading string could appear in floating posts from out-of-view quotes ([9d454b4](https://github.com/plebbit/plebchan/commit/9d454b489c655c3e3575b83e98435c470503aeb5))
+
+
+### Features
+
+* **catalog:** show posts published by account instantly in feed ([628115f](https://github.com/plebbit/plebchan/commit/628115f19871fa8e381e4a1fcd6eed82f24ed252))
+
+
+
 ## [0.3.5](https://github.com/plebbit/plebchan/compare/v0.3.4...v0.3.5) (2025-02-20)
 
 
