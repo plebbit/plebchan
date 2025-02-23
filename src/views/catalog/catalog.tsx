@@ -187,7 +187,7 @@ const Catalog = () => {
         t('not_subscribed_to_any_board')
       ) : blocked ? (
         t('you_have_blocked_this_board')
-      ) : !hasMore && feed.length === 0 ? (
+      ) : !hasMore && combinedFeed.length === 0 ? (
         t('no_threads')
       ) : (
         hasMore && <LoadingEllipsis string={loadingStateString} />
@@ -209,7 +209,7 @@ const Catalog = () => {
     if (feed.length === 0) {
       if (blocked) {
         footerContent = t('you_have_blocked_this_board');
-      } else {
+      } else if (combinedFeed.length === 0) {
         footerContent = t('no_threads');
       }
     }

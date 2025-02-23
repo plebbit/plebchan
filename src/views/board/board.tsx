@@ -165,7 +165,7 @@ const Board = () => {
 
   const Footer = () => {
     let footerContent;
-    if (feed.length === 0) {
+    if (combinedFeed.length === 0) {
       footerContent = t('no_threads');
     }
     if (hasMore || (subplebbitAddresses && subplebbitAddresses.length === 0)) {
