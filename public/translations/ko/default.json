@@ -283,5 +283,6 @@
   "loading_default_boards": "기본 보드 목록을 로드 중",
   "loading_subscriptions": "구독 로딩 중",
   "create_board": "보드 만들기",
-  "enter_board_address": "어떤 보드 주소든 입력하세요"
+  "enter_board_address": "어떤 보드 주소든 입력하세요",
+  "board_not_reachable": "보드를 찾을 수 없습니다"
 }

@@ -283,5 +283,6 @@
   "loading_default_boards": "డిఫాల్ట్ బోర్డుల జాబితా లోడవుతోంది",
   "loading_subscriptions": "సబ్‌స్క్రిప్షన్‌లు లోడ్ అవుతున్నాయి",
   "create_board": "బోర్డ్ రూపొందించండి",
-  "enter_board_address": "ఏదైనా బోర్డ్ అడ్రస్ నమోదు చేయండి"
+  "enter_board_address": "ఏదైనా బోర్డ్ అడ్రస్ నమోదు చేయండి",
+  "board_not_reachable": "బోర్డు అందుబాటులో లేదు"
 }

@@ -283,5 +283,6 @@
   "loading_default_boards": "Laddar standardlistan för tavlor",
   "loading_subscriptions": "Laddar prenumerationer",
   "create_board": "Skapa tavla",
-  "enter_board_address": "Ange vilken som helst brädets adress"
+  "enter_board_address": "Ange vilken som helst brädets adress",
+  "board_not_reachable": "Tavlan är inte tillgänglig"
 }

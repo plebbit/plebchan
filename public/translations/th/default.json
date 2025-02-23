@@ -283,5 +283,6 @@
   "loading_default_boards": "กำลังโหลดรายการกระดานเริ่มต้น",
   "loading_subscriptions": "กำลังโหลดการสมัครสมาชิก",
   "create_board": "สร้างกระดาน",
-  "enter_board_address": "ป้อนที่อยู่บอร์ดใดก็ได้"
+  "enter_board_address": "ป้อนที่อยู่บอร์ดใดก็ได้",
+  "board_not_reachable": "ไม่สามารถเข้าถึงบอร์ดได้"
 }

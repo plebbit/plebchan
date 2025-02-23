@@ -283,5 +283,6 @@
   "loading_default_boards": "Đang tải danh sách bảng mặc định",
   "loading_subscriptions": "Đang tải đăng ký",
   "create_board": "Tạo bảng",
-  "enter_board_address": "Nhập bất kỳ địa chỉ bảng nào"
+  "enter_board_address": "Nhập bất kỳ địa chỉ bảng nào",
+  "board_not_reachable": "Bảng không thể truy cập"
 }

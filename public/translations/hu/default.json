@@ -283,5 +283,6 @@
   "loading_default_boards": "Alapértelmezett táblák listájának betöltése",
   "loading_subscriptions": "Előfizetések betöltése",
   "create_board": "Hozzon létre táblát",
-  "enter_board_address": "Adjon meg bármilyen táblázat címet"
+  "enter_board_address": "Adjon meg bármilyen táblázat címet",
+  "board_not_reachable": "A tábla nem elérhető"
 }

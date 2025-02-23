@@ -283,5 +283,6 @@
   "loading_default_boards": "डीफॉल्ट बोर्ड यादी लोड करत आहे",
   "loading_subscriptions": "सदस्यता लोड होत आहे",
   "create_board": "बोर्ड तयार करा",
-  "enter_board_address": "कोणत्याही बोर्ड पत्त्याची नोंद करा"
+  "enter_board_address": "कोणत्याही बोर्ड पत्त्याची नोंद करा",
+  "board_not_reachable": "बोर्ड उपलब्ध नाही"
 }

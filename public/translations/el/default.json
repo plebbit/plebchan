@@ -283,5 +283,6 @@
   "loading_default_boards": "Φόρτωση της λίστας προεπιλεγμένων πάνελ",
   "loading_subscriptions": "Φορτώνει συνδρομές",
   "create_board": "Δημιουργία πίνακα",
-  "enter_board_address": "Εισάγετε οποιαδήποτε διεύθυνση πίνακα"
+  "enter_board_address": "Εισάγετε οποιαδήποτε διεύθυνση πίνακα",
+  "board_not_reachable": "Ο πίνακας δεν είναι προσβάσιμος"
 }

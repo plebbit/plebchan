@@ -283,5 +283,6 @@
   "loading_default_boards": "正在加载默认板块列表",
   "loading_subscriptions": "加载订阅",
   "create_board": "创建板块",
-  "enter_board_address": "输入任何板块地址"
+  "enter_board_address": "输入任何板块地址",
+  "board_not_reachable": "无法访问板块"
 }

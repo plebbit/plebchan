@@ -35,7 +35,7 @@ const useFeedStateString = (subplebbitAddresses?: string[]): string | undefined 
     if (states['resolving-address']) {
       const { subplebbitAddresses, clientUrls } = states['resolving-address'];
       if (subplebbitAddresses.length && clientUrls.length) {
-        stateString += `loading ${subplebbitAddresses.length} ${subplebbitAddresses.length === 1 ? 'address' : 'addresses'} from ${clientUrls
+        stateString += `resolving ${subplebbitAddresses.length} ${subplebbitAddresses.length === 1 ? 'address' : 'addresses'} from ${clientUrls
           .map(getClientHost)
           .join(', ')}`;
       }

@@ -283,5 +283,6 @@
   "loading_default_boards": "Laden van de standaard boardlijst",
   "loading_subscriptions": "Abonnementen laden",
   "create_board": "Maak bord",
-  "enter_board_address": "Voer een willekeurig bordadres in"
+  "enter_board_address": "Voer een willekeurig bordadres in",
+  "board_not_reachable": "Bord is niet bereikbaar"
 }

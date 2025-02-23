@@ -283,5 +283,6 @@
   "loading_default_boards": "डिफ़ॉल्ट बोर्ड सूची लोड हो रही है",
   "loading_subscriptions": "सब्सक्रिप्शन लोड हो रहे हैं",
   "create_board": "बोर्ड बनाएं",
-  "enter_board_address": "किसी भी बोर्ड का पता दर्ज करें"
+  "enter_board_address": "किसी भी बोर्ड का पता दर्ज करें",
+  "board_not_reachable": "बोर्ड पहुँच योग्य नहीं है"
 }

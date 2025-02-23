@@ -283,5 +283,6 @@
   "loading_default_boards": "Indlæser standard tavleliste",
   "loading_subscriptions": "Indlæser abonnementer",
   "create_board": "Opret tavle",
-  "enter_board_address": "Indtast enhver tavleadresse"
+  "enter_board_address": "Indtast enhver tavleadresse",
+  "board_not_reachable": "Boardet er ikke tilgængeligt"
 }

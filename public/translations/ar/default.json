@@ -283,5 +283,6 @@
   "loading_default_boards": "جار تحميل قائمة اللوحات الافتراضية",
   "loading_subscriptions": "جارٍ تحميل الاشتراكات",
   "create_board": "إنشاء لوحة",
-  "enter_board_address": "أدخل عنوان أي لوحة"
+  "enter_board_address": "أدخل عنوان أي لوحة",
+  "board_not_reachable": "اللوحة غير قابلة للوصول"
 }

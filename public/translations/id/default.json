@@ -283,5 +283,6 @@
   "loading_default_boards": "Memuat daftar papan default",
   "loading_subscriptions": "Memuat langganan",
   "create_board": "Buat papan",
-  "enter_board_address": "Masukkan alamat papan apa saja"
+  "enter_board_address": "Masukkan alamat papan apa saja",
+  "board_not_reachable": "Papan tidak dapat dijangkau"
 }

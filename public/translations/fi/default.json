@@ -283,5 +283,6 @@
   "loading_default_boards": "Ladataan oletuslautalistaa",
   "loading_subscriptions": "Ladataan tilauksia",
   "create_board": "Luo taulu",
-  "enter_board_address": "Syötä mikä tahansa taulun osoite"
+  "enter_board_address": "Syötä mikä tahansa taulun osoite",
+  "board_not_reachable": "Taulua ei ole käytettävissä"
 }

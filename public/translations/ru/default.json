@@ -283,5 +283,6 @@
   "loading_default_boards": "Загрузка списка стандартных досок",
   "loading_subscriptions": "Загрузка подписок",
   "create_board": "Создать доску",
-  "enter_board_address": "Введите любой адрес доски"
+  "enter_board_address": "Введите любой адрес доски",
+  "board_not_reachable": "Доска недоступна"
 }

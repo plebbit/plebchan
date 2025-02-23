@@ -283,5 +283,6 @@
   "loading_default_boards": "ڈिफالٹ بورڈ کی فہرست لوڈ ہو رہی ہے",
   "loading_subscriptions": "سبسکرپشن لوڈ ہو رہی ہے",
   "create_board": "بورڈ بنائیں",
-  "enter_board_address": "کسی بھی بورڈ کا پتہ درج کریں"
+  "enter_board_address": "کسی بھی بورڈ کا پتہ درج کریں",
+  "board_not_reachable": "بورڈ قابل رسائی نہیں ہے"
 }

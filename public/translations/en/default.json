@@ -237,8 +237,8 @@
   "no_board_selected_warning": "Please select a board before posting.",
   "invalid_url_alert": "The provided link is not a valid URL.",
   "empty_comment_alert": "Cannot post empty comment.",
-  "more_threads_last_week": "{{count}} threads since {{currentTimeFilterName}} — [<1>Show more threads from last week</1>]",
-  "more_threads_last_month": "{{count}} threads since {{currentTimeFilterName}} — [<1>Show more threads from last month</1>]",
+  "more_threads_last_week": "{{count}} threads since {{currentTimeFilterName}} — [<1>Show More Threads from Last Week</1>]",
+  "more_threads_last_month": "{{count}} threads since {{currentTimeFilterName}} — [<1>Show More Threads from Last Month</1>]",
   "newer_threads_available": "Newer threads available — [<1>Refresh</1>]",
   "stored_locally": "Stored locally ({{location}}), not synced across devices",
   "choose_one": "Choose one:",
@@ -283,5 +283,6 @@
   "loading_default_boards": "Loading default boards list",
   "loading_subscriptions": "Loading subscriptions",
   "create_board": "Create Board",
-  "enter_board_address": "Enter any board address"
+  "enter_board_address": "Enter any board address",
+  "board_not_reachable": "Board is not reachable"
 }

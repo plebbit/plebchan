@@ -283,5 +283,6 @@
   "loading_default_boards": "Caricamento della lista delle board predefinite",
   "loading_subscriptions": "Caricamento abbonamenti",
   "create_board": "Crea Board",
-  "enter_board_address": "Inserisci indirizzo di qualsiasi board"
+  "enter_board_address": "Inserisci indirizzo di qualsiasi board",
+  "board_not_reachable": "Board non raggiungibile"
 }

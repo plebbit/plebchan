@@ -283,5 +283,6 @@
   "loading_default_boards": "در حال بارگذاری فهرست تخته‌های پیش‌فرض",
   "loading_subscriptions": "در حال بارگذاری اشترا‌ک‌ها",
   "create_board": "ایجاد تابلو",
-  "enter_board_address": "آدرس هر تابلو را وارد کنید"
+  "enter_board_address": "آدرس هر تابلو را وارد کنید",
+  "board_not_reachable": "تابلو قابل دسترسی نیست"
 }

@@ -283,5 +283,6 @@
   "loading_default_boards": "Laster standard tavleliste",
   "loading_subscriptions": "Laster abonnementer",
   "create_board": "Lag tavle",
-  "enter_board_address": "Skriv inn hvilken som helst brettadresse"
+  "enter_board_address": "Skriv inn hvilken som helst brettadresse",
+  "board_not_reachable": "Brettet er ikke tilgjengelig"
 }

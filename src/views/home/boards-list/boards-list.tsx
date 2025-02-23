@@ -9,7 +9,7 @@ import useIsMobile from '../../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
 import Tooltip from '../../../components/tooltip';
-import styles from '../home.module.css';
+import styles from './boards-list.module.css';
 import { nsfwTags } from '../home';
 
 const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
@@ -27,11 +27,19 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
 
   const title =
     subplebbitData?.title ||
-    (subplebbitData?.updatedAt ? (displayAddress.endsWith('.eth') || displayAddress.endsWith('.sol') ? displayAddress.slice(0, -4) : displayAddress) : '?');
+    (subplebbitData?.updatedAt ? (
+      displayAddress.endsWith('.eth') || displayAddress.endsWith('.sol') ? (
+        displayAddress.slice(0, -4)
+      ) : (
+        displayAddress
+      )
+    ) : (
+      <span className={styles.loadingBoardCellValue}>{isOffline ? t('board_not_reachable') : t('loading_board')}</span>
+    ));
 
   return (
-    <tr className={styles.subplebbit} key={address}>
-      <td className={styles.boardAddress}>
+    <tr key={address}>
+      <td>
         <p className={styles.boardCell}>
           <Link to={`/p/${address}`}>{displayAddress}</Link>
           {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
@@ -44,13 +52,13 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
           )}
         </p>
       </td>
-      <td className={styles.boardTitle}>
+      <td>
         <p className={styles.boardCell}>{title}</p>
       </td>
       {!isMobile && (
         <>
           <td className={styles.boardPPH}>
-            <p className={styles.boardCell}>{stats.hourPostCount ?? '?'}</p>
+            <p className={styles.boardCell}>{stats.hourPostCount ?? <span className={styles.loadingBoardCellValue}>?</span>}</p>
           </td>
           <td className={styles.boardTags}>
             <p className={styles.boardCell}>

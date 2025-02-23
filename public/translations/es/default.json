@@ -283,5 +283,6 @@
   "loading_default_boards": "Cargando lista de tableros predeterminados",
   "loading_subscriptions": "Cargando suscripciones",
   "create_board": "Crear tablero",
-  "enter_board_address": "Ingrese cualquier dirección de tablero"
+  "enter_board_address": "Ingrese cualquier dirección de tablero",
+  "board_not_reachable": "El tablero no es accesible"
 }

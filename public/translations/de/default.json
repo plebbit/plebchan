@@ -283,5 +283,6 @@
   "loading_default_boards": "Laden der Standard-Boards-Liste",
   "loading_subscriptions": "Lade Abonnements",
   "create_board": "Board erstellen",
-  "enter_board_address": "Geben Sie eine beliebige Board-Adresse ein"
+  "enter_board_address": "Geben Sie eine beliebige Board-Adresse ein",
+  "board_not_reachable": "Board ist nicht erreichbar"
 }

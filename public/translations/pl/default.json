@@ -283,5 +283,6 @@
   "loading_default_boards": "Ładowanie domyślnej listy tablic",
   "loading_subscriptions": "Ładowanie subskrypcji",
   "create_board": "Utwórz tablicę",
-  "enter_board_address": "Wprowadź dowolny adres tablicy"
+  "enter_board_address": "Wprowadź dowolny adres tablicy",
+  "board_not_reachable": "Tablica jest niedostępna"
 }
