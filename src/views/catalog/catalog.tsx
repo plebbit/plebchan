@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Comment, useAccount, useFeed, useSubplebbit, useBlock } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useFeed, useSubplebbit, useBlock, useAccountComments } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
@@ -90,6 +90,46 @@ const Catalog = () => {
   }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, hideThreadsWithoutImages]);
 
   const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
+  const { accountComments } = useAccountComments();
+
+  const resetTriggeredRef = useRef(false);
+
+  // show account comments instantly in the feed once published (cid defined), instead of waiting for the feed to update
+  const filteredComments = useMemo(
+    () =>
+      accountComments.filter((comment) => {
+        const { cid, deleted, postCid, removed, state, timestamp } = comment || {};
+        return (
+          !deleted &&
+          !removed &&
+          timestamp > Date.now() / 1000 - 60 * 60 &&
+          state === 'succeeded' &&
+          cid &&
+          (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(comment), comment?.link) : true) &&
+          cid === postCid &&
+          comment?.subplebbitAddress === subplebbitAddress &&
+          !feed.some((post) => post.cid === cid)
+        );
+      }),
+    [accountComments, subplebbitAddress, feed, hideThreadsWithoutImages],
+  );
+
+  // show newest account comment at the top of the feed but after pinned posts
+  const combinedFeed = useMemo(() => {
+    const newFeed = [...feed];
+    const lastPinnedIndex = newFeed.map((post) => post.pinned).lastIndexOf(true);
+    if (filteredComments.length > 0) {
+      newFeed.splice(lastPinnedIndex + 1, 0, ...filteredComments);
+    }
+    return newFeed;
+  }, [feed, filteredComments]);
+
+  useEffect(() => {
+    if (filteredComments.length > 0 && !resetTriggeredRef.current) {
+      reset();
+      resetTriggeredRef.current = true;
+    }
+  }, [filteredComments, reset]);
 
   const handleNewerPostsButtonClick = () => {
     window.scrollTo({ top: 0, left: 0 });
@@ -222,7 +262,7 @@ const Catalog = () => {
 
   const isFeedLoaded = feed.length > 0 || state === 'failed';
 
-  const rows = useCatalogFeedRows(columnCount, feed, isFeedLoaded, subplebbit);
+  const rows = useCatalogFeedRows(columnCount, combinedFeed, isFeedLoaded, subplebbit);
 
   // save the last Virtuoso state to restore it when navigating back
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
@@ -251,7 +291,7 @@ const Catalog = () => {
       {location.pathname.endsWith('/settings') && <SettingsModal />}
       <hr />
       <div className={styles.catalog}>
-        {feed.length !== 0 ? (
+        {combinedFeed.length !== 0 ? (
           <>
             <Virtuoso
               increaseViewportBy={{ bottom: 1200, top: 1200 }}
