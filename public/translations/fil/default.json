@@ -164,8 +164,8 @@
   "creation_date": "Petsa ng Paglikha",
   "sort_by": "Ayusin ayon sa",
   "time_filter": "Time Filter",
-  "subplebbit_offline_info": "Maaaring offline ang subplebbit at maaaring mabigo ang paglalathala.",
-  "posts_last_synced_info": "Huling naka-sync na mga post {{time}}, maaaring offline ang subplebbit at maaaring mabigo ang paglalathala.",
+  "subplebbit_offline_info": "Maaaring offline ang board at maaaring mabigo ang pag-publish",
+  "posts_last_synced_info": "Huling na-sync na mga post {{time}}, maaaring offline ang board at maaaring mabigo ang pag-publish.",
   "newer_than": "mas bago kaysa",
   "no_threads": "Walang mga thread",
   "unblock": "I-unblock",
@@ -282,5 +282,7 @@
   "node_stats": "Istatistika ng node",
   "loading_default_boards": "Naglo-load ng default na listahan ng mga board",
   "loading_subscriptions": "Naglo-load ng mga subscription",
-  "create_board": "Gumawa ng board"
+  "create_board": "Gumawa ng board",
+  "enter_board_address": "Ipasok ang anumang address ng board",
+  "board_not_reachable": "Hindi maa-access ang board"
 }

@@ -164,8 +164,8 @@
   "creation_date": "Data de criação",
   "sort_by": "Ordenar por",
   "time_filter": "Filtro de tempo",
-  "subplebbit_offline_info": "O subplebbit pode estar offline e a publicação pode falhar.",
-  "posts_last_synced_info": "Posts sincronizados pela última vez {{time}}, o subplebbit pode estar offline e a publicação pode falhar.",
+  "subplebbit_offline_info": "O quadro pode estar offline e a publicação pode falhar",
+  "posts_last_synced_info": "Últimas postagens sincronizadas {{time}}, o quadro pode estar offline e a publicação pode falhar.",
   "newer_than": "mais recente que",
   "no_threads": "Sem tópicos",
   "unblock": "Desbloquear",
@@ -282,5 +282,7 @@
   "node_stats": "Estatísticas do nó",
   "loading_default_boards": "Carregando lista de quadros padrão",
   "loading_subscriptions": "Carregando assinaturas",
-  "create_board": "Criar quadro"
+  "create_board": "Criar quadro",
+  "enter_board_address": "Digite qualquer endereço de quadro",
+  "board_not_reachable": "O quadro não é acessível"
 }

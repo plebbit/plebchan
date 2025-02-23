@@ -164,8 +164,8 @@
   "creation_date": "Oluşturulma tarihi",
   "sort_by": "Sırala",
   "time_filter": "Zaman Filtresi",
-  "subplebbit_offline_info": "Subplebbit çevrimdışı olabilir ve yayınlama başarısız olabilir.",
-  "posts_last_synced_info": "Son senkronize edilen gönderiler {{time}}, subplebbit çevrimdışı olabilir ve yayınlama başarısız olabilir.",
+  "subplebbit_offline_info": "Tahta çevrimdışı olabilir ve yayınlama başarısız olabilir",
+  "posts_last_synced_info": "Son gönderiler senkronize edildi {{time}}, board çevrimdışı olabilir ve yayınlama başarısız olabilir.",
   "newer_than": "daha yeni",
   "no_threads": "Hiç gönderi yok",
   "unblock": "Engeli kaldır",
@@ -282,5 +282,7 @@
   "node_stats": "Düğüm istatistikleri",
   "loading_default_boards": "Varsayılan panolar listesi yükleniyor",
   "loading_subscriptions": "Abonelikler yükleniyor",
-  "create_board": "Tahta oluştur"
+  "create_board": "Tahta oluştur",
+  "enter_board_address": "Herhangi bir tahta adresini girin",
+  "board_not_reachable": "Board erişilemez"
 }

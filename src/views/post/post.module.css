@@ -221,7 +221,6 @@
 
 .stateString {
   color: var(--post-mobile-abbr-text-color);
-  padding-left: 20px;
 }
 
 .loadingString {

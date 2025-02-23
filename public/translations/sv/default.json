@@ -164,8 +164,8 @@
   "creation_date": "Skapelsedatum",
   "sort_by": "Sortera efter",
   "time_filter": "Tidsfilter",
-  "subplebbit_offline_info": "Subplebbit kan vara offline och publicering kan misslyckas.",
-  "posts_last_synced_info": "Inlägg senast synkroniserade {{time}}, subplebbit kan vara offline och publicering kan misslyckas.",
+  "subplebbit_offline_info": "Brettet kan vara offline och publicering kan misslyckas",
+  "posts_last_synced_info": "Senaste inlägg synkroniserades {{time}}, tavlan kan vara offline och publiceringen kan misslyckas.",
   "newer_than": "nyare än",
   "no_threads": "Inga trådar",
   "unblock": "Avblockera",
@@ -282,5 +282,7 @@
   "node_stats": "Node-statistik",
   "loading_default_boards": "Laddar standardlistan för tavlor",
   "loading_subscriptions": "Laddar prenumerationer",
-  "create_board": "Skapa tavla"
+  "create_board": "Skapa tavla",
+  "enter_board_address": "Ange vilken som helst brädets adress",
+  "board_not_reachable": "Tavlan är inte tillgänglig"
 }

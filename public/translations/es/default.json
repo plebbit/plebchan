@@ -164,8 +164,8 @@
   "creation_date": "Fecha de creación",
   "sort_by": "Ordenar por",
   "time_filter": "Filtro de tiempo",
-  "subplebbit_offline_info": "El subplebbit podría estar fuera de línea y la publicación podría fallar.",
-  "posts_last_synced_info": "Últimas publicaciones sincronizadas {{time}}, el subplebbit podría estar fuera de línea y la publicación podría fallar.",
+  "subplebbit_offline_info": "El tablero podría estar fuera de línea y la publicación podría fallar",
+  "posts_last_synced_info": "Últimas publicaciones sincronizadas {{time}}, el tablero podría estar fuera de línea y la publicación podría fallar.",
   "newer_than": "más reciente que",
   "no_threads": "No hay hilos",
   "unblock": "Desbloquear",
@@ -282,5 +282,7 @@
   "node_stats": "Estadísticas del nodo",
   "loading_default_boards": "Cargando lista de tableros predeterminados",
   "loading_subscriptions": "Cargando suscripciones",
-  "create_board": "Crear tablero"
+  "create_board": "Crear tablero",
+  "enter_board_address": "Ingrese cualquier dirección de tablero",
+  "board_not_reachable": "El tablero no es accesible"
 }

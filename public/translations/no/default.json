@@ -164,8 +164,8 @@
   "creation_date": "Opprettelsesdato",
   "sort_by": "Sorter etter",
   "time_filter": "Tidsfilter",
-  "subplebbit_offline_info": "Subplebbiten kan være offline, og publisering kan mislykkes.",
-  "posts_last_synced_info": "Siste synkroniserte innlegg {{time}}, subplebbiten kan være offline, og publisering kan mislykkes.",
+  "subplebbit_offline_info": "Brettet kan være offline, og publisering kan mislykkes",
+  "posts_last_synced_info": "Siste innlegg synkronisert {{time}}, tavlen kan være offline og publisering kan feile.",
   "newer_than": "nyere enn",
   "no_threads": "Ingen tråder",
   "unblock": "Fjern blokkering",
@@ -282,5 +282,7 @@
   "node_stats": "Node-statistikk",
   "loading_default_boards": "Laster standard tavleliste",
   "loading_subscriptions": "Laster abonnementer",
-  "create_board": "Lag tavle"
+  "create_board": "Lag tavle",
+  "enter_board_address": "Skriv inn hvilken som helst brettadresse",
+  "board_not_reachable": "Brettet er ikke tilgjengelig"
 }

@@ -164,8 +164,8 @@
   "creation_date": "Datum vytvoření",
   "sort_by": "Řadit podle",
   "time_filter": "Filtr času",
-  "subplebbit_offline_info": "Subplebbit může být offline a zveřejnění může selhat.",
-  "posts_last_synced_info": "Poslední synchronizace příspěvků {{time}}, subplebbit může být offline a zveřejňování může selhat.",
+  "subplebbit_offline_info": "Deska může být offline a publikování může selhat",
+  "posts_last_synced_info": "Poslední příspěvky synchronizovány {{time}}, deska může být offline a publikování může selhat.",
   "newer_than": "novější než",
   "no_threads": "Žádná témata",
   "unblock": "Odblokovat",
@@ -282,5 +282,7 @@
   "node_stats": "Statistiky uzlu",
   "loading_default_boards": "Načítání seznamu výchozích tabulí",
   "loading_subscriptions": "Načítání odběrů",
-  "create_board": "Vytvořit desku"
+  "create_board": "Vytvořit desku",
+  "enter_board_address": "Zadejte adresu libovolné desky",
+  "board_not_reachable": "Deska není dostupná"
 }

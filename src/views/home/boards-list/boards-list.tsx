@@ -3,17 +3,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { Subplebbit, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
-import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
 import { useDefaultSubplebbitsState } from '../../../hooks/use-default-subplebbits';
+import { useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits-tags';
 import useIsMobile from '../../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
-import styles from '../home.module.css';
-import { nsfwTags } from '../home';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
+import Tooltip from '../../../components/tooltip';
+import styles from './boards-list.module.css';
+import { nsfwTags } from '../home';
 
 const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
   const { t } = useTranslation();
-  const { address, title, tags } = subplebbit || {};
+  const { address, tags } = subplebbit || {};
   const nsfwTag = tags?.find((tag: string) => nsfwTags.includes(tag));
 
   let stats = useSubplebbitStats({ subplebbitAddress: address });
@@ -24,22 +25,40 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
   const displayAddress = address && Plebbit.getShortAddress(address);
   const showOfflineIcon = address && (isOffline || isOnlineStatusLoading);
 
+  const title =
+    subplebbitData?.title ||
+    (subplebbitData?.updatedAt ? (
+      displayAddress.endsWith('.eth') || displayAddress.endsWith('.sol') ? (
+        displayAddress.slice(0, -4)
+      ) : (
+        displayAddress
+      )
+    ) : (
+      <span className={styles.loadingBoardCellValue}>{isOffline ? t('board_not_reachable') : t('loading_board')}</span>
+    ));
+
   return (
-    <tr className={styles.subplebbit} key={address}>
-      <td className={styles.boardAddress}>
+    <tr key={address}>
+      <td>
         <p className={styles.boardCell}>
-          {showOfflineIcon && <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />}
           <Link to={`/p/${address}`}>{displayAddress}</Link>
           {nsfwTag && <span className={styles.nsfw}> ({t(nsfwTag)})</span>}
+          {showOfflineIcon && (
+            <span className={styles.offlineIconContainer}>
+              <Tooltip content={offlineTitle}>
+                <span className={`${styles.offlineIcon} ${offlineIconClass}`} />
+              </Tooltip>
+            </span>
+          )}
         </p>
       </td>
-      <td className={styles.boardTitle}>
-        <p className={styles.boardCell}>{title || displayAddress}</p>
+      <td>
+        <p className={styles.boardCell}>{title}</p>
       </td>
       {!isMobile && (
         <>
           <td className={styles.boardPPH}>
-            <p className={styles.boardCell}>{stats.hourPostCount ?? '?'}</p>
+            <p className={styles.boardCell}>{stats.hourPostCount ?? <span className={styles.loadingBoardCellValue}>?</span>}</p>
           </td>
           <td className={styles.boardTags}>
             <p className={styles.boardCell}>

@@ -64,7 +64,6 @@ const useStateString = (commentOrSubplebbit: CommentOrSubplebbit): string | unde
           .replace('ipfs', 'post')
           .replace('ipns', 'subplebbit')
           .replace('fetching', 'loading')
-          .replace('resolving', 'loading')
           .replace('subplebbit subplebbit', 'board')
           .replace('loading subplebbit', 'loading board');
       }

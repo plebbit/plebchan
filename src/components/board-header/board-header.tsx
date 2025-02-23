@@ -7,6 +7,7 @@ import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useIsMobile from '../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 import { shouldShowSnow } from '../../lib/snow';
+import Tooltip from '../tooltip';
 
 const totalBanners = 61;
 
@@ -47,7 +48,11 @@ const BoardHeader = () => {
       <div className={styles.boardTitle}>
         {title || (shortAddress ? (shortAddress.endsWith('.eth') || shortAddress.endsWith('.sol') ? shortAddress.slice(0, -4) : shortAddress) : subplebbitAddress)}
         {(isOffline || isOnlineStatusLoading) && !isInAllView && !isInSubscriptionsView && (
-          <span className={`${styles.offlineIcon} ${offlineIconClass}`} title={offlineTitle} />
+          <span className={styles.offlineIconWrapper}>
+            <Tooltip content={offlineTitle}>
+              <span className={`${styles.offlineIcon} ${offlineIconClass}`} />
+            </Tooltip>
+          </span>
         )}
       </div>
       <div className={styles.boardSubtitle}>{subtitle}</div>

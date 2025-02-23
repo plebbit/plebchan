@@ -164,8 +164,8 @@
   "creation_date": "Luomispäivämäärä",
   "sort_by": "Järjestä",
   "time_filter": "Aikasuodatin",
-  "subplebbit_offline_info": "Subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua.",
-  "posts_last_synced_info": "Viimeksi synkronoidut viestit {{time}}, subplebbit voi olla offline-tilassa, ja julkaisu voi epäonnistua.",
+  "subplebbit_offline_info": "Taulu voi olla offline-tilassa ja julkaiseminen voi epäonnistua",
+  "posts_last_synced_info": "Viimeisimmät julkaisut synkronoitu {{time}}, taulu saattaa olla offline-tilassa ja julkaiseminen saattaa epäonnistua.",
   "newer_than": "uudempi kuin",
   "no_threads": "Ei ketjuja",
   "unblock": "Poista estäminen",
@@ -282,5 +282,7 @@
   "node_stats": "Solmun tilastot",
   "loading_default_boards": "Ladataan oletuslautalistaa",
   "loading_subscriptions": "Ladataan tilauksia",
-  "create_board": "Luo taulu"
+  "create_board": "Luo taulu",
+  "enter_board_address": "Syötä mikä tahansa taulun osoite",
+  "board_not_reachable": "Taulua ei ole käytettävissä"
 }

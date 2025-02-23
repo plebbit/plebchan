@@ -164,8 +164,8 @@
   "creation_date": "תאריך יצירה",
   "sort_by": "מיין לפי",
   "time_filter": "סינון זמן",
-  "subplebbit_offline_info": "הסאבפלביט עשוי להיות לא מקוון והפרסום עשוי להכשל.",
-  "posts_last_synced_info": "הפוסטים סונכרנו לאחרונה {{time}}, הסאבפלביט עשוי להיות לא מקוון והפרסום עשוי להכשל.",
+  "subplebbit_offline_info": "הפורום עשוי להיות לא זמין וייתכן שפרסום ייכשל",
+  "posts_last_synced_info": "הפוסטים סונכרנו לאחרונה {{time}}, ייתכן שהפורום לא זמין ופרסום עשוי להיכשל.",
   "newer_than": "חדש יותר מ",
   "no_threads": "אין נושאים",
   "unblock": "בטל חסימה",
@@ -282,5 +282,7 @@
   "node_stats": "סטטיסטיקות צומת",
   "loading_default_boards": "טוען את רשימת הלוחות ברירת המחדל",
   "loading_subscriptions": "טוען מנויים",
-  "create_board": "צור לוח"
+  "create_board": "צור לוח",
+  "enter_board_address": "הזן כתובת לוח כלשהי",
+  "board_not_reachable": "הלוח לא נגיש"
 }

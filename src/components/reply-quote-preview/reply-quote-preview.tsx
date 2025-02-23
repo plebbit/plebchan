@@ -137,7 +137,8 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         onMouseLeave={() => handleMouseLeave(backlinkReply?.cid)}
         onClick={(e) => handleClick(e, backlinkReply?.cid, backlinkReply?.subplebbitAddress)}
       >
-        c/{backlinkReply?.shortCid}
+        {'>>'}
+        {backlinkReply?.shortCid}
       </Link>
       {hoveredCid === backlinkReply?.cid &&
         outOfViewCid === backlinkReply?.cid &&
@@ -164,7 +165,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
         onClick={(e) => handleClick(e, quotelinkReply?.cid, quotelinkReply?.subplebbitAddress)}
       >
-        {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
+        {quotelinkReply?.shortCid && `>>${quotelinkReply?.shortCid}`}
         {(quotelinkReply?.author?.address === account?.author?.address || quotelinkReply?.author?.address === threadSigner?.address) && ' (You)'}
       </Link>
       <br />
@@ -239,7 +240,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseOver={() => handleMouseOver(backlinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(backlinkReply?.cid)}
       >
-        {backlinkReply?.shortCid && `c/${backlinkReply?.shortCid}`}
+        {backlinkReply?.shortCid && `>>${backlinkReply?.shortCid}`}
       </span>
       {backlinkReply?.shortCid && (
         <Link
@@ -274,7 +275,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         onMouseOver={() => handleMouseOver(quotelinkReply?.cid)}
         onMouseLeave={() => handleMouseLeave(quotelinkReply?.cid)}
       >
-        {quotelinkReply?.shortCid && `c/${quotelinkReply?.shortCid}`}
+        {quotelinkReply?.shortCid && `>>${quotelinkReply?.shortCid}`}
         {(quotelinkReply?.author?.address === account?.author?.address || quotelinkReply?.author?.address === threadSigner?.address) && ' (You)'}
       </span>
       {quotelinkReply?.shortCid && (

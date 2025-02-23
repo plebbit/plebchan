@@ -164,8 +164,8 @@
   "creation_date": "تاريخ الإنشاء",
   "sort_by": "ترتيب حسب",
   "time_filter": "تصفية الوقت",
-  "subplebbit_offline_info": "قد يكون الرد على الرسائل غير متاح حالياً وقد تفشل النشر.",
-  "posts_last_synced_info": "آخر تزامن الرسائل {{time}}، قد يكون الرد على الرسائل غير متاح حالياً وقد تفشل النشر.",
+  "subplebbit_offline_info": "قد يكون المنتدى غير متصل وقد تفشل النشر",
+  "posts_last_synced_info": "آخر المشاركات تم مزامنتها {{time}} ، قد يكون المنتدى غير متصل وقد تفشل النشر.",
   "newer_than": "أحدث من",
   "no_threads": "لا توجد مواضيع",
   "unblock": "إلغاء الحظر",
@@ -282,5 +282,7 @@
   "node_stats": "إحصائيات العقدة",
   "loading_default_boards": "جار تحميل قائمة اللوحات الافتراضية",
   "loading_subscriptions": "جارٍ تحميل الاشتراكات",
-  "create_board": "إنشاء لوحة"
+  "create_board": "إنشاء لوحة",
+  "enter_board_address": "أدخل عنوان أي لوحة",
+  "board_not_reachable": "اللوحة غير قابلة للوصول"
 }

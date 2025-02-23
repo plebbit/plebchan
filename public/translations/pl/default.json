@@ -164,8 +164,8 @@
   "creation_date": "Data utworzenia",
   "sort_by": "Sortuj według",
   "time_filter": "Filtr czasu",
-  "subplebbit_offline_info": "Subplebbit może być offline, a publikacja może się nie powieść.",
-  "posts_last_synced_info": "Ostatnio zsynchronizowane posty {{time}}, subplebbit może być offline, a publikacja może się nie powieść.",
+  "subplebbit_offline_info": "Tablica może być offline, a publikacja może nie udać się",
+  "posts_last_synced_info": "Ostatnie posty zsynchronizowane {{time}}, tablica może być offline, a publikacja może nie powieść się.",
   "newer_than": "nowsze niż",
   "no_threads": "Brak wątków",
   "unblock": "Odblokuj",
@@ -282,5 +282,7 @@
   "node_stats": "Statystyki węzła",
   "loading_default_boards": "Ładowanie domyślnej listy tablic",
   "loading_subscriptions": "Ładowanie subskrypcji",
-  "create_board": "Utwórz tablicę"
+  "create_board": "Utwórz tablicę",
+  "enter_board_address": "Wprowadź dowolny adres tablicy",
+  "board_not_reachable": "Tablica jest niedostępna"
 }

@@ -164,8 +164,8 @@
   "creation_date": "Létrehozás dátuma",
   "sort_by": "Rendezés",
   "time_filter": "Idő szűrő",
-  "subplebbit_offline_info": "A subplebbit offline lehet, és a közzététel sikertelen lehet.",
-  "posts_last_synced_info": "Legutóbb szinkronizált bejegyzések {{time}}, a subplebbit offline lehet, és a közzététel sikertelen lehet.",
+  "subplebbit_offline_info": "A tábla offline lehet, és a közzététel sikertelen lehet",
+  "posts_last_synced_info": "Legutóbbi bejegyzések szinkronizálva {{time}}, a tábla offline lehet, és a közzététel sikertelen lehet.",
   "newer_than": "újabb, mint",
   "no_threads": "Nincsenek témák",
   "unblock": "Blokkolás feloldása",
@@ -282,5 +282,7 @@
   "node_stats": "Csomópont statisztikák",
   "loading_default_boards": "Alapértelmezett táblák listájának betöltése",
   "loading_subscriptions": "Előfizetések betöltése",
-  "create_board": "Hozzon létre táblát"
+  "create_board": "Hozzon létre táblát",
+  "enter_board_address": "Adjon meg bármilyen táblázat címet",
+  "board_not_reachable": "A tábla nem elérhető"
 }

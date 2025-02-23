@@ -164,8 +164,8 @@
   "creation_date": "Creatiedatum",
   "sort_by": "Sorteer op",
   "time_filter": "Tijdsfilter",
-  "subplebbit_offline_info": "De subplebbit kan offline zijn en publiceren kan mislukken.",
-  "posts_last_synced_info": "Laatste keer gesynchroniseerde berichten {{time}}, de subplebbit kan offline zijn en publiceren kan mislukken.",
+  "subplebbit_offline_info": "Het bord kan offline zijn en publicatie kan mislukken",
+  "posts_last_synced_info": "Laatste berichten gesynchroniseerd {{time}}, het bord is mogelijk offline en publiceren kan mislukken.",
   "newer_than": "nieuwer dan",
   "no_threads": "Geen threads",
   "unblock": "Deblokkeren",
@@ -282,5 +282,7 @@
   "node_stats": "Node-statistieken",
   "loading_default_boards": "Laden van de standaard boardlijst",
   "loading_subscriptions": "Abonnementen laden",
-  "create_board": "Maak bord"
+  "create_board": "Maak bord",
+  "enter_board_address": "Voer een willekeurig bordadres in",
+  "board_not_reachable": "Bord is niet bereikbaar"
 }

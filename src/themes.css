@@ -196,6 +196,9 @@
 
   /* stats */
   --stats-font-size: 11px;
+
+  /* tooltip */
+  --tooltip-background-color: #181f24;
   
   /* topbar */
   --topbar-font-size: 9pt;
@@ -406,6 +409,9 @@
   /* stats */
   --stats-font-size: 11px;
 
+  /* tooltip */
+  --tooltip-background-color: #181f24;
+
   /* topbar */
   --topbar-font-size: 9pt;
   --topbar-separator-color: #89a;
@@ -583,6 +589,9 @@
 
   /* stats */
   --stats-font-size: 10pt;
+
+  /* tooltip */
+  --tooltip-background-color: #181f24;
 
   /* topbar */
   --topbar-font-size: 11pt;
@@ -768,6 +777,9 @@
 
   /* stats */
   --stats-font-size: 10pt;
+
+  /* tooltip */
+  --tooltip-background-color: #181f24;
 
   /* topbar */
   --topbar-font-size: 11pt;
@@ -988,6 +1000,9 @@
   /* stats */
   --stats-font-size: 11px;
 
+  /* tooltip */
+  --tooltip-background-color: #000;
+
   /* topbar */
   --topbar-font-size: 9pt;
   --topbar-separator-color: #c5c8c6;
@@ -1187,6 +1202,9 @@
 
   /* stats */
   --stats-font-size: 11px;
+
+  /* tooltip */
+  --tooltip-background-color: #181f24;
 
   /* topbar */
   --topbar-font-size: 9pt;

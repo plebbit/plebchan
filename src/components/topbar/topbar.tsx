@@ -1,20 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAccount, useAccountComment } from '@plebbit/plebbit-react-hooks';
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import { useAccount, useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import styles from './topbar.module.css';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import _, { debounce } from 'lodash';
-import { TimeFilter } from '../board-buttons';
 import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
+import { TimeFilter } from '../board-buttons';
+import styles from './topbar.module.css';
+import _, { debounce } from 'lodash';
 
 const SearchBar = ({ setShowSearchBar }: { setShowSearchBar: (show: boolean) => void }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const searchBarRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const placeholder = `"community.eth/.sol" / "12D3KooW..."`;
+  const placeholder = _.lowerCase(t('enter_board_address'));
 
   useEffect(() => {
     searchInputRef.current?.focus();
