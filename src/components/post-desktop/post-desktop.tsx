@@ -407,7 +407,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         )}
       </div>
       {!isInPendingPostView &&
-      !isDescription &&
+      (!isDescription || (isDescription && !subplebbit?.updatedAt)) &&
       !isRules &&
       stateString &&
       stateString !== 'Failed' &&
