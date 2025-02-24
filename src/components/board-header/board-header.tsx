@@ -42,7 +42,7 @@ const BoardHeader = () => {
     <div className={`${styles.content} ${shouldShowSnow() ? styles.garland : ''}`}>
       {!useIsMobile() && (
         <div className={styles.bannerCnt}>
-          <ImageBanner key={isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : address} />
+          <ImageBanner key={isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress} />
         </div>
       )}
       <div className={styles.boardTitle}>
