@@ -9,7 +9,7 @@ import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 import { shouldShowSnow } from '../../lib/snow';
 import Tooltip from '../tooltip';
 
-const totalBanners = 61;
+const totalBanners = 62;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
