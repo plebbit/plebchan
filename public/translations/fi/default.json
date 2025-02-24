@@ -284,5 +284,7 @@
   "loading_subscriptions": "Ladataan tilauksia",
   "create_board": "Luo taulu",
   "enter_board_address": "Syötä mikä tahansa taulun osoite",
-  "board_not_reachable": "Taulua ei ole käytettävissä"
+  "board_not_reachable": "Taulua ei ole käytettävissä",
+  "cannot_edit_thread": "Et voi muokata tätä ketjua",
+  "cannot_edit_reply": "Et voi muokata tätä vastausta"
 }

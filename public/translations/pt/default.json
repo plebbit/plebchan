@@ -284,5 +284,7 @@
   "loading_subscriptions": "Carregando assinaturas",
   "create_board": "Criar quadro",
   "enter_board_address": "Digite qualquer endereço de quadro",
-  "board_not_reachable": "O quadro não é acessível"
+  "board_not_reachable": "O quadro não é acessível",
+  "cannot_edit_thread": "Você não pode editar este tópico",
+  "cannot_edit_reply": "Você não pode editar esta resposta"
 }

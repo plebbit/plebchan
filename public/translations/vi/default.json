@@ -284,5 +284,7 @@
   "loading_subscriptions": "Đang tải đăng ký",
   "create_board": "Tạo bảng",
   "enter_board_address": "Nhập bất kỳ địa chỉ bảng nào",
-  "board_not_reachable": "Bảng không thể truy cập"
+  "board_not_reachable": "Bảng không thể truy cập",
+  "cannot_edit_thread": "Bạn không thể chỉnh sửa chủ đề này",
+  "cannot_edit_reply": "Bạn không thể chỉnh sửa phản hồi này"
 }

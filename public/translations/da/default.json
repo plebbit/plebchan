@@ -284,5 +284,7 @@
   "loading_subscriptions": "Indlæser abonnementer",
   "create_board": "Opret tavle",
   "enter_board_address": "Indtast enhver tavleadresse",
-  "board_not_reachable": "Boardet er ikke tilgængeligt"
+  "board_not_reachable": "Boardet er ikke tilgængeligt",
+  "cannot_edit_thread": "Du kan ikke redigere dette emne",
+  "cannot_edit_reply": "Du kan ikke redigere dette svar"
 }

@@ -284,5 +284,7 @@
   "loading_subscriptions": "Lade Abonnements",
   "create_board": "Board erstellen",
   "enter_board_address": "Geben Sie eine beliebige Board-Adresse ein",
-  "board_not_reachable": "Board ist nicht erreichbar"
+  "board_not_reachable": "Board ist nicht erreichbar",
+  "cannot_edit_thread": "Sie können dieses Thema nicht bearbeiten",
+  "cannot_edit_reply": "Sie können diese Antwort nicht bearbeiten"
 }

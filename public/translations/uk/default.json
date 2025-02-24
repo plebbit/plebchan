@@ -284,5 +284,7 @@
   "loading_subscriptions": "Завантаження підписок",
   "create_board": "Створити дошку",
   "enter_board_address": "Введіть будь-яку адресу дошки",
-  "board_not_reachable": "Дошка недоступна"
+  "board_not_reachable": "Дошка недоступна",
+  "cannot_edit_thread": "Ви не можете редагувати цю тему",
+  "cannot_edit_reply": "Ви не можете редагувати цю відповідь"
 }

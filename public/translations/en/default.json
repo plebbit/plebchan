@@ -284,5 +284,7 @@
   "loading_subscriptions": "Loading subscriptions",
   "create_board": "Create Board",
   "enter_board_address": "Enter any board address",
-  "board_not_reachable": "Board is not reachable"
+  "board_not_reachable": "Board is not reachable",
+  "cannot_edit_thread": "You cannot edit this thread",
+  "cannot_edit_reply": "You cannot edit this reply"
 }

@@ -284,5 +284,7 @@
   "loading_subscriptions": "جارٍ تحميل الاشتراكات",
   "create_board": "إنشاء لوحة",
   "enter_board_address": "أدخل عنوان أي لوحة",
-  "board_not_reachable": "اللوحة غير قابلة للوصول"
+  "board_not_reachable": "اللوحة غير قابلة للوصول",
+  "cannot_edit_thread": "لا يمكنك تعديل هذا الموضوع",
+  "cannot_edit_reply": "لا يمكنك تعديل هذه الردود"
 }

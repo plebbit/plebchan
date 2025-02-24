@@ -284,5 +284,7 @@
   "loading_subscriptions": "سبسکرپشن لوڈ ہو رہی ہے",
   "create_board": "بورڈ بنائیں",
   "enter_board_address": "کسی بھی بورڈ کا پتہ درج کریں",
-  "board_not_reachable": "بورڈ قابل رسائی نہیں ہے"
+  "board_not_reachable": "بورڈ قابل رسائی نہیں ہے",
+  "cannot_edit_thread": "آپ اس تھریڈ کو ایڈٹ نہیں کر سکتے",
+  "cannot_edit_reply": "آپ اس جواب کو ایڈٹ نہیں کر سکتے"
 }

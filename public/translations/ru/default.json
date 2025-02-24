@@ -284,5 +284,7 @@
   "loading_subscriptions": "Загрузка подписок",
   "create_board": "Создать доску",
   "enter_board_address": "Введите любой адрес доски",
-  "board_not_reachable": "Доска недоступна"
+  "board_not_reachable": "Доска недоступна",
+  "cannot_edit_thread": "Вы не можете редактировать эту тему",
+  "cannot_edit_reply": "Вы не можете отредактировать этот ответ"
 }

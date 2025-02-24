@@ -284,5 +284,7 @@
   "loading_subscriptions": "Laddar prenumerationer",
   "create_board": "Skapa tavla",
   "enter_board_address": "Ange vilken som helst brädets adress",
-  "board_not_reachable": "Tavlan är inte tillgänglig"
+  "board_not_reachable": "Tavlan är inte tillgänglig",
+  "cannot_edit_thread": "Du kan inte redigera denna tråd",
+  "cannot_edit_reply": "Du kan inte redigera detta svar"
 }

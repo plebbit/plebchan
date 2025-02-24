@@ -284,5 +284,7 @@
   "loading_subscriptions": "Caricamento abbonamenti",
   "create_board": "Crea Board",
   "enter_board_address": "Inserisci indirizzo di qualsiasi board",
-  "board_not_reachable": "Board non raggiungibile"
+  "board_not_reachable": "Board non raggiungibile",
+  "cannot_edit_thread": "Non puoi modificare questa discussione",
+  "cannot_edit_reply": "Non puoi modificare questa risposta"
 }

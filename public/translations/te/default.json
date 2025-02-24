@@ -284,5 +284,7 @@
   "loading_subscriptions": "సబ్‌స్క్రిప్షన్‌లు లోడ్ అవుతున్నాయి",
   "create_board": "బోర్డ్ రూపొందించండి",
   "enter_board_address": "ఏదైనా బోర్డ్ అడ్రస్ నమోదు చేయండి",
-  "board_not_reachable": "బోర్డు అందుబాటులో లేదు"
+  "board_not_reachable": "బోర్డు అందుబాటులో లేదు",
+  "cannot_edit_thread": "మీరు ఈ థ్రెడ్‌ని ఎడిట్ చేయలేరు",
+  "cannot_edit_reply": "మీరు ఈ రిప్లయ్‌ను ఎడిట్ చేయలేరు"
 }

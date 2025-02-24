@@ -284,5 +284,7 @@
   "loading_subscriptions": "Načítání odběrů",
   "create_board": "Vytvořit desku",
   "enter_board_address": "Zadejte adresu libovolné desky",
-  "board_not_reachable": "Deska není dostupná"
+  "board_not_reachable": "Deska není dostupná",
+  "cannot_edit_thread": "Nemůžete upravit toto vlákno",
+  "cannot_edit_reply": "Tento příspěvek nelze upravit"
 }

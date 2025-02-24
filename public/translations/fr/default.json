@@ -284,5 +284,7 @@
   "loading_subscriptions": "Chargement des abonnements",
   "create_board": "Créer un tableau",
   "enter_board_address": "Entrez n'importe quelle adresse du forum",
-  "board_not_reachable": "Le tableau n'est pas accessible"
+  "board_not_reachable": "Le tableau n'est pas accessible",
+  "cannot_edit_thread": "Vous ne pouvez pas modifier ce fil",
+  "cannot_edit_reply": "Vous ne pouvez pas modifier cette réponse"
 }

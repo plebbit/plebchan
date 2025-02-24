@@ -284,5 +284,7 @@
   "loading_subscriptions": "Po ngarkohen abonimet",
   "create_board": "Krijo bord",
   "enter_board_address": "Shkruani çdo adresë bordi",
-  "board_not_reachable": "Tabela nuk është e arritshme"
+  "board_not_reachable": "Tabela nuk është e arritshme",
+  "cannot_edit_thread": "Nuk mund ta redaktoni këtë temë",
+  "cannot_edit_reply": "Nuk mund ta redaktoni këtë përgjigje"
 }

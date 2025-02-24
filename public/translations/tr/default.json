@@ -284,5 +284,7 @@
   "loading_subscriptions": "Abonelikler yükleniyor",
   "create_board": "Tahta oluştur",
   "enter_board_address": "Herhangi bir tahta adresini girin",
-  "board_not_reachable": "Board erişilemez"
+  "board_not_reachable": "Board erişilemez",
+  "cannot_edit_thread": "Bu başlığı düzenleyemezsiniz",
+  "cannot_edit_reply": "Bu yanıtı düzenleyemezsiniz"
 }

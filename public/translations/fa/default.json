@@ -284,5 +284,7 @@
   "loading_subscriptions": "در حال بارگذاری اشترا‌ک‌ها",
   "create_board": "ایجاد تابلو",
   "enter_board_address": "آدرس هر تابلو را وارد کنید",
-  "board_not_reachable": "تابلو قابل دسترسی نیست"
+  "board_not_reachable": "تابلو قابل دسترسی نیست",
+  "cannot_edit_thread": "شما نمی‌توانید این موضوع را ویرایش کنید",
+  "cannot_edit_reply": "شما نمی‌توانید این پاسخ را ویرایش کنید"
 }

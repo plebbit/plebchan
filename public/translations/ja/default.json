@@ -284,5 +284,7 @@
   "loading_subscriptions": "購読を読み込み中",
   "create_board": "ボードを作成",
   "enter_board_address": "任意のボードアドレスを入力してください",
-  "board_not_reachable": "ボードにアクセスできません"
+  "board_not_reachable": "ボードにアクセスできません",
+  "cannot_edit_thread": "このスレッドを編集できません",
+  "cannot_edit_reply": "この返信は編集できません"
 }

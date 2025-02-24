@@ -284,5 +284,7 @@
   "loading_subscriptions": "Cargando suscripciones",
   "create_board": "Crear tablero",
   "enter_board_address": "Ingrese cualquier dirección de tablero",
-  "board_not_reachable": "El tablero no es accesible"
+  "board_not_reachable": "El tablero no es accesible",
+  "cannot_edit_thread": "No puedes editar este hilo",
+  "cannot_edit_reply": "No puedes editar esta respuesta"
 }

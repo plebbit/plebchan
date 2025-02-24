@@ -284,5 +284,7 @@
   "loading_subscriptions": "구독 로딩 중",
   "create_board": "보드 만들기",
   "enter_board_address": "어떤 보드 주소든 입력하세요",
-  "board_not_reachable": "보드를 찾을 수 없습니다"
+  "board_not_reachable": "보드를 찾을 수 없습니다",
+  "cannot_edit_thread": "이 스레드를 편집할 수 없습니다",
+  "cannot_edit_reply": "이 답글을 수정할 수 없습니다"
 }

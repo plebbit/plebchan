@@ -284,5 +284,7 @@
   "loading_subscriptions": "Ładowanie subskrypcji",
   "create_board": "Utwórz tablicę",
   "enter_board_address": "Wprowadź dowolny adres tablicy",
-  "board_not_reachable": "Tablica jest niedostępna"
+  "board_not_reachable": "Tablica jest niedostępna",
+  "cannot_edit_thread": "Nie możesz edytować tego wątku",
+  "cannot_edit_reply": "Nie możesz edytować tej odpowiedzi"
 }

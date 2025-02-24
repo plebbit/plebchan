@@ -284,5 +284,7 @@
   "loading_subscriptions": "Laster abonnementer",
   "create_board": "Lag tavle",
   "enter_board_address": "Skriv inn hvilken som helst brettadresse",
-  "board_not_reachable": "Brettet er ikke tilgjengelig"
+  "board_not_reachable": "Brettet er ikke tilgjengelig",
+  "cannot_edit_thread": "Du kan ikke redigere denne tråden",
+  "cannot_edit_reply": "Du kan ikke redigere dette svaret"
 }

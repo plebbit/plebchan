@@ -284,5 +284,7 @@
   "loading_subscriptions": "加载订阅",
   "create_board": "创建板块",
   "enter_board_address": "输入任何板块地址",
-  "board_not_reachable": "无法访问板块"
+  "board_not_reachable": "无法访问板块",
+  "cannot_edit_thread": "您无法编辑此线程",
+  "cannot_edit_reply": "您无法编辑此回复"
 }

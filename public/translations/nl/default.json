@@ -284,5 +284,7 @@
   "loading_subscriptions": "Abonnementen laden",
   "create_board": "Maak bord",
   "enter_board_address": "Voer een willekeurig bordadres in",
-  "board_not_reachable": "Bord is niet bereikbaar"
+  "board_not_reachable": "Bord is niet bereikbaar",
+  "cannot_edit_thread": "Je kunt deze thread niet bewerken",
+  "cannot_edit_reply": "Je kunt deze reactie niet bewerken"
 }

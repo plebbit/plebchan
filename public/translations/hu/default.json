@@ -284,5 +284,7 @@
   "loading_subscriptions": "Előfizetések betöltése",
   "create_board": "Hozzon létre táblát",
   "enter_board_address": "Adjon meg bármilyen táblázat címet",
-  "board_not_reachable": "A tábla nem elérhető"
+  "board_not_reachable": "A tábla nem elérhető",
+  "cannot_edit_thread": "Nem szerkesztheted ezt a szálat",
+  "cannot_edit_reply": "Nem szerkesztheted ezt a választ"
 }

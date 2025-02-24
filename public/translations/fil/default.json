@@ -284,5 +284,7 @@
   "loading_subscriptions": "Naglo-load ng mga subscription",
   "create_board": "Gumawa ng board",
   "enter_board_address": "Ipasok ang anumang address ng board",
-  "board_not_reachable": "Hindi maa-access ang board"
+  "board_not_reachable": "Hindi maa-access ang board",
+  "cannot_edit_thread": "Hindi mo maaaring i-edit ang thread na ito",
+  "cannot_edit_reply": "Hindi mo maaaring i-edit ang reply na ito"
 }

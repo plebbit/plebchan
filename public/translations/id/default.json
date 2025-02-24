@@ -284,5 +284,7 @@
   "loading_subscriptions": "Memuat langganan",
   "create_board": "Buat papan",
   "enter_board_address": "Masukkan alamat papan apa saja",
-  "board_not_reachable": "Papan tidak dapat dijangkau"
+  "board_not_reachable": "Papan tidak dapat dijangkau",
+  "cannot_edit_thread": "Anda tidak dapat mengedit thread ini",
+  "cannot_edit_reply": "Anda tidak dapat mengedit balasan ini"
 }

@@ -284,5 +284,7 @@
   "loading_subscriptions": "सदस्यता लोड होत आहे",
   "create_board": "बोर्ड तयार करा",
   "enter_board_address": "कोणत्याही बोर्ड पत्त्याची नोंद करा",
-  "board_not_reachable": "बोर्ड उपलब्ध नाही"
+  "board_not_reachable": "बोर्ड उपलब्ध नाही",
+  "cannot_edit_thread": "तुम्ही हा थ्रेड संपादित करू शकत नाही",
+  "cannot_edit_reply": "तुम्ही हा प्रतिसाद संपादित करू शकत नाही"
 }

@@ -284,5 +284,7 @@
   "loading_subscriptions": "সাবস্ক্রিপশন লোড হচ্ছে",
   "create_board": "বোর্ড তৈরি করুন",
   "enter_board_address": "যেকোনো বোর্ডের ঠিকানা লিখুন",
-  "board_not_reachable": "বোর্ডটি অ্যাক্সেসযোগ্য নয়"
+  "board_not_reachable": "বোর্ডটি অ্যাক্সেসযোগ্য নয়",
+  "cannot_edit_thread": "আপনি এই থ্রেডটি সম্পাদনা করতে পারবেন না",
+  "cannot_edit_reply": "আপনি এই রিপ্লাইটি সম্পাদনা করতে পারবেন না"
 }
