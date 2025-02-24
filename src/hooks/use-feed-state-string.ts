@@ -63,7 +63,7 @@ const useFeedStateString = (subplebbitAddresses?: string[]): string | undefined 
       states['fetching-ipfs']?.clientUrls.forEach((clientUrl) => clientHosts.add(getClientHost(clientUrl)));
 
       if (clientHosts.size) {
-        stateString += 'loading ';
+        stateString += 'downloading ';
         if (states['fetching-ipns']) {
           stateString += `${states['fetching-ipns'].subplebbitAddresses.length} boards`;
         }
