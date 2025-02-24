@@ -71,7 +71,7 @@ const useFeedStateString = (subplebbitAddresses?: string[]): string | undefined 
           if (states['fetching-ipns']) {
             stateString += ', ';
           }
-          stateString += `${states['fetching-ipfs'].subplebbitAddresses.length} posts`;
+          stateString += `${states['fetching-ipfs'].subplebbitAddresses.length} threads`;
         }
         if (pagesStatesSubplebbitAddresses.size) {
           if (states['fetching-ipns'] || states['fetching-ipfs']) {

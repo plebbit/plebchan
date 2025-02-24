@@ -61,7 +61,7 @@ const useStateString = (commentOrSubplebbit: CommentOrSubplebbit): string | unde
       if (stateString) {
         stateString = stateString
           .replaceAll('-', ' ')
-          .replace('ipfs', 'post')
+          .replace('ipfs', 'thread')
           .replace('ipns', 'subplebbit')
           .replace('fetching', 'downloading')
           .replace('subplebbit subplebbit', 'board')
