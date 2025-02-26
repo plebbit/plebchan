@@ -56,16 +56,13 @@ const Board = () => {
   const { sortType } = useSortingStore();
   const { timeFilterSeconds, timeFilterName } = useTimeFilter();
 
-  const feedOptions: any = useMemo(
-    () => ({
-      subplebbitAddresses,
-      sortType,
-      postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
-      ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
-      filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
-    }),
-    [subplebbitAddresses, sortType, timeFilterSeconds, isInAllView, isInSubscriptionsView, hideThreadsWithoutImages],
-  );
+  const feedOptions = {
+    subplebbitAddresses,
+    sortType,
+    postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
+    ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
+    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+  };
 
   const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
   const { accountComments } = useAccountComments();
