@@ -8,7 +8,7 @@ import { shouldShowSnow } from '../../lib/snow';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import useFeedStateString from '../../hooks/use-feed-state-string';
+import { useFeedStateString } from '../../hooks/use-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
