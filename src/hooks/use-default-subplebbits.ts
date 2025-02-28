@@ -13,6 +13,7 @@ export interface MultisubSubplebbit {
   tags?: string[];
   features?: string[];
   plebchanAutoSubscribe?: boolean;
+  lowUptime?: boolean;
 }
 
 export interface DefaultSubplebbitsState {
@@ -51,15 +52,17 @@ export const useDefaultSubplebbits = () => {
           return res.json();
         });
 
-        cacheSubplebbits = multisub.subplebbits;
+        const filteredSubplebbits = multisub.subplebbits.filter((sub: MultisubSubplebbit) => !sub.lowUptime);
+
+        cacheSubplebbits = filteredSubplebbits;
 
         // Cache auto-subscribe addresses when we fetch subplebbits
-        cacheAutoSubscribeAddresses = multisub.subplebbits
+        cacheAutoSubscribeAddresses = filteredSubplebbits
           .filter((sub: MultisubSubplebbit) => sub.plebchanAutoSubscribe && sub.address)
           .map((sub: MultisubSubplebbit) => sub.address);
 
         setState({
-          subplebbits: multisub.subplebbits,
+          subplebbits: filteredSubplebbits,
           loading: false,
           error: null,
         });
@@ -77,6 +80,8 @@ export const useDefaultSubplebbits = () => {
   // To maintain backward compatibility, return the subplebbits array directly
   return cacheSubplebbits || state.subplebbits;
 };
+
+export const getAutoSubscribeAddresses = () => cacheAutoSubscribeAddresses || [];
 
 export const useDefaultSubplebbitsState = () => {
   const [state, setState] = useState<DefaultSubplebbitsState>({
@@ -154,4 +159,16 @@ export const useMultisubMetadata = () => {
   return cacheMetadata || metadata;
 };
 
-export const getAutoSubscribeAddresses = () => cacheAutoSubscribeAddresses || [];
+const getUniqueTags = (multisub: any) => {
+  const allTags = new Set<string>();
+  Object.values(multisub).forEach((sub: any) => {
+    if (sub?.tags?.length) {
+      sub.tags.forEach((tag: string) => allTags.add(tag));
+    }
+  });
+  return Array.from(allTags).sort();
+};
+
+export const useDefaultSubplebbitTags = (subplebbits: any) => {
+  return useMemo(() => getUniqueTags(subplebbits), [subplebbits]);
+};
