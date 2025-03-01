@@ -59,7 +59,7 @@
   "comment_too_long": "Yorum çok uzun. <1>Buraya tıklayın</1> tam metni görüntülemek için.",
   "replies_omitted": "{{repliesCount}} yanıt göz ardı edildi. <1>Buraya tıklayın</1> görüntülemek için.",
   "replies_and_links_omitted": "{{repliesCount}} yanıt ve {{linksCount}} bağlantı göz ardı edildi. <1>Buraya tıklayın</1> görüntülemek için.",
-  "thread_closed_alert": "Bu konu kapatılmıştır",
+  "this_thread_is_closed": "Bu konu kapatılmıştır",
   "reply_to_cid": "{{cid}}’ye yanıt ver",
   "submit": "Gönder",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Herhangi bir tahta adresini girin",
   "board_not_reachable": "Board erişilemez",
   "cannot_edit_thread": "Bu başlığı düzenleyemezsiniz",
-  "cannot_edit_reply": "Bu yanıtı düzenleyemezsiniz"
+  "cannot_edit_reply": "Bu yanıtı düzenleyemezsiniz",
+  "this_thread_was_deleted": "Bu başlık, yazarının tarafından silindi",
+  "this_thread_was_removed": "Bu konu, board moderatörleri tarafından kaldırıldı",
+  "this_reply_was_deleted": "Bu yanıt, yazar tarafından silindi",
+  "this_reply_was_removed": "Bu yanıt, forum moderatörleri tarafından kaldırıldı"
 }

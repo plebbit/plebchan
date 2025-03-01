@@ -59,7 +59,7 @@
   "comment_too_long": "Kommentti on liian pitkä. <1>Napsauta tästä</1> nähdäksesi koko tekstin.",
   "replies_omitted": "{{repliesCount}} vastausta jätetty pois. <1>Napsauta tästä</1> nähdäksesi ne.",
   "replies_and_links_omitted": "{{repliesCount}} vastausta ja {{linksCount}} linkkiä jätetty pois. <1>Napsauta tästä</1> nähdäksesi ne.",
-  "thread_closed_alert": "Ketju on suljettu",
+  "this_thread_is_closed": "Ketju on suljettu",
   "reply_to_cid": "Vastaa {{cid}}",
   "submit": "Lähetä",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Syötä mikä tahansa taulun osoite",
   "board_not_reachable": "Taulua ei ole käytettävissä",
   "cannot_edit_thread": "Et voi muokata tätä ketjua",
-  "cannot_edit_reply": "Et voi muokata tätä vastausta"
+  "cannot_edit_reply": "Et voi muokata tätä vastausta",
+  "this_thread_was_deleted": "Tämä ketju poistettiin sen kirjoittajan toimesta",
+  "this_thread_was_removed": "Tämä ketju poistettiin foorumin moderaattoreiden toimesta",
+  "this_reply_was_deleted": "Tämä vastaus poistettiin sen kirjoittajalta",
+  "this_reply_was_removed": "Tämä vastaus poistettiin foorumin moderaattoreiden toimesta"
 }

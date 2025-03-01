@@ -59,7 +59,7 @@
   "comment_too_long": "Comentariul este prea lung. <1>Click aici</1> pentru a vedea textul complet.",
   "replies_omitted": "{{repliesCount}} răspunsuri omise. <1>Click aici</1> pentru a le vizualiza.",
   "replies_and_links_omitted": "{{repliesCount}} răspunsuri și {{linksCount}} linkuri omise. <1>Click aici</1> pentru a le vizualiza.",
-  "thread_closed_alert": "Acest fir de discuție este închis",
+  "this_thread_is_closed": "Acest fir de discuție este închis",
   "reply_to_cid": "Răspundeți la {{cid}}",
   "submit": "Trimite",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Introduceți orice adresă de tablă",
   "board_not_reachable": "Tabloul nu este accesibil",
   "cannot_edit_thread": "Nu poți edita acest subiect",
-  "cannot_edit_reply": "Nu poți edita acest răspuns"
+  "cannot_edit_reply": "Nu poți edita acest răspuns",
+  "this_thread_was_deleted": "Acest thread a fost șters de autorul său",
+  "this_thread_was_removed": "Acest thread a fost eliminat de moderatorii board-ului",
+  "this_reply_was_deleted": "Acest răspuns a fost șters de autorul său",
+  "this_reply_was_removed": "Acest răspuns a fost eliminat de moderatorii forumului"
 }

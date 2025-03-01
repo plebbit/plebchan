@@ -59,7 +59,7 @@
   "comment_too_long": "Komentář je příliš dlouhý. <1>Klikněte zde</1> pro zobrazení celého textu.",
   "replies_omitted": "{{repliesCount}} odpovědí vynecháno. <1>Klikněte zde</1> pro zobrazení.",
   "replies_and_links_omitted": "{{repliesCount}} odpovědí a {{linksCount}} odkazů vynecháno. <1>Klikněte zde</1> pro zobrazení.",
-  "thread_closed_alert": "Vlákno je uzavřeno",
+  "this_thread_is_closed": "Vlákno je uzavřeno",
   "reply_to_cid": "Odpovědět na {{cid}}",
   "submit": "Odeslat",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Zadejte adresu libovolné desky",
   "board_not_reachable": "Deska není dostupná",
   "cannot_edit_thread": "Nemůžete upravit toto vlákno",
-  "cannot_edit_reply": "Tento příspěvek nelze upravit"
+  "cannot_edit_reply": "Tento příspěvek nelze upravit",
+  "this_thread_was_deleted": "Toto vlákno bylo smazáno jeho autorem",
+  "this_thread_was_removed": "Toto vlákno bylo odstraněno moderátory fóra",
+  "this_reply_was_deleted": "Tato odpověď byla smazána autorem",
+  "this_reply_was_removed": "Tato odpověď byla odstraněna moderátory fóra"
 }

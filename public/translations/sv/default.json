@@ -59,7 +59,7 @@
   "comment_too_long": "Kommentaren är för lång. <1>Klicka här</1> för att se hela texten.",
   "replies_omitted": "{{repliesCount}} svar utelämnade. <1>Klicka här</1> för att visa dem.",
   "replies_and_links_omitted": "{{repliesCount}} svar och {{linksCount}} länkar utelämnade. <1>Klicka här</1> för att visa dem.",
-  "thread_closed_alert": "Tråden är stängd",
+  "this_thread_is_closed": "Tråden är stängd",
   "reply_to_cid": "Svara på {{cid}}",
   "submit": "Skicka in",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Ange vilken som helst brädets adress",
   "board_not_reachable": "Tavlan är inte tillgänglig",
   "cannot_edit_thread": "Du kan inte redigera denna tråd",
-  "cannot_edit_reply": "Du kan inte redigera detta svar"
+  "cannot_edit_reply": "Du kan inte redigera detta svar",
+  "this_thread_was_deleted": "Denna tråd raderades av dess författare",
+  "this_thread_was_removed": "Denna tråd togs bort av forumets moderatorer",
+  "this_reply_was_deleted": "Detta svar togs bort av författaren",
+  "this_reply_was_removed": "Detta svar togs bort av forumets moderatorer"
 }

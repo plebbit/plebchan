@@ -59,7 +59,7 @@
   "comment_too_long": "Comentário muito longo. <1>Clique aqui</1> para ver o texto completo.",
   "replies_omitted": "{{repliesCount}} respostas omitidas. <1>Clique aqui</1> para visualizar.",
   "replies_and_links_omitted": "{{repliesCount}} respostas e {{linksCount}} links omitidos. <1>Clique aqui</1> para visualizar.",
-  "thread_closed_alert": "O tópico está fechado",
+  "this_thread_is_closed": "O tópico está fechado",
   "reply_to_cid": "Responder a {{cid}}",
   "submit": "Enviar",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Digite qualquer endereço de quadro",
   "board_not_reachable": "O quadro não é acessível",
   "cannot_edit_thread": "Você não pode editar este tópico",
-  "cannot_edit_reply": "Você não pode editar esta resposta"
+  "cannot_edit_reply": "Você não pode editar esta resposta",
+  "this_thread_was_deleted": "Este tópico foi excluído pelo seu autor",
+  "this_thread_was_removed": "Este tópico foi removido pelos moderadores do fórum",
+  "this_reply_was_deleted": "Esta resposta foi excluída pelo autor",
+  "this_reply_was_removed": "Esta resposta foi removida pelos moderadores do fórum"
 }

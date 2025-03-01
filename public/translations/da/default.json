@@ -59,7 +59,7 @@
   "comment_too_long": "Kommentaren er for lang. <1>Klik her</1> for at se hele teksten.",
   "replies_omitted": "{{repliesCount}} svar udeladt. <1>Klik her</1> for at se dem.",
   "replies_and_links_omitted": "{{repliesCount}} svar og {{linksCount}} links udeladt. <1>Klik her</1> for at se dem.",
-  "thread_closed_alert": "Tråden er lukket",
+  "this_thread_is_closed": "Tråden er lukket",
   "reply_to_cid": "Svar til {{cid}}",
   "submit": "Indsend",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Indtast enhver tavleadresse",
   "board_not_reachable": "Boardet er ikke tilgængeligt",
   "cannot_edit_thread": "Du kan ikke redigere dette emne",
-  "cannot_edit_reply": "Du kan ikke redigere dette svar"
+  "cannot_edit_reply": "Du kan ikke redigere dette svar",
+  "this_thread_was_deleted": "Denne tråd blev slettet af dens forfatter",
+  "this_thread_was_removed": "Denne tråd blev fjernet af boardmoderatorer",
+  "this_reply_was_deleted": "Dette svar blev slettet af forfatteren",
+  "this_reply_was_removed": "Dette svar blev fjernet af forummoderatorer"
 }

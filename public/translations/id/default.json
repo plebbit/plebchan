@@ -59,7 +59,7 @@
   "comment_too_long": "Komentar terlalu panjang. <1>Klik di sini</1> untuk melihat teks lengkap.",
   "replies_omitted": "{{repliesCount}} balasan dihilangkan. <1>Klik di sini</1> untuk melihat.",
   "replies_and_links_omitted": "{{repliesCount}} balasan dan {{linksCount}} tautan dihilangkan. <1>Klik di sini</1> untuk melihat.",
-  "thread_closed_alert": "Thread ini ditutup",
+  "this_thread_is_closed": "Thread ini ditutup",
   "reply_to_cid": "Balas ke {{cid}}",
   "submit": "Kirim",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Masukkan alamat papan apa saja",
   "board_not_reachable": "Papan tidak dapat dijangkau",
   "cannot_edit_thread": "Anda tidak dapat mengedit thread ini",
-  "cannot_edit_reply": "Anda tidak dapat mengedit balasan ini"
+  "cannot_edit_reply": "Anda tidak dapat mengedit balasan ini",
+  "this_thread_was_deleted": "Thread ini dihapus oleh penulisnya",
+  "this_thread_was_removed": "Thread ini dihapus oleh moderator papan",
+  "this_reply_was_deleted": "Balasan ini dihapus oleh penulisnya",
+  "this_reply_was_removed": "Balasan ini dihapus oleh moderator papan"
 }

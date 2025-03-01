@@ -59,7 +59,7 @@
   "comment_too_long": "Komenti është shumë i gjatë. <1>Kliko këtu</1> për të parë tekstin e plotë.",
   "replies_omitted": "{{repliesCount}} përgjigje janë lënë jashtë. <1>Kliko këtu</1> për t'i shikuar.",
   "replies_and_links_omitted": "{{repliesCount}} përgjigje dhe {{linksCount}} lidhje janë lënë jashtë. <1>Kliko këtu</1> për t'i shikuar.",
-  "thread_closed_alert": "Temë është mbyllur",
+  "this_thread_is_closed": "Temë është mbyllur",
   "reply_to_cid": "Përgjigju në {{cid}}",
   "submit": "Dorëzo",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Shkruani çdo adresë bordi",
   "board_not_reachable": "Tabela nuk është e arritshme",
   "cannot_edit_thread": "Nuk mund ta redaktoni këtë temë",
-  "cannot_edit_reply": "Nuk mund ta redaktoni këtë përgjigje"
+  "cannot_edit_reply": "Nuk mund ta redaktoni këtë përgjigje",
+  "this_thread_was_deleted": "Ky thread u fshi nga autori i tij",
+  "this_thread_was_removed": "Ky thread u hoq nga moderatorët e bordit",
+  "this_reply_was_deleted": "Ky përgjigje u fshi nga autori i saj",
+  "this_reply_was_removed": "Ky përgjigje u hoq nga moderatorët e forumit"
 }

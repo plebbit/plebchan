@@ -59,7 +59,7 @@
   "comment_too_long": "Комментарий слишком длинный. <1>Нажмите здесь</1>, чтобы прочитать полный текст.",
   "replies_omitted": "{{repliesCount}} ответов пропущено. <1>Нажмите здесь</1>, чтобы посмотреть.",
   "replies_and_links_omitted": "{{repliesCount}} ответов и {{linksCount}} ссылок пропущено. <1>Нажмите здесь</1>, чтобы посмотреть.",
-  "thread_closed_alert": "Тема закрыта",
+  "this_thread_is_closed": "Тема закрыта",
   "reply_to_cid": "Ответить на {{cid}}",
   "submit": "Отправить",
   "gif": "ГИФ",
@@ -286,5 +286,9 @@
   "enter_board_address": "Введите любой адрес доски",
   "board_not_reachable": "Доска недоступна",
   "cannot_edit_thread": "Вы не можете редактировать эту тему",
-  "cannot_edit_reply": "Вы не можете отредактировать этот ответ"
+  "cannot_edit_reply": "Вы не можете отредактировать этот ответ",
+  "this_thread_was_deleted": "Эта тема была удалена её автором",
+  "this_thread_was_removed": "Эта тема была удалена модераторами форума",
+  "this_reply_was_deleted": "Этот ответ был удален автором",
+  "this_reply_was_removed": "Этот ответ был удален модераторами форума"
 }

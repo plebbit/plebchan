@@ -59,7 +59,7 @@
   "comment_too_long": "Bình luận quá dài. <1>Nhấn vào đây</1> để xem toàn bộ văn bản.",
   "replies_omitted": "{{repliesCount}} câu trả lời bị bỏ qua. <1>Nhấn vào đây</1> để xem.",
   "replies_and_links_omitted": "{{repliesCount}} câu trả lời và {{linksCount}} liên kết bị bỏ qua. <1>Nhấn vào đây</1> để xem.",
-  "thread_closed_alert": "Chủ đề này đã đóng",
+  "this_thread_is_closed": "Chủ đề này đã đóng",
   "reply_to_cid": "Trả lời {{cid}}",
   "submit": "Gửi",
   "gif": "GIF",
@@ -286,5 +286,9 @@
   "enter_board_address": "Nhập bất kỳ địa chỉ bảng nào",
   "board_not_reachable": "Bảng không thể truy cập",
   "cannot_edit_thread": "Bạn không thể chỉnh sửa chủ đề này",
-  "cannot_edit_reply": "Bạn không thể chỉnh sửa phản hồi này"
+  "cannot_edit_reply": "Bạn không thể chỉnh sửa phản hồi này",
+  "this_thread_was_deleted": "Chủ đề này đã bị tác giả của nó xóa",
+  "this_thread_was_removed": "Chủ đề này đã bị các quản trị viên diễn đàn xóa",
+  "this_reply_was_deleted": "Câu trả lời này đã bị tác giả của nó xóa",
+  "this_reply_was_removed": "Phản hồi này đã bị xóa bởi các quản trị viên diễn đàn"
 }
