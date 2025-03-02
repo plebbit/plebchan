@@ -30,14 +30,6 @@ export const Post = ({ post, showAllReplies = false, showReplies = true, openRep
   const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
   const isMobile = useIsMobile();
 
-  const { deleted, locked, removed } = post || {};
-  const isThreadClosed = deleted || locked || removed;
-
-  const { t } = useTranslation();
-  if (isThreadClosed) {
-    openReplyModal = () => alert(t('thread_closed_alert'));
-  }
-
   let comment = post;
 
   // handle pending mod or author edit
@@ -72,7 +64,7 @@ const PostPage = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
 
-  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
+  const { activeCid, threadCid, closeModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
 
   const comment = useComment({ commentCid });
 
@@ -85,8 +77,7 @@ const PostPage = () => {
     post = comment;
   }
 
-  const { error, deleted, locked, removed, replyCount } = post || {};
-  const isThreadClosed = deleted || locked || removed;
+  const { error, replyCount } = post || {};
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -128,7 +119,7 @@ const PostPage = () => {
       ) : isInRulesView ? (
         <SubplebbitRules createdAt={createdAt} rules={rules} subplebbitAddress={subplebbitAddress} />
       ) : (
-        <Post post={post} showAllReplies={true} openReplyModal={isThreadClosed ? () => alert(t('thread_closed_alert')) : openReplyModal} />
+        <Post post={post} showAllReplies={true} />
       )}
     </div>
   );
