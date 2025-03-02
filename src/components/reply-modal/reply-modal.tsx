@@ -145,29 +145,26 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
-  const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
+  const [{ x, y }, api] = useSpring(() => ({
+    x: window.innerWidth / 2 - 150,
+    y: window.innerHeight / 2 - 400,
+  }));
 
   const bind = useDrag(
-    ({ offset: [ox, oy], first, last }) => {
+    ({ offset: [ox, oy] }) => {
       api.start({ x: ox, y: oy, immediate: true });
     },
     {
       from: () => [x.get(), y.get()],
       filterTaps: true,
-      bounds: {
-        left: -300,
-        right: window.innerWidth - 100,
-        top: 0,
-        bottom: window.innerHeight - 100,
-      },
+      bounds: undefined,
     },
   );
 
   useEffect(() => {
     if (nodeRef.current && isMobile) {
       const viewportHeight = window.innerHeight;
-      const modalHeight = 150;
-      const centeredPosition = scrollY + viewportHeight / 2 - modalHeight / 2;
+      const centeredPosition = scrollY + viewportHeight / 2 - 300;
       api.start({ y: centeredPosition, immediate: true });
     }
   }, [isMobile, scrollY, api]);
