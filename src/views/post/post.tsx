@@ -64,7 +64,7 @@ const PostPage = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
 
-  const { activeCid, threadCid, closeModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
+  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
 
   const comment = useComment({ commentCid });
 
@@ -119,7 +119,7 @@ const PostPage = () => {
       ) : isInRulesView ? (
         <SubplebbitRules createdAt={createdAt} rules={rules} subplebbitAddress={subplebbitAddress} />
       ) : (
-        <Post post={post} showAllReplies={true} />
+        <Post post={post} showAllReplies={true} openReplyModal={openReplyModal} />
       )}
     </div>
   );
