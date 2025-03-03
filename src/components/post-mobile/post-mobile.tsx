@@ -27,7 +27,25 @@ import _ from 'lodash';
 
 const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, deleted, link, locked, parentCid, pinned, postCid, reason, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const {
+    author,
+    cid,
+    deleted,
+    link,
+    linkHeight,
+    linkWidth,
+    locked,
+    parentCid,
+    pinned,
+    postCid,
+    reason,
+    removed,
+    shortCid,
+    state,
+    subplebbitAddress,
+    timestamp,
+    thumbnailUrl,
+  } = post || {};
   const isReply = parentCid;
   const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -43,7 +61,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  const commentMediaInfo = useCommentMediaInfo(post);
+  const commentMediaInfo = useCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   const stateString = useStateString(post);
@@ -179,25 +197,33 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
         </span>
       </div>
-      {(hasThumbnail || link) && !(deleted || removed) && <PostMediaContent key={cid} post={post} link={link} t={t} />}
+      {(hasThumbnail || link) && !(deleted || removed) && <PostMediaContent key={cid} post={post} link={link} />}
     </>
   );
 };
 
-const PostMediaContent = ({ post, link, t }: { post: any; link: string; t: any }) => {
+const PostMediaContent = ({ post, link }: { post: any; link: string }) => {
   const [showThumbnail, setShowThumbnail] = useState(true);
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-  const commentMediaInfo = useCommentMediaInfo(post);
+  const { thumbnailUrl, linkWidth, linkHeight, spoiler, deleted, removed, parentCid } = post || {};
+  const commentMediaInfo = useCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   return (
     hasThumbnail && (
       <CommentMedia
         commentMediaInfo={commentMediaInfo}
-        post={post}
+        deleted={deleted}
+        isDescription={isDescription}
+        isRules={isRules}
+        removed={removed}
+        linkHeight={linkHeight}
+        linkWidth={linkWidth}
         showThumbnail={showThumbnail}
         setShowThumbnail={setShowThumbnail}
         isOutOfFeed={isDescription || isRules}
+        parentCid={parentCid}
+        spoiler={spoiler}
       />
     )
   );

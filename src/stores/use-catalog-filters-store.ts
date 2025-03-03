@@ -53,7 +53,9 @@ const useCatalogFiltersStore = create(
               // filterItems
             } = state;
 
-            const hasThumbnail = getHasThumbnail(getCommentMediaInfo(comment), comment?.link);
+            const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
+
+            const hasThumbnail = getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link);
             // const title = comment?.title?.toLowerCase() || '';
             // const content = comment?.content?.toLowerCase() || '';
 

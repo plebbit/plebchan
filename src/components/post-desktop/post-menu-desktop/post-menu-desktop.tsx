@@ -132,8 +132,8 @@ const BlockBoardButton = ({ address }: { address: string }) => {
 
 const PostMenuDesktop = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
-  const { author, cid, isDescription, isRules, link, postCid, subplebbitAddress } = post || {};
-  const commentMediaInfo = getCommentMediaInfo(post);
+  const { author, cid, isDescription, isRules, link, thumbnailUrl, linkWidth, linkHeight, postCid, subplebbitAddress } = post || {};
+  const commentMediaInfo = getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [menuBtnRotated, setMenuBtnRotated] = useState(false);
 

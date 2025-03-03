@@ -24,7 +24,8 @@ import SubplebbitRules from '../../components/subplebbit-rules';
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
 const threadsWithoutImagesFilter = (comment: Comment) => {
-  if (!getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
+  const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
+  if (!getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link)) {
     return false;
   }
   return true;
@@ -78,14 +79,14 @@ const Board = () => {
   const filteredComments = useMemo(
     () =>
       accountComments.filter((comment) => {
-        const { cid, deleted, postCid, removed, state, timestamp } = comment || {};
+        const { cid, deleted, link, linkHeight, linkWidth, postCid, removed, state, thumbnailUrl, timestamp } = comment || {};
         return (
           !deleted &&
           !removed &&
           timestamp > Date.now() / 1000 - 60 * 60 &&
           state === 'succeeded' &&
           cid &&
-          (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(comment), comment?.link) : true) &&
+          (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), comment?.link) : true) &&
           cid === postCid &&
           comment?.subplebbitAddress === subplebbitAddress &&
           !feed.some((post) => post.cid === cid)

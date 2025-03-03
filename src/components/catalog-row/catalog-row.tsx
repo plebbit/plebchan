@@ -115,10 +115,11 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     subplebbitAddress,
     timestamp,
     title,
+    thumbnailUrl,
   } = post || {};
   const linkCount = useCountLinksInReplies(post);
 
-  const commentMediaInfo = useCommentMediaInfo(post);
+  const commentMediaInfo = useCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   const { hidden } = useHide({ cid });

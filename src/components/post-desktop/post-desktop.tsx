@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { Comment, useAuthorAvatar, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
-import { getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
+import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { hashStringToColor, getTextColorForBackground } from '../../lib/utils/post-utils';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
@@ -222,17 +222,21 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   );
 };
 
-const PostMedia = ({ post, hasThumbnail }: PostProps) => {
+interface PostMediaProps {
+  commentMediaInfo: CommentMediaInfo | undefined;
+  hasThumbnail: boolean;
+  isDescription: boolean;
+  isRules: boolean;
+  spoiler: boolean;
+  deleted: boolean;
+  removed: boolean;
+  linkHeight: number;
+  linkWidth: number;
+  parentCid: string;
+}
+
+const PostMedia = ({ commentMediaInfo, hasThumbnail, isDescription, isRules, spoiler, deleted, removed, linkHeight, linkWidth, parentCid }: PostMediaProps) => {
   const { t } = useTranslation();
-  const { spoiler, cid } = post || {};
-
-  // Reset state by remounting component when post changes
-  return <PostMediaContent key={cid} post={post} hasThumbnail={hasThumbnail} spoiler={spoiler} t={t} />;
-};
-
-const PostMediaContent = ({ post, hasThumbnail, spoiler, t }: { post: any; hasThumbnail: boolean | undefined; spoiler: boolean; t: any }) => {
-  const { isDescription, isRules } = post || {}; // custom properties, not from api
-  const commentMediaInfo = useCommentMediaInfo(post);
   const { url } = commentMediaInfo || {};
   let type = commentMediaInfo?.type;
   const gifFrameUrl = useFetchGifFirstFrame(url);
@@ -247,7 +251,7 @@ const PostMediaContent = ({ post, hasThumbnail, spoiler, t }: { post: any; hasTh
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const mediaDimensions = getMediaDimensions(commentMediaInfo);
-
+  console.log('mediaDimensions', mediaDimensions);
   return (
     <div className={styles.file}>
       <div className={styles.fileText}>
@@ -268,8 +272,7 @@ const PostMediaContent = ({ post, hasThumbnail, spoiler, t }: { post: any; hasTh
         )}
         {showThumbnail && !hasThumbnail && embedUrl && canEmbed(embedUrl) && (
           <span>
-            {' '}
-            [
+            -[
             <span className={styles.closeMedia} onClick={() => setShowThumbnail(false)}>
               {t('open')}
             </span>
@@ -281,10 +284,17 @@ const PostMediaContent = ({ post, hasThumbnail, spoiler, t }: { post: any; hasTh
         <div className={styles.fileThumbnail}>
           <CommentMedia
             commentMediaInfo={commentMediaInfo}
-            post={post}
+            deleted={deleted}
+            isDescription={isDescription}
+            isRules={isRules}
+            removed={removed}
+            linkHeight={linkHeight}
+            linkWidth={linkWidth}
             showThumbnail={showThumbnail}
             setShowThumbnail={setShowThumbnail}
             isOutOfFeed={isDescription || isRules}
+            parentCid={parentCid}
+            spoiler={spoiler}
           />
         </div>
       )}
@@ -300,11 +310,13 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     post = editedComment;
   }
 
-  const { author, cid, deleted, link, postCid, reason, removed, subplebbitAddress } = post || {};
+  const { author, cid, deleted, link, linkHeight, linkWidth, postCid, reason, removed, spoiler, subplebbitAddress, thumbnailUrl, parentCid } = post || {};
+  const { isDescription, isRules } = post || {}; // custom properties, not from api
+
   const isRouteLinkToReply = useLocation().pathname.startsWith(`/p/${subplebbitAddress}/c/${cid}`);
   const { hidden } = useHide({ cid });
 
-  const commentMediaInfo = useCommentMediaInfo(post);
+  const commentMediaInfo = useCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   return (
@@ -312,7 +324,20 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
       <div className={styles.sideArrows}>{'>>'}</div>
       <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
         <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} />
-        {link && !hidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} hasThumbnail={hasThumbnail} />}
+        {link && !hidden && !(deleted || removed) && isValidURL(link) && (
+          <PostMedia
+            commentMediaInfo={commentMediaInfo}
+            hasThumbnail={hasThumbnail}
+            isDescription={isDescription}
+            isRules={isRules}
+            spoiler={spoiler}
+            deleted={deleted}
+            removed={removed}
+            linkHeight={linkHeight}
+            linkWidth={linkWidth}
+            parentCid={parentCid}
+          />
+        )}
         {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
       </div>
     </div>
@@ -321,7 +346,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
 
 const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, content, deleted, link, pinned, postCid, removed, state, subplebbitAddress } = post || {};
+  const { author, cid, content, deleted, link, linkHeight, linkWidth, pinned, postCid, removed, spoiler, state, subplebbitAddress, thumbnailUrl, parentCid } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
   const params = useParams();
   const location = useLocation();
@@ -353,7 +378,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
     replyCount: 0,
   };
 
-  const commentMediaInfo = useCommentMediaInfo(post);
+  const commentMediaInfo = useCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   return (
@@ -373,7 +398,20 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
         )}
         <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid} className={shouldShowSnow() && hasThumbnail ? styles.xmasHatWrapper : ''}>
           {shouldShowSnow() && hasThumbnail && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
-          {link && !isHidden && !(deleted || removed) && isValidURL(link) && <PostMedia post={post} hasThumbnail={hasThumbnail} />}
+          {link && !isHidden && !(deleted || removed) && isValidURL(link) && (
+            <PostMedia
+              commentMediaInfo={commentMediaInfo}
+              hasThumbnail={hasThumbnail}
+              isDescription={isDescription}
+              isRules={isRules}
+              spoiler={spoiler}
+              deleted={deleted}
+              removed={removed}
+              linkHeight={linkHeight}
+              linkWidth={linkWidth}
+              parentCid={parentCid}
+            />
+          )}
           <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && !(deleted || removed) && <div className={styles.spacer} />}
           {!isHidden && <CommentContent comment={post} />}
