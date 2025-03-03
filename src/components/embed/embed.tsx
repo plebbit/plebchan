@@ -74,6 +74,8 @@ const YoutubeEmbed = ({ parsedUrl }: EmbedComponentProps) => {
     if (!videoId) {
       if (parsedUrl.host.includes('youtu.be')) {
         videoId = parsedUrl.pathname.substring(1);
+      } else if (parsedUrl.pathname.includes('/shorts/')) {
+        videoId = parsedUrl.pathname.split('/shorts/')[1];
       } else if (isInvidious) {
         if (parsedUrl.pathname.startsWith('/watch')) {
           videoId = parsedUrl.searchParams.get('v');

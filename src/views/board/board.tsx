@@ -8,7 +8,7 @@ import { shouldShowSnow } from '../../lib/snow';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import useFeedStateString from '../../hooks/use-feed-state-string';
+import { useFeedStateString } from '../../hooks/use-state-string';
 import useReplyModal from '../../hooks/use-reply-modal';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
@@ -56,16 +56,13 @@ const Board = () => {
   const { sortType } = useSortingStore();
   const { timeFilterSeconds, timeFilterName } = useTimeFilter();
 
-  const feedOptions: any = useMemo(
-    () => ({
-      subplebbitAddresses,
-      sortType,
-      postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
-      ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
-      filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
-    }),
-    [subplebbitAddresses, sortType, timeFilterSeconds, isInAllView, isInSubscriptionsView, hideThreadsWithoutImages],
-  );
+  const feedOptions = {
+    subplebbitAddresses,
+    sortType,
+    postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
+    ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
+    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+  };
 
   const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
   const { accountComments } = useAccountComments();

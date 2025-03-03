@@ -59,7 +59,7 @@
   "comment_too_long": "نظر بسیار طولانی است. <1>اینجا کلیک کنید</1> تا متن کامل را ببینید.",
   "replies_omitted": "{{repliesCount}} پاسخ حذف شده است. <1>اینجا کلیک کنید</1> تا آنها را مشاهده کنید.",
   "replies_and_links_omitted": "{{repliesCount}} پاسخ و {{linksCount}} لینک حذف شده است. <1>اینجا کلیک کنید</1> تا آنها را مشاهده کنید.",
-  "thread_closed_alert": "موضوع بسته شده است",
+  "this_thread_is_closed": "موضوع بسته شده است",
   "reply_to_cid": "پاسخ به {{cid}}",
   "submit": "ارسال",
   "gif": "گیف",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "در حال بارگذاری اشترا‌ک‌ها",
   "create_board": "ایجاد تابلو",
   "enter_board_address": "آدرس هر تابلو را وارد کنید",
-  "board_not_reachable": "تابلو قابل دسترسی نیست"
+  "board_not_reachable": "تابلو قابل دسترسی نیست",
+  "cannot_edit_thread": "شما نمی‌توانید این موضوع را ویرایش کنید",
+  "cannot_edit_reply": "شما نمی‌توانید این پاسخ را ویرایش کنید",
+  "this_thread_was_deleted": "این موضوع توسط نویسنده‌اش حذف شد",
+  "this_thread_was_removed": "این تاپیک توسط مدیران انجمن حذف شد",
+  "this_reply_was_deleted": "این پاسخ توسط نویسنده‌اش حذف شد",
+  "this_reply_was_removed": "این پاسخ توسط مدیران انجمن حذف شد"
 }

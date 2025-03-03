@@ -59,7 +59,7 @@
   "comment_too_long": "댓글이 너무 깁니다. <1>여기를 클릭하십시오</1> 전체 텍스트를 보려면.",
   "replies_omitted": "{{repliesCount}}개의 답글이 생략되었습니다. <1>여기를 클릭하십시오</1> 보려면.",
   "replies_and_links_omitted": "{{repliesCount}}개의 답글과 {{linksCount}}개의 링크가 생략되었습니다. <1>여기를 클릭하십시오</1> 보려면.",
-  "thread_closed_alert": "이 스레드는 닫혔습니다",
+  "this_thread_is_closed": "이 스레드는 닫혔습니다",
   "reply_to_cid": "{{cid}}에 답변",
   "submit": "제출",
   "gif": "GIF",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "구독 로딩 중",
   "create_board": "보드 만들기",
   "enter_board_address": "어떤 보드 주소든 입력하세요",
-  "board_not_reachable": "보드를 찾을 수 없습니다"
+  "board_not_reachable": "보드를 찾을 수 없습니다",
+  "cannot_edit_thread": "이 스레드를 편집할 수 없습니다",
+  "cannot_edit_reply": "이 답글을 수정할 수 없습니다",
+  "this_thread_was_deleted": "이 스레드는 작성자에 의해 삭제되었습니다",
+  "this_thread_was_removed": "이 스레드는 보드 관리자에 의해 제거되었습니다",
+  "this_reply_was_deleted": "이 답글은 작성자에 의해 삭제되었습니다",
+  "this_reply_was_removed": "이 답글은 게시판 관리자에 의해 삭제되었습니다"
 }

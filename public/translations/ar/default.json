@@ -59,7 +59,7 @@
   "comment_too_long": "التعليق طويل جدًا. <1>اضغط هنا</1> لعرض النص الكامل.",
   "replies_omitted": "{{repliesCount}} ردود محذوفة. <1>اضغط هنا</1> لعرضها.",
   "replies_and_links_omitted": "{{repliesCount}} ردود و{{linksCount}} روابط محذوفة. <1>اضغط هنا</1> لعرضها.",
-  "thread_closed_alert": "الموضوع مغلق",
+  "this_thread_is_closed": "الموضوع مغلق",
   "reply_to_cid": "الرد على {{cid}}",
   "submit": "إرسال",
   "gif": "جي آي إف",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "جارٍ تحميل الاشتراكات",
   "create_board": "إنشاء لوحة",
   "enter_board_address": "أدخل عنوان أي لوحة",
-  "board_not_reachable": "اللوحة غير قابلة للوصول"
+  "board_not_reachable": "اللوحة غير قابلة للوصول",
+  "cannot_edit_thread": "لا يمكنك تعديل هذا الموضوع",
+  "cannot_edit_reply": "لا يمكنك تعديل هذه الردود",
+  "this_thread_was_deleted": "تم حذف هذا الموضوع بواسطة مؤلفه",
+  "this_thread_was_removed": "تم إزالة هذا الموضوع بواسطة مشرفي المنتدى",
+  "this_reply_was_deleted": "تم حذف هذه الرد من قبل مؤلفه",
+  "this_reply_was_removed": "تمت إزالة هذه الرد من قبل مشرفي المنتدى"
 }

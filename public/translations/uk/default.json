@@ -59,7 +59,7 @@
   "comment_too_long": "Коментар занадто довгий. <1>Натисніть тут</1>, щоб переглянути повний текст.",
   "replies_omitted": "{{repliesCount}} відповідей пропущено. <1>Натисніть тут</1>, щоб переглянути.",
   "replies_and_links_omitted": "{{repliesCount}} відповідей та {{linksCount}} посилань пропущено. <1>Натисніть тут</1>, щоб переглянути.",
-  "thread_closed_alert": "Тему закрито",
+  "this_thread_is_closed": "Тему закрито",
   "reply_to_cid": "Відповісти на {{cid}}",
   "submit": "Надіслати",
   "gif": "ГІФ",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "Завантаження підписок",
   "create_board": "Створити дошку",
   "enter_board_address": "Введіть будь-яку адресу дошки",
-  "board_not_reachable": "Дошка недоступна"
+  "board_not_reachable": "Дошка недоступна",
+  "cannot_edit_thread": "Ви не можете редагувати цю тему",
+  "cannot_edit_reply": "Ви не можете редагувати цю відповідь",
+  "this_thread_was_deleted": "Цю тему видалив її автор",
+  "this_thread_was_removed": "Цю тему було видалено модераторами форуму",
+  "this_reply_was_deleted": "Цю відповідь було видалено її автором",
+  "this_reply_was_removed": "Цю відповідь було видалено модераторами форуму"
 }

@@ -59,7 +59,7 @@
   "comment_too_long": "टिप्पणी खूप लांब आहे. <1>पूर्ण मजकूर पाहण्यासाठी येथे क्लिक करा</1>.",
   "replies_omitted": "{{repliesCount}} प्रतिसाद वगळले गेले आहेत. <1>पाहण्यासाठी येथे क्लिक करा</1>.",
   "replies_and_links_omitted": "{{repliesCount}} प्रतिसाद आणि {{linksCount}} दुवे वगळले गेले आहेत. <1>पाहण्यासाठी येथे क्लिक करा</1>.",
-  "thread_closed_alert": "हा थ्रेड बंद आहे",
+  "this_thread_is_closed": "हा थ्रेड बंद आहे",
   "reply_to_cid": "{{cid}} ला उत्तर द्या",
   "submit": "सबमिट करा",
   "gif": "जीआईएफ",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "सदस्यता लोड होत आहे",
   "create_board": "बोर्ड तयार करा",
   "enter_board_address": "कोणत्याही बोर्ड पत्त्याची नोंद करा",
-  "board_not_reachable": "बोर्ड उपलब्ध नाही"
+  "board_not_reachable": "बोर्ड उपलब्ध नाही",
+  "cannot_edit_thread": "तुम्ही हा थ्रेड संपादित करू शकत नाही",
+  "cannot_edit_reply": "तुम्ही हा प्रतिसाद संपादित करू शकत नाही",
+  "this_thread_was_deleted": "हा धागा त्याच्या लेखकाने हटविला",
+  "this_thread_was_removed": "हे थ्रेड बोर्ड मध्यमाने काढले गेले आहे",
+  "this_reply_was_deleted": "हा प्रतिसाद त्याच्या लेखकाने हटवला आहे",
+  "this_reply_was_removed": "या उत्तराला बोर्ड मॉडरेटरने काढले आहे"
 }

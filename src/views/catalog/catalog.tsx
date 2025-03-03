@@ -7,7 +7,7 @@ import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-util
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogFeedRows from '../../hooks/use-catalog-feed-rows';
 import { useDefaultSubplebbits } from '../../hooks/use-default-subplebbits';
-import useFeedStateString from '../../hooks/use-feed-state-string';
+import { useFeedStateString } from '../../hooks/use-state-string';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useWindowWidth from '../../hooks/use-window-width';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';

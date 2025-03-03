@@ -59,7 +59,7 @@
   "comment_too_long": "コメントが長すぎます。 <1>ここをクリック</1>して全文を表示。",
   "replies_omitted": "{{repliesCount}}件の返信が省略されました。 <1>ここをクリック</1>して表示。",
   "replies_and_links_omitted": "{{repliesCount}}件の返信と{{linksCount}}件のリンクが省略されました。 <1>ここをクリック</1>して表示。",
-  "thread_closed_alert": "このスレッドは閉じられています",
+  "this_thread_is_closed": "このスレッドは閉じられています",
   "reply_to_cid": "{{cid}}に返信",
   "submit": "送信",
   "gif": "GIF",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "購読を読み込み中",
   "create_board": "ボードを作成",
   "enter_board_address": "任意のボードアドレスを入力してください",
-  "board_not_reachable": "ボードにアクセスできません"
+  "board_not_reachable": "ボードにアクセスできません",
+  "cannot_edit_thread": "このスレッドを編集できません",
+  "cannot_edit_reply": "この返信は編集できません",
+  "this_thread_was_deleted": "このスレッドは著者によって削除されました",
+  "this_thread_was_removed": "このスレッドはボードのモデレーターによって削除されました",
+  "this_reply_was_deleted": "この返信はその著者によって削除されました",
+  "this_reply_was_removed": "この返信は掲示板のモデレーターによって削除されました"
 }

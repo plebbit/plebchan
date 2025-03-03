@@ -59,7 +59,7 @@
   "comment_too_long": "মন্তব্য খুব দীর্ঘ। <1>পূর্ণ পাঠ্য দেখতে এখানে ক্লিক করুন</1>।",
   "replies_omitted": "{{repliesCount}}টি উত্তর বাদ দেওয়া হয়েছে। <1>দেখতে এখানে ক্লিক করুন</1>।",
   "replies_and_links_omitted": "{{repliesCount}}টি উত্তর এবং {{linksCount}}টি লিঙ্ক বাদ দেওয়া হয়েছে। <1>দেখতে এখানে ক্লিক করুন</1>।",
-  "thread_closed_alert": "থ্রেডটি বন্ধ করা হয়েছে",
+  "this_thread_is_closed": "থ্রেডটি বন্ধ করা হয়েছে",
   "reply_to_cid": "{{cid}}-এ উত্তর দিন",
   "submit": "জমা দিন",
   "gif": "জিআইএফ",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "সাবস্ক্রিপশন লোড হচ্ছে",
   "create_board": "বোর্ড তৈরি করুন",
   "enter_board_address": "যেকোনো বোর্ডের ঠিকানা লিখুন",
-  "board_not_reachable": "বোর্ডটি অ্যাক্সেসযোগ্য নয়"
+  "board_not_reachable": "বোর্ডটি অ্যাক্সেসযোগ্য নয়",
+  "cannot_edit_thread": "আপনি এই থ্রেডটি সম্পাদনা করতে পারবেন না",
+  "cannot_edit_reply": "আপনি এই রিপ্লাইটি সম্পাদনা করতে পারবেন না",
+  "this_thread_was_deleted": "এই থ্রেডটি এর লেখক দ্বারা মুছে ফেলা হয়েছে",
+  "this_thread_was_removed": "এই থ্রেডটি বোর্ড moderators দ্বারা মুছে ফেলা হয়েছে",
+  "this_reply_was_deleted": "এই প্রতিক্রিয়া তার লেখক দ্বারা মুছে ফেলা হয়েছে",
+  "this_reply_was_removed": "এই প্রতিক্রিয়া বোর্ড পরিচালকদের দ্বারা সরানো হয়েছে"
 }

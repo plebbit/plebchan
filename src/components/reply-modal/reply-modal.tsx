@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import Draggable from 'react-draggable';
 import { setAccount, useAccount, useComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { formatMarkdown } from '../../lib/utils/post-utils';
@@ -17,6 +16,8 @@ import _ from 'lodash';
 import useAnonMode from '../../hooks/use-anon-mode';
 import FileUploader from '../../plugins/file-uploader';
 import { Capacitor } from '@capacitor/core';
+import { useSpring, animated } from '@react-spring/web';
+import { useDrag } from '@use-gesture/react';
 
 const isAndroid = Capacitor.getPlatform() === 'android';
 
@@ -144,14 +145,29 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
+  const [{ x, y }, api] = useSpring(() => ({
+    x: window.innerWidth / 2 - 150,
+    y: window.innerHeight / 2 - 400,
+  }));
+
+  const bind = useDrag(
+    ({ offset: [ox, oy] }) => {
+      api.start({ x: ox, y: oy, immediate: true });
+    },
+    {
+      from: () => [x.get(), y.get()],
+      filterTaps: true,
+      bounds: undefined,
+    },
+  );
+
   useEffect(() => {
     if (nodeRef.current && isMobile) {
       const viewportHeight = window.innerHeight;
-      const modalHeight = 150;
-      const centeredPosition = scrollY + viewportHeight / 2 - modalHeight / 2;
-      nodeRef.current.style.top = `${centeredPosition}px`;
+      const centeredPosition = scrollY + viewportHeight / 2 - 300;
+      api.start({ y: centeredPosition, immediate: true });
     }
-  }, [isMobile, scrollY]);
+  }, [isMobile, scrollY, api]);
 
   const parentCidRef = useRef<HTMLSpanElement>(null);
 
@@ -275,8 +291,16 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   }, [displayName, setPublishReplyOptions]);
 
   const modalContent = (
-    <div className={styles.container} ref={nodeRef}>
-      <div className={`replyModalHandle ${styles.title}`}>
+    <animated.div
+      className={styles.container}
+      ref={nodeRef}
+      style={{
+        x,
+        y,
+        touchAction: 'none',
+      }}
+    >
+      <div className={`replyModalHandle ${styles.title}`} {...(!isMobile ? bind() : {})}>
         {t('reply_to_cid', { cid: `c/${parentCid && Plebbit.getShortCid(parentCid)}`, interpolation: { escapeValue: false } })}
         <button
           className={styles.closeIcon}
@@ -346,19 +370,10 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
         {lengthError ? <div className={styles.error}>{lengthError}</div> : error && <div className={styles.error}>{error}</div>}
         {!(isInAllView || isInSubscriptionsView) && offlineAlert}
       </div>
-    </div>
+    </animated.div>
   );
 
-  return (
-    showReplyModal &&
-    (isMobile ? (
-      modalContent
-    ) : (
-      <Draggable handle='.replyModalHandle' nodeRef={nodeRef}>
-        {modalContent}
-      </Draggable>
-    ))
-  );
+  return showReplyModal && modalContent;
 };
 
 export default ReplyModal;

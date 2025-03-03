@@ -59,7 +59,7 @@
   "comment_too_long": "Masyadong mahaba ang komento. <1>I-click dito</1> upang makita ang buong teksto.",
   "replies_omitted": "{{repliesCount}} mga tugon ang hindi ipinakita. <1>I-click dito</1> upang makita.",
   "replies_and_links_omitted": "{{repliesCount}} mga tugon at {{linksCount}} mga link ang hindi ipinakita. <1>I-click dito</1> upang makita.",
-  "thread_closed_alert": "Sarado na ang thread",
+  "this_thread_is_closed": "Sarado na ang thread",
   "reply_to_cid": "Tumugon sa {{cid}}",
   "submit": "Isumite",
   "gif": "GIF",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "Naglo-load ng mga subscription",
   "create_board": "Gumawa ng board",
   "enter_board_address": "Ipasok ang anumang address ng board",
-  "board_not_reachable": "Hindi maa-access ang board"
+  "board_not_reachable": "Hindi maa-access ang board",
+  "cannot_edit_thread": "Hindi mo maaaring i-edit ang thread na ito",
+  "cannot_edit_reply": "Hindi mo maaaring i-edit ang reply na ito",
+  "this_thread_was_deleted": "Ang thread na ito ay tinanggal ng may-akda nito",
+  "this_thread_was_removed": "Inalis ang thread na ito ng mga moderator ng board",
+  "this_reply_was_deleted": "Ang tugon na ito ay tinanggal ng may-akda nito",
+  "this_reply_was_removed": "Ang sagot na ito ay tinanggal ng mga moderator ng board"
 }

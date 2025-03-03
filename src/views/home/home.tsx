@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import styles from './home.module.css';
-import packageJson from '../../../package.json';
 import { useDefaultSubplebbits, useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useSubplebbitsStats from '../../hooks/use-subplebbits-stats';
 import PopularThreadsBox from './popular-threads-box';
@@ -106,24 +105,6 @@ const Stats = ({ subplebbitAddresses }: { subplebbitAddresses: string[] }) => {
   );
 };
 
-const { version } = packageJson;
-const downloadAppLink = (() => {
-  const platform = navigator.platform;
-  if (platform === 'Linux' || platform === 'Linux x86_64' || platform === 'Linux i686' || platform === 'Linux aarch64') {
-    return `https://github.com/plebbit/plebchan/releases/download/v${version}/plebchan-${version}.AppImage`;
-  } else if (platform === 'Win32' || platform === 'Win64' || platform === 'Windows') {
-    return `https://github.com/plebbit/plebchan/releases/download/v${version}/plebchan.Portable.${version}.exe`;
-  } else if (platform === 'MacIntel' || platform === 'Macintosh') {
-    return `https://github.com/plebbit/plebchan/releases/download/v${version}/plebchan-${version}.dmg`;
-  } else if (platform === 'Android') {
-    return undefined;
-  } else if (platform === 'iPhone' || platform === 'iPad') {
-    return undefined;
-  } else {
-    return undefined;
-  }
-})();
-
 export const Footer = () => {
   const { t } = useTranslation();
   return (
@@ -134,13 +115,11 @@ export const Footer = () => {
             {t('about')}
           </a>
         </li>
-        {downloadAppLink && (
-          <li>
-            <a href={downloadAppLink} target='_blank' rel='noopener noreferrer'>
-              {t('download_app')}
-            </a>
-          </li>
-        )}
+        <li>
+          <a href='https://blog.plebbit.eth.limo' target='_blank' rel='noopener noreferrer'>
+            Blog
+          </a>
+        </li>
         <li>
           <Link to='/faq'>FAQ</Link>
         </li>

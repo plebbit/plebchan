@@ -59,7 +59,7 @@
   "comment_too_long": "ความคิดเห็นยาวเกินไป <1>คลิกที่นี่</1> เพื่อดูข้อความเต็ม.",
   "replies_omitted": "ข้าม {{repliesCount}} คำตอบ <1>คลิกที่นี่</1> เพื่อดู.",
   "replies_and_links_omitted": "ข้าม {{repliesCount}} คำตอบและ {{linksCount}} ลิงก์ <1>คลิกที่นี่</1> เพื่อดู.",
-  "thread_closed_alert": "กระทู้นี้ถูกปิด",
+  "this_thread_is_closed": "กระทู้นี้ถูกปิด",
   "reply_to_cid": "ตอบกลับ {{cid}}",
   "submit": "ส่ง",
   "gif": "จีไอเอฟ",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "กำลังโหลดการสมัครสมาชิก",
   "create_board": "สร้างกระดาน",
   "enter_board_address": "ป้อนที่อยู่บอร์ดใดก็ได้",
-  "board_not_reachable": "ไม่สามารถเข้าถึงบอร์ดได้"
+  "board_not_reachable": "ไม่สามารถเข้าถึงบอร์ดได้",
+  "cannot_edit_thread": "คุณไม่สามารถแก้ไขกระทู้นี้ได้",
+  "cannot_edit_reply": "คุณไม่สามารถแก้ไขคำตอบนี้ได้",
+  "this_thread_was_deleted": "กระทู้นี้ถูกลบโดยผู้แต่ง",
+  "this_thread_was_removed": "กระทู้นี้ถูกลบโดยผู้ดูแลบอร์ด",
+  "this_reply_was_deleted": "การตอบกลับนี้ถูกลบโดยผู้แต่ง",
+  "this_reply_was_removed": "คำตอบนี้ถูกลบโดยผู้ดูแลบอร์ด"
 }

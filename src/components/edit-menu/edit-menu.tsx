@@ -34,8 +34,7 @@ const timestampToDays = (timestamp: number) => {
 const EditMenu = ({ post }: { post: Comment }) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { author, cid, content, deleted, locked, parentCid, pinned, postCid, reason, removed, spoiler, subplebbitAddress } = post || {};
-  const isReply = parentCid;
+  const { author, cid, content, deleted, isRules, locked, parentCid, pinned, postCid, reason, removed, spoiler, subplebbitAddress } = post || {};
   const [isEditMenuOpen, setIsEditMenuOpen] = useState(false);
   const [isContentEditorOpen, setIsContentEditorOpen] = useState(false);
 
@@ -236,8 +235,19 @@ const EditMenu = ({ post }: { post: Comment }) => {
 
   return (
     <>
-      <span className={`${styles.checkbox} ${isReply && styles.replyCheckbox}`} ref={refs.setReference} {...(cid && getReferenceProps())}>
-        <input type='checkbox' onChange={() => setIsEditMenuOpen(cid && (isAccountCommentAuthor || isAccountMod) ? !isEditMenuOpen : false)} checked={isEditMenuOpen} />
+      <span className={`${styles.checkbox} ${parentCid && styles.replyCheckbox}`} ref={refs.setReference} {...(cid && getReferenceProps())}>
+        <input
+          type='checkbox'
+          onChange={() => {
+            if (cid && (isAccountCommentAuthor || isAccountMod)) {
+              setIsEditMenuOpen(!isEditMenuOpen);
+            } else {
+              setIsEditMenuOpen(false);
+              alert(parentCid || isRules ? t('cannot_edit_reply') : t('cannot_edit_thread'));
+            }
+          }}
+          checked={isEditMenuOpen}
+        />
       </span>
       {isEditMenuOpen && (isAccountCommentAuthor || isAccountMod) && (
         <FloatingFocusManager context={context} modal={false}>
@@ -282,7 +292,7 @@ const EditMenu = ({ post }: { post: Comment }) => {
                       {_.capitalize(t('remove'))}?]
                     </label>
                   </div>
-                  {!isReply && (
+                  {!parentCid && (
                     <div className={styles.menuItem}>
                       [
                       <label>

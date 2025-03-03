@@ -59,7 +59,7 @@
   "comment_too_long": "התגובה ארוכה מדי. <1>לחץ כאן</1> כדי לראות את הטקסט המלא.",
   "replies_omitted": "{{repliesCount}} תגובות נשמטו. <1>לחץ כאן</1> לצפייה.",
   "replies_and_links_omitted": "{{repliesCount}} תגובות ו{{linksCount}} קישורים נשמטו. <1>לחץ כאן</1> לצפייה.",
-  "thread_closed_alert": "האשכול סגור",
+  "this_thread_is_closed": "האשכול סגור",
   "reply_to_cid": "תגובה ל{{cid}}",
   "submit": "שלח",
   "gif": "גיף",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "טוען מנויים",
   "create_board": "צור לוח",
   "enter_board_address": "הזן כתובת לוח כלשהי",
-  "board_not_reachable": "הלוח לא נגיש"
+  "board_not_reachable": "הלוח לא נגיש",
+  "cannot_edit_thread": "אינך יכול לערוך את השרשור הזה",
+  "cannot_edit_reply": "אינך יכול לערוך את התגובה הזו",
+  "this_thread_was_deleted": "השרשור הזה נמחק על ידי המחבר שלו",
+  "this_thread_was_removed": "השרשור הזה הוסר על ידי מנהלי הפורום",
+  "this_reply_was_deleted": "תשובה זו נמחקה על ידי המחבר שלה",
+  "this_reply_was_removed": "תשובה זו הוסרה על ידי מנהלי הפורום"
 }

@@ -59,7 +59,7 @@
   "comment_too_long": "A megjegyzés túl hosszú. <1>Kattintson ide</1> a teljes szöveg megtekintéséhez.",
   "replies_omitted": "{{repliesCount}} válasz kihagyva. <1>Kattintson ide</1> a megtekintéshez.",
   "replies_and_links_omitted": "{{repliesCount}} válasz és {{linksCount}} link kihagyva. <1>Kattintson ide</1> a megtekintéshez.",
-  "thread_closed_alert": "A téma lezárva",
+  "this_thread_is_closed": "A téma lezárva",
   "reply_to_cid": "Válasz erre: {{cid}}",
   "submit": "Beküldés",
   "gif": "GIF",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "Előfizetések betöltése",
   "create_board": "Hozzon létre táblát",
   "enter_board_address": "Adjon meg bármilyen táblázat címet",
-  "board_not_reachable": "A tábla nem elérhető"
+  "board_not_reachable": "A tábla nem elérhető",
+  "cannot_edit_thread": "Nem szerkesztheted ezt a szálat",
+  "cannot_edit_reply": "Nem szerkesztheted ezt a választ",
+  "this_thread_was_deleted": "Ez a szál törlésre került a szerzője által",
+  "this_thread_was_removed": "Ezt a témát a fórum moderátorai eltávolították",
+  "this_reply_was_deleted": "Ez a válasz törölve lett a szerzője által",
+  "this_reply_was_removed": "Ez a válasz törlésre került a fórum moderátorai által"
 }

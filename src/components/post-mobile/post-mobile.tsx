@@ -57,6 +57,18 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
 
   const { hidden } = useHide(post);
 
+  const onReplyModalClick = () => {
+    deleted
+      ? isReply
+        ? alert(t('this_reply_was_deleted'))
+        : alert(t('this_thread_was_deleted'))
+      : removed
+      ? isReply
+        ? alert(t('this_reply_was_removed'))
+        : alert(t('this_thread_was_removed'))
+      : openReplyModal && openReplyModal(cid, postCid, subplebbitAddress);
+  };
+
   return (
     <>
       <div className={styles.postInfo}>
@@ -152,11 +164,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
                   <Link to={`/p/${subplebbitAddress}/c/${cid}`} className={styles.linkToPost} title={t('link_to_post')} onClick={(e) => !cid && e.preventDefault()}>
                     c/
                   </Link>
-                  <span
-                    className={styles.replyToPost}
-                    title={t('reply_to_post')}
-                    onMouseDown={() => openReplyModal && !(deleted || removed) && openReplyModal(cid, postCid, subplebbitAddress)}
-                  >
+                  <span className={styles.replyToPost} title={t('reply_to_post')} onMouseDown={onReplyModalClick}>
                     {shortCid.slice(0, -4)}
                   </span>
                 </span>
@@ -333,7 +341,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
             )}
           </div>
           {!isInPendingPostView &&
-          !isDescription &&
+          (!isDescription || (isDescription && !subplebbit?.updatedAt)) &&
           !isRules &&
           stateString &&
           stateString !== 'Failed' &&

@@ -59,7 +59,7 @@
   "comment_too_long": "Reactie te lang. <1>Klik hier</1> om de volledige tekst te bekijken.",
   "replies_omitted": "{{repliesCount}} reacties weggelaten. <1>Klik hier</1> om ze te bekijken.",
   "replies_and_links_omitted": "{{repliesCount}} reacties en {{linksCount}} links weggelaten. <1>Klik hier</1> om ze te bekijken.",
-  "thread_closed_alert": "De thread is gesloten",
+  "this_thread_is_closed": "De thread is gesloten",
   "reply_to_cid": "Reageren op {{cid}}",
   "submit": "Verzenden",
   "gif": "GIF",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "Abonnementen laden",
   "create_board": "Maak bord",
   "enter_board_address": "Voer een willekeurig bordadres in",
-  "board_not_reachable": "Bord is niet bereikbaar"
+  "board_not_reachable": "Bord is niet bereikbaar",
+  "cannot_edit_thread": "Je kunt deze thread niet bewerken",
+  "cannot_edit_reply": "Je kunt deze reactie niet bewerken",
+  "this_thread_was_deleted": "Dit draadje is verwijderd door de auteur",
+  "this_thread_was_removed": "Deze thread werd verwijderd door boardmoderators",
+  "this_reply_was_deleted": "Dit antwoord werd verwijderd door de auteur",
+  "this_reply_was_removed": "Dit antwoord is verwijderd door de forum moderators"
 }

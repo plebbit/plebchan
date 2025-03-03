@@ -59,7 +59,7 @@
   "comment_too_long": "تبصرہ بہت طویل ہے۔ <1>مکمل متن دیکھنے کے لیے یہاں کلک کریں</1>۔",
   "replies_omitted": "{{repliesCount}} جوابات چھوڑ دیے گئے ہیں۔ <1>مکمل دیکھنے کے لیے یہاں کلک کریں</1>۔",
   "replies_and_links_omitted": "{{repliesCount}} جوابات اور {{linksCount}} لنکس چھوڑ دیے گئے ہیں۔ <1>مکمل دیکھنے کے لیے یہاں کلک کریں</1>۔",
-  "thread_closed_alert": "یہ دھاگہ بند ہے",
+  "this_thread_is_closed": "یہ دھاگہ بند ہے",
   "reply_to_cid": "{{cid}} کا جواب دیں",
   "submit": "جمع کرائیں",
   "gif": "جی آئی ایف",
@@ -284,5 +284,11 @@
   "loading_subscriptions": "سبسکرپشن لوڈ ہو رہی ہے",
   "create_board": "بورڈ بنائیں",
   "enter_board_address": "کسی بھی بورڈ کا پتہ درج کریں",
-  "board_not_reachable": "بورڈ قابل رسائی نہیں ہے"
+  "board_not_reachable": "بورڈ قابل رسائی نہیں ہے",
+  "cannot_edit_thread": "آپ اس تھریڈ کو ایڈٹ نہیں کر سکتے",
+  "cannot_edit_reply": "آپ اس جواب کو ایڈٹ نہیں کر سکتے",
+  "this_thread_was_deleted": "اس تھریڈ کو اس کے مصنف نے حذف کیا",
+  "this_thread_was_removed": "اس تھریڈ کو بورڈ کے موڈریٹرز نے ہٹا دیا ہے",
+  "this_reply_was_deleted": "اس جواب کو اس کے مصنف نے حذف کر دیا تھا",
+  "this_reply_was_removed": "اس جواب کو بورڈ کے منتظمین نے حذف کر دیا ہے"
 }
