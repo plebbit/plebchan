@@ -151,7 +151,15 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   }));
 
   const bind = useDrag(
-    ({ offset: [ox, oy] }) => {
+    ({ active, event, offset: [ox, oy] }) => {
+      if (active) {
+        event.preventDefault();
+        document.body.style.userSelect = 'none';
+        document.body.style.webkitUserSelect = 'none';
+      } else {
+        document.body.style.userSelect = '';
+        document.body.style.webkitUserSelect = '';
+      }
       api.start({ x: ox, y: oy, immediate: true });
     },
     {
