@@ -11,7 +11,7 @@ const Version = () => {
   return (
     <>
       <a
-        href={commitRef ? `https://github.com/plebbit/seedit/commit/${commitRef}` : `https://github.com/plebbit/seedit/releases/tag/v${version}`}
+        href={commitRef ? `https://github.com/plebbit/plebchan/commit/${commitRef}` : `https://github.com/plebbit/plebchan/releases/tag/v${version}`}
         target='_blank'
         rel='noopener noreferrer'
       >
