@@ -15,7 +15,7 @@ const Version = () => {
         target='_blank'
         rel='noopener noreferrer'
       >
-        v{commitRef ? '-dev' : version}
+        plebchan v{commitRef ? `${version}-dev (#${commitRef.slice(0, 7)})` : version}
       </a>
       {isElectron && (
         <>
