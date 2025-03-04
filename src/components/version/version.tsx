@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import packageJson from '../../../package.json';
 
 const { version } = packageJson;
-const commitRef = process.env.REACT_APP_COMMIT_REF;
+const commitRef = process.env.VITE_COMMIT_REF;
 const isElectron = window.isElectron === true;
 
 const Version = () => {
