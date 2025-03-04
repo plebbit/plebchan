@@ -48,7 +48,7 @@
   "scripts": {
     "start": "vite",
     "build": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=false vite build",
-    "build-netlify": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true REACT_APP_COMMIT_REF=$COMMIT_REF CI='' vite build",
+    "build-netlify": "cross-env NODE_OPTIONS=\"--max_old_space_size=4096\" PUBLIC_URL=./ GENERATE_SOURCEMAP=true REACT_APP_COMMIT_REF=$COMMIT_REF CI='' vite build",
     "test": "vitest",
     "preview": "vite preview",
     "analyze-bundle": "cross-env PUBLIC_URL=./ GENERATE_SOURCEMAP=true vite build && source-map-explorer 'build/assets/*.js'",

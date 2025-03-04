@@ -4,6 +4,8 @@ import { resolve } from 'path';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import eslint from 'vite-plugin-eslint';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export default defineConfig({
   plugins: [
     react({
@@ -15,7 +17,7 @@ export default defineConfig({
         ]
       }
     }),
-    eslint({
+    !isProduction && eslint({
       lintOnStart: true,
       overrideConfigFile: './.eslintrc.cjs',
       failOnError: false,
