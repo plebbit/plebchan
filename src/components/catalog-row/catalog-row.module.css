@@ -58,11 +58,11 @@
 }
 
 .threadIcons .stickyIcon {
-  background-image: url("/public/assets/icons/sticky.gif");
+  background-image: url("/assets/icons/sticky.gif");
 }
 
 .threadIcons .closedIcon {
-  background-image: url("/public/assets/icons/closed.gif");
+  background-image: url("/assets/icons/closed.gif");
 }
 
 .mediaWrapper {

@@ -9,7 +9,7 @@ import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../../components/catalog-row';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
 import BoxModal from '../box-modal';
-import { nsfwTags } from '../home';
+import { nsfwTags } from '../../../constants/nsfwTags';
 import { removeMarkdown } from '../../../lib/utils/post-utils';
 
 interface PopularThreadProps {

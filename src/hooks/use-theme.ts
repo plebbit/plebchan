@@ -4,7 +4,7 @@ import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
 import { useDefaultSubplebbits } from './use-default-subplebbits';
 import useInitialTheme from './use-initial-theme';
-import { nsfwTags } from '../views/home/home';
+import { nsfwTags } from '../constants/nsfwTags';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import useSpecialThemeStore from '../stores/use-special-theme-store';
 import { isChristmas } from '../lib/utils/time-utils';

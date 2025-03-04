@@ -20,7 +20,7 @@
 
   /* body */
   --body-background-base-color: #ffe;
-  --body-background-pattern-image: url("/public/assets/background-fade.png");
+  --body-background-pattern-image: url("/assets/background-fade.png");
   --body-font-color: maroon;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -49,7 +49,7 @@
   /* desktop buttons */
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
-  --close-button-background-image: url("/public/assets/buttons/cross-red.png");
+  --close-button-background-image: url("/assets/buttons/cross-red.png");
 
   /* horizontal rule */
   --hr-border: none;
@@ -90,7 +90,7 @@
   --button-font-size-mobile: 10pt;
   --button-font-weight-mobile: 700;
   --button-text-color-mobile: #800;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-image-mobile: url("/assets/buttons/button-fade.png");
   --button-background-color-mobile: #f0e0d6;
   --button-border-mobile: 1px solid #c0a69d;
 
@@ -98,8 +98,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/plus-red.png");
+  --post-hide-button-background-image: url("/assets/buttons/minus-red.png");
+  --post-unhide-button-background-image: url("/assets/buttons/plus-red.png");
   --post-subject-text-color: #cc1105;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -190,9 +190,9 @@
   --settings-modal-border-right: 1px solid #d9bfb7;
   --settings-modal-border-bottom: 1px solid #d9bfb7;
   --settings-modal-border-left: none;
-  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-red.png");
-  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-red.png");
-  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
+  --settings-modal-close-button-background-image: url("/assets/buttons/cross-red.png");
+  --settings-modal-show-button-background-image: url("/assets/buttons/plus-red.png");
+  --settings-modal-hide-button-background-image: url("/assets/buttons/minus-red.png");
 
   /* stats */
   --stats-font-size: 11px;
@@ -234,7 +234,7 @@
 
   /* body */
   --body-background-base-color: #eef2ff;
-  --body-background-pattern-image: url("/public/assets/background-fade-blue.png");
+  --body-background-pattern-image: url("/assets/background-fade-blue.png");
   --body-font-color: #000;
   --body-font-family: arial, helvetica, sans-serif;
   --body-font-size: 10pt;
@@ -262,7 +262,7 @@
   /* desktop buttons */
   --button-desktop-text-color: #34345c;
   --button-desktop-text-color-hover: #d00;
-  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+  --close-button-background-image: url("/assets/buttons/cross-blue.png");
 
   /* footer */
   --footer-item-background-color-desktop: #eef2ff;
@@ -302,7 +302,7 @@
   --button-font-size-mobile: 10pt;
   --button-font-weight-mobile: 700;
   --button-text-color-mobile: #34345c;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
+  --button-background-image-mobile: url("/assets/buttons/button-fade-blue.png");
   --button-background-color-mobile: #d6daf0;
   --button-border-mobile: 1px solid #b7c5d9;
 
@@ -310,8 +310,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/plus-blue.png");
+  --post-hide-button-background-image: url("/assets/buttons/minus-blue.png");
+  --post-unhide-button-background-image: url("/assets/buttons/plus-blue.png");
   --post-subject-text-color: #0f0c5d;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -402,9 +402,9 @@
   --settings-modal-border-bottom: 1px solid #b7c5d9;
   --settings-modal-border-left: none;
   --settings-modal-header-border-bottom: 1px solid #b7c5d9;
-  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-blue.png");
-  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-blue.png");
-  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
+  --settings-modal-close-button-background-image: url("/assets/buttons/cross-blue.png");
+  --settings-modal-show-button-background-image: url("/assets/buttons/plus-blue.png");
+  --settings-modal-hide-button-background-image: url("/assets/buttons/minus-blue.png");
 
   /* stats */
   --stats-font-size: 11px;
@@ -478,7 +478,7 @@
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
   --button-text-decoration: underline;
-  --close-button-background-image: url("/public/assets/buttons/cross-red.png");
+  --close-button-background-image: url("/assets/buttons/cross-red.png");
 
   /* footer */
   --footer-item-background-color-desktop: #fed;
@@ -498,7 +498,7 @@
   --button-font-size-mobile: 11pt;
   --button-font-weight-mobile: 700;
   --button-text-color-mobile: #800;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade.png");
+  --button-background-image-mobile: url("/assets/buttons/button-fade.png");
   --button-background-color-mobile: #f0e0d6;
   --button-border-mobile: 1px solid #c0a69d;
 
@@ -506,8 +506,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/plus-red.png");
+  --post-hide-button-background-image: url("/assets/buttons/minus-red.png");
+  --post-unhide-button-background-image: url("/assets/buttons/plus-red.png");
   --post-subject-text-color: #cc1105;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -583,9 +583,9 @@
   --settings-modal-border-bottom: 1px solid rgba(0, 0, 0, 0.20);
   --settings-modal-border-left: 1px solid rgba(0, 0, 0, 0.20);
   --settings-modal-header-border-bottom: 1px solid rgba(0,0,0,.2);
-  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-red.png");
-  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-red.png");
-  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-red.png");
+  --settings-modal-close-button-background-image: url("/assets/buttons/cross-red.png");
+  --settings-modal-show-button-background-image: url("/assets/buttons/plus-red.png");
+  --settings-modal-hide-button-background-image: url("/assets/buttons/minus-red.png");
 
   /* stats */
   --stats-font-size: 10pt;
@@ -656,7 +656,7 @@
   --button-desktop-text-color: #34345c;
   --button-text-decoration: underline;
   --button-desktop-text-color-hover: #d00;
-  --close-button-background-image: url("/public/assets/buttons/cross-blue.png");
+  --close-button-background-image: url("/assets/buttons/cross-blue.png");
 
   /* footer */
   --footer-item-background-color-desktop: #eef2ff;
@@ -678,7 +678,7 @@
   --button-font-size-mobile: 11pt;
   --button-font-weight-mobile: 700;
   --button-text-color-mobile: #34345c;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade-blue.png");
+  --button-background-image-mobile: url("/assets/buttons/button-fade-blue.png");
   --button-background-color-mobile: #d6daf0;
   --button-border-mobile: 1px solid #b7c5d9;
 
@@ -694,8 +694,8 @@
   --post-capcode-mod-text-color: purple;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/plus-blue.png");
+  --post-hide-button-background-image: url("/assets/buttons/minus-blue.png");
+  --post-unhide-button-background-image: url("/assets/buttons/plus-blue.png");
   --post-subject-text-color: #0f0c5d;
   --post-subject-font-weight: 700;
   --post-name-text-color: #117743;
@@ -771,9 +771,9 @@
   --settings-modal-border-bottom: 1px solid rgba(0, 0, 0, 0.20);
   --settings-modal-border-left: 1px solid rgba(0, 0, 0, 0.20);
   --settings-modal-header-border-bottom: 1px solid rgba(0,0,0,.2);
-  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-blue.png");
-  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-blue.png");
-  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-blue.png");
+  --settings-modal-close-button-background-image: url("/assets/buttons/cross-blue.png");
+  --settings-modal-show-button-background-image: url("/assets/buttons/plus-blue.png");
+  --settings-modal-hide-button-background-image: url("/assets/buttons/minus-blue.png");
 
   /* stats */
   --stats-font-size: 10pt;
@@ -847,7 +847,7 @@
   /* desktop buttons */
   --button-desktop-text-color: #81a2be;
   --button-desktop-text-color-hover: #5f89ac;
-  --close-button-background-image: url("/public/assets/buttons/cross-dark.png");
+  --close-button-background-image: url("/assets/buttons/cross-dark.png");
 
   /* filter for inputs */
   --filter80: brightness(85%);
@@ -882,7 +882,7 @@
   --button-font-size-mobile: 10pt;
   --button-font-weight-mobile: 700;
   --button-text-color-mobile: #707070;
-  --button-background-image-mobile: url("/public/assets/buttons/button-fade-dark.png");
+  --button-background-image-mobile: url("/assets/buttons/button-fade-dark.png");
   --button-background-color-mobile: #1b1c1e;
   --button-border-mobile: 1px solid #282a2e;
 
@@ -890,8 +890,8 @@
   --post-capcode-mod-text-color: #81a2be;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/minus-dark.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/plus-dark.png");
+  --post-hide-button-background-image: url("/assets/buttons/minus-dark.png");
+  --post-unhide-button-background-image: url("/assets/buttons/plus-dark.png");
   --post-subject-text-color: #b294bb;
   --post-subject-font-weight: 700;
   --post-name-text-color: #c5c8c6;
@@ -993,9 +993,9 @@
   --settings-modal-border-bottom: 1px solid #111;
   --settings-modal-border-left: 1px solid #111;
   --settings-modal-header-border-bottom: 1px solid #111;
-  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-dark.png");
-  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-dark.png");
-  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-dark.png");
+  --settings-modal-close-button-background-image: url("/assets/buttons/cross-dark.png");
+  --settings-modal-show-button-background-image: url("/assets/buttons/plus-dark.png");
+  --settings-modal-hide-button-background-image: url("/assets/buttons/minus-dark.png");
 
   /* stats */
   --stats-font-size: 11px;
@@ -1066,7 +1066,7 @@
   /* desktop buttons */
   --button-desktop-text-color: #f60;
   --button-desktop-text-color-hover: #f30;
-  --close-button-background-image: url("/public/assets/buttons/cross-photon.png");
+  --close-button-background-image: url("/assets/buttons/cross-photon.png");
 
   /* horizontal rule */
   --hr-border: none;
@@ -1095,8 +1095,8 @@
   --post-capcode-mod-text-color: #f60;
 
   /* post desktop */
-  --post-hide-button-background-image: url("/public/assets/buttons/minus-photon.png");
-  --post-unhide-button-background-image: url("/public/assets/buttons/plus-photon.png");
+  --post-hide-button-background-image: url("/assets/buttons/minus-photon.png");
+  --post-unhide-button-background-image: url("/assets/buttons/plus-photon.png");
   --post-subject-text-color: #111;
   --post-subject-font-weight: 700;
   --post-name-text-color: #004a99;
@@ -1196,9 +1196,9 @@
   --settings-modal-border-bottom: 1px solid #ccc;
   --settings-modal-border-left: 1px solid #ccc;
   --settings-modal-header-border-bottom: 1px solid rgba(0, 0, 0, 0.20);
-  --settings-modal-close-button-background-image: url("/public/assets/buttons/cross-photon.png");
-  --settings-modal-show-button-background-image: url("/public/assets/buttons/plus-photon.png");
-  --settings-modal-hide-button-background-image: url("/public/assets/buttons/minus-photon.png");
+  --settings-modal-close-button-background-image: url("/assets/buttons/cross-photon.png");
+  --settings-modal-show-button-background-image: url("/assets/buttons/plus-photon.png");
+  --settings-modal-hide-button-background-image: url("/assets/buttons/minus-photon.png");
 
   /* stats */
   --stats-font-size: 11px;

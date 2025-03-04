@@ -9,7 +9,7 @@ import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
 import Tooltip from '../../../components/tooltip';
 import styles from './boards-list.module.css';
-import { nsfwTags } from '../home';
+import { nsfwTags } from '../../../constants/nsfwTags';
 
 const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import useThemeStore from '../stores/use-theme-store';
 import { useDefaultSubplebbits } from './use-default-subplebbits';
 import { isAllView, isHomeView, isNotFoundView, isPendingPostView, isSubscriptionsView } from '../lib/utils/view-utils';
-import { nsfwTags } from '../views/home/home';
+import { nsfwTags } from '../constants/nsfwTags';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 
 const useInitialTheme = (pendingPostSubplebbitAddress?: string) => {
