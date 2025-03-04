@@ -1,7 +1,5 @@
 .container {
   position: fixed;
-  top: calc(50% - 150px);
-  left: calc(50% - 150px);
   display: block;
   padding: 2px;
   font-size: 10pt;
@@ -10,6 +8,9 @@
   z-index: 999;
   background-color: var(--challenge-modal-background-color);
   border: var(--challenge-modal-border);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .title {
