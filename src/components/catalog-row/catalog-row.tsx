@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
+import { Comment } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, size, autoUpdate, Placement } from '@floating-ui/react';
 import { getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
@@ -20,6 +20,7 @@ import _ from 'lodash';
 import { ContentPreview } from '../../views/home/popular-threads-box';
 import { useCommentMediaInfo } from '../../hooks/use-comment-media-info';
 import { shouldShowSnow } from '../../lib/snow';
+import useReplies from '../../hooks/use-replies';
 
 interface CatalogPostMediaProps {
   commentMediaInfo: any;
@@ -182,7 +183,8 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     update();
   }, [update, windowWidth]);
 
-  const lastReply = useComment({ commentCid: lastChildCid });
+  const replies = useReplies(post);
+  const lastReply = replies.length > 0 ? replies[replies.length - 1] : null;
 
   const { isCommentAuthorMod: isCatalogPostAuthorMod, commentAuthorRole: catalogPostAuthorRole } = useEditCommentPrivileges({
     commentAuthorAddress: author?.address,
