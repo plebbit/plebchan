@@ -88,7 +88,7 @@ export default defineConfig({
     target: 'es2020'
   },
   define: {
-    'process.env': {},
+    'process.env.VITE_COMMIT_REF': JSON.stringify(process.env.COMMIT_REF),
     'global': 'globalThis',
     '__dirname': '""',
   }
