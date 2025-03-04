@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
@@ -84,7 +84,7 @@ const CommentContent = ({ comment: post }: { comment: Comment }) => {
                 i18nKey={'comment_edited_at_timestamp'}
                 values={{ timestamp: getFormattedDate(edit?.timestamp) }}
                 shouldUnescape={true}
-                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<></>} /> }}
+                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<Fragment key={edit?.timestamp}></Fragment>} /> }}
               />{' '}
               {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
               {showOriginal ? (

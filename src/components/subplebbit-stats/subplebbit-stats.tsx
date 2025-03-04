@@ -52,13 +52,13 @@ const SubplebbitStats = () => {
                 <Trans
                   i18nKey='board_stats_hour'
                   values={{ userCount: stats.hourActiveUserCount ?? '?', postCount: stats.hourPostCount ?? '?' }}
-                  components={{ 1: <span className={styles.statValue} /> }}
+                  components={{ 1: <span key='hour-stat-value' className={styles.statValue} /> }}
                 />
                 {' / '}
                 <Trans
                   i18nKey='board_stats_day'
                   values={{ userCount: stats.dayActiveUserCount ?? '?', postCount: stats.dayPostCount ?? '?' }}
-                  components={{ 1: <span className={styles.statValue} /> }}
+                  components={{ 1: <span key='day-stat-value' className={styles.statValue} /> }}
                 />
               </td>
             </tr>
@@ -67,13 +67,13 @@ const SubplebbitStats = () => {
                 <Trans
                   i18nKey='board_stats_week'
                   values={{ userCount: stats.weekActiveUserCount ?? '?', postCount: stats.weekPostCount ?? '?' }}
-                  components={{ 1: <span className={styles.statValue} /> }}
+                  components={{ 1: <span key='week-stat-value' className={styles.statValue} /> }}
                 />
                 {' / '}
                 <Trans
                   i18nKey='board_stats_month'
                   values={{ userCount: stats.monthActiveUserCount ?? '?', postCount: stats.monthPostCount ?? '?' }}
-                  components={{ 1: <span className={styles.statValue} /> }}
+                  components={{ 1: <span key='month-stat-value' className={styles.statValue} /> }}
                 />
               </td>
             </tr>
@@ -84,7 +84,7 @@ const SubplebbitStats = () => {
                 <Trans
                   i18nKey='board_stats_all'
                   values={{ userCount: stats.allActiveUserCount ?? '?', postCount: stats.allPostCount ?? '?' }}
-                  components={{ 1: <span className={styles.statValue} /> }}
+                  components={{ 1: <span key='all-stat-value' className={styles.statValue} /> }}
                 />
               </td>
             </tr>

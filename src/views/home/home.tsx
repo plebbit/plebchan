@@ -52,7 +52,13 @@ const InfoBox = () => {
         <h2>{t('what_is_plebchan')}</h2>
       </div>
       <div className={styles.boxContent}>
-        <Trans i18nKey='plebchan_description' shouldUnescape={true} components={{ 1: <Link to='https://plebbit.com' target='_blank' rel='noopener noreferrer' /> }} />
+        <Trans
+          i18nKey='plebchan_description'
+          shouldUnescape={true}
+          components={{
+            1: <Link key='plebbit-link' to='https://plebbit.com' target='_blank' rel='noopener noreferrer' />,
+          }}
+        />
         <br />
         <br />
         {t('no_global_rules_info')}

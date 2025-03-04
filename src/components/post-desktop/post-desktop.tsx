@@ -251,7 +251,7 @@ const PostMedia = ({ commentMediaInfo, hasThumbnail, isDescription, isRules, spo
   const [showThumbnail, setShowThumbnail] = useState(true);
 
   const mediaDimensions = getMediaDimensions(commentMediaInfo);
-  console.log('mediaDimensions', mediaDimensions);
+
   return (
     <div className={styles.file}>
       <div className={styles.fileText}>
