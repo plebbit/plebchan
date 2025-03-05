@@ -35,7 +35,7 @@
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 340px;
+  width: 380px;
   height: auto;
   max-height: 80%;
   overflow-y: auto;
@@ -49,6 +49,12 @@
   border-right: var(--settings-modal-border-right);
   border-bottom: var(--settings-modal-border-bottom);
   border-left: var(--settings-modal-border-left);
+}
+
+@media (max-width: 420px) {
+  .modal {
+    width: 90vw;
+  }
 }
 
 .header {
@@ -142,7 +148,7 @@
   outline: none;
   border: var(--reply-modal-field-input-border, revert);
   font-size: 11px;
-  width: 200px;
+  width: 150px;
 }
 
 .filtersTable input[type='text']:focus {
@@ -163,4 +169,23 @@
 
 .saveButton {
   float: right;
+}
+
+.filterHits {
+  font-size: 12px !important;
+  text-transform: none;
+}
+
+.clickbox {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 10px;
+  display: block;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  text-decoration: none;
+  color: #000;
+  margin: auto;
 }

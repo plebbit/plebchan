@@ -228,7 +228,7 @@
   "pending": "În așteptare",
   "failed": "Eșuat",
   "add": "Adaugă",
-  "pattern": "Model",
+  "pattern": "model",
   "enable": "Activare",
   "order": "Ordine",
   "text": "Text",
@@ -291,5 +291,6 @@
   "this_thread_was_removed": "Acest thread a fost eliminat de moderatorii board-ului",
   "this_reply_was_deleted": "Acest răspuns a fost șters de autorul său",
   "this_reply_was_removed": "Acest răspuns a fost eliminat de moderatorii forumului",
-  "not_mod_of_any_board": "Nu ești moderator pe niciun tablou."
+  "not_mod_of_any_board": "Nu ești moderator pe niciun tablou.",
+  "filters_and_highlights": "Filtre și evidențiere"
 }

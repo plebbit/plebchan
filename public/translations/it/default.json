@@ -228,7 +228,7 @@
   "pending": "In attesa",
   "failed": "Fallito",
   "add": "Aggiungi",
-  "pattern": "Modello",
+  "pattern": "modello",
   "enable": "Abilita",
   "order": "Ordine",
   "text": "Testo",
@@ -291,5 +291,6 @@
   "this_thread_was_removed": "Questo thread è stato rimosso dai moderatori del board",
   "this_reply_was_deleted": "Questa risposta è stata eliminata dal suo autore",
   "this_reply_was_removed": "Questa risposta è stata rimossa dai moderatori del forum",
-  "not_mod_of_any_board": "Non sei un mod di nessuna board."
+  "not_mod_of_any_board": "Non sei un mod di nessuna board.",
+  "filters_and_highlights": "Filtri e Evidenziazioni"
 }

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
 import styles from './catalog-filters.module.css';
@@ -7,8 +7,26 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
   const { t } = useTranslation();
   const { filterItems, saveAndApplyFilters } = useCatalogFiltersStore();
 
-  const [localFilterItems, setLocalFilterItems] = useState(filterItems);
+  const [localFilterItems, setLocalFilterItems] = useState(
+    filterItems.map((item) => ({
+      ...item,
+      hide: item.hide ?? true,
+      top: item.top ?? false,
+    })),
+  );
+
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  // Update local items when store changes
+  useEffect(() => {
+    setLocalFilterItems(
+      filterItems.map((item) => ({
+        ...item,
+        hide: item.hide ?? true,
+        top: item.top ?? false,
+      })),
+    );
+  }, [filterItems]);
 
   const handleAddFilter = useCallback(() => {
     setLocalFilterItems((prev) => {
@@ -16,7 +34,17 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
       setTimeout(() => {
         inputRefs.current[newIndex]?.focus();
       }, 0);
-      return [...prev, { text: '', enabled: true }];
+      return [
+        ...prev,
+        {
+          text: '',
+          enabled: true,
+          count: 0,
+          filteredCids: new Set<string>(),
+          hide: true,
+          top: false,
+        },
+      ];
     });
   }, []);
 
@@ -47,10 +75,13 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
     <table className={styles.filtersTable}>
       <thead>
         <tr>
-          <th>{t('order')}</th>
-          <th>{t('enable')}</th>
-          <th>{t('text')}</th>
-          <th>{t('delete')}</th>
+          <th>order</th>
+          <th>on</th>
+          <th>pattern</th>
+          <th>color</th>
+          <th>hide</th>
+          <th>top</th>
+          <th>del</th>
         </tr>
       </thead>
       <tbody>
@@ -81,16 +112,26 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
               />
             </td>
             <td>
+              <span className={styles.clickbox} />
+            </td>
+            <td>
+              <input type='checkbox' checked={item.hide} onChange={(e) => updateLocalFilterItem(index, { ...item, hide: e.target.checked })} />
+            </td>
+            <td>
+              <input type='checkbox' checked={item.top} onChange={(e) => updateLocalFilterItem(index, { ...item, top: e.target.checked })} />
+            </td>
+            <td>
               <span className={styles.deleteButton} onClick={() => removeLocalFilterItem(index)}>
                 ×
               </span>
             </td>
+            <td className={styles.filterHits}>{item.count > 0 && `x${item.count}`}</td>
           </tr>
         ))}
       </tbody>
       <tfoot>
         <tr>
-          <td colSpan={4}>
+          <td colSpan={7}>
             <button className={styles.addButton} onClick={handleAddFilter}>
               {t('add')}
             </button>
@@ -112,7 +153,7 @@ const FiltersModal = ({ closeModal }: { closeModal: () => void }) => {
       <div className={styles.overlay} onClick={closeModal} />
       <div className={styles.modal}>
         <div className={styles.header}>
-          <span className={styles.title}>{t('filters')}</span>
+          <span className={styles.title}>{t('filters_and_highlights')}</span>
           <span className={styles.closeButton} title='close' onClick={closeModal} />
         </div>
         <FiltersTable onSave={closeModal} />
@@ -125,13 +166,23 @@ const CatalogFilters = () => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setShowModal(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const onEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', onEscapeKey);
+    return () => document.removeEventListener('keydown', onEscapeKey);
+  }, [closeModal]);
 
   return (
     <>
-      <span className={`${styles.filtersButton} button`} onClick={() => setShowModal(false)} style={{ cursor: 'not-allowed' }}>
+      <span className={`${styles.filtersButton} button`} onClick={() => setShowModal(true)}>
         {t('filters')}
       </span>
       {showModal && <FiltersModal closeModal={closeModal} />}

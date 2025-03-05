@@ -228,7 +228,7 @@
   "pending": "Väntande",
   "failed": "Misslyckades",
   "add": "Lägg till",
-  "pattern": "Mönster",
+  "pattern": "mönster",
   "enable": "Aktivera",
   "order": "Ordning",
   "text": "Text",
@@ -291,5 +291,6 @@
   "this_thread_was_removed": "Denna tråd togs bort av forumets moderatorer",
   "this_reply_was_deleted": "Detta svar togs bort av författaren",
   "this_reply_was_removed": "Detta svar togs bort av forumets moderatorer",
-  "not_mod_of_any_board": "Du är inte moderator på någon tavla."
+  "not_mod_of_any_board": "Du är inte moderator på någon tavla.",
+  "filters_and_highlights": "Filter och markeringar"
 }

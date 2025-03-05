@@ -291,5 +291,6 @@
   "this_thread_was_removed": "此帖子已被论坛版主删除",
   "this_reply_was_deleted": "该回复已被其作者删除",
   "this_reply_was_removed": "该回复已被版主删除",
-  "not_mod_of_any_board": "您不是任何板块的管理员。"
+  "not_mod_of_any_board": "您不是任何板块的管理员。",
+  "filters_and_highlights": "筛选器和高亮"
 }

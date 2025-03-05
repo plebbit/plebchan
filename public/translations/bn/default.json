@@ -291,5 +291,6 @@
   "this_thread_was_removed": "এই থ্রেডটি বোর্ড moderators দ্বারা মুছে ফেলা হয়েছে",
   "this_reply_was_deleted": "এই প্রতিক্রিয়া তার লেখক দ্বারা মুছে ফেলা হয়েছে",
   "this_reply_was_removed": "এই প্রতিক্রিয়া বোর্ড পরিচালকদের দ্বারা সরানো হয়েছে",
-  "not_mod_of_any_board": "আপনি কোনও বোর্ডের মড নন।"
+  "not_mod_of_any_board": "আপনি কোনও বোর্ডের মড নন।",
+  "filters_and_highlights": "ফিল্টার এবং হাইলাইট"
 }

@@ -291,5 +291,6 @@
   "this_thread_was_removed": "Dieser Thread wurde von den Moderatoren des Boards entfernt",
   "this_reply_was_deleted": "Diese Antwort wurde vom Autor gelöscht",
   "this_reply_was_removed": "Diese Antwort wurde von den Forenmoderatoren entfernt",
-  "not_mod_of_any_board": "Du bist kein Moderator eines Boards."
+  "not_mod_of_any_board": "Du bist kein Moderator eines Boards.",
+  "filters_and_highlights": "Filter & Highlights"
 }

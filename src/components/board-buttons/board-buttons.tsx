@@ -13,7 +13,6 @@ import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
 import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
-import { useEffect } from 'react';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -244,13 +243,7 @@ export const MobileBoardButtons = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
-  const { filteredCount, resetFilteredCount } = useCatalogFiltersStore();
-
-  useEffect(() => {
-    if (subplebbitAddress) {
-      resetFilteredCount();
-    }
-  }, [subplebbitAddress, resetFilteredCount]);
+  const { filteredCount } = useCatalogFiltersStore();
 
   return (
     <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
@@ -334,13 +327,7 @@ export const DesktopBoardButtons = () => {
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
-  const { filteredCount, resetFilteredCount } = useCatalogFiltersStore();
-
-  useEffect(() => {
-    if (subplebbitAddress) {
-      resetFilteredCount();
-    }
-  }, [subplebbitAddress, resetFilteredCount]);
+  const { filteredCount } = useCatalogFiltersStore();
 
   return (
     <>

@@ -228,7 +228,7 @@
   "pending": "In afwachting",
   "failed": "Mislukt",
   "add": "Toevoegen",
-  "pattern": "Patroon",
+  "pattern": "patroon",
   "enable": "Inschakelen",
   "order": "Volgorde",
   "text": "Tekst",
@@ -291,5 +291,6 @@
   "this_thread_was_removed": "Deze thread werd verwijderd door boardmoderators",
   "this_reply_was_deleted": "Dit antwoord werd verwijderd door de auteur",
   "this_reply_was_removed": "Dit antwoord is verwijderd door de forum moderators",
-  "not_mod_of_any_board": "Je bent geen mod van een bord."
+  "not_mod_of_any_board": "Je bent geen mod van een bord.",
+  "filters_and_highlights": "Filters en markeringen"
 }

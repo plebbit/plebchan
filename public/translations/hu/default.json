@@ -228,7 +228,7 @@
   "pending": "Függőben",
   "failed": "Sikertelen",
   "add": "Hozzáad",
-  "pattern": "Minta",
+  "pattern": "minta",
   "enable": "Engedélyez",
   "order": "Rendelés",
   "text": "Szöveg",
@@ -291,5 +291,6 @@
   "this_thread_was_removed": "Ezt a témát a fórum moderátorai eltávolították",
   "this_reply_was_deleted": "Ez a válasz törölve lett a szerzője által",
   "this_reply_was_removed": "Ez a válasz törlésre került a fórum moderátorai által",
-  "not_mod_of_any_board": "Nem vagy moderátor egyetlen táblán sem."
+  "not_mod_of_any_board": "Nem vagy moderátor egyetlen táblán sem.",
+  "filters_and_highlights": "Szűrők és kiemelések"
 }

@@ -228,7 +228,7 @@
   "pending": "Pendente",
   "failed": "Falhou",
   "add": "Adicionar",
-  "pattern": "Padrão",
+  "pattern": "padrão",
   "enable": "Ativar",
   "order": "Ordem",
   "text": "Texto",
@@ -291,5 +291,6 @@
   "this_thread_was_removed": "Este tópico foi removido pelos moderadores do fórum",
   "this_reply_was_deleted": "Esta resposta foi excluída pelo autor",
   "this_reply_was_removed": "Esta resposta foi removida pelos moderadores do fórum",
-  "not_mod_of_any_board": "Você não é um moderador de nenhum quadro."
+  "not_mod_of_any_board": "Você não é um moderador de nenhum quadro.",
+  "filters_and_highlights": "Filtros e Destaques"
 }

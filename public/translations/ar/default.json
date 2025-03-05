@@ -291,5 +291,6 @@
   "this_thread_was_removed": "تم إزالة هذا الموضوع بواسطة مشرفي المنتدى",
   "this_reply_was_deleted": "تم حذف هذه الرد من قبل مؤلفه",
   "this_reply_was_removed": "تمت إزالة هذه الرد من قبل مشرفي المنتدى",
-  "not_mod_of_any_board": "أنت لست مشرفًا في أي لوحة."
+  "not_mod_of_any_board": "أنت لست مشرفًا في أي لوحة.",
+  "filters_and_highlights": "الفلاتر والإبرازات"
 }

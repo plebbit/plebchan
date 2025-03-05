@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Comment, useAccount, useFeed, useSubplebbit, useBlock, useAccountComments } from '@plebbit/plebbit-react-hooks';
@@ -14,22 +14,97 @@ import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import useSortingStore from '../../stores/use-sorting-store';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import styles from './catalog.module.css';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const createThreadsWithoutImagesFilter = () => ({
-  filter: (comment: Comment) => {
-    const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
-    if (!getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link)) {
-      return false;
-    }
-    return true;
-  },
-  key: 'threads-with-images-only',
-});
+const createContentFilter = (
+  filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean }[],
+  onFilterMatch?: (filterIndex: number, cid: string) => void,
+) => {
+  // Create a unique key based on the enabled filter items
+  const enabledFilters = filterItems.filter((item) => item.enabled && item.text.trim() !== '');
+  const filterKey =
+    enabledFilters.length > 0
+      ? `content-filter-${enabledFilters.map((item) => `${item.text}-${item.hide ? 'hide' : ''}-${item.top ? 'top' : ''}`).join('-')}`
+      : 'no-content-filter';
+
+  return {
+    filter: (comment: Comment) => {
+      if (!comment?.cid) return true;
+
+      if (enabledFilters.length === 0) return true;
+
+      const titleLower = comment?.title?.toLowerCase() || '';
+      const contentLower = comment?.content?.toLowerCase() || '';
+
+      // Check if any enabled filter matches the content
+      for (let i = 0; i < enabledFilters.length; i++) {
+        const item = enabledFilters[i];
+        const pattern = item.text.toLowerCase();
+
+        if (titleLower.includes(pattern) || contentLower.includes(pattern)) {
+          // Find the original filter index to increment count
+          const filterIndex = filterItems.findIndex((f) => f.text === item.text && f.enabled);
+          if (filterIndex !== -1) {
+            if (onFilterMatch) {
+              onFilterMatch(filterIndex, comment.cid);
+            } else {
+              // Fallback to the store method if no callback provided
+              useCatalogFiltersStore.getState().incrementFilterCount(filterIndex, comment.cid);
+            }
+          }
+
+          // If this filter is set to hide, filter out the comment
+          if (item.hide) {
+            return false;
+          }
+
+          // If this filter is set to top, we'll handle it separately in the component
+          // (we don't filter it out here)
+        }
+      }
+
+      return true;
+    },
+    key: filterKey,
+  };
+};
+
+const createImageFilter = (showTextOnlyThreads: boolean) => {
+  return {
+    filter: (comment: Comment) => {
+      if (showTextOnlyThreads) return true;
+
+      const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
+      const hasThumbnail = getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link);
+
+      return hasThumbnail;
+    },
+    key: showTextOnlyThreads ? 'no-image-filter' : 'threads-with-images-only',
+  };
+};
+
+const createCombinedFilter = (
+  showTextOnlyThreads: boolean,
+  filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean }[],
+  onFilterMatch?: (filterIndex: number, cid: string) => void,
+) => {
+  const imageFilter = createImageFilter(showTextOnlyThreads);
+  const contentFilter = createContentFilter(filterItems, onFilterMatch);
+
+  return {
+    filter: (comment: Comment) => {
+      if (!imageFilter.filter(comment)) return false;
+
+      return contentFilter.filter(comment);
+    },
+    key: `${imageFilter.key}-${contentFilter.key}`,
+  };
+};
 
 const Catalog = () => {
   const { t } = useTranslation();
@@ -39,7 +114,7 @@ const Catalog = () => {
   const isInAllView = isAllView(location.pathname);
   const defaultSubplebbits = useDefaultSubplebbits();
   const { hideAdultBoards, hideGoreBoards } = useInterfaceSettingsStore();
-  const { hideThreadsWithoutImages } = useInterfaceSettingsStore();
+  const { showTextOnlyThreads, filterItems } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -77,12 +152,17 @@ const Catalog = () => {
   const { timeFilterSeconds, timeFilterName } = useTimeFilter();
   const { sortType } = useSortingStore();
 
+  // stable callback for filter matching
+  const handleFilterMatch = useCallback((filterIndex: number, cid: string) => {
+    useCatalogFiltersStore.getState().incrementFilterCount(filterIndex, cid);
+  }, []);
+
   const feedOptions = useMemo(() => {
     const options: any = {
       subplebbitAddresses,
       sortType,
       postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-      filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
+      filter: createCombinedFilter(showTextOnlyThreads, filterItems, handleFilterMatch),
     };
 
     if (isInAllView || isInSubscriptionsView) {
@@ -90,7 +170,7 @@ const Catalog = () => {
     }
 
     return options;
-  }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, hideThreadsWithoutImages]);
+  }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, showTextOnlyThreads, filterItems, handleFilterMatch]);
 
   const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
   const { accountComments } = useAccountComments();
@@ -108,13 +188,13 @@ const Catalog = () => {
           timestamp > Date.now() / 1000 - 60 * 60 &&
           state === 'succeeded' &&
           cid &&
-          (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), comment?.link) : true) &&
+          (showTextOnlyThreads ? getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), comment?.link) : true) &&
           cid === postCid &&
           comment?.subplebbitAddress === subplebbitAddress &&
           !feed.some((post) => post.cid === cid)
         );
       }),
-    [accountComments, subplebbitAddress, feed, hideThreadsWithoutImages],
+    [accountComments, subplebbitAddress, feed, showTextOnlyThreads],
   );
 
   // show newest account comment at the top of the feed but after pinned posts
@@ -146,13 +226,14 @@ const Catalog = () => {
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 7,
-    filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
+    filter: createCombinedFilter(showTextOnlyThreads, filterItems, handleFilterMatch),
   });
+
   const { feed: monthlyFeed } = useFeed({
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 30,
-    filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
+    filter: createCombinedFilter(showTextOnlyThreads, filterItems, handleFilterMatch),
   });
 
   const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);
@@ -265,7 +346,44 @@ const Catalog = () => {
 
   const isFeedLoaded = feed.length > 0 || state === 'failed';
 
-  const rows = useCatalogFeedRows(columnCount, combinedFeed, isFeedLoaded, subplebbit);
+  // Process the feed to move "top" posts to the top
+  const processedFeed = useMemo(() => {
+    if (!combinedFeed || combinedFeed.length === 0) return combinedFeed;
+
+    const enabledTopFilters = filterItems.filter((item) => item.enabled && item.text.trim() !== '' && item.top);
+    if (enabledTopFilters.length === 0) return combinedFeed;
+
+    // Separate posts that match "top" filters
+    const topPosts: Comment[] = [];
+    const regularPosts: Comment[] = [];
+
+    combinedFeed.forEach((comment) => {
+      if (!comment) return;
+
+      const titleLower = comment?.title?.toLowerCase() || '';
+      const contentLower = comment?.content?.toLowerCase() || '';
+
+      let isTop = false;
+      for (const filter of enabledTopFilters) {
+        const pattern = filter.text.toLowerCase();
+        if (titleLower.includes(pattern) || contentLower.includes(pattern)) {
+          isTop = true;
+          break;
+        }
+      }
+
+      if (isTop) {
+        topPosts.push(comment);
+      } else {
+        regularPosts.push(comment);
+      }
+    });
+
+    // Return top posts followed by regular posts
+    return [...topPosts, ...regularPosts];
+  }, [combinedFeed, filterItems]);
+
+  const rows = useCatalogFeedRows(columnCount, processedFeed, isFeedLoaded, subplebbit);
 
   // save the last Virtuoso state to restore it when navigating back
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
@@ -293,7 +411,7 @@ const Catalog = () => {
     <div className={styles.content}>
       <hr />
       <div className={styles.catalog}>
-        {combinedFeed.length !== 0 ? (
+        {processedFeed.length !== 0 ? (
           <>
             <Virtuoso
               increaseViewportBy={{ bottom: 1200, top: 1200 }}
