@@ -75,7 +75,7 @@ const CommentContent = ({ comment: post, replies }: { comment: Comment; replies:
             <span className={styles.abbr}>
               <br />
               <br />
-              <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <span onClick={() => setShowFullComment(true)} /> }} />
+              <Trans i18nKey={'comment_too_long'} shouldUnescape={true} components={{ 1: <span key={cid} onClick={() => setShowFullComment(true)} /> }} />
             </span>
           )}
           {edit && original?.content !== content && (
@@ -87,20 +87,22 @@ const CommentContent = ({ comment: post, replies }: { comment: Comment; replies:
                 i18nKey={'comment_edited_at_timestamp'}
                 values={{ timestamp: getFormattedDate(edit?.timestamp) }}
                 shouldUnescape={true}
-                components={{ 1: <Tooltip content={getFormattedTimeAgo(edit?.timestamp)} children={<Fragment key={edit?.timestamp}></Fragment>} /> }}
+                components={{
+                  1: <Tooltip key={edit?.timestamp} content={getFormattedTimeAgo(edit?.timestamp)} children={<Fragment key={edit?.timestamp}></Fragment>} />,
+                }}
               />{' '}
               {reason && <>{t('reason_reason', { reason: reason, interpolation: { escapeValue: false } })} </>}
               {showOriginal ? (
                 <Trans
                   i18nKey={'click_here_to_hide_original'}
                   shouldUnescape={true}
-                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                  components={{ 1: <span key={cid} className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
                 />
               ) : (
                 <Trans
                   i18nKey={'click_here_to_show_original'}
                   shouldUnescape={true}
-                  components={{ 1: <span className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
+                  components={{ 1: <span key={cid} className={styles.showOriginal} onClick={() => setShowOriginal(!showOriginal)} /> }}
                 />
               )}
             </span>

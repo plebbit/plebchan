@@ -433,11 +433,16 @@ const PostDesktop = ({ post, roles, showAllReplies, showReplies = true, replies:
               <Trans
                 i18nKey={'replies_and_links_omitted'}
                 shouldUnescape={true}
-                components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
+                components={{ 1: <Link key={cid} to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
                 values={{ repliesCount, linksCount }}
               />
             ) : (
-              <Trans i18nKey={'replies_omitted'} shouldUnescape={true} components={{ 1: <Link to={`/p/${subplebbitAddress}/c/${cid}`} /> }} values={{ repliesCount }} />
+              <Trans
+                i18nKey={'replies_omitted'}
+                shouldUnescape={true}
+                components={{ 1: <Link key={cid} to={`/p/${subplebbitAddress}/c/${cid}`} /> }}
+                values={{ repliesCount }}
+              />
             )}
           </span>
         )}
