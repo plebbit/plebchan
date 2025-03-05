@@ -9,14 +9,12 @@ import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-util
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { useFeedStateString } from '../../hooks/use-state-string';
-import useReplyModal from '../../hooks/use-reply-modal';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import { Post } from '../post';
-import ReplyModal from '../../components/reply-modal';
 import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
@@ -115,8 +113,6 @@ const Board = () => {
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, error, rules, shortAddress, state, suggested } = subplebbit || {};
   const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
-
-  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
 
@@ -272,16 +268,6 @@ const Board = () => {
       {shouldShowSnow() && <hr />}
       <div className={`${styles.content} ${shouldShowSnow() ? styles.garland : ''}`}>
         {location.pathname.endsWith('/settings') && <SettingsModal />}
-        {activeCid && threadCid && postSubplebbitAddress && (
-          <ReplyModal
-            closeModal={closeModal}
-            parentCid={activeCid}
-            postCid={threadCid}
-            scrollY={scrollY}
-            showReplyModal={showReplyModal}
-            subplebbitAddress={postSubplebbitAddress}
-          />
-        )}
         {((description && description.length > 0) || isInAllView) && (
           <SubplebbitDescription
             avatarUrl={suggested?.avatarUrl}
@@ -298,7 +284,7 @@ const Board = () => {
           increaseViewportBy={{ bottom: 1200, top: 1200 }}
           totalCount={combinedFeed.length}
           data={combinedFeed}
-          itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
+          itemContent={(index, post) => <Post index={index} post={post} />}
           useWindowScroll={true}
           components={{ Footer }}
           endReached={loadMore}

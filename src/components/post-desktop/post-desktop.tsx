@@ -29,6 +29,7 @@ import { PostProps } from '../../views/post/post';
 import { create } from 'zustand';
 import _ from 'lodash';
 import { shouldShowSnow } from '../../lib/snow';
+import useReplyModalStore from '../../stores/use-reply-modal-store';
 
 interface ShowOmittedRepliesState {
   showOmittedReplies: Record<string, boolean>;
@@ -46,7 +47,7 @@ const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
     })),
 }));
 
-const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }: PostProps) => {
+const PostInfo = ({ post, postReplyCount = 0, roles, isHidden }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, deleted, locked, pinned, parentCid, postCid, reason, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
@@ -75,6 +76,8 @@ const PostInfo = ({ openReplyModal, post, postReplyCount = 0, roles, isHidden }:
   const numberOfPostsByAuthor = document.querySelectorAll(`[data-author-address="${shortAddress}"][data-post-cid="${postCid}"]`).length;
 
   const { hidden } = useHide(post);
+
+  const { openReplyModal } = useReplyModalStore();
 
   const onReplyModalClick = () => {
     deleted
@@ -302,7 +305,7 @@ const PostMedia = ({ commentMediaInfo, hasThumbnail, isDescription, isRules, spo
   );
 };
 
-const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
+const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
@@ -323,7 +326,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
       <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
-        <PostInfo openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} />
+        <PostInfo post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} />
         {link && !hidden && !(deleted || removed) && isValidURL(link) && (
           <PostMedia
             commentMediaInfo={commentMediaInfo}
@@ -344,7 +347,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   );
 };
 
-const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
+const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, deleted, link, linkHeight, linkWidth, pinned, postCid, removed, spoiler, state, subplebbitAddress, thumbnailUrl, parentCid } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -412,7 +415,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
               parentCid={parentCid}
             />
           )}
-          <PostInfo isHidden={hidden} openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
+          <PostInfo isHidden={hidden} post={post} postReplyCount={replyCount} roles={roles} />
           {!isHidden && !content && !(deleted || removed) && <div className={styles.spacer} />}
           {!isHidden && <CommentContent comment={post} />}
         </div>
@@ -443,7 +446,7 @@ const PostDesktop = ({ openReplyModal, post, roles, showAllReplies, showReplies 
           showReplies &&
           (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={index} className={styles.replyContainer}>
-              <Reply openReplyModal={openReplyModal} reply={reply} roles={roles} postReplyCount={replyCount} />
+              <Reply reply={reply} roles={roles} postReplyCount={replyCount} />
             </div>
           ))}
         {isDescription && subplebbit?.rules && subplebbit?.rules.length > 0 && (

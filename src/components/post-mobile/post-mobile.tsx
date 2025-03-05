@@ -24,8 +24,9 @@ import ReplyQuotePreview from '../reply-quote-preview';
 import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import _ from 'lodash';
+import useReplyModalStore from '../../stores/use-reply-modal-store';
 
-const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
+const PostInfoAndMedia = ({ post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
   const {
     author,
@@ -74,6 +75,8 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   const { hidden } = useHide(post);
+
+  const { openReplyModal } = useReplyModalStore();
 
   const onReplyModalClick = () => {
     deleted
@@ -249,7 +252,7 @@ const ReplyBacklinks = ({ post }: PostProps) => {
   );
 };
 
-const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
+const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
@@ -269,7 +272,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
           data-author-address={author?.shortAddress}
           data-post-cid={postCid}
         >
-          <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
+          <PostInfoAndMedia post={post} postReplyCount={postReplyCount} roles={roles} />
           {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
           <ReplyBacklinks post={reply} />
         </div>
@@ -278,7 +281,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   );
 };
 
-const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
+const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -333,7 +336,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 data-post-cid={postCid}
               >
                 {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
-                <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
+                <PostInfoAndMedia post={post} postReplyCount={replyCount} roles={roles} />
                 <CommentContent comment={post} />
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
@@ -357,7 +360,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               showReplies &&
               (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
                 <div key={index} className={styles.replyContainer}>
-                  <Reply openReplyModal={openReplyModal} postReplyCount={replyCount} reply={reply} roles={roles} />
+                  <Reply postReplyCount={replyCount} reply={reply} roles={roles} />
                 </div>
               ))}
             {showRules && (

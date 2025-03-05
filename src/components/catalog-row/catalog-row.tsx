@@ -105,7 +105,6 @@ const CatalogPost = ({ post }: { post: Comment }) => {
     content,
     isDescription,
     isRules,
-    lastChildCid,
     link,
     linkHeight,
     linkWidth,

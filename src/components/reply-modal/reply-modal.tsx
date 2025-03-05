@@ -147,7 +147,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
 
   const [{ x, y }, api] = useSpring(() => ({
     x: window.innerWidth / 2 - 150,
-    y: window.innerHeight / 2 - 400,
+    y: window.innerHeight / 2 - 200,
   }));
 
   const bind = useDrag(

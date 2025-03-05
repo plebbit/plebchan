@@ -25,6 +25,9 @@
   background-color: var(--challenge-modal-title-background-color);
   color: var(--challenge-modal-title-text-color);
   border: var(--challenge-modal-title-border);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
 }
 
 .closeIcon {
