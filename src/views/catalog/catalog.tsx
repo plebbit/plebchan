@@ -20,13 +20,16 @@ import styles from './catalog.module.css';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const threadsWithoutImagesFilter = (comment: Comment) => {
-  const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
-  if (!getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link)) {
-    return false;
-  }
-  return true;
-};
+const createThreadsWithoutImagesFilter = () => ({
+  filter: (comment: Comment) => {
+    const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
+    if (!getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link)) {
+      return false;
+    }
+    return true;
+  },
+  key: 'threads-with-images-only',
+});
 
 const Catalog = () => {
   const { t } = useTranslation();
@@ -79,7 +82,7 @@ const Catalog = () => {
       subplebbitAddresses,
       sortType,
       postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-      filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+      filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
     };
 
     if (isInAllView || isInSubscriptionsView) {
@@ -143,13 +146,13 @@ const Catalog = () => {
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 7,
-    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+    filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
   });
   const { feed: monthlyFeed } = useFeed({
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 30,
-    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+    filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
   });
 
   const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);
