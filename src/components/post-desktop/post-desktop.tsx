@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAuthorAvatar, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAuthorAvatar, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
@@ -47,7 +48,7 @@ const useShowOmittedReplies = create<ShowOmittedRepliesState>((set) => ({
     })),
 }));
 
-const PostInfo = ({ post, postReplyCount = 0, roles, isHidden }: PostProps) => {
+const PostInfo = ({ post, postReplyCount = 0, roles, isHidden, replies: threadReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, deleted, locked, pinned, parentCid, postCid, reason, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
   const title = post?.title?.trim();
@@ -218,7 +219,7 @@ const PostInfo = ({ post, postReplyCount = 0, roles, isHidden }: PostProps) => {
             (reply: Comment, index: number) =>
               reply?.parentCid === cid &&
               reply?.cid &&
-              !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+              !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} replies={threadReplies} />,
           )}
       </span>
     </div>
@@ -305,7 +306,7 @@ const PostMedia = ({ commentMediaInfo, hasThumbnail, isDescription, isRules, spo
   );
 };
 
-const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
+const Reply = ({ postReplyCount, reply, roles, replies }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
@@ -326,7 +327,7 @@ const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
     <div className={styles.replyDesktop}>
       <div className={styles.sideArrows}>{'>>'}</div>
       <div className={`${styles.reply} ${isRouteLinkToReply && styles.highlight}`} data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid}>
-        <PostInfo post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} />
+        <PostInfo post={post} postReplyCount={postReplyCount} roles={roles} isHidden={hidden} replies={replies} />
         {link && !hidden && !(deleted || removed) && isValidURL(link) && (
           <PostMedia
             commentMediaInfo={commentMediaInfo}
@@ -341,13 +342,13 @@ const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
             parentCid={parentCid}
           />
         )}
-        {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
+        {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} replies={replies || []} />}
       </div>
     </div>
   );
 };
 
-const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostProps) => {
+const PostDesktop = ({ post, roles, showAllReplies, showReplies = true, replies: threadReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, content, deleted, link, linkHeight, linkWidth, pinned, postCid, removed, spoiler, state, subplebbitAddress, thumbnailUrl, parentCid } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -359,7 +360,8 @@ const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostPr
   const { hidden, unhide, hide } = useHide({ cid });
   const isHidden = hidden && !isInPostPageView;
 
-  const replies = useReplies(post);
+  const commentReplies = useReplies(post);
+  const replies = threadReplies || commentReplies;
   const visiblelinksCount = useCountLinksInReplies(post, 5);
   const totalLinksCount = useCountLinksInReplies(post);
   const replyCount = replies?.length;
@@ -370,7 +372,7 @@ const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostPr
 
   const stateString = useStateString(post) || t('loading_board');
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
 
   const subplebbitRulesReply = {
     isRules: true,
@@ -415,9 +417,9 @@ const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostPr
               parentCid={parentCid}
             />
           )}
-          <PostInfo isHidden={hidden} post={post} postReplyCount={replyCount} roles={roles} />
+          <PostInfo isHidden={hidden} post={post} postReplyCount={replyCount} roles={roles} replies={replies} />
           {!isHidden && !content && !(deleted || removed) && <div className={styles.spacer} />}
-          {!isHidden && <CommentContent comment={post} />}
+          {!isHidden && <CommentContent comment={post} replies={replies} />}
         </div>
         {!isHidden && !isDescription && !isRules && !isInPendingPostView && (replyCount > 5 || (pinned && repliesCount > 0)) && !isInPostPageView && (
           <span className={styles.summary}>
@@ -446,7 +448,7 @@ const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostPr
           showReplies &&
           (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
             <div key={index} className={styles.replyContainer}>
-              <Reply reply={reply} roles={roles} postReplyCount={replyCount} />
+              <Reply reply={reply} roles={roles} postReplyCount={replyCount} replies={replies} />
             </div>
           ))}
         {isDescription && subplebbit?.rules && subplebbit?.rules.length > 0 && (

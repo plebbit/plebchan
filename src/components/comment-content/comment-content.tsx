@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
+import { Comment } from '@plebbit/plebbit-react-hooks';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isPostPageView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -9,11 +10,10 @@ import LoadingEllipsis from '../../components/loading-ellipsis';
 import ReplyQuotePreview from '../../components/reply-quote-preview';
 import Markdown from '../../components/markdown';
 import Tooltip from '../../components/tooltip';
-import { Comment, useComment } from '@plebbit/plebbit-react-hooks';
 import styles from '../../views/post/post.module.css';
 import _ from 'lodash';
 
-const CommentContent = ({ comment: post }: { comment: Comment }) => {
+const CommentContent = ({ comment: post, replies }: { comment: Comment; replies: Comment[] }) => {
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -34,9 +34,10 @@ const CommentContent = ({ comment: post }: { comment: Comment }) => {
       ? content.slice(0, 2000)
       : content);
 
-  const quotelinkReply = useComment({ commentCid: parentCid });
-  const isReply = parentCid;
-  const isReplyingToReply = (postCid && postCid !== parentCid) || quotelinkReply?.postCid !== parentCid;
+  const quotelinkReply = parentCid && replies?.find((reply) => reply.cid === parentCid);
+
+  const isReply = !!parentCid;
+  const isReplyingToReply = isReply && parentCid !== postCid;
 
   const stateString = useStateString(post);
 
@@ -44,7 +45,9 @@ const CommentContent = ({ comment: post }: { comment: Comment }) => {
 
   return (
     <blockquote className={`${styles.postMessage} ${!isReply && isMobile && styles.clampLines} ${isRules && styles.rulesMessage}`}>
-      {isReply && state !== 'failed' && isReplyingToReply && !(deleted || removed) && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
+      {isReply && state !== 'failed' && isReplyingToReply && !(deleted || removed) && (
+        <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} replies={replies} />
+      )}
       {removed ? (
         reason ? (
           <>

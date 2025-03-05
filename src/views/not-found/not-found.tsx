@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { HomeLogo } from '../home';
 import styles from './not-found.module.css';
-import { useSubplebbit } from '@plebbit/plebbit-react-hooks';
 
 const totalNotFoundImages = 2;
 
@@ -18,7 +18,7 @@ const NotFoundImage = () => {
 const NotFound = () => {
   const location = useLocation();
   const subplebbitAddress = location.pathname.startsWith('/p/') ? location.pathname.split('/')[2] : '';
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
   const { address, shortAddress } = subplebbit || {};
 
   return (

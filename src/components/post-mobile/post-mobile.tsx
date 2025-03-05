@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAuthorAvatar, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAuthorAvatar, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { shouldShowSnow } from '../../lib/snow';
@@ -232,7 +233,7 @@ const PostMediaContent = ({ post, link }: { post: any; link: string }) => {
   );
 };
 
-const ReplyBacklinks = ({ post }: PostProps) => {
+const ReplyBacklinks = ({ post, replies: threadReplies }: PostProps) => {
   const { cid, parentCid } = post || {};
   const replies = useReplies(post);
 
@@ -245,14 +246,14 @@ const ReplyBacklinks = ({ post }: PostProps) => {
           (reply: Comment, index: number) =>
             reply?.parentCid === cid &&
             reply?.cid &&
-            !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+            !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} replies={threadReplies} />,
         )}
       </div>
     )
   );
 };
 
-const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
+const Reply = ({ postReplyCount, reply, replies, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
@@ -273,7 +274,7 @@ const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
           data-post-cid={postCid}
         >
           <PostInfoAndMedia post={post} postReplyCount={postReplyCount} roles={roles} />
-          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
+          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} replies={replies || []} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>
@@ -281,7 +282,7 @@ const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
   );
 };
 
-const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostProps) => {
+const PostMobile = ({ post, roles, showAllReplies, showReplies = true, replies: threadReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -291,14 +292,15 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostPro
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const linksCount = useCountLinksInReplies(post);
-  const replies = useReplies(post);
+  const commentReplies = useReplies(post);
+  const replies = threadReplies || commentReplies;
 
   const isInPostPageView = isPostPageView(location.pathname, params);
   const { hidden, unhide } = useHide({ cid });
 
   const stateString = useStateString(post) || t('loading_post');
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
   const showRules = isDescription && subplebbit?.rules && subplebbit?.rules.length > 0;
   const subplebbitRulesReply = {
     isRules: true,
@@ -337,7 +339,7 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostPro
               >
                 {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
                 <PostInfoAndMedia post={post} postReplyCount={replyCount} roles={roles} />
-                <CommentContent comment={post} />
+                <CommentContent comment={post} replies={replies} />
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
                 <div className={styles.postLink}>
@@ -360,7 +362,7 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostPro
               showReplies &&
               (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
                 <div key={index} className={styles.replyContainer}>
-                  <Reply postReplyCount={replyCount} reply={reply} roles={roles} />
+                  <Reply postReplyCount={replyCount} reply={reply} roles={roles} replies={replies} />
                 </div>
               ))}
             {showRules && (
