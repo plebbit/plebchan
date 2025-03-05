@@ -12,7 +12,7 @@ import useSpecialThemeStore from '../../../stores/use-special-theme-store';
 import { isChristmas } from '../../../lib/utils/time-utils';
 import Version from '../../version';
 
-const commitRef = process.env.REACT_APP_COMMIT_REF;
+const commitRef = process.env.VITE_COMMIT_REF;
 const isElectron = window.isElectron === true;
 
 const CheckForUpdates = () => {

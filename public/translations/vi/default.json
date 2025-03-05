@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "Chủ đề này đã bị tác giả của nó xóa",
   "this_thread_was_removed": "Chủ đề này đã bị các quản trị viên diễn đàn xóa",
   "this_reply_was_deleted": "Câu trả lời này đã bị tác giả của nó xóa",
-  "this_reply_was_removed": "Phản hồi này đã bị xóa bởi các quản trị viên diễn đàn"
+  "this_reply_was_removed": "Phản hồi này đã bị xóa bởi các quản trị viên diễn đàn",
+  "not_mod_of_any_board": "Bạn không phải là quản trị viên của bất kỳ bảng nào."
 }

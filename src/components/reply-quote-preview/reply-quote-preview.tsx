@@ -13,6 +13,7 @@ interface ReplyQuotePreviewProps {
   backlinkReply?: Comment;
   isQuotelinkReply?: boolean;
   quotelinkReply?: Comment;
+  replies?: Comment[];
 }
 
 const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
@@ -53,7 +54,7 @@ const handleQuoteHover = (cid: string, onElementOutOfView: () => void) => {
   }
 };
 
-const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, isQuotelinkReply }: ReplyQuotePreviewProps) => {
+const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, isQuotelinkReply, replies }: ReplyQuotePreviewProps) => {
   const [hoveredCid, setHoveredCid] = useState<string | null>(null);
   const [outOfViewCid, setOutOfViewCid] = useState<string | null>(null);
   const placementRef = useRef<Placement>('right');
@@ -144,7 +145,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         outOfViewCid === backlinkReply?.cid &&
         createPortal(
           <div className={styles.replyQuotePreview} ref={refs.setFloating} style={floatingStyles}>
-            <Post post={backlinkReply} showReplies={false} />
+            <Post post={backlinkReply} showReplies={false} replies={replies} />
           </div>,
           document.body,
         )}
@@ -173,7 +174,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
         outOfViewCid === quotelinkReply?.cid &&
         createPortal(
           <div className={styles.replyQuotePreview} ref={refs.setFloating} style={floatingStyles}>
-            <Post post={quotelinkReply} showReplies={false} />
+            <Post post={quotelinkReply} showReplies={false} replies={replies} />
           </div>,
           document.body,
         )}
@@ -183,7 +184,7 @@ const DesktopQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, i
   return isBacklinkReply ? replyBacklink : isQuotelinkReply && replyQuotelink;
 };
 
-const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, isQuotelinkReply }: ReplyQuotePreviewProps) => {
+const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, isQuotelinkReply, replies }: ReplyQuotePreviewProps) => {
   const [hoveredCid, setHoveredCid] = useState<string | null>(null);
   const [outOfViewCid, setOutOfViewCid] = useState<string | null>(null);
 
@@ -256,7 +257,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         outOfViewCid === backlinkReply?.cid &&
         createPortal(
           <div className={styles.replyQuotePreview} ref={refs.setFloating} style={floatingStyles}>
-            <Post post={backlinkReply} showReplies={false} />
+            <Post post={backlinkReply} showReplies={false} replies={replies} />
           </div>,
           document.body,
         )}
@@ -292,7 +293,7 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
         outOfViewCid === quotelinkReply?.cid &&
         createPortal(
           <div className={styles.replyQuotePreview} ref={refs.setFloating} style={floatingStyles}>
-            <Post post={quotelinkReply} showReplies={false} />
+            <Post post={quotelinkReply} showReplies={false} replies={replies} />
           </div>,
           document.body,
         )}
@@ -302,13 +303,25 @@ const MobileQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, is
   return isBacklinkReply ? replyBacklink : isQuotelinkReply && replyQuotelink;
 };
 
-const ReplyQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, isQuotelinkReply }: ReplyQuotePreviewProps) => {
+const ReplyQuotePreview = ({ backlinkReply, quotelinkReply, isBacklinkReply, isQuotelinkReply, replies }: ReplyQuotePreviewProps) => {
   const isMobile = useIsMobile();
 
   return isMobile ? (
-    <MobileQuotePreview backlinkReply={backlinkReply} quotelinkReply={quotelinkReply} isBacklinkReply={isBacklinkReply} isQuotelinkReply={isQuotelinkReply} />
+    <MobileQuotePreview
+      backlinkReply={backlinkReply}
+      quotelinkReply={quotelinkReply}
+      isBacklinkReply={isBacklinkReply}
+      isQuotelinkReply={isQuotelinkReply}
+      replies={replies}
+    />
   ) : (
-    <DesktopQuotePreview backlinkReply={backlinkReply} quotelinkReply={quotelinkReply} isBacklinkReply={isBacklinkReply} isQuotelinkReply={isQuotelinkReply} />
+    <DesktopQuotePreview
+      backlinkReply={backlinkReply}
+      quotelinkReply={quotelinkReply}
+      isBacklinkReply={isBacklinkReply}
+      isQuotelinkReply={isQuotelinkReply}
+      replies={replies}
+    />
   );
 };
 

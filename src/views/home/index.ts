@@ -1,1 +1,1 @@
-export { HomeLogo, Footer, nsfwTags, default } from './home';
+export { HomeLogo, Footer, default } from './home';

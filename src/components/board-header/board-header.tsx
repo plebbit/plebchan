@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAccountComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
-import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { isAllView, isSubscriptionsView, isModView } from '../../lib/utils/view-utils';
 import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -25,7 +25,7 @@ const BoardHeader = () => {
   const params = useParams();
   const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
-
+  const isInModView = isModView(location.pathname);
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
@@ -33,8 +33,8 @@ const BoardHeader = () => {
   const { address, shortAddress } = subplebbit || {};
 
   const multisubMetadata = useMultisubMetadata();
-  const title = isInAllView ? multisubMetadata?.title || 'all' : isInSubscriptionsView ? 'Subscriptions' : subplebbit?.title;
-  const subtitle = isInAllView ? 'p/all' : isInSubscriptionsView ? 'p/subscriptions' : `p/${address}`;
+  const title = isInAllView ? multisubMetadata?.title || 'all' : isInSubscriptionsView ? 'Subscriptions' : isInModView ? 'Mod' : subplebbit?.title;
+  const subtitle = isInAllView ? 'p/all' : isInSubscriptionsView ? 'p/subscriptions' : isInModView ? 'p/mod' : `p/${address}`;
 
   const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbit);
 
@@ -47,7 +47,7 @@ const BoardHeader = () => {
       )}
       <div className={styles.boardTitle}>
         {title || (shortAddress ? (shortAddress.endsWith('.eth') || shortAddress.endsWith('.sol') ? shortAddress.slice(0, -4) : shortAddress) : subplebbitAddress)}
-        {(isOffline || isOnlineStatusLoading) && !isInAllView && !isInSubscriptionsView && (
+        {(isOffline || isOnlineStatusLoading) && !isInAllView && !isInSubscriptionsView && !isInModView && (
           <span className={styles.offlineIconWrapper}>
             <Tooltip content={offlineTitle}>
               <span className={`${styles.offlineIcon} ${offlineIconClass}`} />

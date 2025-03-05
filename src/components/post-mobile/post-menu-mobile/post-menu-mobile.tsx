@@ -122,9 +122,9 @@ const BlockBoardButton = ({ address }: { address: string }) => {
 };
 
 const PostMenuMobile = ({ post }: { post: Comment }) => {
-  const { author, cid, deleted, isDescription, isRules, link, parentCid, postCid, removed, subplebbitAddress } = post || {};
+  const { author, cid, deleted, isDescription, isRules, link, linkHeight, linkWidth, parentCid, postCid, removed, subplebbitAddress, thumbnailUrl } = post || {};
   const { isAccountMod, isAccountCommentAuthor } = useEditCommentPrivileges({ commentAuthorAddress: author?.address, subplebbitAddress });
-  const commentMediaInfo = getCommentMediaInfo(post);
+  const commentMediaInfo = getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const { thumbnail, type, url } = commentMediaInfo || {};
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { refs, floatingStyles, context } = useFloating({

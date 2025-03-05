@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "Questo thread è stato eliminato dal suo autore",
   "this_thread_was_removed": "Questo thread è stato rimosso dai moderatori del board",
   "this_reply_was_deleted": "Questa risposta è stata eliminata dal suo autore",
-  "this_reply_was_removed": "Questa risposta è stata rimossa dai moderatori del forum"
+  "this_reply_was_removed": "Questa risposta è stata rimossa dai moderatori del forum",
+  "not_mod_of_any_board": "Non sei un mod di nessuna board."
 }

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAuthorAvatar, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAuthorAvatar, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import styles from '../../views/post/post.module.css';
 import { shouldShowSnow } from '../../lib/snow';
@@ -24,10 +25,29 @@ import ReplyQuotePreview from '../reply-quote-preview';
 import Tooltip from '../tooltip';
 import { PostProps } from '../../views/post/post';
 import _ from 'lodash';
+import useReplyModalStore from '../../stores/use-reply-modal-store';
 
-const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: PostProps) => {
+const PostInfoAndMedia = ({ post, postReplyCount = 0, roles }: PostProps) => {
   const { t } = useTranslation();
-  const { author, cid, deleted, link, locked, parentCid, pinned, postCid, reason, removed, shortCid, state, subplebbitAddress, timestamp } = post || {};
+  const {
+    author,
+    cid,
+    deleted,
+    link,
+    linkHeight,
+    linkWidth,
+    locked,
+    parentCid,
+    pinned,
+    postCid,
+    reason,
+    removed,
+    shortCid,
+    state,
+    subplebbitAddress,
+    timestamp,
+    thumbnailUrl,
+  } = post || {};
   const isReply = parentCid;
   const title = post?.title?.trim();
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -43,7 +63,7 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const isInPostPageView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  const commentMediaInfo = useCommentMediaInfo(post);
+  const commentMediaInfo = useCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   const stateString = useStateString(post);
@@ -56,6 +76,8 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
   const userIDTextColor = getTextColorForBackground(userIDBackgroundColor);
 
   const { hidden } = useHide(post);
+
+  const { openReplyModal } = useReplyModalStore();
 
   const onReplyModalClick = () => {
     deleted
@@ -179,31 +201,39 @@ const PostInfoAndMedia = ({ openReplyModal, post, postReplyCount = 0, roles }: P
           </span>
         </span>
       </div>
-      {(hasThumbnail || link) && !(deleted || removed) && <PostMediaContent key={cid} post={post} link={link} t={t} />}
+      {(hasThumbnail || link) && !(deleted || removed) && <PostMediaContent key={cid} post={post} link={link} />}
     </>
   );
 };
 
-const PostMediaContent = ({ post, link, t }: { post: any; link: string; t: any }) => {
+const PostMediaContent = ({ post, link }: { post: any; link: string }) => {
   const [showThumbnail, setShowThumbnail] = useState(true);
   const { isDescription, isRules } = post || {}; // custom properties, not from api
-  const commentMediaInfo = useCommentMediaInfo(post);
+  const { thumbnailUrl, linkWidth, linkHeight, spoiler, deleted, removed, parentCid } = post || {};
+  const commentMediaInfo = useCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
   const hasThumbnail = getHasThumbnail(commentMediaInfo, link);
 
   return (
     hasThumbnail && (
       <CommentMedia
         commentMediaInfo={commentMediaInfo}
-        post={post}
+        deleted={deleted}
+        isDescription={isDescription}
+        isRules={isRules}
+        removed={removed}
+        linkHeight={linkHeight}
+        linkWidth={linkWidth}
         showThumbnail={showThumbnail}
         setShowThumbnail={setShowThumbnail}
         isOutOfFeed={isDescription || isRules}
+        parentCid={parentCid}
+        spoiler={spoiler}
       />
     )
   );
 };
 
-const ReplyBacklinks = ({ post }: PostProps) => {
+const ReplyBacklinks = ({ post, replies: threadReplies }: PostProps) => {
   const { cid, parentCid } = post || {};
   const replies = useReplies(post);
 
@@ -216,14 +246,14 @@ const ReplyBacklinks = ({ post }: PostProps) => {
           (reply: Comment, index: number) =>
             reply?.parentCid === cid &&
             reply?.cid &&
-            !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
+            !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} replies={threadReplies} />,
         )}
       </div>
     )
   );
 };
 
-const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
+const Reply = ({ postReplyCount, reply, replies, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
@@ -243,8 +273,8 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
           data-author-address={author?.shortAddress}
           data-post-cid={postCid}
         >
-          <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={postReplyCount} roles={roles} />
-          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
+          <PostInfoAndMedia post={post} postReplyCount={postReplyCount} roles={roles} />
+          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} replies={replies || []} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>
@@ -252,7 +282,7 @@ const Reply = ({ openReplyModal, postReplyCount, reply, roles }: PostProps) => {
   );
 };
 
-const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies = true }: PostProps) => {
+const PostMobile = ({ post, roles, showAllReplies, showReplies = true, replies: threadReplies }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -262,14 +292,15 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const linksCount = useCountLinksInReplies(post);
-  const replies = useReplies(post);
+  const commentReplies = useReplies(post);
+  const replies = threadReplies || commentReplies;
 
   const isInPostPageView = isPostPageView(location.pathname, params);
   const { hidden, unhide } = useHide({ cid });
 
   const stateString = useStateString(post) || t('loading_post');
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
   const showRules = isDescription && subplebbit?.rules && subplebbit?.rules.length > 0;
   const subplebbitRulesReply = {
     isRules: true,
@@ -307,8 +338,8 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
                 data-post-cid={postCid}
               >
                 {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
-                <PostInfoAndMedia openReplyModal={openReplyModal} post={post} postReplyCount={replyCount} roles={roles} />
-                <CommentContent comment={post} />
+                <PostInfoAndMedia post={post} postReplyCount={replyCount} roles={roles} />
+                <CommentContent comment={post} replies={replies} />
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
                 <div className={styles.postLink}>
@@ -331,7 +362,7 @@ const PostMobile = ({ openReplyModal, post, roles, showAllReplies, showReplies =
               showReplies &&
               (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
                 <div key={index} className={styles.replyContainer}>
-                  <Reply openReplyModal={openReplyModal} postReplyCount={replyCount} reply={reply} roles={roles} />
+                  <Reply postReplyCount={replyCount} reply={reply} roles={roles} replies={replies} />
                 </div>
               ))}
             {showRules && (

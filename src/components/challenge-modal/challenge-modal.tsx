@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react';
-import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { Challenge as ChallengeType } from '@plebbit/plebbit-react-hooks';
 import { getPublicationType } from '../../lib/utils/challenge-utils';
@@ -7,6 +6,8 @@ import useIsMobile from '../../hooks/use-is-mobile';
 import useChallengesStore from '../../stores/use-challenges-store';
 import styles from './challenge-modal.module.css';
 import _ from 'lodash';
+import { useSpring, animated } from '@react-spring/web';
+import { useDrag } from '@use-gesture/react';
 
 interface ChallengeProps {
   challenge: ChallengeType;
@@ -63,13 +64,44 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
     return () => document.removeEventListener('keydown', onEscapeKey);
   }, [closeModal]);
 
-  // react-draggable requires a ref to the modal node
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
+  const [{ x, y }, api] = useSpring(() => ({
+    x: window.innerWidth / 2 - 150,
+    y: window.innerHeight / 2 - 200,
+  }));
+
+  const bind = useDrag(
+    ({ active, event, offset: [ox, oy] }) => {
+      if (active) {
+        event.preventDefault();
+        document.body.style.userSelect = 'none';
+        document.body.style.webkitUserSelect = 'none';
+      } else {
+        document.body.style.userSelect = '';
+        document.body.style.webkitUserSelect = '';
+      }
+      api.start({ x: ox, y: oy, immediate: true });
+    },
+    {
+      from: () => [x.get(), y.get()],
+      filterTaps: true,
+      bounds: undefined,
+    },
+  );
+
   const modalContent = (
-    <div className={styles.container} ref={nodeRef}>
-      <div className={`challengeHandle ${styles.title}`}>
+    <animated.div
+      className={styles.container}
+      ref={nodeRef}
+      style={{
+        x: isMobile ? 0 : x,
+        y: isMobile ? 0 : y,
+        touchAction: 'none',
+      }}
+    >
+      <div className={`challengeHandle ${styles.title}`} {...(!isMobile ? bind() : {})}>
         Challenge for {publicationType}
         <button className={styles.closeIcon} onClick={closeModal} title='close' />
       </div>
@@ -127,16 +159,10 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
           </span>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 
-  return isMobile ? (
-    modalContent
-  ) : (
-    <Draggable handle='.challengeHandle' nodeRef={nodeRef}>
-      {modalContent}
-    </Draggable>
-  );
+  return modalContent;
 };
 
 const ChallengeModal = () => {

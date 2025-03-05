@@ -9,7 +9,7 @@ import { getCommentMediaInfo } from '../../../lib/utils/media-utils';
 import { CatalogPostMedia } from '../../../components/catalog-row';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
 import BoxModal from '../box-modal';
-import { nsfwTags } from '../home';
+import { nsfwTags } from '../../../constants/nsfwTags';
 import { removeMarkdown } from '../../../lib/utils/post-utils';
 
 interface PopularThreadProps {
@@ -26,8 +26,8 @@ export const ContentPreview = ({ content, maxLength = 99 }: { content: string; m
 };
 
 const PopularThreadCard = ({ post, boardTitle, boardShortAddress }: PopularThreadProps) => {
-  const { cid, content, subplebbitAddress, title } = post || {};
-  const commentMediaInfo = getCommentMediaInfo(post);
+  const { cid, content, link, linkHeight, linkWidth, subplebbitAddress, thumbnailUrl, title } = post || {};
+  const commentMediaInfo = getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
 
   return (
     <div className={styles.popularThread} key={cid}>

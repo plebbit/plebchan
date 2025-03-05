@@ -53,11 +53,11 @@ hr {
 }
 
 .yellowOfflineIcon {
-  background-image: url('/public/assets/icons/offline-blue.png');
+  background-image: url('/assets/icons/offline-blue.png');
 }
 
 .redOfflineIcon {
-  background-image: url('/public/assets/icons/offline-red.png');
+  background-image: url('/assets/icons/offline-red.png');
 }
 
 @media (max-width: 640px) {

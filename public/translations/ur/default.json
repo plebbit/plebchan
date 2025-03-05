@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "اس تھریڈ کو اس کے مصنف نے حذف کیا",
   "this_thread_was_removed": "اس تھریڈ کو بورڈ کے موڈریٹرز نے ہٹا دیا ہے",
   "this_reply_was_deleted": "اس جواب کو اس کے مصنف نے حذف کر دیا تھا",
-  "this_reply_was_removed": "اس جواب کو بورڈ کے منتظمین نے حذف کر دیا ہے"
+  "this_reply_was_removed": "اس جواب کو بورڈ کے منتظمین نے حذف کر دیا ہے",
+  "not_mod_of_any_board": "آپ کسی بورڈ کے موڈ نہیں ہیں۔"
 }

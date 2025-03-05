@@ -1,30 +1,28 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAccountComments, useAccountSubplebbits, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { Trans, useTranslation } from 'react-i18next';
 import styles from './board.module.css';
 import { shouldShowSnow } from '../../lib/snow';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
-import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { isAllView, isSubscriptionsView, isModView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { useFeedStateString } from '../../hooks/use-state-string';
-import useReplyModal from '../../hooks/use-reply-modal';
 import useTimeFilter from '../../hooks/use-time-filter';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
-import { Post } from '../post';
-import ReplyModal from '../../components/reply-modal';
-import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
+import { Post } from '../post';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
 const threadsWithoutImagesFilter = (comment: Comment) => {
-  if (!getHasThumbnail(getCommentMediaInfo(comment), comment?.link)) {
+  const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
+  if (!getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link)) {
     return false;
   }
   return true;
@@ -43,6 +41,10 @@ const Board = () => {
   const subscriptions = account?.subscriptions;
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
+  const isInModView = isModView(location.pathname);
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
+
   const subplebbitAddresses = useMemo(() => {
     if (isInAllView) {
       return defaultSubplebbitAddresses;
@@ -50,8 +52,11 @@ const Board = () => {
     if (isInSubscriptionsView) {
       return subscriptions || [];
     }
+    if (isInModView) {
+      return accountSubplebbitAddresses;
+    }
     return [subplebbitAddress];
-  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
+  }, [isInAllView, isInSubscriptionsView, isInModView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions, accountSubplebbitAddresses]);
 
   const { sortType } = useSortingStore();
   const { timeFilterSeconds, timeFilterName } = useTimeFilter();
@@ -59,8 +64,8 @@ const Board = () => {
   const feedOptions = {
     subplebbitAddresses,
     sortType,
-    postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
-    ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
+    postsPerPage: isInAllView || isInSubscriptionsView || isInModView ? 5 : 25,
+    ...(isInAllView || isInSubscriptionsView || isInModView ? { newerThan: timeFilterSeconds } : {}),
     filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
   };
 
@@ -78,14 +83,14 @@ const Board = () => {
   const filteredComments = useMemo(
     () =>
       accountComments.filter((comment) => {
-        const { cid, deleted, postCid, removed, state, timestamp } = comment || {};
+        const { cid, deleted, link, linkHeight, linkWidth, postCid, removed, state, thumbnailUrl, timestamp } = comment || {};
         return (
           !deleted &&
           !removed &&
           timestamp > Date.now() / 1000 - 60 * 60 &&
           state === 'succeeded' &&
           cid &&
-          (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(comment), comment?.link) : true) &&
+          (hideThreadsWithoutImages ? getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), comment?.link) : true) &&
           cid === postCid &&
           comment?.subplebbitAddress === subplebbitAddress &&
           !feed.some((post) => post.cid === cid)
@@ -113,9 +118,7 @@ const Board = () => {
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, error, rules, shortAddress, state, suggested } = subplebbit || {};
-  const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
-
-  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
+  const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : isInModView ? t('mod') : subplebbit?.title;
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
 
@@ -178,7 +181,7 @@ const Board = () => {
               />
             </div>
           ) : (
-            (isInAllView || isInSubscriptionsView) &&
+            (isInAllView || isInSubscriptionsView || isInModView) &&
             showMorePostsSuggestion &&
             monthlyFeed.length > feed.length &&
             (weeklyFeed.length > feed.length ? (
@@ -187,7 +190,7 @@ const Board = () => {
                   i18nKey='more_threads_last_week'
                   values={{ currentTimeFilterName, count: feed.length }}
                   components={{
-                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1w'} />,
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : isInModView ? '/p/mod' : `/p/${subplebbitAddress}`) + '/1w'} />,
                   }}
                 />
               </div>
@@ -197,7 +200,7 @@ const Board = () => {
                   i18nKey='more_threads_last_month'
                   values={{ currentTimeFilterName, count: feed.length }}
                   components={{
-                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1m'} />,
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : isInModView ? '/p/mod' : `/p/${subplebbitAddress}`) + '/1m'} />,
                   }}
                 />
               </div>
@@ -213,9 +216,11 @@ const Board = () => {
           {state === 'failed' ? (
             <span className='red'>{state}</span>
           ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-            t('not_subscribed_to_any_board')
+            <span className='red'>{t('not_subscribed_to_any_board')}</span>
+          ) : isInModView && accountSubplebbitAddresses?.length === 0 ? (
+            <span className='red'>{t('not_mod_of_any_board')}</span>
           ) : blocked ? (
-            t('you_have_blocked_this_board')
+            <span className='red'>{t('you_have_blocked_this_board')}</span>
           ) : (
             hasMore && <LoadingEllipsis string={loadingStateString} />
           )}
@@ -270,17 +275,6 @@ const Board = () => {
     <>
       {shouldShowSnow() && <hr />}
       <div className={`${styles.content} ${shouldShowSnow() ? styles.garland : ''}`}>
-        {location.pathname.endsWith('/settings') && <SettingsModal />}
-        {activeCid && threadCid && postSubplebbitAddress && (
-          <ReplyModal
-            closeModal={closeModal}
-            parentCid={activeCid}
-            postCid={threadCid}
-            scrollY={scrollY}
-            showReplyModal={showReplyModal}
-            subplebbitAddress={postSubplebbitAddress}
-          />
-        )}
         {((description && description.length > 0) || isInAllView) && (
           <SubplebbitDescription
             avatarUrl={suggested?.avatarUrl}
@@ -297,7 +291,7 @@ const Board = () => {
           increaseViewportBy={{ bottom: 1200, top: 1200 }}
           totalCount={combinedFeed.length}
           data={combinedFeed}
-          itemContent={(index, post) => <Post index={index} post={post} openReplyModal={openReplyModal} />}
+          itemContent={(index, post) => <Post index={index} post={post} />}
           useWindowScroll={true}
           components={{ Footer }}
           endReached={loadMore}

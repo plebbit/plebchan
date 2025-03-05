@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { Subplebbit, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import { Subplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { useDefaultSubplebbitsState, useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits';
 import useIsMobile from '../../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../../hooks/use-is-subplebbit-offline';
 import LoadingEllipsis from '../../../components/loading-ellipsis';
 import Tooltip from '../../../components/tooltip';
 import styles from './boards-list.module.css';
-import { nsfwTags } from '../home';
+import { nsfwTags } from '../../../constants/nsfwTags';
 
 const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boolean }) => {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ const Board = ({ subplebbit, isMobile }: { subplebbit: Subplebbit; isMobile: boo
 
   let stats = useSubplebbitStats({ subplebbitAddress: address });
 
-  const subplebbitData = useSubplebbit({ subplebbitAddress: address });
+  const subplebbitData = useSubplebbitsStore((state) => state.subplebbits[address]);
   const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbitData);
 
   const displayAddress = address && Plebbit.getShortAddress(address);

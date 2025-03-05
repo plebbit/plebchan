@@ -58,11 +58,11 @@
 }
 
 .threadIcons .stickyIcon {
-  background-image: url("/public/assets/icons/sticky.gif");
+  background-image: url("/assets/icons/sticky.gif");
 }
 
 .threadIcons .closedIcon {
-  background-image: url("/public/assets/icons/closed.gif");
+  background-image: url("/assets/icons/closed.gif");
 }
 
 .mediaWrapper {
@@ -72,6 +72,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  clip-path: inset(-5px); /* direct media could change its dimensions after being published, so we need to clip the overflow. We can't use overflow: hidden because it will hide the box-shadow */
 }
 
 .post img, .post video, .post audio {

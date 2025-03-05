@@ -1,18 +1,15 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { useLocation, useParams } from 'react-router-dom';
-import { isAllView, isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
+import { isAllView, isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
-import useReplyModal from '../../hooks/use-reply-modal';
 import PostDesktop from '../../components/post-desktop';
 import PostMobile from '../../components/post-mobile';
-import ReplyModal from '../../components/reply-modal';
-import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 import styles from './post.module.css';
-
 export interface PostProps {
   index?: number;
   isHidden?: boolean;
@@ -23,11 +20,11 @@ export interface PostProps {
   roles?: Role[];
   showAllReplies?: boolean;
   showReplies?: boolean;
-  openReplyModal?: (parentCid: string, postCid: string, subplebbitAddress: string) => void;
+  replies?: Comment[];
 }
 
-export const Post = ({ post, showAllReplies = false, showReplies = true, openReplyModal }: PostProps) => {
-  const subplebbit = useSubplebbit({ subplebbitAddress: post?.subplebbitAddress });
+export const Post = ({ post, showAllReplies = false, showReplies = true, replies }: PostProps) => {
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[post?.subplebbitAddress]);
   const isMobile = useIsMobile();
 
   let comment = post;
@@ -42,9 +39,9 @@ export const Post = ({ post, showAllReplies = false, showReplies = true, openRep
     <div className={styles.thread}>
       <div className={styles.postContainer}>
         {isMobile ? (
-          <PostMobile post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
+          <PostMobile post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} replies={replies} />
         ) : (
-          <PostDesktop post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} openReplyModal={openReplyModal} />
+          <PostDesktop post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} replies={replies} />
         )}
       </div>
     </div>
@@ -57,14 +54,11 @@ const PostPage = () => {
   const location = useLocation();
   const { commentCid, subplebbitAddress } = params;
   const isInAllView = isAllView(location.pathname);
-  const isInSettigsView = isSettingsView(location.pathname, params);
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
-
-  const { activeCid, threadCid, closeModal, openReplyModal, showReplyModal, scrollY, subplebbitAddress: postSubplebbitAddress } = useReplyModal();
 
   const comment = useComment({ commentCid });
 
@@ -92,17 +86,6 @@ const PostPage = () => {
 
   return (
     <div className={styles.content}>
-      {isInSettigsView && <SettingsModal />}
-      {activeCid && threadCid && postSubplebbitAddress && (
-        <ReplyModal
-          closeModal={closeModal}
-          parentCid={activeCid}
-          postCid={threadCid}
-          scrollY={scrollY}
-          showReplyModal={showReplyModal}
-          subplebbitAddress={postSubplebbitAddress}
-        />
-      )}
       {/* TODO: remove this replyCount error once api supports scrolling replies pages */}
       {replyCount > 60 && <span className={styles.error}>Error: this thread has too many replies, some of them cannot be displayed right now.</span>}
       {error && <span className={styles.error}>Error: {error?.message || error?.toString?.()}</span>}
@@ -119,7 +102,7 @@ const PostPage = () => {
       ) : isInRulesView ? (
         <SubplebbitRules createdAt={createdAt} rules={rules} subplebbitAddress={subplebbitAddress} />
       ) : (
-        <Post post={post} showAllReplies={true} openReplyModal={openReplyModal} />
+        <Post post={post} showAllReplies={true} />
       )}
     </div>
   );

@@ -92,7 +92,7 @@ const UpdateButton = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
 
-  const handleUpdate = () => {
+  const handleManualUpdate = () => {
     window.alert('Manual updates are not available yet. Posts update automatically every ~2 minutes.');
   };
 
@@ -100,11 +100,11 @@ const UpdateButton = () => {
     <>
       {/* TODO: Implement update button once available in API  */}
       {isMobile ? (
-        <button className={`button ${styles.disabledButton}`} onClick={handleUpdate}>
+        <button className={`button ${styles.disabledButton}`} onClick={handleManualUpdate}>
           {t('update')}
         </button>
       ) : (
-        <button className={`button ${styles.disabledButton}`} onClick={handleUpdate}>
+        <button className={`button ${styles.disabledButton}`} onClick={handleManualUpdate}>
           {t('update')}
         </button>
       )}
@@ -116,17 +116,21 @@ const AutoButton = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
 
+  const handleManualUpdate = () => {
+    window.alert('Manual updates are not available yet. Posts update automatically every ~2 minutes.');
+  };
+
   return (
     <>
       {isMobile ? (
-        <button className='button'>
+        <button className='button' onClick={handleManualUpdate}>
           <label>
             <input type='checkbox' className={styles.autoCheckbox} checked disabled />
             {t('Auto')}
           </label>
         </button>
       ) : (
-        <label>
+        <label onClick={handleManualUpdate}>
           {' '}
           <input type='checkbox' className={styles.autoCheckbox} checked disabled /> {t('Auto')}
         </label>

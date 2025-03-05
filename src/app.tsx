@@ -3,6 +3,8 @@ import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { initSnow, removeSnow } from './lib/snow';
 import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
+import useReplyModalStore from './stores/use-reply-modal-store';
+import useSpecialThemeStore from './stores/use-special-theme-store';
 import useIsMobile from './hooks/use-is-mobile';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
@@ -16,10 +18,11 @@ import Post from './views/post';
 import { DesktopBoardButtons, MobileBoardButtons } from './components/board-buttons';
 import BoardHeader from './components/board-header';
 import ChallengeModal from './components/challenge-modal';
+import ReplyModal from './components/reply-modal';
 import PostForm from './components/post-form';
 import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
-import useSpecialThemeStore from './stores/use-special-theme-store';
+import SettingsModal from './components/settings-modal';
 
 const BoardLayout = () => {
   const { accountCommentIndex, subplebbitAddress } = useParams();
@@ -87,9 +90,25 @@ const GlobalLayout = () => {
     }
   }, [theme]);
 
+  const { activeCid, threadCid, subplebbitAddress, closeModal, showReplyModal, scrollY } = useReplyModalStore();
+
+  const location = useLocation();
+  const isInSettingsView = location.pathname.endsWith('/settings');
+
   return (
     <>
       <ChallengeModal />
+      {activeCid && threadCid && subplebbitAddress && (
+        <ReplyModal
+          closeModal={closeModal}
+          parentCid={activeCid}
+          postCid={threadCid}
+          scrollY={scrollY}
+          showReplyModal={showReplyModal}
+          subplebbitAddress={subplebbitAddress}
+        />
+      )}
+      {isInSettingsView && <SettingsModal />}
       <Outlet />
     </>
   );
@@ -127,6 +146,11 @@ const App = () => {
             <Route path='/p/subscriptions/:timeFilterName?/settings' element={<Board />} />
             <Route path='/p/subscriptions/catalog/:timeFilterName?' element={<Catalog />} />
             <Route path='/p/subscriptions/catalog/:timeFilterName?/settings' element={<Catalog />} />
+
+            <Route path='/p/mod/:timeFilterName?' element={<Board />} />
+            <Route path='/p/mod/:timeFilterName?/settings' element={<Board />} />
+            <Route path='/p/mod/catalog/:timeFilterName?' element={<Catalog />} />
+            <Route path='/p/mod/catalog/:timeFilterName?/settings' element={<Catalog />} />
 
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
             <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />

@@ -1,10 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Comment } from '@plebbit/plebbit-react-hooks';
 import { getCommentMediaInfo, fetchWebpageThumbnailIfNeeded } from '../lib/utils/media-utils';
 import { isPendingPostView, isPostPageView } from '../lib/utils/view-utils';
 
-export const useCommentMediaInfo = (comment: Comment) => {
+export const useCommentMediaInfo = (link: string, thumbnailUrl: string, linkWidth: number, linkHeight: number) => {
   const location = useLocation();
   const params = useParams();
   const isInPostPageView = isPostPageView(location.pathname, params);
@@ -12,7 +11,7 @@ export const useCommentMediaInfo = (comment: Comment) => {
 
   // some sites have CORS access, so the thumbnail can be fetched client-side, which is helpful if subplebbit.settings.fetchThumbnailUrls is false
   const fetchThumbnail = useCallback(async () => {
-    let commentMediaInfo = getCommentMediaInfo(comment);
+    let commentMediaInfo = getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
     if (commentMediaInfo?.type === 'webpage' && !commentMediaInfo.thumbnail) {
       const newMediaInfo = await fetchWebpageThumbnailIfNeeded(commentMediaInfo);
       // Fetch the dimensions of the thumbnail
@@ -30,7 +29,7 @@ export const useCommentMediaInfo = (comment: Comment) => {
       commentMediaInfo = newMediaInfo;
     }
     return commentMediaInfo;
-  }, [comment]);
+  }, [link, thumbnailUrl, linkWidth, linkHeight]);
 
   useEffect(() => {
     // don't fetch in feed view, it displaces the posts
@@ -39,5 +38,5 @@ export const useCommentMediaInfo = (comment: Comment) => {
     }
   }, [fetchThumbnail, isInPostPageView, isInPendingPostView]);
 
-  return getCommentMediaInfo(comment);
+  return getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight);
 };

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import packageJson from '../../../package.json';
 
 const { version } = packageJson;
-const commitRef = process.env.REACT_APP_COMMIT_REF;
+const commitRef = process.env.VITE_COMMIT_REF;
 const isElectron = window.isElectron === true;
 
 const Version = () => {
@@ -11,11 +11,11 @@ const Version = () => {
   return (
     <>
       <a
-        href={commitRef ? `https://github.com/plebbit/seedit/commit/${commitRef}` : `https://github.com/plebbit/seedit/releases/tag/v${version}`}
+        href={commitRef ? `https://github.com/plebbit/plebchan/commit/${commitRef}` : `https://github.com/plebbit/plebchan/releases/tag/v${version}`}
         target='_blank'
         rel='noopener noreferrer'
       >
-        v{commitRef ? '-dev' : version}
+        plebchan v{commitRef ? `${version}-dev (#${commitRef.slice(0, 7)})` : version}
       </a>
       {isElectron && (
         <>

@@ -63,7 +63,7 @@ const SubscriptionsSetting = () => {
           </ul>
         </>
       ) : (
-        t('not_subscribed_to_any_board')
+        <div className={styles.notSubscribed}>{t('not_subscribed_to_any_board')}</div>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { useAccount, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccount } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import useAnonModeStore from '../stores/use-anon-mode-store';
 import useAnonMode from './use-anon-mode';
 
@@ -12,7 +13,8 @@ interface AuthorPrivilegesProps {
 const useAuthorPrivileges = ({ commentAuthorAddress, subplebbitAddress, postCid }: AuthorPrivilegesProps) => {
   const account = useAccount();
   const accountAuthorAddress = account?.author?.address;
-  const { roles } = useSubplebbit({ subplebbitAddress }) || {};
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
+  const { roles } = subplebbit || {};
   const { getAddressSigner, getThreadSigner } = useAnonModeStore();
   const { anonMode } = useAnonMode(postCid);
 

@@ -1,5 +1,4 @@
 import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru/index.js';
-import { Comment } from '@plebbit/plebbit-react-hooks';
 import extName from 'ext-name';
 import { canEmbed } from '../../components/embed';
 import memoize from 'memoizee';
@@ -13,7 +12,8 @@ export interface CommentMediaInfo {
   thumbnailWidth?: number;
   thumbnailHeight?: number;
   patternThumbnailUrl?: string;
-  post?: Comment;
+  linkWidth?: number;
+  linkHeight?: number;
 }
 
 export const getDisplayMediaInfoType = (type: string, t: any) => {
@@ -35,19 +35,20 @@ export const getDisplayMediaInfoType = (type: string, t: any) => {
   }
 };
 
-export const getHasThumbnail = (commentMediaInfo: CommentMediaInfo | undefined, link: string | undefined): boolean => {
-  const iframeThumbnail = commentMediaInfo?.patternThumbnailUrl || commentMediaInfo?.thumbnail;
-  return link &&
-    commentMediaInfo &&
-    (commentMediaInfo.type === 'image' ||
-      commentMediaInfo.type === 'video' ||
-      commentMediaInfo.type === 'audio' ||
-      commentMediaInfo.type === 'gif' ||
-      (commentMediaInfo.type === 'webpage' && commentMediaInfo.thumbnail) ||
-      (commentMediaInfo.type === 'iframe' && iframeThumbnail))
-    ? true
-    : false;
-};
+export const getHasThumbnail = memoize(
+  (commentMediaInfo: CommentMediaInfo | undefined, link: string | undefined): boolean => {
+    if (!link || !commentMediaInfo) return false;
+
+    const { type, thumbnail, patternThumbnailUrl } = commentMediaInfo;
+
+    if (type === 'image' || type === 'video' || type === 'audio' || type === 'gif') return true;
+    if (type === 'webpage' && thumbnail) return true;
+    if (type === 'iframe' && (patternThumbnailUrl || thumbnail)) return true;
+
+    return false;
+  },
+  { max: 1000 },
+);
 
 const getYouTubeVideoId = (url: URL): string | null => {
   if (url.host.includes('youtu.be')) {
@@ -182,55 +183,61 @@ const fetchWebpageThumbnail = async (url: string): Promise<string | undefined> =
   }
 };
 
-export const getCommentMediaInfo = (comment: Comment): CommentMediaInfo | undefined => {
-  if (!comment?.thumbnailUrl && !comment?.link) {
+export const getCommentMediaInfo = (link: string, thumbnailUrl: string, linkWidth: number, linkHeight: number): CommentMediaInfo | undefined => {
+  if (!thumbnailUrl && !link) {
     return;
   }
-  const linkInfo = comment.link ? getLinkMediaInfo(comment.link) : undefined;
+  const linkInfo = link ? getLinkMediaInfo(link) : undefined;
   if (linkInfo) {
     return {
       ...linkInfo,
-      thumbnail: comment.thumbnailUrl || linkInfo.thumbnail,
-      post: comment,
+      thumbnail: thumbnailUrl || linkInfo.thumbnail,
+      linkWidth,
+      linkHeight,
     };
   }
   return;
 };
 
-export const getMediaDimensions = (commentMediaInfo: CommentMediaInfo | undefined): string => {
-  if (!commentMediaInfo) return '';
+const EMBED_DIMENSIONS = {
+  'youtube.com': '800x450',
+  'youtu.be': '800x450',
+  'instagram.com': '360x420',
+  'reddit.com': '500x520',
+  'tiktok.com': '400x780',
+  'x.com': '550x580',
+  'twitter.com': '550x580',
+  'soundcloud.com': '700x166',
+} as const;
 
-  const { type, url, post } = commentMediaInfo;
+export const getMediaDimensions = memoize(
+  (commentMediaInfo: CommentMediaInfo | undefined): string => {
+    if (!commentMediaInfo) return '';
 
-  if (type === 'iframe' && url) {
-    const embedUrl = new URL(url);
-    if (canEmbed(embedUrl)) {
-      // hardcoded dimensions from embed.module.css
-      if (embedUrl.hostname.includes('youtube.com') || embedUrl.hostname.includes('youtu.be')) {
-        return '800x450';
-      } else if (embedUrl.hostname.includes('instagram.com')) {
-        return '360x420';
-      } else if (embedUrl.hostname.includes('reddit.com')) {
-        return '500x520';
-      } else if (embedUrl.hostname.includes('tiktok.com')) {
-        return '400x780';
-      } else if (embedUrl.hostname.includes('x.com') || embedUrl.hostname.includes('twitter.com')) {
-        return '550x580';
-      } else if (embedUrl.hostname.includes('soundcloud.com')) {
-        return '700x166';
+    const { type, url, linkWidth, linkHeight } = commentMediaInfo;
+
+    if (type === 'iframe' && url) {
+      const embedUrl = new URL(url);
+      if (canEmbed(embedUrl)) {
+        const hostname = embedUrl.hostname;
+        for (const [site, dimensions] of Object.entries(EMBED_DIMENSIONS)) {
+          if (hostname.includes(site)) {
+            return dimensions;
+          }
+        }
+      }
+    } else if (type === 'audio') {
+      return '700x240';
+    } else if (type === 'image' || type === 'video' || type === 'gif') {
+      if (linkWidth && linkHeight) {
+        return `${linkWidth}x${linkHeight}`;
       }
     }
-  } else if (type === 'audio') {
-    return '700x240'; // hardcoded dimensions from embed.module.css
-  } else if (type === 'image' || type === 'video' || type === 'gif') {
-    // media dimensions calculated by API
-    if (post?.linkWidth && post?.linkHeight) {
-      return `${post.linkWidth}x${post.linkHeight}`;
-    }
-  }
 
-  return '';
-};
+    return '';
+  },
+  { max: 1000 },
+);
 
 const thumbnailUrlsDb = localForageLru.createInstance({ name: 'plebchanThumbnailUrls', size: 500 });
 

@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "This thread was deleted by its author",
   "this_thread_was_removed": "This thread was removed by board moderators",
   "this_reply_was_deleted": "This reply was deleted by its author",
-  "this_reply_was_removed": "This reply was removed by board moderators"
+  "this_reply_was_removed": "This reply was removed by board moderators",
+  "not_mod_of_any_board": "You are not a mod of any board."
 }

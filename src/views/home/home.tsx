@@ -11,8 +11,6 @@ import Version from '../../components/version';
 import _ from 'lodash';
 
 // https://github.com/plebbit/temporary-default-subplebbits/blob/master/README.md
-// plebchan shouldn't consider 'vulgar' or 'anti' as nsfw tags, unlike more sfw-oriented clients
-export const nsfwTags = ['adult', 'gore'];
 
 const SearchBar = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -52,7 +50,13 @@ const InfoBox = () => {
         <h2>{t('what_is_plebchan')}</h2>
       </div>
       <div className={styles.boxContent}>
-        <Trans i18nKey='plebchan_description' shouldUnescape={true} components={{ 1: <Link to='https://plebbit.com' target='_blank' rel='noopener noreferrer' /> }} />
+        <Trans
+          i18nKey='plebchan_description'
+          shouldUnescape={true}
+          components={{
+            1: <Link key='plebbit-link' to='https://plebbit.com' target='_blank' rel='noopener noreferrer' />,
+          }}
+        />
         <br />
         <br />
         {t('no_global_rules_info')}

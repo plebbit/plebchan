@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Comment } from '@plebbit/plebbit-react-hooks';
 import { CommentMediaInfo, getDisplayMediaInfoType, getHasThumbnail, getMediaDimensions } from '../../lib/utils/media-utils';
 import { getHostname } from '../../lib/utils/url-utils';
 import useExpandedMediaStore from '../../stores/use-expanded-media-store';
@@ -14,12 +13,14 @@ interface MediaProps {
   deleted?: boolean;
   displayHeight?: string;
   displayWidth?: string;
+  isDescription?: boolean;
+  isRules?: boolean;
   isFloatingEmbed?: boolean;
   isOutOfFeed?: boolean;
   isReply?: boolean;
   linkHeight?: number;
   linkWidth?: number;
-  post?: Comment;
+  parentCid?: string;
   removed?: boolean;
   spoiler?: boolean;
   showThumbnail?: boolean;
@@ -130,12 +131,12 @@ interface ImageProps {
   displayHeight: string;
   displayWidth: string;
   isOutOfFeed: boolean;
-  post: Comment | undefined;
+  parentCid?: string;
+  spoiler?: boolean;
 }
 
-const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, post }: ImageProps) => {
+const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, parentCid, spoiler }: ImageProps) => {
   const { t } = useTranslation();
-  const { parentCid, spoiler } = post || {};
   const { type, url } = commentMediaInfo || {};
   const isReply = parentCid;
   const isMobile = useIsMobile();
@@ -181,7 +182,7 @@ const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, pos
           {mediaDimensions && `, ${mediaDimensions}`})
         </div>
       )}
-      {type && !isImageExpanded && <div className={styles.fileInfo}>{`${post?.spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
+      {type && !isImageExpanded && <div className={styles.fileInfo}>{`${spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
     </span>
   ) : (
     <span
@@ -197,8 +198,20 @@ const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, pos
   );
 };
 
-const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, setShowThumbnail }: MediaProps) => {
-  const { deleted, linkHeight, linkWidth, parentCid, removed, spoiler } = post || {};
+const CommentMedia = ({
+  commentMediaInfo,
+  deleted,
+  isDescription,
+  isFloatingEmbed,
+  isRules,
+  linkHeight,
+  linkWidth,
+  parentCid,
+  removed,
+  showThumbnail,
+  setShowThumbnail,
+  spoiler,
+}: MediaProps) => {
   const isReply = parentCid;
   const { t } = useTranslation();
   const isMobile = useIsMobile();
@@ -235,14 +248,20 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
     displayWidth = '100%';
     displayHeight = '100%';
   }
-  const { isDescription, isRules } = post || {}; // custom properties, not from api
-  const isOutOfFeed = isDescription || isRules || isFloatingEmbed || spoiler; // virtuoso wrapper unneeded
+  const isOutOfFeed = isDescription || isRules || isFloatingEmbed || spoiler || false; // virtuoso wrapper unneeded
 
   return (
     <span className={styles.content}>
       {commentMediaInfo?.type === 'image' ? (
         // images just enlarge when clicked, so they don't need two separate components
-        <Image commentMediaInfo={commentMediaInfo} displayHeight={displayHeight} displayWidth={displayWidth} isOutOfFeed={isOutOfFeed} post={post} />
+        <Image
+          commentMediaInfo={commentMediaInfo}
+          displayHeight={displayHeight}
+          displayWidth={displayWidth}
+          isOutOfFeed={isOutOfFeed}
+          parentCid={parentCid}
+          spoiler={spoiler}
+        />
       ) : (
         <>
           <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
@@ -259,9 +278,9 @@ const CommentMedia = ({ commentMediaInfo, isFloatingEmbed, post, showThumbnail, 
                 setShowThumbnail={setShowThumbnail}
               />
             )}
-            {isMobile && type && <div className={styles.fileInfo}>{`${post?.spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
+            {isMobile && type && <div className={styles.fileInfo}>{`${spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
           </span>
-          {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={post?.parentCid} setShowThumbnail={setShowThumbnail} />}
+          {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} isReply={!!parentCid} setShowThumbnail={setShowThumbnail} />}
         </>
       )}
     </span>

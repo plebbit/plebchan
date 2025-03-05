@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "Dit draadje is verwijderd door de auteur",
   "this_thread_was_removed": "Deze thread werd verwijderd door boardmoderators",
   "this_reply_was_deleted": "Dit antwoord werd verwijderd door de auteur",
-  "this_reply_was_removed": "Dit antwoord is verwijderd door de forum moderators"
+  "this_reply_was_removed": "Dit antwoord is verwijderd door de forum moderators",
+  "not_mod_of_any_board": "Je bent geen mod van een bord."
 }

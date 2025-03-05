@@ -69,7 +69,7 @@
   border-image-width: 40px 0px 0px 0px;
   border-image-outset: 0px 0px 0px 0px;
   border-image-repeat: repeat repeat;
-  border-image-source: url('/public/assets/garland.png');
+  border-image-source: url('/assets/garland.png');
   border-style: solid;
   padding-top: 50px;
  }
