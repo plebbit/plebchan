@@ -233,7 +233,7 @@ const PostMediaContent = ({ post, link }: { post: any; link: string }) => {
   );
 };
 
-const ReplyBacklinks = ({ post, replies: threadReplies }: PostProps) => {
+const ReplyBacklinks = ({ post }: PostProps) => {
   const { cid, parentCid } = post || {};
   const replies = useReplies(post);
 
@@ -246,14 +246,14 @@ const ReplyBacklinks = ({ post, replies: threadReplies }: PostProps) => {
           (reply: Comment, index: number) =>
             reply?.parentCid === cid &&
             reply?.cid &&
-            !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} replies={threadReplies} />,
+            !(reply?.deleted || reply?.removed) && <ReplyQuotePreview key={index} isBacklinkReply={true} backlinkReply={reply} />,
         )}
       </div>
     )
   );
 };
 
-const Reply = ({ postReplyCount, reply, replies, roles }: PostProps) => {
+const Reply = ({ postReplyCount, reply, roles }: PostProps) => {
   let post = reply;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment: reply });
@@ -274,7 +274,7 @@ const Reply = ({ postReplyCount, reply, replies, roles }: PostProps) => {
           data-post-cid={postCid}
         >
           <PostInfoAndMedia post={post} postReplyCount={postReplyCount} roles={roles} />
-          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} replies={replies || []} />}
+          {!hidden && (!(removed || deleted) || ((removed || deleted) && reason)) && <CommentContent comment={post} />}
           <ReplyBacklinks post={reply} />
         </div>
       </div>
@@ -282,7 +282,7 @@ const Reply = ({ postReplyCount, reply, replies, roles }: PostProps) => {
   );
 };
 
-const PostMobile = ({ post, roles, showAllReplies, showReplies = true, replies: threadReplies }: PostProps) => {
+const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostProps) => {
   const { t } = useTranslation();
   const { author, cid, pinned, postCid, replyCount, state, subplebbitAddress } = post || {};
   const { isDescription, isRules } = post || {}; // custom properties, not from api
@@ -292,8 +292,7 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true, replies: 
   const isInPendingPostView = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const linksCount = useCountLinksInReplies(post);
-  const commentReplies = useReplies(post);
-  const replies = threadReplies || commentReplies;
+  const replies = useReplies(post);
 
   const isInPostPageView = isPostPageView(location.pathname, params);
   const { hidden, unhide } = useHide({ cid });
@@ -339,7 +338,7 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true, replies: 
               >
                 {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
                 <PostInfoAndMedia post={post} postReplyCount={replyCount} roles={roles} />
-                <CommentContent comment={post} replies={replies} />
+                <CommentContent comment={post} />
               </div>
               {!isInPostView && !isInPendingPostView && showReplies && (
                 <div className={styles.postLink}>
@@ -362,7 +361,7 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true, replies: 
               showReplies &&
               (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
                 <div key={index} className={styles.replyContainer}>
-                  <Reply postReplyCount={replyCount} reply={reply} roles={roles} replies={replies} />
+                  <Reply postReplyCount={replyCount} reply={reply} roles={roles} />
                 </div>
               ))}
             {showRules && (

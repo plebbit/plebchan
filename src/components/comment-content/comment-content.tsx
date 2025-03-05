@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Comment } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import { getFormattedDate, getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isPostPageView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
@@ -13,7 +14,7 @@ import Tooltip from '../../components/tooltip';
 import styles from '../../views/post/post.module.css';
 import _ from 'lodash';
 
-const CommentContent = ({ comment: post, replies }: { comment: Comment; replies: Comment[] }) => {
+const CommentContent = ({ comment: post }: { comment: Comment }) => {
   const { t } = useTranslation();
   const params = useParams();
   const location = useLocation();
@@ -34,7 +35,7 @@ const CommentContent = ({ comment: post, replies }: { comment: Comment; replies:
       ? content.slice(0, 2000)
       : content);
 
-  const quotelinkReply = parentCid && replies?.find((reply) => reply.cid === parentCid);
+  const quotelinkReply = useSubplebbitsPagesStore((state) => state.comments[parentCid]);
 
   const isReply = !!parentCid;
   const isReplyingToReply = isReply && parentCid !== postCid;
@@ -45,9 +46,7 @@ const CommentContent = ({ comment: post, replies }: { comment: Comment; replies:
 
   return (
     <blockquote className={`${styles.postMessage} ${!isReply && isMobile && styles.clampLines} ${isRules && styles.rulesMessage}`}>
-      {isReply && state !== 'failed' && isReplyingToReply && !(deleted || removed) && (
-        <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} replies={replies} />
-      )}
+      {isReply && state !== 'failed' && isReplyingToReply && !(deleted || removed) && <ReplyQuotePreview isQuotelinkReply={true} quotelinkReply={quotelinkReply} />}
       {removed ? (
         reason ? (
           <>
