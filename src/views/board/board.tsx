@@ -14,10 +14,9 @@ import useInterfaceSettingsStore from '../../stores/use-interface-settings-store
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
 import LoadingEllipsis from '../../components/loading-ellipsis';
-import { Post } from '../post';
-import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
+import { Post } from '../post';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -267,7 +266,6 @@ const Board = () => {
     <>
       {shouldShowSnow() && <hr />}
       <div className={`${styles.content} ${shouldShowSnow() ? styles.garland : ''}`}>
-        {location.pathname.endsWith('/settings') && <SettingsModal />}
         {((description && description.length > 0) || isInAllView) && (
           <SubplebbitDescription
             avatarUrl={suggested?.avatarUrl}

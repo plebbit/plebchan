@@ -16,7 +16,6 @@ import useInterfaceSettingsStore from '../../stores/use-interface-settings-store
 import useSortingStore from '../../stores/use-sorting-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
-import SettingsModal from '../../components/settings-modal';
 import styles from './catalog.module.css';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
@@ -289,7 +288,6 @@ const Catalog = () => {
 
   return (
     <div className={styles.content}>
-      {location.pathname.endsWith('/settings') && <SettingsModal />}
       <hr />
       <div className={styles.catalog}>
         {combinedFeed.length !== 0 ? (

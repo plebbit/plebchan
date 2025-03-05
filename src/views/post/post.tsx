@@ -2,11 +2,10 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { useLocation, useParams } from 'react-router-dom';
-import { isAllView, isDescriptionView, isRulesView, isSettingsView } from '../../lib/utils/view-utils';
+import { isAllView, isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
 import PostDesktop from '../../components/post-desktop';
 import PostMobile from '../../components/post-mobile';
-import SettingsModal from '../../components/settings-modal';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 import styles from './post.module.css';
@@ -54,7 +53,6 @@ const PostPage = () => {
   const location = useLocation();
   const { commentCid, subplebbitAddress } = params;
   const isInAllView = isAllView(location.pathname);
-  const isInSettigsView = isSettingsView(location.pathname, params);
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
@@ -87,7 +85,6 @@ const PostPage = () => {
 
   return (
     <div className={styles.content}>
-      {isInSettigsView && <SettingsModal />}
       {/* TODO: remove this replyCount error once api supports scrolling replies pages */}
       {replyCount > 60 && <span className={styles.error}>Error: this thread has too many replies, some of them cannot be displayed right now.</span>}
       {error && <span className={styles.error}>Error: {error?.message || error?.toString?.()}</span>}

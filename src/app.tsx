@@ -22,6 +22,7 @@ import ReplyModal from './components/reply-modal';
 import PostForm from './components/post-form';
 import SubplebbitStats from './components/subplebbit-stats';
 import TopBar from './components/topbar';
+import SettingsModal from './components/settings-modal';
 
 const BoardLayout = () => {
   const { accountCommentIndex, subplebbitAddress } = useParams();
@@ -91,6 +92,9 @@ const GlobalLayout = () => {
 
   const { activeCid, threadCid, subplebbitAddress, closeModal, showReplyModal, scrollY } = useReplyModalStore();
 
+  const location = useLocation();
+  const isInSettingsView = location.pathname.endsWith('/settings');
+
   return (
     <>
       <ChallengeModal />
@@ -104,6 +108,7 @@ const GlobalLayout = () => {
           subplebbitAddress={subplebbitAddress}
         />
       )}
+      {isInSettingsView && <SettingsModal />}
       <Outlet />
     </>
   );
