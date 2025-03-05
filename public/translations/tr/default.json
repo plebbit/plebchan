@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "Bu başlık, yazarının tarafından silindi",
   "this_thread_was_removed": "Bu konu, board moderatörleri tarafından kaldırıldı",
   "this_reply_was_deleted": "Bu yanıt, yazar tarafından silindi",
-  "this_reply_was_removed": "Bu yanıt, forum moderatörleri tarafından kaldırıldı"
+  "this_reply_was_removed": "Bu yanıt, forum moderatörleri tarafından kaldırıldı",
+  "not_mod_of_any_board": "Hiçbir tahtanın moderatörü değilsiniz."
 }

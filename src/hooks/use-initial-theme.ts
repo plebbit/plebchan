@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useThemeStore from '../stores/use-theme-store';
 import { useDefaultSubplebbits } from './use-default-subplebbits';
-import { isAllView, isHomeView, isNotFoundView, isPendingPostView, isSubscriptionsView } from '../lib/utils/view-utils';
+import { isAllView, isHomeView, isNotFoundView, isPendingPostView, isSubscriptionsView, isModView } from '../lib/utils/view-utils';
 import { nsfwTags } from '../constants/nsfwTags';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 
@@ -19,6 +19,7 @@ const useInitialTheme = (pendingPostSubplebbitAddress?: string) => {
   const isInNotFoundView = isNotFoundView(location.pathname, params);
   const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+  const isInModView = isModView(location.pathname);
   const isInPendingPostView = isPendingPostView(location.pathname, params);
 
   const initialTheme = useMemo(() => {
@@ -36,7 +37,7 @@ const useInitialTheme = (pendingPostSubplebbitAddress?: string) => {
       } else {
         theme = currentTheme || 'yotsuba';
       }
-    } else if (isInAllView || isInSubscriptionsView) {
+    } else if (isInAllView || isInSubscriptionsView || isInModView) {
       theme = getTheme('sfw', false) || 'yotsuba-b'; // Add 'false' parameter
     } else if (isInHomeView || isInNotFoundView) {
       theme = 'yotsuba';
@@ -54,6 +55,7 @@ const useInitialTheme = (pendingPostSubplebbitAddress?: string) => {
     isInPendingPostView,
     isInAllView,
     isInSubscriptionsView,
+    isInModView,
     isInHomeView,
     isInNotFoundView,
     paramsSubplebbitAddress,

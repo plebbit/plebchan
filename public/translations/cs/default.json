@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "Toto vlákno bylo smazáno jeho autorem",
   "this_thread_was_removed": "Toto vlákno bylo odstraněno moderátory fóra",
   "this_reply_was_deleted": "Tato odpověď byla smazána autorem",
-  "this_reply_was_removed": "Tato odpověď byla odstraněna moderátory fóra"
+  "this_reply_was_removed": "Tato odpověď byla odstraněna moderátory fóra",
+  "not_mod_of_any_board": "Nejste moderátor žádné desky."
 }

@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "이 스레드는 작성자에 의해 삭제되었습니다",
   "this_thread_was_removed": "이 스레드는 보드 관리자에 의해 제거되었습니다",
   "this_reply_was_deleted": "이 답글은 작성자에 의해 삭제되었습니다",
-  "this_reply_was_removed": "이 답글은 게시판 관리자에 의해 삭제되었습니다"
+  "this_reply_was_removed": "이 답글은 게시판 관리자에 의해 삭제되었습니다",
+  "not_mod_of_any_board": "당신은 어떤 게시판의 관리자도 아닙니다."
 }

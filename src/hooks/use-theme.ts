@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { isAllView, isSubscriptionsView } from '../lib/utils/view-utils';
+import { isAllView, isSubscriptionsView, isModView } from '../lib/utils/view-utils';
 import useThemeStore from '../stores/use-theme-store';
 import { useDefaultSubplebbits } from './use-default-subplebbits';
 import useInitialTheme from './use-initial-theme';
@@ -37,26 +37,24 @@ const useTheme = (): [string, (theme: string) => void] => {
 
   const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
+  const isInModView = isModView(location.pathname);
+  const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
 
   // Check for Christmas and initialize special theme if needed
   useEffect(() => {
     const isChristmasTime = isChristmas();
-    const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
 
-    if (isChristmasTime && isEnabled === null && subplebbitAddress && !isInAllView && !isInSubscriptionsView) {
+    if (isChristmasTime && isEnabled === null && subplebbitAddress && !isInAllView && !isInSubscriptionsView && !isInModView) {
       setIsEnabled(true);
       setCurrentTheme('tomorrow');
       updateThemeClass('tomorrow');
     } else if (!isChristmasTime && isEnabled) {
       setIsEnabled(false);
     }
-  }, [isEnabled, setIsEnabled, params, pendingPostSubplebbitAddress, location.pathname, isInAllView, isInSubscriptionsView]);
+  }, [isEnabled, setIsEnabled, params, pendingPostSubplebbitAddress, location.pathname, isInAllView, isInSubscriptionsView, isInModView, subplebbitAddress]);
 
   const getCurrentTheme = useCallback(() => {
     const { isEnabled } = useSpecialThemeStore.getState();
-    const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
-    const isInAllView = isAllView(location.pathname);
-    const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
     // Always use yotsuba for home page
     if (location.pathname === '/') {
@@ -69,7 +67,7 @@ const useTheme = (): [string, (theme: string) => void] => {
     }
 
     let storedTheme = null;
-    if (isInAllView || isInSubscriptionsView) {
+    if (isInAllView || isInSubscriptionsView || isInModView) {
       storedTheme = getTheme('sfw', false);
     } else if (subplebbitAddress) {
       const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
@@ -81,6 +79,7 @@ const useTheme = (): [string, (theme: string) => void] => {
     }
 
     return storedTheme || initialTheme;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, params, getTheme, subplebbits, initialTheme, pendingPostSubplebbitAddress]);
 
   useEffect(() => {
@@ -97,11 +96,7 @@ const useTheme = (): [string, (theme: string) => void] => {
 
   const setSubplebbitTheme = useCallback(
     async (newTheme: string) => {
-      const subplebbitAddress = params?.subplebbitAddress || pendingPostSubplebbitAddress;
-      const isInAllView = isAllView(location.pathname);
-      const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
-
-      if (isInAllView || isInSubscriptionsView) {
+      if (isInAllView || isInSubscriptionsView || isInModView) {
         await setThemeStore('sfw', newTheme);
       } else if (subplebbitAddress) {
         const subplebbit = subplebbits.find((s) => s.address === subplebbitAddress);
@@ -115,6 +110,7 @@ const useTheme = (): [string, (theme: string) => void] => {
       setCurrentTheme(newTheme);
       updateThemeClass(newTheme);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [location.pathname, params, setThemeStore, subplebbits, pendingPostSubplebbitAddress],
   );
 

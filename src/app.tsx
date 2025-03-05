@@ -147,6 +147,11 @@ const App = () => {
             <Route path='/p/subscriptions/catalog/:timeFilterName?' element={<Catalog />} />
             <Route path='/p/subscriptions/catalog/:timeFilterName?/settings' element={<Catalog />} />
 
+            <Route path='/p/mod/:timeFilterName?' element={<Board />} />
+            <Route path='/p/mod/:timeFilterName?/settings' element={<Board />} />
+            <Route path='/p/mod/catalog/:timeFilterName?' element={<Catalog />} />
+            <Route path='/p/mod/catalog/:timeFilterName?/settings' element={<Catalog />} />
+
             <Route path='/profile/:accountCommentIndex' element={<PendingPost />} />
             <Route path='/profile/:accountCommentIndex/settings' element={<PendingPost />} />
           </Route>

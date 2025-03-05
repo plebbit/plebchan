@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "Эта тема была удалена её автором",
   "this_thread_was_removed": "Эта тема была удалена модераторами форума",
   "this_reply_was_deleted": "Этот ответ был удален автором",
-  "this_reply_was_removed": "Этот ответ был удален модераторами форума"
+  "this_reply_was_removed": "Этот ответ был удален модераторами форума",
+  "not_mod_of_any_board": "Вы не модератор ни одной доски."
 }

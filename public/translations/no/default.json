@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "Denne tråden ble slettet av forfatteren",
   "this_thread_was_removed": "Denne tråden ble fjernet av boardmoderatorer",
   "this_reply_was_deleted": "Dette svaret ble slettet av forfatteren",
-  "this_reply_was_removed": "Dette svaret ble fjernet av forummoderatorer"
+  "this_reply_was_removed": "Dette svaret ble fjernet av forummoderatorer",
+  "not_mod_of_any_board": "Du er ikke moderator på noen brett."
 }

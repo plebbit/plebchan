@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "השרשור הזה נמחק על ידי המחבר שלו",
   "this_thread_was_removed": "השרשור הזה הוסר על ידי מנהלי הפורום",
   "this_reply_was_deleted": "תשובה זו נמחקה על ידי המחבר שלה",
-  "this_reply_was_removed": "תשובה זו הוסרה על ידי מנהלי הפורום"
+  "this_reply_was_removed": "תשובה זו הוסרה על ידי מנהלי הפורום",
+  "not_mod_of_any_board": "אתה לא מוד בכל לוח."
 }

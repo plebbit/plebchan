@@ -290,5 +290,6 @@
   "this_thread_was_deleted": "हा धागा त्याच्या लेखकाने हटविला",
   "this_thread_was_removed": "हे थ्रेड बोर्ड मध्यमाने काढले गेले आहे",
   "this_reply_was_deleted": "हा प्रतिसाद त्याच्या लेखकाने हटवला आहे",
-  "this_reply_was_removed": "या उत्तराला बोर्ड मॉडरेटरने काढले आहे"
+  "this_reply_was_removed": "या उत्तराला बोर्ड मॉडरेटरने काढले आहे",
+  "not_mod_of_any_board": "तुम्ही कोणत्याही बोर्डचे मॉड नाहीत."
 }

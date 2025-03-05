@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment, useAccount, useAccountComments, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, useAccount, useAccountComments, useAccountSubplebbits, useBlock, useFeed, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { Trans, useTranslation } from 'react-i18next';
 import styles from './board.module.css';
 import { shouldShowSnow } from '../../lib/snow';
 import { getCommentMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
-import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { isAllView, isSubscriptionsView, isModView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { useFeedStateString } from '../../hooks/use-state-string';
 import useTimeFilter from '../../hooks/use-time-filter';
@@ -41,6 +41,10 @@ const Board = () => {
   const subscriptions = account?.subscriptions;
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
+  const isInModView = isModView(location.pathname);
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
+
   const subplebbitAddresses = useMemo(() => {
     if (isInAllView) {
       return defaultSubplebbitAddresses;
@@ -48,8 +52,11 @@ const Board = () => {
     if (isInSubscriptionsView) {
       return subscriptions || [];
     }
+    if (isInModView) {
+      return accountSubplebbitAddresses;
+    }
     return [subplebbitAddress];
-  }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions]);
+  }, [isInAllView, isInSubscriptionsView, isInModView, subplebbitAddress, defaultSubplebbitAddresses, subscriptions, accountSubplebbitAddresses]);
 
   const { sortType } = useSortingStore();
   const { timeFilterSeconds, timeFilterName } = useTimeFilter();
@@ -57,8 +64,8 @@ const Board = () => {
   const feedOptions = {
     subplebbitAddresses,
     sortType,
-    postsPerPage: isInAllView || isInSubscriptionsView ? 5 : 25,
-    ...(isInAllView || isInSubscriptionsView ? { newerThan: timeFilterSeconds } : {}),
+    postsPerPage: isInAllView || isInSubscriptionsView || isInModView ? 5 : 25,
+    ...(isInAllView || isInSubscriptionsView || isInModView ? { newerThan: timeFilterSeconds } : {}),
     filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
   };
 
@@ -111,7 +118,7 @@ const Board = () => {
 
   const subplebbit = useSubplebbit({ subplebbitAddress });
   const { createdAt, description, error, rules, shortAddress, state, suggested } = subplebbit || {};
-  const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : subplebbit?.title;
+  const title = isInAllView ? t('all') : isInSubscriptionsView ? t('subscriptions') : isInModView ? t('mod') : subplebbit?.title;
 
   const { blocked, unblock } = useBlock({ address: subplebbitAddress });
 
@@ -174,7 +181,7 @@ const Board = () => {
               />
             </div>
           ) : (
-            (isInAllView || isInSubscriptionsView) &&
+            (isInAllView || isInSubscriptionsView || isInModView) &&
             showMorePostsSuggestion &&
             monthlyFeed.length > feed.length &&
             (weeklyFeed.length > feed.length ? (
@@ -183,7 +190,7 @@ const Board = () => {
                   i18nKey='more_threads_last_week'
                   values={{ currentTimeFilterName, count: feed.length }}
                   components={{
-                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1w'} />,
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : isInModView ? '/p/mod' : `/p/${subplebbitAddress}`) + '/1w'} />,
                   }}
                 />
               </div>
@@ -193,7 +200,7 @@ const Board = () => {
                   i18nKey='more_threads_last_month'
                   values={{ currentTimeFilterName, count: feed.length }}
                   components={{
-                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : `/p/${subplebbitAddress}`) + '/1m'} />,
+                    1: <Link to={(isInAllView ? '/p/all' : isInSubscriptionsView ? '/p/subscriptions' : isInModView ? '/p/mod' : `/p/${subplebbitAddress}`) + '/1m'} />,
                   }}
                 />
               </div>
@@ -209,9 +216,11 @@ const Board = () => {
           {state === 'failed' ? (
             <span className='red'>{state}</span>
           ) : isInSubscriptionsView && subscriptions?.length === 0 ? (
-            t('not_subscribed_to_any_board')
+            <span className='red'>{t('not_subscribed_to_any_board')}</span>
+          ) : isInModView && accountSubplebbitAddresses?.length === 0 ? (
+            <span className='red'>{t('not_mod_of_any_board')}</span>
           ) : blocked ? (
-            t('you_have_blocked_this_board')
+            <span className='red'>{t('you_have_blocked_this_board')}</span>
           ) : (
             hasMore && <LoadingEllipsis string={loadingStateString} />
           )}

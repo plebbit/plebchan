@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
-import { useAccount, useAccountComment } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountComment, useAccountSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
@@ -79,10 +79,20 @@ const TopBarDesktop = () => {
 
   const subscriptions = account?.subscriptions;
 
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
+
   return (
     <div className={styles.boardNavDesktop}>
       <span className={styles.boardList}>
-        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>]{' '}
+        [<Link to='/p/all'>all</Link> / <Link to='/p/subscriptions'>subscriptions</Link>
+        {accountSubplebbitAddresses.length > 0 && (
+          <>
+            {' '}
+            / <Link to='/p/mod'>mod</Link>
+          </>
+        )}
+        ]{' '}
         {subscriptions?.length > 0 && (
           <>
             [
@@ -137,11 +147,15 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const selectValue = isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress;
 
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
+
   const boardSelect = (
     <select value={selectValue} onChange={(e) => navigate(`/p/${e.target.value}${isInCatalogView ? '/catalog' : ''}`)}>
       {!currentSubplebbitIsInList && subplebbitAddress && <option value={subplebbitAddress}>{displaySubplebbitAddress}</option>}
       <option value='all'>all</option>
       <option value='subscriptions'>subscriptions</option>
+      {accountSubplebbitAddresses.length > 0 && <option value='mod'>mod</option>}
       {subplebbitAddresses.map((address: any, index: number) => {
         const subplebbitAddress = address?.includes('.') ? address : Plebbit.getShortAddress(address);
         return (
