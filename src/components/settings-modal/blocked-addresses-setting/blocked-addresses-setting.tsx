@@ -50,7 +50,7 @@ const BlockedAddressesSetting = () => {
           </ul>
         </>
       ) : (
-        t('you_have_not_blocked')
+        <div className={styles.notBlocked}>{t('you_have_not_blocked')}</div>
       )}
     </div>
   );
