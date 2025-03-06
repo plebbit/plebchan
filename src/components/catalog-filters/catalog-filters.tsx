@@ -5,7 +5,7 @@ import styles from './catalog-filters.module.css';
 
 const FiltersTable = ({ onSave }: { onSave: () => void }) => {
   const { t } = useTranslation();
-  const { filterItems, saveAndApplyFilters } = useCatalogFiltersStore();
+  const { filterItems, saveAndApplyFilters, currentSubplebbitAddress } = useCatalogFiltersStore();
 
   const [localFilterItems, setLocalFilterItems] = useState(
     filterItems.map((item) => ({
@@ -127,7 +127,9 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
                 ×
               </span>
             </td>
-            <td className={styles.filterHits}>{item.count > 0 && `x${item.count}`}</td>
+            <td className={styles.filterHits}>
+              {currentSubplebbitAddress && (item.subplebbitCounts?.get(currentSubplebbitAddress) ?? 0) > 0 && `x${item.subplebbitCounts?.get(currentSubplebbitAddress)}`}
+            </td>
           </tr>
         ))}
       </tbody>

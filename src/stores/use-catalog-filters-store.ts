@@ -50,7 +50,50 @@ const useCatalogFiltersStore = create(
       filteredCount: 0,
       filteredCids: new Set<string>(),
       currentSubplebbitAddress: null,
-      setCurrentSubplebbitAddress: (address: string | null) => set({ currentSubplebbitAddress: address }),
+      setCurrentSubplebbitAddress: (address: string | null) => {
+        const prevAddress = get().currentSubplebbitAddress;
+
+        if (address !== prevAddress) {
+          set((state) => {
+            if (address) {
+              const updatedFilterItems = state.filterItems.map((item) => {
+                const newItem = { ...item };
+
+                // Ensure subplebbitCounts is a Map
+                if (!newItem.subplebbitCounts || !(newItem.subplebbitCounts instanceof Map)) {
+                  newItem.subplebbitCounts = new Map(Array.isArray(newItem.subplebbitCounts) ? newItem.subplebbitCounts : []);
+                }
+
+                // Ensure subplebbitFilteredCids is a Map
+                if (!newItem.subplebbitFilteredCids || !(newItem.subplebbitFilteredCids instanceof Map)) {
+                  newItem.subplebbitFilteredCids = new Map();
+                }
+
+                // Now safely check if the address exists in the map
+                if (!newItem.subplebbitCounts.has(address)) {
+                  newItem.subplebbitFilteredCids.set(address, new Set<string>());
+                  newItem.subplebbitCounts.set(address, 0);
+                }
+
+                return newItem;
+              });
+
+              return {
+                currentSubplebbitAddress: address,
+                filterItems: updatedFilterItems,
+                filteredCount: 0,
+              };
+            }
+
+            return { currentSubplebbitAddress: address };
+          });
+
+          get().recalcFilteredCount();
+          get().updateFilter();
+        } else {
+          set({ currentSubplebbitAddress: address });
+        }
+      },
       searchText: '',
       setSearchFilter: (text: string) => {
         set({ searchText: text });
@@ -100,6 +143,9 @@ const useCatalogFiltersStore = create(
           filter: (comment: Comment) => {
             if (!comment?.cid) return true;
 
+            const currentSubplebbit = state.currentSubplebbitAddress;
+
+            // Apply search filter
             if (state.searchText.trim() !== '') {
               const searchPattern = state.searchText.toLowerCase();
               const title = comment?.title?.toLowerCase() || '';
@@ -110,21 +156,36 @@ const useCatalogFiltersStore = create(
               }
             }
 
+            // Apply content filters
             const { filterItems } = state;
             let shouldHide = false;
+
             for (let i = 0; i < filterItems.length; i++) {
               const item = filterItems[i];
               if (item.enabled && item.text.trim() !== '') {
                 const pattern = item.text.toLowerCase();
                 const title = comment?.title?.toLowerCase() || '';
                 const content = comment?.content?.toLowerCase() || '';
+
                 if (title.includes(pattern) || content.includes(pattern)) {
+                  // If we have a current subplebbit and this is a match, increment the count
+                  if (currentSubplebbit && comment.subplebbitAddress === currentSubplebbit) {
+                    // We need to use a timeout to avoid modifying state during a state update
+                    setTimeout(() => {
+                      const filterIndex = filterItems.findIndex((f) => f.text === item.text && f.enabled);
+                      if (filterIndex !== -1) {
+                        get().incrementFilterCount(filterIndex, comment.cid, comment.subplebbitAddress);
+                      }
+                    }, 0);
+                  }
+
                   if (item.hide) {
                     shouldHide = true;
                   }
                 }
               }
             }
+
             return !shouldHide;
           },
         }));
