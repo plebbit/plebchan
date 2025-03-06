@@ -56,6 +56,20 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
     onSave();
   }, [saveAndApplyFilters, localFilterItems, onSave]);
 
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleSave();
+      }
+    },
+    [handleSave],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
   const updateLocalFilterItem = useCallback((index: number, item: any) => {
     setLocalFilterItems((prev) => prev.map((f, i) => (i === index ? item : f)));
   }, []);

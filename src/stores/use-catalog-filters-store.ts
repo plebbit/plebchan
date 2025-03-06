@@ -59,9 +59,13 @@ const useCatalogFiltersStore = create(
               const updatedFilterItems = state.filterItems.map((item) => {
                 const newItem = { ...item };
 
+                // Reset count and filteredCids (global counters)
+                newItem.count = 0;
+                newItem.filteredCids = new Set();
+
                 // Ensure subplebbitCounts is a Map
                 if (!newItem.subplebbitCounts || !(newItem.subplebbitCounts instanceof Map)) {
-                  newItem.subplebbitCounts = new Map(Array.isArray(newItem.subplebbitCounts) ? newItem.subplebbitCounts : []);
+                  newItem.subplebbitCounts = new Map();
                 }
 
                 // Ensure subplebbitFilteredCids is a Map
@@ -69,9 +73,11 @@ const useCatalogFiltersStore = create(
                   newItem.subplebbitFilteredCids = new Map();
                 }
 
-                // Now safely check if the address exists in the map
-                if (!newItem.subplebbitCounts.has(address)) {
+                // Only initialize for the new address if it doesn't already exist
+                if (!newItem.subplebbitFilteredCids.has(address)) {
                   newItem.subplebbitFilteredCids.set(address, new Set<string>());
+                }
+                if (!newItem.subplebbitCounts.has(address)) {
                   newItem.subplebbitCounts.set(address, 0);
                 }
 
@@ -81,13 +87,14 @@ const useCatalogFiltersStore = create(
               return {
                 currentSubplebbitAddress: address,
                 filterItems: updatedFilterItems,
-                filteredCount: 0,
+                filteredCount: 0, // This will be recalculated below
               };
             }
 
             return { currentSubplebbitAddress: address };
           });
 
+          // Recalculate the filtered count for the current subplebbit
           get().recalcFilteredCount();
           get().updateFilter();
         } else {
@@ -199,12 +206,14 @@ const useCatalogFiltersStore = create(
           if (newFilterItems[filterIndex]) {
             const item = newFilterItems[filterIndex];
 
+            // Ensure subplebbitFilteredCids is a Map
             const subplebbitFilteredCids = new Map(item.subplebbitFilteredCids);
             if (!subplebbitFilteredCids.has(subplebbitAddress)) {
               subplebbitFilteredCids.set(subplebbitAddress, new Set());
             }
             const cidSet = subplebbitFilteredCids.get(subplebbitAddress)!;
 
+            // Only increment the count if this CID hasn't been counted for this subplebbit yet
             if (!cidSet.has(cid)) {
               const newItemFilteredCids = new Set(item.filteredCids);
               newItemFilteredCids.add(cid);
@@ -274,10 +283,29 @@ const useCatalogFiltersStore = create(
             enabled: item.enabled,
             hide: item.hide,
             top: item.top,
-            subplebbitCounts: Array.from(item.subplebbitCounts || new Map()),
-            subplebbitFilteredCids: Array.from((item.subplebbitFilteredCids || new Map()).entries()).map(([key, value]) => [key, Array.from(value)]),
           })),
         } as any;
+      },
+      deserialize: (persisted) => {
+        const persistedObj = typeof persisted === 'string' ? JSON.parse(persisted) : persisted;
+
+        if (persistedObj && persistedObj.filterItems) {
+          return {
+            ...persistedObj,
+            filterItems: persistedObj.filterItems.map((item: any) => ({
+              text: item.text,
+              enabled: item.enabled,
+              hide: item.hide,
+              top: item.top,
+              count: 0,
+              filteredCids: new Set<string>(),
+              subplebbitCounts: new Map<string, number>(),
+              subplebbitFilteredCids: new Map<string, Set<string>>(),
+            })),
+            filteredCount: 0,
+          };
+        }
+        return persistedObj || persisted;
       },
     },
   ),

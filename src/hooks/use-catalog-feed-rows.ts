@@ -95,7 +95,23 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
     }
 
     return _feed;
-  }, [accountComments, feed, description, rules, address, isFeedLoaded, createdAt, title, shortAddress, avatarUrl, t, isInAllView, multisub, hideThreadsWithoutImages]);
+  }, [
+    accountComments,
+    feed,
+    description,
+    rules,
+    address,
+    isFeedLoaded,
+    createdAt,
+    title,
+    shortAddress,
+    avatarUrl,
+    t,
+    isInAllView,
+    multisub,
+    hideThreadsWithoutImages,
+    searchText,
+  ]);
 
   const rows = useMemo(() => {
     const rows = [];

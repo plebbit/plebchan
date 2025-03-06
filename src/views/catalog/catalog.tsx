@@ -461,7 +461,7 @@ const Catalog = () => {
     <div className={styles.content}>
       <hr />
       <div className={styles.catalog}>
-        {processedFeed.length !== 0 ? (
+        {processedFeed?.length !== 0 ? (
           <>
             <Virtuoso
               increaseViewportBy={{ bottom: 1200, top: 1200 }}
