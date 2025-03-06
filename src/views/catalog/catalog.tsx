@@ -23,7 +23,8 @@ const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
 const createContentFilter = (
   filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean }[],
-  onFilterMatch?: (filterIndex: number, cid: string) => void,
+  subplebbitAddress: string,
+  onFilterMatch?: (filterIndex: number, cid: string, subplebbitAddress: string) => void,
 ) => {
   // Create a unique key based on the enabled filter items
   const enabledFilters = filterItems.filter((item) => item.enabled && item.text.trim() !== '');
@@ -51,10 +52,10 @@ const createContentFilter = (
           const filterIndex = filterItems.findIndex((f) => f.text === item.text && f.enabled);
           if (filterIndex !== -1) {
             if (onFilterMatch) {
-              onFilterMatch(filterIndex, comment.cid);
+              onFilterMatch(filterIndex, comment.cid, subplebbitAddress);
             } else {
               // Fallback to the store method if no callback provided
-              useCatalogFiltersStore.getState().incrementFilterCount(filterIndex, comment.cid);
+              useCatalogFiltersStore.getState().incrementFilterCount(filterIndex, comment.cid, subplebbitAddress);
             }
           }
 
@@ -91,10 +92,11 @@ const createImageFilter = (showTextOnlyThreads: boolean) => {
 const createCombinedFilter = (
   showTextOnlyThreads: boolean,
   filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean }[],
-  onFilterMatch?: (filterIndex: number, cid: string) => void,
+  subplebbitAddress: string,
+  onFilterMatch?: (filterIndex: number, cid: string, subplebbitAddress: string) => void,
 ) => {
   const imageFilter = createImageFilter(showTextOnlyThreads);
-  const contentFilter = createContentFilter(filterItems, onFilterMatch);
+  const contentFilter = createContentFilter(filterItems, subplebbitAddress, onFilterMatch);
 
   return {
     filter: (comment: Comment) => {
@@ -152,17 +154,25 @@ const Catalog = () => {
   const { timeFilterSeconds, timeFilterName } = useTimeFilter();
   const { sortType } = useSortingStore();
 
-  // stable callback for filter matching
-  const handleFilterMatch = useCallback((filterIndex: number, cid: string) => {
-    useCatalogFiltersStore.getState().incrementFilterCount(filterIndex, cid);
+  // Create a stable callback for filter matching
+  const handleFilterMatch = useCallback((filterIndex: number, cid: string, subplebbitAddress: string) => {
+    useCatalogFiltersStore.getState().incrementFilterCount(filterIndex, cid, subplebbitAddress);
   }, []);
+
+  // Set the current subplebbit address
+  useEffect(() => {
+    useCatalogFiltersStore.getState().setCurrentSubplebbitAddress(subplebbitAddress || null);
+    return () => {
+      useCatalogFiltersStore.getState().setCurrentSubplebbitAddress(null);
+    };
+  }, [subplebbitAddress]);
 
   const feedOptions = useMemo(() => {
     const options: any = {
       subplebbitAddresses,
       sortType,
       postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-      filter: createCombinedFilter(showTextOnlyThreads, filterItems, handleFilterMatch),
+      filter: createCombinedFilter(showTextOnlyThreads, filterItems, subplebbitAddress || 'all', handleFilterMatch),
     };
 
     if (isInAllView || isInSubscriptionsView) {
@@ -170,7 +180,18 @@ const Catalog = () => {
     }
 
     return options;
-  }, [subplebbitAddresses, sortType, isInAllView, isInSubscriptionsView, postsPerPage, timeFilterSeconds, showTextOnlyThreads, filterItems, handleFilterMatch]);
+  }, [
+    subplebbitAddresses,
+    sortType,
+    isInAllView,
+    isInSubscriptionsView,
+    postsPerPage,
+    timeFilterSeconds,
+    showTextOnlyThreads,
+    filterItems,
+    subplebbitAddress,
+    handleFilterMatch,
+  ]);
 
   const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
   const { accountComments } = useAccountComments();
@@ -226,14 +247,14 @@ const Catalog = () => {
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 7,
-    filter: createCombinedFilter(showTextOnlyThreads, filterItems, handleFilterMatch),
+    filter: createCombinedFilter(showTextOnlyThreads, filterItems, subplebbitAddress || 'all', handleFilterMatch),
   });
 
   const { feed: monthlyFeed } = useFeed({
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 30,
-    filter: createCombinedFilter(showTextOnlyThreads, filterItems, handleFilterMatch),
+    filter: createCombinedFilter(showTextOnlyThreads, filterItems, subplebbitAddress || 'all', handleFilterMatch),
   });
 
   const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);

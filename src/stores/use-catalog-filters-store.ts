@@ -7,6 +7,8 @@ interface FilterItem {
   enabled: boolean;
   count: number;
   filteredCids: Set<string>;
+  subplebbitCounts: Map<string, number>;
+  subplebbitFilteredCids: Map<string, Set<string>>;
   hide: boolean;
   top: boolean;
 }
@@ -24,8 +26,11 @@ interface CatalogFiltersStore {
   initializeFilter: () => void;
   filteredCount: number;
   filteredCids: Set<string>;
-  incrementFilterCount: (filterIndex: number, cid: string) => void;
+  incrementFilterCount: (filterIndex: number, cid: string, subplebbitAddress: string) => void;
   recalcFilteredCount: () => void;
+  currentSubplebbitAddress: string | null;
+  setCurrentSubplebbitAddress: (address: string | null) => void;
+  getFilteredCountForCurrentSubplebbit: () => number;
 }
 
 const useCatalogFiltersStore = create(
@@ -41,6 +46,8 @@ const useCatalogFiltersStore = create(
       filterItems: [],
       filteredCount: 0,
       filteredCids: new Set<string>(),
+      currentSubplebbitAddress: null,
+      setCurrentSubplebbitAddress: (address: string | null) => set({ currentSubplebbitAddress: address }),
       setFilterItems: (items: FilterItem[]) => {
         const nonEmptyItems = items
           .filter((item) => item.text.trim() !== '')
@@ -48,6 +55,8 @@ const useCatalogFiltersStore = create(
             ...item,
             count: item.count || 0,
             filteredCids: item.filteredCids || new Set(),
+            subplebbitCounts: item.subplebbitCounts || new Map(),
+            subplebbitFilteredCids: item.subplebbitFilteredCids || new Map(),
             hide: item.hide ?? true,
             top: item.top ?? false,
           }));
@@ -61,6 +70,8 @@ const useCatalogFiltersStore = create(
             ...item,
             count: item.count || 0,
             filteredCids: item.filteredCids || new Set(),
+            subplebbitCounts: item.subplebbitCounts || new Map(),
+            subplebbitFilteredCids: item.subplebbitFilteredCids || new Map(),
             hide: item.hide ?? true,
             top: item.top ?? false,
           }));
@@ -98,30 +109,75 @@ const useCatalogFiltersStore = create(
       initializeFilter: () => {
         get().updateFilter();
       },
-      incrementFilterCount: (filterIndex: number, cid: string) => {
+      incrementFilterCount: (filterIndex: number, cid: string, subplebbitAddress: string) => {
         set((state) => {
           const newFilterItems = [...state.filterItems];
           if (newFilterItems[filterIndex]) {
             const item = newFilterItems[filterIndex];
-            if (!item.filteredCids.has(cid)) {
+
+            const subplebbitFilteredCids = new Map(item.subplebbitFilteredCids);
+            if (!subplebbitFilteredCids.has(subplebbitAddress)) {
+              subplebbitFilteredCids.set(subplebbitAddress, new Set());
+            }
+            const cidSet = subplebbitFilteredCids.get(subplebbitAddress)!;
+
+            if (!cidSet.has(cid)) {
               const newItemFilteredCids = new Set(item.filteredCids);
               newItemFilteredCids.add(cid);
+
+              cidSet.add(cid);
+              subplebbitFilteredCids.set(subplebbitAddress, cidSet);
+
+              const subplebbitCounts = new Map(item.subplebbitCounts);
+              const currentCount = subplebbitCounts.get(subplebbitAddress) || 0;
+              subplebbitCounts.set(subplebbitAddress, currentCount + 1);
+
               newFilterItems[filterIndex] = {
                 ...item,
                 count: item.count + 1,
                 filteredCids: newItemFilteredCids,
+                subplebbitCounts,
+                subplebbitFilteredCids,
               };
-              const newFilteredCount = newFilterItems.reduce((sum, filt) => (filt.hide ? sum + filt.count : sum), 0);
-              return { filterItems: newFilterItems, filteredCount: newFilteredCount };
+
+              return { filterItems: newFilterItems };
             }
           }
           return state;
         });
+
+        get().recalcFilteredCount();
       },
       recalcFilteredCount: () => {
-        set((state) => ({
-          filteredCount: state.filterItems.reduce((sum, item) => (item.hide ? sum + item.count : sum), 0),
-        }));
+        set((state) => {
+          const currentSubplebbit = state.currentSubplebbitAddress;
+          if (!currentSubplebbit) return { filteredCount: 0 };
+
+          let filteredCount = 0;
+          for (const item of state.filterItems) {
+            if (item.enabled && item.hide) {
+              const subCount = item.subplebbitCounts?.get(currentSubplebbit) || 0;
+              filteredCount += subCount;
+            }
+          }
+
+          return { filteredCount };
+        });
+      },
+      getFilteredCountForCurrentSubplebbit: () => {
+        const state = get();
+        const currentSubplebbit = state.currentSubplebbitAddress;
+        if (!currentSubplebbit) return 0;
+
+        let filteredCount = 0;
+        for (const item of state.filterItems) {
+          if (item.enabled && item.hide) {
+            const subCount = item.subplebbitCounts?.get(currentSubplebbit) || 0;
+            filteredCount += subCount;
+          }
+        }
+
+        return filteredCount;
       },
     }),
     {
@@ -134,6 +190,8 @@ const useCatalogFiltersStore = create(
             enabled: item.enabled,
             hide: item.hide,
             top: item.top,
+            subplebbitCounts: Array.from(item.subplebbitCounts || new Map()),
+            subplebbitFilteredCids: Array.from((item.subplebbitFilteredCids || new Map()).entries()).map(([key, value]) => [key, Array.from(value)]),
           })),
         } as any;
       },

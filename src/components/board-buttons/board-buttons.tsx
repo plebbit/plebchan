@@ -4,17 +4,18 @@ import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
-import useTimeFilter from '../../hooks/use-time-filter';
-import CatalogFilters from '../../views/catalog/catalog-filters/';
-import styles from './board-buttons.module.css';
-import Tooltip from '../tooltip';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
-import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
-import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
+import useTimeFilter from '../../hooks/use-time-filter';
+import CatalogFilters from '../catalog-filters';
+import CatalogSearch from '../catalog-search';
+import Tooltip from '../tooltip';
+import styles from './board-buttons.module.css';
+import _ from 'lodash';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -282,7 +283,7 @@ export const MobileBoardButtons = () => {
                   <SortOptions /> <ImageSizeOptions />
                 </div>
                 <div className={styles.mobileCatalogOptionsPadding}>
-                  <ShowOPCommentOption /> <CatalogFilters />
+                  <ShowOPCommentOption /> <CatalogFilters /> <CatalogSearch />
                 </div>
               </div>
             </>
@@ -380,16 +381,15 @@ export const DesktopBoardButtons = () => {
               {(isInAllView || isInSubscriptionsView) && (
                 <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
               )}
-              {isInCatalogView && (
-                <>
-                  [
-                  <CatalogFilters />]
-                </>
-              )}{' '}
               {!(isInAllView || isInSubscriptionsView) && (
                 <>
                   [
                   <SubscribeButton address={subplebbitAddress} />]
+                </>
+              )}{' '}
+              {isInCatalogView && (
+                <>
+                  [<CatalogFilters />] <CatalogSearch />
                 </>
               )}
             </span>

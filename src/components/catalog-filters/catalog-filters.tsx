@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import useCatalogFiltersStore from '../../../stores/use-catalog-filters-store';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import styles from './catalog-filters.module.css';
 
 const FiltersTable = ({ onSave }: { onSave: () => void }) => {
@@ -41,6 +41,8 @@ const FiltersTable = ({ onSave }: { onSave: () => void }) => {
           enabled: true,
           count: 0,
           filteredCids: new Set<string>(),
+          subplebbitCounts: new Map<string, number>(),
+          subplebbitFilteredCids: new Map<string, Set<string>>(),
           hide: true,
           top: false,
         },
