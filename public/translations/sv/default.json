@@ -292,5 +292,6 @@
   "this_reply_was_deleted": "Detta svar togs bort av författaren",
   "this_reply_was_removed": "Detta svar togs bort av forumets moderatorer",
   "not_mod_of_any_board": "Du är inte moderator på någon tavla.",
-  "filters_and_highlights": "Filter och markeringar"
+  "filters_and_highlights": "Filter och markeringar",
+  "search_results_for": "Sökresultat för"
 }

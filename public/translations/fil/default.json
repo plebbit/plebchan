@@ -292,5 +292,6 @@
   "this_reply_was_deleted": "Ang tugon na ito ay tinanggal ng may-akda nito",
   "this_reply_was_removed": "Ang sagot na ito ay tinanggal ng mga moderator ng board",
   "not_mod_of_any_board": "Hindi ka mod ng anumang board.",
-  "filters_and_highlights": "Mga filter at highlight"
+  "filters_and_highlights": "Mga filter at highlight",
+  "search_results_for": "Mga resulta ng paghahanap para sa"
 }

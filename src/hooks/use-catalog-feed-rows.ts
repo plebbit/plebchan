@@ -7,6 +7,7 @@ import { getCommentMediaInfo, getHasThumbnail } from '../lib/utils/media-utils';
 import { isAllView } from '../lib/utils/view-utils';
 import { useMultisubMetadata } from './use-default-subplebbits';
 import _ from 'lodash';
+import useCatalogFiltersStore from '../stores/use-catalog-filters-store';
 
 const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolean, subplebbit: Subplebbit) => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
   const multisub = useMultisubMetadata();
 
   const { accountComments } = useAccountComments();
+  const { searchText } = useCatalogFiltersStore();
 
   const feedWithFakePostsOnTop = useMemo(() => {
     if (!isFeedLoaded) {
@@ -64,7 +66,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
     }
 
     // add subplebbit description and rules as fake posts at the top of the feed
-    if (description && description.length > 0) {
+    if (description && description.length > 0 && !searchText) {
       _feed.unshift({
         isDescription: true,
         subplebbitAddress: address,
@@ -79,7 +81,7 @@ const useCatalogFeedRows = (columnCount: number, feed: any, isFeedLoaded: boolea
     }
 
     // rules are shown in description thread if both are set
-    if (rules && rules.length > 0 && !description) {
+    if (rules && rules.length > 0 && !description && !searchText) {
       _feed.unshift({
         isRules: true,
         subplebbitAddress: address,

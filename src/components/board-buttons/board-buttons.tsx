@@ -246,7 +246,7 @@ export const MobileBoardButtons = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
-  const { filteredCount } = useCatalogFiltersStore();
+  const { filteredCount, searchText } = useCatalogFiltersStore();
 
   return (
     <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
@@ -269,11 +269,19 @@ export const MobileBoardButtons = () => {
           )}
           {!(isInAllView || isInSubscriptionsView) && <SubscribeButton address={subplebbitAddress} />}
           <RefreshButton />
-          {isInCatalogView && filteredCount > 0 && (
+          {isInCatalogView && searchText ? (
             <span className={styles.filteredThreadsCount}>
               {' '}
-              — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+              — {t('search_results_for')}: <strong>{searchText}</strong>
             </span>
+          ) : (
+            isInCatalogView &&
+            filteredCount > 0 && (
+              <span className={styles.filteredThreadsCount}>
+                {' '}
+                — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+              </span>
+            )
           )}
           {isInCatalogView && (
             <>
@@ -331,7 +339,7 @@ export const DesktopBoardButtons = () => {
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
-  const { filteredCount } = useCatalogFiltersStore();
+  const { filteredCount, searchText } = useCatalogFiltersStore();
 
   return (
     <>
@@ -364,11 +372,19 @@ export const DesktopBoardButtons = () => {
               </>
             )}
             [<RefreshButton />]
-            {isInCatalogView && filteredCount > 0 && (
+            {isInCatalogView && searchText ? (
               <span className={styles.filteredThreadsCount}>
                 {' '}
-                — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+                — {t('search_results_for')}: <strong>{searchText}</strong>
               </span>
+            ) : (
+              isInCatalogView &&
+              filteredCount > 0 && (
+                <span className={styles.filteredThreadsCount}>
+                  {' '}
+                  — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+                </span>
+              )
             )}
             <span className={styles.rightSideButtons}>
               {isInCatalogView && (

@@ -92,19 +92,35 @@ const createImageFilter = (showTextOnlyThreads: boolean) => {
 const createCombinedFilter = (
   showTextOnlyThreads: boolean,
   filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean }[],
+  searchText: string,
   subplebbitAddress: string,
   onFilterMatch?: (filterIndex: number, cid: string, subplebbitAddress: string) => void,
 ) => {
   const imageFilter = createImageFilter(showTextOnlyThreads);
   const contentFilter = createContentFilter(filterItems, subplebbitAddress, onFilterMatch);
 
+  const searchFilter = {
+    filter: (comment: Comment) => {
+      if (!searchText.trim()) return true;
+
+      const titleLower = comment?.title?.toLowerCase() || '';
+      const contentLower = comment?.content?.toLowerCase() || '';
+      const searchPattern = searchText.toLowerCase();
+
+      return titleLower.includes(searchPattern) || contentLower.includes(searchPattern);
+    },
+    key: searchText ? `search-filter-${searchText}` : 'no-search-filter',
+  };
+
   return {
     filter: (comment: Comment) => {
       if (!imageFilter.filter(comment)) return false;
+      if (!contentFilter.filter(comment)) return false;
+      if (!searchFilter.filter(comment)) return false;
 
-      return contentFilter.filter(comment);
+      return true;
     },
-    key: `${imageFilter.key}-${contentFilter.key}`,
+    key: `${imageFilter.key}-${contentFilter.key}-${searchFilter.key}`,
   };
 };
 
@@ -116,7 +132,7 @@ const Catalog = () => {
   const isInAllView = isAllView(location.pathname);
   const defaultSubplebbits = useDefaultSubplebbits();
   const { hideAdultBoards, hideGoreBoards } = useInterfaceSettingsStore();
-  const { showTextOnlyThreads, filterItems } = useCatalogFiltersStore();
+  const { showTextOnlyThreads, filterItems, searchText } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -172,7 +188,7 @@ const Catalog = () => {
       subplebbitAddresses,
       sortType,
       postsPerPage: isInAllView || isInSubscriptionsView ? 10 : postsPerPage,
-      filter: createCombinedFilter(showTextOnlyThreads, filterItems, subplebbitAddress || 'all', handleFilterMatch),
+      filter: createCombinedFilter(showTextOnlyThreads, filterItems, searchText, subplebbitAddress || 'all', handleFilterMatch),
     };
 
     if (isInAllView || isInSubscriptionsView) {
@@ -189,6 +205,7 @@ const Catalog = () => {
     timeFilterSeconds,
     showTextOnlyThreads,
     filterItems,
+    searchText,
     subplebbitAddress,
     handleFilterMatch,
   ]);
@@ -203,7 +220,9 @@ const Catalog = () => {
     () =>
       accountComments.filter((comment) => {
         const { cid, deleted, link, linkHeight, linkWidth, postCid, removed, state, thumbnailUrl, timestamp } = comment || {};
-        return (
+
+        // Basic filtering conditions
+        const basicConditions =
           !deleted &&
           !removed &&
           timestamp > Date.now() / 1000 - 60 * 60 &&
@@ -212,10 +231,20 @@ const Catalog = () => {
           (showTextOnlyThreads ? getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), comment?.link) : true) &&
           cid === postCid &&
           comment?.subplebbitAddress === subplebbitAddress &&
-          !feed.some((post) => post.cid === cid)
-        );
+          !feed.some((post) => post.cid === cid);
+
+        // If search is active, also check search conditions
+        if (basicConditions && searchText.trim()) {
+          const titleLower = comment?.title?.toLowerCase() || '';
+          const contentLower = comment?.content?.toLowerCase() || '';
+          const searchPattern = searchText.toLowerCase();
+
+          return titleLower.includes(searchPattern) || contentLower.includes(searchPattern);
+        }
+
+        return basicConditions;
       }),
-    [accountComments, subplebbitAddress, feed, showTextOnlyThreads],
+    [accountComments, subplebbitAddress, feed, showTextOnlyThreads, searchText],
   );
 
   // show newest account comment at the top of the feed but after pinned posts
@@ -247,14 +276,14 @@ const Catalog = () => {
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 7,
-    filter: createCombinedFilter(showTextOnlyThreads, filterItems, subplebbitAddress || 'all', handleFilterMatch),
+    filter: createCombinedFilter(showTextOnlyThreads, filterItems, searchText, subplebbitAddress || 'all', handleFilterMatch),
   });
 
   const { feed: monthlyFeed } = useFeed({
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 30,
-    filter: createCombinedFilter(showTextOnlyThreads, filterItems, subplebbitAddress || 'all', handleFilterMatch),
+    filter: createCombinedFilter(showTextOnlyThreads, filterItems, searchText, subplebbitAddress || 'all', handleFilterMatch),
   });
 
   const [showMorePostsSuggestion, setShowMorePostsSuggestion] = useState(false);

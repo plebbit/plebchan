@@ -292,5 +292,6 @@
   "this_reply_was_deleted": "Dit antwoord werd verwijderd door de auteur",
   "this_reply_was_removed": "Dit antwoord is verwijderd door de forum moderators",
   "not_mod_of_any_board": "Je bent geen mod van een bord.",
-  "filters_and_highlights": "Filters en markeringen"
+  "filters_and_highlights": "Filters en markeringen",
+  "search_results_for": "Zoekresultaten voor"
 }

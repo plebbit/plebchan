@@ -292,5 +292,6 @@
   "this_reply_was_deleted": "Tato odpověď byla smazána autorem",
   "this_reply_was_removed": "Tato odpověď byla odstraněna moderátory fóra",
   "not_mod_of_any_board": "Nejste moderátor žádné desky.",
-  "filters_and_highlights": "Filtry a zvýraznění"
+  "filters_and_highlights": "Filtry a zvýraznění",
+  "search_results_for": "Výsledky hledání pro"
 }

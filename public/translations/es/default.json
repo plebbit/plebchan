@@ -292,5 +292,6 @@
   "this_reply_was_deleted": "Esta respuesta fue eliminada por su autor",
   "this_reply_was_removed": "Esta respuesta fue eliminada por los moderadores del foro",
   "not_mod_of_any_board": "No eres moderador de ningún tablero.",
-  "filters_and_highlights": "Filtros y resaltar"
+  "filters_and_highlights": "Filtros y resaltar",
+  "search_results_for": "Resultados de búsqueda para"
 }

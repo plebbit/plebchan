@@ -31,6 +31,9 @@ interface CatalogFiltersStore {
   currentSubplebbitAddress: string | null;
   setCurrentSubplebbitAddress: (address: string | null) => void;
   getFilteredCountForCurrentSubplebbit: () => number;
+  searchText: string;
+  setSearchFilter: (text: string) => void;
+  clearSearchFilter: () => void;
 }
 
 const useCatalogFiltersStore = create(
@@ -48,6 +51,15 @@ const useCatalogFiltersStore = create(
       filteredCids: new Set<string>(),
       currentSubplebbitAddress: null,
       setCurrentSubplebbitAddress: (address: string | null) => set({ currentSubplebbitAddress: address }),
+      searchText: '',
+      setSearchFilter: (text: string) => {
+        set({ searchText: text });
+        get().updateFilter();
+      },
+      clearSearchFilter: () => {
+        set({ searchText: '' });
+        get().updateFilter();
+      },
       setFilterItems: (items: FilterItem[]) => {
         const nonEmptyItems = items
           .filter((item) => item.text.trim() !== '')
@@ -87,6 +99,17 @@ const useCatalogFiltersStore = create(
         set((state) => ({
           filter: (comment: Comment) => {
             if (!comment?.cid) return true;
+
+            if (state.searchText.trim() !== '') {
+              const searchPattern = state.searchText.toLowerCase();
+              const title = comment?.title?.toLowerCase() || '';
+              const content = comment?.content?.toLowerCase() || '';
+
+              if (!title.includes(searchPattern) && !content.includes(searchPattern)) {
+                return false;
+              }
+            }
+
             const { filterItems } = state;
             let shouldHide = false;
             for (let i = 0; i < filterItems.length; i++) {

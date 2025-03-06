@@ -292,5 +292,6 @@
   "this_reply_was_deleted": "Dette svar blev slettet af forfatteren",
   "this_reply_was_removed": "Dette svar blev fjernet af forummoderatorer",
   "not_mod_of_any_board": "Du er ikke moderator for nogen tavler.",
-  "filters_and_highlights": "Filtre og fremhævninger"
+  "filters_and_highlights": "Filtre og fremhævninger",
+  "search_results_for": "Søgeresultater for"
 }

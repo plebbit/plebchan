@@ -292,5 +292,6 @@
   "this_reply_was_deleted": "This reply was deleted by its author",
   "this_reply_was_removed": "This reply was removed by board moderators",
   "not_mod_of_any_board": "You are not a mod of any board.",
-  "filters_and_highlights": "Filters & Highlights"
+  "filters_and_highlights": "Filters & Highlights",
+  "search_results_for": "Search results for"
 }
