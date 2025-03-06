@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAccountComment, useComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
+import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
@@ -297,8 +299,9 @@ const PostPageStats = () => {
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
 
-  const comment = useComment({ commentCid: params?.commentCid });
-  const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
+  const comment = useSubplebbitsPagesStore((state) => state.comments[params?.commentCid as string]);
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[params?.subplebbitAddress as string]);
+
   const descriptionReplyCount = location?.pathname.startsWith('/p/all/') ? 0 : subplebbit?.rules?.length > 0 ? 1 : 0;
   const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);

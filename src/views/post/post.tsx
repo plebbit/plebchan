@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, Role, useComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
 import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { useLocation, useParams } from 'react-router-dom';
 import { isAllView, isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
@@ -57,7 +57,7 @@ const PostPage = () => {
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress as string]);
   const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
 
   const comment = useComment({ commentCid });

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAccountComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { isAllView, isSubscriptionsView, isModView } from '../../lib/utils/view-utils';
 import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
@@ -29,7 +30,8 @@ const BoardHeader = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
+
   const { address, shortAddress } = subplebbit || {};
 
   const multisubMetadata = useMultisubMetadata();

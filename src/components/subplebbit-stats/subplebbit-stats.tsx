@@ -1,6 +1,8 @@
 import { useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { useAccountComment, useComment, useSubplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
+import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import useSubplebbitStatsVisibilityStore from '../../stores/use-subplebbit-stats-visibility-store';
 import { isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 import styles from './subplebbit-stats.module.css';
@@ -12,7 +14,7 @@ const SubplebbitStats = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
   const { address, createdAt } = subplebbit || {};
 
   let stats = useSubplebbitStats({ subplebbitAddress: address });
@@ -23,7 +25,7 @@ const SubplebbitStats = () => {
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
-  const comment = useComment({ commentCid: params?.commentCid });
+  const comment = useSubplebbitsPagesStore((state) => state.comments[params?.commentCid as string]);
   const { deleted, locked, removed } = comment || {};
   const hideStats = deleted || locked || removed || isInDescriptionView || isInRulesView;
 
