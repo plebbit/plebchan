@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Comment } from '@plebbit/plebbit-react-hooks';
+import { commentMatchesPattern } from '../lib/utils/pattern-utils';
 
 interface FilterItem {
   text: string;
@@ -34,6 +35,7 @@ interface CatalogFiltersStore {
   searchText: string;
   setSearchFilter: (text: string) => void;
   clearSearchFilter: () => void;
+  resetCountsForCurrentSubplebbit: () => void;
 }
 
 const useCatalogFiltersStore = create(
@@ -137,10 +139,39 @@ const useCatalogFiltersStore = create(
             hide: item.hide ?? true,
             top: item.top ?? false,
           }));
+
+        // Compare new filter items with existing ones to detect pattern changes
+        const existingItems = get().filterItems;
+        const updatedItems = nonEmptyItems.map((newItem) => {
+          // Try to find matching existing item by index or text
+          const existingItem = existingItems.find((item) => item.text === newItem.text);
+
+          // If we found a matching item, keep its counts
+          if (existingItem) {
+            return {
+              ...newItem,
+              count: existingItem.count,
+              filteredCids: existingItem.filteredCids,
+              subplebbitCounts: existingItem.subplebbitCounts,
+              subplebbitFilteredCids: existingItem.subplebbitFilteredCids,
+            };
+          }
+
+          // If pattern has changed or it's a new filter, reset all counts
+          return {
+            ...newItem,
+            count: 0,
+            filteredCids: new Set<string>(),
+            subplebbitCounts: new Map<string, number>(),
+            subplebbitFilteredCids: new Map<string, Set<string>>(),
+          };
+        });
+
         set({
-          filterItems: nonEmptyItems,
+          filterItems: updatedItems,
           filteredCids: new Set<string>(),
         });
+
         get().recalcFilteredCount();
         get().updateFilter();
       },
@@ -154,11 +185,7 @@ const useCatalogFiltersStore = create(
 
             // Apply search filter
             if (state.searchText.trim() !== '') {
-              const searchPattern = state.searchText.toLowerCase();
-              const title = comment?.title?.toLowerCase() || '';
-              const content = comment?.content?.toLowerCase() || '';
-
-              if (!title.includes(searchPattern) && !content.includes(searchPattern)) {
+              if (!commentMatchesPattern(comment, state.searchText)) {
                 return false;
               }
             }
@@ -170,11 +197,7 @@ const useCatalogFiltersStore = create(
             for (let i = 0; i < filterItems.length; i++) {
               const item = filterItems[i];
               if (item.enabled && item.text.trim() !== '') {
-                const pattern = item.text.toLowerCase();
-                const title = comment?.title?.toLowerCase() || '';
-                const content = comment?.content?.toLowerCase() || '';
-
-                if (title.includes(pattern) || content.includes(pattern)) {
+                if (commentMatchesPattern(comment, item.text)) {
                   // If we have a current subplebbit and this is a match, increment the count
                   if (currentSubplebbit && comment.subplebbitAddress === currentSubplebbit) {
                     // We need to use a timeout to avoid modifying state during a state update
@@ -271,6 +294,38 @@ const useCatalogFiltersStore = create(
         }
 
         return filteredCount;
+      },
+      resetCountsForCurrentSubplebbit: () => {
+        const currentSubplebbit = get().currentSubplebbitAddress;
+        if (!currentSubplebbit) return;
+
+        set((state) => {
+          const updatedFilterItems = state.filterItems.map((item) => {
+            const newItem = { ...item };
+
+            // Ensure maps are properly initialized
+            if (!newItem.subplebbitCounts || !(newItem.subplebbitCounts instanceof Map)) {
+              newItem.subplebbitCounts = new Map();
+            }
+            if (!newItem.subplebbitFilteredCids || !(newItem.subplebbitFilteredCids instanceof Map)) {
+              newItem.subplebbitFilteredCids = new Map();
+            }
+
+            // Reset counts for current subplebbit
+            newItem.subplebbitCounts.set(currentSubplebbit, 0);
+            newItem.subplebbitFilteredCids.set(currentSubplebbit, new Set<string>());
+
+            return newItem;
+          });
+
+          return {
+            filterItems: updatedFilterItems,
+            filteredCount: 0,
+          };
+        });
+
+        // Trigger filter reapplication to start counting again
+        get().updateFilter();
       },
     }),
     {

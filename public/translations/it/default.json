@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Questa risposta è stata rimossa dai moderatori del forum",
   "not_mod_of_any_board": "Non sei un mod di nessuna board.",
   "filters_and_highlights": "Filtri e Evidenziazioni",
-  "search_results_for": "Risultati di ricerca per"
+  "search_results_for": "Risultati di ricerca per",
+  "help": "Aiuto",
+  "filter_and_highlights_help": "Aiuto su Filtri e Evidenziazioni",
+  "filter_and_highlights": "Filtri e Evidenziazioni"
 }

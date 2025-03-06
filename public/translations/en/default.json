@@ -293,5 +293,8 @@
   "this_reply_was_removed": "This reply was removed by board moderators",
   "not_mod_of_any_board": "You are not a mod of any board.",
   "filters_and_highlights": "Filters & Highlights",
-  "search_results_for": "Search results for"
+  "search_results_for": "Search results for",
+  "help": "Help",
+  "filter_and_highlights_help": "Filters & Highlights Help",
+  "filter_and_highlights": "Filters & Highlights"
 }

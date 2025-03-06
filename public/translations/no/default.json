@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Dette svaret ble fjernet av forummoderatorer",
   "not_mod_of_any_board": "Du er ikke moderator på noen brett.",
   "filters_and_highlights": "Filtre og fremhevinger",
-  "search_results_for": "Søkeresultater for"
+  "search_results_for": "Søkeresultater for",
+  "help": "Hjelp",
+  "filter_and_highlights_help": "Filtre og fremhevinger Hjelp",
+  "filter_and_highlights": "Filtre og uthevinger"
 }

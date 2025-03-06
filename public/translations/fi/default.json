@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Tämä vastaus poistettiin foorumin moderaattoreiden toimesta",
   "not_mod_of_any_board": "Et ole moderaattori missään taulussa.",
   "filters_and_highlights": "Suodattimet ja korostukset",
-  "search_results_for": "Hakutulokset hakusanalle"
+  "search_results_for": "Hakutulokset hakusanalle",
+  "help": "Apua",
+  "filter_and_highlights_help": "Suodattimet ja korostukset -apu",
+  "filter_and_highlights": "Suodattimet ja korostukset"
 }

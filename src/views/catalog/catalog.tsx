@@ -18,6 +18,7 @@ import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import CatalogRow from '../../components/catalog-row';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import styles from './catalog.module.css';
+import { commentMatchesPattern } from '../../lib/utils/pattern-utils';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
@@ -39,15 +40,12 @@ const createContentFilter = (
 
       if (enabledFilters.length === 0) return true;
 
-      const titleLower = comment?.title?.toLowerCase() || '';
-      const contentLower = comment?.content?.toLowerCase() || '';
-
       // Check if any enabled filter matches the content
       for (let i = 0; i < enabledFilters.length; i++) {
         const item = enabledFilters[i];
-        const pattern = item.text.toLowerCase();
+        const pattern = item.text;
 
-        if (titleLower.includes(pattern) || contentLower.includes(pattern)) {
+        if (commentMatchesPattern(comment, pattern)) {
           // Find the original filter index to increment count
           const filterIndex = filterItems.findIndex((f) => f.text === item.text && f.enabled);
           if (filterIndex !== -1) {
@@ -102,12 +100,7 @@ const createCombinedFilter = (
   const searchFilter = {
     filter: (comment: Comment) => {
       if (!searchText.trim()) return true;
-
-      const titleLower = comment?.title?.toLowerCase() || '';
-      const contentLower = comment?.content?.toLowerCase() || '';
-      const searchPattern = searchText.toLowerCase();
-
-      return titleLower.includes(searchPattern) || contentLower.includes(searchPattern);
+      return commentMatchesPattern(comment, searchText);
     },
     key: searchText ? `search-filter-${searchText}` : 'no-search-filter',
   };
@@ -410,13 +403,9 @@ const Catalog = () => {
     combinedFeed.forEach((comment) => {
       if (!comment) return;
 
-      const titleLower = comment?.title?.toLowerCase() || '';
-      const contentLower = comment?.content?.toLowerCase() || '';
-
       let isTop = false;
       for (const filter of enabledTopFilters) {
-        const pattern = filter.text.toLowerCase();
-        if (titleLower.includes(pattern) || contentLower.includes(pattern)) {
+        if (commentMatchesPattern(comment, filter.text)) {
           isTop = true;
           break;
         }

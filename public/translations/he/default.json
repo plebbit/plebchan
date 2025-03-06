@@ -293,5 +293,8 @@
   "this_reply_was_removed": "תשובה זו הוסרה על ידי מנהלי הפורום",
   "not_mod_of_any_board": "אתה לא מוד בכל לוח.",
   "filters_and_highlights": "סינונים והדגשות",
-  "search_results_for": "תוצאות חיפוש עבור"
+  "search_results_for": "תוצאות חיפוש עבור",
+  "help": "עזרה",
+  "filter_and_highlights_help": "עזרה במסננים והדגשות",
+  "filter_and_highlights": "מסננים והדגשות"
 }

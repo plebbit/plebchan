@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Acest răspuns a fost eliminat de moderatorii forumului",
   "not_mod_of_any_board": "Nu ești moderator pe niciun tablou.",
   "filters_and_highlights": "Filtre și evidențiere",
-  "search_results_for": "Rezultatele căutării pentru"
+  "search_results_for": "Rezultatele căutării pentru",
+  "help": "Ajutor",
+  "filter_and_highlights_help": "Ajutor pentru filtre și evidențieri",
+  "filter_and_highlights": "Filtre și evidențieri"
 }

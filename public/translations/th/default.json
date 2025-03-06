@@ -293,5 +293,8 @@
   "this_reply_was_removed": "คำตอบนี้ถูกลบโดยผู้ดูแลบอร์ด",
   "not_mod_of_any_board": "คุณไม่ใช่ผู้ดูแลบอร์ดใดๆ",
   "filters_and_highlights": "ตัวกรองและไฮไลท์",
-  "search_results_for": "ผลการค้นหาสำหรับ"
+  "search_results_for": "ผลการค้นหาสำหรับ",
+  "help": "ช่วยเหลือ",
+  "filter_and_highlights_help": "ตัวกรองและการเน้นความช่วยเหลือ",
+  "filter_and_highlights": "ตัวกรองและไฮไลท์"
 }

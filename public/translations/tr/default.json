@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Bu yanıt, forum moderatörleri tarafından kaldırıldı",
   "not_mod_of_any_board": "Hiçbir tahtanın moderatörü değilsiniz.",
   "filters_and_highlights": "Filtreler ve Vurgular",
-  "search_results_for": "Arama sonuçları için"
+  "search_results_for": "Arama sonuçları için",
+  "help": "Yardım",
+  "filter_and_highlights_help": "Filtreler ve Vurgular Yardımı",
+  "filter_and_highlights": "Filtreler ve Vurgular"
 }

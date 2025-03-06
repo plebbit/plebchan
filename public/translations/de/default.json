@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Diese Antwort wurde von den Forenmoderatoren entfernt",
   "not_mod_of_any_board": "Du bist kein Moderator eines Boards.",
   "filters_and_highlights": "Filter & Highlights",
-  "search_results_for": "Suchergebnisse für"
+  "search_results_for": "Suchergebnisse für",
+  "help": "Hilfe",
+  "filter_and_highlights_help": "Filter- und Markierungs-Hilfe",
+  "filter_and_highlights": "Filter und Hervorhebungen"
 }

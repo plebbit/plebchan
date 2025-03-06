@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Η απάντηση αυτή αφαιρέθηκε από τους διαχειριστές του φόρουμ",
   "not_mod_of_any_board": "Δεν είστε διαχειριστής σε καμία κοινότητα.",
   "filters_and_highlights": "Φίλτρα και επισημάνσεις",
-  "search_results_for": "Αποτελέσματα αναζήτησης για"
+  "search_results_for": "Αποτελέσματα αναζήτησης για",
+  "help": "Βοήθεια",
+  "filter_and_highlights_help": "Βοήθεια φίλτρων και επισήμανσης",
+  "filter_and_highlights": "Φίλτρα και Επισημάνσεις"
 }

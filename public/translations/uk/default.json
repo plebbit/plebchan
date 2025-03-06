@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Цю відповідь було видалено модераторами форуму",
   "not_mod_of_any_board": "Ви не модератор жодної дошки.",
   "filters_and_highlights": "Фільтри та виділення",
-  "search_results_for": "Результати пошуку для"
+  "search_results_for": "Результати пошуку для",
+  "help": "Допомога",
+  "filter_and_highlights_help": "Допомога з фільтрами та підсвічуваннями",
+  "filter_and_highlights": "Фільтри та виділення"
 }

@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Phản hồi này đã bị xóa bởi các quản trị viên diễn đàn",
   "not_mod_of_any_board": "Bạn không phải là quản trị viên của bất kỳ bảng nào.",
   "filters_and_highlights": "Bộ lọc và Nổi bật",
-  "search_results_for": "Kết quả tìm kiếm cho"
+  "search_results_for": "Kết quả tìm kiếm cho",
+  "help": "Trợ giúp",
+  "filter_and_highlights_help": "Trợ giúp bộ lọc và đánh dấu",
+  "filter_and_highlights": "Bộ lọc và Nổi bật"
 }

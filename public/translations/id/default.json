@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Balasan ini dihapus oleh moderator papan",
   "not_mod_of_any_board": "Anda bukan mod di papan manapun.",
   "filters_and_highlights": "Filter dan Sorotan",
-  "search_results_for": "Hasil pencarian untuk"
+  "search_results_for": "Hasil pencarian untuk",
+  "help": "Bantuan",
+  "filter_and_highlights_help": "Bantuan Filter dan Sorotan",
+  "filter_and_highlights": "Filter dan Sorotan"
 }

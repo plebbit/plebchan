@@ -293,5 +293,8 @@
   "this_reply_was_removed": "この返信は掲示板のモデレーターによって削除されました",
   "not_mod_of_any_board": "あなたはどのボードのモデレーターでもありません。",
   "filters_and_highlights": "フィルターとハイライト",
-  "search_results_for": "検索結果"
+  "search_results_for": "検索結果",
+  "help": "ヘルプ",
+  "filter_and_highlights_help": "フィルターとハイライトのヘルプ",
+  "filter_and_highlights": "フィルターとハイライト"
 }

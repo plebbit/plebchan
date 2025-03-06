@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Этот ответ был удален модераторами форума",
   "not_mod_of_any_board": "Вы не модератор ни одной доски.",
   "filters_and_highlights": "Фильтры и выделения",
-  "search_results_for": "Результаты поиска для"
+  "search_results_for": "Результаты поиска для",
+  "help": "Помощь",
+  "filter_and_highlights_help": "Помощь с фильтрами и выделениями",
+  "filter_and_highlights": "Фильтры и выделения"
 }

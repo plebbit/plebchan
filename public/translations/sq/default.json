@@ -293,5 +293,8 @@
   "this_reply_was_removed": "Ky përgjigje u hoq nga moderatorët e forumit",
   "not_mod_of_any_board": "Nuk jeni mod në asnjë bord.",
   "filters_and_highlights": "Filtra dhe theksime",
-  "search_results_for": "Rezultatet e kërkimit për"
+  "search_results_for": "Rezultatet e kërkimit për",
+  "help": "Ndihmë",
+  "filter_and_highlights_help": "Ndihma për Filtro & Thekso",
+  "filter_and_highlights": "Filtra dhe thekson"
 }

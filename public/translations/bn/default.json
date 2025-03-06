@@ -293,5 +293,8 @@
   "this_reply_was_removed": "এই প্রতিক্রিয়া বোর্ড পরিচালকদের দ্বারা সরানো হয়েছে",
   "not_mod_of_any_board": "আপনি কোনও বোর্ডের মড নন।",
   "filters_and_highlights": "ফিল্টার এবং হাইলাইট",
-  "search_results_for": "অনুসন্ধান ফলাফল"
+  "search_results_for": "অনুসন্ধান ফলাফল",
+  "help": "সাহায্য",
+  "filter_and_highlights_help": "ফিল্টার এবং হাইলাইট সাহায্য",
+  "filter_and_highlights": "ফিল্টার এবং হাইলাইট"
 }
