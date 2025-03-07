@@ -5,7 +5,6 @@ import { getAutoSubscribeAddresses, useDefaultSubplebbits } from './use-default-
 
 const AUTO_SUBSCRIBE_KEY_PREFIX = 'seedit-auto-subscribe-done-';
 
-// Keep track of which accounts have been processed globally
 const processedAccounts = new Set<string>();
 
 export const useAutoSubscribe = () => {
@@ -31,7 +30,7 @@ export const useAutoSubscribe = () => {
       const storageKey = AUTO_SUBSCRIBE_KEY_PREFIX + accountAddress;
       const hasAutoSubscribed = localStorage.getItem(storageKey);
 
-      if (account.subscriptions?.length > 0 || hasAutoSubscribed) {
+      if (hasAutoSubscribed) {
         processedAccounts.add(accountAddress);
         removeCheckingAccount(accountAddress);
         return;
@@ -40,9 +39,19 @@ export const useAutoSubscribe = () => {
       const autoSubscribeAddresses = getAutoSubscribeAddresses();
       if (autoSubscribeAddresses.length) {
         try {
+          const currentSubscriptions = account.subscriptions || [];
+
+          const mergedSubscriptions = [...currentSubscriptions];
+
+          for (const address of autoSubscribeAddresses) {
+            if (!mergedSubscriptions.includes(address)) {
+              mergedSubscriptions.push(address);
+            }
+          }
+
           await setAccount({
             ...account,
-            subscriptions: autoSubscribeAddresses,
+            subscriptions: mergedSubscriptions,
           });
           localStorage.setItem(storageKey, 'true');
           processedAccounts.add(accountAddress);

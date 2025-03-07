@@ -132,7 +132,6 @@ const AccountSettings = () => {
     fileInput.type = 'file';
     fileInput.accept = '.json';
 
-    // Handle file selection
     fileInput.onchange = async (event) => {
       try {
         const files = (event.target as HTMLInputElement).files;
@@ -141,7 +140,6 @@ const AccountSettings = () => {
         }
         const file = files[0];
 
-        // Read the file content
         const reader = new FileReader();
         reader.onload = async (e) => {
           try {
@@ -149,20 +147,40 @@ const AccountSettings = () => {
             if (typeof fileContent !== 'string') {
               throw new Error('File content is not a string.');
             }
-            const newAccount = JSON.parse(fileContent);
-            await importAccount(fileContent);
 
-            // Store the imported account's address
-            if (newAccount.account?.author?.address) {
-              localStorage.setItem('importedAccountAddress', newAccount.account.author.address);
+            const accountData = JSON.parse(fileContent);
+
+            // Add subplebbit addresses to subscriptions if they exist
+            if (accountData.account?.subplebbits) {
+              const subplebbitAddresses = Object.keys(accountData.account.subplebbits);
+
+              if (!accountData.account.subscriptions) {
+                accountData.account.subscriptions = [];
+              }
+
+              const uniqueSubscriptions = [...accountData.account.subscriptions];
+
+              for (const address of subplebbitAddresses) {
+                if (!uniqueSubscriptions.includes(address)) {
+                  uniqueSubscriptions.push(address);
+                }
+              }
+
+              accountData.account.subscriptions = uniqueSubscriptions;
             }
 
-            // Set the new account as active before reloading
-            if (newAccount.account?.name) {
-              await setActiveAccount(newAccount.account.name);
+            const modifiedAccountJson = JSON.stringify(accountData);
+            await importAccount(modifiedAccountJson);
+
+            if (accountData.account?.author?.address) {
+              localStorage.setItem('importedAccountAddress', accountData.account.author.address);
             }
 
-            alert(`Imported ${newAccount.account?.name}`);
+            if (accountData.account?.name) {
+              await setActiveAccount(accountData.account.name);
+            }
+
+            alert(`Imported ${accountData.account?.name}`);
 
             const currentPath = location.pathname;
             if (!currentPath.includes('/settings#account-settings')) {
@@ -189,7 +207,6 @@ const AccountSettings = () => {
       }
     };
 
-    // Trigger file selection dialog
     fileInput.click();
   };
 
