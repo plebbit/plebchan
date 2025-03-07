@@ -65,6 +65,10 @@
   float: left;
 }
 
+.removeFloat {
+  float: none !important;
+}
+
 .thumbnail video {
   cursor: pointer;
 }
