@@ -1,3 +1,40 @@
+# [0.4.0](https://github.com/plebbit/plebchan/compare/v0.3.6...v0.4.0) (2025-03-07)
+
+This version migrates the framework from Create React App to Vite and upgrades to React 19, implementing React Compiler, for better rendering optimizations.
+
+### Bug Fixes
+
+* **board header:** banner could change while subplebbit is loading ([2df9a96](https://github.com/plebbit/plebchan/commit/2df9a964e65cf7d8968ba28d470dcf7aba58b979))
+* **board:** loading state wasn't showing in description page ([319d374](https://github.com/plebbit/plebchan/commit/319d37481044e2c7d99ac48ed94962c440558bd5))
+* **catalog:** embedded images that 404'd could overflow ([9013cb0](https://github.com/plebbit/plebchan/commit/9013cb02fe58655f164eb5862b1a8d3e4121d78a))
+* **css:** floating-ui portal could override app color scheme ([fc674f4](https://github.com/plebbit/plebchan/commit/fc674f4caf755bb3667a70f6735ae39003e17932))
+* **reply modal:** dragging modal could select text behind it ([2d1fb69](https://github.com/plebbit/plebchan/commit/2d1fb69f02fcb05d9906c0f37a1766df489f8cff))
+
+
+### Features
+
+* add p/mod feed for all subs the user moderates ([ba5753d](https://github.com/plebbit/plebchan/commit/ba5753d85e347b248df962bdcd6f4231f44716a7))
+* **catalog filter:** add filtering with complex patterns, including regex, help modal ([d7a9c16](https://github.com/plebbit/plebchan/commit/d7a9c1640babd5b468e7551ead4280a6f4819390))
+* **catalog filters:** add color highlighting of threads matching pattern ([22b828b](https://github.com/plebbit/plebchan/commit/22b828b3e834fdd6ce5658af1457792403793394))
+* **catalog filters:** add filter by user address, display name or anonymous, mod role ([70f640e](https://github.com/plebbit/plebchan/commit/70f640ecca6440ffcc7239f2c9da105adcf1640a))
+* **catalog:** add catalog filters ([b127876](https://github.com/plebbit/plebchan/commit/b127876ce4798d34448940ad14e82f2b161a0db7))
+* **catalog:** add search ([a8f7de7](https://github.com/plebbit/plebchan/commit/a8f7de7d85dcf33adec0b0a4e8f17a42949b5f4a))
+* **edit menu:** alert "you cannot edit this thread/reply" if without permission ([377d8cd](https://github.com/plebbit/plebchan/commit/377d8cdffaec7b0efbbb1dfa77b2944b34498ed5))
+* **embeds:** add support to youtube shorts ([306e7b0](https://github.com/plebbit/plebchan/commit/306e7b081ff72a2acfbe629e1f7ebc0f7ba432de))
+* **post:** when attempting to reply, alert reply or thread was deleted or removed ([0a7cda3](https://github.com/plebbit/plebchan/commit/0a7cda31bfe64986fb34788e71868ccd59bc1fad))
+* **settings:** auto-subscribe imported accounts to default subs and moderated subplebbits ([0f38fb3](https://github.com/plebbit/plebchan/commit/0f38fb3ae711dcea1ec317aae2fe93231e85c9e3))
+
+
+### Performance Improvements
+
+* **app:** optimize loading times by using stored values of subplebbits and comments instead of fetching them multiple times ([8557ebb](https://github.com/plebbit/plebchan/commit/8557ebb3a73b2c62965f9f48473f5903d15425cd))
+* **catalog:** each post in the feed was loading a comment needlessly ([64f984d](https://github.com/plebbit/plebchan/commit/64f984d2d0d85fbb8bc6b20672723c1b45a590cf))
+* **feed:** optimize posts rendering via props refactoring, memoizations ([797a1f2](https://github.com/plebbit/plebchan/commit/797a1f23c69374ce09b7a1ed7914e40e29acc4ca))
+* prioritize cached data from API, improving navigation speed and memory consumption ([dcb05ed](https://github.com/plebbit/plebchan/commit/dcb05ed3a04212b5e140ed42fa0e4bbed810781e))
+* **reply-modal:** fix laggy dragging during post loading with GPU-accelerated gestures ([0caa8f9](https://github.com/plebbit/plebchan/commit/0caa8f9e70cdaea6769dbb4e7bb52f7046479b61))
+
+
+
 ## [0.3.6](https://github.com/plebbit/plebchan/compare/v0.3.5...v0.3.6) (2025-02-23)
 
 
