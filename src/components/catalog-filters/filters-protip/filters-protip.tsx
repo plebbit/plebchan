@@ -56,6 +56,18 @@ const FiltersProtip = () => {
         </li>
       </ul>
       <ul>
+        <strong>Filtering by display name or user ID</strong>
+        <li>
+          Prefix the pattern with <code>#</code> to search by <em>user ID</em>: <code>#GPPr4CQSRCt8</code>
+        </li>
+        <li>
+          Prefix the pattern with <code>##</code> to search by <em>name</em>: <code>##Anonymous</code>
+        </li>
+        <li>
+          To filter by <em>role</em>: <code>#!#owner</code>, <code>#!#admin</code>, <code>#!#moderator</code> (or <code>#!#mod</code>)
+        </li>
+      </ul>
+      <ul>
         <strong>It is also possible to filter by regular expression:</strong>
         <li>
           <code>/^(?=.*detachable)(?=.*hats).*$/i</code> — AND operator.
@@ -74,6 +86,9 @@ const FiltersProtip = () => {
       <ul>
         <li>
           <strong>On</strong> — enables or disables the filter.
+        </li>
+        <li>
+          <strong>Color</strong> — highlights matched threads with the specified color.
         </li>
         <li>
           <strong>Hide</strong> — hides matched threads.
