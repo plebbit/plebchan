@@ -113,41 +113,6 @@
   cursor: pointer;
 }
 
-.filtersProtip {
-  text-transform: none;
-  text-align: left;
-}
-
-.filtersProtip code {
-  padding: 1px 5px 1px 5px;
-  background-color: #EEE;
-  color: #000;
-}
-
-.filtersProtip li {
-  list-style: none;
-  margin: 5px 0px;
-}
-
-.filtersProtip ul {
-  margin-bottom: 10px;
-}
-
-.filtersProtip h4 {
-  font-size: 15px;
-  margin: 10px 0px 5px 0px;
-  padding-top: 10px;
-}
-
-.filtersProtip h4:first-child {
-  padding-top: 0px;
-}
-
-.filtersProtip h4::before {
-  content: "»";
-  margin-right: 3px;
-}
-
 .filters {
   padding: 5px;
   text-align: left;
@@ -246,18 +211,4 @@
 .filterHits {
   font-size: 12px !important;
   text-transform: none;
-}
-
-.clickbox {
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-  font-size: 10px;
-  display: block;
-  text-align: center;
-  background-color: #fff;
-  border: 1px solid #aaa;
-  text-decoration: none;
-  color: #000;
-  margin: auto;
 }

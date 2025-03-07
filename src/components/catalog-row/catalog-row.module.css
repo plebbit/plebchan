@@ -13,6 +13,8 @@
   padding: 10px 0 3px 0;
   vertical-align: top;
   display: inline-block;
+  box-sizing: border-box; 
+  margin: 2px;
 }
 
 .postContent {
@@ -69,14 +71,14 @@
   background-color: var(--media-thumbnail-background-color);
   width: var(--width);
   height: var(--height);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  clip-path: inset(-5px); /* direct media could change its dimensions after being published, so we need to clip the overflow. We can't use overflow: hidden because it will hide the box-shadow */
+  overflow: hidden;
 }
 
 .post img, .post video, .post audio {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   max-width: var(--maxWidth);
   max-height: var(--maxHeight);
 }

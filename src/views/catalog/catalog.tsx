@@ -23,7 +23,7 @@ import { commentMatchesPattern } from '../../lib/utils/pattern-utils';
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
 const createContentFilter = (
-  filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean }[],
+  filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean; color?: string }[],
   subplebbitAddress: string,
   onFilterMatch?: (filterIndex: number, cid: string, subplebbitAddress: string) => void,
 ) => {
@@ -54,6 +54,11 @@ const createContentFilter = (
             } else {
               // Fallback to the store method if no callback provided
               useCatalogFiltersStore.getState().incrementFilterCount(filterIndex, comment.cid, subplebbitAddress);
+            }
+
+            // If the filter has a color, track it in the matchedFilters map
+            if (item.color) {
+              useCatalogFiltersStore.getState().setMatchedFilter(comment.cid, item.color);
             }
           }
 
@@ -89,7 +94,7 @@ const createImageFilter = (showTextOnlyThreads: boolean) => {
 
 const createCombinedFilter = (
   showTextOnlyThreads: boolean,
-  filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean }[],
+  filterItems: { text: string; enabled: boolean; count: number; filteredCids: Set<string>; hide: boolean; top: boolean; color?: string }[],
   searchText: string,
   subplebbitAddress: string,
   onFilterMatch?: (filterIndex: number, cid: string, subplebbitAddress: string) => void,
@@ -125,7 +130,7 @@ const Catalog = () => {
   const isInAllView = isAllView(location.pathname);
   const defaultSubplebbits = useDefaultSubplebbits();
   const { hideAdultBoards, hideGoreBoards } = useInterfaceSettingsStore();
-  const { showTextOnlyThreads, filterItems, searchText } = useCatalogFiltersStore();
+  const { showTextOnlyThreads, filterItems, searchText, clearMatchedFilters } = useCatalogFiltersStore();
 
   const account = useAccount();
   const subscriptions = account?.subscriptions;
@@ -445,6 +450,37 @@ const Catalog = () => {
     else if (isInSubscriptionsView) documentTitle = t('subscriptions');
     document.title = documentTitle + ` - ${t('catalog')} - plebchan`;
   }, [title, shortAddress, isInAllView, isInSubscriptionsView, t]);
+
+  // Clear matched filters when component mounts or when subplebbit changes
+  useEffect(() => {
+    clearMatchedFilters();
+    return () => {
+      clearMatchedFilters();
+    };
+  }, [clearMatchedFilters, subplebbitAddress]);
+
+  // Apply filter colors to posts when feed changes
+  useEffect(() => {
+    if (combinedFeed.length > 0 && filterItems.length > 0) {
+      // Clear existing matched filters
+      clearMatchedFilters();
+
+      // Apply colors to posts that match filters
+      combinedFeed.forEach((comment) => {
+        if (!comment?.cid) return;
+
+        // Check each filter
+        for (const item of filterItems) {
+          if (item.enabled && item.text.trim() !== '' && item.color) {
+            if (commentMatchesPattern(comment, item.text)) {
+              useCatalogFiltersStore.getState().setMatchedFilter(comment.cid, item.color);
+              break; // Use the first matching filter's color
+            }
+          }
+        }
+      });
+    }
+  }, [combinedFeed, filterItems, clearMatchedFilters]);
 
   return (
     <div className={styles.content}>

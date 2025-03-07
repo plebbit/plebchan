@@ -12,6 +12,7 @@ interface FilterItem {
   subplebbitFilteredCids: Map<string, Set<string>>;
   hide: boolean;
   top: boolean;
+  color?: string;
 }
 
 interface CatalogFiltersStore {
@@ -36,6 +37,9 @@ interface CatalogFiltersStore {
   setSearchFilter: (text: string) => void;
   clearSearchFilter: () => void;
   resetCountsForCurrentSubplebbit: () => void;
+  matchedFilters: Map<string, string>;
+  setMatchedFilter: (cid: string, color: string) => void;
+  clearMatchedFilters: () => void;
 }
 
 const useCatalogFiltersStore = create(
@@ -52,6 +56,21 @@ const useCatalogFiltersStore = create(
       filteredCount: 0,
       filteredCids: new Set<string>(),
       currentSubplebbitAddress: null,
+      matchedFilters: new Map<string, string>(),
+      setMatchedFilter: (cid: string, color: string) => {
+        set((state) => {
+          const newMatchedFilters = new Map(state.matchedFilters);
+          if (color) {
+            newMatchedFilters.set(cid, color);
+          } else {
+            newMatchedFilters.delete(cid);
+          }
+          return { matchedFilters: newMatchedFilters };
+        });
+      },
+      clearMatchedFilters: () => {
+        set({ matchedFilters: new Map<string, string>() });
+      },
       setCurrentSubplebbitAddress: (address: string | null) => {
         const prevAddress = get().currentSubplebbitAddress;
 
@@ -123,6 +142,7 @@ const useCatalogFiltersStore = create(
             subplebbitFilteredCids: item.subplebbitFilteredCids || new Map(),
             hide: item.hide ?? true,
             top: item.top ?? false,
+            color: item.color || '',
           }));
         set({ filterItems: nonEmptyItems });
         get().recalcFilteredCount();
@@ -138,6 +158,7 @@ const useCatalogFiltersStore = create(
             subplebbitFilteredCids: item.subplebbitFilteredCids || new Map(),
             hide: item.hide ?? true,
             top: item.top ?? false,
+            color: item.color || '',
           }));
 
         // Compare new filter items with existing ones to detect pattern changes
@@ -154,6 +175,7 @@ const useCatalogFiltersStore = create(
               filteredCids: existingItem.filteredCids,
               subplebbitCounts: existingItem.subplebbitCounts,
               subplebbitFilteredCids: existingItem.subplebbitFilteredCids,
+              color: newItem.color || '',
             };
           }
 
@@ -164,8 +186,12 @@ const useCatalogFiltersStore = create(
             filteredCids: new Set<string>(),
             subplebbitCounts: new Map<string, number>(),
             subplebbitFilteredCids: new Map<string, Set<string>>(),
+            color: newItem.color || '',
           };
         });
+
+        // Clear matched filters when saving new filters
+        get().clearMatchedFilters();
 
         set({
           filterItems: updatedItems,
