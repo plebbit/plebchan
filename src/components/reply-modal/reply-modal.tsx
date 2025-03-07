@@ -203,7 +203,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
     : t('subplebbit_offline_info');
 
   useEffect(() => {
-    if (showReplyModal) {
+    if (showReplyModal && !isMobile) {
       setTimeout(() => {
         if (textRef.current) {
           textRef.current.focus();
@@ -221,7 +221,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
         document.removeEventListener('keydown', handleEscape);
       };
     }
-  }, [showReplyModal, closeModal]);
+  }, [showReplyModal, closeModal, isMobile]);
 
   useEffect(() => {
     if (textRef.current) {

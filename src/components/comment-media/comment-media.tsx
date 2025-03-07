@@ -155,14 +155,17 @@ const Image = ({ commentMediaInfo, displayHeight, displayWidth, isOutOfFeed, par
   if (spoiler && !isImageExpanded) {
     const spoilerDimensions = { '--width': '150px', '--height': '150px' } as React.CSSProperties;
     return (
-      <span className={`${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailBig} ${styles.thumbnail}`} style={spoilerDimensions}>
+      <span
+        className={`${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailBig} ${styles.thumbnail} ${isImageExpanded && isMobile ? styles.removeFloat : ''}`}
+        style={spoilerDimensions}
+      >
         <img className={styles.spoiler} src='assets/spoiler.png' alt='' onClick={() => setIsImageExpanded(true)} />
       </span>
     );
   }
 
   return isMobile ? (
-    <span className={styles.thumbnail}>
+    <span className={`${styles.thumbnail} ${isImageExpanded && isMobile ? styles.removeFloat : ''}`}>
       <span
         className={isImageExpanded ? mediaClass : `${isOutOfFeed ? styles.subplebbitAvatar : styles.thumbnailSmall} ${thumbnailSmallPadding}`}
         style={isImageExpanded ? {} : thumbnailDimensions}
