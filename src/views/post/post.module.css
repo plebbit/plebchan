@@ -562,7 +562,7 @@
   width: 24px;
   max-height: 24px;
   position: absolute;
-  bottom: -5px;
+  bottom: -7px;
 }
 
 @media (max-width: 640px) {

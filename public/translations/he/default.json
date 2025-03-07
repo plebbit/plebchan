@@ -228,7 +228,7 @@
   "pending": "ממתין",
   "failed": "נכשל",
   "add": "הוסף",
-  "pattern": "תבנית",
+  "pattern": "דפוס",
   "enable": "הפעל",
   "order": "סדר",
   "text": "טקסט",
@@ -291,5 +291,10 @@
   "this_thread_was_removed": "השרשור הזה הוסר על ידי מנהלי הפורום",
   "this_reply_was_deleted": "תשובה זו נמחקה על ידי המחבר שלה",
   "this_reply_was_removed": "תשובה זו הוסרה על ידי מנהלי הפורום",
-  "not_mod_of_any_board": "אתה לא מוד בכל לוח."
+  "not_mod_of_any_board": "אתה לא מוד בכל לוח.",
+  "filters_and_highlights": "סינונים והדגשות",
+  "search_results_for": "תוצאות חיפוש עבור",
+  "help": "עזרה",
+  "filter_and_highlights_help": "עזרה במסננים והדגשות",
+  "filter_and_highlights": "מסננים והדגשות"
 }

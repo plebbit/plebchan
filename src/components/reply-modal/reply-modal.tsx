@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { setAccount, useAccount, useComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { setAccount, useAccount } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
+import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
 import { formatMarkdown } from '../../lib/utils/post-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
@@ -45,7 +47,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const { selectedText } = useSelectedTextStore();
 
   const { anonMode, getNewSigner, getExistingSigner } = useAnonMode(postCid);
-  const comment = useComment({ commentCid: postCid });
+  const comment = useSubplebbitsPagesStore((state) => state.comments[postCid]);
   const address = comment?.author?.address;
 
   const getAnonAddressForReply = useCallback(async () => {
@@ -189,7 +191,7 @@ const ReplyModal = ({ closeModal, showReplyModal, parentCid, postCid, scrollY, s
   const location = useLocation();
   const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
   const { updatedAt } = subplebbit || {};
   const isBoardOffline = subplebbit?.updatedAt && subplebbit.updatedAt < Date.now() / 1000 - 60 * 60;
   const offlineAlert = updatedAt

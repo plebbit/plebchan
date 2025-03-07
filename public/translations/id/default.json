@@ -228,7 +228,7 @@
   "pending": "Tertunda",
   "failed": "Gagal",
   "add": "Tambahkan",
-  "pattern": "Pola",
+  "pattern": "pola",
   "enable": "Aktifkan",
   "order": "Urutan",
   "text": "Teks",
@@ -291,5 +291,10 @@
   "this_thread_was_removed": "Thread ini dihapus oleh moderator papan",
   "this_reply_was_deleted": "Balasan ini dihapus oleh penulisnya",
   "this_reply_was_removed": "Balasan ini dihapus oleh moderator papan",
-  "not_mod_of_any_board": "Anda bukan mod di papan manapun."
+  "not_mod_of_any_board": "Anda bukan mod di papan manapun.",
+  "filters_and_highlights": "Filter dan Sorotan",
+  "search_results_for": "Hasil pencarian untuk",
+  "help": "Bantuan",
+  "filter_and_highlights_help": "Bantuan Filter dan Sorotan",
+  "filter_and_highlights": "Filter dan Sorotan"
 }

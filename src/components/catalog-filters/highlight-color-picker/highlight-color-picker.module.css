@@ -1,0 +1,110 @@
+.colorClickbox {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 10px;
+  display: block;
+  text-align: center;
+  background-color: #fff;
+  border: var(--reply-modal-field-input-border, revert);
+  text-decoration: none;
+  color: #000;
+  position: relative;
+  cursor: pointer;
+}
+
+.colorPickerModal {
+  padding: 4px;
+  z-index: 1000;
+  font-size: 14px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  background-color: var(--settings-modal-background-color);
+}
+
+.colorPickerModal table {
+  border-spacing: 1px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.colorPickerModal table td {
+  padding: 2px;
+  text-align: center;
+  font-size: 10pt;
+  margin: 0;
+}
+
+.colorOption {
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 10px;
+  display: block;
+  text-align: center;
+  border: 1px solid #aaa;
+  text-decoration: none;
+  color: #000;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.middleTxt input[type="text"] {
+  width: 45px;
+  margin: 0 2px;
+  margin-right: 5px;
+  padding: 1px;
+  outline: none;
+  border: var(--reply-modal-field-input-border, revert);
+  font-size: 11px;
+  background-color: default;
+  vertical-align: top;
+}
+
+.middleTxt input[type="text"]:focus {
+  border: var(--reply-modal-field-input-border-focus, revert);
+}
+
+@media (max-width: 640px) {
+  .middleTxt input[type="text"] {
+    font-size: 16px !important;
+  }
+}
+
+.middleTxt .colorClickbox {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 10px;
+  text-align: center;
+  border: 1px solid #aaa;
+  text-decoration: none;
+  color: #000;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  cursor: pointer;
+  float: right;
+  background-color: transparent !important;
+}
+
+.colorPickerModal tfoot .button {
+  color: var(--button-desktop-text-color);
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.colorPickerModal tfoot .button:hover {
+  color: var(--button-desktop-text-color-hover);
+}
+
+.colorPickerModal tfoot .button::before{
+  content: '[';
+  color: var(--body-font-color);
+}
+
+.colorPickerModal tfoot .button::after{
+  content: ']';
+  color: var(--body-font-color);
+}

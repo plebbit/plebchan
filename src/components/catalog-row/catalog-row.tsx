@@ -2,34 +2,36 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Comment } from '@plebbit/plebbit-react-hooks';
 import { useFloating, offset, size, autoUpdate, Placement } from '@floating-ui/react';
+import { Comment } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import { shouldShowSnow } from '../../lib/snow';
 import { getHasThumbnail } from '../../lib/utils/media-utils';
 import { getFormattedTimeAgo } from '../../lib/utils/time-utils';
 import { isAllView, isSubscriptionsView } from '../../lib/utils/view-utils';
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useEditCommentPrivileges from '../../hooks/use-author-privileges';
+import { useCommentMediaInfo } from '../../hooks/use-comment-media-info';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
 import useHide from '../../hooks/use-hide';
 import useWindowWidth from '../../hooks/use-window-width';
+import useReplies from '../../hooks/use-replies';
+import { ContentPreview } from '../../views/home/popular-threads-box';
 import PostMenuDesktop from '../post-desktop/post-menu-desktop';
 import styles from './catalog-row.module.css';
 import _ from 'lodash';
-import { ContentPreview } from '../../views/home/popular-threads-box';
-import { useCommentMediaInfo } from '../../hooks/use-comment-media-info';
-import { shouldShowSnow } from '../../lib/snow';
-import useReplies from '../../hooks/use-replies';
 
 interface CatalogPostMediaProps {
+  cid: string;
   commentMediaInfo: any;
   isOutOfFeed?: boolean;
   linkWidth?: number;
   linkHeight?: number;
 }
 
-export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, linkHeight }: CatalogPostMediaProps) => {
+export const CatalogPostMedia = ({ cid, commentMediaInfo, isOutOfFeed, linkWidth, linkHeight }: CatalogPostMediaProps) => {
   const { patternThumbnailUrl, thumbnail, type, url } = commentMediaInfo || {};
   const iframeThumbnail = patternThumbnailUrl || thumbnail;
   const gifFrameUrl = useFetchGifFirstFrame(type === 'gif' ? url : undefined);
@@ -89,8 +91,16 @@ export const CatalogPostMedia = ({ commentMediaInfo, isOutOfFeed, linkWidth, lin
     thumbnailComponent = <audio src={url} controls />;
   }
 
+  const matchedFilterColor = useCatalogFiltersStore((state) => state.matchedFilters.get(cid || ''));
+
   return (
-    <div className={hasError ? '' : styles.mediaWrapper} style={CSSProperties}>
+    <div
+      className={hasError ? '' : styles.mediaWrapper}
+      style={{
+        ...CSSProperties,
+        ...(matchedFilterColor ? { border: `3px solid ${matchedFilterColor}` } : {}),
+      }}
+    >
       {!isLoaded && !hasError && type !== 'video' && type !== 'audio' && <span className={styles.loadingSkeleton} />}
       {hasError ? <img className={styles.fileDeleted} src='assets/filedeleted-res.gif' alt='' /> : thumbnailComponent}
     </div>
@@ -250,7 +260,13 @@ const CatalogPost = ({ post }: { post: Comment }) => {
                   {spoiler ? (
                     <img src='assets/spoiler.png' alt='' />
                   ) : (
-                    <CatalogPostMedia commentMediaInfo={commentMediaInfo} isOutOfFeed={isDescription || isRules} linkWidth={linkWidth} linkHeight={linkHeight} />
+                    <CatalogPostMedia
+                      cid={cid}
+                      commentMediaInfo={commentMediaInfo}
+                      isOutOfFeed={isDescription || isRules}
+                      linkWidth={linkWidth}
+                      linkHeight={linkHeight}
+                    />
                   )}
                 </div>
               </Link>

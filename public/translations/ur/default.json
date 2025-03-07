@@ -228,7 +228,7 @@
   "pending": "منتظر",
   "failed": "ناکام",
   "add": "شامل کریں",
-  "pattern": "نمونہ",
+  "pattern": "پیٹرن",
   "enable": "فعال کریں",
   "order": "ترتیب",
   "text": "متن",
@@ -291,5 +291,10 @@
   "this_thread_was_removed": "اس تھریڈ کو بورڈ کے موڈریٹرز نے ہٹا دیا ہے",
   "this_reply_was_deleted": "اس جواب کو اس کے مصنف نے حذف کر دیا تھا",
   "this_reply_was_removed": "اس جواب کو بورڈ کے منتظمین نے حذف کر دیا ہے",
-  "not_mod_of_any_board": "آپ کسی بورڈ کے موڈ نہیں ہیں۔"
+  "not_mod_of_any_board": "آپ کسی بورڈ کے موڈ نہیں ہیں۔",
+  "filters_and_highlights": "فلٹرز اور ہائیلائٹس",
+  "search_results_for": "تلاش کے نتائج",
+  "help": "مدد",
+  "filter_and_highlights_help": "فلٹرز اور ہائی لائٹس کی مدد",
+  "filter_and_highlights": "فلٹرز اور ہائلाइटس"
 }

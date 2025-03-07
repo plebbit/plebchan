@@ -50,6 +50,7 @@
   --button-desktop-text-color: #00e;
   --button-desktop-text-color-hover: red;
   --close-button-background-image: url("/assets/buttons/cross-red.png");
+  --open-help-button-background-image: url("/assets/buttons/help-red.png");
 
   /* horizontal rule */
   --hr-border: none;
@@ -263,6 +264,7 @@
   --button-desktop-text-color: #34345c;
   --button-desktop-text-color-hover: #d00;
   --close-button-background-image: url("/assets/buttons/cross-blue.png");
+  --open-help-button-background-image: url("/assets/buttons/help-blue.png");
 
   /* footer */
   --footer-item-background-color-desktop: #eef2ff;
@@ -479,6 +481,7 @@
   --button-desktop-text-color-hover: red;
   --button-text-decoration: underline;
   --close-button-background-image: url("/assets/buttons/cross-red.png");
+  --open-help-button-background-image: url("/assets/buttons/help-red.png");
 
   /* footer */
   --footer-item-background-color-desktop: #fed;
@@ -657,7 +660,7 @@
   --button-text-decoration: underline;
   --button-desktop-text-color-hover: #d00;
   --close-button-background-image: url("/assets/buttons/cross-blue.png");
-
+  --open-help-button-background-image: url("/assets/buttons/help-blue.png");
   /* footer */
   --footer-item-background-color-desktop: #eef2ff;
 
@@ -848,7 +851,7 @@
   --button-desktop-text-color: #81a2be;
   --button-desktop-text-color-hover: #5f89ac;
   --close-button-background-image: url("/assets/buttons/cross-dark.png");
-
+  --open-help-button-background-image: url("/assets/buttons/help-dark.png");
   /* filter for inputs */
   --filter80: brightness(85%);
 
@@ -1067,7 +1070,7 @@
   --button-desktop-text-color: #f60;
   --button-desktop-text-color-hover: #f30;
   --close-button-background-image: url("/assets/buttons/cross-photon.png");
-
+  --open-help-button-background-image: url("/assets/buttons/help-photon.png");
   /* horizontal rule */
   --hr-border: none;
   --hr-border-top: 1px solid #ddd;

@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Comment, setAccount, useAccount, useAccountComment, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { Comment, setAccount, useAccount, useAccountComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
+import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import { getHasThumbnail, getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { formatMarkdown } from '../../lib/utils/post-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
@@ -56,7 +58,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
   const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
 
   const { anonMode, getNewSigner, getExistingSigner } = useAnonMode(postCid);
-  const comment = useComment({ commentCid: postCid });
+  const comment = useSubplebbitsPagesStore((state) => state.comments[postCid]);
   const address = comment?.author?.address;
 
   const [lengthError, setLengthError] = useState<string | null>(null);
@@ -427,9 +429,10 @@ const PostForm = () => {
   const isInPostView = isPostPageView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
   const isInAllView = isAllView(location.pathname);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
-  const post = useComment({ commentCid: useParams().commentCid });
+  const commentCid = params?.commentCid;
+  const post = useSubplebbitsPagesStore((state) => state.comments[commentCid as string]);
   let comment: Comment = post;
   // handle pending mod or author edit
   const { editedComment } = useEditedComment({ comment });
@@ -444,7 +447,7 @@ const PostForm = () => {
 
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
   const { isOffline, isOnlineStatusLoading, offlineTitle } = useIsSubplebbitOffline(subplebbit);
 
   return (

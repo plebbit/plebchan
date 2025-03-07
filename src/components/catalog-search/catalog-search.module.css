@@ -1,0 +1,49 @@
+.button {
+  text-transform: capitalize;
+  color: var(--button-desktop-text-color);
+  text-decoration: var(--button-text-decoration);
+}
+
+.button:hover {
+  color: var(--button-desktop-text-color-hover);
+  cursor: pointer;
+}
+
+.filtersButton {
+  text-transform: capitalize;
+}
+
+.searchContainer {
+  display: inline;
+}
+
+.searchContainer input {
+  width: 75px;
+  margin: 0px 5px;
+  padding: 1px;
+  outline: none;
+  border: 1px solid #AAA;
+  font-size: 11px;
+}
+
+.searchContainer input:focus {
+  border: var(--post-form-field-input-focus-border);
+}
+
+.closeSearch {
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  color: var(--button-desktop-text-color);
+}
+
+.closeSearch:hover {
+  color: var(--button-desktop-text-color-hover);
+}
+
+@media (max-width: 640px) {
+  .searchContainer input {
+    width: 75px;
+    font-size: 16px;
+  }
+}

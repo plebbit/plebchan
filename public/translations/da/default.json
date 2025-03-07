@@ -228,7 +228,7 @@
   "pending": "Afventer",
   "failed": "Mislykkedes",
   "add": "Tilføj",
-  "pattern": "Mønster",
+  "pattern": "mønster",
   "enable": "Aktiver",
   "order": "Rækkefølge",
   "text": "Tekst",
@@ -291,5 +291,10 @@
   "this_thread_was_removed": "Denne tråd blev fjernet af boardmoderatorer",
   "this_reply_was_deleted": "Dette svar blev slettet af forfatteren",
   "this_reply_was_removed": "Dette svar blev fjernet af forummoderatorer",
-  "not_mod_of_any_board": "Du er ikke moderator for nogen tavler."
+  "not_mod_of_any_board": "Du er ikke moderator for nogen tavler.",
+  "filters_and_highlights": "Filtre og fremhævninger",
+  "search_results_for": "Søgeresultater for",
+  "help": "Hjælp",
+  "filter_and_highlights_help": "Filtre og fremhævelser Hjælp",
+  "filter_and_highlights": "Filtre og fremhævninger"
 }

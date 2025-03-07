@@ -144,7 +144,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
   const params = useParams();
   const isInAllView = isAllView(location.pathname);
   const isInCatalogView = isCatalogView(location.pathname, params);
-  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
   const selectValue = isInAllView ? 'all' : isInSubscriptionsView ? 'subscriptions' : subplebbitAddress;
 
   const { accountSubplebbits } = useAccountSubplebbits();
@@ -160,7 +160,7 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
         const subplebbitAddress = address?.includes('.') ? address : Plebbit.getShortAddress(address);
         return (
           <option key={index} value={address}>
-            {subplebbitAddress.endsWith('.eth') || subplebbitAddress.endsWith('.sol') ? subplebbitAddress.slice(0, -4) : subplebbitAddress}
+            {Plebbit.getShortAddress(subplebbitAddress)}
           </option>
         );
       })}

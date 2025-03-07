@@ -10,6 +10,7 @@ import PostMobile from '../../components/post-mobile';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
 import styles from './post.module.css';
+
 export interface PostProps {
   index?: number;
   isHidden?: boolean;
@@ -20,10 +21,9 @@ export interface PostProps {
   roles?: Role[];
   showAllReplies?: boolean;
   showReplies?: boolean;
-  replies?: Comment[];
 }
 
-export const Post = ({ post, showAllReplies = false, showReplies = true, replies }: PostProps) => {
+export const Post = ({ post, showAllReplies = false, showReplies = true }: PostProps) => {
   const subplebbit = useSubplebbitsStore((state) => state.subplebbits[post?.subplebbitAddress]);
   const isMobile = useIsMobile();
 
@@ -39,9 +39,9 @@ export const Post = ({ post, showAllReplies = false, showReplies = true, replies
     <div className={styles.thread}>
       <div className={styles.postContainer}>
         {isMobile ? (
-          <PostMobile post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} replies={replies} />
+          <PostMobile post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} />
         ) : (
-          <PostDesktop post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} replies={replies} />
+          <PostDesktop post={comment} roles={subplebbit?.roles} showAllReplies={showAllReplies} showReplies={showReplies} />
         )}
       </div>
     </div>
@@ -57,10 +57,9 @@ const PostPage = () => {
   const isInDescriptionView = isDescriptionView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
-  const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit;
-
   const comment = useComment({ commentCid });
+  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const { createdAt, description, rules, shortAddress, suggested, title } = subplebbit || {};
 
   // if the comment is a reply, return the post comment instead, then the reply will be highlighted in the thread
   const postComment = useComment({ commentCid: comment?.postCid });

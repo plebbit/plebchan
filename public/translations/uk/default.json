@@ -228,7 +228,7 @@
   "pending": "Очікує",
   "failed": "Не вдалося",
   "add": "Додати",
-  "pattern": "Шаблон",
+  "pattern": "шаблон",
   "enable": "Увімкнути",
   "order": "Порядок",
   "text": "Текст",
@@ -291,5 +291,10 @@
   "this_thread_was_removed": "Цю тему було видалено модераторами форуму",
   "this_reply_was_deleted": "Цю відповідь було видалено її автором",
   "this_reply_was_removed": "Цю відповідь було видалено модераторами форуму",
-  "not_mod_of_any_board": "Ви не модератор жодної дошки."
+  "not_mod_of_any_board": "Ви не модератор жодної дошки.",
+  "filters_and_highlights": "Фільтри та виділення",
+  "search_results_for": "Результати пошуку для",
+  "help": "Допомога",
+  "filter_and_highlights_help": "Допомога з фільтрами та підсвічуваннями",
+  "filter_and_highlights": "Фільтри та виділення"
 }

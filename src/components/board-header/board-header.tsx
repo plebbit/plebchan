@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAccountComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { isAllView, isSubscriptionsView, isModView } from '../../lib/utils/view-utils';
 import styles from './board-header.module.css';
 import { useMultisubMetadata } from '../../hooks/use-default-subplebbits';
@@ -9,7 +10,7 @@ import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 import { shouldShowSnow } from '../../lib/snow';
 import Tooltip from '../tooltip';
 
-const totalBanners = 62;
+const totalBanners = 63;
 
 const ImageBanner = () => {
   const [imagePath] = useState(() => {
@@ -29,7 +30,8 @@ const BoardHeader = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
-  const subplebbit = useSubplebbit({ subplebbitAddress });
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[subplebbitAddress]);
+
   const { address, shortAddress } = subplebbit || {};
 
   const multisubMetadata = useMultisubMetadata();

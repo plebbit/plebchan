@@ -1,19 +1,21 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAccountComment, useComment, useSubplebbit, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
+import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
+import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
-import useTimeFilter from '../../hooks/use-time-filter';
-import CatalogFilters from '../../views/catalog/catalog-filters/';
-import styles from './board-buttons.module.css';
-import Tooltip from '../tooltip';
 import useCountLinksInReplies from '../../hooks/use-count-links-in-replies';
-import _ from 'lodash';
 import useIsMobile from '../../hooks/use-is-mobile';
-import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
-import { useEffect } from 'react';
+import useTimeFilter from '../../hooks/use-time-filter';
+import CatalogFilters from '../catalog-filters';
+import CatalogSearch from '../catalog-search';
+import Tooltip from '../tooltip';
+import styles from './board-buttons.module.css';
+import _ from 'lodash';
 
 interface BoardButtonsProps {
   address?: string | undefined;
@@ -244,13 +246,7 @@ export const MobileBoardButtons = () => {
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
-  const { filteredCount, resetFilteredCount } = useCatalogFiltersStore();
-
-  useEffect(() => {
-    if (subplebbitAddress) {
-      resetFilteredCount();
-    }
-  }, [subplebbitAddress, resetFilteredCount]);
+  const { filteredCount, searchText } = useCatalogFiltersStore();
 
   return (
     <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
@@ -273,11 +269,19 @@ export const MobileBoardButtons = () => {
           )}
           {!(isInAllView || isInSubscriptionsView) && <SubscribeButton address={subplebbitAddress} />}
           <RefreshButton />
-          {isInCatalogView && filteredCount > 0 && (
+          {isInCatalogView && searchText ? (
             <span className={styles.filteredThreadsCount}>
               {' '}
-              — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+              — {t('search_results_for')}: <strong>{searchText}</strong>
             </span>
+          ) : (
+            isInCatalogView &&
+            filteredCount > 0 && (
+              <span className={styles.filteredThreadsCount}>
+                {' '}
+                — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+              </span>
+            )
           )}
           {isInCatalogView && (
             <>
@@ -287,7 +291,7 @@ export const MobileBoardButtons = () => {
                   <SortOptions /> <ImageSizeOptions />
                 </div>
                 <div className={styles.mobileCatalogOptionsPadding}>
-                  <ShowOPCommentOption /> <CatalogFilters />
+                  <ShowOPCommentOption /> <CatalogFilters /> <CatalogSearch />
                 </div>
               </div>
             </>
@@ -304,8 +308,9 @@ const PostPageStats = () => {
   const location = useLocation();
   const isInDescriptionView = isDescriptionView(location.pathname, params);
 
-  const comment = useComment({ commentCid: params?.commentCid });
-  const subplebbit = useSubplebbit({ subplebbitAddress: params?.subplebbitAddress });
+  const comment = useSubplebbitsPagesStore((state) => state.comments[params?.commentCid as string]);
+  const subplebbit = useSubplebbitsStore((state) => state.subplebbits[params?.subplebbitAddress as string]);
+
   const descriptionReplyCount = location?.pathname.startsWith('/p/all/') ? 0 : subplebbit?.rules?.length > 0 ? 1 : 0;
   const { closed, pinned, replyCount } = comment || {};
   const linkCount = useCountLinksInReplies(comment);
@@ -334,13 +339,7 @@ export const DesktopBoardButtons = () => {
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
 
-  const { filteredCount, resetFilteredCount } = useCatalogFiltersStore();
-
-  useEffect(() => {
-    if (subplebbitAddress) {
-      resetFilteredCount();
-    }
-  }, [subplebbitAddress, resetFilteredCount]);
+  const { filteredCount, searchText } = useCatalogFiltersStore();
 
   return (
     <>
@@ -373,11 +372,19 @@ export const DesktopBoardButtons = () => {
               </>
             )}
             [<RefreshButton />]
-            {isInCatalogView && filteredCount > 0 && (
+            {isInCatalogView && searchText ? (
               <span className={styles.filteredThreadsCount}>
                 {' '}
-                — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+                — {t('search_results_for')}: <strong>{searchText}</strong>
               </span>
+            ) : (
+              isInCatalogView &&
+              filteredCount > 0 && (
+                <span className={styles.filteredThreadsCount}>
+                  {' '}
+                  — {t('filtered_threads')}: <strong>{filteredCount}</strong>
+                </span>
+              )
             )}
             <span className={styles.rightSideButtons}>
               {isInCatalogView && (
@@ -390,16 +397,15 @@ export const DesktopBoardButtons = () => {
               {(isInAllView || isInSubscriptionsView) && (
                 <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
               )}
-              {isInCatalogView && (
-                <>
-                  [
-                  <CatalogFilters />]
-                </>
-              )}{' '}
               {!(isInAllView || isInSubscriptionsView) && (
                 <>
                   [
                   <SubscribeButton address={subplebbitAddress} />]
+                </>
+              )}{' '}
+              {isInCatalogView && (
+                <>
+                  [<CatalogFilters />] <CatalogSearch />
                 </>
               )}
             </span>

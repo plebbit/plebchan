@@ -228,7 +228,7 @@
   "pending": "Naghihintay",
   "failed": "Nabigo",
   "add": "Idagdag",
-  "pattern": "Pattern",
+  "pattern": "pattern",
   "enable": "I-enable",
   "order": "Kaayusan",
   "text": "Teksto",
@@ -291,5 +291,10 @@
   "this_thread_was_removed": "Inalis ang thread na ito ng mga moderator ng board",
   "this_reply_was_deleted": "Ang tugon na ito ay tinanggal ng may-akda nito",
   "this_reply_was_removed": "Ang sagot na ito ay tinanggal ng mga moderator ng board",
-  "not_mod_of_any_board": "Hindi ka mod ng anumang board."
+  "not_mod_of_any_board": "Hindi ka mod ng anumang board.",
+  "filters_and_highlights": "Mga filter at highlight",
+  "search_results_for": "Mga resulta ng paghahanap para sa",
+  "help": "Tulong",
+  "filter_and_highlights_help": "Tulong sa mga filter at highlight",
+  "filter_and_highlights": "Mga filter at highlight"
 }

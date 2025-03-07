@@ -52,6 +52,10 @@ hr {
   color-scheme: dark;
 }
 
+[data-floating-ui-portal] {
+  color-scheme: var(--color-scheme) !important;
+}
+
 .yellowOfflineIcon {
   background-image: url('/assets/icons/offline-blue.png');
 }

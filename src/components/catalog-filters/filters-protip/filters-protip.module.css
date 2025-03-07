@@ -1,0 +1,34 @@
+.filtersProtip {
+  text-transform: none;
+  text-align: left;
+}
+
+.filtersProtip code {
+  padding: 1px 5px 1px 5px;
+  background-color: #EEE;
+  color: #000;
+}
+
+.filtersProtip li {
+  list-style: none;
+  margin: 5px 0px;
+}
+
+.filtersProtip ul {
+  margin-bottom: 10px;
+}
+
+.filtersProtip h4 {
+  font-size: 15px;
+  margin: 10px 0px 5px 0px;
+  padding-top: 10px;
+}
+
+.filtersProtip h4:first-child {
+  padding-top: 0px;
+}
+
+.filtersProtip h4::before {
+  content: "»";
+  margin-right: 3px;
+}

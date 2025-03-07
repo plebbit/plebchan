@@ -291,5 +291,10 @@
   "this_thread_was_removed": "यह थ्रेड बोर्ड मॉडरेटर्स द्वारा हटा दिया गया था",
   "this_reply_was_deleted": "इस उत्तर को इसके लेखक द्वारा हटा दिया गया था",
   "this_reply_was_removed": "यह उत्तर बोर्ड मॉडरेटर द्वारा हटा दिया गया था",
-  "not_mod_of_any_board": "आप किसी बोर्ड के मॉड नहीं हैं।"
+  "not_mod_of_any_board": "आप किसी बोर्ड के मॉड नहीं हैं।",
+  "filters_and_highlights": "फ़िल्टर और हाइलाइट्स",
+  "search_results_for": "के लिए खोज परिणाम",
+  "help": "मदद",
+  "filter_and_highlights_help": "फ़िल्टर और हाइलाइट्स सहायता",
+  "filter_and_highlights": "फ़िल्टर और हाइलाइट्स"
 }

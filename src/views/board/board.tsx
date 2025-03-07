@@ -20,13 +20,16 @@ import { Post } from '../post';
 
 const lastVirtuosoStates: { [key: string]: StateSnapshot } = {};
 
-const threadsWithoutImagesFilter = (comment: Comment) => {
-  const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
-  if (!getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link)) {
-    return false;
-  }
-  return true;
-};
+const createThreadsWithoutImagesFilter = () => ({
+  filter: (comment: Comment) => {
+    const { link, linkHeight, linkWidth, thumbnailUrl } = comment || {};
+    if (!getHasThumbnail(getCommentMediaInfo(link, thumbnailUrl, linkWidth, linkHeight), link)) {
+      return false;
+    }
+    return true;
+  },
+  key: 'threads-with-images-only',
+});
 
 const Board = () => {
   const { t } = useTranslation();
@@ -66,7 +69,7 @@ const Board = () => {
     sortType,
     postsPerPage: isInAllView || isInSubscriptionsView || isInModView ? 5 : 25,
     ...(isInAllView || isInSubscriptionsView || isInModView ? { newerThan: timeFilterSeconds } : {}),
-    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+    filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
   };
 
   const { feed, hasMore, loadMore, reset, subplebbitAddressesWithNewerPosts } = useFeed(feedOptions);
@@ -134,13 +137,13 @@ const Board = () => {
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 7,
-    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+    filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
   });
   const { feed: monthlyFeed } = useFeed({
     subplebbitAddresses,
     sortType,
     newerThan: 60 * 60 * 24 * 30,
-    filter: hideThreadsWithoutImages ? threadsWithoutImagesFilter : undefined,
+    filter: hideThreadsWithoutImages ? createThreadsWithoutImagesFilter() : undefined,
   });
 
   const feedLength = feed.length;
