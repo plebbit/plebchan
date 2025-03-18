@@ -12,13 +12,10 @@ let releaseChangelog =
 // format
 releaseChangelog = releaseChangelog.trim().replace(/\n\n+/g, '\n\n')
 
-const releaseBody = `Progressive web app mirrors:
-- https://plebchan.eth.limo
-- https://plebchan.eth.link
-- https://cloudflare-ipfs.com/ipns/plebchan.eth (insecure, no subdomain isolation)
-
-CLI client:
-- https://github.com/plebbit/plebbit-cli/releases/latest
+const releaseBody = `- Web app: https://plebchan.app
+- Mobile app: available for Android. Download link under "Assets" ⬇️
+- Desktop app (full P2P node, run your own community): available for Mac/Windows/Linux. Download links under "Assets" ⬇️
+- Command Line Interface (full P2P node, run your own community): https://github.com/plebbit/plebbit-cli/releases/latest
 
 ${releaseChangelog}`
 
