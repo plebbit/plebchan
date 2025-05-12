@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import eslint from 'vite-plugin-eslint';
+import { VitePWA } from 'vite-plugin-pwa';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -32,6 +33,107 @@ export default defineConfig({
       },
       protocolImports: true,
       include: ['crypto', 'stream', 'util', 'buffer', 'events'],
+    }),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+      manifest: {
+        name: 'Seedit',
+        short_name: 'Seedit',
+        description: 'A GUI for plebbit similar to old.reddit',
+        theme_color: '#ffffff',
+        background_color: '#ffffee',
+        display: 'standalone',
+        icons: [
+          {
+            src: '/android-chrome-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          },
+          {
+            src: '/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          }
+        ]
+      },
+      workbox: {
+        clientsClaim: true,
+        skipWaiting: true,
+        cleanupOutdatedCaches: true,
+        
+        navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/api/, /^\/_(.*)/],
+        
+        runtimeCaching: [
+          // Fix index.html not refreshing on new versions
+          {
+            urlPattern: ({ url }) => url.pathname === '/' || url.pathname === '/index.html',
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'html-cache'
+            }
+          },
+          // PNG caching
+          {
+            urlPattern: ({ url }) => url.pathname.endsWith('.png'),
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'images',
+              expiration: {
+                maxEntries: 50
+              }
+            }
+          },
+          // Add additional asset caching
+          {
+            urlPattern: /\.(?:js|css|woff2?|svg|gif|jpg|jpeg)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'assets-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              }
+            }
+          },
+          // Google Fonts caching
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-webfonts',
+              expiration: {
+                maxEntries: 30,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
+      }
     }),
   ],
   resolve: {

@@ -1,5 +1,5 @@
 import { setAccount, useAccount, useSubscribe } from '@plebbit/plebbit-react-hooks';
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import Plebbit from '@plebbit/plebbit-js';
 import styles from './subscriptions-setting.module.css';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';

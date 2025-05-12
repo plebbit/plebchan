@@ -1,5 +1,5 @@
 import { setAccount, useAccount, useBlock } from '@plebbit/plebbit-react-hooks';
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import Plebbit from '@plebbit/plebbit-js';
 import styles from './blocked-addresses-setting.module.css';
 import { useTranslation } from 'react-i18next';
 

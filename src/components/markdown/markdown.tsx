@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import supersub from 'remark-supersub';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import rehypeRaw from 'rehype-raw';
 import { useDismiss, useFloating, useFocus, useHover, useInteractions, offset, shift, size, autoUpdate, Placement, FloatingPortal } from '@floating-ui/react';
 import { getLinkMediaInfo, getHasThumbnail } from '../../lib/utils/media-utils';
 import { isCatalogView } from '../../lib/utils/view-utils';
@@ -17,6 +18,10 @@ interface ContentLinkEmbedProps {
   children: any;
   href: string;
   linkMediaInfo: any;
+}
+
+interface ExtendedComponents extends Components {
+  spoiler: React.ComponentType<{ children: React.ReactNode }>;
 }
 
 const ContentLinkEmbed = ({ children, href, linkMediaInfo }: ContentLinkEmbedProps) => {
@@ -125,50 +130,22 @@ const blockquoteToGreentext = () => (tree: any) => {
   });
 };
 
-const spoilerToDiv = () => (tree: any) => {
-  tree.children.forEach((node: any) => {
-    if (node.type === 'paragraph') {
-      const text = node.children.map((child: any) => child.value).join('');
-      if (text.includes('§§SPOILER_START§§')) {
-        node.type = 'span';
-        node.data = {
-          hName: 'span',
-        };
-        node.children.forEach((child: any) => {
-          if (child.type === 'text') {
-            const parts = child.value.split(/(§§SPOILER_START§§.*?§§SPOILER_END§§)/);
-            if (parts.length > 1) {
-              const newChildren = parts.map((part: string) => {
-                const spoilerMatch = part.match(/§§SPOILER_START§§(.*?)§§SPOILER_END§§/);
-                if (spoilerMatch) {
-                  return {
-                    type: 'span',
-                    data: {
-                      hName: 'span',
-                      hProperties: {
-                        className: 'spoilertext',
-                      },
-                    },
-                    children: [
-                      {
-                        type: 'text',
-                        value: spoilerMatch[1],
-                      },
-                    ],
-                  };
-                }
-                return {
-                  type: 'text',
-                  value: part,
-                };
-              });
-              node.children = newChildren;
-            }
-          }
-        });
-      }
+const spoilerTransform = () => (tree: any) => {
+  const visit = (node: any) => {
+    if (node.tagName === 'spoiler') {
+      node.tagName = 'span';
+      node.properties = node.properties || {};
+      node.properties.className = 'spoilertext';
     }
-  });
+
+    if (node.children) {
+      node.children.forEach(visit);
+    }
+  };
+
+  if (tree.children) {
+    tree.children.forEach(visit);
+  }
 };
 
 interface MarkdownProps {
@@ -177,32 +154,28 @@ interface MarkdownProps {
 }
 
 const Markdown = ({ content, title }: MarkdownProps) => {
-  const preprocessedContent = useMemo(() => {
-    if (!content) return '';
-    return content.replace(/<spoiler>([^<]*)<\/spoiler>/g, '§§SPOILER_START§§$1§§SPOILER_END§§').replace(/<img[^>]*src=['"]([^'"]+)['"][^>]*>/gi, '$1');
-  }, [content]);
-
   const remarkPlugins: any[] = [[supersub]];
 
-  if (preprocessedContent && preprocessedContent.length <= MAX_LENGTH_FOR_GFM) {
+  if (content && content.length <= MAX_LENGTH_FOR_GFM) {
     remarkPlugins.push([remarkGfm, { singleTilde: false }]);
   }
+
+  remarkPlugins.push([blockquoteToGreentext]);
+  remarkPlugins.push([spoilerTransform]);
 
   const customSchema = useMemo(
     () => ({
       ...defaultSchema,
-      tagNames: [...(defaultSchema.tagNames || []), 'div', 'span'],
+      tagNames: [...(defaultSchema.tagNames || []), 'div', 'span', 'spoiler'],
       attributes: {
         ...defaultSchema.attributes,
         div: ['className'],
         span: ['className'],
+        spoiler: [],
       },
     }),
     [],
   );
-
-  remarkPlugins.push([blockquoteToGreentext]);
-  remarkPlugins.push([spoilerToDiv]);
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
@@ -215,44 +188,47 @@ const Markdown = ({ content, title }: MarkdownProps) => {
         </span>
       )}
       <ReactMarkdown
-        children={preprocessedContent}
+        children={content}
         remarkPlugins={remarkPlugins}
-        rehypePlugins={[[rehypeSanitize, customSchema]]}
-        components={{
-          p: ({ children }) => <p className={isInCatalogView ? styles.inline : ''}>{children}</p>,
-          h1: ({ children }) => <p className={styles.header}>{children}</p>,
-          h2: ({ children }) => <p className={styles.header}>{children}</p>,
-          h3: ({ children }) => <p className={styles.header}>{children}</p>,
-          h4: ({ children }) => <p className={styles.header}>{children}</p>,
-          h5: ({ children }) => <p className={styles.header}>{children}</p>,
-          h6: ({ children }) => <p className={styles.header}>{children}</p>,
-          img: ({ src, alt }) => {
-            const displayText = src || alt || 'image';
-            return <span>{displayText}</span>;
-          },
-          video: ({ src }) => <span>{src}</span>,
-          iframe: ({ src }) => <span>{src}</span>,
-          source: ({ src }) => <span>{src}</span>,
-          a: ({ href, children }) => {
-            if (href && !isInCatalogView) {
-              try {
-                const linkMediaInfo = getLinkMediaInfo(href);
-                const embedUrl = href.startsWith('http') ? new URL(href) : null;
-                if ((embedUrl && canEmbed(embedUrl)) || getHasThumbnail(linkMediaInfo, href)) {
-                  return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
+        rehypePlugins={[[rehypeRaw as any], [rehypeSanitize, customSchema]]}
+        components={
+          {
+            p: ({ children }) => <p className={isInCatalogView ? styles.inline : ''}>{children}</p>,
+            h1: ({ children }) => <p className={styles.header}>{children}</p>,
+            h2: ({ children }) => <p className={styles.header}>{children}</p>,
+            h3: ({ children }) => <p className={styles.header}>{children}</p>,
+            h4: ({ children }) => <p className={styles.header}>{children}</p>,
+            h5: ({ children }) => <p className={styles.header}>{children}</p>,
+            h6: ({ children }) => <p className={styles.header}>{children}</p>,
+            img: ({ src, alt }) => {
+              const displayText = src || alt || 'image';
+              return <span>{displayText}</span>;
+            },
+            video: ({ src }) => <span>{src}</span>,
+            iframe: ({ src }) => <span>{src}</span>,
+            source: ({ src }) => <span>{src}</span>,
+            spoiler: ({ children }) => <span className='spoilertext'>{children}</span>,
+            a: ({ href, children }) => {
+              if (href && !isInCatalogView) {
+                try {
+                  const linkMediaInfo = getLinkMediaInfo(href);
+                  const embedUrl = href.startsWith('http') ? new URL(href) : null;
+                  if ((embedUrl && canEmbed(embedUrl)) || getHasThumbnail(linkMediaInfo, href)) {
+                    return <ContentLinkEmbed children={children} href={href} linkMediaInfo={linkMediaInfo} />;
+                  }
+                } catch (e) {
+                  console.debug('Invalid URL:', href);
                 }
-              } catch (e) {
-                console.debug('Invalid URL:', href);
-              }
 
-              return (
-                <a href={href} target='_blank' rel='noopener noreferrer'>
-                  {children}
-                </a>
-              );
-            }
-          },
-        }}
+                return (
+                  <a href={href} target='_blank' rel='noopener noreferrer'>
+                    {children}
+                  </a>
+                );
+              }
+            },
+          } as ExtendedComponents
+        }
       />
     </span>
   );

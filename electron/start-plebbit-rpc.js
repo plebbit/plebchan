@@ -2,7 +2,7 @@ import tcpPortUsed from 'tcp-port-used';
 import EnvPaths from 'env-paths';
 import { randomBytes } from 'crypto';
 import fs from 'fs-extra';
-import PlebbitRpc from '@plebbit/plebbit-js/dist/node/rpc/src/index.js';
+import PlebbitRpc from '@plebbit/plebbit-js/rpc';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import isDev from 'electron-is-dev';
@@ -14,7 +14,7 @@ const port = 9138;
 const defaultPlebbitOptions = {
   // find the user's OS data path
   dataPath: !isDev ? envPaths.data : path.join(dirname, '..', '.plebbit'),
-  ipfsHttpClientsOptions: ['http://localhost:50019/api/v0'],
+  kuboRpcClientsOptions: [{ url: 'http://localhost:50019/api/v0' }],
   httpRoutersOptions: ['https://routing.lol', 'https://peers.pleb.bot', 'https://peers.plebpubsub.xyz', 'https://peers.forumindex.com'],
 };
 
