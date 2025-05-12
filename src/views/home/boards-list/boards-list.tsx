@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Plebbit from '@plebbit/plebbit-js/dist/browser/index.js';
+import Plebbit from '@plebbit/plebbit-js';
 import { Subplebbit, useSubplebbitStats } from '@plebbit/plebbit-react-hooks';
 import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { useDefaultSubplebbitsState, useDefaultSubplebbitTags } from '../../../hooks/use-default-subplebbits';
