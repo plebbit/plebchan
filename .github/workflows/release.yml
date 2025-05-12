@@ -20,21 +20,33 @@ jobs:
         with:
           # needed for git commit history changelog
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - name: Setup Node.js v20
+        uses: actions/setup-node@v2
         with:
-          node-version: 18
-      - run: yarn install --frozen-lockfile
+          node-version: 20
+      - name: Install dependencies (with Node v20)
+        run: yarn install --frozen-lockfile --ignore-engines
       # make sure the ipfs executable is executable
-      - run: node electron/download-ipfs && sudo chmod +x bin/linux/ipfs
-      - run: CI='' yarn build
-      - run: yarn electron:build:linux
-      - run: ls dist
+      - name: Download IPFS and set permissions (with Node v20)
+        run: node electron/download-ipfs && sudo chmod +x bin/linux/ipfs
+
+      - name: Setup Node.js v22 for Electron build
+        uses: actions/setup-node@v2
+        with:
+          node-version: 22
+      - name: Build React app (with Node v22)
+        run: CI='' yarn build
+      - name: Build Electron app for Linux (with Node v22)
+        run: yarn electron:build:linux
+      - name: List dist directory
+        run: ls dist
 
       # publish version release
-      - run: node scripts/release-body > release-body.txt
+      - name: Generate release body
+        run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'dist/plebchan-linux*.AppImage,dist/plebchan-html*.zip'
+          artifacts: 'dist/plebchan*.AppImage,dist/plebchan-html*.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"
@@ -50,26 +62,38 @@ jobs:
         with:
           # needed for git commit history changelog
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - name: Setup Node.js v20
+        uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 20
 
       # install missing dep for sqlite
       - run: python3 -m ensurepip
       - run: pip install setuptools
 
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies (with Node v20)
+        run: yarn install --frozen-lockfile --ignore-engines
       # make sure the ipfs executable is executable
-      - run: node electron/download-ipfs && sudo chmod +x bin/mac/ipfs
-      - run: CI='' yarn build
-      - run: yarn electron:build:mac
-      - run: ls dist
+      - name: Download IPFS and set permissions (with Node v20)
+        run: node electron/download-ipfs && sudo chmod +x bin/mac/ipfs
+
+      - name: Setup Node.js v22 for Electron build
+        uses: actions/setup-node@v2
+        with:
+          node-version: 22
+      - name: Build React app (with Node v22)
+        run: CI='' yarn build
+      - name: Build Electron app for Mac (with Node v22)
+        run: yarn electron:build:mac
+      - name: List dist directory
+        run: ls dist
 
       # publish version release
-      - run: node scripts/release-body > release-body.txt
+      - name: Generate release body
+        run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'dist/plebchan-mac*.dmg'
+          artifacts: 'dist/plebchan*.dmg'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"
@@ -85,26 +109,32 @@ jobs:
         with:
           # needed for git commit history changelog
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - name: Setup Node.js v22 # electron-rebuild needs Node 22+
+        uses: actions/setup-node@v2
         with:
-          node-version: 18
-      - run: yarn install --frozen-lockfile --network-timeout 100000 --network-concurrency 1
-      - run: yarn build
-      - run: yarn electron:build:windows
-      - run: dir dist
+          node-version: 22
+      - name: Install dependencies (with Node v22) # --network-timeout and --network-concurrency are yarn v1 flags.
+        run: yarn install --frozen-lockfile --network-timeout 100000 --network-concurrency 1
+      - name: Build React app (with Node v22)
+        run: yarn build
+      - name: Build Electron app for Windows (with Node v22)
+        run: yarn electron:build:windows
+      - name: List dist directory
+        run: dir dist
 
       # publish version release
-      - run: node scripts/release-body > release-body.txt
+      - name: Generate release body
+        run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'dist/plebchan-windows*.exe'
+          artifacts: 'dist/plebchan*.exe'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"
           allowUpdates: true
 
   android:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:
@@ -115,17 +145,19 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '21'
       - uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: 7.6
+          gradle-version: 8.9
       - uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 20
       - run: sudo apt install -y apksigner zipalign
 
+      # install all dependencies (including devDependencies needed for React build)
+      - name: Install dependencies (with Node v20)
+        run: yarn install --frozen-lockfile --ignore-engines
       # build react app
-      - run: yarn install --frozen-lockfile
       - run: CI='' yarn build
       # set android versionCode and versionName
       - run: sed -i "s/versionCode 1/versionCode $(git tag | wc -l)/" ./android/app/build.gradle
@@ -142,14 +174,14 @@ jobs:
       # to create keystore: keytool -genkey -v -keystore plebbit.keystore -keyalg RSA -keysize 2048 -validity 10000 -alias release
       - run: cd android/app/build/outputs/apk/release && apksigner sign --ks ../../../../../plebbit.keystore --ks-pass pass:${{ secrets.PLEBBIT_REACT_KEYSTORE_PASSWORD }} --ks-key-alias release --out app-release-signed.apk app-release-unsigned-zip.apk
       # move apk to dist folder
-      - run: mkdir -p dist && mv android/app/build/outputs/apk/release/app-release-signed.apk dist/plebchan-android-$(node -e "console.log(require('./package.json').version)").apk
+      - run: mkdir -p dist && mv android/app/build/outputs/apk/release/app-release-signed.apk dist/plebchan-$(node -e "console.log(require('./package.json').version)").apk
       - run: ls dist
 
       # publish version release
       - run: node scripts/release-body > release-body.txt
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'dist/plebchan-android*.apk'
+          artifacts: 'dist/plebchan*.apk'
           token: ${{ secrets.GITHUB_TOKEN }}
           replacesArtifacts: true
           bodyFile: "release-body.txt"
