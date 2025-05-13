@@ -6,7 +6,7 @@
   "author": "plebeius.eth",
   "private": true,
   "dependencies": {
-    "@capacitor/app": "6.0.1",
+    "@capacitor/app": "7.0.1",
     "@floating-ui/react": "0.26.1",
     "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#f760ce2f5961307c93517fed0257b425bbf38c30",
     "@react-spring/web": "9.7.5",
@@ -83,9 +83,9 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/android": "5.0.0",
-    "@capacitor/cli": "5.0.0",
-    "@capacitor/core": "5.0.0",
+    "@capacitor/android": "7.2.0",
+    "@capacitor/cli": "7.2.0",
+    "@capacitor/core": "7.2.0",
     "@electron/rebuild": "4.0.0",
     "@types/memoizee": "0.4.9",
     "@typescript-eslint/eslint-plugin": "8.29.0",
