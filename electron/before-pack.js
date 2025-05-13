@@ -43,6 +43,7 @@ const downloadWithProgress = (url) =>
         incomplete: ' ',
         width: 20,
         total: len,
+        stream: process.stdout,
       });
       res.on('data', (chunk) => {
         chunks.push(chunk);
@@ -85,24 +86,52 @@ const downloadAndExtract = async (url, destinationPath) => {
   if (fs.pathExistsSync(binPath)) {
     return;
   }
+  console.log(`Downloading IPFS client from ${url} to ${destinationPath}`);
   const split = url.split('/');
   const fileName = split[split.length - 1];
   const dowloadPath = path.join(destinationPath, fileName);
   const file = await downloadWithProgress(url);
   fs.ensureDirSync(destinationPath);
   await fs.writeFile(dowloadPath, file);
-  await decompress(dowloadPath, destinationPath);
+  console.log(`Downloaded archive to ${dowloadPath}`);
+  console.log(`Extracting ${dowloadPath} to ${destinationPath}`);
+  try {
+    await decompress(dowloadPath, destinationPath);
+    console.log('Decompression complete');
+  } catch (err) {
+    console.error('Error during decompression:', err);
+    throw err;
+  }
   const extractedPath = path.join(destinationPath, 'kubo');
   const extractedBinPath = path.join(extractedPath, binName);
+  console.log(`Moving binary from ${extractedBinPath} to ${binPath}`);
   fs.moveSync(extractedBinPath, binPath);
+  console.log('Binary moved');
+  console.log('Cleaning up temporary files');
   fs.removeSync(extractedPath);
   fs.removeSync(dowloadPath);
+  console.log('Cleanup complete');
 };
 
 export const downloadIpfsClients = async () => {
-  await downloadAndExtract(ipfsClientWindowsUrl, ipfsClientWindowsPath);
-  await downloadAndExtract(ipfsClientMacUrl, ipfsClientMacPath);
-  await downloadAndExtract(ipfsClientLinuxUrl, ipfsClientLinuxPath);
+  const platform = process.platform;
+  console.log(`Starting IPFS client download for platform: ${platform}`);
+  switch (platform) {
+    case 'win32':
+      await downloadAndExtract(ipfsClientWindowsUrl, ipfsClientWindowsPath);
+      break;
+    case 'darwin':
+      await downloadAndExtract(ipfsClientMacUrl, ipfsClientMacPath);
+      break;
+    case 'linux':
+      await downloadAndExtract(ipfsClientLinuxUrl, ipfsClientLinuxPath);
+      break;
+    default:
+      console.warn(`Unknown platform: ${platform}, downloading all IPFS clients`);
+      await downloadAndExtract(ipfsClientWindowsUrl, ipfsClientWindowsPath);
+      await downloadAndExtract(ipfsClientMacUrl, ipfsClientMacPath);
+      await downloadAndExtract(ipfsClientLinuxUrl, ipfsClientLinuxPath);
+  }
 };
 
 export default async (context) => {
