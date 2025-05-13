@@ -24,12 +24,20 @@ const ipfsClientMacUrl = `https://dist.ipfs.io/kubo/v${ipfsClientVersion}/kubo_v
 const ipfsClientLinuxUrl = `https://dist.ipfs.io/kubo/v${ipfsClientVersion}/kubo_v${ipfsClientVersion}_linux-amd64.tar.gz`;
 
 const downloadWithProgress = (url) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     const split = url.split('/');
     const fileName = split[split.length - 1];
     const chunks = [];
     const req = https.request(url);
+    req.on('error', (err) => {
+      console.error(`Error making request for ${url}:`, err);
+      reject(err);
+    });
     req.on('response', (res) => {
+      res.on('error', (err) => {
+        console.error(`Error in response for ${url}:`, err);
+        reject(err);
+      });
       // handle redirects
       if (res.statusCode == 301 || res.statusCode === 302) {
         resolve(downloadWithProgress(res.headers.location));
@@ -57,6 +65,20 @@ const downloadWithProgress = (url) =>
     req.end();
   });
 
+// add retry wrapper around downloadWithProgress to handle transient network errors
+const downloadWithRetry = async (url, retries = 3) => {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      return await downloadWithProgress(url);
+    } catch (err) {
+      console.warn(`Download attempt ${attempt} for ${url} failed:`, err);
+      if (attempt === retries) throw err;
+      // wait before retrying
+      await new Promise((res) => setTimeout(res, attempt * 1000));
+    }
+  }
+};
+
 // plebbit kubo downloads dont need to be extracted
 const download = async (url, destinationPath) => {
   let binName = 'ipfs';
@@ -71,7 +93,7 @@ const download = async (url, destinationPath) => {
   const split = url.split('/');
   const fileName = split[split.length - 1];
   const dowloadPath = path.join(destinationPath, fileName);
-  const file = await downloadWithProgress(url);
+  const file = await downloadWithRetry(url);
   fs.ensureDirSync(destinationPath);
   await fs.writeFile(binPath, file);
 };
@@ -90,7 +112,7 @@ const downloadAndExtract = async (url, destinationPath) => {
   const split = url.split('/');
   const fileName = split[split.length - 1];
   const dowloadPath = path.join(destinationPath, fileName);
-  const file = await downloadWithProgress(url);
+  const file = await downloadWithRetry(url);
   fs.ensureDirSync(destinationPath);
   await fs.writeFile(dowloadPath, file);
   console.log(`Downloaded archive to ${dowloadPath}`);
