@@ -242,7 +242,7 @@ const CatalogPost = ({ post }: { post: Comment }) => {
             </Link>
           ) : hasThumbnail ? (
             <>
-              {shouldShowSnow() && hasThumbnail && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
+              {shouldShowSnow() && hasThumbnail && <img src='assets/xmashat.gif' className={styles.xmasHat} alt='' />}
               <Link to={postLink}>
                 <div
                   className={`${styles.mediaPaddingWrapper} ${hidden && styles.hidden}`}

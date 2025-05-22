@@ -1,14 +1,11 @@
-// hook that runs after electron-build
-
-import fs from 'fs-extra';
-import path from 'path';
-import { execSync } from 'child_process';
-import packageJson from '../package.json' assert { type: 'json' };
-import { fileURLToPath } from 'url';
-const rootPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const fs = require('fs-extra');
+const path = require('path');
+const { execSync } = require('child_process');
+const packageJson = require('../package.json');
+const rootPath = path.resolve(__dirname, '..');
 const distFolderPath = path.resolve(rootPath, 'dist');
 
-const addPortableToPortableExecutableFileName = () => {
+function addPortableToPortableExecutableFileName() {
   const files = fs.readdirSync(distFolderPath);
   for (const file of files) {
     if (file.endsWith('.exe') && !file.match('Setup')) {
@@ -17,9 +14,9 @@ const addPortableToPortableExecutableFileName = () => {
       fs.moveSync(filePath, renamedFilePath);
     }
   }
-};
+}
 
-const createHtmlArchive = () => {
+function createHtmlArchive() {
   if (process.platform !== 'linux') {
     return;
   }
@@ -28,17 +25,14 @@ const createHtmlArchive = () => {
   const outputFile = path.resolve(distFolderPath, `${plebchanHtmlFolderName}.zip`);
   const inputFolder = path.resolve(rootPath, 'build');
   try {
-    // will break if node_modules/7zip-bin changes
     execSync(`${zipBinPath} a ${outputFile} ${inputFolder}`);
-    // rename 'build' folder to 'plebchan-html-version' inside the archive
     execSync(`${zipBinPath} rn -r ${outputFile} build ${plebchanHtmlFolderName}`);
   } catch (e) {
-    e.message = 'electron build createHtmlArchive error: ' + e.message;
-    console.log(e);
+    console.error('electron build createHtmlArchive error:', e);
   }
-};
+}
 
-export default async (buildResult) => {
+module.exports = async function afterAllArtifactBuild(buildResult) {
   addPortableToPortableExecutableFileName();
   createHtmlArchive();
 };

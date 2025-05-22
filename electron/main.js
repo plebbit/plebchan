@@ -1,5 +1,5 @@
 import './log.js';
-import { app, BrowserWindow, Menu, MenuItem, Tray, screen as electronScreen, shell, dialog, nativeTheme, ipcMain } from 'electron';
+import { app, BrowserWindow, Menu, MenuItem, Tray, shell, dialog, nativeTheme, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
 import fs from 'fs';
 import path from 'path';
@@ -8,8 +8,13 @@ import startIpfs from './start-ipfs.js';
 import './start-plebbit-rpc.js';
 import { URL, fileURLToPath } from 'node:url';
 import contextMenu from 'electron-context-menu';
-import packageJson from '../package.json' with { type: 'json' };
-const dirname = path.join(path.dirname(fileURLToPath(import.meta.url)));
+
+// Determine __filename and dirname for ESM
+const __filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(__filename);
+
+// Load package.json dynamically
+const packageJson = JSON.parse(fs.readFileSync(path.join(dirname, '../package.json'), 'utf-8'));
 
 let startIpfsError;
 startIpfs.onError = (error) => {
@@ -78,7 +83,7 @@ const createMainWindow = () => {
       nodeIntegration: false,
       contextIsolation: true,
       devTools: true, // TODO: change to isDev when no bugs left
-      preload: path.join(dirname, 'preload.js'),
+      preload: path.join(dirname, '../build/electron/preload.cjs'),
     },
   });
 
