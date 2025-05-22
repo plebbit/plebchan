@@ -35,6 +35,7 @@ export default defineConfig({
       include: ['crypto', 'stream', 'util', 'buffer', 'events'],
     }),
     VitePWA({
+      strategies: 'generateSW',
       registerType: 'autoUpdate',
       strategies: 'injectManifest',
       injectManifest: {
@@ -47,10 +48,13 @@ export default defineConfig({
         type: 'module',
       },
       includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+      injectManifest: {
+        maximumFileSizeToCacheInBytes: 6000000,
+      },
       manifest: {
-        name: 'Seedit',
-        short_name: 'Seedit',
-        description: 'A GUI for plebbit similar to old.reddit',
+        name: 'plebchan',
+        short_name: 'plebchan',
+        description: 'A GUI for plebbit similar to 4chan',
         theme_color: '#ffffff',
         background_color: '#ffffee',
         display: 'standalone',
@@ -77,10 +81,9 @@ export default defineConfig({
         clientsClaim: true,
         skipWaiting: true,
         cleanupOutdatedCaches: true,
-        
         navigateFallback: 'index.html',
-        navigateFallbackDenylist: [/^\/api/, /^\/_(.*)/],
-        
+        navigateFallbackDenylist: [/^\/api/, /^\/_\(.*\)/],
+        maximumFileSizeToCacheInBytes: 6000000,
         runtimeCaching: [
           // Fix index.html not refreshing on new versions
           {

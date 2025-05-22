@@ -1,12 +1,12 @@
 {
   "name": "plebchan",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A GUI for plebbit similar to 4chan",
   "type": "module",
   "author": "plebeius.eth",
   "private": true,
   "dependencies": {
-    "@capacitor/app": "6.0.1",
+    "@capacitor/app": "7.0.1",
     "@floating-ui/react": "0.26.1",
     "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#39cd7c09f1675949193498891fc448f68e42742b",
     "@react-spring/web": "9.7.5",
@@ -140,7 +140,8 @@
     "files": [
       "build/**/*",
       "electron/**/*",
-      "package.json"
+      "package.json",
+      "node_modules/**/*"
     ],
     "extends": null,
     "mac": {

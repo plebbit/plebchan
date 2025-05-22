@@ -1,6 +1,9 @@
+# [0.5.0](https://github.com/plebbit/plebchan/compare/v0.4.0...v0.5.0) (2025-05-12)
+
+
+
 # [0.4.0](https://github.com/plebbit/plebchan/compare/v0.3.6...v0.4.0) (2025-03-07)
 
-This version migrates the framework from Create React App to Vite and upgrades to React 19, implementing React Compiler, for better rendering optimizations.
 
 ### Bug Fixes
 
