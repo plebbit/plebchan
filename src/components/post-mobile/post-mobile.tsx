@@ -336,7 +336,7 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostPro
                 data-author-address={author?.shortAddress}
                 data-post-cid={postCid}
               >
-                {shouldShowSnow() && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
+                {shouldShowSnow() && <img src='assets/xmashat.gif' className={styles.xmasHat} alt='' />}
                 <PostInfoAndMedia post={post} postReplyCount={replyCount} roles={roles} />
                 <CommentContent comment={post} />
               </div>

@@ -401,7 +401,7 @@ const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostPr
           </span>
         )}
         <div data-cid={cid} data-author-address={author?.shortAddress} data-post-cid={postCid} className={shouldShowSnow() && hasThumbnail ? styles.xmasHatWrapper : ''}>
-          {shouldShowSnow() && hasThumbnail && <img src={`${process.env.PUBLIC_URL}/assets/xmashat.gif`} className={styles.xmasHat} alt='' />}
+          {shouldShowSnow() && hasThumbnail && <img src='assets/xmashat.gif' className={styles.xmasHat} alt='' />}
           {link && !isHidden && !(deleted || removed) && isValidURL(link) && (
             <PostMedia
               commentMediaInfo={commentMediaInfo}

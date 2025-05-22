@@ -2,12 +2,11 @@ import { useTranslation } from 'react-i18next';
 import packageJson from '../../../package.json';
 
 const { version } = packageJson;
-const commitRef = process.env.VITE_COMMIT_REF;
-const isElectron = window.isElectron === true;
+const commitRef = import.meta.env.VITE_COMMIT_REF;
+const isElectron = window.electronApi?.isElectron === true;
 
 const Version = () => {
   const { t } = useTranslation();
-
   return (
     <>
       <a
@@ -15,7 +14,7 @@ const Version = () => {
         target='_blank'
         rel='noopener noreferrer'
       >
-        plebchan v{commitRef ? `${version}-dev (#${commitRef.slice(0, 7)})` : version}
+        v{commitRef ? `${version}#${commitRef.slice(0, 7)}` : version}
       </a>
       {isElectron && (
         <>

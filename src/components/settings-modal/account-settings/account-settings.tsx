@@ -228,7 +228,7 @@ const AccountSettings = () => {
         <button onClick={handleImportAccount}>{t('import')}</button> <button onClick={handleExportAccount}>{t('export')}</button>
         <div className={styles.warning}>
           {t('stored_locally', {
-            location: window.isElectron ? 'this desktop app' : isAndroid ? 'this mobile app' : window.location.hostname,
+            location: window.electronApi?.isElectron ? 'this desktop app' : isAndroid ? 'this mobile app' : window.location.hostname,
             interpolation: { escapeValue: false },
           })}
         </div>

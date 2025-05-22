@@ -37,7 +37,15 @@ const IPFSGatewaysSettings = ({ ipfsGatewayUrlsRef, mediaIpfsGatewayUrlRef }: Se
       </div>
       <span className={styles.settingTip}>NFT profile pics gateway</span>
       <div>
-        <input type='text' defaultValue={mediaIpfsGatewayUrl} ref={mediaIpfsGatewayUrlRef} disabled={isConnectedToRpc} />
+        <input
+          type='text'
+          defaultValue={mediaIpfsGatewayUrl}
+          ref={mediaIpfsGatewayUrlRef}
+          disabled={isConnectedToRpc}
+          autoCorrect='off'
+          autoCapitalize='off'
+          spellCheck='false'
+        />
       </div>
     </div>
   );
@@ -53,7 +61,15 @@ const PubsubProvidersSettings = ({ pubsubProvidersRef }: SettingsProps) => {
 
   return (
     <div className={styles.pubsubProvidersSettings}>
-      <textarea defaultValue={pubsubProvidersDefaultValue} ref={pubsubProvidersRef} disabled={isConnectedToRpc} autoCorrect='off' autoComplete='off' spellCheck='false' />
+      <textarea
+        defaultValue={pubsubProvidersDefaultValue}
+        ref={pubsubProvidersRef}
+        disabled={isConnectedToRpc}
+        autoCorrect='off'
+        autoCapitalize='off'
+        autoComplete='off'
+        spellCheck='false'
+      />
     </div>
   );
 };
@@ -98,7 +114,7 @@ const PlebbitRPCSettings = ({ plebbitRpcRef }: SettingsProps) => {
   return (
     <div className={styles.plebbitRPCSettings}>
       <div>
-        <input type='text' defaultValue={plebbitRpcClientsOptions} ref={plebbitRpcRef} />
+        <input type='text' defaultValue={plebbitRpcClientsOptions} ref={plebbitRpcRef} autoCorrect='off' autoCapitalize='off' spellCheck='false' />
         <button onClick={() => setShowInfo(!showInfo)}>{showInfo ? 'X' : '?'}</button>
       </div>
       {showInfo && (
@@ -123,18 +139,18 @@ const PlebbitDataPathSettings = ({ plebbitDataPathRef }: SettingsProps) => {
   const plebbitRpc = usePlebbitRpcSettings();
   const { plebbitRpcSettings } = plebbitRpc || {};
   const isConnectedToRpc = plebbitRpc?.state === 'succeeded';
-  const path = plebbitRpcSettings?.plebbitOptions?.plebbitDataPath || '';
+  const path = plebbitRpcSettings?.plebbitOptions?.dataPath || '';
 
   return (
     <div className={styles.plebbitDataPathSettings}>
       <div>
-        <input type='text' defaultValue={path} disabled={!isConnectedToRpc} ref={plebbitDataPathRef} />
+        <input autoCorrect='off' autoCapitalize='off' spellCheck='false' type='text' defaultValue={path} disabled={!isConnectedToRpc} ref={plebbitDataPathRef} />
       </div>
     </div>
   );
 };
 
-const isElectron = window.isElectron === true;
+const isElectron = window.electronApi?.isElectron === true;
 
 const PlebbitOptions = () => {
   const { t } = useTranslation();

@@ -37,6 +37,16 @@ export default defineConfig({
     VitePWA({
       strategies: 'generateSW',
       registerType: 'autoUpdate',
+      strategies: 'injectManifest',
+      injectManifest: {
+        maximumFileSizeToCacheInBytes: 6000000,
+      },
+      srcDir: 'src',
+      filename: 'sw.ts',
+      devOptions: {
+        enabled: true,
+        type: 'module',
+      },
       includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
       injectManifest: {
         maximumFileSizeToCacheInBytes: 6000000,
