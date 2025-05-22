@@ -35,7 +35,6 @@ export default defineConfig({
       include: ['crypto', 'stream', 'util', 'buffer', 'events'],
     }),
     VitePWA({
-      strategies: 'generateSW',
       registerType: 'autoUpdate',
       strategies: 'injectManifest',
       injectManifest: {
@@ -48,9 +47,6 @@ export default defineConfig({
         type: 'module',
       },
       includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
-      injectManifest: {
-        maximumFileSizeToCacheInBytes: 6000000,
-      },
       manifest: {
         name: 'plebchan',
         short_name: 'plebchan',
