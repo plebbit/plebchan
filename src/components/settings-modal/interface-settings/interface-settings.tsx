@@ -13,7 +13,7 @@ import { isChristmas } from '../../../lib/utils/time-utils';
 import Version from '../../version';
 
 const commitRef = process.env.VITE_COMMIT_REF;
-const isElectron = window.isElectron === true;
+const isElectron = window.electronApi?.isElectron === true;
 
 const CheckForUpdates = () => {
   const { t } = useTranslation();

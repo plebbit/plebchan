@@ -15,3 +15,5 @@ contextBridge.exposeInMainWorld('defaultMediaIpfsGatewayUrl', 'http://localhost:
 // receive plebbit rpc auth key from main
 ipcRenderer.on('plebbit-rpc-auth-key', (event, plebbitRpcAuthKey) => contextBridge.exposeInMainWorld('plebbitRpcAuthKey', plebbitRpcAuthKey));
 ipcRenderer.send('get-plebbit-rpc-auth-key');
+
+contextBridge.exposeInMainWorld('electronApi', { isElectron: true });
