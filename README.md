@@ -25,7 +25,7 @@ The boards list on plebchan is plebbit's [temporary-default-subplebbits](https:/
 
 ## To run locally
 
-1. Install Node v18 (Download from https://nodejs.org)
+1. Install Node v22 (Download from https://nodejs.org)
 2. Install Yarn: `npm install -g yarn`
 3. `yarn install --frozen-lockfile` to install Plebchan dependencies
 4. `yarn start` to run the web client
