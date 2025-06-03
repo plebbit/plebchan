@@ -68,48 +68,6 @@ const ImageSearchButton = ({ url, onClose }: { url: string; onClose: () => void 
   );
 };
 
-const ViewOnButton = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuDesktopProps) => {
-  const { t } = useTranslation();
-  const [isClientRedirectMenuOpen, setIsClientRedirectMenuOpen] = useState(false);
-
-  const getViewOnOtherClientLink = () => {
-    if (isDescription || isRules) {
-      return `${subplebbitAddress}`;
-    } else {
-      return `${subplebbitAddress}/c/${cid}`;
-    }
-  };
-
-  const viewOnOtherClientLink = getViewOnOtherClientLink();
-
-  const { refs, floatingStyles } = useFloating({
-    placement: 'right-start',
-    middleware: [flip(), shift({ padding: 10 })],
-  });
-
-  return (
-    <div
-      className={`${styles.postMenuItem} ${styles.dropdown}`}
-      onMouseOver={() => setIsClientRedirectMenuOpen(true)}
-      onMouseLeave={() => setIsClientRedirectMenuOpen(false)}
-      ref={refs.setReference}
-      onClick={onClose}
-    >
-      {_.capitalize(t('view_on'))} »
-      {isClientRedirectMenuOpen && (
-        <div ref={refs.setFloating} style={floatingStyles} className={styles.dropdownMenu}>
-          <a href={`https://seedit.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
-            <div className={styles.postMenuItem}>Seedit</div>
-          </a>
-          <a href={`https://plebones.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
-            <div className={styles.postMenuItem}>Plebones</div>
-          </a>
-        </div>
-      )}
-    </div>
-  );
-};
-
 const BlockUserButton = ({ address }: { address: string }) => {
   const { t } = useTranslation();
   const { blocked, unblock, block } = useBlock({ address });
@@ -197,7 +155,6 @@ const PostMenuDesktop = ({ post }: { post: Comment }) => {
                 </div>
               )}
               {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButton url={url} onClose={handleClose} />}
-              <ViewOnButton cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
               {!isDescription && !isRules && <BlockUserButton address={author?.address} />}
               {(isInAllView || isInSubscriptionsView) && <BlockBoardButton address={subplebbitAddress} />}
             </div>

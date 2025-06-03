@@ -55,31 +55,6 @@ const ImageSearchButtons = ({ url, onClose }: { url: string; onClose: () => void
   );
 };
 
-const ViewOnButtons = ({ cid, isDescription, isRules, subplebbitAddress, onClose }: PostMenuMobileProps) => {
-  const { t } = useTranslation();
-
-  const getViewOnOtherClientLink = () => {
-    if (isDescription || isRules) {
-      return `${subplebbitAddress}`;
-    } else {
-      return `${subplebbitAddress}/c/${cid}`;
-    }
-  };
-
-  const viewOnOtherClientLink = getViewOnOtherClientLink();
-
-  return (
-    <div onClick={onClose}>
-      <a href={`https://seedit.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
-        <div className={styles.postMenuItem}>{t('view_on_client', { client: 'Seedit' })}</div>
-      </a>
-      <a href={`https://plebones.eth.limo/#/p/${viewOnOtherClientLink}`} target='_blank' rel='noreferrer'>
-        <div className={styles.postMenuItem}>{t('view_on_client', { client: 'Plebones' })}</div>
-      </a>
-    </div>
-  );
-};
-
 const HidePostButton = ({ cid, isReply, onClose, postCid }: PostMenuMobileProps) => {
   const { t } = useTranslation();
   const { hide, hidden, unhide } = useHide({ cid });
@@ -167,7 +142,6 @@ const PostMenuMobile = ({ post }: { post: Comment }) => {
                   {cid && subplebbitAddress && !isDescription && !isRules && <BlockUserButton address={author?.address} />}
                   {cid && subplebbitAddress && !isInBoardView && !isDescription && !isRules && <BlockBoardButton address={subplebbitAddress} />}
                   {link && isValidURL(link) && (type === 'image' || type === 'gif' || thumbnail) && url && <ImageSearchButtons url={url} onClose={handleClose} />}
-                  <ViewOnButtons cid={cid} isDescription={isDescription} isRules={isRules} subplebbitAddress={subplebbitAddress} onClose={handleClose} />
                 </div>
               </FloatingFocusManager>,
               document.body,
