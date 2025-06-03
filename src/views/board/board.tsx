@@ -13,6 +13,7 @@ import useTimeFilter from '../../hooks/use-time-filter';
 import useInterfaceSettingsStore from '../../stores/use-interface-settings-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
 import useSortingStore from '../../stores/use-sorting-store';
+import ErrorDisplay from '../../components/error-display/error-display';
 import LoadingEllipsis from '../../components/loading-ellipsis';
 import SubplebbitDescription from '../../components/subplebbit-description';
 import SubplebbitRules from '../../components/subplebbit-rules';
@@ -227,12 +228,6 @@ const Board = () => {
           ) : (
             hasMore && <LoadingEllipsis string={loadingStateString} />
           )}
-          {error && (
-            <div className='red'>
-              <br />
-              {error.message}
-            </div>
-          )}
           {blocked && (
             <>
               &nbsp;&nbsp;[
@@ -274,6 +269,16 @@ const Board = () => {
     document.title = boardTitle + ' - plebchan';
   }, [title, shortAddress, subplebbitAddress]);
 
+  // probably not necessary to show the error to the user if the feed loaded successfully
+  const [shouldShowErrorToUser, setShouldShowErrorToUser] = useState(false);
+  useEffect(() => {
+    if (error?.message && feed.length === 0) {
+      setShouldShowErrorToUser(true);
+    } else if (feed.length > 0) {
+      setShouldShowErrorToUser(false);
+    }
+  }, [error, feed]);
+
   return (
     <>
       {shouldShowSnow() && <hr />}
@@ -288,6 +293,11 @@ const Board = () => {
             shortAddress={shortAddress}
             title={title}
           />
+        )}
+        {shouldShowErrorToUser && (
+          <div className={styles.error}>
+            <ErrorDisplay error={error} />
+          </div>
         )}
         {rules && !description && rules.length > 0 && <SubplebbitRules subplebbitAddress={subplebbitAddress} createdAt={createdAt} rules={rules} />}
         <Virtuoso

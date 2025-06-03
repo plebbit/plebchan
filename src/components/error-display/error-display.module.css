@@ -1,0 +1,11 @@
+.errorMessage {
+  color: red;
+}
+
+.clickableErrorMessage {
+  cursor: pointer;
+}
+
+.feedbackSuccessMessage {
+  color: inherit;
+}

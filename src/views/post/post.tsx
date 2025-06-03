@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Comment, Role, useComment, useEditedComment, useSubplebbit } from '@plebbit/plebbit-react-hooks';
 import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { useLocation, useParams } from 'react-router-dom';
 import { isAllView, isDescriptionView, isRulesView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
+import ErrorDisplay from '../../components/error-display/error-display';
 import PostDesktop from '../../components/post-desktop';
 import PostMobile from '../../components/post-mobile';
 import SubplebbitDescription from '../../components/subplebbit-description';
@@ -83,11 +84,25 @@ const PostPage = () => {
     document.title = isInAllView ? `${t('all')} - plebchan` : postDucumentTitle;
   }, [title, shortAddress, subplebbitAddress, post?.title, post?.content, isInAllView, t]);
 
+  // probably not necessary to show the error to the user if the post loaded successfully
+  const [shouldShowErrorToUser, setShouldShowErrorToUser] = useState(false);
+  useEffect(() => {
+    if (post?.error && ((post?.replyCount > 0 && post?.replies?.length === 0) || (post?.state === 'failed' && post?.error))) {
+      setShouldShowErrorToUser(true);
+    } else if (post?.replyCount > 0 && post?.replies?.length > 0) {
+      setShouldShowErrorToUser(false);
+    }
+  }, [post]);
+
   return (
     <div className={styles.content}>
       {/* TODO: remove this replyCount error once api supports scrolling replies pages */}
       {replyCount > 60 && <span className={styles.error}>Error: this thread has too many replies, some of them cannot be displayed right now.</span>}
-      {error && <span className={styles.error}>Error: {error?.message || error?.toString?.()}</span>}
+      {shouldShowErrorToUser && (
+        <div className={styles.error}>
+          <ErrorDisplay error={error} />
+        </div>
+      )}
       {isInDescriptionView ? (
         <SubplebbitDescription
           avatarUrl={suggested?.avatarUrl}
