@@ -4,14 +4,21 @@ const config: CapacitorConfig = {
   appId: 'plebchan.android',
   appName: 'plebchan',
   webDir: 'build',
-  bundledWebRuntime: false,
   plugins: {
     CapacitorHttp: {
       enabled: true,
     },
     FileUploader: {
       enabled: true
-    }
+    },
+    StatusBar: {
+      style: 'Dark',
+      backgroundColor: '#000000',
+      overlay: false,
+    },
+    EdgeToEdge: {
+      backgroundColor: '#000000',
+    },
   },
   server: {
     androidScheme: 'https'

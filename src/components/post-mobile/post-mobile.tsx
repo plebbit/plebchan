@@ -359,11 +359,14 @@ const PostMobile = ({ post, roles, showAllReplies, showReplies = true }: PostPro
               !isInPendingPostView &&
               replies &&
               showReplies &&
-              (showAllReplies ? replies : replies.slice(-5)).map((reply, index) => (
-                <div key={index} className={styles.replyContainer}>
-                  <Reply postReplyCount={replyCount} reply={reply} roles={roles} />
-                </div>
-              ))}
+              (showAllReplies ? replies : replies.slice(-5))
+                // Don't render deleted replies that have no children (replyCount = 0)
+                .filter((reply) => !(reply.deleted && (reply.replyCount === 0 || !reply.replyCount)))
+                .map((reply, index) => (
+                  <div key={index} className={styles.replyContainer}>
+                    <Reply postReplyCount={replyCount} reply={reply} roles={roles} />
+                  </div>
+                ))}
             {showRules && (
               <div className={styles.replyContainer}>
                 <Reply reply={subplebbitRulesReply} />

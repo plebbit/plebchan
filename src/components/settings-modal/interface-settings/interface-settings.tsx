@@ -52,7 +52,7 @@ const CheckForUpdates = () => {
       if (!updateAvailable) {
         alert(
           commitRef
-            ? `${t('latest_development_version', { commit: commitRef.slice(0, 7), link: 'https://plebchan.eth.limo/#/', interpolation: { escapeValue: false } })}`
+            ? `${t('latest_development_version', { commit: commitRef.slice(0, 7), link: 'https://plebchan.app/#/', interpolation: { escapeValue: false } })}`
             : `${t('latest_stable_version', { version: packageJson.version })}`,
         );
       }
