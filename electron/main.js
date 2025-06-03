@@ -1,5 +1,5 @@
 import './log.js';
-import { app, BrowserWindow, Menu, MenuItem, Tray, shell, dialog, nativeTheme, ipcMain } from 'electron';
+import { app, BrowserWindow, Menu, MenuItem, Tray, shell, dialog, nativeTheme, ipcMain, clipboard } from 'electron';
 import isDev from 'electron-is-dev';
 import fs from 'fs';
 import path from 'path';
@@ -320,4 +320,24 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+// Handle request to copy text to clipboard
+ipcMain.handle('copy-to-clipboard', async (event, text) => {
+  try {
+    clipboard.writeText(text);
+    return { success: true };
+  } catch (error) {
+    console.error('[Electron Main] Error copying to clipboard:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Handle request for platform info
+ipcMain.handle('get-platform', async () => {
+  return {
+    platform: process.platform,
+    arch: process.arch,
+    version: process.version,
+  };
 });
