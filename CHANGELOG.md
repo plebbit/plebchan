@@ -1,4 +1,23 @@
-# [0.5.0](https://github.com/plebbit/plebchan/compare/v0.4.0...v0.5.0) (2025-05-12)
+## [0.5.1](https://github.com/plebbit/plebchan/compare/v0.5.0...v0.5.1) (2025-06-03)
+
+
+### Bug Fixes
+
+* **android:** resolve fullscreen overlay preventing user interaction ([c3ca0c3](https://github.com/plebbit/plebchan/commit/c3ca0c330dd55db7c33733ecf48616db3fe35822))
+* **electron:** app couldn't copy share links to clipboard ([104c9c0](https://github.com/plebbit/plebchan/commit/104c9c0eba2b4e3668911d49ae66a51c516fe0b5))
+* errors could be displayed unnecessarily ([9fbfcb3](https://github.com/plebbit/plebchan/commit/9fbfcb3630a4231d240a6582cf3645184d8e1e19))
+* **reply:** no need to render deleted replies that have no children ([f233da9](https://github.com/plebbit/plebchan/commit/f233da98069ea1b6f38543cca0ebbeefa43dc19a))
+
+
+
+# [0.5.0](https://github.com/plebbit/plebchan/compare/v0.4.0...v0.5.0) (2025-05-22)
+
+
+### Bug Fixes
+
+* **electron:** catch stream errors (e.g. ECONNRESET) in IPFS downloader and add retry logic ([694b01b](https://github.com/plebbit/plebchan/commit/694b01b8e3d73a7a9e7fb6799c1221546e2183a2))
+* **markdown:** use rehype-raw for spoiler tag parsing instead of string replacement ([45e9482](https://github.com/plebbit/plebchan/commit/45e94822417c75c87c6a09e11cdb2a971f5c5807))
+* **pending post:** page could redirect to "not found" if pending post failed ([b50df69](https://github.com/plebbit/plebchan/commit/b50df69cf3499eb8facea1475b99b85362468681))
 
 
 
