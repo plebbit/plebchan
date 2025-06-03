@@ -450,11 +450,14 @@ const PostDesktop = ({ post, roles, showAllReplies, showReplies = true }: PostPr
           !isInPendingPostView &&
           replies &&
           showReplies &&
-          (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5)).map((reply, index) => (
-            <div key={index} className={styles.replyContainer}>
-              <Reply reply={reply} roles={roles} postReplyCount={replyCount} />
-            </div>
-          ))}
+          (showAllReplies || showOmittedReplies[cid] ? replies : replies.slice(-5))
+            // Don't render deleted replies that have no children (replyCount = 0)
+            .filter((reply) => !(reply.deleted && (reply.replyCount === 0 || !reply.replyCount)))
+            .map((reply, index) => (
+              <div key={index} className={styles.replyContainer}>
+                <Reply reply={reply} roles={roles} postReplyCount={replyCount} />
+              </div>
+            ))}
         {isDescription && subplebbit?.rules && subplebbit?.rules.length > 0 && (
           <div className={styles.replyContainer}>
             <Reply reply={subplebbitRulesReply} />
