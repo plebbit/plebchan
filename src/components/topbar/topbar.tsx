@@ -116,7 +116,7 @@ const TopBarDesktop = () => {
         </span>
         ] [
         <span className={styles.temporaryButton}>
-          <a href='https://seedit.eth.limo/#/communities/vote' target='_blank' rel='noopener noreferrer'>
+          <a href='https://seedit.app/#/communities/vote' target='_blank' rel='noopener noreferrer'>
             {t('vote')}
           </a>
         </span>
