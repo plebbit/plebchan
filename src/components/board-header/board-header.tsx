@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js';
 import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import { isAllView, isSubscriptionsView, isModView } from '../../lib/utils/view-utils';
 import styles from './board-header.module.css';
@@ -48,7 +49,12 @@ const BoardHeader = () => {
         </div>
       )}
       <div className={styles.boardTitle}>
-        {title || (shortAddress ? (shortAddress.endsWith('.eth') || shortAddress.endsWith('.sol') ? shortAddress.slice(0, -4) : shortAddress) : subplebbitAddress)}
+        {title ||
+          (shortAddress
+            ? shortAddress.endsWith('.eth') || shortAddress.endsWith('.sol')
+              ? shortAddress.slice(0, -4)
+              : shortAddress
+            : Plebbit.getShortAddress(subplebbitAddress))}
         {(isOffline || isOnlineStatusLoading) && !isInAllView && !isInSubscriptionsView && !isInModView && (
           <span className={styles.offlineIconWrapper}>
             <Tooltip content={offlineTitle}>
