@@ -11,8 +11,9 @@ import { isCatalogView } from '../../lib/utils/view-utils';
 import useIsMobile from '../../hooks/use-is-mobile';
 import CommentMedia from '../comment-media';
 import styles from './markdown.module.css';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { canEmbed } from '../embed';
+import { isPlebchanLink, transformPlebchanLinkToInternal, preprocessPlebchanPatterns } from '../../lib/utils/url-utils';
 
 interface ContentLinkEmbedProps {
   children: any;
@@ -153,6 +154,52 @@ interface MarkdownProps {
   title?: string;
 }
 
+const renderAnchorLink = (children: React.ReactNode, href: string) => {
+  if (!href) {
+    return <span>{children}</span>;
+  }
+
+  // Check if this is a valid plebchan link that should be handled internally
+  if (isPlebchanLink(href)) {
+    const internalPath = transformPlebchanLinkToInternal(href);
+    if (internalPath) {
+      // Check if the link text should be replaced with the internal path
+      let shouldReplaceText = false;
+
+      if (typeof children === 'string') {
+        shouldReplaceText = children === href || children.trim() === href.trim();
+      } else if (Array.isArray(children) && children.length === 1 && typeof children[0] === 'string') {
+        shouldReplaceText = children[0] === href || children[0].trim() === href.trim();
+      }
+
+      // For display purposes, remove leading slash from paths like "/p/something"
+      let displayText: React.ReactNode = children;
+      if (shouldReplaceText && internalPath.startsWith('/p/')) {
+        displayText = internalPath.substring(1); // Remove leading slash
+      } else if (shouldReplaceText) {
+        displayText = internalPath;
+      }
+
+      return <Link to={internalPath}>{displayText}</Link>;
+    } else {
+      console.warn('Failed to transform plebchan link to internal path:', href);
+      return <Link to={href}>{children}</Link>;
+    }
+  }
+
+  // Handle hash routes and internal patterns (including routes that start with /#/)
+  if (href.startsWith('#/') || href.startsWith('/#/') || href.startsWith('/p/') || href.match(/^\/p\/[^/]+(\/c\/[^/]+)?$/)) {
+    return <Link to={href}>{children}</Link>;
+  }
+
+  // External links
+  return (
+    <a href={href} target='_blank' rel='noopener noreferrer'>
+      {children}
+    </a>
+  );
+};
+
 const Markdown = ({ content, title }: MarkdownProps) => {
   const remarkPlugins: any[] = [[supersub]];
 
@@ -179,6 +226,9 @@ const Markdown = ({ content, title }: MarkdownProps) => {
 
   const isInCatalogView = isCatalogView(useLocation().pathname, useParams());
 
+  // Preprocess content to convert plain text plebchan patterns to markdown links
+  const processedContent = preprocessPlebchanPatterns(content || '');
+
   return (
     <span className={styles.markdown}>
       {isInCatalogView && title && (
@@ -188,7 +238,7 @@ const Markdown = ({ content, title }: MarkdownProps) => {
         </span>
       )}
       <ReactMarkdown
-        children={content}
+        children={processedContent}
         remarkPlugins={remarkPlugins}
         rehypePlugins={[[rehypeRaw as any], [rehypeSanitize, customSchema]]}
         components={
@@ -220,12 +270,10 @@ const Markdown = ({ content, title }: MarkdownProps) => {
                   console.debug('Invalid URL:', href);
                 }
 
-                return (
-                  <a href={href} target='_blank' rel='noopener noreferrer'>
-                    {children}
-                  </a>
-                );
+                return renderAnchorLink(children, href);
               }
+
+              return renderAnchorLink(children, href || '');
             },
           } as ExtendedComponents
         }
