@@ -1,5 +1,4 @@
 import localForageLru from '@plebbit/plebbit-react-hooks/dist/lib/localforage-lru/index.js';
-import extName from 'ext-name';
 import { canEmbed } from '../../components/embed';
 import memoize from 'memoizee';
 import { isValidURL } from './url-utils';
@@ -72,6 +71,11 @@ const getPatternThumbnailUrl = (url: URL): string | undefined => {
   }
 };
 
+// Known media file extensions - only these will be classified as media files
+const KNOWN_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico', 'tiff'];
+const KNOWN_VIDEO_EXTENSIONS = ['mp4', 'webm', 'mov', 'avi', 'mkv', 'flv', 'wmv', 'm4v'];
+const KNOWN_AUDIO_EXTENSIONS = ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a', 'wma'];
+
 export const getLinkMediaInfo = memoize(
   (link: string): CommentMediaInfo | undefined => {
     if (!isValidURL(link)) {
@@ -80,7 +84,6 @@ export const getLinkMediaInfo = memoize(
     const url = new URL(link);
     let patternThumbnailUrl: string | undefined;
     let type: string = 'webpage';
-    let mime: string | undefined;
 
     if (url.pathname === '/_next/image' && url.search.startsWith('?url=')) {
       return { url: link, type: 'image' };
@@ -93,16 +96,19 @@ export const getLinkMediaInfo = memoize(
     }
 
     try {
-      mime = extName(url.pathname.toLowerCase().replace('/', ''))[0]?.mime;
-      if (mime) {
-        if (mime.startsWith('image')) {
-          type = mime === 'image/gif' ? 'gif' : 'image';
-        } else if (mime.startsWith('video')) {
-          type = 'video';
-        } else if (mime.startsWith('audio')) {
-          type = 'audio';
-        }
+      // Extract file extension
+      const pathParts = url.pathname.toLowerCase().split('.');
+      const extension = pathParts.length > 1 ? pathParts[pathParts.length - 1] : '';
+
+      // Only classify as media if we explicitly know the extension
+      if (KNOWN_IMAGE_EXTENSIONS.includes(extension)) {
+        type = extension === 'gif' ? 'gif' : 'image';
+      } else if (KNOWN_VIDEO_EXTENSIONS.includes(extension)) {
+        type = 'video';
+      } else if (KNOWN_AUDIO_EXTENSIONS.includes(extension)) {
+        type = 'audio';
       }
+      // Unknown extensions remain as 'webpage'
 
       if (!url.pathname.includes('.')) {
         type = 'webpage';
