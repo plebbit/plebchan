@@ -294,5 +294,6 @@
   "search_results_for": "검색 결과",
   "help": "도움말",
   "filter_and_highlights_help": "필터 및 하이라이트 도움말",
-  "filter_and_highlights": "필터 및 하이라이트"
+  "filter_and_highlights": "필터 및 하이라이트",
+  "boards_you_moderate": "당신이 관리하는 게시판"
 }

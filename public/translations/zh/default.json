@@ -294,5 +294,6 @@
   "search_results_for": "搜索结果",
   "help": "帮助",
   "filter_and_highlights_help": "过滤器和高亮帮助",
-  "filter_and_highlights": "筛选器与高亮"
+  "filter_and_highlights": "筛选器与高亮",
+  "boards_you_moderate": "您管理的板块"
 }

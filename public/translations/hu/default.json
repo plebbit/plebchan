@@ -294,5 +294,6 @@
   "search_results_for": "Keresési eredmények",
   "help": "Segítség",
   "filter_and_highlights_help": "Szűrők és kiemelések súgó",
-  "filter_and_highlights": "Szűrők és kiemelések"
+  "filter_and_highlights": "Szűrők és kiemelések",
+  "boards_you_moderate": "boardok, amelyeket moderálsz"
 }

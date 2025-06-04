@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Comment, setAccount, useAccount, useAccountComment, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import { Comment, setAccount, useAccount, useAccountComment, useAccountSubplebbits, useEditedComment } from '@plebbit/plebbit-react-hooks';
+import Plebbit from '@plebbit/plebbit-js';
 import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
 import { getHasThumbnail, getLinkMediaInfo } from '../../lib/utils/media-utils';
 import { formatMarkdown } from '../../lib/utils/post-utils';
 import { isValidURL } from '../../lib/utils/url-utils';
-import { isAllView, isDescriptionView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { isAllView, isDescriptionView, isModView, isPostPageView, isRulesView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useAnonMode from '../../hooks/use-anon-mode';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
 import useFetchGifFirstFrame from '../../hooks/use-fetch-gif-first-frame';
@@ -53,9 +54,13 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
 
   const location = useLocation();
   const isInAllView = isAllView(location.pathname);
+  const isInModView = isModView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
   const subscriptions = account?.subscriptions || [];
   const defaultSubplebbitAddresses = useDefaultSubplebbitAddresses();
+
+  const { accountSubplebbits } = useAccountSubplebbits();
+  const accountSubplebbitAddresses = Object.keys(accountSubplebbits);
 
   const { anonMode, getNewSigner, getExistingSigner } = useAnonMode(postCid);
   const comment = useSubplebbitsPagesStore((state) => state.comments[postCid]);
@@ -129,7 +134,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
       return;
     }
 
-    if ((isInAllView || isInSubscriptionsView) && !publishPostOptions.subplebbitAddress) {
+    if ((isInAllView || isInSubscriptionsView || isInModView) && !publishPostOptions.subplebbitAddress) {
       alert(t('no_board_selected_warning'));
       return;
     }
@@ -394,7 +399,7 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
             ]
           </td>
         </tr>
-        {(isInAllView || isInSubscriptionsView) && (
+        {(isInAllView || isInSubscriptionsView || isInModView) && (
           <tr>
             <td>{t('board')}</td>
             <td>
@@ -403,7 +408,13 @@ const PostFormTable = ({ closeForm, postCid }: { closeForm: () => void; postCid:
                 {isInAllView &&
                   defaultSubplebbitAddresses.map((address: string) => (
                     <option key={address} value={address}>
-                      {address}
+                      {address && Plebbit.getShortAddress(address)}
+                    </option>
+                  ))}
+                {isInModView &&
+                  accountSubplebbitAddresses.map((address: string) => (
+                    <option key={address} value={address}>
+                      {address && Plebbit.getShortAddress(address)}
                     </option>
                   ))}
                 {isInSubscriptionsView &&
@@ -429,6 +440,7 @@ const PostForm = () => {
   const isInPostView = isPostPageView(location.pathname, params);
   const isInRulesView = isRulesView(location.pathname, params);
   const isInAllView = isAllView(location.pathname);
+  const isInModView = isModView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, params);
 
   const commentCid = params?.commentCid;
@@ -453,7 +465,9 @@ const PostForm = () => {
   return (
     <>
       <div className={styles.postFormDesktop}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && (isOffline || isOnlineStatusLoading) && <div className={styles.offlineBoard}>{offlineTitle}</div>}
+        {!(isInAllView || isInSubscriptionsView || isInModView) && showForm && (isOffline || isOnlineStatusLoading) && (
+          <div className={styles.offlineBoard}>{offlineTitle}</div>
+        )}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}
@@ -473,7 +487,9 @@ const PostForm = () => {
         )}
       </div>
       <div className={styles.postFormMobile}>
-        {!(isInAllView || isInSubscriptionsView) && showForm && (isOffline || isOnlineStatusLoading) && <div className={styles.offlineBoard}>{offlineTitle}</div>}
+        {!(isInAllView || isInSubscriptionsView || isInModView) && showForm && (isOffline || isOnlineStatusLoading) && (
+          <div className={styles.offlineBoard}>{offlineTitle}</div>
+        )}
         {isThreadClosed ? (
           <div className={styles.closed}>
             {t('thread_closed')}

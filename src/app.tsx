@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import { initSnow, removeSnow } from './lib/snow';
-import { isAllView, isSubscriptionsView } from './lib/utils/view-utils';
+import { isAllView, isModView, isSubscriptionsView } from './lib/utils/view-utils';
 import useReplyModalStore from './stores/use-reply-modal-store';
 import useSpecialThemeStore from './stores/use-special-theme-store';
 import useIsMobile from './hooks/use-is-mobile';
@@ -30,6 +30,7 @@ const BoardLayout = () => {
   const isMobile = useIsMobile();
   const isInAllView = isAllView(location.pathname);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInModView = isModView(location.pathname);
   const pendingPost = useAccountComment({ commentIndex: accountCommentIndex ? parseInt(accountCommentIndex) : undefined });
 
   // Christmas theme
@@ -53,17 +54,17 @@ const BoardLayout = () => {
       <TopBar />
       <BoardHeader />
       {isMobile
-        ? (subplebbitAddress || isInAllView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (
+        ? (subplebbitAddress || isInAllView || isInModView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (
             <>
               <PostForm key={key} />
               <hr />
               <MobileBoardButtons />
             </>
           )
-        : (subplebbitAddress || isInAllView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (
+        : (subplebbitAddress || isInAllView || isInModView || isInSubscriptionsView || pendingPost?.subplebbitAddress) && (
             <>
               <PostForm key={key} />
-              {!(isInAllView || isInSubscriptionsView) && <SubplebbitStats />}
+              {!(isInAllView || isInSubscriptionsView || isInModView) && <SubplebbitStats />}
               <DesktopBoardButtons />
             </>
           )}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAccountComment } from '@plebbit/plebbit-react-hooks';
 import Plebbit from '@plebbit/plebbit-js';
@@ -10,6 +11,7 @@ import useIsMobile from '../../hooks/use-is-mobile';
 import useIsSubplebbitOffline from '../../hooks/use-is-subplebbit-offline';
 import { shouldShowSnow } from '../../lib/snow';
 import Tooltip from '../tooltip';
+import _ from 'lodash';
 
 const totalBanners = 63;
 
@@ -23,6 +25,7 @@ const ImageBanner = () => {
 };
 
 const BoardHeader = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const params = useParams();
   const isInAllView = isAllView(location.pathname);
@@ -36,7 +39,13 @@ const BoardHeader = () => {
   const { address, shortAddress } = subplebbit || {};
 
   const multisubMetadata = useMultisubMetadata();
-  const title = isInAllView ? multisubMetadata?.title || 'all' : isInSubscriptionsView ? 'Subscriptions' : isInModView ? 'Mod' : subplebbit?.title;
+  const title = isInAllView
+    ? multisubMetadata?.title || 'all'
+    : isInSubscriptionsView
+    ? 'Subscriptions'
+    : isInModView
+    ? _.startCase(t('boards_you_moderate'))
+    : subplebbit?.title;
   const subtitle = isInAllView ? 'p/all' : isInSubscriptionsView ? 'p/subscriptions' : isInModView ? 'p/mod' : `p/${address}`;
 
   const { isOffline, isOnlineStatusLoading, offlineIconClass, offlineTitle } = useIsSubplebbitOffline(subplebbit);
