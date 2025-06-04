@@ -294,5 +294,6 @@
   "search_results_for": "ผลการค้นหาสำหรับ",
   "help": "ช่วยเหลือ",
   "filter_and_highlights_help": "ตัวกรองและการเน้นความช่วยเหลือ",
-  "filter_and_highlights": "ตัวกรองและไฮไลท์"
+  "filter_and_highlights": "ตัวกรองและไฮไลท์",
+  "boards_you_moderate": "บอร์ดที่คุณดูแล"
 }

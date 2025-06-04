@@ -148,15 +148,17 @@ const Catalog = () => {
         }
         return true;
       })
-      .map((subplebbit) => subplebbit.address);
+      .map((subplebbit) => subplebbit.address)
+      .filter(Boolean); // Filter out any undefined/null values
 
     if (isInAllView) {
       return filteredDefaultSubplebbits;
     }
     if (isInSubscriptionsView) {
-      return subscriptions || [];
+      return (subscriptions || []).filter(Boolean); // Filter out any undefined/null values
     }
-    return [subplebbitAddress];
+    // Only include subplebbitAddress if it's defined
+    return subplebbitAddress ? [subplebbitAddress] : [];
   }, [isInAllView, isInSubscriptionsView, subplebbitAddress, defaultSubplebbits, subscriptions, hideAdultBoards, hideGoreBoards]);
 
   const { imageSize } = useCatalogStyleStore();

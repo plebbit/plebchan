@@ -141,6 +141,7 @@
   "user_deleted_this_post": "User deleted this post.",
   "reason": "reason",
   "search": "search",
+  "search_ops_placeholder": "Search OPs...",
   "ban_user_for": "Ban user for <1></1> days",
   "optional": "optional",
   "close_thread": "close thread",
@@ -294,5 +295,6 @@
   "search_results_for": "Search results for",
   "help": "Help",
   "filter_and_highlights_help": "Filters & Highlights Help",
-  "filter_and_highlights": "Filters & Highlights"
+  "filter_and_highlights": "Filters & Highlights",
+  "boards_you_moderate": "boards you moderate"
 }

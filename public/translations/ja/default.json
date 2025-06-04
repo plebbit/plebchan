@@ -294,5 +294,6 @@
   "search_results_for": "検索結果",
   "help": "ヘルプ",
   "filter_and_highlights_help": "フィルターとハイライトのヘルプ",
-  "filter_and_highlights": "フィルターとハイライト"
+  "filter_and_highlights": "フィルターとハイライト",
+  "boards_you_moderate": "あなたが管理するボード"
 }

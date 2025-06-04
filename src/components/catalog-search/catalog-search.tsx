@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './catalog-search.module.css';
 import useIsMobile from '../../hooks/use-is-mobile';
 import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
@@ -7,21 +8,52 @@ import _ from 'lodash';
 
 const CatalogSearch = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [openSearch, setOpenSearch] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const { setSearchFilter, clearSearchFilter } = useCatalogFiltersStore();
 
-  // Create a debounced version of setSearchFilter
+  // Extract query parameter from URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const queryParam = urlParams.get('q');
+    if (queryParam) {
+      setInputValue(queryParam);
+      setSearchFilter(queryParam);
+      setOpenSearch(true);
+    }
+  }, [location.search, setSearchFilter]);
+
+  // Update URL when search changes
+  const updateURL = useCallback(
+    (searchText: string) => {
+      const urlParams = new URLSearchParams(location.search);
+      if (searchText.trim()) {
+        urlParams.set('q', searchText);
+      } else {
+        urlParams.delete('q');
+      }
+      const newSearch = urlParams.toString();
+      const newPath = location.pathname + (newSearch ? `?${newSearch}` : '');
+      navigate(newPath, { replace: true });
+    },
+    [location.pathname, location.search, navigate],
+  );
+
+  // Create a debounced version of setSearchFilter and URL update
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearchFilter = useCallback(
     _.debounce((text: string) => {
       if (text.trim()) {
         setSearchFilter(text);
+        updateURL(text);
       } else {
         clearSearchFilter();
+        updateURL('');
       }
     }, 300),
-    [setSearchFilter, clearSearchFilter],
+    [setSearchFilter, clearSearchFilter, updateURL],
   );
 
   const handleToggleSearch = useCallback(() => {
@@ -30,14 +62,16 @@ const CatalogSearch = () => {
     if (openSearch) {
       setInputValue('');
       clearSearchFilter();
+      updateURL('');
     }
-  }, [openSearch, clearSearchFilter]);
+  }, [openSearch, clearSearchFilter, updateURL]);
 
   const handleCloseSearch = useCallback(() => {
     setOpenSearch(false);
     setInputValue('');
     clearSearchFilter();
-  }, [clearSearchFilter]);
+    updateURL('');
+  }, [clearSearchFilter, updateURL]);
 
   useEffect(() => {
     if (openSearch) {

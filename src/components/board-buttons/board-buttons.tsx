@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAccountComment, useSubscribe } from '@plebbit/plebbit-react-hooks';
 import useSubplebbitsStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits';
 import useSubplebbitsPagesStore from '@plebbit/plebbit-react-hooks/dist/stores/subplebbits-pages';
-import { isAllView, isCatalogView, isDescriptionView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
+import { isAllView, isCatalogView, isDescriptionView, isModView, isPendingPostView, isPostPageView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import useCatalogFiltersStore from '../../stores/use-catalog-filters-store';
 import useCatalogStyleStore from '../../stores/use-catalog-style-store';
 import useFeedResetStore from '../../stores/use-feed-reset-store';
@@ -22,10 +22,11 @@ interface BoardButtonsProps {
   isInAllView?: boolean;
   isInCatalogView?: boolean;
   isInSubscriptionsView?: boolean;
+  isInModView?: boolean;
   isTopbar?: boolean;
 }
 
-const CatalogButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
+const CatalogButton = ({ address, isInAllView, isInSubscriptionsView, isInModView }: BoardButtonsProps) => {
   const { t } = useTranslation();
   const params = useParams();
 
@@ -36,6 +37,9 @@ const CatalogButton = ({ address, isInAllView, isInSubscriptionsView }: BoardBut
     } else if (isInSubscriptionsView) {
       if (params?.timeFilterName) return `/p/subscriptions/catalog/${params.timeFilterName}`;
       return `/p/subscriptions/catalog`;
+    } else if (isInModView) {
+      if (params?.timeFilterName) return `/p/mod/catalog/${params.timeFilterName}`;
+      return `/p/mod/catalog`;
     }
     return `/p/${address}/catalog`;
   };
@@ -58,7 +62,7 @@ const SubscribeButton = ({ address }: BoardButtonsProps) => {
   );
 };
 
-const ReturnButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButtonsProps) => {
+const ReturnButton = ({ address, isInAllView, isInSubscriptionsView, isInModView }: BoardButtonsProps) => {
   const { t } = useTranslation();
   const params = useParams();
 
@@ -69,6 +73,9 @@ const ReturnButton = ({ address, isInAllView, isInSubscriptionsView }: BoardButt
     } else if (isInSubscriptionsView) {
       if (params?.timeFilterName) return `/p/subscriptions/${params.timeFilterName}`;
       return `/p/subscriptions`;
+    } else if (isInModView) {
+      if (params?.timeFilterName) return `/p/mod/${params.timeFilterName}`;
+      return `/p/mod`;
     }
     return `/p/${address}`;
   };
@@ -190,7 +197,7 @@ const ShowOPCommentOption = () => {
   );
 };
 
-export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView, isTopbar = false }: BoardButtonsProps) => {
+export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView, isInModView, isTopbar = false }: BoardButtonsProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { timeFilterName, timeFilterNames } = useTimeFilter();
@@ -205,6 +212,10 @@ export const TimeFilter = ({ isInAllView, isInCatalogView, isInSubscriptionsView
       ? isInCatalogView
         ? `/p/subscriptions/catalog/${timeFilterName}`
         : `/p/subscriptions/${timeFilterName}`
+      : isInModView
+      ? isInCatalogView
+        ? `/p/mod/catalog/${timeFilterName}`
+        : `/p/mod/${timeFilterName}`
       : null;
     link && navigate(link);
   };
@@ -242,6 +253,7 @@ export const MobileBoardButtons = () => {
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInModView = isModView(location.pathname);
 
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
@@ -252,8 +264,8 @@ export const MobileBoardButtons = () => {
     <div className={`${styles.mobileBoardButtons} ${!isInCatalogView ? styles.addMargin : ''}`}>
       {isInPostView || isInPendingPostPage ? (
         <>
-          <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
-          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+          <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />
+          <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />
           <SubscribeButton address={subplebbitAddress} />
           <div className={styles.secondRow}>
             <UpdateButton />
@@ -263,11 +275,11 @@ export const MobileBoardButtons = () => {
       ) : (
         <>
           {isInCatalogView ? (
-            <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+            <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />
           ) : (
-            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />
           )}
-          {!(isInAllView || isInSubscriptionsView) && <SubscribeButton address={subplebbitAddress} />}
+          {!(isInAllView || isInSubscriptionsView || isInModView) && <SubscribeButton address={subplebbitAddress} />}
           <RefreshButton />
           {isInCatalogView && searchText ? (
             <span className={styles.filteredThreadsCount}>
@@ -338,6 +350,7 @@ export const DesktopBoardButtons = () => {
   const isInPendingPostPage = isPendingPostView(location.pathname, params);
   const isInPostView = isPostPageView(location.pathname, params);
   const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInModView = isModView(location.pathname);
 
   const { filteredCount, searchText } = useCatalogFiltersStore();
 
@@ -348,9 +361,9 @@ export const DesktopBoardButtons = () => {
         {isInPostView || isInPendingPostPage ? (
           <>
             [
-            <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />
+            <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />
             ] [
-            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />] [
+            <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />] [
             <UpdateButton />
             ] [
             <AutoButton />]
@@ -363,12 +376,13 @@ export const DesktopBoardButtons = () => {
             {isInCatalogView ? (
               <>
                 [
-                <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />]{' '}
+                <ReturnButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />]{' '}
               </>
             ) : (
               <>
+                <SearchOPsBar />
                 [
-                <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} />]{' '}
+                <CatalogButton address={subplebbitAddress} isInAllView={isInAllView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />]{' '}
               </>
             )}
             [<RefreshButton />]
@@ -394,10 +408,10 @@ export const DesktopBoardButtons = () => {
                   <ShowOPCommentOption />
                 </>
               )}
-              {(isInAllView || isInSubscriptionsView) && (
-                <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} />
+              {(isInAllView || isInSubscriptionsView || isInModView) && (
+                <TimeFilter isInAllView={isInAllView} isInCatalogView={isInCatalogView} isInSubscriptionsView={isInSubscriptionsView} isInModView={isInModView} />
               )}
-              {!(isInAllView || isInSubscriptionsView) && (
+              {!(isInAllView || isInSubscriptionsView || isInModView) && (
                 <>
                   [
                   <SubscribeButton address={subplebbitAddress} />]
@@ -414,4 +428,43 @@ export const DesktopBoardButtons = () => {
       </div>
     </>
   );
+};
+
+const SearchOPsBar = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const params = useParams();
+  const location = useLocation();
+  const isInAllView = isAllView(location.pathname);
+  const isInSubscriptionsView = isSubscriptionsView(location.pathname, useParams());
+  const isInModView = isModView(location.pathname);
+
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      const searchQuery = (event.target as HTMLInputElement).value.trim();
+      if (searchQuery) {
+        let catalogUrl = '';
+
+        if (isInAllView) {
+          catalogUrl = params?.timeFilterName
+            ? `/p/all/catalog/${params.timeFilterName}?q=${encodeURIComponent(searchQuery)}`
+            : `/p/all/catalog?q=${encodeURIComponent(searchQuery)}`;
+        } else if (isInSubscriptionsView) {
+          catalogUrl = params?.timeFilterName
+            ? `/p/subscriptions/catalog/${params.timeFilterName}?q=${encodeURIComponent(searchQuery)}`
+            : `/p/subscriptions/catalog?q=${encodeURIComponent(searchQuery)}`;
+        } else if (isInModView) {
+          catalogUrl = params?.timeFilterName
+            ? `/p/mod/catalog/${params.timeFilterName}?q=${encodeURIComponent(searchQuery)}`
+            : `/p/mod/catalog?q=${encodeURIComponent(searchQuery)}`;
+        } else {
+          catalogUrl = `/p/${params?.subplebbitAddress}/catalog?q=${encodeURIComponent(searchQuery)}`;
+        }
+
+        navigate(catalogUrl);
+      }
+    }
+  };
+
+  return <input type='text' placeholder={t('search_ops_placeholder', 'Search OPs...')} onKeyDown={handleSearch} className={styles.searchOPsInput} />;
 };

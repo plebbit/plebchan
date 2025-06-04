@@ -17,7 +17,7 @@ let releaseChangelog =
 // format
 releaseChangelog = releaseChangelog.trim().replace(/\n\n+/g, '\n\n')
 
-const releaseBody = `This version fixes a bug where the android app would launch in fullscreen mode.
+const releaseBody = `This version adds minor features and fixes some bugs.
 
 - Web app: https://plebchan.app
 - Decentralized web app: https://plebchan.eth (only works on [Brave Browser](https://brave.com/) or via [IPFS Companion](https://docs.ipfs.tech/install/ipfs-companion/#prerequisites))

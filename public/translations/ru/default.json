@@ -294,5 +294,6 @@
   "search_results_for": "Результаты поиска для",
   "help": "Помощь",
   "filter_and_highlights_help": "Помощь с фильтрами и выделениями",
-  "filter_and_highlights": "Фильтры и выделения"
+  "filter_and_highlights": "Фильтры и выделения",
+  "boards_you_moderate": "boards, которые вы модерируете"
 }

@@ -96,8 +96,8 @@ const Challenge = ({ challenge, closeModal }: ChallengeProps) => {
       className={styles.container}
       ref={nodeRef}
       style={{
-        x: isMobile ? 0 : x,
-        y: isMobile ? 0 : y,
+        x: isMobile ? window.innerWidth / 2 - 150 : x,
+        y: isMobile ? window.innerHeight / 2 - 200 : y,
         touchAction: 'none',
       }}
     >

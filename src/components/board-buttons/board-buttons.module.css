@@ -88,6 +88,27 @@
   margin-bottom: 15px;
 }
 
+.searchOPsInput {
+  height: 16px;
+  line-height: 16px;
+  margin-left: 2px;
+  padding: 0 2px;
+  width: 120px;
+  margin: 0px;
+  margin-right: 4px;
+  padding: 0 2px;
+  border: var(--post-form-field-input-border, revert);
+  background-color: var(--post-form-field-input-background-color, revert);
+  color: var(--post-form-field-input-color);
+  outline: none;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+.searchOPsInput:focus {
+  border: var(--post-form-field-input-focus-border, revert);
+}
+
 @media (max-width: 640px) {
   .desktopBoardButtons {
     display: none;
