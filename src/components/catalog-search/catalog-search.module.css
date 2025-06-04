@@ -1,11 +1,11 @@
 .button {
   text-transform: capitalize;
-  color: var(--button-desktop-text-color);
-  text-decoration: var(--button-text-decoration);
+  color: var(--button-desktop-text-color, revert);
+  text-decoration: var(--button-text-decoration, revert);
 }
 
 .button:hover {
-  color: var(--button-desktop-text-color-hover);
+  color: var(--button-desktop-text-color-hover, revert);
   cursor: pointer;
 }
 
@@ -22,23 +22,23 @@
   margin: 0px 5px;
   padding: 1px;
   outline: none;
-  border: 1px solid #AAA;
+  border: var(--post-form-field-input-border, revert);
   font-size: 11px;
 }
 
 .searchContainer input:focus {
-  border: var(--post-form-field-input-focus-border);
+  border: var(--post-form-field-input-focus-border, revert);
 }
 
 .closeSearch {
   cursor: pointer;
   border: none;
   white-space: nowrap;
-  color: var(--button-desktop-text-color);
+  color: var(--button-desktop-text-color, revert);
 }
 
 .closeSearch:hover {
-  color: var(--button-desktop-text-color-hover);
+  color: var(--button-desktop-text-color-hover, revert);
 }
 
 @media (max-width: 640px) {
