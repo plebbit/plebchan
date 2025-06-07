@@ -5,6 +5,7 @@ import { initSnow, removeSnow } from './lib/snow';
 import { isAllView, isModView, isSubscriptionsView } from './lib/utils/view-utils';
 import useReplyModalStore from './stores/use-reply-modal-store';
 import useSpecialThemeStore from './stores/use-special-theme-store';
+import { useAutoSubscribe } from './hooks/use-auto-subscribe';
 import useIsMobile from './hooks/use-is-mobile';
 import useTheme from './hooks/use-theme';
 import styles from './app.module.css';
@@ -117,6 +118,8 @@ const GlobalLayout = () => {
 };
 
 const App = () => {
+  useAutoSubscribe();
+
   return (
     <div className={styles.app}>
       <Routes>

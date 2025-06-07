@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useAccount, setAccount } from '@plebbit/plebbit-react-hooks';
-import { useAutoSubscribeStore } from '../stores/use-auto-subscribe-store';
 import { getAutoSubscribeAddresses, useDefaultSubplebbits } from './use-default-subplebbits';
+import { useAutoSubscribeStore } from '../stores/use-auto-subscribe-store';
 
-const AUTO_SUBSCRIBE_KEY_PREFIX = 'seedit-auto-subscribe-done-';
+const AUTO_SUBSCRIBE_KEY_PREFIX = 'plebchan-auto-subscribe-done-';
 
+// Keep track of which accounts have been processed globally
 const processedAccounts = new Set<string>();
 
 export const useAutoSubscribe = () => {
@@ -30,7 +31,7 @@ export const useAutoSubscribe = () => {
       const storageKey = AUTO_SUBSCRIBE_KEY_PREFIX + accountAddress;
       const hasAutoSubscribed = localStorage.getItem(storageKey);
 
-      if (hasAutoSubscribed) {
+      if (account.subscriptions?.length > 0 || hasAutoSubscribed) {
         processedAccounts.add(accountAddress);
         removeCheckingAccount(accountAddress);
         return;
@@ -54,12 +55,13 @@ export const useAutoSubscribe = () => {
             subscriptions: mergedSubscriptions,
           });
           localStorage.setItem(storageKey, 'true');
-          processedAccounts.add(accountAddress);
         } catch (error) {
           console.error('Auto-subscribe error:', error);
         }
-        removeCheckingAccount(accountAddress);
       }
+
+      processedAccounts.add(accountAddress);
+      removeCheckingAccount(accountAddress);
     };
 
     processAutoSubscribe();
@@ -69,5 +71,7 @@ export const useAutoSubscribe = () => {
     };
   }, [account, accountAddress, defaultSubplebbits, addCheckingAccount, removeCheckingAccount]);
 
-  return { isCheckingSubscriptions: accountAddress ? isCheckingAccount(accountAddress) : true };
+  return {
+    isCheckingSubscriptions: !accountAddress || isCheckingAccount(accountAddress),
+  };
 };
