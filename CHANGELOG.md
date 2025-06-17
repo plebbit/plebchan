@@ -1,3 +1,21 @@
+## [0.5.2](https://github.com/plebbit/plebchan/compare/v0.5.1...v0.5.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* **board header:** subplebbit address could be too long ([bc80533](https://github.com/plebbit/plebchan/commit/bc805337400c5233e829c823606d8a0401bedf94))
+* **catalog search:** use query parameter so users can share searches and link to them ([6075b2e](https://github.com/plebbit/plebchan/commit/6075b2ebf7b7bcfc6e3bcb57dec4bb53988f658f))
+* **challenge modal:** on mobile the modal was incorrectly positioned on top left ([bb0fcb9](https://github.com/plebbit/plebchan/commit/bb0fcb9c1a97d2dac7ed08544bb406d3d99f0bba))
+* **mod multisub:** mod page was missing post form ([339a9bc](https://github.com/plebbit/plebchan/commit/339a9bc18a6ca4414a9b80f85b5d12799f68cf94))
+
+
+### Features
+
+* **board:** add search bar to board page, redirect to catalog view ([53e0482](https://github.com/plebbit/plebchan/commit/53e04823df833bb376770892d1f51b0ecbdaa8c8))
+* **markdown:** render plebchan links as internal links, so the user doesn't have to leave the app ([b3bcd58](https://github.com/plebbit/plebchan/commit/b3bcd5896c8880fdcb99423baaf3bab9be705921))
+
+
+
 ## [0.5.1](https://github.com/plebbit/plebchan/compare/v0.5.0...v0.5.1) (2025-06-03)
 
 
