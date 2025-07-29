@@ -121,7 +121,8 @@
     "wait-on": "7.0.1"
   },
   "resolutions": {
-    "@bonfida/spl-name-service": "3.0.0"
+    "@bonfida/spl-name-service": "3.0.0",
+    "@libp2p/utils": "6.7.1"
   },
   "main": "electron/main.js",
   "build": {
