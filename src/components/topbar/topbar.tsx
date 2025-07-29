@@ -5,7 +5,6 @@ import Plebbit from '@plebbit/plebbit-js';
 import { useAccount, useAccountComment, useAccountSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { isAllView, isCatalogView, isSubscriptionsView } from '../../lib/utils/view-utils';
 import { useDefaultSubplebbitAddresses } from '../../hooks/use-default-subplebbits';
-import { useAutoSubscribe } from '../../hooks/use-auto-subscribe';
 import { TimeFilter } from '../board-buttons';
 import styles from './topbar.module.css';
 import _, { debounce } from 'lodash';
@@ -205,15 +204,12 @@ const TopBarMobile = ({ subplebbitAddress }: { subplebbitAddress: string }) => {
 };
 
 const TopBar = () => {
-  const { t } = useTranslation();
   const params = useParams();
-  const { isCheckingSubscriptions } = useAutoSubscribe();
   const accountComment = useAccountComment({ commentIndex: params?.accountCommentIndex as any });
   const subplebbitAddress = params?.subplebbitAddress || accountComment?.subplebbitAddress;
 
   return (
     <>
-      {isCheckingSubscriptions && <div className={styles.checkingSubscriptions}>{t('loading_subscriptions')}</div>}
       <TopBarDesktop />
       <TopBarMobile subplebbitAddress={subplebbitAddress} />
     </>
