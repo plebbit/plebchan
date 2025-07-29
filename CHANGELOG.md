@@ -1,3 +1,14 @@
+## [0.5.3](https://github.com/plebbit/plebchan/compare/v0.5.2...v0.5.3) (2025-07-29)
+
+
+### Bug Fixes
+
+* **pending post page:** prevent crash and ensure redirect to "not found" on invalid URL ([7374465](https://github.com/plebbit/plebchan/commit/7374465c4f121313054aec962c567e243c8ac61e))
+* prevent TypeError when challengeErrors is not iterable in challenge verification ([b2e1dd5](https://github.com/plebbit/plebchan/commit/b2e1dd54a4022add5dce744f796c5f5b07cd127f))
+* resolve @libp2p/utils version conflict causing build failures ([4dbe751](https://github.com/plebbit/plebchan/commit/4dbe7512724ef91b41f695d57c56c2a70e5102df))
+
+
+
 ## [0.5.2](https://github.com/plebbit/plebchan/compare/v0.5.1...v0.5.2) (2025-06-04)
 
 
