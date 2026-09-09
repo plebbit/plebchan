@@ -15859,13 +15859,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"multiformats@npm:^14.0.0":
-  version: 14.0.0
-  resolution: "multiformats@npm:14.0.0"
-  checksum: 10c0/ec4b7d5ffa9dfb5b18274afb41c105c2d410e758b2c9242fdfbd938972c3a9796cabba74c214158b8732a41e1b5ba3c106c9dd5f1b7b19c4669c8f45b91db5cd
-  languageName: node
-  linkType: hard
-
 "multiformats@npm:^9.4.2, multiformats@npm:^9.4.5":
   version: 9.9.0
   resolution: "multiformats@npm:9.9.0"
