@@ -3,6 +3,8 @@ name: code-quality-review
 description: Advisory code quality review for current diffs before finishing, committing, pushing, or opening a PR. Use when asked to review code quality, run a final quality pass, inspect AI-generated changes, or check for over-engineering. Reports actionable suggestions only; does not block or edit unless explicitly asked.
 ---
 
+<!-- Generated from .agents/skills/code-quality-review/SKILL.md; run yarn ai-workflow:sync. -->
+
 # Code Quality Review
 
 Run an advisory review of the current diff. This is a suggestion pass for the author before finishing, committing, pushing, or opening a PR, not a blocking CI gate.

@@ -4,6 +4,8 @@ description: Commit current work by reviewing diffs, splitting into logical comm
 disable-model-invocation: true
 ---
 
+<!-- Generated from .agents/skills/commit/SKILL.md; run yarn ai-workflow:sync. -->
+
 # Commit Current Work
 
 ## Workflow
@@ -16,11 +18,11 @@ disable-model-invocation: true
    git diff --cached
    ```
 
-   Read every changed file's diff to understand the full scope of changes.
+   Read the diffs to identify the changes authorized for this commit. Preserve unrelated work, including preexisting staged changes. A request to commit this task does not authorize committing every modification in the checkout.
 
 2. **Group changes into logical commits**
 
-   If diffs are unrelated, split into multiple commits. Each commit should cover one logical unit of work.
+   Within the authorized scope, split distinct changes into logical commits. Leave unrelated work out of the commit.
 
    Example — two unrelated changes in the working tree:
    - Modified `src/components/reply-modal.tsx` (UI fix)
@@ -34,7 +36,7 @@ disable-model-invocation: true
 
 4. **Stage and commit each group**
 
-   For each logical group:
+   For each logical group, stage only its changes. Use a selective index patch for mixed files, then inspect `git diff --cached` before committing:
    ```bash
    git add <relevant files>
    git commit -m "title here"

@@ -3,6 +3,8 @@ name: readme
 description: When the user wants to create or update a README.md file for a project. Also use when the user says "write readme," "create readme," "document this project," "project documentation," or asks for help with README.md. Produces thorough, verified documentation covering local setup, architecture, and distribution.
 ---
 
+<!-- Generated from .agents/skills/readme/SKILL.md; run yarn ai-workflow:sync. -->
+
 # README Generator
 
 You are an expert technical writer. Write (or update) a README.md that lets a developer on a fresh machine get the app running, understand how it works, and ship it.

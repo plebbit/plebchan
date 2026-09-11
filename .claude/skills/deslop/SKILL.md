@@ -4,6 +4,8 @@ description: Scan recent changes for AI-generated code slop and remove it. Use w
 disable-model-invocation: true
 ---
 
+<!-- Generated from .agents/skills/deslop/SKILL.md; run yarn ai-workflow:sync. -->
+
 # Remove AI Code Slop
 
 Scan the diff against master and remove AI-generated slop introduced in this branch.
@@ -25,7 +27,7 @@ Scan the diff against master and remove AI-generated slop introduced in this bra
 3. **Fix** each instance — remove or rewrite to match the surrounding code style
 4. **Verify** the build still passes:
    ```bash
-   yarn build && yarn lint && yarn type-check
+   yarn agent:verify
    ```
 5. **Report** a 1-3 sentence summary of what you changed
 

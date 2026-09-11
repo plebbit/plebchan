@@ -4,6 +4,8 @@ description: Resolve all merge conflicts on the current branch non-interactively
 disable-model-invocation: true
 ---
 
+<!-- Generated from .agents/skills/fix-merge-conflicts/SKILL.md; run yarn ai-workflow:sync. -->
+
 # Fix Merge Conflicts
 
 Resolve all merge conflicts on the current branch non-interactively and leave the repo buildable.
@@ -48,7 +50,7 @@ Open each conflicting file and remove conflict markers. Merge both sides logical
 Run all three checks. Fix any failures before proceeding.
 
 ```bash
-corepack yarn build && corepack yarn lint && corepack yarn type-check
+corepack yarn agent:verify
 ```
 
 If `package.json` was modified, run `corepack yarn install` first.
@@ -64,7 +66,7 @@ If any markers remain, go back and resolve them.
 ### 5. Finalize
 
 ```bash
-git add -A
+git add <resolved-task-files>
 git commit -m "chore(merge): resolve merge conflicts"
 ```
 
@@ -73,11 +75,11 @@ git commit -m "chore(merge): resolve merge conflicts"
 - If a resolution is ambiguous and blocks the build, prefer the variant that compiles.
 - For large refactors causing conflicts, keep consistent imports, types, and module boundaries.
 - Keep edits minimal — don't reformat unrelated code.
-- Format resolved files with `npx oxfmt <file>` if they're `.ts`/`.tsx`/`.js`.
+- Format resolved files with `corepack yarn exec oxfmt <file>` if they're `.ts`/`.tsx`/`.js`.
 
 ## Deliverables
 
-- Clean working tree with all conflicts resolved
-- Passing `corepack yarn build && corepack yarn lint && corepack yarn type-check`
+- All task conflicts resolved, with unrelated edits preserved
+- Passing `corepack yarn agent:verify`
 - One local commit: `chore(merge): resolve merge conflicts`
 - Brief summary of files touched and notable resolution choices

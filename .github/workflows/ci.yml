@@ -35,6 +35,11 @@ jobs:
             [ "$i" = "3" ] && exit 1
           done
 
+      - name: Check AI workflows
+        run: |
+          yarn ai-workflow:check
+          yarn ai-workflow:test
+
       - name: Run Vitest
         run: yarn test --run
 

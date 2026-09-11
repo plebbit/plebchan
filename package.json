@@ -57,6 +57,9 @@
   },
   "scripts": {
     "ai-workflow:check": "node scripts/validate-ai-workflow.mjs",
+    "ai-workflow:sync": "node scripts/sync-ai-workflow.mjs",
+    "ai-workflow:test": "node --test --test-concurrency=1 scripts/__tests__/*.node-test.mjs",
+    "agent:verify": "node scripts/agent-verify.mjs",
     "generate:assets": "node scripts/generate-asset-manifest.js",
     "llms:generate": "node scripts/generate-llms-files.mjs",
     "map:generate": "node scripts/generate-world-map-dots.mjs",
@@ -157,6 +160,7 @@
     "concurrently": "8.0.1",
     "conventional-changelog-cli": "4.1.0",
     "cordova-res": "0.15.4",
+    "cross-spawn": "7.0.6",
     "crypto-browserify": "3.12.1",
     "cz-conventional-changelog": "3.3.0",
     "electron": "39.8.10",

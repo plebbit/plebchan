@@ -3,6 +3,8 @@ name: profile-browsing
 description: Profile app performance while browsing, collecting Web Vitals and React rerender data via react-scan. Orchestrates sequential profiler subagents via playwright-cli to capture navigation timing, long tasks, layout shifts, LCP, React commit counts, render bursts, and per-component render data without saturating the machine. Use when profiling browsing performance, finding bottlenecks, diagnosing excessive rerenders, or auditing page performance.
 ---
 
+<!-- Generated from .agents/skills/profile-browsing/SKILL.md; run yarn ai-workflow:sync. -->
+
 # Profile Browsing Performance
 
 Two-layer profiling: browser-level symptoms (Web Vitals, long tasks, scroll jank) and React-level diagnosis (commit counts, render bursts, per-component render data from react-scan). Each profiler subagent runs in its own browser session and context window, with only one profiler active at a time.
@@ -58,11 +60,11 @@ Keep batches balanced. Add thread views (`/:boardIdentifier/thread/:cid`) as nee
 
 ## Step 2: Run Profiler Subagents Sequentially
 
-Read the profiler subagent definition at `.claude/agents/profiler.md`. Then spawn one `profiler` Task for the first batch:
+Read the profiler subagent definition at `.agents/roles/profiler.md`. Then spawn one `profiler` subagent for the first batch using the current harness's delegation tool:
 
 ```
-For each batch, create a Task:
-  subagent_type: "profiler"
+For each batch, create a subagent request:
+  agent_type: "profiler"
   prompt: |
     Session name: "prof-N"
     Routes to profile: /route1, /route2, ...

@@ -3,6 +3,8 @@ name: test-apk
 description: Test and debug Android APK features using a local Android emulator. Manages emulator lifecycle, builds/installs the APK, runs instrumentation tests, captures logcat diagnostics, and debugs WebView automation (imgur, postimages uploads). Use when the user asks to test APK, debug Android, test uploads, run emulator tests, or says "test-apk".
 ---
 
+<!-- Generated from .agents/skills/test-apk/SKILL.md; run yarn ai-workflow:sync. -->
+
 # Test APK on Android Emulator
 
 ## Overview
@@ -30,8 +32,8 @@ Ask the user (or infer from context) what to test. Common scenarios:
 Spawn the `test-apk` subagent with the prompt template below, filling in `{TEST_DESCRIPTION}` with the user's requirements and any exact commands or classes you want run.
 
 ```
-Use the Task tool:
-  subagent_type: "test-apk"
+Use the current harness's delegation tool:
+  role: test-apk
   prompt: <see Prompt Template below>
 ```
 
@@ -82,22 +84,27 @@ adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
 adb shell settings put global animator_duration_scale 0
 
-### IMPORTANT: Do NOT kill the emulator when done. Leave it running for iterative debugging.
+### Preserve an emulator that was already running. Record any emulator started by this task and clean it up unless the user wants to keep it for iteration.
 
 ## Build & Install APK
 
-### Only rebuild if user asked to, or if this is the first run:
+Resolve the distribution flavor, Gradle task, and APK path from `android/app/build.gradle` and current build outputs before running commands. Do not assume an unflavored `debug/app-debug.apk` exists. Coordinate builds with the parent’s verification owner.
+
+### Rebuild when requested or when the installed APK does not contain the code being tested:
 cd "$(git rev-parse --show-toplevel)"
-yarn build && npx cap sync android
-cd android && ./gradlew assembleDebug
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+yarn build
+corepack yarn exec cap sync android
+# Run the verified flavor-specific Gradle task, then install its actual APK.
+# Example only after confirming the GitHub flavor exists:
+cd android && ./gradlew assembleGithubDebug
+adb install -r app/build/outputs/apk/github/debug/app-github-debug.apk
 
 ## Run Tests
 {TEST_COMMANDS}
 
 ## Diagnostics to Capture
 
-### Always capture logcat filtered to upload automation:
+### For upload workflows, capture logcat filtered to upload automation:
 adb logcat -d -s MediaUploadAutomation:* FileUploaderPlugin:* | tail -200
 
 ### If test fails, also capture:

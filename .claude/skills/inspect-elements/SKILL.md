@@ -3,6 +3,8 @@ name: inspect-elements
 description: Resolve on-screen 5chan DOM elements to React source files, line numbers, component names, and ownership stacks using the app's dev-only element-source helpers and playwright-cli. Use when an agent needs to inspect a page element, map a snapshot ref to source code, confirm which component rendered a node, or follow up after $profile-browsing finds a rerender hotspot and needs file-level attribution.
 ---
 
+<!-- Generated from .agents/skills/inspect-elements/SKILL.md; run yarn ai-workflow:sync. -->
+
 # Inspect Elements
 
 Use this skill to jump from a concrete DOM node in the running 5chan app to the React file and component stack that produced it.

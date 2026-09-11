@@ -1,7 +1,10 @@
 ---
 name: release
 description: Automate a full 5chan release — analyze commits, update release body and blotter, bump version, generate changelog, commit, tag, and push. Use when the user says "release", "new version", "cut a release", "prepare release", or provides a version number to ship.
+disable-model-invocation: true
 ---
+
+<!-- Generated from .agents/skills/release/SKILL.md; run yarn ai-workflow:sync. -->
 
 # Release
 
@@ -10,7 +13,9 @@ End-to-end release automation for 5chan.
 ## Usage
 
 The user provides a version bump (`patch`, `minor`, `major`, or explicit `x.y.z`).
-If omitted, ask which bump level they want.
+If omitted and it cannot be inferred from an explicitly approved release plan, ask which bump level they want.
+
+For “dry run” or “preview,” only inspect history and show the proposed version, release text, blotter, and changed-file list. Do not edit files or run mutating generators. “Prepare release” authorizes local preparation; publishing requires a request to ship/publish/push. Reuse authorization already given.
 
 ## Workflow
 
@@ -101,7 +106,7 @@ Save this string — you will pass it to the blotter script in Step 6.
 
 ### Step 4 — Bump version
 
-Read `package.json`, compute the new version from the bump level, and update the `"version"` field.
+Read `package.json`, compute the new version from the bump level, and update the `"version"` field. Run `corepack yarn install` to keep the lockfile synchronized.
 
 | Bump | Effect |
 |------|--------|
@@ -136,16 +141,19 @@ If it fails, fix the issue and re-run.
 
 ### Step 8 — Commit, tag, push
 
+Run the required final verification and inspect the release diff. Stage only the release files actually changed (version/lockfile, changelog, release body and blotter), plus any explicitly authorized prerequisite changes. Verify `git diff --cached` contains nothing unrelated. When publishing is authorized, create and push the exact release tag:
+
 ```bash
-git add -A
+git add <reviewed-release-files>
+git diff --cached
 git commit -m "chore(release): v<version>"
-git push
 git tag v<version>
-git push --tags
+git push origin HEAD
+git push origin refs/tags/v<version>
 ```
 
 GitHub Actions triggers on the pushed tag to build release artifacts.
 
 ## Dry-run mode
 
-If the user says "dry run" or "preview", execute Steps 1–7 but **skip Step 8** (git operations). Print a summary of what would be committed so the user can review.
+Preview is read-only: inspect the inputs and print proposed changes without editing the version, release body, changelog, blotter, index, commits, or tags.

@@ -4,6 +4,8 @@ description: Analyze code for useEffect anti-patterns and refactor to simpler al
 disable-model-invocation: true
 ---
 
+<!-- Generated from .agents/skills/you-might-not-need-an-effect/SKILL.md; run yarn ai-workflow:sync. -->
+
 # You Might Not Need an Effect
 
 Analyze code for `useEffect` anti-patterns and refactor to simpler, more correct alternatives.
@@ -25,7 +27,7 @@ Based on https://react.dev/learn/you-might-not-need-an-effect
 2. **Scan for anti-patterns** — check each `useEffect` against the patterns below
 
 3. **Fix or propose** — depending on the `fix` argument:
-   - `fix=true`: apply the refactors, then verify with `yarn build && yarn lint && yarn type-check`
+   - `fix=true`: apply the refactors, then verify with `yarn agent:verify`
    - `fix=false`: list each anti-pattern found with a before/after code suggestion
 
 4. **Report** — summarize what was found and changed

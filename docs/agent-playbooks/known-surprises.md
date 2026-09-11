@@ -28,6 +28,16 @@ If uncertain, ask the developer before adding an entry.
 
 ## Entries
 
+### AI hook payloads and concurrent locale writes need behavioral checks
+
+- **Date:** 2026-09-11
+- **Observed by:** contributor + Codex
+- **Context:** Approved audit of the repository's AI workflows for GPT-6 Astra.
+- **What was surprising:** Mirrored hook files passed parity checks while Codex supplied patch text in `tool_input.command`, not `file_path`. Stop hooks also mutated Git and repeated builds. Per-key translator agents rewrote the same locale files concurrently.
+- **Impact:** Edit hooks could silently skip work; routine conversations could trigger unrelated work; overlapping locale writers could lose keys.
+- **Mitigation:** Keep only the payload-tested formatter on edit events, use explicit `agent:verify`, and apply translation maps serially with the writer lock. Run `ai-workflow:test` as well as schema/generated-file checks after workflow changes.
+- **Status:** confirmed
+
 ### Yarn Berry never runs `pre*`/`post*` hooks on user-defined scripts
 
 - **Date:** 2026-09-02
