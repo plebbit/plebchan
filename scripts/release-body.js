@@ -103,7 +103,7 @@ const downloads = [macSection, winSection, linuxSection, androidSection, htmlSec
 
 // One-liner summary of what changed in this release. Update before each release.
 const oneLinerDescription =
-  'This version adds /search/, which searches archived posts across every 5chan board and shows the matches inside their threads, tells you which board currently serves a directory code, and widens the time filter automatically when a feed comes up empty.';
+  'This version removes location and camera metadata from images before upload on web, desktop, and Android, makes feed scrolling, media loading, and navigation faster, rejects temporary or broken media links before you post, and fixes account backup imports and the display name after switching accounts.';
 
 const releaseBody = `${oneLinerDescription}
 

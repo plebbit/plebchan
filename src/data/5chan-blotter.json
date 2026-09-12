@@ -1,6 +1,13 @@
 {
   "entries": [
     {
+      "id": "release-0.9.20",
+      "kind": "release",
+      "timestamp": 1789214400,
+      "message": "v0.9.20: Location data removed from image uploads, smoother feed scrolling",
+      "version": "0.9.20"
+    },
+    {
       "id": "release-0.9.19",
       "kind": "release",
       "timestamp": 1787054400,

@@ -1,3 +1,49 @@
+## [0.9.20](https://github.com/bitsocialnet/5chan/compare/v0.9.19...v0.9.20) (2026-09-12)
+
+
+### Bug Fixes
+
+* **board:** delay offline indicator until first sync cache is ready ([709adf3](https://github.com/bitsocialnet/5chan/commit/709adf3ba90a1a3de21085c2ae0235713afb3733))
+* **board:** keep cached boards loading during refresh and retry ([4de1a89](https://github.com/bitsocialnet/5chan/commit/4de1a890cbf982e299164de1ee149cf2d5d6e9d7))
+* **build:** run directory sync and asset manifest before build and start ([e7867dc](https://github.com/bitsocialnet/5chan/commit/e7867dcec8fa74ab7cb459f47683e542a94af045))
+* **deps:** dedupe multiformats ([e50bfc4](https://github.com/bitsocialnet/5chan/commit/e50bfc484aa53792cf900e66ac4ca76cb29e00e9))
+* **deps:** patch vulnerable transitive packages [skip github-alerts] [skip ci] ([636638d](https://github.com/bitsocialnet/5chan/commit/636638de7f4da1e846190a9976b9c1bfde6b676b))
+* **deps:** upgrade hooks and pkc-js ([490a3d6](https://github.com/bitsocialnet/5chan/commit/490a3d6e664462ec587d5d500d9cb680e95268fd))
+* **feeds:** use published community sorts ([c99a88e](https://github.com/bitsocialnet/5chan/commit/c99a88e0ded4724ed902b945226b68b370acc6bc))
+* **nsfw:** derive board NSFW from protocol safeForWork ([054b456](https://github.com/bitsocialnet/5chan/commit/054b456c5ff95e77724502077a621e5acd33807a))
+* **posting:** block Litterbox temporary media links ([e4925c4](https://github.com/bitsocialnet/5chan/commit/e4925c462eee40602ce25785d0286caee900a072))
+* **posting:** reject temporary and signed media links ([d8d51ae](https://github.com/bitsocialnet/5chan/commit/d8d51ae8a7374a573deca99a4fc951d82c85a48d))
+* **posts:** reject media links that fail browser load validation ([63bada1](https://github.com/bitsocialnet/5chan/commit/63bada1c0c0aab9496c850a99bf275d1a74d2b23))
+* **publishing:** reset display name after account switch ([#1205](https://github.com/bitsocialnet/5chan/issues/1205)) ([b38668a](https://github.com/bitsocialnet/5chan/commit/b38668a90d6074224da730cb9ce9f28240f09d17))
+* **pwa:** disable service worker dev options for Firefox ([e879da3](https://github.com/bitsocialnet/5chan/commit/e879da3a5d2da0b7724e747e1098c544ec76f40f))
+* **replies:** use published reply sorts ([b4f3bcd](https://github.com/bitsocialnet/5chan/commit/b4f3bcdea7f0e2162ed124e82c5d9627adf64329))
+* **settings:** align account backup imports ([#1204](https://github.com/bitsocialnet/5chan/issues/1204)) ([c08a78d](https://github.com/bitsocialnet/5chan/commit/c08a78d189dc26dc7ad9cc2ce3e0e7b181e34120))
+* **settings:** show settings sections instantly when expanded ([#1198](https://github.com/bitsocialnet/5chan/issues/1198)) ([5cc1425](https://github.com/bitsocialnet/5chan/commit/5cc1425835f9f275468743c0c6860f620d7a9c43))
+
+
+* chore(rebrand)!: remove all plebbit references from 5chan (#1203) ([cdfeb13](https://github.com/bitsocialnet/5chan/commit/cdfeb131438f29530c4dc8b5ceb4d2c8f926fb49)), closes [#1203](https://github.com/bitsocialnet/5chan/issues/1203)
+
+
+### Features
+
+* **upload:** strip image metadata before upload on web, Electron, and Android ([#1201](https://github.com/bitsocialnet/5chan/issues/1201)) ([e3c1511](https://github.com/bitsocialnet/5chan/commit/e3c1511e952ac95ab988f9b498c19bbc2fdd82bf))
+
+
+### Performance Improvements
+
+* **feeds:** improve scrolling, media loading, and navigation ([#1206](https://github.com/bitsocialnet/5chan/issues/1206)) ([c8ba0b3](https://github.com/bitsocialnet/5chan/commit/c8ba0b319588ba766975dfba60945db14bd36243))
+
+
+### BREAKING CHANGES
+
+* comments and accounts carrying only the retired
+subplebbit field names are no longer read.
+
+The release workflow now reads the BITSOCIAL_KEYSTORE_PASSWORD secret,
+which must be created before the next release or APK signing will fail.
+
+
+
 ## [0.9.19](https://github.com/bitsocialnet/5chan/compare/v0.9.18...v0.9.19) (2026-08-18)
 
 
