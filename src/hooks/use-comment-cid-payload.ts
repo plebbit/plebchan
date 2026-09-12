@@ -19,6 +19,7 @@ type CommentCidPayloadEntry = {
 
 const IDLE_SNAPSHOT: CommentCidPayloadSnapshot = { state: 'idle' };
 const entriesByClient = new WeakMap<object, Map<string, CommentCidPayloadEntry>>();
+const MAX_CACHED_PAYLOADS_PER_CLIENT = 100;
 
 const isRecord = (value: unknown): value is Record<string, unknown> => Boolean(value && typeof value === 'object');
 
@@ -73,8 +74,30 @@ const getEntry = (pkc: PkcWithCidFetch, cid: string): CommentCidPayloadEntry => 
       snapshot: IDLE_SNAPSHOT,
     };
     entries.set(cid, entry);
+  } else if (entry.snapshot.state === 'succeeded') {
+    entries.delete(cid);
+    entries.set(cid, entry);
   }
   return entry;
+};
+
+const releaseUnusedEntry = (pkc: PkcWithCidFetch, cid: string, entry: CommentCidPayloadEntry) => {
+  if (entry.listeners.size > 0 || entry.request) return;
+
+  const entries = getClientEntries(pkc);
+  if (entry.snapshot.state !== 'succeeded') {
+    entries.delete(cid);
+    return;
+  }
+
+  // CID payloads are immutable. Retain successful lookups across visits, but never
+  // evict a live subscription or pending request to make room in the inactive cache.
+  for (const [cachedCid, cachedEntry] of entries) {
+    if (entries.size <= MAX_CACHED_PAYLOADS_PER_CLIENT) break;
+    if (cachedEntry.listeners.size === 0 && !cachedEntry.request && cachedEntry.snapshot.state === 'succeeded') {
+      entries.delete(cachedCid);
+    }
+  }
 };
 
 const notify = (entry: CommentCidPayloadEntry) => {
@@ -103,7 +126,7 @@ const startFetch = (pkc: PkcWithCidFetch, cid: string, entry: CommentCidPayloadE
     .finally(() => {
       entry.request = undefined;
       notify(entry);
-      if (entry.listeners.size === 0) getClientEntries(pkc).delete(cid);
+      releaseUnusedEntry(pkc, cid, entry);
     });
 };
 
@@ -114,7 +137,7 @@ const subscribe = (pkc: PkcWithCidFetch, cid: string, listener: () => void) => {
 
   return () => {
     entry.listeners.delete(listener);
-    if (entry.listeners.size === 0 && !entry.request) getClientEntries(pkc).delete(cid);
+    releaseUnusedEntry(pkc, cid, entry);
   };
 };
 

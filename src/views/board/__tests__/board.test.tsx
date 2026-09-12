@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import communitiesPagesStore from '@bitsocial/bitsocial-react-hooks/dist/stores/communities-pages/index.js';
 import Board, { type BoardProps } from '../board';
@@ -89,6 +89,9 @@ const testState = vi.hoisted(() => ({
   lastVirtuosoDefaultItemHeight: undefined as number | undefined,
   lastVirtuosoIncreaseViewportBy: undefined as { top: number; bottom: number } | undefined,
   lastVirtuosoMinOverscanItemCount: undefined as { top: number; bottom: number } | undefined,
+  lastVirtuosoRestoreState: undefined as { ranges: number[]; scrollTop: number } | undefined,
+  virtuosoSnapshot: { ranges: [0], scrollTop: 42 },
+  getVirtuosoStateMock: vi.fn(),
   expandTimeWindowMock: vi.fn(),
   loadMoreMock: vi.fn(),
   pageSizes: {
@@ -232,6 +235,7 @@ vi.mock('react-virtuoso', () => ({
         minOverscanItemCount,
         endReached,
         itemContent,
+        restoreStateFrom,
       }: {
         components?: { Footer?: React.ComponentType };
         data?: TestComment[];
@@ -240,14 +244,19 @@ vi.mock('react-virtuoso', () => ({
         minOverscanItemCount?: { top: number; bottom: number };
         endReached?: ((index: number) => void) | undefined;
         itemContent: (index: number, item: TestComment) => React.ReactNode;
+        restoreStateFrom?: { ranges: number[]; scrollTop: number };
       },
       ref: React.ForwardedRef<{ getState: (cb: (snapshot: { ranges: number[]; scrollTop: number }) => void) => void }>,
     ) => {
       testState.lastVirtuosoDefaultItemHeight = defaultItemHeight;
       testState.lastVirtuosoIncreaseViewportBy = increaseViewportBy;
       testState.lastVirtuosoMinOverscanItemCount = minOverscanItemCount;
+      testState.lastVirtuosoRestoreState = restoreStateFrom;
       React.useImperativeHandle(ref, () => ({
-        getState: (cb) => cb({ ranges: [0], scrollTop: 42 }),
+        getState: (cb) => {
+          testState.getVirtuosoStateMock();
+          cb(testState.virtuosoSnapshot);
+        },
       }));
 
       return createElement(
@@ -448,6 +457,9 @@ describe('Board', () => {
     testState.lastVirtuosoDefaultItemHeight = undefined;
     testState.lastVirtuosoIncreaseViewportBy = undefined;
     testState.lastVirtuosoMinOverscanItemCount = undefined;
+    testState.lastVirtuosoRestoreState = undefined;
+    testState.virtuosoSnapshot = { ranges: [0], scrollTop: 42 };
+    testState.getVirtuosoStateMock.mockReset();
     testState.pageSizes = {
       guiPostsPerPage: 2,
       infiniteFeedPostsPerPage: 2,
@@ -609,6 +621,81 @@ describe('Board', () => {
     });
 
     expect(document.title).toBe(`${TRASH_BOARD_TITLE} - 5chan`);
+  });
+
+  it('saves the last Virtuoso snapshot on Activity hide and restores it when returning with POP navigation', async () => {
+    testState.feed = [{ cid: 'post-activity', communityAddress: 'music-posting.eth' }];
+    const CachedBoardHarness = () => {
+      const { pathname } = useLocation();
+      const navigate = useNavigate();
+      const isVisible = pathname === '/all';
+      return createElement(
+        React.Fragment,
+        {},
+        createElement('button', { 'data-testid': 'open-thread', onClick: () => navigate('/mu/thread/post-activity') }, 'thread'),
+        createElement('button', { 'data-testid': 'back', onClick: () => navigate(-1) }, 'back'),
+        createElement(React.Activity, {
+          mode: isVisible ? 'visible' : 'hidden',
+          children: createElement(Board, { feedCacheKey: '/all-activity-snapshot', isVisible, viewType: 'all' }),
+        }),
+      );
+    };
+    await act(async () => {
+      root.render(createElement(MemoryRouter, { initialEntries: ['/all'] }, createElement(CachedBoardHarness)));
+    });
+    expect(testState.lastVirtuosoRestoreState).toBeUndefined();
+    expect(testState.getVirtuosoStateMock).not.toHaveBeenCalled();
+    const lastSnapshot = { ranges: [0, 4], scrollTop: 432 };
+    testState.virtuosoSnapshot = lastSnapshot;
+
+    await act(async () => container.querySelector<HTMLButtonElement>('[data-testid="open-thread"]')?.click());
+    expect(testState.getVirtuosoStateMock).toHaveBeenCalledTimes(1);
+    await act(async () => container.querySelector<HTMLButtonElement>('[data-testid="back"]')?.click());
+    expect(testState.lastVirtuosoRestoreState).toBe(lastSnapshot);
+  });
+
+  it('retains pagination scroll on Activity reactivation and settings navigation but scrolls for real page changes', async () => {
+    testState.feed = [1, 2, 3, 4].map((number) => ({ cid: `post-${number}`, communityAddress: 'music-posting.eth' }));
+    const CachedBoardHarness = () => {
+      const { pathname } = useLocation();
+      const navigate = useNavigate();
+      const isVisible = !pathname.includes('/thread/');
+      return createElement(
+        React.Fragment,
+        {},
+        createElement('button', { 'data-testid': 'open-thread', onClick: () => navigate('/mu/thread/post-3') }, 'thread'),
+        createElement('button', { 'data-testid': 'back', onClick: () => navigate(-1) }, 'back'),
+        createElement('button', { 'data-testid': 'settings', onClick: () => navigate('/mu/2/settings') }, 'settings'),
+        createElement('button', { 'data-testid': 'page-one', onClick: () => navigate('/mu') }, 'page 1'),
+        createElement('button', { 'data-testid': 'page-two', onClick: () => navigate('/mu/2') }, 'page 2'),
+        createElement(React.Activity, {
+          mode: isVisible ? 'visible' : 'hidden',
+          children: createElement(Board, { boardIdentifier: 'mu', feedCacheKey: '/mu', isVisible, viewType: 'board' }),
+        }),
+      );
+    };
+    await act(async () => {
+      root.render(
+        createElement(
+          MemoryRouter,
+          { initialEntries: ['/mu/2'] },
+          createElement(Routes, {}, createElement(Route, { path: '/:boardIdentifier/*', element: createElement(CachedBoardHarness) })),
+        ),
+      );
+    });
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, left: 0, behavior: 'instant' });
+    vi.mocked(window.scrollTo).mockClear();
+
+    for (const testId of ['open-thread', 'back', 'settings', 'back']) {
+      await act(async () => container.querySelector<HTMLButtonElement>(`[data-testid="${testId}"]`)?.click());
+    }
+    expect(window.scrollTo).not.toHaveBeenCalled();
+    expect(container.querySelector('[data-testid="board-pagination"]')?.textContent).toBe('/mu:2:2');
+
+    await act(async () => container.querySelector<HTMLButtonElement>('[data-testid="page-one"]')?.click());
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
+    await act(async () => container.querySelector<HTMLButtonElement>('[data-testid="page-two"]')?.click());
+    expect(window.scrollTo).toHaveBeenCalledTimes(2);
   });
 
   it('renders the current page feed, inserts recent account comments, and wires footer actions', async () => {
