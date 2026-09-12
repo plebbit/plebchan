@@ -6,6 +6,7 @@ import { TIME_FILTER_QUERY_PARAM } from '../../lib/utils/time-filter-utils';
 import { restoreSuspendedMediaPlayback, suspendMediaPlayback } from '../../lib/utils/media-playback-utils';
 import Board from '../../views/board/board';
 import Catalog from '../../views/catalog/catalog';
+import { FeedCacheContext } from './feed-cache-context';
 import styles from './feed-cache-container.module.css';
 
 interface FeedContextFromKey {
@@ -94,11 +95,11 @@ const FeedCacheContainer = () => {
   }, [currentFeedKey, isOnFeedRoute, feedType, accessFeed]);
 
   return (
-    <>
+    <FeedCacheContext.Provider value={true}>
       {cachedFeeds.map((feed) => (
         <CachedFeedWrapper key={feed.key} feed={feed} isVisible={isOnFeedRoute && feed.key === currentFeedKey} />
       ))}
-    </>
+    </FeedCacheContext.Provider>
   );
 };
 

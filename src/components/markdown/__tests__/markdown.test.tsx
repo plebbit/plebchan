@@ -40,7 +40,7 @@ vi.mock('react-i18next', () => ({
 }));
 
 vi.mock('@floating-ui/react', () => ({
-  FloatingPortal: ({ children }: { children?: React.ReactNode }) => createElement(React.Fragment, {}, children),
+  FloatingPortal: ({ children }: { children?: React.ReactNode }) => createElement('div', { 'data-testid': 'floating-portal' }, children),
   autoUpdate: () => undefined,
   offset: () => ({}),
   shift: () => ({}),
@@ -686,6 +686,7 @@ describe('Markdown', () => {
 
     const embedButton = Array.from(container.querySelectorAll('button')).find((node) => node.textContent === 'embed');
     expect(embedButton).toBeTruthy();
+    expect(container.querySelector('[data-testid="floating-portal"]')).toBeNull();
 
     await act(async () => {
       testState.floatingOnOpenChange?.(true);
@@ -695,6 +696,29 @@ describe('Markdown', () => {
     expect(floatingMedia).toBeTruthy();
     expect(floatingMedia?.getAttribute('data-show-thumbnail')).toBe('true');
     expect(testState.floatingMediaProps?.showThumbnail).toBe(true);
+
+    await act(async () => {
+      testState.floatingOnOpenChange?.(false);
+    });
+    expect(container.querySelector('[data-testid="floating-portal"]')).toBeNull();
+  });
+
+  it('does not mount hover portals on mobile while allowing inline embeds', async () => {
+    testState.isMobile = true;
+    testState.mediaInfoByHref = {
+      'https://cdn.example/image.png': { type: 'image', url: 'https://cdn.example/image.png' },
+    };
+    await renderMarkdown({ content: 'https://cdn.example/image.png' });
+
+    await act(async () => {
+      testState.floatingOnOpenChange?.(true);
+    });
+    expect(container.querySelector('[data-testid="floating-portal"]')).toBeNull();
+
+    await act(async () => {
+      container.querySelector<HTMLButtonElement>('button')?.click();
+    });
+    expect(container.querySelector('[data-testid="comment-media"]')).toBeTruthy();
   });
 
   it('toggles inline media embeds for embeddable links outside catalog view', async () => {

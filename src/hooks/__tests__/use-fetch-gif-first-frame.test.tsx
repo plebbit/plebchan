@@ -190,17 +190,31 @@ describe('useFetchGifFirstFrame', () => {
     });
   });
 
-  it('reuses a cached frame url when the cached asset is still fetchable', async () => {
+  it('migrates a still-valid legacy object URL to durable frame bytes', async () => {
+    const frame = new Blob(['cached frame'], { type: 'image/png' });
     testState.cacheGetItemMock.mockResolvedValueOnce('blob:cached-frame');
-    testState.fetchMock.mockResolvedValueOnce({ ok: true });
+    testState.fetchMock.mockResolvedValueOnce({ ok: true, blob: async () => frame });
 
     const { getState } = await renderHook('https://cdn.example/animated.gif');
 
     expect(getState()).toEqual({
-      frameUrl: 'blob:cached-frame',
+      frameUrl: 'blob:generated-1',
       status: 'ready',
     });
     expect(testState.fetchMock).toHaveBeenCalledWith('blob:cached-frame');
+    expect(testState.xhrCalls).toEqual([]);
+    expect(testState.cacheSetItemMock).toHaveBeenCalledWith('https://cdn.example/animated.gif', frame);
+  });
+
+  it('loads persisted frame bytes without a network request or GIF decoding', async () => {
+    const frame = new Blob(['cached frame'], { type: 'image/png' });
+    testState.cacheGetItemMock.mockResolvedValueOnce(frame);
+
+    const { getState } = await renderHook('https://cdn.example/animated.gif');
+
+    expect(getState()).toEqual({ frameUrl: 'blob:generated-1', status: 'ready' });
+    expect(createObjectUrlSpy).toHaveBeenCalledWith(frame);
+    expect(testState.fetchMock).not.toHaveBeenCalled();
     expect(testState.xhrCalls).toEqual([]);
     expect(testState.cacheSetItemMock).not.toHaveBeenCalled();
   });
@@ -218,7 +232,7 @@ describe('useFetchGifFirstFrame', () => {
     expect(getState().status).toBe('ready');
     expect(getState().frameUrl).toBe('blob:generated-2');
     expect(testState.xhrCalls).toEqual(['https://cdn.example/animated.gif']);
-    expect(testState.cacheSetItemMock).toHaveBeenCalledWith('https://cdn.example/animated.gif', 'blob:generated-2');
+    expect(testState.cacheSetItemMock).toHaveBeenCalledWith('https://cdn.example/animated.gif', expect.any(Blob));
     expect(revokeObjectUrlSpy).toHaveBeenCalledWith('blob:generated-1');
   });
 
@@ -231,7 +245,80 @@ describe('useFetchGifFirstFrame', () => {
     expect(getState().status).toBe('ready');
     expect(getState().frameUrl).toBe('blob:generated-2');
     expect(testState.xhrCalls).toEqual([]);
-    expect(testState.cacheSetItemMock).toHaveBeenCalledWith(source, 'blob:generated-2');
+    expect(testState.cacheSetItemMock).toHaveBeenCalledWith(source, expect.any(Blob));
+  });
+
+  it('shares pending requests and decoding while each mounted consumer owns its object URL', async () => {
+    let finishCacheLookup!: (value: null) => void;
+    testState.cacheGetItemMock.mockReturnValue(
+      new Promise((resolve) => {
+        finishCacheLookup = resolve;
+      }),
+    );
+    const url = 'https://cdn.example/shared.gif';
+    testState.xhrResponses.set(url, { response: testState.fileBuffer, status: 200, statusText: 'OK' });
+    const { HookHarness } = await renderHook(url);
+
+    await dispatchRender(
+      root,
+      createElement(React.Fragment, null, createElement(HookHarness, { key: 'first', value: url }), createElement(HookHarness, { key: 'second', value: url })),
+    );
+    expect(testState.cacheGetItemMock).toHaveBeenCalledTimes(1);
+
+    finishCacheLookup(null);
+    await flushEffects();
+    expect(testState.xhrCalls).toEqual([url]);
+    expect(testState.cacheSetItemMock).toHaveBeenCalledTimes(1);
+    const consumers = Array.from(container.querySelectorAll('[data-frame-url]'));
+    const firstFrame = consumers[0].getAttribute('data-frame-url');
+    const secondFrame = consumers[1].getAttribute('data-frame-url');
+    expect(firstFrame).toBeTruthy();
+    expect(secondFrame).toBeTruthy();
+    expect(firstFrame).not.toBe(secondFrame);
+
+    await dispatchRender(root, createElement(React.Fragment, null, createElement(HookHarness, { key: 'second', value: url })));
+    expect(revokeObjectUrlSpy).toHaveBeenCalledWith(firstFrame);
+    expect(revokeObjectUrlSpy).not.toHaveBeenCalledWith(secondFrame);
+    expect(container.querySelector('[data-frame-url]')?.getAttribute('data-frame-url')).toBe(secondFrame);
+  });
+
+  it('retains completed frame bytes after consumers unmount and never creates an unused object URL', async () => {
+    let finishCacheLookup!: (value: null) => void;
+    testState.cacheGetItemMock.mockReturnValueOnce(
+      new Promise((resolve) => {
+        finishCacheLookup = resolve;
+      }),
+    );
+    testState.cacheSetItemMock.mockImplementation(async (_url, frame) => {
+      testState.cacheGetItemMock.mockResolvedValue(frame);
+    });
+    const url = 'https://cdn.example/offscreen.gif';
+    testState.xhrResponses.set(url, { response: testState.fileBuffer, status: 200, statusText: 'OK' });
+    const { HookHarness } = await renderHook(url);
+    await act(async () => root.render(null));
+    finishCacheLookup(null);
+    await flushEffects();
+
+    expect(testState.cacheSetItemMock).toHaveBeenCalledWith(url, expect.any(Blob));
+    expect(createObjectUrlSpy).toHaveBeenCalledTimes(1);
+    expect(revokeObjectUrlSpy).toHaveBeenCalledWith('blob:generated-1');
+    await dispatchRender(root, createElement(HookHarness, { value: url }));
+    expect(testState.xhrCalls).toEqual([url]);
+    expect(container.querySelector('[data-status]')?.getAttribute('data-status')).toBe('ready');
+  });
+
+  it('regenerates expired legacy cache entries and keeps the frame ready if persistence fails', async () => {
+    testState.cacheGetItemMock.mockResolvedValue('blob:expired');
+    testState.fetchMock.mockRejectedValue(new Error('Object URL belongs to an earlier document'));
+    testState.cacheSetItemMock.mockRejectedValue(new Error('Quota exceeded'));
+    const url = 'https://cdn.example/regenerated.gif';
+    testState.xhrResponses.set(url, { response: testState.fileBuffer, status: 200, statusText: 'OK' });
+
+    const { getState } = await renderHook(url);
+
+    expect(getState().status).toBe('ready');
+    expect(testState.xhrCalls).toEqual([url]);
+    expect(testState.cacheSetItemMock).toHaveBeenCalledWith(url, expect.any(Blob));
   });
 
   it('marks a failed url and short-circuits retries for the same source', async () => {

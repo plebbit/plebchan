@@ -5,6 +5,7 @@ import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import useFeedCacheStore from '../../../stores/use-feed-cache-store';
 import FeedCacheContainer from '../feed-cache-container';
+import { FeedCacheContext } from '../feed-cache-context';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 const act = (React as { act?: (cb: () => void | Promise<void>) => void | Promise<void> }).act as (cb: () => void | Promise<void>) => void | Promise<void>;
@@ -17,7 +18,7 @@ vi.mock('../../../views/board/board', () => ({
   default: ({ feedCacheKey }: { feedCacheKey: string }) =>
     createElement(
       'div',
-      { 'data-testid': `board-${feedCacheKey}` },
+      { 'data-testid': `board-${feedCacheKey}`, 'data-cached-feed': React.useContext(FeedCacheContext) },
       feedCacheKey === '/a'
         ? createElement(
             React.Fragment,
@@ -95,6 +96,7 @@ describe('FeedCacheContainer', () => {
     await flushEffects();
 
     expect(latestPathname).toBe('/a');
+    expect(container.querySelector('[data-testid="board-/a"]')?.getAttribute('data-cached-feed')).toBe('true');
     expect(container.querySelector<HTMLVideoElement>('[data-testid="cached-video"]')).toBeTruthy();
     expect(container.querySelector<HTMLIFrameElement>('[data-testid="cached-iframe"]')?.getAttribute('src')).toBe('https://player.example.com/embed');
     expect(container.querySelector<HTMLIFrameElement>('[data-testid="cached-srcdoc-iframe"]')?.getAttribute('srcdoc')).toBe('<p>srcdoc embed</p>');
@@ -105,6 +107,7 @@ describe('FeedCacheContainer', () => {
     await flushEffects();
 
     expect(latestPathname).toBe('/b');
+    expect(container.querySelector('[data-testid="board-/a"]')?.getAttribute('data-cached-feed')).toBe('true');
     expect(pauseSpy).toHaveBeenCalled();
     expect(container.querySelector<HTMLVideoElement>('[data-testid="cached-video"]')).toBeTruthy();
     expect(container.querySelector<HTMLIFrameElement>('[data-testid="cached-iframe"]')?.getAttribute('src')).toBe('about:blank');

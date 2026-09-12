@@ -415,7 +415,9 @@ const CommentMedia = ({
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const { thumbnailHeight, thumbnailWidth, url } = commentMediaInfo || {};
-  const gifFrameState = useFetchGifFirstFrame(commentMediaInfo?.type === 'gif' ? url : undefined);
+  // Inline embeds cannot collapse to a thumbnail; audio's player still lives in Thumbnail.
+  const needsThumbnail = !disableToggle || showThumbnail !== false || commentMediaInfo?.type === 'audio';
+  const gifFrameState = useFetchGifFirstFrame(needsThumbnail && commentMediaInfo?.type === 'gif' ? url : undefined);
   let type = commentMediaInfo?.type;
   const { status: gifFrameStatus } = gifFrameState;
 
@@ -468,24 +470,26 @@ const CommentMedia = ({
         />
       ) : (
         <>
-          <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
-            {url && (
-              <Thumbnail
-                commentMediaInfo={commentMediaInfo}
-                displayHeight={displayHeight}
-                gifFrameState={gifFrameState}
-                displayWidth={displayWidth}
-                isFloatingEmbed={isFloatingEmbed}
-                isOutOfFeed={isOutOfFeed}
-                deleted={deleted}
-                purged={purged}
-                removed={removed}
-                spoiler={spoiler}
-                setShowThumbnail={setShowThumbnail}
-              />
-            )}
-            {isMobile && type && <div className={styles.fileInfo}>{`${spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
-          </span>
+          {needsThumbnail && (
+            <span className={`${showThumbnail ? styles.show : styles.hide} ${styles.thumbnail}`}>
+              {url && (
+                <Thumbnail
+                  commentMediaInfo={commentMediaInfo}
+                  displayHeight={displayHeight}
+                  gifFrameState={gifFrameState}
+                  displayWidth={displayWidth}
+                  isFloatingEmbed={isFloatingEmbed}
+                  isOutOfFeed={isOutOfFeed}
+                  deleted={deleted}
+                  purged={purged}
+                  removed={removed}
+                  spoiler={spoiler}
+                  setShowThumbnail={setShowThumbnail}
+                />
+              )}
+              {isMobile && type && <div className={styles.fileInfo}>{`${spoiler ? `${t('spoiler')} - ` : ''} ${getDisplayMediaInfoType(type, t)}`}</div>}
+            </span>
+          )}
           {!showThumbnail && <Media commentMediaInfo={commentMediaInfo} disableToggle={disableToggle} isReply={!!parentCid} setShowThumbnail={setShowThumbnail} />}
         </>
       )}
