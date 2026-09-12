@@ -1,7 +1,5 @@
 ---
 name: browser-check
-claude-model: haiku
-cursor-model: composer-2.5[fast=true]
 description: Verify an assigned 5chan browser flow against explicit acceptance criteria.
 ---
 

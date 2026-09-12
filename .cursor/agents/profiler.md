@@ -1,7 +1,6 @@
 ---
 name: profiler
 description: Measure an assigned 5chan performance scenario and report observed costs and limitations.
-model: composer-2.5[fast=true]
 ---
 
 <!-- Generated from .agents/roles/profiler.md; run yarn ai-workflow:sync. -->

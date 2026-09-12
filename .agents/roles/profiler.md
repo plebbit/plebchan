@@ -1,7 +1,5 @@
 ---
 name: profiler
-claude-model: haiku
-cursor-model: composer-2.5[fast=true]
 description: Measure an assigned 5chan performance scenario and report observed costs and limitations.
 ---
 
