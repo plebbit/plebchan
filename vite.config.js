@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
 import { resolve } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import { createHash } from 'crypto';
@@ -328,59 +329,13 @@ function verifyVercelCspHashesPlugin() {
   };
 }
 
-function adaptReactPluginForRolldown(plugin) {
-  if (!plugin?.config || plugin.name !== 'vite:react-babel') {
-    return plugin;
-  }
-
-  return {
-    ...plugin,
-    async config(userConfig, configEnv) {
-      const config = await plugin.config.call(this, userConfig, configEnv);
-      const optimizeDeps = config?.optimizeDeps;
-
-      if (optimizeDeps?.esbuildOptions?.jsx !== 'automatic') {
-        return config;
-      }
-
-      const { esbuildOptions, ...remainingOptimizeDeps } = optimizeDeps;
-
-      return {
-        ...config,
-        optimizeDeps: {
-          ...remainingOptimizeDeps,
-          rolldownOptions: {
-            ...optimizeDeps.rolldownOptions,
-            transform: {
-              ...optimizeDeps.rolldownOptions?.transform,
-              jsx: optimizeDeps.rolldownOptions?.transform?.jsx ?? {
-                runtime: 'automatic',
-              },
-            },
-          },
-        },
-      };
-    },
-  };
-}
-
 export default defineConfig({
   plugins: [
     appVersionMetadataPlugin(),
     ruffleRuntimeAssetsPlugin(),
     mathjaxFontAssetsPlugin(),
-    ...react({
-      babel: {
-        plugins: [
-          [
-            'babel-plugin-react-compiler',
-            {
-              verbose: true,
-            },
-          ],
-        ],
-      },
-    }).map(adaptReactPluginForRolldown),
+    react(),
+    babel({ presets: [reactCompilerPreset()] }),
     VitePWA({
       registerType: 'autoUpdate',
       strategies: 'injectManifest',

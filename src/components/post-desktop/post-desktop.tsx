@@ -895,13 +895,8 @@ const PostDesktop = ({
 
   const fullIsFetching = shouldFetchFull && !hasReplyPaginationOverride && fullReplies.length === 0 && fullRepliesResult.hasMore;
 
-  const repliesForRender = showAllReplies
-    ? fullReplies
-    : showOmittedReplies[cid]
-      ? fullReplies.length
-        ? fullReplies
-        : previewReplies
-      : getPreviewDisplayReplies(previewReplies, BOARD_REPLIES_PREVIEW_VISIBLE_COUNT);
+  const collapsedPreviewReplies = useMemo(() => getPreviewDisplayReplies(previewReplies, BOARD_REPLIES_PREVIEW_VISIBLE_COUNT), [previewReplies]);
+  const repliesForRender = showAllReplies ? fullReplies : showOmittedReplies[cid] ? (fullReplies.length ? fullReplies : previewReplies) : collapsedPreviewReplies;
   const freshRepliesForRender = useFreshReplies(repliesForRender, { post: resolvedPost });
   useRegisterFreshReplies(resolvedPost, freshRepliesForRender);
   const setResetFunction = useFeedResetStore((s) => s.setResetFunction);

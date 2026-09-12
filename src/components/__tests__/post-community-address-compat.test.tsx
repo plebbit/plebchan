@@ -52,6 +52,7 @@ const testState = vi.hoisted(() => ({
   accountCommentsByCid: {} as Record<string, TestComment | undefined>,
   directoryEntryByAddress: {} as Record<string, { address: string; directoryCode?: string; features?: Record<string, unknown>; title?: string } | undefined>,
   hasMoreReplies: false,
+  freshReplyInputs: [] as TestComment[][],
   openReplyModalMock: vi.fn(),
   pseudonymityMode: 'none',
   replyComments: [] as Array<TestComment | undefined>,
@@ -369,7 +370,10 @@ vi.mock('../../hooks/use-progressive-render', () => ({
 }));
 
 vi.mock('../../hooks/use-fresh-replies', () => ({
-  default: (replies: TestComment[]) => replies,
+  default: (replies: TestComment[]) => {
+    testState.freshReplyInputs.push(replies);
+    return replies;
+  },
 }));
 
 vi.mock('../../hooks/use-reply-height-estimates', () => ({
@@ -389,7 +393,7 @@ vi.mock('../../lib/constants', () => ({
 vi.mock('../../lib/utils/replies-preview-utils', () => ({
   computeOmittedCount: () => 0,
   filterRepliesForDisplay: (replies: TestComment[]) => replies,
-  getPreviewDisplayReplies: (replies: TestComment[]) => replies,
+  getPreviewDisplayReplies: (replies: TestComment[]) => [...replies],
   getTotalReplyCount: ({ replyCount }: { replyCount?: number }) => replyCount ?? 0,
   hasEnoughPreviewReplies: ({ replyCount, loadedCount, visibleCount }: { replyCount?: number; loadedCount: number; visibleCount: number }) =>
     loadedCount >= Math.min(visibleCount, replyCount ?? visibleCount),
@@ -494,6 +498,7 @@ describe('post community address compatibility', () => {
       'music-posting.eth': { address: 'music-posting.eth', features: {} },
     };
     testState.hasMoreReplies = false;
+    testState.freshReplyInputs = [];
     testState.pseudonymityMode = 'none';
     testState.replyComments = [];
     testState.stateString = undefined;
@@ -797,6 +802,27 @@ describe('post community address compatibility', () => {
       initialScrollTop: 1024,
       restoreStateFrom: { ranges: [2, 5], scrollTop: 1024 },
     });
+  });
+
+  it('preserves unchanged desktop preview inputs and updates them when replies change', async () => {
+    const post = makeLegacyThread();
+    const reply = post.replies!.pages!.new.comments![0];
+    const replyPaginationOverride = { replies: [reply] };
+
+    await renderWithRoute(createElement(PostDesktop, { post, replyPaginationOverride }));
+    const firstPreview = testState.freshReplyInputs.at(-1);
+    expect(firstPreview).toEqual([reply]);
+    testState.freshReplyInputs = [];
+
+    await renderWithRoute(createElement(PostDesktop, { post, replyPaginationOverride }));
+    expect(testState.freshReplyInputs.length).toBeGreaterThan(0);
+    expect(testState.freshReplyInputs.every((replies) => replies === firstPreview)).toBe(true);
+
+    const updatedReply = { ...reply, cid: 'updated-reply', content: 'Updated preview' };
+    await renderWithRoute(createElement(PostDesktop, { post, replyPaginationOverride: { replies: [updatedReply] } }));
+    expect(testState.freshReplyInputs.at(-1)).toEqual([updatedReply]);
+    expect(testState.freshReplyInputs.at(-1)).not.toBe(firstPreview);
+    expect(container.textContent).toContain('updated-reply');
   });
 
   it('keeps board-card Pretext heights when preview replies are rendered', async () => {
