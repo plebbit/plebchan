@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { Link, useLocation, useNavigate, useNavigationType, useParams } from 'react-router-dom';
 import { Comment, useAccount, useAccountComments, useCommunity, useFeed } from '@bitsocial/bitsocial-react-hooks';
 import { useCommunityField } from '../../hooks/use-stable-community';
-import { communitiesPagesStore } from '../../lib/bitsocial-internals/stores';
+import { communitiesPagesStore as useCommunitiesPagesStore } from '../../lib/bitsocial-internals/stores';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { Trans, useTranslation } from 'react-i18next';
 import styles from './board.module.css';
@@ -399,7 +399,7 @@ const Board = ({ feedCacheKey, viewType, boardIdentifier: boardIdentifierProp, t
   // useCommunityField only reads from store, doesn't trigger fetching
   const communityData = useCommunity(communityIdentifier ? { community: communityIdentifier } : undefined);
   const { error: communityError, state: communityState } = communityData || {};
-  const communitiesPages = communitiesPagesStore((state) => (isMultiboardView ? EMPTY_COMMUNITIES_PAGES : state.communitiesPages));
+  const communitiesPages = useCommunitiesPagesStore((state) => (isMultiboardView ? EMPTY_COMMUNITIES_PAGES : state.communitiesPages));
   const rawBoardThreadState = useMemo(
     () =>
       isMultiboardView
@@ -561,12 +561,19 @@ const Board = ({ feedCacheKey, viewType, boardIdentifier: boardIdentifierProp, t
     }
   }, [isVisible, effectiveInfiniteScroll, currentPage, totalPages, paginationBasePath, routerLocation.search, navigate]);
 
-  // Scroll to top instantly when page changes in pagination mode
+  // Activity reconnects effects when returning to a cached feed. Only a real page
+  // change should scroll; background route changes must not replace the saved page.
+  const lastVisiblePaginationPageRef = useRef<number | undefined>(undefined);
   useEffect(() => {
-    if (!effectiveInfiniteScroll) {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (!isVisible) return;
+    if (effectiveInfiniteScroll) {
+      lastVisiblePaginationPageRef.current = undefined;
+      return;
     }
-  }, [effectiveInfiniteScroll, currentPage]);
+    if (lastVisiblePaginationPageRef.current === currentPage) return;
+    lastVisiblePaginationPageRef.current = currentPage;
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [effectiveInfiniteScroll, currentPage, isVisible]);
 
   useEffect(() => {
     if (filteredComments.length > 0 && !resetTriggeredRef.current) {
@@ -732,13 +739,15 @@ const Board = ({ feedCacheKey, viewType, boardIdentifier: boardIdentifierProp, t
     }
   }, [isVisible, navigationType]);
 
-  useEffect(() => {
-    if (!isVisible) return;
+  useLayoutEffect(() => {
+    if (!isVisible || !effectiveInfiniteScroll) return;
 
     const currentKey = virtuosoStateKey;
-    // Avoid state snapshot work on every scroll tick in the hottest board path.
+    // Capture the handle before Activity clears the ref. Save before Virtuoso's
+    // effects disconnect, without snapshot work on every scroll tick.
+    const virtuoso = virtuosoRef.current;
     const saveVirtuosoState = () => {
-      virtuosoRef.current?.getState((snapshot: StateSnapshot) => {
+      virtuoso?.getState((snapshot: StateSnapshot) => {
         if (snapshot?.ranges?.length) {
           lastVirtuosoStates[currentKey] = snapshot;
         }
@@ -749,7 +758,7 @@ const Board = ({ feedCacheKey, viewType, boardIdentifier: boardIdentifierProp, t
       saveVirtuosoState();
       window.removeEventListener('pagehide', saveVirtuosoState);
     };
-  }, [virtuosoStateKey, isVisible]);
+  }, [virtuosoStateKey, isVisible, effectiveInfiniteScroll]);
 
   const lastVirtuosoState = navigationType === 'POP' ? lastVirtuosoStates?.[virtuosoStateKey] : undefined;
 

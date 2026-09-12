@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { Activity, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import useFeedCacheStore, { CachedFeed } from '../../stores/use-feed-cache-store';
+import useFeedCacheStore, { CachedFeed, getFeedCacheAfterAccess } from '../../stores/use-feed-cache-store';
 import { getFeedCacheKey, getFeedType, isFeedRoute } from '../../lib/utils/route-utils';
 import { TIME_FILTER_QUERY_PARAM } from '../../lib/utils/time-filter-utils';
 import { restoreSuspendedMediaPlayback, suspendMediaPlayback } from '../../lib/utils/media-playback-utils';
 import Board from '../../views/board/board';
 import Catalog from '../../views/catalog/catalog';
+import { FeedCacheContext } from './feed-cache-context';
 import styles from './feed-cache-container.module.css';
 
 interface FeedContextFromKey {
@@ -66,13 +67,15 @@ const CachedFeedWrapper = ({ feed, isVisible }: CachedFeedWrapperProps) => {
           isVisible={isVisible}
         />
       ) : (
-        <Board
-          feedCacheKey={feed.key}
-          viewType={context.viewType}
-          boardIdentifier={context.boardIdentifier}
-          timeFilterNameFromCache={context.timeFilterName}
-          isVisible={isVisible}
-        />
+        <Activity mode={isVisible ? 'visible' : 'hidden'}>
+          <Board
+            feedCacheKey={feed.key}
+            viewType={context.viewType}
+            boardIdentifier={context.boardIdentifier}
+            timeFilterNameFromCache={context.timeFilterName}
+            isVisible={isVisible}
+          />
+        </Activity>
       )}
     </div>
   );
@@ -82,10 +85,17 @@ const FeedCacheContainer = () => {
   const location = useLocation();
   const cachedFeeds = useFeedCacheStore((state) => state.cachedFeeds);
   const accessFeed = useFeedCacheStore((state) => state.accessFeed);
+  const maxCacheSize = useFeedCacheStore((state) => state.maxCacheSize);
 
   const currentFeedKey = getFeedCacheKey(location.pathname, location.search);
   const isOnFeedRoute = isFeedRoute(location.pathname);
   const feedType = getFeedType(location.pathname);
+  // Mount the incoming view in this route commit; persist its recency in the effect.
+  // Infinity is only a deterministic projection marker and never enters the store.
+  const renderedFeeds =
+    isOnFeedRoute && currentFeedKey && feedType && !cachedFeeds.some((feed) => feed.key === currentFeedKey)
+      ? getFeedCacheAfterAccess(cachedFeeds, maxCacheSize, { key: currentFeedKey, type: feedType, lastAccessed: Infinity })
+      : cachedFeeds;
 
   useEffect(() => {
     if (isOnFeedRoute && currentFeedKey && feedType) {
@@ -94,11 +104,11 @@ const FeedCacheContainer = () => {
   }, [currentFeedKey, isOnFeedRoute, feedType, accessFeed]);
 
   return (
-    <>
-      {cachedFeeds.map((feed) => (
+    <FeedCacheContext.Provider value={true}>
+      {renderedFeeds.map((feed) => (
         <CachedFeedWrapper key={feed.key} feed={feed} isVisible={isOnFeedRoute && feed.key === currentFeedKey} />
       ))}
-    </>
+    </FeedCacheContext.Provider>
   );
 };
 

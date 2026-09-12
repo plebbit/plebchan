@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigationType, useParams } from 'react-router-dom';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
@@ -745,20 +745,27 @@ const PostMobile = ({
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
   const virtuosoStateKey = `replies-mobile-${cid}`;
 
-  useEffect(() => {
-    if (!showAllReplies || !isInPostPageView) return;
+  const hasVirtualizedReplies = showAllReplies && !isInPendingPostView && showReplies && hasMore && !!resolvedPost?.replyCount;
 
-    const currentKey = virtuosoStateKey;
-    const setLastVirtuosoState = () => {
-      virtuosoRef.current?.getState((snapshot: StateSnapshot) => {
+  useLayoutEffect(() => {
+    if (!hasVirtualizedReplies || !isInPostPageView) return;
+
+    // Capture the handle before React clears its ref on unmount. Snapshotting every
+    // scroll event serializes the complete item-size tree in the scrolling hot path.
+    const virtuoso = virtuosoRef.current;
+    const saveVirtuosoState = () => {
+      virtuoso?.getState((snapshot: StateSnapshot) => {
         if (snapshot?.ranges?.length) {
-          lastVirtuosoStates[currentKey] = snapshot;
+          lastVirtuosoStates[virtuosoStateKey] = snapshot;
         }
       });
     };
-    window.addEventListener('scroll', setLastVirtuosoState, { passive: true });
-    return () => window.removeEventListener('scroll', setLastVirtuosoState);
-  }, [virtuosoStateKey, showAllReplies, isInPostPageView]);
+    window.addEventListener('pagehide', saveVirtuosoState);
+    return () => {
+      saveVirtuosoState();
+      window.removeEventListener('pagehide', saveVirtuosoState);
+    };
+  }, [virtuosoStateKey, hasVirtualizedReplies, isInPostPageView]);
 
   const lastVirtuosoState = navigationType === 'POP' ? lastVirtuosoStates?.[virtuosoStateKey] : undefined;
 
@@ -884,7 +891,7 @@ const PostMobile = ({
               )}
             </div>
             {/* Virtuoso infinite scroll for post page view when there's more content to paginate */}
-            {showAllReplies && !isInPendingPostView && showReplies && hasMore && !!resolvedPost?.replyCount && (
+            {hasVirtualizedReplies && (
               <Virtuoso
                 defaultItemHeight={defaultReplyItemHeight}
                 heightEstimates={replyHeightEstimates}

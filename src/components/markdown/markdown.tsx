@@ -126,20 +126,11 @@ const ContentLinkEmbed = ({ children, href, linkMediaInfo }: ContentLinkEmbedPro
           <CommentMedia commentMediaInfo={linkMediaInfo} disableToggle={true} isReply={false} setShowThumbnail={setShowMedia} showThumbnail={false} />
         </>
       )}
-      {getHasThumbnail(linkMediaInfo, href) && (
+      {isOpen && !isMobile && getHasThumbnail(linkMediaInfo, href) && (
         <FloatingPortal>
-          {isOpen && !isMobile && (
-            <div className={styles.floatingEmbed} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
-              <CommentMedia
-                commentMediaInfo={linkMediaInfo}
-                disableToggle={true}
-                isFloatingEmbed={true}
-                isReply={false}
-                setShowThumbnail={() => {}}
-                showThumbnail={true}
-              />
-            </div>
-          )}
+          <div className={styles.floatingEmbed} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+            <CommentMedia commentMediaInfo={linkMediaInfo} disableToggle={true} isFloatingEmbed={true} isReply={false} setShowThumbnail={() => {}} showThumbnail={true} />
+          </div>
         </FloatingPortal>
       )}
     </>

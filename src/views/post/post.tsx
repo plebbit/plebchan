@@ -403,7 +403,7 @@ const PostPage = () => {
 
   // if the comment is a reply, return the post comment instead, then the reply will be highlighted in the thread
   const postComment = useCommentWithFeedCache({
-    commentCid: comment?.postCid,
+    commentCid: comment?.parentCid ? comment.postCid : undefined,
     autoUpdate: autoUpdateEnabled,
     community: authoritativeCommentCommunityAddress ? communityIdentifier : undefined,
   });
