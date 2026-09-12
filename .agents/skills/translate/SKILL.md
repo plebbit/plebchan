@@ -1,6 +1,6 @@
 ---
 name: translate
-description: Add or update 5chan i18next keys across supported locales, preserving placeholders and applying all locale writes serially through the translation script.
+description: Add, update, or remove 5chan i18next translations when locale changes are requested.
 ---
 
 # Translate

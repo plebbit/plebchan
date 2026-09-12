@@ -1,7 +1,7 @@
 ---
 name: test-apk
 description: Verify an assigned Android workflow on the local emulator and return build, test and logcat evidence.
-model: composer-2.5-fast
+model: composer-2.5[fast=true]
 ---
 
 <!-- Generated from .agents/roles/test-apk.md; run yarn ai-workflow:sync. -->

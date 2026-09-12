@@ -1,43 +1,11 @@
-# Video Recording
+# Video evidence
 
-Capture browser automation sessions as video for debugging, documentation, or verification. Produces WebM (VP8/VP9 codec).
-
-## Basic Recording
+Use video when motion or an interaction sequence matters; use a screenshot for one state and a trace for DOM/network diagnosis. Record only the affected flow in the owned session.
 
 ```bash
-# Start recording
-playwright-cli video-start
-
-# Perform actions
-playwright-cli open https://example.com
-playwright-cli snapshot
-playwright-cli click e1
-playwright-cli fill e2 "test input"
-
-# Stop and save
-playwright-cli video-stop demo.webm
+playwright-cli -s=check-task video-start /tmp/task-owned-flow.webm
+# Perform the interaction.
+playwright-cli -s=check-task video-stop
 ```
 
-## Best Practices
-
-### 1. Use Descriptive Filenames
-
-```bash
-# Include context in filename
-playwright-cli video-stop recordings/login-flow-2024-01-15.webm
-playwright-cli video-stop recordings/checkout-test-run-42.webm
-```
-
-## Tracing vs Video
-
-| Feature | Video | Tracing |
-|---------|-------|---------|
-| Output | WebM file | Trace file (viewable in Trace Viewer) |
-| Shows | Visual recording | DOM snapshots, network, console, actions |
-| Use case | Demos, documentation | Debugging, analysis |
-| Size | Larger | Smaller |
-
-## Limitations
-
-- Recording adds slight overhead to automation
-- Large recordings can consume significant disk space
+The installed CLI takes the output filename on `video-start`; `video-stop` takes no filename. Stop recording before closing the exact session, including after a failed action. Use a unique task-owned path, inspect captured private content before sharing, and retain or remove only this task's recording. Recording overhead can affect performance measurements.
