@@ -11,6 +11,7 @@ const testState = vi.hoisted(() => ({
   cacheSetItemMock: vi.fn(),
   fetchMock: vi.fn(),
   fileBuffer: new Uint8Array([71, 73, 70]).buffer,
+  fileReadCalls: [] as File[],
   imageShouldFail: false,
   nextBlobId: 0,
   toBlobReturnsNull: false,
@@ -68,7 +69,8 @@ class MockFileReader {
   onload: (() => void) | null = null;
   result: ArrayBuffer | null = null;
 
-  readAsArrayBuffer() {
+  readAsArrayBuffer(file: File) {
+    testState.fileReadCalls.push(file);
     this.result = testState.fileBuffer;
     queueMicrotask(() => this.onload?.());
   }
@@ -135,6 +137,7 @@ describe('useFetchGifFirstFrame', () => {
     testState.cacheSetItemMock.mockReset();
     testState.fetchMock.mockReset();
     testState.fileBuffer = new Uint8Array([71, 73, 70]).buffer;
+    testState.fileReadCalls = [];
     testState.imageShouldFail = false;
     testState.nextBlobId = 0;
     testState.toBlobReturnsNull = false;
@@ -219,6 +222,77 @@ describe('useFetchGifFirstFrame', () => {
     expect(testState.cacheSetItemMock).not.toHaveBeenCalled();
   });
 
+  it('restores a ready frame synchronously on repeated Activity reveals without reloading its bytes', async () => {
+    const frame = new Blob(['cached frame'], { type: 'image/png' });
+    testState.cacheGetItemMock.mockResolvedValueOnce(frame).mockReturnValue(new Promise(() => {}));
+    const { getState, HookHarness } = await renderHook(undefined);
+    const renderActivity = (mode: 'hidden' | 'visible') =>
+      createElement(React.Activity, { mode, children: createElement(HookHarness, { value: 'https://cdn.example/activity.gif' }) });
+    await dispatchRender(root, renderActivity('visible'));
+    expect(getState().status).toBe('ready');
+
+    for (let index = 0; index < 2; index++) {
+      const previousUrl = getState().frameUrl;
+      act(() => root.render(renderActivity('hidden')));
+      expect(revokeObjectUrlSpy).toHaveBeenCalledWith(previousUrl);
+
+      // Synchronous act leaves promises pending: the reveal must finish before any DB read can settle.
+      act(() => root.render(renderActivity('visible')));
+      expect(getState().status).toBe('ready');
+      expect(getState().frameUrl).not.toBe(previousUrl);
+      expect(revokeObjectUrlSpy).not.toHaveBeenCalledWith(getState().frameUrl);
+      expect(container.querySelector('[data-frame-url]')?.getAttribute('data-frame-url')).toBe(getState().frameUrl);
+    }
+
+    expect(testState.cacheGetItemMock).toHaveBeenCalledOnce();
+    expect(testState.fetchMock).not.toHaveBeenCalled();
+    expect(testState.xhrCalls).toEqual([]);
+    expect(testState.cacheSetItemMock).not.toHaveBeenCalled();
+    expect(createObjectUrlSpy.mock.calls.every(([blob]) => blob === frame)).toBe(true);
+
+    const finalUrl = getState().frameUrl;
+    act(() => root.render(null));
+    expect(revokeObjectUrlSpy).toHaveBeenCalledWith(finalUrl);
+  });
+
+  it('never restores a previous source or lets a late request replace the current frame', async () => {
+    const firstSource = 'https://cdn.example/first.gif';
+    const pendingSource = 'https://cdn.example/pending.gif';
+    const currentSource = 'https://cdn.example/current.gif';
+    const firstFrame = new Blob(['first frame']);
+    const currentFrame = new Blob(['current frame']);
+    let resolvePending!: (blob: Blob) => void;
+    testState.cacheGetItemMock.mockImplementation((source) =>
+      source === pendingSource
+        ? new Promise((resolve) => {
+            resolvePending = resolve;
+          })
+        : Promise.resolve(source === firstSource ? firstFrame : currentFrame),
+    );
+    const { getState, HookHarness } = await renderHook(undefined);
+    const renderActivity = (mode: 'hidden' | 'visible', value: string) => createElement(React.Activity, { mode, children: createElement(HookHarness, { value }) });
+    await dispatchRender(root, renderActivity('visible', firstSource));
+    const previousUrl = getState().frameUrl;
+    act(() => root.render(renderActivity('hidden', firstSource)));
+    act(() => root.render(renderActivity('visible', pendingSource)));
+    expect(getState()).toEqual({ frameUrl: null, status: 'loading' });
+    expect(revokeObjectUrlSpy).toHaveBeenCalledWith(previousUrl);
+
+    await dispatchRender(root, renderActivity('visible', currentSource));
+    const currentUrl = getState().frameUrl;
+    expect(getState().status).toBe('ready');
+    await act(async () => resolvePending(new Blob(['late frame'])));
+    expect(getState().frameUrl).toBe(currentUrl);
+
+    act(() => root.render(renderActivity('hidden', currentSource)));
+    act(() => root.render(renderActivity('visible', currentSource)));
+    expect(getState().status).toBe('ready');
+    expect(getState().frameUrl).not.toBe(currentUrl);
+    expect(createObjectUrlSpy).toHaveBeenLastCalledWith(currentFrame);
+    expect(testState.cacheGetItemMock).toHaveBeenCalledTimes(3);
+    expect(testState.xhrCalls).toEqual([]);
+  });
+
   it('fetches, parses, and caches a generated frame when no usable cache entry exists', async () => {
     testState.cacheGetItemMock.mockResolvedValueOnce(null);
     testState.xhrResponses.set('https://cdn.example/animated.gif', {
@@ -236,7 +310,7 @@ describe('useFetchGifFirstFrame', () => {
     expect(revokeObjectUrlSpy).toHaveBeenCalledWith('blob:generated-1');
   });
 
-  it('reads File inputs through FileReader and caches the result', async () => {
+  it('reads File inputs through FileReader without using persistent string keys', async () => {
     testState.cacheGetItemMock.mockResolvedValueOnce(null);
     const source = new File(['gif-bytes'], 'reply.gif', { type: 'image/gif' });
 
@@ -245,7 +319,50 @@ describe('useFetchGifFirstFrame', () => {
     expect(getState().status).toBe('ready');
     expect(getState().frameUrl).toBe('blob:generated-2');
     expect(testState.xhrCalls).toEqual([]);
-    expect(testState.cacheSetItemMock).toHaveBeenCalledWith(source, expect.any(Blob));
+    expect(testState.fileReadCalls).toEqual([source]);
+    expect(testState.cacheGetItemMock).not.toHaveBeenCalled();
+    expect(testState.cacheSetItemMock).not.toHaveBeenCalled();
+  });
+
+  it('keeps two distinct File previews separate even when their names and persistent string keys match', async () => {
+    const first = new File(['first GIF'], 'reply.gif', { type: 'image/gif' });
+    const second = new File(['second GIF'], 'reply.gif', { type: 'image/gif' });
+    testState.cacheGetItemMock.mockResolvedValue(new Blob(['incorrect shared frame']));
+    const { HookHarness } = await renderHook(first);
+    await dispatchRender(root, createElement(HookHarness, { value: second }));
+
+    expect(String(first)).toBe(String(second));
+    expect(testState.fileReadCalls).toEqual([first, second]);
+    expect(testState.cacheGetItemMock).not.toHaveBeenCalled();
+    expect(testState.cacheSetItemMock).not.toHaveBeenCalled();
+    expect(testState.xhrCalls).toEqual([]);
+  });
+
+  it('delivers decoded frames while a slow cache write stays pending and deduplicates later consumers', async () => {
+    let rejectWrite!: (error: Error) => void;
+    testState.cacheGetItemMock.mockResolvedValue(null);
+    testState.cacheSetItemMock.mockReturnValue(
+      new Promise((_resolve, reject) => {
+        rejectWrite = reject;
+      }),
+    );
+    const url = 'https://cdn.example/slow-cache.gif';
+    testState.xhrResponses.set(url, { response: testState.fileBuffer, status: 200, statusText: 'OK' });
+    const { getState, HookHarness } = await renderHook(url);
+    expect(getState().status).toBe('ready');
+
+    await dispatchRender(
+      root,
+      createElement(React.Fragment, null, createElement(HookHarness, { key: 'first', value: url }), createElement(HookHarness, { key: 'second', value: url })),
+    );
+    expect(Array.from(container.querySelectorAll('[data-status]'), (node) => node.getAttribute('data-status'))).toEqual(['ready', 'ready']);
+    expect(testState.xhrCalls).toEqual([url]);
+    expect(testState.cacheGetItemMock).toHaveBeenCalledOnce();
+    expect(testState.cacheSetItemMock).toHaveBeenCalledOnce();
+
+    await act(async () => rejectWrite(new Error('Quota exceeded')));
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to cache GIF frame:', expect.any(Error));
+    expect(Array.from(container.querySelectorAll('[data-status]'), (node) => node.getAttribute('data-status'))).toEqual(['ready', 'ready']);
   });
 
   it('shares pending requests and decoding while each mounted consumer owns its object URL', async () => {

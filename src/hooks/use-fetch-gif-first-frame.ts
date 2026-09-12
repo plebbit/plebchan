@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { localForageLru } from '../lib/bitsocial-internals/utils';
 
 const gifFrameDb = localForageLru.createInstance({ name: '5chanGifFrames', size: 500 });
@@ -80,11 +80,15 @@ const getGifFrame = (url: GifSource): Promise<Blob> => {
   const pendingFrame = pendingFrames.get(url);
   if (pendingFrame) return pendingFrame;
 
+  let cacheWrite: Promise<unknown> | undefined;
   const frame = (async () => {
     let cachedFrame: Blob | string | null = null;
-    try {
-      cachedFrame = await gifFrameDb.getItem(url);
-    } catch {}
+    // localforage coerces File keys to the same string; File previews use identity only.
+    if (typeof url === 'string') {
+      try {
+        cachedFrame = await gifFrameDb.getItem(url);
+      } catch {}
+    }
     if (cachedFrame instanceof Blob) return cachedFrame;
 
     let blob: Blob | undefined;
@@ -97,11 +101,13 @@ const getGifFrame = (url: GifSource): Promise<Blob> => {
     }
     blob ??= await parseGif(typeof url === 'string' ? await fetchImage(url) : await readImage(url));
 
-    try {
-      await gifFrameDb.setItem(url, blob);
-    } catch (error) {
-      // Storage failures must not turn a successfully decoded thumbnail into an animated fallback.
-      console.error('Failed to cache GIF frame:', error);
+    if (typeof url === 'string') {
+      cacheWrite = Promise.resolve()
+        .then(() => gifFrameDb.setItem(url, blob))
+        .catch((error) => {
+          // Storage failures must not turn a successfully decoded thumbnail into an animated fallback.
+          console.error('Failed to cache GIF frame:', error);
+        });
     }
     return blob;
   })()
@@ -110,37 +116,50 @@ const getGifFrame = (url: GifSource): Promise<Blob> => {
       console.error('Failed to load GIF frame:', error);
       throw error;
     })
-    .finally(() => pendingFrames.delete(url));
+    .finally(() => {
+      // Deliver the frame immediately, sharing its resolved promise until persistence finishes.
+      if (cacheWrite) void cacheWrite.then(() => pendingFrames.delete(url));
+      else pendingFrames.delete(url);
+    });
 
   pendingFrames.set(url, frame);
   return frame;
 };
 
 const useFetchGifFirstFrame = (url: GifSource | undefined) => {
+  const retainedFrame = useRef<{ source: GifSource; blob: Blob } | undefined>(undefined);
   const [result, setResult] = useState<{ source: GifSource | undefined; state: GifFirstFrameState }>(() => ({
     source: url,
     state: url ? LOADING_STATE : IDLE_STATE,
   }));
 
-  useEffect(() => {
+  // Activity preserves refs while disconnecting effects. Recreate the URL from
+  // retained bytes before a revealed feed paints, without repeating async loading.
+  useLayoutEffect(() => {
     if (!url) {
+      retainedFrame.current = undefined;
       setResult((prev) => (prev.source === undefined ? prev : { source: undefined, state: IDLE_STATE }));
       return;
     }
 
     let isActive = true;
     let objectUrl: string | undefined;
-    setResult((prev) => (prev.source === url && prev.state.status === 'loading' ? prev : { source: url, state: LOADING_STATE }));
+    const retainedBlob = retainedFrame.current?.source === url ? retainedFrame.current.blob : undefined;
+    if (!retainedBlob) {
+      retainedFrame.current = undefined;
+      setResult((prev) => (prev.source === url && prev.state.status === 'loading' ? prev : { source: url, state: LOADING_STATE }));
+    }
 
     const fetchFrame = async () => {
-      if (failedUrls.has(url)) {
+      if (!retainedBlob && failedUrls.has(url)) {
         setResult({ source: url, state: FAILED_STATE });
         return;
       }
 
       try {
-        const blob = await getGifFrame(url);
+        const blob = retainedBlob ?? (await getGifFrame(url));
         if (!isActive) return;
+        retainedFrame.current = { source: url, blob };
         objectUrl = URL.createObjectURL(blob);
         setResult({ source: url, state: { frameUrl: objectUrl, status: 'ready' } });
       } catch {
